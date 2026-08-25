@@ -1,0 +1,95 @@
+# Logical domain model
+
+This is a logical model, not the SQL schema. Local persistence is accepted as Supabase PostgreSQL with declarative SQL schemas, versioned migrations, and no initial ORM; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). Exact identifiers, columns, types, constraints, indexes, and repository queries remain implementation decisions that must preserve the behavior below.
+
+## Exercises
+
+### `exercises`
+
+Persistent exercise definitions: identity, unique active name, base type, persistent note, and active/archived status.
+
+### `exercise_load_modes`
+
+The allowed per-set modes for an exercise. A mode distinguishes kilograms, bodyweight, added weight, resistance band, assistance kilograms, and assistance band as applicable. Band direction and strength are separate concepts.
+
+Validation and behavior are canonical in [`exercises.md`](../product/exercises.md).
+
+## Programs
+
+### `programs`
+
+Name, `draft`/`active`/`archived` status, and the identity of the next split. Exactly one program may be active.
+
+### `splits`
+
+Persistent identity, parent program, name unique within that program, rotation position, and active/archived status.
+
+### `split_exercises`
+
+Ordered association between one split and one exercise, with planned-set count and minimum/maximum reps. An exercise occurs at most once within a split.
+
+Rotation semantics are canonical in [`programs-and-splits.md`](../product/programs-and-splits.md).
+
+## Workouts
+
+### `workouts`
+
+Stores status (active/paused/completed/incomplete as required by the lifecycle), source kind (proposed split, today-only alternate split, or one-time), source references where applicable, snapshot program/split names, custom one-time name where applicable, local workout date, start and finish timestamps, accumulated active duration, current active-segment start timestamp when running, and enough source context to apply but never retroactively reapply the rotation rule.
+
+Only one workout may be active or paused as the resumable current workout.
+
+The physical schema must enforce that invariant and maintain a workout revision used by the accepted idempotent command flow. Pending browser commands are transport durability records rather than canonical workout entities; see [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md).
+
+### `workout_exercises`
+
+Ordered exercise performances within a workout. Each retains the original exercise reference plus exercise and prescription snapshots, and its workout-specific note.
+
+### `workout_sets`
+
+Each set stores position, load mode, a decimal weight/assistance value when applicable, band direction and strength when applicable, reps, and confirmed/completed status. Assistance kilograms remain positive; meaning comes from load mode.
+
+Detailed lifecycle behavior is in [`workouts.md`](../product/workouts.md).
+
+## Workout snapshots
+
+Starting a workout copies the then-current display and prescription values into workout history while retaining references to their source entities. Snapshot at least:
+
+- program name;
+- split name;
+- exercise name;
+- exercise base type;
+- allowed load modes;
+- persistent exercise note;
+- planned sets;
+- minimum and maximum reps;
+- exercise order.
+
+Program and split fields are absent where they do not apply to a one-time workout. Exercises added during an active workout receive the same exercise-definition snapshot at the time they are added; workout-local ordering and prescriptions are then authoritative for that workout.
+
+Snapshots make old workouts faithful to what was performed even if a source definition is later renamed, edited, reordered, or archived. Retained references allow identity-based statistics across those changes. This separation is accepted in [ADR-0002](../decisions/0002-template-snapshot-history-model.md).
+
+## Progress
+
+### `weight_entries`
+
+One decimal-kilogram value per local calendar date.
+
+### `measurement_types`
+
+User-defined name, `cm` unit, and active/archived status.
+
+### `measurement_entries`
+
+One decimal-centimeter value per measurement type and local calendar date.
+
+Calculation and date rules are canonical in [`weight-and-body.md`](../product/weight-and-body.md).
+
+## Settings
+
+One application-settings record holds at least the local time zone and measurement units. The initial agreed display/storage units are kilograms and centimeters; exact persistence mechanics remain a technical decision.
+
+## Derived statistics
+
+Do not initially create authoritative aggregate tables for weekly weight averages, PRs, or split statistics. Derive them from canonical historical entries so historical edits, deletion, and completion-status changes produce correct results.
+
+Caching can be considered later only if demonstrated necessary. Calculation eligibility is canonical in [`history-and-statistics.md`](../product/history-and-statistics.md#statistics-eligibility-and-recalculation).

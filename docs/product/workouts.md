@@ -1,0 +1,82 @@
+# Workouts
+
+## Starting a workout
+
+Starting a split creates a separate workout snapshot. It includes the workout name, an automatic timer, ordered exercises, persistent exercise notes, each exercise's last performance, planned sets and rep ranges, actual set inputs, workout-specific exercise notes, and the actions needed to modify or finish the session.
+
+The snapshot boundary and stored fields are canonical in [`domain-model.md`](../architecture/domain-model.md#workout-snapshots). The source split remains unchanged by all workout-local edits.
+
+Only one workout may be active at a time. Reopening the application must restore it without losing confirmed sets, notes, ordering, or timer state.
+
+## Initial and editable sets
+
+Starting from a split generates exactly its planned number of set rows. A three-set prescription creates Set 1, Set 2, and Set 3.
+
+The user may add another set or remove any set. Planned count is the initial state, not a limit. These changes apply only to this workout.
+
+If a removed set or exercise already contains data, the UI requires confirmation.
+
+## Set entry
+
+Load mode and values are selected per set. The exercise definition controls which modes are allowed; the complete type rules are in [`exercises.md`](exercises.md#load-modes).
+
+Examples of resulting fields:
+
+- bodyweight: reps;
+- bodyweight with added load: added kg and reps;
+- bodyweight with an allowed assistance or resistance band: direction, strength, and reps;
+- weights: kg, optional resistance-band strength when allowed, and reps;
+- assisted: assistance kg and reps, or assistance-band strength and reps;
+- standalone band: resistance-band strength and reps.
+
+Weights permit decimal values. Reps are positive integers. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
+
+The accepted technical durability mechanism is defined in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md); this document remains authoritative for user-visible workout behavior.
+
+## Last time
+
+**Last time** finds the latest completed performance of the same persistent exercise, regardless of split or whether it was a one-time workout. It reflects corrections subsequently made in History.
+
+Incomplete workouts do not qualify because they do not contribute to exercise statistics. See [`history-and-statistics.md`](history-and-statistics.md#statistics-eligibility-and-recalculation).
+
+## Two kinds of notes
+
+1. **Exercise note** is persistent guidance from the Exercise Library. Its snapshot is read-only during the workout.
+2. **Workout exercise note** applies only to that exercise in this workout. It auto-saves, remains in History, and is not carried into the next workout.
+
+## Workout-local changes
+
+During a workout the user may:
+
+- reorder exercises;
+- add an active exercise from the library;
+- remove an exercise;
+- add or remove a set;
+- change a set's permitted load mode and values;
+- add a workout-specific note.
+
+None of these actions changes the originating split.
+
+## Timer and continuation
+
+The timer measures active workout duration. **Continue Later** pauses it, so time spent away from the workout is excluded.
+
+Persist:
+
+- accumulated active duration;
+- the start timestamp of the currently active timer segment, when running.
+
+The exact timestamps retained for completed History are described in [`domain-model.md`](../architecture/domain-model.md#workouts).
+
+## Finishing a workout
+
+The finish review shows active duration, exercise count, confirmed-set count, and any empty planned sets. It offers:
+
+- **Complete Workout**;
+- **Save as Incomplete**;
+- **Continue Workout**;
+- a separate, confirmed action to discard the workout entirely.
+
+A completed workout enters History and eligible statistics. It advances rotation only if it was the split proposed by the active rotation, according to [`programs-and-splits.md`](programs-and-splits.md#rotation).
+
+An incomplete workout remains in History but does not enter PRs, exercise charts, or split-duration statistics and never advances rotation. It can later be marked completed; this recalculates statistics but does not affect the then-current rotation.
