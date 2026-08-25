@@ -20,6 +20,8 @@ Each Task targets one independently reviewable **delivery commit** with subject:
 
 The delivery commit contains the Task's complete implementation or documentation outcome and every canonical documentation change required by that outcome. It does not attempt to contain its own SHA. Scope that requires another independently reviewable delivery commit becomes another Task.
 
+Canonical product, UX, architecture, and process documents in the delivery tree describe accepted system state without embedding a future Task review, approval, or completion status. Those lifecycle projections belong only in the project-management evidence paths so they can change after delivery without making canonical specification stale or changing the delivery scope.
+
 The delivery commit SHA is the immutable object that the Reviewer reviews, the user approves, and authorized tests exercise. Any change to delivered code, behavior, architecture, specification, configuration, test source, or other scoped outcome requires a new delivery commit SHA, returns the Task to `In Progress`, and clears review, approval, and test authorization for the replaced SHA.
 
 ### Evidence commits

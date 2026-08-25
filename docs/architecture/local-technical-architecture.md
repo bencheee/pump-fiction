@@ -1,6 +1,6 @@
 # Local technical architecture
 
-- **Status:** Accepted architecture package; pending commit review under [`T-001`](../project/tasks/T-001-define-local-technical-architecture.md)
+- **Status:** Accepted
 
 This is the canonical summary of accepted local technical architecture. Each cross-cutting choice links to its ADR; undecided sections remain explicitly open.
 
