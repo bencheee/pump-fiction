@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:23:38+02:00`
-- **Progress:** `0/1 currently registered required Features Done; implementation breakdown incomplete`
+- **Updated:** `2026-08-25T16:27:49+02:00`
+- **Progress:** `1/1 currently registered required Features Done; implementation breakdown incomplete`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -29,7 +29,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 
 ## Features
 
-- [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture
+- [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture (`Done`)
 - Additional implementation Features must be defined after the architecture is accepted; this Milestone is not yet ready for execution as a complete breakdown.
 
 ## Dependencies and blockers
@@ -55,3 +55,4 @@ A complete local, single-user, phone-only application that satisfies all locked 
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T15:43:40+02:00` | User / Owner | Created `M-001` in `Now` | Establish the Local MVP delivery outcome and begin architecture definition |
+| `2026-08-25T16:27:49+02:00` | User / Owner and Approver | Completed registered `F-001`; Milestone remains incomplete | Local architecture accepted; implementation Feature breakdown still required |

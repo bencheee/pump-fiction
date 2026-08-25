@@ -1,7 +1,7 @@
 # T-001 — Define and document local technical architecture
 
 - **Feature:** [`F-001`](../features/F-001-local-technical-architecture.md)
-- **Status:** `In Review`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:23:38+02:00`
+- **Updated:** `2026-08-25T16:27:49+02:00`
 - **Started:** `2026-08-25T15:48:00+02:00`
 - **Review started:** `2026-08-25T16:23:38+02:00` for replacement delivery
-- **Approval requested:** Not reached for replacement delivery
-- **Approved:** Not reached for replacement delivery
+- **Approval requested:** `2026-08-25T16:27:49+02:00`
+- **Approved:** `2026-08-25T16:27:49+02:00`
 - **Testing started:** Not applicable unless scope changes
-- **Completed:** Not reached
+- **Completed:** `2026-08-25T16:27:49+02:00`
 - **Canceled:** Not reached
-- **Next action:** User reviews replacement delivery commit `2d243e6e67da68a80696f56ad8d3371df7d03494` without feature tests.
+- **Next action:** None; follow-up implementation planning must use a new Task.
 
 ## Scope
 
@@ -102,16 +102,16 @@ Define one coherent local technical architecture package, record every accepted 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed for replacement delivery
-- **Outcome:** Not reviewed for replacement delivery
-- **Findings:** Prior lifecycle-marker finding resolved in replacement delivery; awaiting User review
+- **Reviewed at:** `2026-08-25T16:27:49+02:00`
+- **Outcome:** Recommended for approval and approved for replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`
+- **Findings:** Prior lifecycle-marker finding resolved; no remaining review findings
 
 ## Approval
 
-- **Approved commit:** Not approved for replacement delivery
-- **Approved by:** Not approved for replacement delivery
-- **Approved at:** Not approved for replacement delivery
-- **Approval note:** Prior approval of `853fe06b0a7016ffffd3357476f6fc0e53e97a45` was invalidated before testing and remains preserved in transition history. Replacement SHA awaits explicit approval.
+- **Approved commit:** `2d243e6e67da68a80696f56ad8d3371df7d03494`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-08-25T16:27:49+02:00`
+- **Approval note:** User replied `da` to the explicit exact-SHA approval request. `test_required: no`; no automated or manual feature tests were run.
 
 ## Definition of Ready
 
@@ -129,15 +129,15 @@ Define one coherent local technical architecture package, record every accepted 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -151,3 +151,6 @@ Define one coherent local technical architecture package, record every accepted 
 | `2026-08-25T16:21:35+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved `853fe06b0a7016ffffd3357476f6fc0e53e97a45` |
 | `2026-08-25T16:21:35+02:00` | Codex primary agent / Executor | `Approved` | `In Progress` | Required canonical architecture lifecycle correction changes the delivery tree; approval and all test authorization invalidated before any test ran |
 | `2026-08-25T16:23:38+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`, resolving the lifecycle finding; no feature tests run |
+| `2026-08-25T16:27:49+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed replacement delivery and replied `da` to the exact-SHA request; no feature tests run |
+| `2026-08-25T16:27:49+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` |
+| `2026-08-25T16:27:49+02:00` | Codex primary agent / Executor | `Approved` | `Done` | Documentation-only Task completed with the approved no-test reason; no tests run |

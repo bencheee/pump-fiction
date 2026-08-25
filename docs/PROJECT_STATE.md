@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. Replacement `T-001` delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` resolved the lifecycle-marker finding and is in user review. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -67,7 +67,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews exact replacement [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` without feature tests. Implementation initialization remains a separate future Task.
+Define the remaining `M-001` implementation Feature breakdown and prepare the first implementation-initialization Task for explicit Owner readiness approval. Do not initialize implementation before that Task is ready.
 
 ## Implementation status
 

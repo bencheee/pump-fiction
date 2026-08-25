@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:23:38+02:00`
-- **Progress:** `0/1 required Tasks Done`
+- **Updated:** `2026-08-25T16:27:49+02:00`
+- **Progress:** `1/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -50,14 +50,15 @@ An explicitly accepted and fully documented local technical architecture that ca
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden
+- [x] User confirms the feature result
 
 ## History
 
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T15:43:40+02:00` | User / Owner | Created `F-001` in `Now` and confirmed readiness | Begin technical architecture only after accepting project management |
+| `2026-08-25T16:27:49+02:00` | User / Owner and Approver | Completed `F-001` | Approved the exact replacement T-001 delivery containing the accepted architecture package |
