@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. `T-002` is defining the complete delivery breakdown and external UI/UX collaboration process. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -42,6 +42,7 @@ The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 - Local persistence uses Supabase PostgreSQL, declarative SQL schemas, reviewed versioned migrations, generated TypeScript database types, no initial ORM, and a server-only repository boundary: [ADR-0018](decisions/0018-local-supabase-postgres-and-server-data-access.md)
 - The repository contains one npm-managed Next.js app with explicit App Router, feature, server, and shared boundaries; active-workout changes use idempotent revisioned commands and a narrow IndexedDB pending outbox: [ADR-0019](decisions/0019-application-boundaries-and-active-workout-durability.md)
 - Mobile UI uses Tailwind CSS 4, application-owned tokens/primitives, and selective Radix; charts use Recharts 3 behind a neutral data boundary; static checks and future approval-gated test tools are explicit: [ADR-0020](decisions/0020-mobile-ui-charting-and-quality-tooling.md)
+- External UI/UX work uses an Owner-approved design brief and a separate versioned handoff; fixed visual references define objective fidelity: [ADR-0022](decisions/0022-versioned-external-design-handoff.md)
 - Nutrition and calorie tracking are outside product scope, not open questions.
 - Local-MVP behavior and release boundary: [`product/mvp-acceptance-criteria.md`](product/mvp-acceptance-criteria.md)
 
@@ -67,7 +68,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Define the remaining `M-001` implementation Feature breakdown and prepare the first implementation-initialization Task for explicit Owner readiness approval. Do not initialize implementation before that Task is ready.
+Complete and approve `T-002`, then refine `T-003` with the Owner to create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not initialize implementation before its own Task is ready.
 
 ## Implementation status
 

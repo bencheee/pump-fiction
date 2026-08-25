@@ -17,6 +17,8 @@ This repository (working title: Pump Fiction) specifies a private, single-user, 
 4. Before changing behavior, check the relevant accepted decisions and canonical specification.
 5. When behavior changes, update its canonical documentation in the same task.
 
+Keep the cold-start bundle small: this guide, `docs/INDEX.md`, and—only for managed delivery work—`PROJECT.md` plus its linked active Task. Do not preload the full registry, project state, all ADRs, completed Tasks, or design exports. Work items reference canonical requirements by link and stable ID; they do not duplicate full specifications.
+
 Documentation is part of the work, not a follow-up. Record every architectural decision in an ADR and update every affected canonical document in the same task. An architectural change is not complete while its documentation is missing or stale. Record a small local decision in its canonical topic document. Never silently change an accepted decision. Mark unresolved choices as open questions instead of inventing answers.
 
 Do not run automated or manual feature tests until the user explicitly confirms that the relevant commit is fully approved. Implementation or commit authorization does not imply test authorization. After confirmation, test only the approved feature/commit scope. Read [`docs/process/development-governance.md`](docs/process/development-governance.md) before implementation, commit, or testing work.

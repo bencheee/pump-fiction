@@ -25,6 +25,7 @@ ADRs preserve important cross-cutting product, technical, and delivery-governanc
 | [0019](0019-application-boundaries-and-active-workout-durability.md) | Accepted | Single-app boundaries and durable command outbox for active workouts |
 | [0020](0020-mobile-ui-charting-and-quality-tooling.md) | Accepted | Mobile UI, charting, static checks, and approval-gated future test tooling |
 | [0021](0021-delivery-and-evidence-commit-model.md) | Accepted | One Task delivery commit plus narrow repository-native evidence commits |
+| [0022](0022-versioned-external-design-handoff.md) | Accepted | Versioned external design brief, structured handoff, and fixed-reference fidelity |
 
 ## Lifecycle
 

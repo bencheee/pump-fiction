@@ -18,9 +18,16 @@ Use this file as a router. Read only the documents needed for the current task a
 | Accepted local technical architecture and explicitly deferred production choices | [`architecture/local-technical-architecture.md`](architecture/local-technical-architecture.md) |
 | Documentation obligations, commit approval, testing gate | [`process/development-governance.md`](process/development-governance.md) |
 | Accepted project-management workflow and evidence model | [`process/project-management.md`](process/project-management.md) |
+| External UI/UX design brief, handoff, and fidelity process | [`process/design-collaboration.md`](process/design-collaboration.md) |
 | Current operational focus and next work | [`../PROJECT.md`](../PROJECT.md) |
 | Complete work-item registry and next IDs | [`project/INDEX.md`](project/INDEX.md) |
 | Current phase, open questions, next step | [`PROJECT_STATE.md`](PROJECT_STATE.md) |
 | Accepted architectural/product decisions | [`decisions/README.md`](decisions/README.md) |
 
 Documentation maintenance rules are in [`process/development-governance.md`](process/development-governance.md#documentation-as-part-of-the-work).
+
+## Context budget
+
+For a new work session, load this router first. For managed delivery work, add the small root dashboard and only its linked active Task. Load canonical topic documents and accepted ADRs only when the Task actually touches them; never preload all of `docs/`, all ADRs, completed Tasks, the full registry, or design exports.
+
+Task files point to canonical requirements by stable ID and link instead of copying their full text. Detailed design packages are loaded only for design or UI implementation/review work.
