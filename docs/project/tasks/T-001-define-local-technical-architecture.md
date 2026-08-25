@@ -1,7 +1,7 @@
 # T-001 — Define and document local technical architecture
 
 - **Feature:** [`F-001`](../features/F-001-local-technical-architecture.md)
-- **Status:** `In Review`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:18:09+02:00`
+- **Updated:** `2026-08-25T16:21:35+02:00`
 - **Started:** `2026-08-25T15:48:00+02:00`
 - **Review started:** `2026-08-25T16:18:09+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-08-25T16:21:35+02:00`
+- **Approved:** `2026-08-25T16:21:35+02:00` — invalidated before testing by required documentation correction
 - **Testing started:** Not applicable unless scope changes
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` against T-001 scope and documentation, without feature tests.
+- **Next action:** Remove future lifecycle state from the canonical architecture status and clarify the evidence boundary, then create and review a replacement delivery SHA.
 
 ## Scope
 
@@ -101,16 +101,16 @@ Define one coherent local technical architecture package, record every accepted 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-08-25T16:21:35+02:00`
+- **Outcome:** Recommended for approval for delivery `853fe06b0a7016ffffd3357476f6fc0e53e97a45`; later Executor DoD review found one stale-on-approval lifecycle marker
+- **Findings:** Canonical `local-technical-architecture.md` must not retain `pending commit review` after approval; correcting it changes the delivery tree and requires a replacement SHA
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `853fe06b0a7016ffffd3357476f6fc0e53e97a45` — authorization invalidated before testing
+- **Approved by:** User / Approver
+- **Approved at:** `2026-08-25T16:21:35+02:00`
+- **Approval note:** User replied `ok` to the explicit exact-SHA approval request. Executor then found a required canonical-document lifecycle correction; under ADR-0021 the resulting replacement delivery SHA requires fresh approval. No tests ran.
 
 ## Definition of Ready
 
@@ -146,3 +146,6 @@ Define one coherent local technical architecture package, record every accepted 
 | `2026-08-25T15:43:40+02:00` | User / Owner | `Backlog` | `Ready` | Explicitly approved creation and `Ready` status |
 | `2026-08-25T15:48:00+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | User authorized starting the architecture work |
 | `2026-08-25T16:18:09+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created and recorded delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45`; no feature tests run |
+| `2026-08-25T16:21:35+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Replied `ok` to the exact delivery SHA review request; no feature tests run |
+| `2026-08-25T16:21:35+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved `853fe06b0a7016ffffd3357476f6fc0e53e97a45` |
+| `2026-08-25T16:21:35+02:00` | Codex primary agent / Executor | `Approved` | `In Progress` | Required canonical architecture lifecycle correction changes the delivery tree; approval and all test authorization invalidated before any test ran |

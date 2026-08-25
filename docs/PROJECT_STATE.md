@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` is in user review under `F-001`. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. User approval of the first `T-001` delivery SHA was invalidated before testing because a required canonical lifecycle-marker correction changes the delivery tree. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -67,7 +67,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews exact [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` without feature tests. Implementation initialization remains a separate future Task.
+Correct the canonical architecture lifecycle marker and evidence-boundary rule, then create and review the replacement [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery SHA. Implementation initialization remains a separate future Task.
 
 ## Implementation status
 
