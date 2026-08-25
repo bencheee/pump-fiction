@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-25T16:47:34+02:00
-- **Current phase:** Local MVP delivery and UI/UX collaboration planning
+- **Last updated:** 2026-08-25T16:49:33+02:00
+- **Current phase:** Mobile UI/UX design-brief preparation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Approve the completed `T-002` planning delivery before the design-brief phase begins.
+Refine `T-003` into a complete, Owner-approved design-agent brief and annotated wireframe Task.
 
 ## Immediate next action
 
-User approves or rejects exact delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` for `T-002`.
+Resolve the design-blocking inputs listed in `T-003`, then request Owner confirmation that the Task is `Ready`.
 
 ## Now
 
-- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — `Awaiting Approval` — Executor: Codex primary agent — updated `2026-08-25T16:47:34+02:00` — user decision on exact delivery commit.
+- No active Tasks. `T-002` is `Done`; `T-003` remains in `Backlog` until readiness refinement.
 
 ## Next
 
@@ -33,7 +33,7 @@ None.
 
 ## Awaiting approval
 
-- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` — review recommends approval; user must approve or reject that exact SHA.
+None.
 
 ## Approved — ready for testing
 
@@ -41,12 +41,13 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — completed `2026-08-25T16:49:33+02:00` — approved delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` — no tests required or run.
 - [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) — completed `2026-08-25T16:27:49+02:00` — approved delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` — no tests required or run.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`1/10 Features Done`)
-- [`F-002`](docs/project/features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`0/1 Tasks Done`)
-- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — Define MVP delivery and external-design workflow (`Awaiting Approval`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`2/10 Features Done`)
+- [`F-003`](docs/project/features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`0/2 Tasks Done`; not yet Ready)
+- [`T-003`](docs/project/tasks/T-003-prepare-mobile-design-agent-brief.md) — Prepare mobile design-agent brief and wireframes (`Backlog`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

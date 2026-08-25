@@ -5,10 +5,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:47:34+02:00`
-- **Progress:** `1/10 required Features Done`
+- **Updated:** `2026-08-25T16:49:33+02:00`
+- **Progress:** `2/10 required Features Done`
 - **Blocked children:** `0`
-- **Awaiting approval children:** `1`
+- **Awaiting approval children:** `0`
 
 ## Outcome
 
@@ -30,7 +30,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 ## Features
 
 - [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture (`Done`)
-- [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`In progress through T-002`)
+- [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`Done`)
 - [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Next / 1`)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Next / 2`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Next / 3`)
@@ -80,3 +80,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-08-25T15:43:40+02:00` | User / Owner | Created `M-001` in `Now` | Establish the Local MVP delivery outcome and begin architecture definition |
 | `2026-08-25T16:27:49+02:00` | User / Owner and Approver | Completed registered `F-001`; Milestone remains incomplete | Local architecture accepted; implementation Feature breakdown still required |
 | `2026-08-25T16:35:55+02:00` | User / Owner | Confirmed complete Feature-planning work and external-design phase | Added `F-002` through `F-010`; Milestone execution remains gated per Task |
+| `2026-08-25T16:49:33+02:00` | User / Owner and Approver | Completed `F-002` | Approved the exact planning delivery; `F-003` design-brief refinement is next |

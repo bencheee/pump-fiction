@@ -1,7 +1,7 @@
 # T-002 — Define MVP delivery and external-design workflow
 
 - **Feature:** `F-002`
-- **Status:** `Awaiting Approval`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:47:34+02:00`
+- **Updated:** `2026-08-25T16:49:33+02:00`
 - **Started:** `2026-08-25T16:35:55+02:00`
 - **Review started:** `2026-08-25T16:47:34+02:00`
 - **Approval requested:** `2026-08-25T16:47:34+02:00`
-- **Approved:** Not reached
+- **Approved:** `2026-08-25T16:49:33+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-08-25T16:49:33+02:00`
 - **Canceled:** Not reached
-- **Next action:** User reviews and explicitly approves or rejects delivery commit `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`.
+- **Next action:** None; follow-up design-brief work is tracked separately in `T-003`.
 
 ## Scope
 
@@ -84,7 +84,7 @@ Conclusion: current documentation is modular and does not consume a major share 
 - **Test required:** `no`
 - **No-test reason:** Documentation-only planning and process change delivers no executable feature behavior.
 - **Planned tests:** None; no feature test may run.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** Not applicable
 - **Results:** Not run
 
 ## Delivery commit
@@ -102,10 +102,10 @@ Conclusion: current documentation is modular and does not consume a major share 
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-08-25T16:49:33+02:00`
+- **Approval note:** User replied `potvrdujem` to the explicit exact-SHA approval request. `test_required: no`; no automated, manual, or visual feature tests were run.
 
 ## Definition of Ready
 
@@ -123,15 +123,15 @@ Conclusion: current documentation is modular and does not consume a major share 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -141,3 +141,5 @@ Conclusion: current documentation is modular and does not consume a major share 
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began documentation-only planning Task; no feature testing authorized or required |
 | `2026-08-25T16:47:34+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` and reviewed its exact committed scope; no tests run |
 | `2026-08-25T16:47:34+02:00` | Codex primary agent / Reviewer | `In Review` | `Awaiting Approval` | Recommended the exact delivery commit for user approval with no findings |
+| `2026-08-25T16:49:33+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed exact delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` |
+| `2026-08-25T16:49:33+02:00` | Codex primary agent / Executor | `Approved` | `Done` | Documentation-only Task completed with the approved no-test reason; no tests run |

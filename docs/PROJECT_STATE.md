@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. The completed `T-002` planning delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` awaits exact-commit user approval. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-002` and `F-002` are complete after user approval of delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -17,6 +17,7 @@ The functional specification, textual mobile-wireframe decisions, local-MVP acce
 - Testable local-MVP acceptance criteria with stable IDs (locked)
 - Documentation-as-system-of-record and approval-gated feature-testing rules
 - Complete repository-native project-management workflow, templates, dashboard, and registry
+- Ordered Local MVP Feature breakdown, external-design workflow, and context-efficient documentation rules
 
 The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 
@@ -68,7 +69,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Approve or reject exact `T-002` delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`; after approval and completion, refine `T-003` with the Owner to create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not initialize implementation before its own Task is ready.
+Refine `T-003` with the Owner to resolve its design-blocking inputs and create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not start it or initialize implementation before the relevant Task is `Ready`.
 
 ## Implementation status
 
