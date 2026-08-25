@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. User approval of the first `T-001` delivery SHA was invalidated before testing because a required canonical lifecycle-marker correction changes the delivery tree. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. Replacement `T-001` delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` resolved the lifecycle-marker finding and is in user review. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -67,7 +67,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the canonical architecture lifecycle marker and evidence-boundary rule, then create and review the replacement [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery SHA. Implementation initialization remains a separate future Task.
+User reviews exact replacement [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` without feature tests. Implementation initialization remains a separate future Task.
 
 ## Implementation status
 

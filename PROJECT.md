@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-25T16:21:35+02:00
+- **Last updated:** 2026-08-25T16:23:38+02:00
 - **Current phase:** Local technical architecture definition
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -12,11 +12,11 @@ Define and accept the local technical architecture under [`F-001`](docs/project/
 
 ## Immediate next action
 
-Correct the canonical architecture lifecycle marker and evidence-boundary rule, then create and review a replacement [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) delivery SHA. The prior approval is invalidated; no tests ran.
+User reviews exact replacement [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) delivery `2d243e6e67da68a80696f56ad8d3371df7d03494` without running feature tests.
 
 ## Now
 
-- [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) — `In Progress` — Executor: Codex primary agent — Updated: `2026-08-25T16:21:35+02:00` — Next: correct lifecycle metadata and create replacement delivery SHA.
+- [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) — `In Review` — Executor: Codex primary agent — Updated: `2026-08-25T16:23:38+02:00` — Next: User reviews exact replacement delivery SHA.
 
 ## Next
 
