@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. `T-002` is defining the complete delivery breakdown and external UI/UX collaboration process. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` and `F-001` are complete after user approval of replacement delivery `2d243e6e67da68a80696f56ad8d3371df7d03494`. The completed `T-002` planning delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` awaits exact-commit user approval. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -68,7 +68,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete and approve `T-002`, then refine `T-003` with the Owner to create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not initialize implementation before its own Task is ready.
+Approve or reject exact `T-002` delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`; after approval and completion, refine `T-003` with the Owner to create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not initialize implementation before its own Task is ready.
 
 ## Implementation status
 

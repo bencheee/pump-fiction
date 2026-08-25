@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-25T16:45:56+02:00
+- **Last updated:** 2026-08-25T16:47:34+02:00
 - **Current phase:** Local MVP delivery and UI/UX collaboration planning
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Complete `T-002`: freeze the MVP Feature sequence, external UI/UX collaboration process, and context-efficient documentation rules without starting implementation.
+Approve the completed `T-002` planning delivery before the design-brief phase begins.
 
 ## Immediate next action
 
-Finish and review the documentation-only `T-002` delivery, then ask the user to approve its exact commit before starting the design-brief Task.
+User approves or rejects exact delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` for `T-002`.
 
 ## Now
 
-- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — `In Progress` — Executor: Codex primary agent — updated `2026-08-25T16:45:56+02:00` — create the reviewed delivery commit.
+- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — `Awaiting Approval` — Executor: Codex primary agent — updated `2026-08-25T16:47:34+02:00` — user decision on exact delivery commit.
 
 ## Next
 
@@ -33,7 +33,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` — review recommends approval; user must approve or reject that exact SHA.
 
 ## Approved — ready for testing
 
@@ -47,6 +47,6 @@ None.
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`1/10 Features Done`)
 - [`F-002`](docs/project/features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`0/1 Tasks Done`)
-- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — Define MVP delivery and external-design workflow (`In Progress`)
+- [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — Define MVP delivery and external-design workflow (`Awaiting Approval`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

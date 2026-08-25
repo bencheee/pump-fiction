@@ -6,10 +6,10 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:45:56+02:00`
+- **Updated:** `2026-08-25T16:47:34+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `0`
+- **Awaiting approval Tasks:** `1`
 
 ## Outcome
 

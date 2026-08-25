@@ -1,7 +1,7 @@
 # T-002 — Define MVP delivery and external-design workflow
 
 - **Feature:** `F-002`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:45:56+02:00`
+- **Updated:** `2026-08-25T16:47:34+02:00`
 - **Started:** `2026-08-25T16:35:55+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-08-25T16:47:34+02:00`
+- **Approval requested:** `2026-08-25T16:47:34+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete the documentation changes, run static documentation checks, and create the delivery commit for review.
+- **Next action:** User reviews and explicitly approves or rejects delivery commit `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`.
 
 ## Scope
 
@@ -89,15 +89,15 @@ Conclusion: current documentation is modular and does not consume a major share 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`
 - **Subject:** `T-002: define MVP delivery and design workflow`
-- **Committed scope:** Not created
+- **Committed scope:** Ordered `M-001` Feature and criteria ownership plan; external design brief/handoff/fidelity process and ADR-0022; `T-003`/`T-004`; measured cold-start guidance; synchronized indexes and project projections.
 
 ## Review
 
 - **Reviewer:** Codex primary agent
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-25T16:47:34+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
@@ -139,3 +139,5 @@ Conclusion: current documentation is modular and does not consume a major share 
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed proceeding with delivery planning and requested explicit UI/UX brief and handoff phases |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began documentation-only planning Task; no feature testing authorized or required |
+| `2026-08-25T16:47:34+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` and reviewed its exact committed scope; no tests run |
+| `2026-08-25T16:47:34+02:00` | Codex primary agent / Reviewer | `In Review` | `Awaiting Approval` | Recommended the exact delivery commit for user approval with no findings |
