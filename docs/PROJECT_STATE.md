@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` is preparing the initial documentation delivery commit under `F-001`. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, and local technical architecture are accepted. `T-001` delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` is in user review under `F-001`. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -67,7 +67,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Repeat the documentation static checks after the workflow correction, then create the exact [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) bootstrap delivery commit and record its SHA for review. Implementation initialization remains a separate future Task.
+User reviews exact [`T-001`](project/tasks/T-001-define-local-technical-architecture.md) delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` without feature tests. Implementation initialization remains a separate future Task.
 
 ## Implementation status
 

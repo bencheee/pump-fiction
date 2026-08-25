@@ -16,19 +16,19 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `0/1 registered; breakdown incomplete` | User | `2026-08-25T16:15:43+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `0/1 registered; breakdown incomplete` | User | `2026-08-25T16:18:09+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
 | ID | Milestone | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [`F-001`](features/F-001-local-technical-architecture.md) | `M-001` | Local Technical Architecture | `Now / 1` | `0/1` | User | `2026-08-25T16:15:43+02:00` | [`features/F-001-local-technical-architecture.md`](features/F-001-local-technical-architecture.md) |
+| [`F-001`](features/F-001-local-technical-architecture.md) | `M-001` | Local Technical Architecture | `Now / 1` | `0/1` | User | `2026-08-25T16:18:09+02:00` | [`features/F-001-local-technical-architecture.md`](features/F-001-local-technical-architecture.md) |
 
 ## Tasks
 
 | ID | Feature | Title | Horizon/order | Status | Executor | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [`T-001`](tasks/T-001-define-local-technical-architecture.md) | `F-001` | Define and document local technical architecture | `Now / 1` | `In Progress` | Codex primary agent | `2026-08-25T16:15:43+02:00` | [`tasks/T-001-define-local-technical-architecture.md`](tasks/T-001-define-local-technical-architecture.md) |
+| [`T-001`](tasks/T-001-define-local-technical-architecture.md) | `F-001` | Define and document local technical architecture | `Now / 1` | `In Review` | Codex primary agent | `2026-08-25T16:18:09+02:00` | [`tasks/T-001-define-local-technical-architecture.md`](tasks/T-001-define-local-technical-architecture.md) |
 
 ## Templates
 

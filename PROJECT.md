@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-25T16:15:43+02:00
+- **Last updated:** 2026-08-25T16:18:09+02:00
 - **Current phase:** Local technical architecture definition
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -12,11 +12,11 @@ Define and accept the local technical architecture under [`F-001`](docs/project/
 
 ## Immediate next action
 
-Create the exact [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) bootstrap delivery commit, then record its full SHA and `In Review` transition through an evidence commit.
+User reviews exact [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` without running feature tests.
 
 ## Now
 
-- [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) — `In Progress` — Executor: Codex primary agent — Updated: `2026-08-25T16:15:43+02:00` — Next: create delivery commit and record its SHA for review.
+- [`T-001`](docs/project/tasks/T-001-define-local-technical-architecture.md) — `In Review` — Executor: Codex primary agent — Updated: `2026-08-25T16:18:09+02:00` — Next: User reviews exact delivery SHA.
 
 ## Next
 

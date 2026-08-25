@@ -1,7 +1,7 @@
 # T-001 — Define and document local technical architecture
 
 - **Feature:** [`F-001`](../features/F-001-local-technical-architecture.md)
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:15:43+02:00`
+- **Updated:** `2026-08-25T16:18:09+02:00`
 - **Started:** `2026-08-25T15:48:00+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-25T16:18:09+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not applicable unless scope changes
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the bootstrap delivery commit, then record its full SHA and transition to `In Review` through an evidence commit.
+- **Next action:** User reviews delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45` against T-001 scope and documentation, without feature tests.
 
 ## Scope
 
@@ -82,6 +82,7 @@ Define one coherent local technical architecture package, record every accepted 
   - `markdownlint-cli2` and Lychee were not locally installed and were not downloaded in this documentation-only Task; the equivalent required local-link check was performed by the read-only script above
   - `2026-08-25T16:15:43+02:00` — Codex primary agent — passed — repeated local path/anchor validation resolved all links across 48 Markdown files after ADR-0021
   - `2026-08-25T16:15:43+02:00` — Codex primary agent — passed — repeated structure and contradiction scans found no non-Markdown artifacts and no resolved workflow/technical choices left open
+  - `2026-08-25T16:18:09+02:00` — Codex primary agent — passed — `git diff --cached --check` reported no whitespace errors before creating the delivery commit
 
 ## Test plan and results
 
@@ -93,9 +94,9 @@ Define one coherent local technical architecture package, record every accepted 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `853fe06b0a7016ffffd3357476f6fc0e53e97a45`
 - **Subject:** `T-001: define local technical architecture`
-- **Committed scope:** Accepted documentation baseline plus local technical architecture under the one-time ADR-0021 bootstrap exception; not created yet
+- **Committed scope:** Initial accepted specification, UX, architecture, governance, project-management, work-item, and agent-guide documentation baseline plus the complete accepted local technical architecture under the one-time ADR-0021 bootstrap exception; no application code or executable artifacts
 
 ## Review
 
@@ -144,3 +145,4 @@ Define one coherent local technical architecture package, record every accepted 
 | `2026-08-25T15:43:40+02:00` | Codex primary agent / Executor | — | `Backlog` | Allocated `T-001` from the accepted template |
 | `2026-08-25T15:43:40+02:00` | User / Owner | `Backlog` | `Ready` | Explicitly approved creation and `Ready` status |
 | `2026-08-25T15:48:00+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | User authorized starting the architecture work |
+| `2026-08-25T16:18:09+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created and recorded delivery commit `853fe06b0a7016ffffd3357476f6fc0e53e97a45`; no feature tests run |
