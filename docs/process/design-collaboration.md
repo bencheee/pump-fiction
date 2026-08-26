@@ -34,6 +34,8 @@ The brief Task must produce a self-contained prompt that gives the design agent 
 
 The exact outbound prompt is a versioned repository artifact created during the design-brief Task, not an informal chat-only instruction.
 
+The first draft package is [`../design/T-003-v1/README.md`](../design/T-003-v1/README.md). It remains unapproved until its Task delivery commit completes review and receives Owner approval.
+
 ## Required handoff package
 
 The later handoff prompt must request one frozen, version-labelled package with:

@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-25T16:49:33+02:00`
+- **Updated:** `2026-08-26T12:38:44+02:00`
 - **Progress:** `2/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -31,7 +31,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 
 - [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture (`Done`)
 - [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`Done`)
-- [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Next / 1`)
+- [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Now / 1`; `T-003` in progress)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Next / 2`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Next / 3`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Next / 4`)
@@ -81,3 +81,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-08-25T16:27:49+02:00` | User / Owner and Approver | Completed registered `F-001`; Milestone remains incomplete | Local architecture accepted; implementation Feature breakdown still required |
 | `2026-08-25T16:35:55+02:00` | User / Owner | Confirmed complete Feature-planning work and external-design phase | Added `F-002` through `F-010`; Milestone execution remains gated per Task |
 | `2026-08-25T16:49:33+02:00` | User / Owner and Approver | Completed `F-002` | Approved the exact planning delivery; `F-003` design-brief refinement is next |
+| `2026-08-26T12:30:56+02:00` | User / Owner | Started `F-003` through ready Task `T-003` | Confirmed design inputs; outbound brief package prepared for Owner review |
+| `2026-08-26T12:38:44+02:00` | User / Owner | Approved `T-003` outbound prompt content | Authorized creation of the delivery commit; exact-SHA approval remains pending |

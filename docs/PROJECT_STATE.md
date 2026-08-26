@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-002` and `F-002` are complete after user approval of delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-002` and `F-002` are complete after user approval of delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`. The Owner confirmed the blocking `T-003` design inputs on `2026-08-26`, and the design-brief Task is in progress. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -64,12 +64,11 @@ These are not decisions and must not be inferred during implementation:
 - whether and how to support RIR/RPE;
 - whether and how to support a rest timer;
 - whether and how to model warm-up sets;
-- UI language;
 - application name;
 
 ## Next planned step
 
-Refine `T-003` with the Owner to resolve its design-blocking inputs and create the exact external design-agent prompt, criteria-to-screen map, sample data, and annotated wireframes. Do not start it or initialize implementation before the relevant Task is `Ready`.
+Create the authorized `T-003` delivery commit, record and review its exact SHA, then request exact-SHA approval before any external design work. Do not initialize implementation.
 
 ## Implementation status
 

@@ -2,11 +2,11 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
+- **Updated:** `2026-08-26T12:38:44+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -45,10 +45,10 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified; the first executable work is `Ready`
+- [x] Required Tasks are identified; the first executable work is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness
 
 ## Completion
 
@@ -63,3 +63,4 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Make specialized external design and structured return a formal pre-implementation phase |
+| `2026-08-26T12:22:18+02:00` | User / Owner | Confirmed Feature readiness and `T-003` inputs | Begin the approved design-brief phase with all blocking choices resolved |

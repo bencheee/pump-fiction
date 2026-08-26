@@ -1,27 +1,33 @@
 # T-003 — Prepare mobile design-agent brief and wireframes
 
 - **Feature:** `F-003`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-26T12:38:44+02:00`
+- **Started:** `2026-08-26T12:22:18+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** After `T-002` is Done, refine scope and ask the Owner to confirm readiness.
+- **Next action:** Create the authorized `T-003` delivery commit, record its exact SHA, and perform documentation review without feature tests.
 
 ## Scope
 
 Create the exact outbound prompt, complete screen/state inventory, criteria-to-screen map, realistic sample data, and annotated low-fidelity mobile wireframes needed by the external design agent.
+
+## Design brief package
+
+The versioned outbound package is [`../../design/T-003-v1/README.md`](../../design/T-003-v1/README.md). It contains the exact prompt, 24-screen/state manifest, map of all 57 locked MVP criteria, realistic sample data, and annotated low-fidelity wireframes.
+
+The Owner approved this exact prompt content and authorized its delivery commit by replying `potvrđujem` on `2026-08-26T12:38:44+02:00`. External sending remains gated by approval of the exact delivery commit SHA.
 
 ## Out of scope
 
@@ -31,9 +37,9 @@ Create the exact outbound prompt, complete screen/state inventory, criteria-to-s
 
 ## Acceptance criteria
 
-- [ ] The outbound prompt satisfies the brief contract in [`../../process/design-collaboration.md`](../../process/design-collaboration.md).
-- [ ] Wireframes cover every required screen, state, and critical flow without changing accepted behavior.
-- [ ] The user approves the exact prompt and its design constraints before sending it externally.
+- [x] The outbound prompt satisfies the brief contract in [`../../process/design-collaboration.md`](../../process/design-collaboration.md).
+- [x] Wireframes cover every required screen, state, and critical flow without changing accepted behavior.
+- [x] The user approves the exact prompt and its design constraints before sending it externally.
 
 ## Traceability
 
@@ -44,8 +50,8 @@ Create the exact outbound prompt, complete screen/state inventory, criteria-to-s
 ## Dependencies and blockers
 
 - Dependencies: `T-002` Done
-- Blockers: Owner decisions required during refinement for the reference viewport matrix, UI language, name treatment, theme direction, and design-tool/export capabilities
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blockers: None. The Owner confirmed the reference viewport matrix, English UI, replaceable `Pump Fiction` working-name treatment, dark-first theme, accessibility/asset constraints, and editable handoff capabilities on `2026-08-26`.
+- Blocked from status: Not blocked; Task is in progress
 
 ## Documentation impact
 
@@ -54,15 +60,15 @@ Create the exact outbound prompt, complete screen/state inventory, criteria-to-s
 
 ## Execution checklist
 
-- [ ] Resolve design-blocking inputs with the Owner.
-- [ ] Map criteria, screens, states, flows, and sample data.
-- [ ] Produce annotated wireframes and outbound prompt.
+- [x] Resolve design-blocking inputs with the Owner.
+- [x] Map criteria, screens, states, flows, and sample data.
+- [x] Produce annotated wireframes and outbound prompt.
 - [ ] Audit prompt completeness and request exact-commit approval.
 
 ## Static-check plan and results
 
 - Planned checks: Markdown links, criterion coverage, artifact inventory, `git diff --check`
-- Results: Not run
+- Results: Passed at `2026-08-26T12:30:56+02:00` — all internal Markdown file targets exist; canonical criteria count is 57 and the criteria map covers the same 57 unique IDs; all 24 screen IDs, seven overlay/feedback IDs, and six required package artifacts are present; prompt and artifact inventory were inspected; `git diff --check` passed.
 
 ## Test plan and results
 
@@ -95,16 +101,16 @@ Create the exact outbound prompt, complete screen/state inventory, criteria-to-s
 ## Definition of Ready
 
 - [x] ID, parent Feature, horizon, and order are set
-- [ ] Scope and out-of-scope are confirmed after dependency completion
-- [ ] Acceptance criteria are confirmed as observable
+- [x] Scope and out-of-scope are confirmed after dependency completion
+- [x] Acceptance criteria are confirmed as observable
 - [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -123,3 +129,5 @@ Create the exact outbound prompt, complete screen/state inventory, criteria-to-s
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the first external-design phase without starting it before `T-002` approval |
+| `2026-08-26T12:22:18+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed all proposed design-blocking inputs and authorized the next planned step |
+| `2026-08-26T12:22:18+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the documentation-only design-brief Task; no feature tests are required or authorized |

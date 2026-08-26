@@ -1,8 +1,23 @@
 # Wireframe decisions
 
-These are textual screen decisions. No visual wireframe assets are currently present in the repository.
+These are canonical textual screen decisions. The versioned `T-003` design-agent input package adds annotated low-fidelity wireframes without replacing the behavior here; see [`../design/T-003-v1/README.md`](../design/T-003-v1/README.md).
 
 Global navigation and interaction constraints are in [`mobile-information-architecture.md`](mobile-information-architecture.md). Detailed behavior belongs to the linked product documents rather than this screen inventory.
+
+## T-003 design-brief reference constraints
+
+The Owner confirmed these inputs on `2026-08-26` for the first external design brief:
+
+- fixed reference viewports are `390 × 844` CSS pixels at `3x` for Mobile Safari/WebKit and `360 × 800` CSS pixels at `3x` for Mobile Chrome/Chromium;
+- layouts must reflow throughout the phone-width range from `320` through `430` CSS pixels, without introducing a desktop layout;
+- visible UI copy is English;
+- `Pump Fiction` is a replaceable text working name, not a request for a logo or permanent product-name decision;
+- the visual direction is dark-first, focused, and athletic, while meeting WCAG 2.2 AA, using non-color state cues, visible focus, reduced-motion behavior, and practical touch targets;
+- use only implementation-ready, licensed assets; prefer SVG for vectors and avoid paid fonts or assets unless separately approved;
+- the handoff must provide an editable design source, clickable prototype, reference PNGs, SVG assets, and machine-readable design tokens. Figma is acceptable but not mandatory if another tool can satisfy the same contract;
+- the exact stable Mobile Safari/WebKit and Mobile Chrome/Chromium versions used for fixed references are frozen and recorded in the returned handoff.
+
+These are design-reference constraints, not an expansion of product behavior. The user-facing name remains open beyond the replaceable working-name treatment.
 
 ## Exercises
 

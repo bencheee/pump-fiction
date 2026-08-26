@@ -19,6 +19,7 @@ Use this file as a router. Read only the documents needed for the current task a
 | Documentation obligations, commit approval, testing gate | [`process/development-governance.md`](process/development-governance.md) |
 | Accepted project-management workflow and evidence model | [`process/project-management.md`](process/project-management.md) |
 | External UI/UX design brief, handoff, and fidelity process | [`process/design-collaboration.md`](process/design-collaboration.md) |
+| Current versioned outbound mobile-design brief package | [`design/T-003-v1/README.md`](design/T-003-v1/README.md) |
 | Current operational focus and next work | [`../PROJECT.md`](../PROJECT.md) |
 | Complete work-item registry and next IDs | [`project/INDEX.md`](project/INDEX.md) |
 | Current phase, open questions, next step | [`PROJECT_STATE.md`](PROJECT_STATE.md) |
