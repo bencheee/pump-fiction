@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-002` and `F-002` are complete after user approval of delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc`. The Owner confirmed the blocking `T-003` design inputs on `2026-08-26`, and the design-brief Task is in progress. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. External visual design and its `T-004` handoff audit remain. Application implementation has not started.
 
 ## Conceptually completed
 
@@ -68,7 +68,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review exact `T-003` delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`, resolve findings, and then request exact-SHA approval before any external design work. Do not initialize implementation.
+Send the approved [`T-003-v1`](design/T-003-v1/README.md) package to the external design agent. When the returned design is available, refine and ready `T-004` for the structured handoff audit. Do not initialize implementation.
 
 ## Implementation status
 

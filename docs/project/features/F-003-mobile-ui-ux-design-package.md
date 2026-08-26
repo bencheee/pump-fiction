@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-26T12:40:26+02:00`
-- **Progress:** `0/2 required Tasks Done`
+- **Updated:** `2026-08-26T12:46:10+02:00`
+- **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -28,13 +28,13 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 
 ## Tasks
 
-- [`T-003`](../tasks/T-003-prepare-mobile-design-agent-brief.md) — Prepare mobile design-agent brief and wireframes
+- [`T-003`](../tasks/T-003-prepare-mobile-design-agent-brief.md) — Prepare mobile design-agent brief and wireframes (`Done`)
 - [`T-004`](../tasks/T-004-audit-and-accept-design-handoff.md) — Request, audit, and accept design handoff
 
 ## Dependencies and blockers
 
 - Dependencies: completed `T-002`; accepted product specification and technical UI constraints
-- Blockers: external design work begins only after Owner approval of the `T-003` brief
+- Blockers: None for external design; `T-004` waits until the external agent returns the requested design package
 
 ## Related decisions and documents
 
@@ -45,7 +45,7 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [x] Required Tasks are identified; the first executable work is `In Progress`
+- [x] Required Tasks are identified; `T-003` is `Done` and `T-004` waits for the returned external design
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
 - [x] Owner confirms readiness
@@ -64,3 +64,4 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Make specialized external design and structured return a formal pre-implementation phase |
 | `2026-08-26T12:22:18+02:00` | User / Owner | Confirmed Feature readiness and `T-003` inputs | Begin the approved design-brief phase with all blocking choices resolved |
+| `2026-08-26T12:46:10+02:00` | User / Reviewer and Approver | Completed `T-003` | Approved the exact outbound brief delivery; external design and `T-004` handoff audit remain |
