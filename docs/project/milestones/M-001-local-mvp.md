@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-26T12:38:44+02:00`
+- **Updated:** `2026-08-26T12:40:26+02:00`
 - **Progress:** `2/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -83,3 +83,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-08-25T16:49:33+02:00` | User / Owner and Approver | Completed `F-002` | Approved the exact planning delivery; `F-003` design-brief refinement is next |
 | `2026-08-26T12:30:56+02:00` | User / Owner | Started `F-003` through ready Task `T-003` | Confirmed design inputs; outbound brief package prepared for Owner review |
 | `2026-08-26T12:38:44+02:00` | User / Owner | Approved `T-003` outbound prompt content | Authorized creation of the delivery commit; exact-SHA approval remains pending |
+| `2026-08-26T12:40:26+02:00` | Codex primary agent / Executor | Created the `T-003` delivery commit | Exact delivery is in review; no tests were run |

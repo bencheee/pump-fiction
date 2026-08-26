@@ -1,7 +1,7 @@
 # T-003 — Prepare mobile design-agent brief and wireframes
 
 - **Feature:** `F-003`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-26T12:38:44+02:00`
+- **Updated:** `2026-08-26T12:40:26+02:00`
 - **Started:** `2026-08-26T12:22:18+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-26T12:40:26+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the authorized `T-003` delivery commit, record its exact SHA, and perform documentation review without feature tests.
+- **Next action:** User reviews exact delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011` and either recommends it for approval or requests changes.
 
 ## Scope
 
@@ -80,9 +80,9 @@ The Owner approved this exact prompt content and authorized its delivery commit 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`
 - **Subject:** `T-003: prepare mobile design agent brief`
-- **Committed scope:** Not created
+- **Committed scope:** Owner-approved versioned outbound prompt; complete 24-screen/state and overlay inventory; all-57-criteria design map; realistic sample data; annotated low-fidelity wireframes; confirmed design constraints; synchronized UX, process, Task, parent, registry, dashboard, and project-state documentation.
 
 ## Review
 
@@ -131,3 +131,4 @@ The Owner approved this exact prompt content and authorized its delivery commit 
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the first external-design phase without starting it before `T-002` approval |
 | `2026-08-26T12:22:18+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed all proposed design-blocking inputs and authorized the next planned step |
 | `2026-08-26T12:22:18+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the documentation-only design-brief Task; no feature tests are required or authorized |
+| `2026-08-26T12:40:26+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011` after Owner content approval; recorded static checks and ran no feature tests |

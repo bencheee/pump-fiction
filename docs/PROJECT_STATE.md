@@ -68,7 +68,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the authorized `T-003` delivery commit, record and review its exact SHA, then request exact-SHA approval before any external design work. Do not initialize implementation.
+Review exact `T-003` delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`, resolve findings, and then request exact-SHA approval before any external design work. Do not initialize implementation.
 
 ## Implementation status
 

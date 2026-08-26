@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-26T12:38:44+02:00
+- **Last updated:** 2026-08-26T12:40:26+02:00
 - **Current phase:** Mobile UI/UX design-brief preparation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -12,11 +12,11 @@ Produce the complete, Owner-approved `T-003` design-agent brief and annotated wi
 
 ## Immediate next action
 
-Create the Owner-authorized `T-003` delivery commit, record its exact SHA, and review it without feature tests.
+User reviews exact `T-003` delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011` and either recommends approval or requests changes.
 
 ## Now
 
-- [`T-003`](docs/project/tasks/T-003-prepare-mobile-design-agent-brief.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — exact prompt content approved; delivery commit authorized and pending creation.
+- [`T-003`](docs/project/tasks/T-003-prepare-mobile-design-agent-brief.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`; awaits User review without feature tests.
 
 ## Next
 
