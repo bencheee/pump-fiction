@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:22:46+02:00
+- **Last updated:** 2026-08-31T15:26:48+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-005` complete; replacement `T-006` delivery approved for testing
+- **Implementation:** `T-006` complete; `T-007` in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Verify the approved corrected `T-006` database constraint assertions against the exact replacement delivery tree.
+Implement accepted server-only data and application boundaries through `T-007`.
 
 ## Immediate next action
 
-Run the approved clean database reset, 13 pgTAP assertions, and generated-type comparison against exact replacement commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`.
+Implement the server-only client, repository/application contracts, shared validation and errors, and thin App Router adapters; prepare but do not run T-007 feature tests.
 
 ## Now
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `Approved`, `Now / 1` — Executor: Codex primary agent — exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` is authorized for its recorded tests.
+- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — building accepted server/data boundaries on the approved schema.
 
 ## Next
 
-- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) through [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue after `T-006`.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) and [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue after `T-007`.
 
 ## Later
 
@@ -28,7 +28,7 @@ No formal Later work items. See the [complete registry](docs/project/INDEX.md).
 
 ## Blocked
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`; database verification is authorized.
+None.
 
 ## Awaiting approval
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — completed `2026-08-31T15:26:48+02:00` — approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` — clean reset, 13/13 pgTAP assertions, and generated-type comparison passed.
 - [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — completed `2026-08-31T14:19:48+02:00` — approved delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` — no tests required or run.
 - [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — completed `2026-08-31T12:06:31+02:00` — approved delivery `3529d318cf647094c640807671b2050502e8be92` — no tests required or run.
 - [`T-003`](docs/project/tasks/T-003-prepare-mobile-design-agent-brief.md) — completed `2026-08-26T12:46:10+02:00` — approved delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011` — no tests required or run.
@@ -49,6 +50,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` Approved)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`2/5 Tasks Done`; `T-007` In Progress)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

@@ -1,23 +1,23 @@
 # T-007 — Build server data and application boundaries
 
 - **Feature:** `F-004`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
-- **Order:** 3
+- **Status:** `In Progress`
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-31T15:26:48+02:00`
+- **Started:** `2026-08-31T15:26:48+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the approved schema and generated types from `T-006`.
+- **Next action:** Read the accepted server/data boundary specifications and implement the server-only client, contracts, repositories, services, and thin adapters without running prepared feature tests.
 
 ## Scope
 
@@ -45,8 +45,8 @@ Implement the server-only Supabase client, repository interfaces and implementat
 ## Dependencies and blockers
 
 - Dependencies: `T-006` Done
-- Blockers: Dependency not complete
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -100,12 +100,12 @@ Implement the server-only Supabase client, repository interfaces and implementat
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and unexecuted test plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -124,3 +124,5 @@ Implement the server-only Supabase client, repository interfaces and implementat
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Establish accepted server and application boundaries before feature delivery |
+| `2026-08-31T15:26:48+02:00` | User / Owner | `Backlog` | `Ready` | Approved the completed `T-006` dependency after the prior instruction to continue directly through implementation |
+| `2026-08-31T15:26:48+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted boundary review and server data-layer implementation |

@@ -1,7 +1,7 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:22:46+02:00`
+- **Updated:** `2026-08-31T15:26:48+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
 - **Review started:** `2026-08-31T15:14:02+02:00`
 - **Approval requested:** `2026-08-31T15:22:46+02:00`
 - **Approved:** `2026-08-31T15:22:46+02:00`
-- **Testing started:** `2026-08-31T15:09:44+02:00` for replaced delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
-- **Completed:** Not reached
+- **Testing started:** `2026-08-31T15:26:48+02:00` for approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`
+- **Completed:** `2026-08-31T15:26:48+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the approved database reset, 13 corrected pgTAP assertions, and generated-type comparison against exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`.
+- **Next action:** None; `T-006` is complete and `T-007` owns the next server-boundary scope.
 
 ## Scope
 
@@ -71,7 +71,7 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 - **No-test reason:** Not applicable
 - **Planned tests:** After exact-commit approval, apply/reset the local schema and verify constraints and generated-type compatibility against local Supabase.
 - **Authorized commit:** `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`
-- **Results:** Failed against replaced delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` on 2026-08-31. A clean local reset and generated-type comparison passed; pgTAP reported 2/13 assertions passed and 11/13 failed because each two-argument `throws_ok` treated the human-readable description as the expected error message. The archived-next-split case also reached the active-program singleton before its intended trigger. Test source is being corrected; the replacement test suite remains unexecuted pending a new exact-SHA approval.
+- **Results:** Passed against exact approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` on 2026-08-31 with Node.js `24.20.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: a clean `supabase db reset` applied the baseline migration; `npm run test:db` passed all 13/13 pgTAP assertions; freshly generated normalized public-schema types matched the committed TypeScript file byte-for-byte. The superseded delivery's earlier 2/13 failure remains recorded in transition history.
 
 ## Delivery commit
 
@@ -111,13 +111,13 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 - [x] Reviewer recommends approval
 - [x] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -134,3 +134,5 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | `2026-08-31T15:14:02+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`; static checks passed and corrected database tests were not run |
 | `2026-08-31T15:22:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` with no additional findings and recommended approval |
 | `2026-08-31T15:22:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact replacement commit and authorized only the recorded database verification |
+| `2026-08-31T15:26:48+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded database verification in an isolated worktree at exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` |
+| `2026-08-31T15:26:48+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Clean reset passed, all 13 pgTAP assertions passed, and regenerated database types matched byte-for-byte |
