@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-006` is complete after exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` passed clean schema reset, all 13 pgTAP assertions, and generated-type comparison. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is in User review; its prepared tests have not run.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-006` is complete after exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` passed clean schema reset, all 13 pgTAP assertions, and generated-type comparison. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is approved for its recorded tests; the Owner explicitly directed that `T-008` not start.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review and approve or request changes to exact `T-007` delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`; approval authorizes only its recorded unit and local repository tests.
+Run the approved `T-007` unit and local repository tests against exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`, record completion if they pass, and stop before `T-008`.
 
 ## Implementation status
 
-`T-005` and `T-006` are `Done`; the application baseline, declarative local schema, migration, generated database types, and database constraint verification are approved. `T-007` is `In Review`: server-only environment/client infrastructure, enforced import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, thin Server Action adapter, canonical guidance, and unexecuted tests exist in delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`. Feature UI behavior and deployment configuration do not exist yet.
+`T-005` and `T-006` are `Done`; the application baseline, declarative local schema, migration, generated database types, and database constraint verification are approved. `T-007` is `Approved`: server-only environment/client infrastructure, enforced import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, thin Server Action adapter, canonical guidance, and prepared tests exist in authorized delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`. `T-008` remains `Backlog` by explicit Owner direction.
