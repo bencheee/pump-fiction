@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T16:41:47+02:00`
+- **Updated:** `2026-08-31T16:43:18+02:00`
 - **Progress:** `3/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -88,3 +88,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T16:35:14+02:00` | User / Reviewer and Approver | Approved exact `T-008` delivery for testing | Commit `0ed5ebc8c042994c74cc991acc13631ca2ec895f` may run only its recorded unit, local repository, and mobile-browser verification |
 | `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | Returned `T-008` to `In Progress` | Unit verification exposed Playwright discovery by Vitest and one over-broad instrumentation assertion; remaining tests stopped and replacement approval is required |
 | `2026-08-31T16:41:47+02:00` | Codex primary agent / Executor | Corrected `T-008` test source pending replacement delivery | Vitest unit discovery is limited to `src`, the assertion checks only delivery-order events, and static checks passed without rerunning feature tests |
+| `2026-08-31T16:43:18+02:00` | Codex primary agent / Executor | Delivered corrected `T-008` for review | Replacement commit `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` changes only test discovery, one assertion, and lifecycle evidence; corrected feature tests remain unexecuted |

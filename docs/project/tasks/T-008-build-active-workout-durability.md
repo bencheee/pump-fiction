@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:41:47+02:00`
+- **Updated:** `2026-08-31T16:43:18+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
-- **Review started:** `2026-08-31T16:31:42+02:00`
+- **Review started:** `2026-08-31T16:43:18+02:00` for replacement
 - **Approval requested:** Not reached for replacement
 - **Approved:** Not reached for replacement
 - **Testing started:** `2026-08-31T16:38:30+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create and record the statically verified replacement delivery; do not rerun feature tests.
+- **Next action:** User reviews replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; feature tests remain locked.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f` (superseded after failed verification; replacement not created)
+- **Delivery commit SHA:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` (replaces `0ed5ebc8c042994c74cc991acc13631ca2ec895f`)
 - **Subject:** `T-008: correct durability test isolation`
-- **Committed scope:** Replacement pending: isolate Vitest unit discovery to `src`, correct one unit assertion to compare only persist/deliver/remove events, record the failed superseded run, and clear its approval; delivered feature behavior remains unchanged.
+- **Committed scope:** Isolate Vitest unit discovery to `src`, correct one unit assertion to compare only persist/deliver/remove events, record the failed superseded run, and clear its approval; delivered feature behavior remains unchanged.
 
 ## Review
 
@@ -131,3 +131,4 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:35:14+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact delivery and authorized only its recorded tests |
 | `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded unit verification in an isolated worktree at exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` |
 | `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit verification passed 8/9 assertions but exposed incorrect Playwright discovery and one over-broad instrumentation assertion; remaining database and browser tests were not run, and replacement approval is required |
+| `2026-08-31T16:43:18+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; static checks passed and corrected feature tests were not run |
