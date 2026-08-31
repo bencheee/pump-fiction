@@ -28,6 +28,8 @@ select throws_ok(
     insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
     values ('00000000-0000-0000-0000-000000000001', 'weights', 'assistance_band')
   $$,
+  '23514'::character(5),
+  null,
   'a load mode invalid for the exercise base type is rejected'
 );
 
@@ -36,6 +38,8 @@ select throws_ok(
     insert into public.exercises (name, base_type)
     values ('  bench PRESS  ', 'weights')
   $$,
+  '23505'::character(5),
+  null,
   'active exercise names are unique after trimming and case folding'
 );
 
@@ -63,6 +67,8 @@ select throws_ok(
     set status = 'active', next_split_id = '20000000-0000-0000-0000-000000000003'
     where id = '10000000-0000-0000-0000-000000000002'
   $$,
+  '23505'::character(5),
+  null,
   'at most one program can be active'
 );
 
@@ -72,8 +78,14 @@ select throws_ok(
     set status = 'archived'
     where id = '20000000-0000-0000-0000-000000000003'
   $$,
+  'P0001'::character(5),
+  'The last active split in a program cannot be archived',
   'the last active split in a program cannot be archived'
 );
+
+update public.programs
+set status = 'draft', next_split_id = null
+where id = '10000000-0000-0000-0000-000000000001';
 
 select throws_ok(
   $$
@@ -81,6 +93,8 @@ select throws_ok(
     set status = 'active', next_split_id = '20000000-0000-0000-0000-000000000005'
     where id = '10000000-0000-0000-0000-000000000003'
   $$,
+  'P0001'::character(5),
+  'An active program must point to one of its active splits',
   'an active program cannot point to an archived split'
 );
 
@@ -96,6 +110,8 @@ select throws_ok(
       8
     )
   $$,
+  '23514'::character(5),
+  null,
   'split prescriptions reject a minimum above the maximum'
 );
 
@@ -137,6 +153,8 @@ select throws_ok(
       current_timestamp
     )
   $$,
+  '23505'::character(5),
+  null,
   'only one active or paused workout can exist'
 );
 
@@ -175,6 +193,8 @@ select throws_ok(
     )
     values ('40000000-0000-0000-0000-000000000001', 1, 'weight', 8, true)
   $$,
+  '23514'::character(5),
+  null,
   'a confirmed weight set requires a positive kilogram value'
 );
 
@@ -183,6 +203,8 @@ select throws_ok(
     insert into public.weight_entries (entry_date, weight_kg)
     values (((current_timestamp at time zone 'Europe/Zagreb')::date + 1), 80)
   $$,
+  'P0001'::character(5),
+  'Future local dates are not allowed',
   'future weight dates are rejected in the configured local time zone'
 );
 
@@ -194,6 +216,8 @@ select throws_ok(
     insert into public.weight_entries (entry_date, weight_kg)
     values ((current_timestamp at time zone 'Europe/Zagreb')::date, 81)
   $$,
+  '23505'::character(5),
+  null,
   'only one weight entry is allowed per local date'
 );
 
@@ -216,6 +240,8 @@ select throws_ok(
       91
     )
   $$,
+  '23505'::character(5),
+  null,
   'only one measurement entry is allowed per type and local date'
 );
 

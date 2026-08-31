@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` is complete after user approval of exact initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. `T-006` database delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` is approved, authorizing only its recorded database-backed verification.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` is complete after user approval of exact initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. The approved test run against `T-006` delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` passed clean schema reset and generated-type comparison but exposed invalid pgTAP exception assertions; `T-006` is back `In Progress` for replacement delivery.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run the approved local database reset, 13 pgTAP assertions, and generated-type compatibility check against exact `T-006` delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`.
+Deliver corrected `T-006` pgTAP assertions for a new exact-SHA review and approval; do not rerun feature tests before approval.
 
 ## Implementation status
 
-`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `Approved`; its declarative schema, baseline migration, generated database types, workflow, and pgTAP tests exist in authorized delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`, with test execution now permitted. Feature behavior and deployment configuration do not exist yet.
+`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Progress`: its declarative schema, baseline migration, generated database types, and workflow remain unchanged, while the failed pgTAP assertion source is being corrected for replacement delivery. Feature behavior and deployment configuration do not exist yet.

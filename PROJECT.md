@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:01:41+02:00
+- **Last updated:** 2026-08-31T15:12:56+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-005` complete; `T-006` approved for testing
+- **Implementation:** `T-005` complete; `T-006` correction in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Verify the approved local database schema baseline through `T-006` against its exact delivery tree.
+Correct the database constraint assertions found invalid during the approved `T-006` test run without changing the accepted schema.
 
 ## Immediate next action
 
-Run the approved database reset, 13 pgTAP assertions, and generated-type compatibility check against exact delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf`.
+Create the replacement `T-006` delivery commit from the statically verified pgTAP corrections, then request exact-SHA review; feature tests are not authorized.
 
 ## Now
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `Approved`, `Now / 1` — Executor: Codex primary agent — exact delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` is authorized for its recorded tests.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — replacing incorrect pgTAP exception assertions found by the approved test run.
 
 ## Next
 
@@ -28,7 +28,7 @@ No formal Later work items. See the [complete registry](docs/project/INDEX.md).
 
 ## Blocked
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — approved exact delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`; database verification is authorized.
+None.
 
 ## Awaiting approval
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` Approved)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` In Progress)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

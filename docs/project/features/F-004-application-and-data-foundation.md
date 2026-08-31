@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T15:01:41+02:00`
+- **Updated:** `2026-08-31T15:12:56+02:00`
 - **Progress:** `1/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; `T-006` is `Approved` for its recorded tests
+- Blockers: None; `T-006` is `In Progress` after its approved test run exposed incorrect pgTAP assertion source
 
 ## Related decisions and documents
 
@@ -73,3 +73,5 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T14:51:13+02:00` | Codex primary agent / Executor | Completed `T-006` implementation scope pending delivery commit | Declarative schema, baseline migration, generated types, workflow documentation, and unexecuted pgTAP tests are ready |
 | `2026-08-31T14:56:59+02:00` | Codex primary agent / Executor | Delivered `T-006` for review | Commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` establishes the local database schema baseline |
 | `2026-08-31T15:01:41+02:00` | User / Reviewer and Approver | Approved exact `T-006` delivery for testing | Commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` may run only its recorded local database verification |
+| `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | Returned `T-006` to `In Progress` | Clean schema reset and generated types passed, but 11 pgTAP assertions used incorrect exception expectations and require replacement delivery |
+| `2026-08-31T15:12:56+02:00` | Codex primary agent / Executor | Corrected `T-006` test source pending replacement delivery | Exception-code assertions now use pgTAP's explicit four-argument signature, and the archived-next-split setup reaches its intended trigger; static checks passed without rerunning feature tests |
