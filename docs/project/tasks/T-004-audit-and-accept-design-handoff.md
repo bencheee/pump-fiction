@@ -1,7 +1,7 @@
 # T-004 — Request, audit, and accept design handoff
 
 - **Feature:** `F-003`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T11:54:03+02:00`
+- **Updated:** `2026-08-31T11:59:23+02:00`
 - **Started:** `2026-08-31T11:37:41+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-31T11:59:23+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete static checks and create the exact `T-004` delivery commit for User review.
+- **Next action:** User reviews delivery commit `3529d318cf647094c640807671b2050502e8be92` and either requests changes or recommends it for approval.
 
 ## Scope
 
@@ -76,9 +76,9 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `3529d318cf647094c640807671b2050502e8be92`
 - **Subject:** `T-004: accept mobile design handoff`
-- **Committed scope:** Not created
+- **Committed scope:** Frozen handoff manifest and return contract; package exceptions and checksums; resolved routing, identifier, overlay, safe-area, and persistence decisions; synchronized canonical UX/architecture documents; `F-004` Task breakdown `T-005`–`T-009`; dashboard and registry projections.
 
 ## Review
 
@@ -127,3 +127,4 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the structured return and acceptance phase after external design |
 | `2026-08-31T11:37:41+02:00` | User / Owner | `Backlog` | `Ready` | Returned design is available; instructed Codex to complete all work needed to enter implementation quickly |
 | `2026-08-31T11:37:41+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began package audit, decision resolution, frozen-manifest creation, and implementation handoff preparation |
+| `2026-08-31T11:59:23+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `3529d318cf647094c640807671b2050502e8be92`; no feature tests were run |

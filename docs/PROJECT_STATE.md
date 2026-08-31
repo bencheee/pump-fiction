@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. The external `v0.4-frozen` visual design is returned and audited; `T-004` is preparing its exact delivery commit and Owner-acceptance record. Application implementation has not started, and `F-004` now has the ordered `T-005`–`T-009` foundation breakdown.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. The external `v0.4-frozen` visual design is returned and audited; `T-004` delivery `3529d318cf647094c640807671b2050502e8be92` is in User review. Application implementation has not started, and `F-004` now has the ordered `T-005`–`T-009` foundation breakdown.
 
 ## Conceptually completed
 
@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create and review the exact `T-004` delivery commit containing the frozen-design manifest, resolved implementation decisions, and `F-004` Task breakdown. After Owner approval completes `T-004`, transition `T-005` to `Ready` and initialize the application; do not start implementation earlier.
+Review and approve or request changes to exact `T-004` delivery `3529d318cf647094c640807671b2050502e8be92`. After approval completes `T-004`, transition `T-005` to `Ready` and initialize the application; do not start implementation earlier.
 
 ## Implementation status
 

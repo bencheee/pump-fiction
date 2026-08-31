@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T11:54:03+02:00
+- **Last updated:** 2026-08-31T11:59:23+02:00
 - **Current phase:** External mobile UI/UX design
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -12,11 +12,11 @@ Complete the exact-commit audit and Owner acceptance of the frozen `v0.4` mobile
 
 ## Immediate next action
 
-Complete static checks, create the `T-004` delivery commit, and submit its exact SHA plus the frozen-design manifest for User review.
+Review delivery commit `3529d318cf647094c640807671b2050502e8be92` and either request changes or recommend it for approval.
 
 ## Now
 
-- [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — finalizing the audited design manifest and implementation handoff.
+- [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — delivery `3529d318cf647094c640807671b2050502e8be92` awaits User review.
 
 ## Next
 
