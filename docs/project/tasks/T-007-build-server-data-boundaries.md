@@ -1,7 +1,7 @@
 # T-007 — Build server data and application boundaries
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:43:23+02:00`
+- **Updated:** `2026-08-31T15:49:04+02:00`
 - **Started:** `2026-08-31T15:26:48+02:00`
 - **Review started:** `2026-08-31T15:40:58+02:00`
 - **Approval requested:** `2026-08-31T15:43:23+02:00`
 - **Approved:** `2026-08-31T15:43:23+02:00`
-- **Testing started:** Not reached
-- **Completed:** Not reached
+- **Testing started:** `2026-08-31T15:49:04+02:00`
+- **Completed:** `2026-08-31T15:49:04+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the approved unit and local repository integration tests against exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`; do not start `T-008`.
+- **Next action:** None; `T-007` is complete, and `T-008` remains in `Backlog` by explicit Owner direction.
 
 ## Scope
 
@@ -71,7 +71,7 @@ Implement the server-only Supabase client, repository interfaces and implementat
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; start/reset local Supabase, export the local `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, and run `npm run test:repository` against the migration-owned settings singleton.
 - **Authorized commit:** `14d97227734c812d8b0cd875c372b1ffa0ebdea0`
-- **Results:** Not run
+- **Results:** Passed against exact approved delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` on 2026-08-31 with Node.js `24.20.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: `npm run test:unit` passed 3/3 validation, domain-result, and generic-retry assertions; a clean local database reset succeeded; `npm run test:repository` passed 1/1 real Data API read/idempotent-update integration assertion. Vitest emitted a forward-looking warning about a planned future native config loader, but the locked version loaded the configuration and both suites passed.
 
 ## Delivery commit
 
@@ -111,13 +111,13 @@ Implement the server-only Supabase client, repository interfaces and implementat
 
 - [x] Reviewer recommends approval
 - [x] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -129,3 +129,5 @@ Implement the server-only Supabase client, repository interfaces and implementat
 | `2026-08-31T15:40:58+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `14d97227734c812d8b0cd875c372b1ffa0ebdea0`; all planned static checks passed and prepared feature tests were not run |
 | `2026-08-31T15:43:23+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` with no findings and recommended approval |
 | `2026-08-31T15:43:23+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact delivery and authorized only its recorded tests; explicitly directed that `T-008` not start |
+| `2026-08-31T15:49:04+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began unit and local repository verification in an isolated worktree at exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` |
+| `2026-08-31T15:49:04+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Unit tests passed 3/3, clean database reset passed, and real repository integration passed 1/1; `T-008` remains unstarted |

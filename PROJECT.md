@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:43:23+02:00
+- **Last updated:** 2026-08-31T15:49:04+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-006` complete; `T-007` approved for testing
+- **Implementation:** `T-007` complete; `T-008` not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Verify the approved `T-007` server data and application boundaries against their exact delivery tree without starting `T-008`.
+Pause after the completed server data/application foundation; `T-008` remains in `Backlog` by Owner direction.
 
 ## Immediate next action
 
-Run the approved unit and local repository tests against exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`, record the result, and stop before `T-008`.
+Wait for explicit Owner direction before changing or starting `T-008`.
 
 ## Now
 
-- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) — `Approved`, `Now / 1` — Executor: Codex primary agent — exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is authorized for its recorded tests.
+No Task is in progress; the Owner explicitly stopped progression before `T-008`.
 
 ## Next
 
@@ -28,7 +28,7 @@ No formal Later work items. See the [complete registry](docs/project/INDEX.md).
 
 ## Blocked
 
-- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) — approved exact delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0`; unit and local repository verification is authorized.
+None.
 
 ## Awaiting approval
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) — completed `2026-08-31T15:49:04+02:00` — approved delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` — unit tests passed 3/3 and real local repository integration passed 1/1 after a clean reset.
 - [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — completed `2026-08-31T15:26:48+02:00` — approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` — clean reset, 13/13 pgTAP assertions, and generated-type comparison passed.
 - [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — completed `2026-08-31T14:19:48+02:00` — approved delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` — no tests required or run.
 - [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — completed `2026-08-31T12:06:31+02:00` — approved delivery `3529d318cf647094c640807671b2050502e8be92` — no tests required or run.
@@ -50,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`2/5 Tasks Done`; `T-007` Approved)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; paused before `T-008`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
