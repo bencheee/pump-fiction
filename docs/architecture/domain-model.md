@@ -86,7 +86,7 @@ Calculation and date rules are canonical in [`weight-and-body.md`](../product/we
 
 ## Settings
 
-One application-settings record holds at least the local time zone and measurement units. The initial agreed display/storage units are kilograms and centimeters; exact persistence mechanics remain a technical decision.
+One singleton application-settings record (`id = 1`) holds the configured IANA time zone and measurement units. The initial local value is `Europe/Zagreb`, matching the accepted local environment, and can later be updated without changing dated records. Display/storage units are constrained to kilograms and centimeters.
 
 ## Derived statistics
 

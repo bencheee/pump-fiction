@@ -18,6 +18,10 @@
     "docs:lint": "markdownlint-cli2",
     "links:internal": "lychee README.md AGENTS.md PROJECT.md docs",
     "links:external": "lychee --offline=false README.md AGENTS.md PROJECT.md docs",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:types": "supabase gen types typescript --local --schema public | sed -e '${/^$/d;}' > src/server/database/database.types.ts",
+    "test:db": "supabase test db",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run docs:lint && npm run links:internal"
   },
   "dependencies": {
@@ -40,6 +44,7 @@
     "markdownlint-cli2": "0.23.2",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",
+    "supabase": "2.116.0",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   }

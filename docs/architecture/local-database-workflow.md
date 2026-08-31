@@ -1,0 +1,72 @@
+# Local database workflow
+
+- **Baseline:** Supabase/PostgreSQL implementation workflow
+- **Supabase CLI:** `2.116.0`
+- **Local PostgreSQL:** `17`
+
+This workflow implements the persistence decisions in [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). It does not define production credentials, authentication, authorization, Row Level Security, or deployment.
+
+## Prerequisites
+
+- the Node.js and npm versions from the root [README](../../README.md#local-prerequisites);
+- a running Docker-compatible container runtime;
+- dependencies installed with `npm ci`.
+
+The Supabase CLI is a locked project dev dependency. Use it through npm scripts or `npm exec`; a separately installed global CLI is not canonical.
+
+## Canonical artifacts
+
+- `supabase/schemas/*.sql` is the structural source of truth.
+- `supabase/migrations/*.sql` is the reviewed, ordered deployment history.
+- `src/server/database/database.types.ts` is generated from the local `public` schema and committed with every schema change.
+- `supabase/tests/database/*.test.sql` contains database-backed pgTAP verification that may run only after the exact delivery commit is approved.
+
+Studio and ad hoc SQL editor changes are never canonical. Make structural changes in the declarative schema first.
+
+The initial singleton settings row is migration-owned data because the declarative diff manages structure rather than DML. It starts with `Europe/Zagreb`, matching the accepted local environment, and remains editable as the application's configured IANA time zone. Units remain kilograms and centimeters.
+
+## Start and stop
+
+```sh
+npm run db:start
+npm run db:stop
+```
+
+`db:start` applies committed migrations to the local stack. It is an implementation/runtime command, not part of `npm run check`.
+
+## Change the schema
+
+1. Edit the ordered SQL files under `supabase/schemas/`.
+2. Generate but do not automatically apply a migration:
+
+   ```sh
+   npm exec supabase db schema declarative sync -- \
+     --schema public \
+     --name descriptive_change_name \
+     --no-apply \
+     --strict-coverage
+   ```
+
+3. Review the complete generated migration, including permissions and any migration-only DML.
+4. Start the updated local stack when implementation requires introspection.
+5. Regenerate and review database types:
+
+   ```sh
+   npm run db:types
+   git diff -- src/server/database/database.types.ts
+   ```
+
+6. Commit the declarative schema, migration, generated types, documentation, and prepared tests in the same Task.
+
+Supabase CLI `2.116.0` no longer uses `[db.migrations].schema_paths` as the baseline for the legacy `db diff` command. Use `db schema declarative sync`; `schema_paths` still declares the ordered schema tree in `supabase/config.toml`.
+
+## Verification gate
+
+The following are database-backed feature verification and must not run before the user approves the exact Task delivery commit:
+
+```sh
+npm exec supabase db reset
+npm run test:db
+```
+
+After approval, reset applies the exact migration history to a clean local database, pgTAP exercises the prepared constraints, and regenerated types are compared with the committed file. Neither command is called by install hooks, lifecycle hooks, or `npm run check`.

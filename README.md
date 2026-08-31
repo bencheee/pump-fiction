@@ -45,3 +45,15 @@ npm run check
 - `src/shared/` contains only demonstrated cross-feature code.
 
 The full accepted structure and dependency rules are canonical in [`docs/architecture/local-technical-architecture.md`](docs/architecture/local-technical-architecture.md).
+
+## Local database
+
+The local Supabase stack requires Docker. Schema and migration work follows [`docs/architecture/local-database-workflow.md`](docs/architecture/local-database-workflow.md). The common runtime commands are:
+
+```sh
+npm run db:start
+npm run db:types
+npm run db:stop
+```
+
+Database reset and `npm run test:db` are approval-gated verification commands and are intentionally excluded from `npm run check`.

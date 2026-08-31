@@ -74,4 +74,4 @@ Complete `T-006`: translate the accepted domain model into declarative SQL, a re
 
 ## Implementation status
 
-`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Progress`. Database schema and migration artifacts are not yet delivered; feature behavior and deployment configuration do not exist yet.
+`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Progress`; its declarative schema, baseline migration, generated database types, workflow, and unexecuted pgTAP tests exist as the pending delivery. Feature behavior and deployment configuration do not exist yet.

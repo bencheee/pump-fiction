@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T14:19:48+02:00
+- **Last updated:** 2026-08-31T14:51:13+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-005` complete; `T-006` in progress
@@ -12,7 +12,7 @@ Establish the local Supabase/PostgreSQL schema, baseline migration, and generate
 
 ## Immediate next action
 
-Translate the accepted domain model into declarative SQL and a reviewed baseline migration without running database-backed tests before delivery approval.
+Review the completed local schema scope and static evidence, then create the single `T-006` delivery commit without running the prepared database tests.
 
 ## Now
 

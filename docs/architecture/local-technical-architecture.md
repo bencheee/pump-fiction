@@ -31,6 +31,8 @@ Canonical decision: [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md).
 - All database access confined to server-only repository/service modules; no browser or Client Component database clients
 - Hosted Supabase later receives the same migration history; production credentials, authentication, RLS, and access protection remain a separate pre-deployment decision
 
+The `T-006` local database baseline locks Supabase CLI `2.116.0` and local PostgreSQL `17`. The repeatable schema, migration, generated-type, and approval-gated verification commands are canonical in [`local-database-workflow.md`](local-database-workflow.md).
+
 Canonical decision: [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md).
 
 ### Application structure and boundaries

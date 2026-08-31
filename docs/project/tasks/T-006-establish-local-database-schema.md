@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T14:19:48+02:00`
+- **Updated:** `2026-08-31T14:51:13+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Read the accepted domain and persistence specifications, then translate them into the declarative local schema and baseline migration without running database-backed tests.
+- **Next action:** Review the completed schema, migration, generated types, and prepared test plan, then create the single `T-006` delivery commit.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Acceptance criteria
 
-- [ ] Declarative SQL models all accepted persistent entities with database-generated UUID identities and required invariants.
-- [ ] A reviewed versioned migration corresponds to the declarative schema.
-- [ ] Generated TypeScript database types match the schema and are committed.
-- [ ] Local schema/setup commands are documented without making live Studio edits canonical.
+- [x] Declarative SQL models all accepted persistent entities with database-generated UUID identities and required invariants.
+- [x] A reviewed versioned migration corresponds to the declarative schema.
+- [x] Generated TypeScript database types match the schema and are committed.
+- [x] Local schema/setup commands are documented without making live Studio edits canonical.
 
 ## Traceability
 
@@ -55,15 +55,15 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Execution checklist
 
-- [ ] Translate the logical model into one declarative SQL schema.
-- [ ] Generate and review the baseline migration.
-- [ ] Generate database types and document the repeatable workflow.
-- [ ] Prepare integration tests without running them before approval.
+- [x] Translate the logical model into one declarative SQL schema.
+- [x] Generate and review the baseline migration.
+- [x] Generate database types and document the repeatable workflow.
+- [x] Prepare integration tests without running them before approval.
 
 ## Static-check plan and results
 
 - Planned checks: SQL formatting/static inspection, generated-type diff, TypeScript check, documentation links, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-08-31 with Node.js `24.20.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: strict-coverage declarative sync generated the reviewed baseline migration; a final sync reported `No schema changes found`; normalized CLI-regenerated database types matched the committed 722-line output byte-for-byte; `npm run check` passed formatting, ESLint, TypeScript, production build, Markdown lint across 76 files, and 533 internal links; `git diff --check` passed. The 13 prepared pgTAP assertions were not run.
 
 ## Test plan and results
 
