@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-004` and `F-003` are complete after user approval of exact frozen-handoff delivery `3529d318cf647094c640807671b2050502e8be92`. Application implementation has started through `T-005`, the first Task in the ordered `T-005`–`T-009` foundation breakdown.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-004` and `F-003` are complete after user approval of exact frozen-handoff delivery `3529d318cf647094c640807671b2050502e8be92`. Application implementation has started through `T-005`; initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` is in User review.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete `T-005`: lock verified stable runtime/dependency versions, initialize the accepted application boundaries, and configure all static-only quality commands.
+Review and approve or request changes to exact `T-005` delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`.
 
 ## Implementation status
 
-`T-005` is `In Progress`. The single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands now exist as the pending Task delivery. Database, migrations, feature behavior, and deployment configuration do not exist yet.
+`T-005` is `In Review`. The single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands exist in delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. Database, migrations, feature behavior, and deployment configuration do not exist yet.

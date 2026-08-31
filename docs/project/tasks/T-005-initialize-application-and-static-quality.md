@@ -1,7 +1,7 @@
 # T-005 — Initialize application and static-quality baseline
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T12:22:39+02:00`
+- **Updated:** `2026-08-31T12:26:36+02:00`
 - **Started:** `2026-08-31T12:06:31+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-31T12:26:36+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Review the initialized files and static-check evidence, then create the single `T-005` delivery commit.
+- **Next action:** User reviews delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` and either requests changes or recommends it for approval.
 
 ## Scope
 
@@ -82,9 +82,9 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`
 - **Subject:** `T-005: initialize application and static quality`
-- **Committed scope:** Not created
+- **Committed scope:** Locked runtime and dependency graph; minimal App Router root and canonical source boundaries; Tailwind/PostCSS, ESLint architecture rules, Prettier, strict TypeScript, production build, Markdown lint, and Lychee configuration; local setup documentation and synchronized architecture/project state.
 
 ## Review
 
@@ -133,3 +133,4 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | First implementation Task after accepted design handoff |
 | `2026-08-31T12:06:31+02:00` | User / Owner | `Backlog` | `Ready` | Exact `T-004` delivery approved after the prior instruction to begin implementation immediately |
 | `2026-08-31T12:06:31+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began runtime verification and application/static-quality initialization |
+| `2026-08-31T12:26:36+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`; all planned static checks passed and no feature tests were run |

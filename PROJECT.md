@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T12:22:39+02:00
+- **Last updated:** 2026-08-31T12:26:36+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Started through `T-005`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Initialize the accepted Next.js runtime and static-quality baseline through `T-005`.
+Complete exact-commit review and Owner acceptance of the initialized application/static-quality baseline through `T-005`.
 
 ## Immediate next action
 
-Review the completed initialization scope and static-check evidence, then create the single `T-005` delivery commit.
+Review delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` and either request changes or recommend it for approval.
 
 ## Now
 
-- [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — initialize runtime, boundaries, and static quality.
+- [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` awaits User review.
 
 ## Next
 
@@ -48,6 +48,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`0/5 Tasks Done`; `T-005` In Progress)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`0/5 Tasks Done`; `T-005` In Review)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
