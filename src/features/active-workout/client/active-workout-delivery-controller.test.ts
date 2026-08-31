@@ -33,7 +33,7 @@ describe("ActiveWorkoutDeliveryController", () => {
     await controller.enqueue(firstCommand);
     await controller.flush();
 
-    expect(events).toEqual([
+    expect(events.filter((event) => event !== "list")).toEqual([
       `persist:${firstCommand.commandId}`,
       `deliver:${firstCommand.commandId}`,
       `remove:${firstCommand.commandId}`,

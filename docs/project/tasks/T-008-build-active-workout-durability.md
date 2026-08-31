@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:35:14+02:00`
+- **Updated:** `2026-08-31T16:41:47+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-08-31T16:31:42+02:00`
-- **Approval requested:** `2026-08-31T16:35:14+02:00`
-- **Approved:** `2026-08-31T16:35:14+02:00`
-- **Testing started:** Not reached
+- **Approval requested:** Not reached for replacement
+- **Approved:** Not reached for replacement
+- **Testing started:** `2026-08-31T16:38:30+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded tests against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` in an isolated worktree.
+- **Next action:** Create and record the statically verified replacement delivery; do not rerun feature tests.
 
 ## Scope
 
@@ -63,35 +63,35 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Static-check plan and results
 
 - Planned checks: ESLint, strict TypeScript, production build, formatting, documentation links, `git diff --check`
-- Results: Passed on 2026-08-31 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build without database environment variables, Markdown lint across 78 files, and all 544 internal links; `git diff --check` passed. Declarative sync generated the reviewed migration and committed database types were regenerated from the locally applied migration. No unit, repository integration, database reset/test, Playwright, or manual feature test ran.
+- Results: Passed for the replacement on 2026-08-31 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript including corrected test source, the Next.js production build without database environment variables, Markdown lint across 78 files, and all 544 internal links; `git diff --check` passed. Inspection confirms `test:unit` is now rooted at `src` and the ordering assertion excludes only the outbox's internal `list` instrumentation. Feature tests were not rerun.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; approval of `0ed5ebc8c042994c74cc991acc13631ca2ec895f` was invalidated by the failed test run.
+- **Results:** Failed against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` on 2026-08-31 with Node.js `24.20.0` and Vitest `4.1.11`: `npm run test:unit` passed 8/9 unit assertions, but one assertion incorrectly included internal outbox `list` instrumentation; the command also incorrectly discovered the Playwright spec, which failed during Vitest collection. Verification stopped immediately. Database reset/repository integration and Chromium/WebKit tests did not run. Replacement test configuration/source requires a new delivery SHA and approval.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
-- **Subject:** `T-008: build active workout durability`
-- **Committed scope:** Typed note-autosave and timer command envelopes; dedicated POST transport and specialized acknowledgement/conflict/retry results; advisory-locked transactional PostgreSQL application with command-ID idempotency and workout revisions; generated database types; narrow IndexedDB FIFO outbox, delivery/status controller, and authoritative restore/pending replay API; locked Playwright browser baseline; unexecuted unit, real-repository, and mobile-browser tests; canonical durability/setup guidance and synchronized project records.
+- **Delivery commit SHA:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f` (superseded after failed verification; replacement not created)
+- **Subject:** `T-008: correct durability test isolation`
+- **Committed scope:** Replacement pending: isolate Vitest unit discovery to `src`, correct one unit assertion to compare only persist/deliver/remove events, record the failed superseded run, and clear its approval; delivered feature behavior remains unchanged.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-08-31T16:35:14+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** Not reviewed for replacement
+- **Outcome:** Changes required after approved verification
+- **Findings:** The unit command discovered Playwright specs, and one delivery-order assertion included internal outbox list instrumentation.
 
 ## Approval
 
-- **Approved commit:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
-- **Approved by:** User
-- **Approved at:** `2026-08-31T16:35:14+02:00`
-- **Approval note:** User explicitly approved the exact `T-008` delivery commit, authorizing only its recorded unit, local repository, and Chromium/WebKit browser tests.
+- **Approved commit:** Not approved; prior approval invalidated by failed verification
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** Exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` was approved and partially tested, but its failed test run requires a replacement delivery and new approval.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [x] Reviewer recommends approval
-- [x] User approved the exact commit SHA
+- [ ] Reviewer recommends approval
+- [ ] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -129,3 +129,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:31:42+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; all planned static checks passed and prepared feature tests were not run |
 | `2026-08-31T16:35:14+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` with no findings and recommended approval |
 | `2026-08-31T16:35:14+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact delivery and authorized only its recorded tests |
+| `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded unit verification in an isolated worktree at exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` |
+| `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit verification passed 8/9 assertions but exposed incorrect Playwright discovery and one over-broad instrumentation assertion; remaining database and browser tests were not run, and replacement approval is required |

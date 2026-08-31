@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. `T-008` delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` is approved for only its recorded tests.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. Approved `T-008` delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` returned to `In Progress` after unit verification exposed two test-layer findings; remaining tests did not run.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run only the recorded `T-008` unit, clean local repository, and Chromium/WebKit tests against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` in an isolated worktree.
+Create and record the statically verified `T-008` replacement delivery, then obtain its review and approval before rerunning any feature test.
 
 ## Implementation status
 
-`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. `T-008` is delivered, statically verified, and `Approved`; its authorized tests are next, while feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. The `T-008` test-only correction is statically verified pending its replacement delivery; feature UI behavior and deployment configuration do not exist yet.
