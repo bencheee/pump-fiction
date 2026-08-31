@@ -1,7 +1,7 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T14:56:59+02:00`
+- **Updated:** `2026-08-31T15:01:41+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
 - **Review started:** `2026-08-31T14:56:59+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-08-31T15:01:41+02:00`
+- **Approved:** `2026-08-31T15:01:41+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` and either requests changes or recommends it for approval; database tests remain unexecuted.
+- **Next action:** Run the approved database reset, 13 pgTAP assertions, and generated-type compatibility check against exact delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf`.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After exact-commit approval, apply/reset the local schema and verify constraints and generated-type compatibility against local Supabase.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
 - **Results:** Not run
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-31T15:01:41+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
+- **Approved by:** User
+- **Approved at:** `2026-08-31T15:01:41+02:00`
+- **Approval note:** User explicitly reviewed and approved the exact delivery commit, authorizing only the recorded `T-006` test scope.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
 - [ ] Scope and acceptance criteria are satisfied
 - [ ] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -127,3 +127,5 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | `2026-08-31T14:19:48+02:00` | User / Owner | `Backlog` | `Ready` | Approved exact `T-005` delivery after the prior instruction to continue directly into implementation |
 | `2026-08-31T14:19:48+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted-domain review and declarative schema implementation |
 | `2026-08-31T14:56:59+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf`; all planned static checks passed and database tests were not run |
+| `2026-08-31T15:01:41+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery commit with no findings and recommended approval |
+| `2026-08-31T15:01:41+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` and authorized only the recorded database tests |

@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T14:56:59+02:00`
+- **Updated:** `2026-08-31T15:01:41+02:00`
 - **Progress:** `1/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; `T-006` is `In Progress`
+- Blockers: None; `T-006` is `Approved` for its recorded tests
 
 ## Related decisions and documents
 
@@ -72,3 +72,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T14:19:48+02:00` | User / Reviewer and Approver | Completed `T-005` and started `T-006` | Approved exact initialization delivery and cleared the local-schema Task to begin |
 | `2026-08-31T14:51:13+02:00` | Codex primary agent / Executor | Completed `T-006` implementation scope pending delivery commit | Declarative schema, baseline migration, generated types, workflow documentation, and unexecuted pgTAP tests are ready |
 | `2026-08-31T14:56:59+02:00` | Codex primary agent / Executor | Delivered `T-006` for review | Commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` establishes the local database schema baseline |
+| `2026-08-31T15:01:41+02:00` | User / Reviewer and Approver | Approved exact `T-006` delivery for testing | Commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` may run only its recorded local database verification |
