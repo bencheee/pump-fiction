@@ -1,7 +1,7 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:12:56+02:00`
+- **Updated:** `2026-08-31T15:14:02+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
-- **Review started:** Not reached for replacement delivery
+- **Review started:** `2026-08-31T15:14:02+02:00`
 - **Approval requested:** Not reached for replacement delivery
 - **Approved:** Not reached for replacement delivery
 - **Testing started:** `2026-08-31T15:09:44+02:00` for replaced delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create a replacement delivery commit for the statically verified pgTAP corrections and request exact-SHA review; do not rerun database tests before approval.
+- **Next action:** User reviews replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` and either requests changes or approves it; database tests remain unauthorized.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created for replacement delivery; replaces `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
-- **Subject:** Pending
-- **Committed scope:** Pending replacement delivery with corrected pgTAP exception assertions; schema, migration, privileges, generated types, and workflow remain unchanged.
+- **Delivery commit SHA:** `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` (replaces `e9251ed73d0976378f2fe71e68aed3045ee10fdf`)
+- **Subject:** `T-006: correct database constraint assertions`
+- **Committed scope:** Corrected pgTAP exception assertions and archived-next-split setup; schema, migration, privileges, generated types, and workflow remain unchanged; recorded the failed superseded test run and cleared its approval.
 
 ## Review
 
@@ -131,3 +131,4 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | `2026-08-31T15:01:41+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` and authorized only the recorded database tests |
 | `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Ran the recorded database verification against exact delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` |
 | `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean reset and generated types passed, but 11/13 pgTAP assertions failed because their exception expectations were expressed incorrectly; replacement test source requires a new delivery SHA and approval |
+| `2026-08-31T15:14:02+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`; static checks passed and corrected database tests were not run |

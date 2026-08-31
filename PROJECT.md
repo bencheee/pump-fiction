@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:12:56+02:00
+- **Last updated:** 2026-08-31T15:14:02+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-005` complete; `T-006` correction in progress
+- **Implementation:** `T-005` complete; replacement `T-006` delivery in review
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Correct the database constraint assertions found invalid during the approved `T-006` test run without changing the accepted schema.
+Complete exact-commit review and Owner acceptance of the corrected `T-006` database constraint assertions.
 
 ## Immediate next action
 
-Create the replacement `T-006` delivery commit from the statically verified pgTAP corrections, then request exact-SHA review; feature tests are not authorized.
+Review replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` and either request changes or approve it; tests run only after exact-SHA approval.
 
 ## Now
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — replacing incorrect pgTAP exception assertions found by the approved test run.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` awaits User review.
 
 ## Next
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` In Progress)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` In Review)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
