@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T16:43:18+02:00
+- **Last updated:** 2026-08-31T16:45:34+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` replacement in review after failed verification
+- **Implementation:** `T-007` complete; `T-008` replacement approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review the statically verified `T-008` replacement delivery; feature tests remain locked.
+Verify the approved `T-008` replacement delivery through the complete recorded test plan.
 
 ## Immediate next action
 
-User reviews replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` and either records findings or recommends it for approval.
+Run the complete recorded `T-008` test plan from the beginning against exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` in a fresh isolated worktree.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Review`; User reviewer; updated `2026-08-31T16:43:18+02:00`; review replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; all further feature tests are locked.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `Approved`; Codex primary agent; updated `2026-08-31T16:45:34+02:00`; run the complete authorized test plan against exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; rerun unit, clean local repository, and Chromium/WebKit tests from the beginning.
 
 ## Recently completed Tasks
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` replacement in review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` replacement approved)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

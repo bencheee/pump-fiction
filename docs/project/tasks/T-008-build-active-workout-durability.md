@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:43:18+02:00`
+- **Updated:** `2026-08-31T16:45:34+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-08-31T16:43:18+02:00` for replacement
-- **Approval requested:** Not reached for replacement
-- **Approved:** Not reached for replacement
+- **Approval requested:** `2026-08-31T16:45:34+02:00` for replacement
+- **Approved:** `2026-08-31T16:45:34+02:00` for replacement
 - **Testing started:** `2026-08-31T16:38:30+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; feature tests remain locked.
+- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` in a fresh isolated worktree.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** Not authorized; approval of `0ed5ebc8c042994c74cc991acc13631ca2ec895f` was invalidated by the failed test run.
+- **Authorized commit:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`
 - **Results:** Failed against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` on 2026-08-31 with Node.js `24.20.0` and Vitest `4.1.11`: `npm run test:unit` passed 8/9 unit assertions, but one assertion incorrectly included internal outbox `list` instrumentation; the command also incorrectly discovered the Playwright spec, which failed during Vitest collection. Verification stopped immediately. Database reset/repository integration and Chromium/WebKit tests did not run. Replacement test configuration/source requires a new delivery SHA and approval.
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed for replacement
-- **Outcome:** Changes required after approved verification
+- **Reviewed at:** `2026-08-31T16:45:34+02:00`
+- **Outcome:** Recommended replacement for approval
 - **Findings:** The unit command discovered Playwright specs, and one delivery-order assertion included internal outbox list instrumentation.
 
 ## Approval
 
-- **Approved commit:** Not approved; prior approval invalidated by failed verification
-- **Approved by:** Not approved for replacement
-- **Approved at:** Not approved for replacement
-- **Approval note:** Exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` was approved and partially tested, but its failed test run requires a replacement delivery and new approval.
+- **Approved commit:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`
+- **Approved by:** User
+- **Approved at:** `2026-08-31T16:45:34+02:00`
+- **Approval note:** User explicitly approved the exact replacement delivery, authorizing the complete recorded test plan from the beginning.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -132,3 +132,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded unit verification in an isolated worktree at exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` |
 | `2026-08-31T16:38:30+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit verification passed 8/9 assertions but exposed incorrect Playwright discovery and one over-broad instrumentation assertion; remaining database and browser tests were not run, and replacement approval is required |
 | `2026-08-31T16:43:18+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; static checks passed and corrected feature tests were not run |
+| `2026-08-31T16:45:34+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` with no additional findings and recommended approval |
+| `2026-08-31T16:45:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact replacement and authorized the complete recorded test plan from the beginning |
