@@ -1,7 +1,7 @@
 # T-007 — Build server data and application boundaries
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:39:04+02:00`
+- **Updated:** `2026-08-31T15:40:58+02:00`
 - **Started:** `2026-08-31T15:26:48+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-31T15:40:58+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the `T-007` delivery commit from the statically verified server-boundary implementation, then record its exact SHA for User review; prepared tests remain unexecuted.
+- **Next action:** User reviews delivery commit `14d97227734c812d8b0cd875c372b1ffa0ebdea0` and either requests changes or approves it; prepared unit and repository tests remain unexecuted.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the server-only Supabase client, repository interfaces and implementat
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `14d97227734c812d8b0cd875c372b1ffa0ebdea0`
 - **Subject:** `T-007: build server data boundaries`
-- **Committed scope:** Pending delivery of server-only environment/client infrastructure, import enforcement, serializable operation/error contracts, an app-settings query/mutation vertical slice, Vitest setup with unexecuted unit and repository integration tests, and canonical boundary guidance.
+- **Committed scope:** Server-only environment/client infrastructure; import enforcement; serializable operation/error contracts; app-settings repository, query, mutation, composition, and thin Server Action vertical slice; Vitest `4.1.11` setup with unexecuted unit and repository integration tests; canonical server-boundary guidance and synchronized project records.
 
 ## Review
 
@@ -126,3 +126,4 @@ Implement the server-only Supabase client, repository interfaces and implementat
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Establish accepted server and application boundaries before feature delivery |
 | `2026-08-31T15:26:48+02:00` | User / Owner | `Backlog` | `Ready` | Approved the completed `T-006` dependency after the prior instruction to continue directly through implementation |
 | `2026-08-31T15:26:48+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted boundary review and server data-layer implementation |
+| `2026-08-31T15:40:58+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `14d97227734c812d8b0cd875c372b1ffa0ebdea0`; all planned static checks passed and prepared feature tests were not run |
