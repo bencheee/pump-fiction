@@ -1,7 +1,7 @@
 # T-004 — Request, audit, and accept design handoff
 
 - **Feature:** `F-003`
-- **Status:** `In Review`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T11:59:23+02:00`
+- **Updated:** `2026-08-31T12:06:31+02:00`
 - **Started:** `2026-08-31T11:37:41+02:00`
 - **Review started:** `2026-08-31T11:59:23+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-08-31T12:06:31+02:00`
+- **Approved:** `2026-08-31T12:06:31+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-08-31T12:06:31+02:00`
 - **Canceled:** Not reached
-- **Next action:** User reviews delivery commit `3529d318cf647094c640807671b2050502e8be92` and either requests changes or recommends it for approval.
+- **Next action:** None; Task is complete and `T-005` is the active implementation Task.
 
 ## Scope
 
@@ -34,7 +34,7 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 - [x] The handoff prompt requests every artifact and annotation required by [`../../process/design-collaboration.md`](../../process/design-collaboration.md).
 - [x] The returned package is complete, accessible, versioned, and consistent with canonical behavior and accepted architecture.
 - [x] The accepted manifest identifies fixed visual references, tokens, assets, exceptions, and unresolved non-blocking notes.
-- [ ] The user accepts the exact frozen design version as the UI implementation source.
+- [x] The user accepts the exact frozen design version as the UI implementation source.
 
 ## Traceability
 
@@ -59,7 +59,7 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 - [x] Inventory and inspect every returned artifact.
 - [x] Resolve missing, ambiguous, conflicting, and risky findings.
 - [x] Freeze the audited package and record the exact candidate manifest.
-- [ ] Record Owner acceptance of the exact delivery commit and frozen package.
+- [x] Record Owner acceptance of the exact delivery commit and frozen package.
 
 ## Static-check plan and results
 
@@ -71,7 +71,7 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 - **Test required:** `no`
 - **No-test reason:** Design-package audit contains no implemented feature behavior; later visual comparison belongs to approved UI implementation Tasks.
 - **Planned tests:** None
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `3529d318cf647094c640807671b2050502e8be92`; no tests required
 - **Results:** Not run
 
 ## Delivery commit
@@ -83,16 +83,16 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-31T12:06:31+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `3529d318cf647094c640807671b2050502e8be92`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-08-31T12:06:31+02:00`
+- **Approval note:** User explicitly reviewed and approved commit `3529d318cf647094c640807671b2050502e8be92`; this accepts the frozen design package represented by that delivery.
 
 ## Definition of Ready
 
@@ -110,15 +110,15 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -128,3 +128,6 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 | `2026-08-31T11:37:41+02:00` | User / Owner | `Backlog` | `Ready` | Returned design is available; instructed Codex to complete all work needed to enter implementation quickly |
 | `2026-08-31T11:37:41+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began package audit, decision resolution, frozen-manifest creation, and implementation handoff preparation |
 | `2026-08-31T11:59:23+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `3529d318cf647094c640807671b2050502e8be92`; no feature tests were run |
+| `2026-08-31T12:06:31+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery and recommended it for approval with no findings |
+| `2026-08-31T12:06:31+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved commit `3529d318cf647094c640807671b2050502e8be92` |
+| `2026-08-31T12:06:31+02:00` | Codex primary agent / Executor | `Approved` | `Done` | Recorded accepted no-test reason and completed the design-handoff Task |

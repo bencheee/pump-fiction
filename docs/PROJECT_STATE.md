@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. The external `v0.4-frozen` visual design is returned and audited; `T-004` delivery `3529d318cf647094c640807671b2050502e8be92` is in User review. Application implementation has not started, and `F-004` now has the ordered `T-005`–`T-009` foundation breakdown.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-004` and `F-003` are complete after user approval of exact frozen-handoff delivery `3529d318cf647094c640807671b2050502e8be92`. Application implementation has started through `T-005`, the first Task in the ordered `T-005`–`T-009` foundation breakdown.
 
 ## Conceptually completed
 
@@ -18,7 +18,7 @@ The functional specification, textual mobile-wireframe decisions, local-MVP acce
 - Documentation-as-system-of-record and approval-gated feature-testing rules
 - Complete repository-native project-management workflow, templates, dashboard, and registry
 - Ordered Local MVP Feature breakdown, external-design workflow, and context-efficient documentation rules
-- Frozen external mobile design source, tokens, specifications, assets, and structural reference scope, pending exact `T-004` commit approval
+- Frozen external mobile design source, tokens, specifications, assets, and structural reference scope
 
 The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review and approve or request changes to exact `T-004` delivery `3529d318cf647094c640807671b2050502e8be92`. After approval completes `T-004`, transition `T-005` to `Ready` and initialize the application; do not start implementation earlier.
+Complete `T-005`: lock verified stable runtime/dependency versions, initialize the accepted application boundaries, and configure all static-only quality commands.
 
 ## Implementation status
 
-No framework, dependency, database, migration, deployment configuration, or application code exists yet.
+`T-005` is `In Progress`; framework initialization and static-quality configuration have begun. Database, migrations, feature behavior, and deployment configuration do not exist yet.

@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T11:59:23+02:00`
-- **Progress:** `1/2 required Tasks Done`
+- **Updated:** `2026-08-31T12:06:31+02:00`
+- **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -29,12 +29,12 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 ## Tasks
 
 - [`T-003`](../tasks/T-003-prepare-mobile-design-agent-brief.md) — Prepare mobile design-agent brief and wireframes (`Done`)
-- [`T-004`](../tasks/T-004-audit-and-accept-design-handoff.md) — Request, audit, and accept design handoff (`In Review`)
+- [`T-004`](../tasks/T-004-audit-and-accept-design-handoff.md) — Request, audit, and accept design handoff (`Done`)
 
 ## Dependencies and blockers
 
 - Dependencies: completed `T-002`; accepted product specification and technical UI constraints
-- Blockers: None; the returned `v0.4-frozen` package is under final `T-004` audit and exact-commit approval
+- Blockers: None
 
 ## Related decisions and documents
 
@@ -52,11 +52,11 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden
+- [x] User confirms the feature result
 
 ## History
 
@@ -67,3 +67,4 @@ An accepted, versioned, implementation-ready phone UI/UX design package covers e
 | `2026-08-26T12:46:10+02:00` | User / Reviewer and Approver | Completed `T-003` | Approved the exact outbound brief delivery; external design and `T-004` handoff audit remain |
 | `2026-08-31T11:37:41+02:00` | User / Owner | Started `T-004` | Directed completion of the frozen handoff audit and all preparation needed to enter implementation |
 | `2026-08-31T11:59:23+02:00` | Codex primary agent / Executor | Delivered `T-004` for review | Commit `3529d318cf647094c640807671b2050502e8be92` freezes the audited manifest and implementation preparation |
+| `2026-08-31T12:06:31+02:00` | User / Reviewer and Approver | Completed `T-004` and `F-003` | Approved exact delivery `3529d318cf647094c640807671b2050502e8be92`; the frozen package is the accepted implementation input |

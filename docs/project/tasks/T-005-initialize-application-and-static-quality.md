@@ -1,23 +1,23 @@
 # T-005 — Initialize application and static-quality baseline
 
 - **Feature:** `F-004`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-31T12:06:31+02:00`
+- **Started:** `2026-08-31T12:06:31+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** After `T-004` is `Done`, confirm this Task as `Ready` and initialize the accepted runtime without feature behavior.
+- **Next action:** Verify official stable runtime/package versions, then initialize the accepted application and static-quality baseline without feature behavior.
 
 ## Scope
 
@@ -45,8 +45,8 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 ## Dependencies and blockers
 
 - Dependencies: `T-004` Done
-- Blockers: `T-004` exact delivery commit is not yet approved
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -100,12 +100,12 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready` after `T-004`
+- [x] Owner confirms transition to `Ready` after `T-004`
 
 ## Definition of Done
 
@@ -124,3 +124,5 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | First implementation Task after accepted design handoff |
+| `2026-08-31T12:06:31+02:00` | User / Owner | `Backlog` | `Ready` | Exact `T-004` delivery approved after the prior instruction to begin implementation immediately |
+| `2026-08-31T12:06:31+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began runtime verification and application/static-quality initialization |

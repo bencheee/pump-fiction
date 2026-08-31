@@ -2,11 +2,11 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
-- **Order:** 2
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
+- **Updated:** `2026-08-31T12:06:31+02:00`
 - **Progress:** `0/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: `T-005` remains `Backlog` until `T-004` is `Done`
+- Blockers: None; `T-005` is `In Progress`
 
 ## Related decisions and documents
 
@@ -47,10 +47,10 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified; the first executable work is `Ready`
+- [x] Required Tasks are identified; the first executable work is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [x] Owner confirms the Feature breakdown and implementation direction; first-Task readiness still waits for `T-004`
+- [x] Owner confirms the Feature breakdown and implementation direction
 
 ## Completion
 
@@ -66,3 +66,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Establish implementation dependencies without initializing the application |
 | `2026-08-31T11:37:41+02:00` | User / Owner | Confirmed implementation preparation and required Task breakdown | Move into implementation as soon as the frozen design handoff receives exact-commit approval |
+| `2026-08-31T12:06:31+02:00` | User / Owner | Moved Feature to `Now` and started `T-005` | Approved the frozen design delivery and cleared the implementation dependency |
