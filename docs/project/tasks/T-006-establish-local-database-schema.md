@@ -1,7 +1,7 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T14:51:13+02:00`
+- **Updated:** `2026-08-31T14:56:59+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-31T14:56:59+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Review the completed schema, migration, generated types, and prepared test plan, then create the single `T-006` delivery commit.
+- **Next action:** User reviews delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` and either requests changes or recommends it for approval; database tests remain unexecuted.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
 - **Subject:** `T-006: establish local database schema`
-- **Committed scope:** Not created
+- **Committed scope:** Supabase CLI and PostgreSQL configuration; declarative public schema and reviewed baseline migration; server-only role privileges; generated database types; repeatable local database workflow; 13 prepared but unexecuted pgTAP constraint assertions; synchronized canonical and project documentation.
 
 ## Review
 
@@ -126,3 +126,4 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Required database foundation after runtime initialization |
 | `2026-08-31T14:19:48+02:00` | User / Owner | `Backlog` | `Ready` | Approved exact `T-005` delivery after the prior instruction to continue directly into implementation |
 | `2026-08-31T14:19:48+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted-domain review and declarative schema implementation |
+| `2026-08-31T14:56:59+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf`; all planned static checks passed and database tests were not run |

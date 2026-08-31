@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` is complete after user approval of exact initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. Application implementation continues through `T-006`, which establishes the local schema, migration, and generated database types.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` is complete after user approval of exact initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. `T-006` database delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` is in User review; its database-backed pgTAP verification has not run.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete `T-006`: translate the accepted domain model into declarative SQL, a reviewed baseline migration, generated database types, and a documented local workflow.
+Review and approve or request changes to exact `T-006` delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`; approval will authorize only its recorded local database tests.
 
 ## Implementation status
 
-`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Progress`; its declarative schema, baseline migration, generated database types, workflow, and unexecuted pgTAP tests exist as the pending delivery. Feature behavior and deployment configuration do not exist yet.
+`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Review`; its declarative schema, baseline migration, generated database types, workflow, and unexecuted pgTAP tests exist in delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`. Feature behavior and deployment configuration do not exist yet.
