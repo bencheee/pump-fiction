@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T16:29:29+02:00`
+- **Updated:** `2026-08-31T16:31:42+02:00`
 - **Progress:** `3/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -84,3 +84,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T15:49:04+02:00` | Codex primary agent / Tester | Completed `T-007` and paused before `T-008` | Unit tests passed 3/3 and real local repository integration passed 1/1 after a clean reset; Owner direction leaves `T-008` in `Backlog` |
 | `2026-08-31T16:00:01+02:00` | User / Owner and Codex primary agent / Executor | Started `T-008` | Owner direction cleared the pause and the ready active-workout durability Task moved into execution |
 | `2026-08-31T16:29:29+02:00` | Codex primary agent / Executor | Completed `T-008` implementation scope pending delivery | Transactional idempotent command application, route contract, IndexedDB FIFO delivery, restore/replay recovery, canonical guidance, and unexecuted tests are statically verified |
+| `2026-08-31T16:31:42+02:00` | Codex primary agent / Executor | Delivered `T-008` for review | Commit `0ed5ebc8c042994c74cc991acc13631ca2ec895f` establishes the active-workout durability foundation; tests remain unexecuted |

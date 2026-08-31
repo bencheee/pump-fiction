@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:29:29+02:00`
+- **Updated:** `2026-08-31T16:31:42+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-08-31T16:31:42+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the `T-008` delivery commit and record its full SHA for review.
+- **Next action:** User reviews exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; feature tests remain locked.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
 - **Subject:** `T-008: build active workout durability`
-- **Committed scope:** Not created
+- **Committed scope:** Typed note-autosave and timer command envelopes; dedicated POST transport and specialized acknowledgement/conflict/retry results; advisory-locked transactional PostgreSQL application with command-ID idempotency and workout revisions; generated database types; narrow IndexedDB FIFO outbox, delivery/status controller, and authoritative restore/pending replay API; locked Playwright browser baseline; unexecuted unit, real-repository, and mobile-browser tests; canonical durability/setup guidance and synchronized project records.
 
 ## Review
 
@@ -126,3 +126,4 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Isolate the complex active-workout durability mechanism from feature UI delivery |
 | `2026-08-31T16:00:01+02:00` | User / Owner | `Backlog` | `Ready` | Directed Codex to start `T-008`; `T-007` is complete and all readiness gates are satisfied |
 | `2026-08-31T16:00:01+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted active-workout durability scope |
+| `2026-08-31T16:31:42+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; all planned static checks passed and prepared feature tests were not run |
