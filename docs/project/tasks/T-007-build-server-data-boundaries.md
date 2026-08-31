@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:26:48+02:00`
+- **Updated:** `2026-08-31T15:39:04+02:00`
 - **Started:** `2026-08-31T15:26:48+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Read the accepted server/data boundary specifications and implement the server-only client, contracts, repositories, services, and thin adapters without running prepared feature tests.
+- **Next action:** Create the `T-007` delivery commit from the statically verified server-boundary implementation, then record its exact SHA for User review; prepared tests remain unexecuted.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Implement the server-only Supabase client, repository interfaces and implementat
 
 ## Acceptance criteria
 
-- [ ] Browser and Client Component code cannot import database clients, row types, repositories, or secrets.
-- [ ] Data flow follows route adapter → application service → repository → Supabase.
-- [ ] Ordinary mutations are transactional where required and expose the accepted generic failure/retry contract.
-- [ ] Domain-shaped serializable results shield UI code from Supabase query builders and database row types.
+- [x] Browser and Client Component code cannot import database clients, row types, repositories, or secrets.
+- [x] Data flow follows route adapter → application service → repository → Supabase.
+- [x] Ordinary mutations are transactional where required and expose the accepted generic failure/retry contract.
+- [x] Domain-shaped serializable results shield UI code from Supabase query builders and database row types.
 
 ## Traceability
 
@@ -55,21 +55,21 @@ Implement the server-only Supabase client, repository interfaces and implementat
 
 ## Execution checklist
 
-- [ ] Implement server-only client and import guards.
-- [ ] Define application/repository contracts and error mapping.
-- [ ] Add thin mutation/query adapters without feature UI.
-- [ ] Prepare boundary and repository tests without executing before approval.
+- [x] Implement server-only client and import guards.
+- [x] Define application/repository contracts and error mapping.
+- [x] Add thin mutation/query adapters without feature UI.
+- [x] Prepare boundary and repository tests without executing before approval.
 
 ## Static-check plan and results
 
 - Planned checks: ESLint dependency boundaries, strict TypeScript, production build, formatting, documentation links, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-08-31 with Node.js `24.20.0`: `npm run check` passed Prettier, ESLint dependency boundaries, strict TypeScript, the Next.js production build without database environment variables, Markdown lint across 77 files, and all 539 internal links; `git diff --check` passed. No unit or repository integration tests ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval, run server boundary/unit tests and local database repository integration tests for the delivered infrastructure.
+- **Planned tests:** After approval, run `npm run test:unit`; start/reset local Supabase, export the local `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`, and run `npm run test:repository` against the migration-owned settings singleton.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
@@ -77,7 +77,7 @@ Implement the server-only Supabase client, repository interfaces and implementat
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-007: build server data boundaries`
-- **Committed scope:** Not created
+- **Committed scope:** Pending delivery of server-only environment/client infrastructure, import enforcement, serializable operation/error contracts, an app-settings query/mutation vertical slice, Vitest setup with unexecuted unit and repository integration tests, and canonical boundary guidance.
 
 ## Review
 

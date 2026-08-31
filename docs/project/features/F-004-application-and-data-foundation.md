@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T15:26:48+02:00`
+- **Updated:** `2026-08-31T15:39:04+02:00`
 - **Progress:** `2/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -78,3 +78,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T15:14:02+02:00` | Codex primary agent / Executor | Delivered corrected `T-006` for review | Replacement commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` changes only test assertions, setup, and lifecycle evidence; corrected feature tests remain unexecuted |
 | `2026-08-31T15:22:46+02:00` | User / Reviewer and Approver | Approved corrected `T-006` replacement delivery | Exact commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` may run only its recorded local database verification |
 | `2026-08-31T15:26:48+02:00` | Codex primary agent / Tester and Executor | Completed `T-006` and started `T-007` | Exact replacement delivery passed clean reset, 13/13 pgTAP assertions, and generated-type comparison; the accepted server-boundary Task is now active |
+| `2026-08-31T15:39:04+02:00` | Codex primary agent / Executor | Completed `T-007` implementation scope pending delivery | Server-only client and imports, domain-shaped repository/application flow, generic retry errors, one app-settings vertical slice, canonical guidance, and unexecuted tests are statically verified |

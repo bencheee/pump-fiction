@@ -17,6 +17,7 @@ Use this file as a router. Read only the documents needed for the current task a
 | Technical constraints, local development, production direction | [`architecture/constraints.md`](architecture/constraints.md) |
 | Accepted local technical architecture and explicitly deferred production choices | [`architecture/local-technical-architecture.md`](architecture/local-technical-architecture.md) |
 | Local Supabase schema, migration, generated-type, and approval-gated database workflow | [`architecture/local-database-workflow.md`](architecture/local-database-workflow.md) |
+| Server-only client, repository/application boundaries, errors, and test workflow | [`architecture/server-data-boundaries.md`](architecture/server-data-boundaries.md) |
 | Documentation obligations, commit approval, testing gate | [`process/development-governance.md`](process/development-governance.md) |
 | Accepted project-management workflow and evidence model | [`process/project-management.md`](process/project-management.md) |
 | External UI/UX design brief, handoff, and fidelity process | [`process/design-collaboration.md`](process/design-collaboration.md) |

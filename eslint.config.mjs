@@ -30,6 +30,12 @@ const architectureBoundaries = {
             from: "./src/app",
             message: "Application modules cannot depend on route adapters.",
           },
+          {
+            target: ["./src/app", "./src/features", "./src/shared"],
+            from: "./src/server/database",
+            message:
+              "Generated database types and clients are private to server infrastructure.",
+          },
         ],
       },
     ],

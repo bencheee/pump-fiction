@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:26:48+02:00
+- **Last updated:** 2026-08-31T15:39:04+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-006` complete; `T-007` in progress
@@ -12,7 +12,7 @@ Implement accepted server-only data and application boundaries through `T-007`.
 
 ## Immediate next action
 
-Implement the server-only client, repository/application contracts, shared validation and errors, and thin App Router adapters; prepare but do not run T-007 feature tests.
+Create the `T-007` delivery commit from the statically verified server-boundary implementation and record its exact SHA for review; prepared tests remain unexecuted.
 
 ## Now
 

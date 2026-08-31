@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Implement `T-007` server-only data and application boundaries while leaving its prepared feature tests unexecuted until exact-commit approval.
+Create and record the exact `T-007` delivery commit for the implemented server-only data and application boundaries; prepared Vitest and local repository tests remain unexecuted until approval.
 
 ## Implementation status
 
-`T-005` and `T-006` are `Done`; the application baseline, declarative local schema, migration, generated database types, and database constraint verification are approved. `T-007` is `In Progress` for server-only repositories, application services, shared contracts, and thin adapters. Feature UI behavior and deployment configuration do not exist yet.
+`T-005` and `T-006` are `Done`; the application baseline, declarative local schema, migration, generated database types, and database constraint verification are approved. `T-007` implementation is complete pending delivery: server-only environment/client infrastructure, enforced import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, thin Server Action adapter, canonical guidance, and unexecuted tests are statically verified. Feature UI behavior and deployment configuration do not exist yet.
