@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T15:14:02+02:00`
+- **Updated:** `2026-08-31T15:22:46+02:00`
 - **Progress:** `1/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; corrected `T-006` replacement delivery is `In Review`
+- Blockers: None; corrected `T-006` replacement delivery is `Approved` for its recorded tests
 
 ## Related decisions and documents
 
@@ -76,3 +76,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | Returned `T-006` to `In Progress` | Clean schema reset and generated types passed, but 11 pgTAP assertions used incorrect exception expectations and require replacement delivery |
 | `2026-08-31T15:12:56+02:00` | Codex primary agent / Executor | Corrected `T-006` test source pending replacement delivery | Exception-code assertions now use pgTAP's explicit four-argument signature, and the archived-next-split setup reaches its intended trigger; static checks passed without rerunning feature tests |
 | `2026-08-31T15:14:02+02:00` | Codex primary agent / Executor | Delivered corrected `T-006` for review | Replacement commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` changes only test assertions, setup, and lifecycle evidence; corrected feature tests remain unexecuted |
+| `2026-08-31T15:22:46+02:00` | User / Reviewer and Approver | Approved corrected `T-006` replacement delivery | Exact commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` may run only its recorded local database verification |

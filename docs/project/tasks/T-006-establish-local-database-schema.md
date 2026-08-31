@@ -1,7 +1,7 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T15:14:02+02:00`
+- **Updated:** `2026-08-31T15:22:46+02:00`
 - **Started:** `2026-08-31T14:19:48+02:00`
 - **Review started:** `2026-08-31T15:14:02+02:00`
-- **Approval requested:** Not reached for replacement delivery
-- **Approved:** Not reached for replacement delivery
+- **Approval requested:** `2026-08-31T15:22:46+02:00`
+- **Approved:** `2026-08-31T15:22:46+02:00`
 - **Testing started:** `2026-08-31T15:09:44+02:00` for replaced delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` and either requests changes or approves it; database tests remain unauthorized.
+- **Next action:** Run the approved database reset, 13 corrected pgTAP assertions, and generated-type comparison against exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After exact-commit approval, apply/reset the local schema and verify constraints and generated-type compatibility against local Supabase.
-- **Authorized commit:** Not authorized for replacement delivery
+- **Authorized commit:** `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`
 - **Results:** Failed against replaced delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` on 2026-08-31. A clean local reset and generated-type comparison passed; pgTAP reported 2/13 assertions passed and 11/13 failed because each two-argument `throws_ok` treated the human-readable description as the expected error message. The archived-next-split case also reached the active-program singleton before its intended trigger. Test source is being corrected; the replacement test suite remains unexecuted pending a new exact-SHA approval.
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed for replacement delivery
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-31T15:22:46+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** Replaced delivery's approved test run found incorrect pgTAP exception assertion signatures and one misdirected test setup path.
 
 ## Approval
 
-- **Approved commit:** Not approved for replacement delivery
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Approval of replaced commit `e9251ed73d0976378f2fe71e68aed3045ee10fdf` authorized the failed test run; changing test source cleared review, approval, and test authorization.
+- **Approved commit:** `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`
+- **Approved by:** User
+- **Approved at:** `2026-08-31T15:22:46+02:00`
+- **Approval note:** User explicitly reviewed and approved the exact replacement delivery, authorizing only the recorded `T-006` database verification.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
 - [ ] Scope and acceptance criteria are satisfied
 - [ ] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -132,3 +132,5 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Ran the recorded database verification against exact delivery `e9251ed73d0976378f2fe71e68aed3045ee10fdf` |
 | `2026-08-31T15:09:44+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean reset and generated types passed, but 11/13 pgTAP assertions failed because their exception expectations were expressed incorrectly; replacement test source requires a new delivery SHA and approval |
 | `2026-08-31T15:14:02+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`; static checks passed and corrected database tests were not run |
+| `2026-08-31T15:22:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` with no additional findings and recommended approval |
+| `2026-08-31T15:22:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact replacement commit and authorized only the recorded database verification |

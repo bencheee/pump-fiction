@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:14:02+02:00
+- **Last updated:** 2026-08-31T15:22:46+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-005` complete; replacement `T-006` delivery in review
+- **Implementation:** `T-005` complete; replacement `T-006` delivery approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Complete exact-commit review and Owner acceptance of the corrected `T-006` database constraint assertions.
+Verify the approved corrected `T-006` database constraint assertions against the exact replacement delivery tree.
 
 ## Immediate next action
 
-Review replacement delivery commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` and either request changes or approve it; tests run only after exact-SHA approval.
+Run the approved clean database reset, 13 pgTAP assertions, and generated-type comparison against exact replacement commit `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`.
 
 ## Now
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` awaits User review.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `Approved`, `Now / 1` — Executor: Codex primary agent — exact replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7` is authorized for its recorded tests.
 
 ## Next
 
@@ -28,7 +28,7 @@ No formal Later work items. See the [complete registry](docs/project/INDEX.md).
 
 ## Blocked
 
-None.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — approved replacement delivery `a5cf25925aabcdebd74cd0c4b0fbe286010eaff7`; database verification is authorized.
 
 ## Awaiting approval
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` In Review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` Approved)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
