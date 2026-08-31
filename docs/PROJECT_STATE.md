@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-004` and `F-003` are complete after user approval of exact frozen-handoff delivery `3529d318cf647094c640807671b2050502e8be92`. Application implementation has started through `T-005`; initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` is in User review.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` is complete after user approval of exact initialization delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. Application implementation continues through `T-006`, which establishes the local schema, migration, and generated database types.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review and approve or request changes to exact `T-005` delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`.
+Complete `T-006`: translate the accepted domain model into declarative SQL, a reviewed baseline migration, generated database types, and a documented local workflow.
 
 ## Implementation status
 
-`T-005` is `In Review`. The single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands exist in delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`. Database, migrations, feature behavior, and deployment configuration do not exist yet.
+`T-005` is `Done`; the single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands are approved. `T-006` is `In Progress`. Database schema and migration artifacts are not yet delivered; feature behavior and deployment configuration do not exist yet.

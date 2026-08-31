@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-31T12:26:36+02:00`
-- **Progress:** `0/5 required Tasks Done`
+- **Updated:** `2026-08-31T14:19:48+02:00`
+- **Progress:** `1/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; `T-005` is `In Progress`
+- Blockers: None; `T-006` is `In Progress`
 
 ## Related decisions and documents
 
@@ -69,3 +69,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-08-31T12:06:31+02:00` | User / Owner | Moved Feature to `Now` and started `T-005` | Approved the frozen design delivery and cleared the implementation dependency |
 | `2026-08-31T12:22:39+02:00` | Codex primary agent / Executor | Completed `T-005` implementation scope pending delivery commit | Locked the runtime and dependencies, initialized source boundaries, and passed the static-only quality baseline |
 | `2026-08-31T12:26:36+02:00` | Codex primary agent / Executor | Delivered `T-005` for review | Commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` establishes the application and static-quality baseline |
+| `2026-08-31T14:19:48+02:00` | User / Reviewer and Approver | Completed `T-005` and started `T-006` | Approved exact initialization delivery and cleared the local-schema Task to begin |

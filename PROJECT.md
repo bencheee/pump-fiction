@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T12:26:36+02:00
+- **Last updated:** 2026-08-31T14:19:48+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** Started through `T-005`
+- **Implementation:** `T-005` complete; `T-006` in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Complete exact-commit review and Owner acceptance of the initialized application/static-quality baseline through `T-005`.
+Establish the local Supabase/PostgreSQL schema, baseline migration, and generated database types through `T-006`.
 
 ## Immediate next action
 
-Review delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` and either request changes or recommend it for approval.
+Translate the accepted domain model into declarative SQL and a reviewed baseline migration without running database-backed tests before delivery approval.
 
 ## Now
 
-- [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — `In Review`, `Now / 1` — Executor: Codex primary agent — delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` awaits User review.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — create the local schema, migration, and generated types.
 
 ## Next
 
-- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) through [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue after `T-005`.
+- [`T-007`](docs/project/tasks/T-007-build-server-data-boundaries.md) through [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue after `T-006`.
 
 ## Later
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — completed `2026-08-31T14:19:48+02:00` — approved delivery `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` — no tests required or run.
 - [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — completed `2026-08-31T12:06:31+02:00` — approved delivery `3529d318cf647094c640807671b2050502e8be92` — no tests required or run.
 - [`T-003`](docs/project/tasks/T-003-prepare-mobile-design-agent-brief.md) — completed `2026-08-26T12:46:10+02:00` — approved delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011` — no tests required or run.
 - [`T-002`](docs/project/tasks/T-002-define-mvp-delivery-and-design-workflow.md) — completed `2026-08-25T16:49:33+02:00` — approved delivery `4b9e0ce75ad1dddfc4694757f2ac33d8b3dd50fc` — no tests required or run.
@@ -48,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`0/5 Tasks Done`; `T-005` In Review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`1/5 Tasks Done`; `T-006` In Progress)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

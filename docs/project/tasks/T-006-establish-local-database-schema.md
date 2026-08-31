@@ -1,23 +1,23 @@
 # T-006 — Establish local database schema and generated types
 
 - **Feature:** `F-004`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
-- **Order:** 2
+- **Status:** `In Progress`
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-31T14:19:48+02:00`
+- **Started:** `2026-08-31T14:19:48+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-005` completion, then refine readiness against the accepted domain model.
+- **Next action:** Read the accepted domain and persistence specifications, then translate them into the declarative local schema and baseline migration without running database-backed tests.
 
 ## Scope
 
@@ -45,8 +45,8 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 ## Dependencies and blockers
 
 - Dependencies: `T-005` Done
-- Blockers: Dependency not complete
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -100,12 +100,12 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and unexecuted test plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -124,3 +124,5 @@ Create the declarative local Supabase/PostgreSQL schema, reviewed baseline migra
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Required database foundation after runtime initialization |
+| `2026-08-31T14:19:48+02:00` | User / Owner | `Backlog` | `Ready` | Approved exact `T-005` delivery after the prior instruction to continue directly into implementation |
+| `2026-08-31T14:19:48+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted-domain review and declarative schema implementation |

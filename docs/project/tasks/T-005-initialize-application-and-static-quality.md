@@ -1,7 +1,7 @@
 # T-005 — Initialize application and static-quality baseline
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T12:26:36+02:00`
+- **Updated:** `2026-08-31T14:19:48+02:00`
 - **Started:** `2026-08-31T12:06:31+02:00`
 - **Review started:** `2026-08-31T12:26:36+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-08-31T14:19:48+02:00`
+- **Approved:** `2026-08-31T14:19:48+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-08-31T14:19:48+02:00`
 - **Canceled:** Not reached
-- **Next action:** User reviews delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` and either requests changes or recommends it for approval.
+- **Next action:** None; Task is complete and `T-006` is the active implementation Task.
 
 ## Scope
 
@@ -77,7 +77,7 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 - **Test required:** `no`
 - **No-test reason:** This Task initializes tooling and static boundaries without product behavior.
 - **Planned tests:** None
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`; no tests required
 - **Results:** Not run
 
 ## Delivery commit
@@ -89,16 +89,16 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-31T14:19:48+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-08-31T14:19:48+02:00`
+- **Approval note:** User explicitly reviewed and approved commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`.
 
 ## Definition of Ready
 
@@ -116,15 +116,15 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -134,3 +134,6 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 | `2026-08-31T12:06:31+02:00` | User / Owner | `Backlog` | `Ready` | Exact `T-004` delivery approved after the prior instruction to begin implementation immediately |
 | `2026-08-31T12:06:31+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began runtime verification and application/static-quality initialization |
 | `2026-08-31T12:26:36+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e`; all planned static checks passed and no feature tests were run |
+| `2026-08-31T14:19:48+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery and recommended it for approval with no findings |
+| `2026-08-31T14:19:48+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved commit `f8781b22a3e9abd7bf31afef9a74d9a0f55d429e` |
+| `2026-08-31T14:19:48+02:00` | Codex primary agent / Executor | `Approved` | `Done` | Recorded the accepted no-test reason and completed the initialization Task |
