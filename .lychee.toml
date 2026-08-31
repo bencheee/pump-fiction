@@ -1,0 +1,5 @@
+cache = false
+include_fragments = true
+offline = true
+
+exclude_path = ["node_modules", ".next", "temp_handoff"]

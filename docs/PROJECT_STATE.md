@@ -74,4 +74,4 @@ Complete `T-005`: lock verified stable runtime/dependency versions, initialize t
 
 ## Implementation status
 
-`T-005` is `In Progress`; framework initialization and static-quality configuration have begun. Database, migrations, feature behavior, and deployment configuration do not exist yet.
+`T-005` is `In Progress`. The single Next.js application, locked runtime/dependency graph, source boundaries, and static-quality commands now exist as the pending Task delivery. Database, migrations, feature behavior, and deployment configuration do not exist yet.

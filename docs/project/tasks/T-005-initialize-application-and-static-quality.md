@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T12:06:31+02:00`
+- **Updated:** `2026-08-31T12:22:39+02:00`
 - **Started:** `2026-08-31T12:06:31+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Verify official stable runtime/package versions, then initialize the accepted application and static-quality baseline without feature behavior.
+- **Next action:** Review the initialized files and static-check evidence, then create the single `T-005` delivery commit.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 
 ## Acceptance criteria
 
-- [ ] Latest stable security-patched compatible Next.js `16.x`, React `19.x`, Node.js `24.x`, TypeScript, npm lockfile, and accepted foundational packages are recorded and locked.
-- [ ] The repository contains one `src/app` Next.js application plus the accepted `src/features`, `src/server`, and `src/shared` boundaries.
-- [ ] ESLint, Prettier with Tailwind ordering, strict TypeScript, production build, Markdown lint, internal-link validation, and a static-only `npm run check` are independently runnable.
-- [ ] No test command runs through install, lifecycle hooks, or `npm run check`.
+- [x] Latest stable security-patched compatible Next.js `16.x`, React `19.x`, Node.js `24.x`, TypeScript, npm lockfile, and accepted foundational packages are recorded and locked.
+- [x] The repository contains one `src/app` Next.js application plus the accepted `src/features`, `src/server`, and `src/shared` boundaries.
+- [x] ESLint, Prettier with Tailwind ordering, strict TypeScript, production build, Markdown lint, internal-link validation, and a static-only `npm run check` are independently runnable.
+- [x] No test command runs through install, lifecycle hooks, or `npm run check`.
 
 ## Traceability
 
@@ -55,15 +55,22 @@ Initialize the single Next.js application, lock the accepted runtime/dependency 
 
 ## Execution checklist
 
-- [ ] Verify current official stable versions and compatibility before installing dependencies.
-- [ ] Initialize the accepted directory and package structure.
-- [ ] Configure static-only quality commands and dependency-boundary enforcement.
-- [ ] Document local prerequisites and commands.
+- [x] Verify current official stable versions and compatibility before installing dependencies.
+- [x] Initialize the accepted directory and package structure.
+- [x] Configure static-only quality commands and dependency-boundary enforcement.
+- [x] Document local prerequisites and commands.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, `tsc --noEmit`, production build, Markdown lint, internal-link validation, package-script inspection, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-08-31 with Node.js `24.20.0` and npm `11.19.0`: checksum-verified official Node binary; `npm ci --ignore-scripts` with 0 vulnerabilities; `npm run check` completed Prettier, ESLint, `tsc --noEmit`, Next.js `16.3.3` production build, Markdown lint across 75 files, and Lychee offline validation of 527 links with 0 errors. `npm pkg get scripts` confirmed no test or lifecycle script.
+
+## Locked initialization baseline
+
+- Runtime: Node.js `24.20.0`, npm `11.19.0`, Next.js `16.3.3`, React and React DOM `19.2.8`, TypeScript `5.9.3`
+- Accepted foundational runtime packages: `@supabase/supabase-js` `2.112.4`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `server-only` `0.0.1`
+- Styling and static tools: Tailwind CSS and PostCSS adapter `4.3.3`, ESLint `9.39.5`, `eslint-config-next` `16.3.3`, Prettier `3.9.6`, Tailwind Prettier plugin `0.8.1`, `markdownlint-cli2` `0.23.2`, Lychee `0.24.2`
+- Compatibility note: ESLint `9.39.5` is the newest release accepted by the peer ranges of the plugins bundled with the selected Next.js config; no unsupported ESLint `10` override is used.
 
 ## Test plan and results
 

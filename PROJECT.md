@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T12:06:31+02:00
+- **Last updated:** 2026-08-31T12:22:39+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Started through `T-005`
@@ -12,7 +12,7 @@ Initialize the accepted Next.js runtime and static-quality baseline through `T-0
 
 ## Immediate next action
 
-Verify official stable dependency versions, initialize the application boundaries, and configure static-only quality commands without feature behavior.
+Review the completed initialization scope and static-check evidence, then create the single `T-005` delivery commit.
 
 ## Now
 

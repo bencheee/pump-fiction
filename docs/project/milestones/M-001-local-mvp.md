@@ -53,7 +53,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `F-008` | `MVP-HIS-001`–`011` | 11 |
 | `F-009` | `MVP-TOD-004`; `MVP-WGT-001`–`004`; `MVP-BOD-001`–`004` | 9 |
 | `F-010` | `MVP-REL-003`–`004`; `MVP-UX-001`–`003` | 5 |
-| **Total** |  | **57** |
+| **Total** | | **57** |
 
 ## Dependencies and blockers
 

@@ -2,9 +2,7 @@
 
 ## Current technical posture
 
-Implementation has not started. The accepted runtime is Next.js 16 Active LTS with App Router, React 19, strict TypeScript, and Node.js 24 LTS; see [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md). Local persistence uses the Supabase CLI stack and PostgreSQL, declarative SQL schemas, versioned migrations, and server-only `@supabase/supabase-js` access; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). The single-app module boundaries and durable active-workout command flow are accepted in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). Mobile UI, charting, static checks, and future test tools are accepted in [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md). The application is developed and run locally before the anticipated Vercel and hosted-Supabase production phase; see [ADR-0004](../decisions/0004-local-first-development.md).
-
-Do not initialize a framework, install dependencies, create a database, write SQL migrations, or deploy within the documentation-only architecture Task.
+Implementation has started through `T-005`. The locked runtime is Next.js `16.3.3` with App Router, React `19.2.8`, strict TypeScript `5.9.3`, and Node.js `24.20.0` LTS; see [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md) and the exact baseline in [`local-technical-architecture.md`](local-technical-architecture.md). Local persistence uses the Supabase CLI stack and PostgreSQL, declarative SQL schemas, versioned migrations, and server-only `@supabase/supabase-js` access; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). The single-app module boundaries and durable active-workout command flow are accepted in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). Mobile UI, charting, static checks, and future test tools are accepted in [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md). The application is developed and run locally before the anticipated Vercel and hosted-Supabase production phase; see [ADR-0004](../decisions/0004-local-first-development.md).
 
 The local data model and workflow use PostgreSQL semantics and the same versioned migration history intended for hosted Supabase. Production authentication, authorization, Row Level Security, credentials, and private-app protection remain explicit pre-deployment decisions.
 
@@ -44,8 +42,8 @@ The delivery sequence is:
 
 1. lock MVP acceptance criteria — completed;
 2. define and accept the project-management system — completed;
-3. decide the local technical architecture — next;
-4. only then initialize implementation.
+3. decide the local technical architecture — completed;
+4. initialize implementation — in progress through `T-005`.
 
 Feature testing additionally follows the approval gate in [ADR-0006](../decisions/0006-approval-gated-feature-testing.md).
 

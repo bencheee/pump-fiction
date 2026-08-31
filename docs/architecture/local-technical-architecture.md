@@ -15,6 +15,8 @@ This is the canonical summary of accepted local technical architecture. Each cro
 - Exact compatible security-patched versions and dependency lockfile selected at implementation initialization
 - Major upgrades require an explicit Task and documentation update
 
+The `T-005` initialization baseline, verified on 2026-08-31, locks Node.js `24.20.0` with npm `11.19.0`, Next.js `16.3.3`, React and React DOM `19.2.8`, and TypeScript `5.9.3`. Exact direct and transitive package versions are committed in `package-lock.json`.
+
 Canonical decision: [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md).
 
 ### Persistence, schema, and data access
@@ -80,6 +82,8 @@ Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-acti
 - Query/domain services own all calculations and return neutral serializable chart series
 - Responsive charts never carry important information without a textual summary and/or accessible data list
 
+The initialized package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`. Their presence establishes the accepted foundation; feature code adopts them only when its ready Task requires them.
+
 ### Quality boundaries
 
 - Static checks: ESLint flat config with Next.js/TypeScript rules, Prettier with Tailwind ordering, `tsc --noEmit`, Next.js production build, `markdownlint-cli2`, and Lychee internal-link validation
@@ -89,6 +93,8 @@ Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-acti
 - Real-browser Playwright scenarios own IndexedDB outbox and reload/retry/conflict verification
 - Test commands remain separate from checks, lifecycle scripts, hooks, and pre-approval automation
 - No test or manual feature validation runs before the user approves the exact Task commit SHA
+
+The initialized static-tool baseline locks ESLint `9.39.5`, `eslint-config-next` `16.3.3`, Prettier `3.9.6`, `prettier-plugin-tailwindcss` `0.8.1`, and `markdownlint-cli2` `0.23.2`; local link checking uses Lychee `0.24.x`. ESLint `9.39.5` is the newest ESLint release compatible with the plugin peer ranges shipped by the selected Next.js configuration; adopting ESLint `10` waits for that compatibility rather than forcing unsupported peer overrides.
 
 Canonical decision: [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md).
 

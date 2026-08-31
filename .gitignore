@@ -1,0 +1,17 @@
+# Dependencies and Next.js output
+node_modules/
+.next/
+out/
+
+# Local environment and generated reports
+.env*
+!.env.example
+coverage/
+*.tsbuildinfo
+
+# Local editor and operating-system files
+.DS_Store
+*.code-workspace
+
+# Audited design source is frozen outside Git; the compact manifest is tracked.
+temp_handoff/
