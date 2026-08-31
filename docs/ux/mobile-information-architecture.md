@@ -31,4 +31,11 @@ An active workout opens a separate focused screen without bottom navigation. The
 - Use visible drag handles for reordering; do not rely on hidden long-press behavior alone.
 - Require confirmation before removing populated workout data, deleting a historical workout, or discarding a workout.
 
+## Overlay and safe-area behavior
+
+- Sheets and dialogs are transient surfaces over the current route rather than independently deep-linkable destinations.
+- Opening an overlay creates a dismissible browser-history entry. Browser or Android Back closes the topmost overlay first; Escape and the visible cancel/close action do the same where applicable.
+- The application background may extend beneath browser or operating-system chrome, but top-bar content and every interactive control start below `env(safe-area-inset-top)`. Bottom-fixed controls include `env(safe-area-inset-bottom)`.
+- The accepted reference PNGs contain only the app viewport. Safe-area insets are therefore additive implementation spacing and are not inferred from status-bar pixels in those images.
+
 Screen-level contents are canonical in [`wireframe-decisions.md`](wireframe-decisions.md).

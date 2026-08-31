@@ -14,6 +14,8 @@ Use the Supabase CLI local stack and its PostgreSQL database from the first impl
 
 Use Supabase declarative SQL files under `supabase/schemas/` as the single source of truth for database structure. Generate timestamped SQL migrations under `supabase/migrations/` with the Supabase CLI, review every generated migration, and version the schema and migration together. Do not treat changes made directly through Supabase Studio, a SQL editor, or a live database as canonical schema changes.
 
+Use database-generated PostgreSQL `uuid` primary keys for persisted domain entities. Application routes expose those opaque UUID strings and never derive persistent identity from an editable display name.
+
 Use `@supabase/supabase-js` as the initial database-access client and generate its TypeScript database types from the local schema. Do not add an ORM or a second schema definition for the MVP. Exact stable, security-patched package and CLI versions are selected and locked during implementation initialization.
 
 All application database access is server-only and passes through repository/service modules owned by the application. Client Components and browser code do not instantiate a database client or query Supabase directly. UI code consumes application operations and domain-shaped results rather than Supabase query builders or generated row types.

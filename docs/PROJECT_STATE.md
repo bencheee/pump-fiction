@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. External visual design and its `T-004` handoff audit remain. Application implementation has not started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-003` is complete after user approval of exact outbound-brief delivery `dd3c2b01885db83583cdd9a29cbbdbdf9f007011`. The external `v0.4-frozen` visual design is returned and audited; `T-004` is preparing its exact delivery commit and Owner-acceptance record. Application implementation has not started, and `F-004` now has the ordered `T-005`–`T-009` foundation breakdown.
 
 ## Conceptually completed
 
@@ -18,6 +18,7 @@ The functional specification, textual mobile-wireframe decisions, local-MVP acce
 - Documentation-as-system-of-record and approval-gated feature-testing rules
 - Complete repository-native project-management workflow, templates, dashboard, and registry
 - Ordered Local MVP Feature breakdown, external-design workflow, and context-efficient documentation rules
+- Frozen external mobile design source, tokens, specifications, assets, and structural reference scope, pending exact `T-004` commit approval
 
 The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 
@@ -44,6 +45,7 @@ The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 - The repository contains one npm-managed Next.js app with explicit App Router, feature, server, and shared boundaries; active-workout changes use idempotent revisioned commands and a narrow IndexedDB pending outbox: [ADR-0019](decisions/0019-application-boundaries-and-active-workout-durability.md)
 - Mobile UI uses Tailwind CSS 4, application-owned tokens/primitives, and selective Radix; charts use Recharts 3 behind a neutral data boundary; static checks and future approval-gated test tools are explicit: [ADR-0020](decisions/0020-mobile-ui-charting-and-quality-tooling.md)
 - External UI/UX work uses an Owner-approved design brief and a separate versioned handoff; fixed visual references define objective fidelity: [ADR-0022](decisions/0022-versioned-external-design-handoff.md)
+- The audited v0.4 prototype/specifications override the retained v0.3 PNGs only for documented color/contrast tokens, save/validation/outcome cue placement, and corrected S09/S10 validation fixtures: [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md)
 - Nutrition and calorie tracking are outside product scope, not open questions.
 - Local-MVP behavior and release boundary: [`product/mvp-acceptance-criteria.md`](product/mvp-acceptance-criteria.md)
 
@@ -68,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Send the approved [`T-003-v1`](design/T-003-v1/README.md) package to the external design agent. When the returned design is available, refine and ready `T-004` for the structured handoff audit. Do not initialize implementation.
+Create and review the exact `T-004` delivery commit containing the frozen-design manifest, resolved implementation decisions, and `F-004` Task breakdown. After Owner approval completes `T-004`, transition `T-005` to `Ready` and initialize the application; do not start implementation earlier.
 
 ## Implementation status
 

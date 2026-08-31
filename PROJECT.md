@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-26T12:46:10+02:00
+- **Last updated:** 2026-08-31T11:54:03+02:00
 - **Current phase:** External mobile UI/UX design
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** Not started
@@ -8,19 +8,20 @@
 
 ## Current focus
 
-Obtain the external mobile design using the approved `T-003-v1` package, then audit its structured handoff through `T-004`.
+Complete the exact-commit audit and Owner acceptance of the frozen `v0.4` mobile design handoff through `T-004`.
 
 ## Immediate next action
 
-Send the approved [`T-003-v1`](docs/design/T-003-v1/README.md) exact prompt and four companion attachments to the external design agent.
+Complete static checks, create the `T-004` delivery commit, and submit its exact SHA plus the frozen-design manifest for User review.
 
 ## Now
 
-- No active Tasks. `T-003` is `Done`; `T-004` waits for the returned external design.
+- [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — `In Progress`, `Now / 1` — Executor: Codex primary agent — finalizing the audited design manifest and implementation handoff.
 
 ## Next
 
-- [`T-004`](docs/project/tasks/T-004-audit-and-accept-design-handoff.md) — `Backlog`, `Next / 2` — Executor: Codex primary agent — waits for approved design brief and returned external design.
+- [`T-005`](docs/project/tasks/T-005-initialize-application-and-static-quality.md) — `Backlog`, `Next / 1` — Executor: Codex primary agent — starts after `T-004` is approved and `Done`.
+- [`T-006`](docs/project/tasks/T-006-establish-local-database-schema.md) through [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue.
 
 ## Later
 

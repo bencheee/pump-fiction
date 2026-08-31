@@ -1,23 +1,23 @@
 # T-004 — Request, audit, and accept design handoff
 
 - **Feature:** `F-003`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
-- **Order:** 2
+- **Status:** `In Progress`
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-31T11:54:03+02:00`
+- **Started:** `2026-08-31T11:37:41+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for an approved `T-003` brief and completed external design before readiness refinement.
+- **Next action:** Complete static checks and create the exact `T-004` delivery commit for User review.
 
 ## Scope
 
@@ -31,22 +31,22 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 
 ## Acceptance criteria
 
-- [ ] The handoff prompt requests every artifact and annotation required by [`../../process/design-collaboration.md`](../../process/design-collaboration.md).
-- [ ] The returned package is complete, accessible, versioned, and consistent with canonical behavior and accepted architecture.
-- [ ] The accepted manifest identifies fixed visual references, tokens, assets, exceptions, and unresolved non-blocking notes.
+- [x] The handoff prompt requests every artifact and annotation required by [`../../process/design-collaboration.md`](../../process/design-collaboration.md).
+- [x] The returned package is complete, accessible, versioned, and consistent with canonical behavior and accepted architecture.
+- [x] The accepted manifest identifies fixed visual references, tokens, assets, exceptions, and unresolved non-blocking notes.
 - [ ] The user accepts the exact frozen design version as the UI implementation source.
 
 ## Traceability
 
 - MVP criteria: all 57 criteria as design coverage inputs, not behavioral delivery
-- ADRs: [ADR-0001](../../decisions/0001-private-mobile-only-app.md), [ADR-0003](../../decisions/0003-history-information-architecture.md), [ADR-0020](../../decisions/0020-mobile-ui-charting-and-quality-tooling.md), [ADR-0022](../../decisions/0022-versioned-external-design-handoff.md)
-- Canonical documents: [`../../process/design-collaboration.md`](../../process/design-collaboration.md), future `T-003` design brief and wireframe artifacts
+- ADRs: [ADR-0001](../../decisions/0001-private-mobile-only-app.md), [ADR-0003](../../decisions/0003-history-information-architecture.md), [ADR-0017](../../decisions/0017-nextjs-app-router-runtime.md), [ADR-0018](../../decisions/0018-local-supabase-postgres-and-server-data-access.md), [ADR-0019](../../decisions/0019-application-boundaries-and-active-workout-durability.md), [ADR-0020](../../decisions/0020-mobile-ui-charting-and-quality-tooling.md), [ADR-0022](../../decisions/0022-versioned-external-design-handoff.md)
+- Canonical documents: [`../../process/design-collaboration.md`](../../process/design-collaboration.md), [`../../design/T-003-v1/README.md`](../../design/T-003-v1/README.md), [`../../design/T-004-v0.4-frozen/README.md`](../../design/T-004-v0.4-frozen/README.md)
 
 ## Dependencies and blockers
 
-- Dependencies: `T-003` Done; external design package returned
-- Blockers: Awaiting those dependencies
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Dependencies: `T-003` Done; external `v0.4-frozen` design package returned
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -55,15 +55,16 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 
 ## Execution checklist
 
-- [ ] Produce and approve the exact handoff prompt.
-- [ ] Inventory and inspect every returned artifact.
-- [ ] Resolve missing, ambiguous, conflicting, and risky findings.
-- [ ] Freeze references and record Owner acceptance.
+- [x] Produce and approve the exact handoff prompt.
+- [x] Inventory and inspect every returned artifact.
+- [x] Resolve missing, ambiguous, conflicting, and risky findings.
+- [x] Freeze the audited package and record the exact candidate manifest.
+- [ ] Record Owner acceptance of the exact delivery commit and frozen package.
 
 ## Static-check plan and results
 
 - Planned checks: package inventory, Markdown links, criteria/frame coverage, asset/reference checksums where practical, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-08-31 — package inventory and JSON parsing; all 404 PNG checksums; ZIP integrity and frozen ZIP SHA-256; targeted contradiction scan; repository internal Markdown links; `git diff --check`.
 
 ## Test plan and results
 
@@ -96,16 +97,16 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 ## Definition of Ready
 
 - [x] ID, parent Feature, horizon, and order are set
-- [ ] Scope and out-of-scope are confirmed after dependency completion
-- [ ] Acceptance criteria are confirmed as observable
+- [x] Scope and out-of-scope are confirmed after dependency completion
+- [x] Acceptance criteria are confirmed as observable
 - [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -124,3 +125,5 @@ Create the exact return/handoff prompt, receive and audit the frozen external de
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the structured return and acceptance phase after external design |
+| `2026-08-31T11:37:41+02:00` | User / Owner | `Backlog` | `Ready` | Returned design is available; instructed Codex to complete all work needed to enter implementation quickly |
+| `2026-08-31T11:37:41+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began package audit, decision resolution, frozen-manifest creation, and implementation handoff preparation |

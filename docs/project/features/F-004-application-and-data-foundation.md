@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Progress:** `0/0 required Tasks Done; Task breakdown pending`
+- **Updated:** `2026-08-31T11:43:22+02:00`
+- **Progress:** `0/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -27,12 +27,16 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 
 ## Tasks
 
-- Task breakdown is deferred until `F-003` exposes accepted visual inputs and `T-002` is complete.
+- [`T-005`](../tasks/T-005-initialize-application-and-static-quality.md) — Initialize application and static-quality baseline
+- [`T-006`](../tasks/T-006-establish-local-database-schema.md) — Establish local database schema and generated types
+- [`T-007`](../tasks/T-007-build-server-data-boundaries.md) — Build server data and application boundaries
+- [`T-008`](../tasks/T-008-build-active-workout-durability.md) — Build active-workout command durability foundation
+- [`T-009`](../tasks/T-009-build-mobile-shell-and-ui-foundation.md) — Build mobile shell and shared UI foundation
 
 ## Dependencies and blockers
 
-- Dependencies: completed `F-002`; relevant accepted output from `F-003` before visual shell implementation
-- Blockers: None for future non-visual initialization; no Task is currently ready
+- Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
+- Blockers: `T-005` remains `Backlog` until `T-004` is `Done`
 
 ## Related decisions and documents
 
@@ -46,7 +50,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 - [ ] Required Tasks are identified; the first executable work is `Ready`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms the Feature breakdown and implementation direction; first-Task readiness still waits for `T-004`
 
 ## Completion
 
@@ -61,3 +65,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Establish implementation dependencies without initializing the application |
+| `2026-08-31T11:37:41+02:00` | User / Owner | Confirmed implementation preparation and required Task breakdown | Move into implementation as soon as the frozen design handoff receives exact-commit approval |

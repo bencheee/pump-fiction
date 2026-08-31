@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-011` |
-| Task | `T-005` |
+| Task | `T-010` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `2/10 Features Done` | User | `2026-08-26T12:46:10+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `2/10 Features Done` | User | `2026-08-31T11:54:03+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -24,8 +24,8 @@ Allocated identifiers are never reused, including after cancellation.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | [`F-001`](features/F-001-local-technical-architecture.md) | `M-001` | Local Technical Architecture | `Now / 1` | `1/1 Done` | User | `2026-08-25T16:27:49+02:00` | [`features/F-001-local-technical-architecture.md`](features/F-001-local-technical-architecture.md) |
 | [`F-002`](features/F-002-mvp-delivery-planning.md) | `M-001` | MVP Delivery Planning | `Now / 2` | `1/1 Done` | User | `2026-08-25T16:49:33+02:00` | [`features/F-002-mvp-delivery-planning.md`](features/F-002-mvp-delivery-planning.md) |
-| [`F-003`](features/F-003-mobile-ui-ux-design-package.md) | `M-001` | Mobile UI/UX Design Package | `Now / 1` | `1/2 Done` | User | `2026-08-26T12:46:10+02:00` | [`features/F-003-mobile-ui-ux-design-package.md`](features/F-003-mobile-ui-ux-design-package.md) |
-| [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Next / 2` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
+| [`F-003`](features/F-003-mobile-ui-ux-design-package.md) | `M-001` | Mobile UI/UX Design Package | `Now / 1` | `1/2 Done; T-004 In Progress` | User | `2026-08-31T11:54:03+02:00` | [`features/F-003-mobile-ui-ux-design-package.md`](features/F-003-mobile-ui-ux-design-package.md) |
+| [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Next / 2` | `0/5 Done` | User | `2026-08-31T11:43:22+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
 | [`F-005`](features/F-005-exercise-library.md) | `M-001` | Exercise Library | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-005-exercise-library.md`](features/F-005-exercise-library.md) |
 | [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Next / 4` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
 | [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Next / 5` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
@@ -40,7 +40,12 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-001`](tasks/T-001-define-local-technical-architecture.md) | `F-001` | Define and document local technical architecture | `Now / 1` | `Done` | Codex primary agent | `2026-08-25T16:27:49+02:00` | [`tasks/T-001-define-local-technical-architecture.md`](tasks/T-001-define-local-technical-architecture.md) |
 | [`T-002`](tasks/T-002-define-mvp-delivery-and-design-workflow.md) | `F-002` | Define MVP delivery and external-design workflow | `Now / 1` | `Done` | Codex primary agent | `2026-08-25T16:49:33+02:00` | [`tasks/T-002-define-mvp-delivery-and-design-workflow.md`](tasks/T-002-define-mvp-delivery-and-design-workflow.md) |
 | [`T-003`](tasks/T-003-prepare-mobile-design-agent-brief.md) | `F-003` | Prepare mobile design-agent brief and wireframes | `Now / 1` | `Done` | Codex primary agent | `2026-08-26T12:46:10+02:00` | [`tasks/T-003-prepare-mobile-design-agent-brief.md`](tasks/T-003-prepare-mobile-design-agent-brief.md) |
-| [`T-004`](tasks/T-004-audit-and-accept-design-handoff.md) | `F-003` | Request, audit, and accept design handoff | `Next / 2` | `Backlog` | Codex primary agent | `2026-08-25T16:35:55+02:00` | [`tasks/T-004-audit-and-accept-design-handoff.md`](tasks/T-004-audit-and-accept-design-handoff.md) |
+| [`T-004`](tasks/T-004-audit-and-accept-design-handoff.md) | `F-003` | Request, audit, and accept design handoff | `Now / 1` | `In Progress` | Codex primary agent | `2026-08-31T11:54:03+02:00` | [`tasks/T-004-audit-and-accept-design-handoff.md`](tasks/T-004-audit-and-accept-design-handoff.md) |
+| [`T-005`](tasks/T-005-initialize-application-and-static-quality.md) | `F-004` | Initialize application and static-quality baseline | `Next / 1` | `Backlog` | Codex primary agent | `2026-08-31T11:43:22+02:00` | [`tasks/T-005-initialize-application-and-static-quality.md`](tasks/T-005-initialize-application-and-static-quality.md) |
+| [`T-006`](tasks/T-006-establish-local-database-schema.md) | `F-004` | Establish local database schema and generated types | `Next / 2` | `Backlog` | Codex primary agent | `2026-08-31T11:43:22+02:00` | [`tasks/T-006-establish-local-database-schema.md`](tasks/T-006-establish-local-database-schema.md) |
+| [`T-007`](tasks/T-007-build-server-data-boundaries.md) | `F-004` | Build server data and application boundaries | `Next / 3` | `Backlog` | Codex primary agent | `2026-08-31T11:43:22+02:00` | [`tasks/T-007-build-server-data-boundaries.md`](tasks/T-007-build-server-data-boundaries.md) |
+| [`T-008`](tasks/T-008-build-active-workout-durability.md) | `F-004` | Build active-workout command durability foundation | `Next / 4` | `Backlog` | Codex primary agent | `2026-08-31T11:43:22+02:00` | [`tasks/T-008-build-active-workout-durability.md`](tasks/T-008-build-active-workout-durability.md) |
+| [`T-009`](tasks/T-009-build-mobile-shell-and-ui-foundation.md) | `F-004` | Build mobile shell and shared UI foundation | `Next / 5` | `Backlog` | Codex primary agent | `2026-08-31T11:43:22+02:00` | [`tasks/T-009-build-mobile-shell-and-ui-foundation.md`](tasks/T-009-build-mobile-shell-and-ui-foundation.md) |
 
 ## Templates
 

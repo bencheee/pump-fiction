@@ -14,7 +14,7 @@ Documentation quality is especially important because repository Markdown is the
 
 Use Tailwind CSS stable `4.x` for application styling. Define application-owned design tokens as CSS custom properties and expose them through the Tailwind theme where useful. Tokens cover at least color, typography, spacing, radii, elevation, motion, and interaction states.
 
-Design only for phone viewports. The base styles are the phone layout; responsive rules may adapt among phone widths and orientations but must not introduce a desktop application layout. Account for safe-area insets, touch target sizing, numeric input behavior, focus visibility, contrast, and reduced-motion preferences.
+Design only for phone viewports. The base styles are the phone layout; responsive rules may adapt among phone widths and orientations but must not introduce a desktop application layout. Account for safe-area insets, touch target sizing, numeric input behavior, focus visibility, contrast, and reduced-motion preferences. The application background may extend under browser or operating-system chrome, but top-bar content and controls begin below `env(safe-area-inset-top)` and bottom-fixed controls include `env(safe-area-inset-bottom)`.
 
 Build and own the reusable visual layer under `src/shared/ui`. Prefer semantic native HTML where it provides the required behavior. Adopt the stable `radix-ui` package incrementally for complex primitives whose accessibility, focus management, or interaction behavior is difficult to implement correctly, such as dialogs and alert dialogs. Wrap used primitives in application-owned components; application features do not import a third-party visual theme.
 

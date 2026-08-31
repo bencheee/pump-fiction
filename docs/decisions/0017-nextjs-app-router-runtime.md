@@ -32,6 +32,8 @@ Interactive workout flows may use Client Components inside the App Router. This 
 
 [ADR-0019](0019-application-boundaries-and-active-workout-durability.md) accepts the package manager, repository structure, Server/Client boundaries, mutation adapters, and active-workout durability model that this ADR intentionally left open.
 
+The accepted external-design handoff resolves the remaining route conventions: application URLs use no trailing slash; persisted entity parameters are opaque UUID strings rather than editable-name slugs; malformed or unavailable identifiers use the shared App Router not-found boundary; sheets and dialogs remain transient parent-route state whose history entry dismisses before parent navigation.
+
 ## Related documents
 
 - [`../architecture/local-technical-architecture.md`](../architecture/local-technical-architecture.md)

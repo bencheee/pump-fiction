@@ -17,6 +17,8 @@ The Owner confirmed these inputs on `2026-08-26` for the first external design b
 - the handoff must provide an editable design source, clickable prototype, reference PNGs, SVG assets, and machine-readable design tokens. Figma is acceptable but not mandatory if another tool can satisfy the same contract;
 - the exact stable Mobile Safari/WebKit and Mobile Chrome/Chromium versions used for fixed references are frozen and recorded in the returned handoff.
 
+The accepted handoff narrows the existing v0.3 PNG authority: those images remain structural references for layout, spacing, typography, content, chart geometry, badges, and skeletons. The v0.4 prototype and specifications are authoritative for color and contrast tokens, the save/validation/outcome cue placement, and the corrected `S09`/`S10` validation fixtures. Those areas are excluded from pixel-diff against the v0.3 PNGs. The exact package identity and exceptions are recorded in [`../design/T-004-v0.4-frozen/README.md`](../design/T-004-v0.4-frozen/README.md).
+
 These are design-reference constraints, not an expansion of product behavior. The user-facing name remains open beyond the replaceable working-name treatment.
 
 ## Exercises

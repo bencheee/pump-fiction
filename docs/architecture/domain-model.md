@@ -1,6 +1,6 @@
 # Logical domain model
 
-This is a logical model, not the SQL schema. Local persistence is accepted as Supabase PostgreSQL with declarative SQL schemas, versioned migrations, and no initial ORM; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). Exact identifiers, columns, types, constraints, indexes, and repository queries remain implementation decisions that must preserve the behavior below.
+This is a logical model, not the SQL schema. Local persistence is accepted as Supabase PostgreSQL with declarative SQL schemas, versioned migrations, and no initial ORM; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). Persisted domain entities use database-generated PostgreSQL `uuid` primary keys; exact remaining columns, constraints, indexes, and repository queries are implementation decisions that must preserve the behavior below.
 
 ## Exercises
 

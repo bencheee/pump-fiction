@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-26T12:46:10+02:00`
+- **Updated:** `2026-08-31T11:54:03+02:00`
 - **Progress:** `2/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -31,7 +31,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 
 - [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture (`Done`)
 - [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`Done`)
-- [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Now / 1`; `1/2 Tasks Done`)
+- [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Now / 1`; `T-004` In Progress)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Next / 2`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Next / 3`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Next / 4`)
@@ -85,3 +85,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-08-26T12:38:44+02:00` | User / Owner | Approved `T-003` outbound prompt content | Authorized creation of the delivery commit; exact-SHA approval remains pending |
 | `2026-08-26T12:40:26+02:00` | Codex primary agent / Executor | Created the `T-003` delivery commit | Exact delivery is in review; no tests were run |
 | `2026-08-26T12:46:10+02:00` | User / Reviewer and Approver | Completed `T-003` | Approved the exact outbound brief; `F-003` continues with external design and handoff audit |
+| `2026-08-31T11:37:41+02:00` | User / Owner | Started final design-handoff audit and implementation preparation | `T-004` is active; `F-004` now has its five-Task delivery breakdown |
