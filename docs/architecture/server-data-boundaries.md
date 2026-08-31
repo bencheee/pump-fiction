@@ -41,6 +41,8 @@ Application operations validate input before persistence and return a serializab
 
 The singleton time-zone update is one atomic PostgreSQL statement. A later feature operation that writes multiple rows must expose one repository method backed by one transactional database function; route adapters must never coordinate partial writes.
 
+`T-008` adds the first dedicated active-workout Route Handler and transactional multi-table command function without changing this dependency direction. Its specialized acknowledgement, retry, and conflict contract is canonical in [`active-workout-durability.md`](active-workout-durability.md).
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

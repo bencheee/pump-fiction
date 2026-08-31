@@ -57,3 +57,15 @@ npm run db:stop
 ```
 
 Database reset and `npm run test:db` are approval-gated verification commands and are intentionally excluded from `npm run check`.
+
+## Approval-gated feature tests
+
+The repository prepares unit, local-repository integration, and mobile-browser commands separately from static checks:
+
+```sh
+npm run test:unit
+npm run test:repository
+npm run test:browser
+```
+
+Do not run them until the exact Task delivery commit is approved under [`docs/process/development-governance.md`](docs/process/development-governance.md). Browser verification additionally requires the locked Playwright package's Chromium and WebKit binaries; install them only when the approved browser-test scope is ready to run.

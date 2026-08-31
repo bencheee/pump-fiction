@@ -1,23 +1,23 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
-- **Order:** 4
+- **Status:** `In Progress`
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-08-31T16:29:29+02:00`
+- **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the server/application contracts from `T-007`.
+- **Next action:** Create the `T-008` delivery commit and record its full SHA for review.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Acceptance criteria
 
-- [ ] Pending commands persist transactionally before delivery and leave the outbox only after acknowledgement.
-- [ ] Server application is transactional, idempotent by command ID, and guarded by expected workout revision.
-- [ ] Reload/reopen restores authoritative state and replays pending commands in FIFO order without duplication.
-- [ ] Conflicts stop silent overwrite and expose a recoverable refresh/replay result for later UI integration.
+- [x] Pending commands persist transactionally before delivery and leave the outbox only after acknowledgement.
+- [x] Server application is transactional, idempotent by command ID, and guarded by expected workout revision.
+- [x] Reload/reopen restores authoritative state and replays pending commands in FIFO order without duplication.
+- [x] Conflicts stop silent overwrite and expose a recoverable refresh/replay result for later UI integration.
 
 ## Traceability
 
@@ -45,7 +45,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Dependencies and blockers
 
 - Dependencies: `T-007` Done
-- Blockers: Dependency not complete
+- Blockers: None
 - Blocked from status: Not blocked; remains planned in `Backlog`
 
 ## Documentation impact
@@ -55,21 +55,21 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Execution checklist
 
-- [ ] Implement typed commands and transactional server application.
-- [ ] Implement the narrow IndexedDB outbox and FIFO client controller.
-- [ ] Implement acknowledgement, restore/replay, retry, and conflict result contracts.
-- [ ] Prepare unit/integration/browser tests without executing before approval.
+- [x] Implement typed commands and transactional server application.
+- [x] Implement the narrow IndexedDB outbox and FIFO client controller.
+- [x] Implement acknowledgement, restore/replay, retry, and conflict result contracts.
+- [x] Prepare unit/integration/browser tests without executing before approval.
 
 ## Static-check plan and results
 
 - Planned checks: ESLint, strict TypeScript, production build, formatting, documentation links, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-08-31 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build without database environment variables, Markdown lint across 78 files, and all 544 internal links; `git diff --check` passed. Declarative sync generated the reviewed migration and committed database types were regenerated from the locally applied migration. No unit, repository integration, database reset/test, Playwright, or manual feature test ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval, run command/idempotency/revision integration tests and Playwright IndexedDB reload/retry/conflict scenarios against the exact commit.
+- **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
@@ -100,12 +100,12 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and unexecuted test plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -124,3 +124,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Isolate the complex active-workout durability mechanism from feature UI delivery |
+| `2026-08-31T16:00:01+02:00` | User / Owner | `Backlog` | `Ready` | Directed Codex to start `T-008`; `T-007` is complete and all readiness gates are satisfied |
+| `2026-08-31T16:00:01+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted active-workout durability scope |

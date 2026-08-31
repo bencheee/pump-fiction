@@ -23,7 +23,8 @@
     "db:types": "supabase gen types typescript --local --schema public | sed -e '${/^$/d;}' > src/server/database/database.types.ts",
     "test:db": "supabase test db",
     "test:unit": "vitest run --exclude '**/*.integration.test.ts'",
-    "test:repository": "vitest run src/server/repositories/supabase-app-settings-repository.integration.test.ts",
+    "test:repository": "vitest run 'src/server/repositories/*.integration.test.ts'",
+    "test:browser": "playwright test",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run docs:lint && npm run links:internal"
   },
   "dependencies": {
@@ -37,6 +38,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.62.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",

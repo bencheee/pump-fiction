@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T15:49:04+02:00
+- **Last updated:** 2026-08-31T16:29:29+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` not started
+- **Implementation:** `T-007` complete; `T-008` in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Pause after the completed server data/application foundation; `T-008` remains in `Backlog` by Owner direction.
+Deliver the statically verified active-workout command durability foundation in `T-008` for review.
 
 ## Immediate next action
 
-Wait for explicit Owner direction before changing or starting `T-008`.
+Create the `T-008` delivery commit and record its full SHA for user review.
 
 ## Now
 
-No Task is in progress; the Owner explicitly stopped progression before `T-008`.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Progress`; Codex primary agent; updated `2026-08-31T16:29:29+02:00`; create and record the delivery commit; feature tests remain unexecuted.
 
 ## Next
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) and [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — ordered `F-004` foundation queue after `T-007`.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — next `F-004` foundation Task after `T-008`.
 
 ## Later
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; paused before `T-008`)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` in progress)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

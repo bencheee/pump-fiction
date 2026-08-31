@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. No Task is in progress; the Owner explicitly directed that `T-008` not start.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. `T-008` is in progress after explicit Owner direction.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Wait for explicit Owner direction before changing or starting `T-008`.
+Create and record the statically verified `T-008` delivery commit for user review; do not run its prepared feature tests before exact-commit approval.
 
 ## Implementation status
 
-`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. `T-008` remains unchanged in `Backlog` by explicit Owner direction; feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. `T-008` implementation is statically verified pending its delivery commit; feature UI behavior and deployment configuration do not exist yet.

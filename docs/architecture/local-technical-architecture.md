@@ -73,6 +73,8 @@ The `T-007` implementation details, dependency rules, environment contract, neut
 - Ordinary mutations are transactional server operations and reuse the accepted generic failure-plus-retry treatment; partial database writes are rolled back
 - Active-workout revision conflicts follow the dedicated recoverable refresh/replay flow and never silently overwrite acknowledged or pending state
 
+The `T-008` implemented command envelope, Route Handler response, PostgreSQL transaction, IndexedDB outbox, FIFO controller, restore/replay API, and approval-gated verification workflow are canonical in [`active-workout-durability.md`](active-workout-durability.md). The initial operation set establishes workout-note autosave and timer transitions; later feature Tasks extend the same path for their agreed domain operations.
+
 Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md).
 
 ### Mobile UI and charting
@@ -99,6 +101,8 @@ The initialized package baseline locks Tailwind CSS and `@tailwindcss/postcss` `
 - No test or manual feature validation runs before the user approves the exact Task commit SHA
 
 The initialized static-tool baseline locks ESLint `9.39.5`, `eslint-config-next` `16.3.3`, Prettier `3.9.6`, `prettier-plugin-tailwindcss` `0.8.1`, and `markdownlint-cli2` `0.23.2`; local link checking uses Lychee `0.24.x`. ESLint `9.39.5` is the newest ESLint release compatible with the plugin peer ranges shipped by the selected Next.js configuration; adopting ESLint `10` waits for that compatibility rather than forcing unsupported peer overrides.
+
+The `T-008` browser-verification baseline locks `@playwright/test` `1.62.1`. Browser binaries are installed and the prepared phone-sized Chromium/WebKit scenarios are executed only after approval of the exact delivery commit.
 
 Canonical decision: [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md).
 

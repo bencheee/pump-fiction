@@ -9,6 +9,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      active_workout_commands: {
+        Row: {
+          applied_at: string
+          client_created_at: string
+          command_id: string
+          expected_revision: number
+          operation: Database["public"]["Enums"]["active_workout_command_operation"]
+          payload: Json
+          resulting_revision: number
+          workout_id: string
+        }
+        Insert: {
+          applied_at?: string
+          client_created_at: string
+          command_id: string
+          expected_revision: number
+          operation: Database["public"]["Enums"]["active_workout_command_operation"]
+          payload: Json
+          resulting_revision: number
+          workout_id: string
+        }
+        Update: {
+          applied_at?: string
+          client_created_at?: string
+          command_id?: string
+          expected_revision?: number
+          operation?: Database["public"]["Enums"]["active_workout_command_operation"]
+          payload?: Json
+          resulting_revision?: number
+          workout_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "active_workout_commands_workout_id_fkey"
+            columns: ["workout_id"]
+            isOneToOne: false
+            referencedRelation: "workouts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       app_settings: {
         Row: {
           created_at: string
@@ -552,9 +593,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      apply_active_workout_command: {
+        Args: {
+          p_client_created_at: string
+          p_command_id: string
+          p_expected_revision: number
+          p_operation: Database["public"]["Enums"]["active_workout_command_operation"]
+          p_payload: Json
+          p_workout_id: string
+        }
+        Returns: {
+          acknowledged_command_id: string
+          acknowledged_workout_id: string
+          expected_revision: number
+          kind: string
+          resulting_revision: number
+        }[]
+      }
     }
     Enums: {
+      active_workout_command_operation:
+        | "set_workout_exercise_note"
+        | "pause_timer"
+        | "resume_timer"
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
       entity_status: "active" | "archived"
@@ -699,6 +760,11 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      active_workout_command_operation: [
+        "set_workout_exercise_note",
+        "pause_timer",
+        "resume_timer",
+      ],
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],
       entity_status: ["active", "archived"],
