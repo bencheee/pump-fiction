@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T16:31:42+02:00
+- **Last updated:** 2026-08-31T16:35:14+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` in review
+- **Implementation:** `T-007` complete; `T-008` approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review the exact `T-008` active-workout durability delivery; feature tests remain locked.
+Verify the approved `T-008` active-workout durability delivery against its recorded test plan.
 
 ## Immediate next action
 
-User reviews delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` and either records findings or recommends it for approval.
+Run only the recorded `T-008` tests against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` in an isolated worktree.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Review`; User reviewer; updated `2026-08-31T16:31:42+02:00`; review exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; feature tests remain unexecuted.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `Approved`; Codex primary agent; updated `2026-08-31T16:35:14+02:00`; run only the authorized tests against exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f`.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; run the recorded unit, clean local repository, and Chromium/WebKit browser tests.
 
 ## Recently completed Tasks
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` in review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` approved for testing)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

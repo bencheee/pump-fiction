@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:31:42+02:00`
+- **Updated:** `2026-08-31T16:35:14+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-08-31T16:31:42+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-08-31T16:35:14+02:00`
+- **Approved:** `2026-08-31T16:35:14+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; feature tests remain locked.
+- **Next action:** Run only the recorded tests against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` in an isolated worktree.
 
 ## Scope
 
@@ -46,7 +46,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 - Dependencies: `T-007` Done
 - Blockers: None
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -70,7 +70,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
 - **Results:** Not run
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-08-31T16:35:14+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `0ed5ebc8c042994c74cc991acc13631ca2ec895f`
+- **Approved by:** User
+- **Approved at:** `2026-08-31T16:35:14+02:00`
+- **Approval note:** User explicitly approved the exact `T-008` delivery commit, authorizing only its recorded unit, local repository, and Chromium/WebKit browser tests.
 
 ## Definition of Ready
 
@@ -109,12 +109,12 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
+- [x] Static checks and all evidence are recorded
 - [ ] Dashboard, registry, and parent progress are current
 - [ ] Follow-up scope has separate Tasks
 - [ ] Audit history is complete
@@ -127,3 +127,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:00:01+02:00` | User / Owner | `Backlog` | `Ready` | Directed Codex to start `T-008`; `T-007` is complete and all readiness gates are satisfied |
 | `2026-08-31T16:00:01+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted active-workout durability scope |
 | `2026-08-31T16:31:42+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `0ed5ebc8c042994c74cc991acc13631ca2ec895f`; all planned static checks passed and prepared feature tests were not run |
+| `2026-08-31T16:35:14+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` with no findings and recommended approval |
+| `2026-08-31T16:35:14+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact delivery and authorized only its recorded tests |
