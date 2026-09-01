@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:42:09+02:00`
+- **Updated:** `2026-09-01T09:45:35+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:39:10+02:00`
-- **Approval requested:** `2026-09-01T09:40:50+02:00`
-- **Approved:** `2026-09-01T09:40:50+02:00`
+- **Approval requested:** Not reached for replacement; prior delivery requested and approved at `2026-09-01T09:40:50+02:00`
+- **Approved:** Not reached for replacement; prior approval invalidated at `2026-09-01T09:45:35+02:00`
 - **Testing started:** `2026-09-01T09:42:09+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete only the recorded component and mobile-browser test plan against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` in an isolated worktree and record the results.
+- **Next action:** Make reference capture execution use the production server, run static checks only, and create a replacement delivery for review without rerunning feature tests.
 
 ## Scope
 
@@ -70,8 +70,8 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:components` for field accessibility wiring, sheet/dialog focus management, Escape, and focus restoration; then run `npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts` for the exact 390 × 844 and 360 × 800 shell geometry/captures, touch targets, horizontal overflow, focused-shell navigation exclusion, overlay Back dismissal, cancel-safe focus, Escape, and focus restoration. Review captures structurally under the frozen v0.3 reference exclusions; do not compare v0.4 colors or corrected cue areas to stale v0.3 pixels.
-- **Authorized commit:** Not authorized
-- **Results:** Not run
+- **Authorized commit:** Not authorized; approval of `027b8fb4020f4f1353f38fb005d16d0391e959d8` was invalidated by the visual-review finding
+- **Results:** Against exact then-approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review of all four attached 390 × 844 and 360 × 800 captures failed because the Next.js development indicator overlapped the active Today destination in every image. T-009 returned to `In Progress`; the production-server correction requires a replacement delivery and new approval before the full recorded test plan runs again. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
 
 ## Delivery commit
 
@@ -82,16 +82,16 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-01T09:40:50+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** Prior delivery reviewed at `2026-09-01T09:40:50+02:00`; replacement not reviewed
+- **Outcome:** Replacement pending
+- **Findings:** Post-approval structural capture review found the Next.js development indicator covering the active Today destination in all four reference-sized captures; visual checks must run against a production server.
 
 ## Approval
 
-- **Approved commit:** `027b8fb4020f4f1353f38fb005d16d0391e959d8`
-- **Approved by:** User
-- **Approved at:** `2026-09-01T09:40:50+02:00`
-- **Approval note:** User explicitly confirmed exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`, authorizing only its recorded T-009 component and mobile-browser tests.
+- **Approved commit:** Not approved; prior `027b8fb4020f4f1353f38fb005d16d0391e959d8` approval invalidated
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** A replacement delivery must be reviewed and explicitly approved before T-009 feature tests run again.
 
 ## Definition of Ready
 
@@ -131,3 +131,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:40:50+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` with no findings and recommended approval |
 | `2026-09-01T09:40:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only its recorded component and mobile-browser tests |
 | `2026-09-01T09:42:09+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and mobile-browser verification in an isolated worktree at exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` |
+| `2026-09-01T09:45:35+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and automated browser scenarios passed 8/8, but structural review found the Next.js development indicator in all four reference captures; approval is invalidated and production-server capture requires a replacement delivery |

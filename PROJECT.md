@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:42:09+02:00
+- **Last updated:** 2026-09-01T09:45:35+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-008` complete; `T-009` approved for testing
+- **Implementation:** `T-008` complete; `T-009` correction in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Run only the recorded T-009 component and mobile-browser tests against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`.
+Correct T-009 reference capture execution so it uses the production server without the Next.js development indicator.
 
 ## Immediate next action
 
-Complete the in-progress T-009 verification and record its results.
+Run static checks only and prepare the T-009 replacement delivery for review; do not rerun feature tests before new approval.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `Testing`; Codex primary agent; updated `2026-09-01T09:42:09+02:00`; verify exact approved delivery with only the recorded test scope.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:45:35+02:00`; switch visual capture execution to the production server and prepare a replacement delivery without rerunning tests.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None; `T-009` verification is in progress.
+None.
 
 ## Recently completed Tasks
 
@@ -49,6 +49,6 @@ None; `T-009` verification is in progress.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` testing)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` correction in progress)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
