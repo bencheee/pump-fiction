@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T09:05:32+02:00`
+- **Updated:** `2026-09-01T09:06:20+02:00`
 - **Progress:** `3/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -96,3 +96,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T08:59:19+02:00` | User / Reviewer and Approver | Approved latest `T-008` replacement delivery | Exact lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` may run the complete recorded test plan from the beginning |
 | `2026-09-01T09:03:53+02:00` | Codex primary agent / Tester | Returned latest `T-008` replacement to `In Progress` | Clean install, unit tests 9/9, and clean reset passed, but a quoted glob selected no repository tests; browser tests stopped and another replacement approval is required |
 | `2026-09-01T09:05:32+02:00` | Codex primary agent / Executor | Corrected `T-008` repository test selection pending replacement delivery | The script names both integration tests explicitly and static checks passed without rerunning feature tests |
+| `2026-09-01T09:06:20+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-008` for review | Test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` names both repository tests explicitly; application and test behavior remain unchanged |

@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:05:32+02:00`
+- **Updated:** `2026-09-01T09:06:20+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
-- **Review started:** `2026-09-01T08:53:52+02:00` for latest replacement
+- **Review started:** `2026-09-01T09:06:20+02:00` for latest replacement
 - **Approval requested:** Not reached for next replacement
 - **Approved:** Not reached for next replacement
 - **Testing started:** `2026-09-01T09:00:57+02:00` for latest approved replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create and record the statically verified test-script-only replacement; do not rerun feature tests.
+- **Next action:** User reviews latest replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; feature tests remain locked.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `9dab09e2520be061a1c8832526bfa2bdb19efec3` (superseded after failed repository test selection; next replacement not created)
+- **Delivery commit SHA:** `b21a7e0631a27f5b633513899fa42aa2d50e5243` (replaces `9dab09e2520be061a1c8832526bfa2bdb19efec3` and its earlier predecessors)
 - **Subject:** `T-008: correct repository test selection`
-- **Committed scope:** Replacement pending: replace the quoted repository glob with both explicit integration-test paths, record the failed selection, and clear approval; application and test behavior remain unchanged.
+- **Committed scope:** Replace the quoted repository glob with both explicit integration-test paths, record the failed selection, and clear approval; application and test behavior remain unchanged.
 
 ## Review
 
@@ -141,3 +141,4 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-09-01T08:59:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact latest replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-01T09:00:57+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` |
 | `2026-09-01T09:03:53+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install, CLI check, unit tests 9/9, and clean database reset passed, but a quoted glob selected no repository tests; browser tests did not run and another replacement approval is required |
+| `2026-09-01T09:06:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; static checks passed and feature tests were not rerun |
