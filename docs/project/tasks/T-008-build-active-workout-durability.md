@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:06:20+02:00`
+- **Updated:** `2026-09-01T09:09:42+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-09-01T09:06:20+02:00` for latest replacement
-- **Approval requested:** Not reached for next replacement
-- **Approved:** Not reached for next replacement
+- **Approval requested:** `2026-09-01T09:09:42+02:00` for latest replacement
+- **Approved:** `2026-09-01T09:09:42+02:00` for latest replacement
 - **Testing started:** `2026-09-01T09:00:57+02:00` for latest approved replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews latest replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; feature tests remain locked.
+- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` in a fresh isolated worktree.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** Not authorized; approval of `9dab09e2520be061a1c8832526bfa2bdb19efec3` was invalidated by the failed repository test selection.
+- **Authorized commit:** `b21a7e0631a27f5b633513899fa42aa2d50e5243`
 - **Results:** Prior superseded failures remain recorded in transition history. Against exact approved replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` on 2026-09-01 with Node.js `24.20.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`, a fresh `npm ci` installed the expected CLI, unit tests passed 9/9 across 3/3 files, and a clean database reset applied both migrations. `npm run test:repository` then passed its quoted glob literally to Vitest, which found no files and exited with code 1 before executing an integration test. Chromium/WebKit tests did not run. A test-script-only replacement with explicit repository test paths and new approval are required; the complete plan will rerun from the beginning.
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed for next replacement
-- **Outcome:** Changes required after approved verification
+- **Reviewed at:** `2026-09-01T09:09:42+02:00`
+- **Outcome:** Recommended latest replacement for approval
 - **Findings:** Prior findings are corrected. The repository script quoted a glob that Vitest treated literally, so no integration files were selected.
 
 ## Approval
 
-- **Approved commit:** Not approved; latest approval invalidated by failed repository test selection
-- **Approved by:** Not approved for next replacement
-- **Approved at:** Not approved for next replacement
-- **Approval note:** Exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` was approved and began verification, but its repository script selected no files and requires another replacement delivery.
+- **Approved commit:** `b21a7e0631a27f5b633513899fa42aa2d50e5243`
+- **Approved by:** User
+- **Approved at:** `2026-09-01T09:09:42+02:00`
+- **Approval note:** User explicitly confirmed the exact test-script-only replacement, authorizing the complete recorded test plan from the beginning.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -142,3 +142,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-09-01T09:00:57+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` |
 | `2026-09-01T09:03:53+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install, CLI check, unit tests 9/9, and clean database reset passed, but a quoted glob selected no repository tests; browser tests did not run and another replacement approval is required |
 | `2026-09-01T09:06:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; static checks passed and feature tests were not rerun |
+| `2026-09-01T09:09:42+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` with no additional findings and recommended approval |
+| `2026-09-01T09:09:42+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Confirmed the exact latest replacement and authorized the complete recorded test plan from the beginning |

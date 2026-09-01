@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:06:20+02:00
+- **Last updated:** 2026-09-01T09:09:42+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` latest replacement in review
+- **Implementation:** `T-007` complete; `T-008` latest replacement approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review the statically verified `T-008` test-script-only replacement; feature tests remain locked.
+Verify the approved `T-008` test-script-only replacement through the complete recorded test plan.
 
 ## Immediate next action
 
-User reviews exact replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` and either records findings or recommends it for approval.
+Run the complete recorded `T-008` test plan from the beginning against exact replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` in a fresh isolated worktree.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Review`; User reviewer; updated `2026-09-01T09:06:20+02:00`; review exact test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; all feature tests are locked.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `Approved`; Codex primary agent; updated `2026-09-01T09:09:42+02:00`; run the complete authorized test plan against exact replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — approved latest replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; rerun unit, clean local repository, and Chromium/WebKit tests from the beginning.
 
 ## Recently completed Tasks
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` latest replacement in review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` latest replacement approved)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
