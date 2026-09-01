@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:09:42+02:00`
+- **Updated:** `2026-09-01T09:15:05+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-09-01T09:06:20+02:00` for latest replacement
 - **Approval requested:** `2026-09-01T09:09:42+02:00` for latest replacement
 - **Approved:** `2026-09-01T09:09:42+02:00` for latest replacement
-- **Testing started:** `2026-09-01T09:00:57+02:00` for latest approved replacement
-- **Completed:** Not reached
+- **Testing started:** `2026-09-01T09:11:18+02:00` for latest approved replacement
+- **Completed:** `2026-09-01T09:15:05+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` in a fresh isolated worktree.
+- **Next action:** None; `T-008` is complete and `T-009` remains in `Backlog` pending Owner direction.
 
 ## Scope
 
@@ -71,7 +71,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
 - **Authorized commit:** `b21a7e0631a27f5b633513899fa42aa2d50e5243`
-- **Results:** Prior superseded failures remain recorded in transition history. Against exact approved replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` on 2026-09-01 with Node.js `24.20.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`, a fresh `npm ci` installed the expected CLI, unit tests passed 9/9 across 3/3 files, and a clean database reset applied both migrations. `npm run test:repository` then passed its quoted glob literally to Vitest, which found no files and exited with code 1 before executing an integration test. Chromium/WebKit tests did not run. A test-script-only replacement with explicit repository test paths and new approval are required; the complete plan will rerun from the beginning.
+- **Results:** Passed against exact approved replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` on 2026-09-01 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, local PostgreSQL `17`, and Playwright `1.62.1`: a fresh `npm ci` installed 595 packages with no vulnerabilities and exposed the expected platform CLI; `npm run test:unit` passed 9/9 across 3/3 files; a clean `supabase db reset` applied both migrations; `npm run test:repository` passed 2/2 real Data API integration tests covering settings plus concurrent command idempotency, revision conflict, note/timer transaction effects, and command recording; `npm run test:browser` passed 6/6 IndexedDB reload/acknowledgement, FIFO, and conflict-recovery scenarios across phone-sized Chromium and WebKit. The first repository invocation lacked the explicit `SUPABASE_URL`/service-role aliases and exited before a database call; mapping the CLI-provided environment to the documented server names corrected the runner environment without changing delivery scope. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
 
 ## Delivery commit
 
@@ -113,11 +113,11 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - [x] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
+- [x] Authorized feature tests passed
 - [x] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -144,3 +144,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-09-01T09:06:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243`; static checks passed and feature tests were not rerun |
 | `2026-09-01T09:09:42+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` with no additional findings and recommended approval |
 | `2026-09-01T09:09:42+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Confirmed the exact latest replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-01T09:11:18+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` |
+| `2026-09-01T09:15:05+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Clean install and CLI verification, unit tests 9/9, clean reset, repository integration 2/2, and Chromium/WebKit scenarios 6/6 passed; `T-009` remains unstarted |
