@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` returned to `In Progress`: replacement component tests passed 4/4, but its production server polled a T-008 harness that intentionally returns 404 in production, so zero browser scenarios started.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` remains `In Progress`; Playwright production readiness now polls `/today` and the correction is statically verified pending another replacement delivery.
 
 ## Conceptually completed
 
@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Point T-009 Playwright readiness at `/today`, run static checks only, and prepare another replacement for new review and approval.
+Create the statically verified T-009 production-readiness replacement and record its exact SHA for new review and approval.
 
 ## Implementation status
 

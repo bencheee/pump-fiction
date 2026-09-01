@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:59:46+02:00
+- **Last updated:** 2026-09-01T16:04:54+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-008` complete; `T-009` readiness correction in progress
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Correct the T-009 production-server readiness URL from the production-hidden T-008 harness to `/today`.
+Prepare the completed T-009 `/today` production-readiness correction for its replacement delivery.
 
 ## Immediate next action
 
-Run static checks only and prepare another T-009 replacement delivery; do not rerun feature tests before new approval.
+Create the new T-009 replacement delivery and record its exact SHA; do not rerun feature tests before new approval.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:59:46+02:00`; correct production readiness and prepare another replacement without rerunning tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T16:04:54+02:00`; `/today` readiness correction and static checks complete, create replacement delivery.
 
 ## Next
 

@@ -68,7 +68,7 @@ Overlay state must not be encoded as a deep-linkable route or query parameter in
 
 ## Approval-gated verification
 
-`T-009` adds React Testing Library, `user-event`, DOM matchers, and jsdom for component accessibility and interaction source. It also prepares Playwright checks for the accepted 390 by 844 and 360 by 800 phone references at an explicit 3x device scale, shell geometry, horizontal overflow, overlay Back behavior, cancel-safe focus, Escape, and focus restoration. Playwright builds and starts the production application, never reuses an unknown local server, and writes both line and HTML reports so reference captures remain available for structural review without the Next.js development indicator. v0.4 colors and other frozen-package exclusions are not compared against the stale v0.3 pixels. These commands remain separate from `npm run check`:
+`T-009` adds React Testing Library, `user-event`, DOM matchers, and jsdom for component accessibility and interaction source. It also prepares Playwright checks for the accepted 390 by 844 and 360 by 800 phone references at an explicit 3x device scale, shell geometry, horizontal overflow, overlay Back behavior, cancel-safe focus, Escape, and focus restoration. Playwright builds and starts the production application, polls the production `/today` route for readiness, never reuses an unknown local server, and writes both line and HTML reports so reference captures remain available for structural review without the Next.js development indicator. v0.4 colors and other frozen-package exclusions are not compared against the stale v0.3 pixels. These commands remain separate from `npm run check`:
 
 ```sh
 npm run test:components

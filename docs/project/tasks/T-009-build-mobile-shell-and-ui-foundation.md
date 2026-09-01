@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:59:46+02:00`
+- **Updated:** `2026-09-01T16:04:54+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:48:54+02:00` for replacement
 - **Approval requested:** Not reached for next replacement; prior replacement approved at `2026-09-01T09:54:46+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-01T09:55:52+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Point Playwright readiness at the production `/today` route, run static checks only, and create another replacement delivery without rerunning feature tests.
+- **Next action:** Create the statically verified production-readiness replacement delivery without rerunning feature tests.
 
 ## Scope
 
@@ -63,7 +63,7 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, asset/license inventory, documentation links, `git diff --check`
-- Results: Passed for the pending replacement on 2026-09-01 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build across all shell and support routes, frozen asset/license verification for 8/8 font and 38/38 icon checksums, Markdown lint across 79 files, and all 546 internal links; `git diff --check` passed. The production-server, retained HTML report, and explicit 3x device-scale corrections were not behaviorally rerun after the prior approval was invalidated.
+- Results: Passed for the pending production-readiness replacement on 2026-09-01 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build across all shell and support routes, frozen asset/license verification for 8/8 font and 38/38 icon checksums, Markdown lint across 79 files, and all 546 internal links; `git diff --check` passed. The `/today` readiness correction was not behaviorally rerun after the prior approval was invalidated.
 
 ## Test plan and results
 
@@ -138,3 +138,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:54:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-009 test plan from the beginning |
 | `2026-09-01T09:55:52+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` |
 | `2026-09-01T09:59:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install and component tests 4/4 passed, but zero browser scenarios started because production readiness polled a T-008 harness that intentionally returns 404; approval is invalidated and `/today` readiness requires another replacement |
+| `2026-09-01T16:04:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Changed Playwright readiness to the production `/today` route and passed all static checks without rerunning feature tests |
