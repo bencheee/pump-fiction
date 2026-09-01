@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:39:10+02:00`
+- **Updated:** `2026-09-01T09:40:50+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:39:10+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-09-01T09:40:50+02:00`
+- **Approved:** `2026-09-01T09:40:50+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`; feature tests remain unexecuted.
+- **Next action:** Run only the recorded component and mobile-browser test plan against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` in an isolated worktree.
 
 ## Scope
 
@@ -82,16 +82,16 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-01T09:40:50+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `027b8fb4020f4f1353f38fb005d16d0391e959d8`
+- **Approved by:** User
+- **Approved at:** `2026-09-01T09:40:50+02:00`
+- **Approval note:** User explicitly confirmed exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`, authorizing only its recorded T-009 component and mobile-browser tests.
 
 ## Definition of Ready
 
@@ -128,3 +128,5 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:18:25+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted mobile shell and shared UI foundation scope |
 | `2026-09-01T09:37:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed frozen assets/tokens, main and focused shells, route/not-found and overlay-history foundations, demonstrated shared primitives, canonical guidance, unexecuted UI tests, and all planned static checks |
 | `2026-09-01T09:39:10+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `027b8fb4020f4f1353f38fb005d16d0391e959d8`; all planned static checks passed and prepared feature tests remain unexecuted |
+| `2026-09-01T09:40:50+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` with no findings and recommended approval |
+| `2026-09-01T09:40:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only its recorded component and mobile-browser tests |

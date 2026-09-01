@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:39:10+02:00
+- **Last updated:** 2026-09-01T09:40:50+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-008` complete; `T-009` in progress
+- **Implementation:** `T-008` complete; `T-009` approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review exact `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` without running feature tests.
+Verify exact approved `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` with only its recorded component and mobile-browser tests.
 
 ## Immediate next action
 
-User reviews `027b8fb4020f4f1353f38fb005d16d0391e959d8` and either requests changes or recommends it for approval; tests remain gated.
+Run the T-009 component and phone-browser test plan in an isolated worktree at exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Review`; Codex primary agent; updated `2026-09-01T09:39:10+02:00`; user reviews exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` without running tests.
+No Task is in progress; exact approved `T-009` delivery is ready for its recorded tests.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`; run only the recorded component and mobile-browser verification.
 
 ## Recently completed Tasks
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; paused before `T-009`)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` approved for testing)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
