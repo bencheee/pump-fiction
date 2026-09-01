@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:55:52+02:00`
+- **Updated:** `2026-09-01T09:59:46+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:48:54+02:00` for replacement
-- **Approval requested:** `2026-09-01T09:54:46+02:00` for replacement
-- **Approved:** `2026-09-01T09:54:46+02:00` for replacement
+- **Approval requested:** Not reached for next replacement; prior replacement approved at `2026-09-01T09:54:46+02:00`
+- **Approved:** Not reached for next replacement; prior replacement approval invalidated at `2026-09-01T09:59:46+02:00`
 - **Testing started:** `2026-09-01T09:55:52+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete the repeated T-009 component, browser, and retained-capture verification against exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` and record the results.
+- **Next action:** Point Playwright readiness at the production `/today` route, run static checks only, and create another replacement delivery without rerunning feature tests.
 
 ## Scope
 
@@ -70,8 +70,8 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:components` for field accessibility wiring, sheet/dialog focus management, Escape, and focus restoration; then run `npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts` for the exact 390 × 844 and 360 × 800 shell geometry/captures, touch targets, horizontal overflow, focused-shell navigation exclusion, overlay Back dismissal, cancel-safe focus, Escape, and focus restoration. Review captures structurally under the frozen v0.3 reference exclusions; do not compare v0.4 colors or corrected cue areas to stale v0.3 pixels.
-- **Authorized commit:** `746985808e7e587b1aa4366d00b133f121d6cd73`
-- **Results:** Against exact then-approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review of all four attached 390 × 844 and 360 × 800 captures failed because the Next.js development indicator overlapped the active Today destination in every image; it also showed the Chromium project inheriting a 2.75x Pixel 5 scale instead of the required 3x physical capture dimensions. T-009 returned to `In Progress`; the production-server, retained-report, and explicit-3x corrections require a replacement delivery and new approval before the full recorded test plan runs again. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
+- **Authorized commit:** Not authorized; approval of `746985808e7e587b1aa4366d00b133f121d6cd73` was invalidated by the production-readiness finding
+- **Results:** Against exact then-approved original delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review failed because the Next.js development indicator overlapped Today and Chromium inherited 2.75x instead of 3x. Against exact then-approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`, another clean `npm ci` installed 653 packages with no vulnerabilities and component tests passed 4/4, but zero browser scenarios started: Playwright timed out after 60 seconds because its readiness URL was the T-008 harness, which deliberately returns 404 in production. Direct diagnosis confirmed the production build and server become ready in seconds and `/today` returns normally. T-009 returned to `In Progress`; the readiness-URL correction requires another replacement and new approval before the full plan runs again. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
 
 ## Delivery commit
 
@@ -82,16 +82,16 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-01T09:54:46+02:00` for replacement
-- **Outcome:** Recommended replacement for approval
-- **Findings:** Post-approval structural capture review found the Next.js development indicator covering the active Today destination in all four reference-sized captures. It also exposed Chromium captures at the inherited Pixel 5 scale of 2.75x (`1073 × 2321` and `990 × 2200`) instead of the required 3x physical sizes. Visual checks must run against a production server, retain their HTML-report attachments, and assert an explicit 3x device scale in both browser projects.
+- **Reviewed at:** Prior replacement reviewed at `2026-09-01T09:54:46+02:00`; next replacement not reviewed
+- **Outcome:** Next replacement pending
+- **Findings:** The first delivery used a development server and Chromium 2.75x captures. Replacement `746985808e7e587b1aa4366d00b133f121d6cd73` corrected those issues but retained the T-008 harness as Playwright's readiness URL; that route deliberately returns 404 in production, preventing every browser scenario from starting. Readiness must use `/today`.
 
 ## Approval
 
-- **Approved commit:** `746985808e7e587b1aa4366d00b133f121d6cd73`
-- **Approved by:** User
-- **Approved at:** `2026-09-01T09:54:46+02:00`
-- **Approval note:** User explicitly confirmed exact replacement `746985808e7e587b1aa4366d00b133f121d6cd73`, authorizing the complete recorded T-009 test plan from the beginning.
+- **Approved commit:** Not approved; prior replacement `746985808e7e587b1aa4366d00b133f121d6cd73` approval invalidated
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** Another replacement must be reviewed and explicitly approved before T-009 tests run again.
 
 ## Definition of Ready
 
@@ -137,3 +137,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:54:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `746985808e7e587b1aa4366d00b133f121d6cd73` with no additional findings and recommended approval |
 | `2026-09-01T09:54:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-009 test plan from the beginning |
 | `2026-09-01T09:55:52+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` |
+| `2026-09-01T09:59:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install and component tests 4/4 passed, but zero browser scenarios started because production readiness polled a T-008 harness that intentionally returns 404; approval is invalidated and `/today` readiness requires another replacement |
