@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T16:05:41+02:00
+- **Last updated:** 2026-09-01T17:01:55+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-008` complete; `T-009` readiness correction in progress
+- **Implementation:** `T-008` complete; latest `T-009` replacement testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review exact latest T-009 replacement `ded6f9f73e5952eafe645d07142ab456808783b9` without running corrected feature tests.
+Run the complete recorded T-009 plan against exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`.
 
 ## Immediate next action
 
-User reviews `ded6f9f73e5952eafe645d07142ab456808783b9` and either requests changes or recommends it for approval; tests remain gated.
+Complete the in-progress latest replacement verification and record its results.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Review`; Codex primary agent; updated `2026-09-01T16:05:41+02:00`; user reviews exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` without running tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `Testing`; Codex primary agent; updated `2026-09-01T17:01:55+02:00`; run the complete recorded plan against exact approved latest replacement.
 
 ## Next
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; latest `T-009` replacement in review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; latest `T-009` replacement testing)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

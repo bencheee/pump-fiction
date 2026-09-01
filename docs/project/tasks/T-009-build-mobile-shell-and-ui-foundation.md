@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T16:05:41+02:00`
+- **Updated:** `2026-09-01T17:01:55+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T16:05:41+02:00` for latest replacement
-- **Approval requested:** Not reached for next replacement; prior replacement approved at `2026-09-01T09:54:46+02:00`
-- **Approved:** Not reached for next replacement; prior replacement approval invalidated at `2026-09-01T09:59:46+02:00`
-- **Testing started:** `2026-09-01T09:55:52+02:00` for replacement
+- **Approval requested:** `2026-09-01T17:01:55+02:00` for latest replacement
+- **Approved:** `2026-09-01T17:01:55+02:00` for latest replacement
+- **Testing started:** `2026-09-01T17:01:55+02:00` for latest replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`; corrected feature tests remain unexecuted.
+- **Next action:** Complete the entire recorded test plan from the beginning against exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` and record the results.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:components` for field accessibility wiring, sheet/dialog focus management, Escape, and focus restoration; then run `npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts` for the exact 390 × 844 and 360 × 800 shell geometry/captures, touch targets, horizontal overflow, focused-shell navigation exclusion, overlay Back dismissal, cancel-safe focus, Escape, and focus restoration. Review captures structurally under the frozen v0.3 reference exclusions; do not compare v0.4 colors or corrected cue areas to stale v0.3 pixels.
-- **Authorized commit:** Not authorized; approval of `746985808e7e587b1aa4366d00b133f121d6cd73` was invalidated by the production-readiness finding
+- **Authorized commit:** `ded6f9f73e5952eafe645d07142ab456808783b9`
 - **Results:** Against exact then-approved original delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review failed because the Next.js development indicator overlapped Today and Chromium inherited 2.75x instead of 3x. Against exact then-approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`, another clean `npm ci` installed 653 packages with no vulnerabilities and component tests passed 4/4, but zero browser scenarios started: Playwright timed out after 60 seconds because its readiness URL was the T-008 harness, which deliberately returns 404 in production. Direct diagnosis confirmed the production build and server become ready in seconds and `/today` returns normally. T-009 returned to `In Progress`; the readiness-URL correction requires another replacement and new approval before the full plan runs again. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Prior replacement reviewed at `2026-09-01T09:54:46+02:00`; latest replacement review started `2026-09-01T16:05:41+02:00`
-- **Outcome:** Latest replacement in review
+- **Reviewed at:** `2026-09-01T17:01:55+02:00` for latest replacement
+- **Outcome:** Recommended latest replacement for approval
 - **Findings:** The first delivery used a development server and Chromium 2.75x captures. Replacement `746985808e7e587b1aa4366d00b133f121d6cd73` corrected those issues but retained the T-008 harness as Playwright's readiness URL; that route deliberately returns 404 in production, preventing every browser scenario from starting. Readiness must use `/today`.
 
 ## Approval
 
-- **Approved commit:** Not approved; prior replacement `746985808e7e587b1aa4366d00b133f121d6cd73` approval invalidated
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Another replacement must be reviewed and explicitly approved before T-009 tests run again.
+- **Approved commit:** `ded6f9f73e5952eafe645d07142ab456808783b9`
+- **Approved by:** User
+- **Approved at:** `2026-09-01T17:01:55+02:00`
+- **Approval note:** User explicitly confirmed exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`, authorizing the complete recorded T-009 test plan from the beginning.
 
 ## Definition of Ready
 
@@ -140,3 +140,6 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:59:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install and component tests 4/4 passed, but zero browser scenarios started because production readiness polled a T-008 harness that intentionally returns 404; approval is invalidated and `/today` readiness requires another replacement |
 | `2026-09-01T16:04:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Changed Playwright readiness to the production `/today` route and passed all static checks without rerunning feature tests |
 | `2026-09-01T16:05:41+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`; static checks passed and corrected feature tests remain unexecuted |
+| `2026-09-01T17:01:55+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` with no additional findings and recommended approval |
+| `2026-09-01T17:01:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact latest replacement and authorized the complete recorded T-009 test plan from the beginning |
+| `2026-09-01T17:01:55+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` |
