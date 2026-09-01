@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T09:48:54+02:00`
+- **Updated:** `2026-09-01T09:54:46+02:00`
 - **Progress:** `4/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -107,3 +107,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T09:45:35+02:00` | Codex primary agent / Tester | Returned `T-009` to `In Progress` | Component tests passed 4/4 and automated browser scenarios passed 8/8, but all four structural captures contained the Next.js development indicator; production-server capture needs a replacement delivery and new approval |
 | `2026-09-01T09:48:03+02:00` | Codex primary agent / Executor | Corrected `T-009` visual test fidelity pending replacement delivery | Production build/start, retained HTML attachments, and explicit 3x capture assertions are statically verified without rerunning feature tests |
 | `2026-09-01T09:48:54+02:00` | Codex primary agent / Executor | Delivered corrected `T-009` for review | Replacement commit `746985808e7e587b1aa4366d00b133f121d6cd73` corrects production-server, report-retention, and 3x capture fidelity; corrected tests remain unexecuted |
+| `2026-09-01T09:54:46+02:00` | User / Reviewer and Approver | Approved exact `T-009` replacement for testing | Commit `746985808e7e587b1aa4366d00b133f121d6cd73` may run the complete recorded T-009 test plan from the beginning |

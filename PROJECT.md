@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:48:54+02:00
+- **Last updated:** 2026-09-01T09:54:46+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-008` complete; `T-009` correction in progress
+- **Implementation:** `T-008` complete; `T-009` replacement approved for testing
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Review exact T-009 replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73` without running corrected feature tests.
+Verify exact approved T-009 replacement `746985808e7e587b1aa4366d00b133f121d6cd73` with the complete recorded test plan.
 
 ## Immediate next action
 
-User reviews `746985808e7e587b1aa4366d00b133f121d6cd73` and either requests changes or recommends it for approval; tests remain gated.
+Repeat the complete T-009 test plan from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Review`; Codex primary agent; updated `2026-09-01T09:48:54+02:00`; user reviews exact replacement `746985808e7e587b1aa4366d00b133f121d6cd73` without running tests.
+No Task is in progress; exact approved T-009 replacement is ready for its complete recorded tests.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`; repeat the complete recorded verification from the beginning.
 
 ## Recently completed Tasks
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` replacement in review)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` replacement approved for testing)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
