@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:45:35+02:00
+- **Last updated:** 2026-09-01T09:48:03+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-008` complete; `T-009` correction in progress
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Correct T-009 reference capture execution so it uses the production server without the Next.js development indicator.
+Prepare the completed T-009 visual-test-fidelity correction for its replacement delivery commit.
 
 ## Immediate next action
 
-Run static checks only and prepare the T-009 replacement delivery for review; do not rerun feature tests before new approval.
+Create the T-009 replacement delivery and record its exact SHA for user review; do not rerun feature tests before new approval.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:45:35+02:00`; switch visual capture execution to the production server and prepare a replacement delivery without rerunning tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:48:03+02:00`; static correction complete, create replacement delivery without rerunning tests.
 
 ## Next
 

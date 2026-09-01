@@ -21,9 +21,11 @@ test.describe("mobile UI foundation", () => {
 
       const geometry = await page.evaluate(() => ({
         clientWidth: document.documentElement.clientWidth,
+        devicePixelRatio: window.devicePixelRatio,
         scrollWidth: document.documentElement.scrollWidth,
       }));
       expect(geometry.scrollWidth).toBe(geometry.clientWidth);
+      expect(geometry.devicePixelRatio).toBe(3);
 
       for (const destination of await destinations.all()) {
         const box = await destination.boundingBox();

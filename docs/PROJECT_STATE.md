@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` returned to `In Progress`: component tests passed 4/4 and automated browser scenarios passed 8/8, but all four structural captures contained the Next.js development indicator and require production-server capture in a replacement delivery.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` remains `In Progress` after correcting its failed capture fidelity to use production build/start, retained HTML attachments, and explicit 3x browser projects; the correction is statically verified pending replacement delivery.
 
 ## Conceptually completed
 
@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct T-009 Playwright capture execution to use the production server, run static checks only, and prepare a replacement delivery for new review and approval.
+Create the statically verified T-009 replacement delivery and record its exact SHA for new review and approval without rerunning feature tests.
 
 ## Implementation status
 
