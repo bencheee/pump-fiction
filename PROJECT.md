@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-08-31T16:45:34+02:00
+- **Last updated:** 2026-09-01T08:53:05+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` replacement approved for testing
+- **Implementation:** `T-007` complete; `T-008` lockfile replacement in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Verify the approved `T-008` replacement delivery through the complete recorded test plan.
+Deliver the statically verified `T-008` platform-metadata correction without changing application or test behavior.
 
 ## Immediate next action
 
-Run the complete recorded `T-008` test plan from the beginning against exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` in a fresh isolated worktree.
+Create and record the lockfile-only `T-008` replacement; do not rerun feature tests before new approval.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `Approved`; Codex primary agent; updated `2026-08-31T16:45:34+02:00`; run the complete authorized test plan against exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Progress`; Codex primary agent; updated `2026-09-01T08:53:05+02:00`; create and record the lockfile-only replacement; all feature tests are locked.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; rerun unit, clean local repository, and Chromium/WebKit tests from the beginning.
+None.
 
 ## Recently completed Tasks
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` replacement approved)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` lockfile replacement pending delivery)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

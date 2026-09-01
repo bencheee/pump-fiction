@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T16:45:34+02:00`
+- **Updated:** `2026-09-01T08:53:05+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-08-31T16:43:18+02:00` for replacement
-- **Approval requested:** `2026-08-31T16:45:34+02:00` for replacement
-- **Approved:** `2026-08-31T16:45:34+02:00` for replacement
-- **Testing started:** `2026-08-31T16:38:30+02:00`
+- **Approval requested:** Not reached for next replacement
+- **Approved:** Not reached for next replacement
+- **Testing started:** `2026-09-01T08:48:42+02:00` for approved replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` in a fresh isolated worktree.
+- **Next action:** Create and record the statically verified lockfile-only replacement; do not rerun feature tests.
 
 ## Scope
 
@@ -63,35 +63,35 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Static-check plan and results
 
 - Planned checks: ESLint, strict TypeScript, production build, formatting, documentation links, `git diff --check`
-- Results: Passed for the replacement on 2026-08-31 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript including corrected test source, the Next.js production build without database environment variables, Markdown lint across 78 files, and all 544 internal links; `git diff --check` passed. Inspection confirms `test:unit` is now rooted at `src` and the ordering assertion excludes only the outbox's internal `list` instrumentation. Feature tests were not rerun.
+- Results: Passed for the next replacement on 2026-09-01 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build without database environment variables, Markdown lint across 78 files, and all 544 internal links; `git diff --check` passed. A fresh temporary `npm ci` from the corrected lockfile installed the expected `@supabase/cli-darwin-x64` binary, which reported locked CLI version `2.116.0`. Feature tests were not rerun after the lockfile correction.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`
-- **Results:** Failed against exact approved delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` on 2026-08-31 with Node.js `24.20.0` and Vitest `4.1.11`: `npm run test:unit` passed 8/9 unit assertions, but one assertion incorrectly included internal outbox `list` instrumentation; the command also incorrectly discovered the Playwright spec, which failed during Vitest collection. Verification stopped immediately. Database reset/repository integration and Chromium/WebKit tests did not run. Replacement test configuration/source requires a new delivery SHA and approval.
+- **Authorized commit:** Not authorized; approval of `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` was invalidated by the failed clean-install/runtime setup.
+- **Results:** Superseded delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` failed as previously recorded. Against exact approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` on 2026-09-01 with Node.js `24.20.0` and Vitest `4.1.11`, a fresh `npm ci` completed and `npm run test:unit` passed 9/9 assertions across 3/3 files. The next database phase exited before starting or resetting Supabase because the committed lockfile incorrectly marked the macOS x64 CLI binary with Linux `musl` metadata, causing npm to omit it. Repository integration and Chromium/WebKit tests did not run. A lockfile-only replacement and new approval are required; the passed unit result will be rerun from the beginning after approval.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` (replaces `0ed5ebc8c042994c74cc991acc13631ca2ec895f`)
-- **Subject:** `T-008: correct durability test isolation`
-- **Committed scope:** Isolate Vitest unit discovery to `src`, correct one unit assertion to compare only persist/deliver/remove events, record the failed superseded run, and clear its approval; delivered feature behavior remains unchanged.
+- **Delivery commit SHA:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` (superseded after failed clean-install/runtime setup; next replacement not created)
+- **Subject:** `T-008: correct platform lock metadata`
+- **Committed scope:** Replacement pending: restore correct OS/CPU/libc metadata for locked optional binaries, record the failed setup, and clear its approval; application and test behavior remain unchanged.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-08-31T16:45:34+02:00`
-- **Outcome:** Recommended replacement for approval
-- **Findings:** The unit command discovered Playwright specs, and one delivery-order assertion included internal outbox list instrumentation.
+- **Reviewed at:** Not reviewed for next replacement
+- **Outcome:** Changes required after approved replacement verification
+- **Findings:** Prior test-layer findings are corrected. Fresh installation exposed incorrect optional-package platform metadata in `package-lock.json`, which omitted the Supabase CLI binary required for the database phase.
 
 ## Approval
 
-- **Approved commit:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`
-- **Approved by:** User
-- **Approved at:** `2026-08-31T16:45:34+02:00`
-- **Approval note:** User explicitly approved the exact replacement delivery, authorizing the complete recorded test plan from the beginning.
+- **Approved commit:** Not approved; replacement approval invalidated by failed setup
+- **Approved by:** Not approved for next replacement
+- **Approved at:** Not approved for next replacement
+- **Approval note:** Exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` was approved and began verification, but its lockfile omitted the platform CLI binary and requires another replacement delivery.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [x] Reviewer recommends approval
-- [x] User approved the exact commit SHA
+- [ ] Reviewer recommends approval
+- [ ] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -134,3 +134,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:43:18+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`; static checks passed and corrected feature tests were not run |
 | `2026-08-31T16:45:34+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement delivery `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` with no additional findings and recommended approval |
 | `2026-08-31T16:45:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-01T08:48:42+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` |
+| `2026-09-01T08:50:04+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 9/9, but incorrect optional-package platform metadata caused the clean installation to omit the Supabase CLI binary; the database stack never started and remaining tests did not run |
