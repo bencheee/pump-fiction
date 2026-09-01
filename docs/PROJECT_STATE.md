@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` remains `In Progress`; Playwright production readiness now polls `/today` and the correction is statically verified pending another replacement delivery.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. Latest `T-009` replacement `ded6f9f73e5952eafe645d07142ab456808783b9` is in review after changing Playwright production readiness to `/today`; corrected tests remain unexecuted.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the statically verified T-009 production-readiness replacement and record its exact SHA for new review and approval.
+User reviews exact latest T-009 replacement `ded6f9f73e5952eafe645d07142ab456808783b9` without rerunning feature tests.
 
 ## Implementation status
 
-`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` is `In Progress` for production-readiness correction; domain feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. Latest `T-009` replacement is `In Review`; domain feature UI behavior and deployment configuration do not exist yet.

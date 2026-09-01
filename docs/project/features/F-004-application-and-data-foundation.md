@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T16:04:54+02:00`
+- **Updated:** `2026-09-01T16:05:41+02:00`
 - **Progress:** `4/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -111,3 +111,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T09:55:52+02:00` | Codex primary agent / Tester | Began replacement `T-009` verification | Repeating the complete recorded plan in an isolated worktree at exact approved replacement |
 | `2026-09-01T09:59:46+02:00` | Codex primary agent / Tester | Returned replacement `T-009` to `In Progress` | Clean install and component tests 4/4 passed, but the production-hidden T-008 readiness URL prevented all browser scenarios from starting; another replacement and approval are required |
 | `2026-09-01T16:04:54+02:00` | Codex primary agent / Executor | Corrected `T-009` production readiness pending replacement delivery | Playwright now polls `/today`; the correction is statically verified without rerunning feature tests |
+| `2026-09-01T16:05:41+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-009` for review | Replacement `ded6f9f73e5952eafe645d07142ab456808783b9` changes readiness to `/today`; corrected feature tests remain unexecuted |

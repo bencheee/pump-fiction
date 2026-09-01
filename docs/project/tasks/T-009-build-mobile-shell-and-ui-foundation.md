@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T16:04:54+02:00`
+- **Updated:** `2026-09-01T16:05:41+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
-- **Review started:** `2026-09-01T09:48:54+02:00` for replacement
+- **Review started:** `2026-09-01T16:05:41+02:00` for latest replacement
 - **Approval requested:** Not reached for next replacement; prior replacement approved at `2026-09-01T09:54:46+02:00`
 - **Approved:** Not reached for next replacement; prior replacement approval invalidated at `2026-09-01T09:59:46+02:00`
 - **Testing started:** `2026-09-01T09:55:52+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified production-readiness replacement delivery without rerunning feature tests.
+- **Next action:** User reviews exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`; corrected feature tests remain unexecuted.
 
 ## Scope
 
@@ -75,15 +75,15 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `746985808e7e587b1aa4366d00b133f121d6cd73` (replaces `027b8fb4020f4f1353f38fb005d16d0391e959d8`)
-- **Subject:** `T-009: correct visual test fidelity`
-- **Committed scope:** Preserve the original mobile shell/UI foundation while changing Playwright visual verification to build/start production, prohibit unknown-server reuse, retain HTML-report captures, set both browser projects to 3x, assert runtime device scale, and record the invalidated prior verification evidence.
+- **Delivery commit SHA:** `ded6f9f73e5952eafe645d07142ab456808783b9` (replaces `746985808e7e587b1aa4366d00b133f121d6cd73` and original `027b8fb4020f4f1353f38fb005d16d0391e959d8`)
+- **Subject:** `T-009: correct production readiness`
+- **Committed scope:** Preserve the original mobile shell/UI foundation and production/3x capture corrections while changing Playwright readiness from the production-hidden T-008 harness to `/today`, with synchronized canonical and lifecycle documentation.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Prior replacement reviewed at `2026-09-01T09:54:46+02:00`; next replacement not reviewed
-- **Outcome:** Next replacement pending
+- **Reviewed at:** Prior replacement reviewed at `2026-09-01T09:54:46+02:00`; latest replacement review started `2026-09-01T16:05:41+02:00`
+- **Outcome:** Latest replacement in review
 - **Findings:** The first delivery used a development server and Chromium 2.75x captures. Replacement `746985808e7e587b1aa4366d00b133f121d6cd73` corrected those issues but retained the T-008 harness as Playwright's readiness URL; that route deliberately returns 404 in production, preventing every browser scenario from starting. Readiness must use `/today`.
 
 ## Approval
@@ -139,3 +139,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:55:52+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` |
 | `2026-09-01T09:59:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Clean install and component tests 4/4 passed, but zero browser scenarios started because production readiness polled a T-008 harness that intentionally returns 404; approval is invalidated and `/today` readiness requires another replacement |
 | `2026-09-01T16:04:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Changed Playwright readiness to the production `/today` route and passed all static checks without rerunning feature tests |
+| `2026-09-01T16:05:41+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`; static checks passed and corrected feature tests remain unexecuted |
