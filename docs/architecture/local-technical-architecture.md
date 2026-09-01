@@ -90,6 +90,8 @@ Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-acti
 
 The initialized package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`. Their presence establishes the accepted foundation; feature code adopts them only when its ready Task requires them.
 
+The `T-009` mobile foundation installs the frozen local Barlow fonts and Lucide SVG assets, translates v0.4 tokens into application-owned CSS variables and Tailwind aliases, and provides safe-area-aware main/focused shells, shared route and not-found conventions, history-backed transient overlay wrappers, and only demonstrated cross-feature primitives. Asset/license guidance, component scope, and approval-gated UI verification commands are canonical in [`mobile-ui-foundation.md`](mobile-ui-foundation.md).
+
 ### Quality boundaries
 
 - Static checks: ESLint flat config with Next.js/TypeScript rules, Prettier with Tailwind ordering, `tsc --noEmit`, Next.js production build, `markdownlint-cli2`, and Lychee internal-link validation
@@ -103,6 +105,8 @@ The initialized package baseline locks Tailwind CSS and `@tailwindcss/postcss` `
 The initialized static-tool baseline locks ESLint `9.39.5`, `eslint-config-next` `16.3.3`, Prettier `3.9.6`, `prettier-plugin-tailwindcss` `0.8.1`, and `markdownlint-cli2` `0.23.2`; local link checking uses Lychee `0.24.x`. ESLint `9.39.5` is the newest ESLint release compatible with the plugin peer ranges shipped by the selected Next.js configuration; adopting ESLint `10` waits for that compatibility rather than forcing unsupported peer overrides.
 
 The `T-008` browser-verification baseline locks `@playwright/test` `1.62.1`. Browser binaries are installed and the prepared phone-sized Chromium/WebKit scenarios are executed only after approval of the exact delivery commit.
+
+The `T-009` component-test source locks React Testing Library `16.3.3`, `user-event` `14.6.6`, DOM matchers `7.0.1`, and jsdom `30.0.1`. These test dependencies and their separate commands do not grant permission to execute UI tests before exact-commit approval.
 
 Canonical decision: [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md).
 

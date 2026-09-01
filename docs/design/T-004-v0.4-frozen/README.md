@@ -1,7 +1,7 @@
 # T-004 external design handoff v0.4-frozen
 
 - **External package status:** Frozen
-- **Repository acceptance status:** Delivery candidate pending Owner approval of the `T-004` delivery commit
+- **Repository acceptance status:** Accepted in approved `T-004` delivery `3529d318cf647094c640807671b2050502e8be92`
 - **Prepared:** 2026-08-31
 - **Owner:** User
 - **Executor:** Codex primary agent

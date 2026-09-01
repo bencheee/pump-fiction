@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:15:05+02:00
+- **Last updated:** 2026-09-01T09:37:39+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-008` complete; `T-009` not started
+- **Implementation:** `T-008` complete; `T-009` in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Pause after the completed active-workout durability foundation; `T-009` remains in `Backlog` pending Owner direction.
+Prepare the completed `T-009` mobile shell and shared UI foundation for its delivery commit and review.
 
 ## Immediate next action
 
-Wait for explicit Owner direction before changing or starting `T-009`.
+Create the `T-009` delivery commit and record its exact SHA for user review; feature tests remain unexecuted.
 
 ## Now
 
-No Task is in progress; `T-008` is complete and `T-009` remains unstarted.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:37:39+02:00`; implementation and static checks complete, create delivery commit without running tests.
 
 ## Next
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — next `F-004` foundation Task after `T-008`.
+No queued Tasks; later Feature breakdown follows completion of `F-004`.
 
 ## Later
 

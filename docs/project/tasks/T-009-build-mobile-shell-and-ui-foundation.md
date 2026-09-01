@@ -1,23 +1,23 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-08-31T11:43:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-01T09:37:39+02:00`
+- **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-005`; refine exact primitive scope from the accepted v0.4 manifest before readiness.
+- **Next action:** Create the delivery commit after the completed implementation and static-only verification; do not run prepared feature tests.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Acceptance criteria
 
-- [ ] Tokens, fonts, icons, and shared primitives follow the accepted v0.4 source hierarchy and licensing manifest.
-- [ ] Main four-destination and focused-workout shells obey phone-only, safe-area, focus, touch-target, and reduced-motion rules.
-- [ ] Routes use opaque UUID parameters, no trailing slash, and the shared not-found boundary; transient overlays dismiss before parent navigation.
-- [ ] Shared UI lives under `src/shared/ui` only where reuse is demonstrated and wraps any adopted Radix primitive.
+- [x] Tokens, fonts, icons, and shared primitives follow the accepted v0.4 source hierarchy and licensing manifest.
+- [x] Main four-destination and focused-workout shells obey phone-only, safe-area, focus, touch-target, and reduced-motion rules.
+- [x] Routes use opaque UUID parameters, no trailing slash, and the shared not-found boundary; transient overlays dismiss before parent navigation.
+- [x] Shared UI lives under `src/shared/ui` only where reuse is demonstrated and wraps any adopted Radix primitive.
 
 ## Traceability
 
@@ -45,8 +45,8 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 ## Dependencies and blockers
 
 - Dependencies: `T-004` Done; `T-005` Done
-- Blockers: Dependencies not complete
-- Blocked from status: Not blocked; remains planned in `Backlog`
+- Blockers: None; `T-004` and `T-005` are complete
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -55,21 +55,21 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Execution checklist
 
-- [ ] Install the frozen assets and translate v0.4 tokens into application-owned CSS variables/Tailwind theme.
-- [ ] Build safe-area-aware main and focused shells plus shared not-found handling.
-- [ ] Implement transient overlay/history behavior and demonstrated shared primitives.
-- [ ] Prepare visual/accessibility tests without executing before approval.
+- [x] Install the frozen assets and translate v0.4 tokens into application-owned CSS variables/Tailwind theme.
+- [x] Build safe-area-aware main and focused shells plus shared not-found handling.
+- [x] Implement transient overlay/history behavior and demonstrated shared primitives.
+- [x] Prepare visual/accessibility tests without executing before approval.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, asset/license inventory, documentation links, `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-09-01 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint and dependency boundaries, strict TypeScript, the Next.js production build across all shell and support routes, frozen asset/license verification for 8/8 font and 38/38 icon checksums, Markdown lint across 79 files, and all 546 internal links; `git diff --check` passed. No feature test or manual application validation ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval, run component interaction/accessibility tests and phone-viewport Playwright visual checks using the accepted structural-reference exclusions.
+- **Planned tests:** After approval, run `npm run test:components` for field accessibility wiring, sheet/dialog focus management, Escape, and focus restoration; then run `npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts` for the exact 390 × 844 and 360 × 800 shell geometry/captures, touch targets, horizontal overflow, focused-shell navigation exclusion, overlay Back dismissal, cancel-safe focus, Escape, and focus restoration. Review captures structurally under the frozen v0.3 reference exclusions; do not compare v0.4 colors or corrected cue areas to stale v0.3 pixels.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
@@ -100,12 +100,12 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and unexecuted test plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -124,3 +124,6 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-08-31T11:43:22+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Deliver the accepted mobile visual foundation before feature screens |
+| `2026-09-01T09:18:25+02:00` | User / Owner | `Backlog` | `Ready` | Explicit direction to start `T-009`; completed dependencies and the frozen v0.4 handoff satisfy readiness |
+| `2026-09-01T09:18:25+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted mobile shell and shared UI foundation scope |
+| `2026-09-01T09:37:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed frozen assets/tokens, main and focused shells, route/not-found and overlay-history foundations, demonstrated shared primitives, canonical guidance, unexecuted UI tests, and all planned static checks |

@@ -16,6 +16,7 @@ Use this file as a router. Read only the documents needed for the current task a
 | Entities, relationships, snapshots, derived data | [`architecture/domain-model.md`](architecture/domain-model.md) |
 | Technical constraints, local development, production direction | [`architecture/constraints.md`](architecture/constraints.md) |
 | Accepted local technical architecture and explicitly deferred production choices | [`architecture/local-technical-architecture.md`](architecture/local-technical-architecture.md) |
+| Mobile tokens, assets, shells, shared primitives, routing, and overlays | [`architecture/mobile-ui-foundation.md`](architecture/mobile-ui-foundation.md) |
 | Local Supabase schema, migration, generated-type, and approval-gated database workflow | [`architecture/local-database-workflow.md`](architecture/local-database-workflow.md) |
 | Server-only client, repository/application boundaries, errors, and test workflow | [`architecture/server-data-boundaries.md`](architecture/server-data-boundaries.md) |
 | Active-workout commands, transaction, IndexedDB outbox, delivery, and recovery | [`architecture/active-workout-durability.md`](architecture/active-workout-durability.md) |

@@ -2,6 +2,7 @@
 node_modules
 temp_handoff
 package-lock.json
+public/assets/**/*.json
 src/server/database/database.types.ts
 docs
 AGENTS.md

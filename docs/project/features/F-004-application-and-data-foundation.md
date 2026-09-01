@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T09:15:05+02:00`
+- **Updated:** `2026-09-01T09:37:39+02:00`
 - **Progress:** `4/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; `T-008` is in progress
+- Blockers: None; `T-009` is in progress
 
 ## Related decisions and documents
 
@@ -99,3 +99,5 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T09:06:20+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-008` for review | Test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` names both repository tests explicitly; application and test behavior remain unchanged |
 | `2026-09-01T09:09:42+02:00` | User / Reviewer and Approver | Approved latest `T-008` replacement delivery | Exact test-script-only replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` may run the complete recorded test plan from the beginning |
 | `2026-09-01T09:15:05+02:00` | Codex primary agent / Tester | Completed `T-008` and paused before `T-009` | Exact replacement passed clean install/CLI verification, unit tests 9/9, clean reset, repository integration 2/2, and Chromium/WebKit scenarios 6/6; `T-009` remains in `Backlog` pending Owner direction |
+| `2026-09-01T09:18:25+02:00` | User / Owner and Codex primary agent / Executor | Started `T-009` | Owner direction cleared the pause and the ready mobile shell and shared UI foundation Task moved into execution |
+| `2026-09-01T09:37:39+02:00` | Codex primary agent / Executor | Completed `T-009` implementation scope pending delivery | Frozen local assets/tokens, phone shells, route and overlay foundations, demonstrated shared primitives, canonical guidance, and unexecuted UI tests are statically verified |

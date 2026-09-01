@@ -1,0 +1,144 @@
+{
+  "package": "pump-fiction",
+  "version": "v0.4-frozen (assets unchanged since v0.3; scope closed by OD-014)",
+  "generated": "2026-08-27",
+  "purpose": "Exact local font binaries used for every canonical PNG capture in reference/. No remote font request occurs during canonical capture.",
+  "licence": {
+    "name": "SIL Open Font License 1.1",
+    "file": "assets/fonts/OFL-1.1.txt",
+    "sha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/barlow/OFL.txt",
+    "note": "Same OFL 1.1 text governs Barlow and Barlow Semi Condensed. Retain the copyright notice and licence with any redistribution; reserved font names must not be used for modified versions."
+  },
+  "subset": {
+    "included": "latin",
+    "codepoints": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    "excluded": "latin-ext, vietnamese — not used by any frozen copy string",
+    "risk": "PF-RISK-FONT-SUBSET"
+  },
+  "files": [
+    {
+      "filename": "barlow-400-latin.woff2",
+      "path": "assets/fonts/barlow-400-latin.woff2",
+      "family": "Barlow",
+      "style": "normal",
+      "weight": 400,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15656,
+      "sha256": "7a686e76312866b7d506c103e51a829d4c96a0b4576835128d3b7b53801c095a",
+      "source_url": "https://fonts.gstatic.com/s/barlow/v13/7cHpv4kjgoGqM7E_DMs5ynghnQ.woff2",
+      "upstream_version": "Google Fonts Barlow v13",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-500-latin.woff2",
+      "path": "assets/fonts/barlow-500-latin.woff2",
+      "family": "Barlow",
+      "style": "normal",
+      "weight": 500,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15640,
+      "sha256": "80e7dc5605dd451bb9b092d7f46704f08bf39d2866cb981aa8caddc016716aed",
+      "source_url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3_-gs51ostz0rdg.woff2",
+      "upstream_version": "Google Fonts Barlow v13",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-600-latin.woff2",
+      "path": "assets/fonts/barlow-600-latin.woff2",
+      "family": "Barlow",
+      "style": "normal",
+      "weight": 600,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15832,
+      "sha256": "488b58098126c00b8fa77f4d58b0a4bc982e81e4c83323c1a73d9f1a67c15971",
+      "source_url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E30-8s51ostz0rdg.woff2",
+      "upstream_version": "Google Fonts Barlow v13",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-700-latin.woff2",
+      "path": "assets/fonts/barlow-700-latin.woff2",
+      "family": "Barlow",
+      "style": "normal",
+      "weight": 700,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15744,
+      "sha256": "98aa8b5c2582107d73a6f1254f08b152b0c037ae5626a902dd44af8c781e0e6d",
+      "source_url": "https://fonts.gstatic.com/s/barlow/v13/7cHqv4kjgoGqM7E3t-4s51ostz0rdg.woff2",
+      "upstream_version": "Google Fonts Barlow v13",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-semi-condensed-400-latin.woff2",
+      "path": "assets/fonts/barlow-semi-condensed-400-latin.woff2",
+      "family": "Barlow Semi Condensed",
+      "style": "normal",
+      "weight": 400,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15680,
+      "sha256": "e7deb8e131397f0c2479b0f87f352d614c02df9376e47abf4e2087f98071cc1f",
+      "source_url": "https://fonts.gstatic.com/s/barlowsemicondensed/v16/wlpvgxjLBV1hqnzfr-F8sEYMB0Yybp0mudRXeIqqKkkogw.woff2",
+      "upstream_version": "Google Fonts Barlow Semi Condensed v16",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-semi-condensed-500-latin.woff2",
+      "path": "assets/fonts/barlow-semi-condensed-500-latin.woff2",
+      "family": "Barlow Semi Condensed",
+      "style": "normal",
+      "weight": 500,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15760,
+      "sha256": "7e400671b95dd3daff340ce3d48e04d10c617c24bb773136270c697d7360408c",
+      "source_url": "https://fonts.gstatic.com/s/barlowsemicondensed/v16/wlpigxjLBV1hqnzfr-F8sEYMB0Yybp0mudRfi6m_B2slqZ6GfQ.woff2",
+      "upstream_version": "Google Fonts Barlow Semi Condensed v16",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-semi-condensed-600-latin.woff2",
+      "path": "assets/fonts/barlow-semi-condensed-600-latin.woff2",
+      "family": "Barlow Semi Condensed",
+      "style": "normal",
+      "weight": 600,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15960,
+      "sha256": "6850e108c9e552f6f6e5fbce8aabee3eea301936a9198fb470626beda8c203c0",
+      "source_url": "https://fonts.gstatic.com/s/barlowsemicondensed/v16/wlpigxjLBV1hqnzfr-F8sEYMB0Yybp0mudRfp66_B2slqZ6GfQ.woff2",
+      "upstream_version": "Google Fonts Barlow Semi Condensed v16",
+      "acquired": "2026-08-27"
+    },
+    {
+      "filename": "barlow-semi-condensed-700-latin.woff2",
+      "path": "assets/fonts/barlow-semi-condensed-700-latin.woff2",
+      "family": "Barlow Semi Condensed",
+      "style": "normal",
+      "weight": 700,
+      "format": "woff2",
+      "subset": "latin",
+      "bytes": 15784,
+      "sha256": "bc8aadf92982fed8deaee6118c0c301fe3c0cf2890d168c6881de95bf80abcf7",
+      "source_url": "https://fonts.gstatic.com/s/barlowsemicondensed/v16/wlpigxjLBV1hqnzfr-F8sEYMB0Yybp0mudRfw6-_B2slqZ6GfQ.woff2",
+      "upstream_version": "Google Fonts Barlow Semi Condensed v16",
+      "acquired": "2026-08-27"
+    }
+  ],
+  "face_declarations": "@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:block;src:url('./assets/fonts/barlow-400-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow';font-style:normal;font-weight:500;font-display:block;src:url('./assets/fonts/barlow-500-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:block;src:url('./assets/fonts/barlow-600-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:block;src:url('./assets/fonts/barlow-700-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow Semi Condensed';font-style:normal;font-weight:400;font-display:block;src:url('./assets/fonts/barlow-semi-condensed-400-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow Semi Condensed';font-style:normal;font-weight:500;font-display:block;src:url('./assets/fonts/barlow-semi-condensed-500-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow Semi Condensed';font-style:normal;font-weight:600;font-display:block;src:url('./assets/fonts/barlow-semi-condensed-600-latin.woff2') format('woff2')}\n@font-face{font-family:'Barlow Semi Condensed';font-style:normal;font-weight:700;font-display:block;src:url('./assets/fonts/barlow-semi-condensed-700-latin.woff2') format('woff2')}",
+  "fallback_stack": {
+    "barlow": "'Barlow', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+    "semi_condensed": "'Barlow Semi Condensed', 'Barlow', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+  },
+  "loading_behavior": {
+    "canonical_capture": "font-display:block; capture waits on document.fonts.ready before any PNG is taken, so no fallback frame is ever exported.",
+    "production_guidance": "font-display:swap with both families preloaded (<link rel=preload as=font type=font/woff2 crossorigin>). Metrics differ between Barlow and the Helvetica/Arial fallback; reserve line-box height via the fixed line-heights in tokens/pump-fiction.tokens.json rather than relying on font metrics.",
+    "remote_dependency": "none — no fonts.googleapis.com or fonts.gstatic.com request at runtime or at capture time."
+  },
+  "files_count": 8
+}

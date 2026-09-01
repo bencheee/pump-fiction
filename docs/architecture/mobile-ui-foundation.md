@@ -1,0 +1,78 @@
+# Mobile UI foundation
+
+- **Status:** Implemented in `T-009`, pending delivery review and approval
+- **Design source:** [`../design/T-004-v0.4-frozen/README.md`](../design/T-004-v0.4-frozen/README.md)
+
+This document defines how later Feature Tasks consume the application-owned mobile shell, assets, tokens, routes, and shared UI. It does not add feature-screen behavior.
+
+## Source hierarchy
+
+Product and architecture documents remain authoritative for behavior. The frozen v0.4 package is authoritative for visual and interaction intent only where it does not conflict with those documents. In particular:
+
+- the primary navigation order is **Today, History, Programs, Exercises**, as defined by [`../ux/mobile-information-architecture.md`](../ux/mobile-information-architecture.md), even though the external prototype presents a different ordering;
+- v0.4 tokens and specifications govern color, contrast, save/validation cue placement, and the corrected S09/S10 validation fixtures;
+- the retained v0.3 PNGs remain structural references under the exclusions recorded in the frozen package manifest.
+
+## Assets and licenses
+
+Runtime assets are local and require no network request:
+
+- `public/assets/fonts/` contains the eight frozen Barlow and Barlow Semi Condensed WOFF2 Latin subsets, their source manifest, and the SIL OFL 1.1 text;
+- `public/assets/icons/` contains all 38 frozen Lucide SVG files from `lucide-static@1.34.0`, the geometry and checksum manifests, and the required ISC license text;
+- icons render through the application-owned `Icon` mask wrapper, so their color is inherited from semantic UI state and feature code does not fetch an icon font or import a separate icon library;
+- the body and numeric families use `font-display: swap`; the regular body face and semibold numeric face are preloaded, while fixed token line heights reserve layout during fallback.
+
+The copied font and SVG binaries must continue to match their committed manifests. Replacing, removing, or adding a production asset requires a ready Task and an updated license inventory.
+
+## Tokens and phone rules
+
+[`../../src/app/globals.css`](../../src/app/globals.css) owns the `--pf-*` custom properties and exposes useful aliases through the Tailwind 4 theme. The token groups cover color, typography, spacing, radii, elevation, motion, control sizing, and interaction states.
+
+- Base layout is phone-only and reflows from 320 through 430 CSS pixels without a desktop variant.
+- Every interactive primitive has at least a 44 by 44 CSS pixel target; primary, secondary, and input sizes use the larger frozen values where applicable.
+- Inputs use at least 16px text, numeric inputs request the decimal keyboard, and numeric values use Barlow Semi Condensed with tabular figures.
+- Focus uses the non-removable two-pixel `--pf-focus` outline and two-pixel offset.
+- Reduced-motion preference collapses every transition and animation duration to `0.01ms`.
+- Top content begins after `env(safe-area-inset-top)`. Bottom navigation and sticky actions include `env(safe-area-inset-bottom)` plus the frozen 12px buffer.
+- When `VisualViewport` reports an on-screen keyboard reduction greater than 150px, sticky action bars release to static positioning so a focused field is not covered.
+
+## Shells and route surface
+
+Route groups own two shells:
+
+- `(main)` provides one scroll container and the four-destination bottom navigation;
+- `(focused)/workout/current` provides the active-workout and finish routes without bottom navigation.
+
+The root route redirects to `/today`; `/history` redirects to `/history/workouts`. URLs use no trailing slash. Persisted-entity routes must validate parameters with `requireUuidRouteParam` from `src/shared/routing/uuid-route-param.ts` before querying. A malformed, missing, archived-unavailable, or otherwise unavailable identifier resolves through the shared App Router `not-found.tsx` boundary. The boundary deliberately uses neutral copy and returns to Today; feature-specific missing-record screens must not replace it.
+
+The initial Today, History, Programs, Exercises, active-workout, and finish route files expose only shell and title structure. Their domain content remains owned by later Feature Tasks.
+
+## Shared UI boundary
+
+Reusable implementation lives under `src/shared/ui` and is exported through its `index.ts`. Current shared primitives are:
+
+- normal/focused shells, bottom navigation, page frame, top bar, and sticky action bar;
+- actions, text/numeric/textarea fields, validation wiring, and selectable chips;
+- bottom sheet and destructive alert dialog wrappers;
+- save status with one retry control, badges, list rows, stat cards, skeletons, empty states, icons, and transient toasts.
+
+The sheet and destructive dialog are application-owned wrappers around Radix. They provide modal semantics, focus containment, Escape dismissal, trigger focus restoration, and cancel-safe initial focus for destructive confirmation. Feature modules must import these wrappers, not Radix directly.
+
+Feature-specific set rows, workout exercise cards, reorder behavior, restored-workout cards, and chart rendering are intentionally absent from `src/shared/ui`. Later Tasks implement them within a Feature first and promote only reuse that is demonstrated across Features. Business calculations never move into shared presentation components.
+
+## Overlay history
+
+Sheets and dialogs are transient parent-route state. Opening a wrapped overlay pushes the current URL with an application-owned marker stack in `history.state`. Browser or Android Back consumes the top marker and closes that overlay before the parent route can change. Visible close/cancel, scrim dismissal, and Escape request the same history-backed close. Nested overlays close last-opened first.
+
+Overlay state must not be encoded as a deep-linkable route or query parameter in the local MVP.
+
+## Approval-gated verification
+
+`T-009` adds React Testing Library, `user-event`, DOM matchers, and jsdom for component accessibility and interaction source. It also prepares Playwright checks for the accepted 390 by 844 and 360 by 800 phone references, shell geometry, horizontal overflow, overlay Back behavior, cancel-safe focus, Escape, and focus restoration. The browser check attaches reference-sized captures for structural review; v0.4 colors and other frozen-package exclusions are not compared against the stale v0.3 pixels. These commands remain separate from `npm run check`:
+
+```sh
+npm run test:components
+npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts
+```
+
+Do not run either command, the application for manual validation, or visual comparison before the user approves the exact `T-009` delivery commit.

@@ -18,14 +18,16 @@
     "docs:lint": "markdownlint-cli2",
     "links:internal": "lychee README.md AGENTS.md PROJECT.md docs",
     "links:external": "lychee --offline=false README.md AGENTS.md PROJECT.md docs",
+    "assets:check": "node scripts/check-ui-assets.mjs",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:types": "supabase gen types typescript --local --schema public | sed -e '${/^$/d;}' > src/server/database/database.types.ts",
     "test:db": "supabase test db",
     "test:unit": "vitest run src --exclude '**/*.integration.test.ts'",
+    "test:components": "vitest run src/shared/ui --environment jsdom",
     "test:repository": "vitest run src/server/repositories/supabase-app-settings-repository.integration.test.ts src/server/repositories/supabase-active-workout-command-repository.integration.test.ts",
     "test:browser": "playwright test",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run docs:lint && npm run links:internal"
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run assets:check && npm run docs:lint && npm run links:internal"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.112.4",
@@ -40,11 +42,15 @@
   "devDependencies": {
     "@playwright/test": "1.62.1",
     "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.6",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.3",
+    "jsdom": "30.0.1",
     "markdownlint-cli2": "0.23.2",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",

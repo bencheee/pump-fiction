@@ -1,6 +1,168 @@
 @import "tailwindcss";
 
-* {
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-400-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-500-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-600-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-700-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-400-latin.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-500-latin.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-600-latin.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-700-latin.woff2")
+    format("woff2");
+}
+
+:root {
+  color-scheme: dark;
+  --pf-bg-canvas: #0b0f0d;
+  --pf-bg-surface: #131816;
+  --pf-bg-surface-2: #1b2220;
+  --pf-bg-surface-3: #232b29;
+  --pf-border: #2c3532;
+  --pf-border-strong: #3e4946;
+  --pf-border-control: #6b7874;
+  --pf-text: #edf2f0;
+  --pf-text-2: #a8b4b0;
+  --pf-text-3: #7c8783;
+  --pf-text-3-deep: #9aa5a1;
+  --pf-accent: #8b85d6;
+  --pf-accent-strong: #a29ce8;
+  --pf-accent-dim: #242138;
+  --pf-on-accent: #0b0f0d;
+  --pf-ok: #6fbf8b;
+  --pf-warn: #e0b15e;
+  --pf-danger: #e58273;
+  --pf-focus: #c9c4ff;
+  --pf-s1: 4px;
+  --pf-s2: 8px;
+  --pf-s3: 12px;
+  --pf-s4: 16px;
+  --pf-s5: 20px;
+  --pf-s6: 24px;
+  --pf-s7: 32px;
+  --pf-r1: 4px;
+  --pf-r2: 8px;
+  --pf-r3: 12px;
+  --pf-r4: 16px;
+  --pf-r-pill: 999px;
+  --pf-type-display-size: 30px;
+  --pf-type-screen-title-size: 26px;
+  --pf-type-metric-size: 30px;
+  --pf-type-title-size: 21px;
+  --pf-type-card-title-size: 16.5px;
+  --pf-type-body-size: 15px;
+  --pf-type-input-size: 16px;
+  --pf-type-meta-size: 12.5px;
+  --pf-type-label-size: 11px;
+  --pf-type-badge-size: 10px;
+  --pf-size-icon-button: 44px;
+  --pf-size-control-chip: 44px;
+  --pf-size-primary-action: 52px;
+  --pf-size-secondary-action: 48px;
+  --pf-size-input: 48px;
+  --pf-size-input-prominent: 56px;
+  --pf-size-bottom-nav: 56px;
+  --pf-border-hairline: 1px;
+  --pf-border-emphasis: 2px;
+  --pf-border-active-marker: 3px;
+  --pf-shadow-sheet: 0 -18px 40px rgb(0 0 0 / 50%);
+  --pf-shadow-toast: 0 10px 30px rgb(0 0 0 / 50%);
+  --pf-opacity-disabled: 0.45;
+  --pf-opacity-scrim-modal: 0.66;
+  --pf-opacity-scrim-sheet: 0.62;
+  --pf-mo-fast: 120ms;
+  --pf-mo-base: 180ms;
+  --pf-mo-slow: 240ms;
+  --pf-mo-pulse: 1.4s;
+  --pf-ease: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --pf-target-min: 44px;
+  --pf-gutter: 16px;
+  --pf-bottom-buffer: 12px;
+  --pf-font-body: "Barlow", system-ui, sans-serif;
+  --pf-font-numeric: "Barlow Semi Condensed", system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-pf-canvas: var(--pf-bg-canvas);
+  --color-pf-surface: var(--pf-bg-surface);
+  --color-pf-surface-2: var(--pf-bg-surface-2);
+  --color-pf-surface-3: var(--pf-bg-surface-3);
+  --color-pf-border: var(--pf-border);
+  --color-pf-control: var(--pf-border-control);
+  --color-pf-text: var(--pf-text);
+  --color-pf-text-2: var(--pf-text-2);
+  --color-pf-text-3: var(--pf-text-3);
+  --color-pf-accent: var(--pf-accent);
+  --color-pf-accent-strong: var(--pf-accent-strong);
+  --color-pf-ok: var(--pf-ok);
+  --color-pf-warn: var(--pf-warn);
+  --color-pf-danger: var(--pf-danger);
+  --font-body: var(--pf-font-body);
+  --font-numeric: var(--pf-font-numeric);
+  --radius-pf-sm: var(--pf-r1);
+  --radius-pf: var(--pf-r2);
+  --radius-pf-lg: var(--pf-r3);
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -8,4 +170,115 @@ html,
 body {
   min-height: 100%;
   margin: 0;
+  background: var(--pf-bg-canvas);
+}
+
+body {
+  color: var(--pf-text);
+  font-family: var(--pf-font-body);
+  font-size: 15px;
+  line-height: 1.3;
+  overflow: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pf-focus);
+  outline-offset: 2px;
+}
+
+::selection {
+  color: var(--pf-on-accent);
+  background: var(--pf-accent);
+}
+
+.pf-scroll {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pf-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.pf-numeric {
+  font-family: var(--pf-font-numeric);
+  font-variant-numeric: tabular-nums;
+}
+
+.pf-safe-top {
+  padding-top: calc(var(--pf-s4) + env(safe-area-inset-top));
+}
+
+.pf-safe-bottom {
+  padding-bottom: calc(var(--pf-bottom-buffer) + env(safe-area-inset-bottom));
+}
+
+.pf-keyboard-open .pf-sticky-action {
+  position: static;
+}
+
+.pf-scrim-modal {
+  background: rgb(0 0 0 / var(--pf-opacity-scrim-modal));
+}
+
+.pf-scrim-sheet {
+  background: rgb(0 0 0 / var(--pf-opacity-scrim-sheet));
+}
+
+@keyframes pf-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+@media (width <= 320px) {
+  :root {
+    --pf-gutter: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
