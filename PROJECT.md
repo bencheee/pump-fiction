@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:37:39+02:00
+- **Last updated:** 2026-09-01T09:39:10+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-008` complete; `T-009` in progress
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Prepare the completed `T-009` mobile shell and shared UI foundation for its delivery commit and review.
+Review exact `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` without running feature tests.
 
 ## Immediate next action
 
-Create the `T-009` delivery commit and record its exact SHA for user review; feature tests remain unexecuted.
+User reviews `027b8fb4020f4f1353f38fb005d16d0391e959d8` and either requests changes or recommends it for approval; tests remain gated.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:37:39+02:00`; implementation and static checks complete, create delivery commit without running tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Review`; Codex primary agent; updated `2026-09-01T09:39:10+02:00`; user reviews exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` without running tests.
 
 ## Next
 

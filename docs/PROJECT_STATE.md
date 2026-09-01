@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` implementation and static checks are complete pending its delivery commit; feature tests remain unexecuted.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` is in user review after all static checks passed; feature tests remain unexecuted.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the `T-009` delivery commit and record its exact SHA for user review without executing feature tests.
+User reviews exact `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` without executing feature tests.
 
 ## Implementation status
 
-`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` remains `In Progress` while its completed mobile shell/UI foundation awaits delivery and review; domain feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` is `In Review`; domain feature UI behavior and deployment configuration do not exist yet.

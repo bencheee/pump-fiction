@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:37:39+02:00`
+- **Updated:** `2026-09-01T09:39:10+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-01T09:39:10+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the delivery commit after the completed implementation and static-only verification; do not run prepared feature tests.
+- **Next action:** User reviews exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8`; feature tests remain unexecuted.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `027b8fb4020f4f1353f38fb005d16d0391e959d8`
 - **Subject:** `T-009: build mobile shell and UI foundation`
-- **Committed scope:** Not created
+- **Committed scope:** Install frozen licensed assets and application-owned v0.4 tokens; add safe-area-aware main/focused shells, route and shared not-found conventions, Radix-wrapped history-backed overlays, demonstrated shared primitives, canonical usage guidance, repeatable asset checks, and unexecuted component/browser verification source.
 
 ## Review
 
@@ -127,3 +127,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:18:25+02:00` | User / Owner | `Backlog` | `Ready` | Explicit direction to start `T-009`; completed dependencies and the frozen v0.4 handoff satisfy readiness |
 | `2026-09-01T09:18:25+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted mobile shell and shared UI foundation scope |
 | `2026-09-01T09:37:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed frozen assets/tokens, main and focused shells, route/not-found and overlay-history foundations, demonstrated shared primitives, canonical guidance, unexecuted UI tests, and all planned static checks |
+| `2026-09-01T09:39:10+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `027b8fb4020f4f1353f38fb005d16d0391e959d8`; all planned static checks passed and prepared feature tests remain unexecuted |
