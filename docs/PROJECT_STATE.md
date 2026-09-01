@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. Latest `T-009` replacement `ded6f9f73e5952eafe645d07142ab456808783b9` is running the complete recorded verification from the beginning.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` through `T-009` are complete. Exact latest `T-009` replacement `ded6f9f73e5952eafe645d07142ab456808783b9` passed a fresh locked install, component tests 4/4, production Chromium/WebKit scenarios 8/8, and structural review of four exact-3x captures. All five `F-004` Tasks are `Done`; the Feature awaits User confirmation of its aggregate result.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the in-progress latest T-009 replacement verification and record its results.
+User reviews and confirms the aggregate `F-004` Application and Data Foundation result, or records a finding.
 
 ## Implementation status
 
-`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. Latest `T-009` replacement is `Testing`; domain feature UI behavior and deployment configuration do not exist yet.
+`T-005` through `T-009` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, phone shells, route and overlay foundations, shared UI primitives, and their approved verification are complete. `F-004` awaits aggregate User confirmation; domain feature UI behavior and deployment configuration do not exist yet.

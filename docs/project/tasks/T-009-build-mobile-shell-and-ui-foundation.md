@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T17:01:55+02:00`
+- **Updated:** `2026-09-01T17:04:42+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T16:05:41+02:00` for latest replacement
 - **Approval requested:** `2026-09-01T17:01:55+02:00` for latest replacement
 - **Approved:** `2026-09-01T17:01:55+02:00` for latest replacement
 - **Testing started:** `2026-09-01T17:01:55+02:00` for latest replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-01T17:04:42+02:00`
 - **Canceled:** Not reached
-- **Next action:** Complete the entire recorded test plan from the beginning against exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` and record the results.
+- **Next action:** None for this Task; parent `F-004` awaits the User's aggregate feature-result confirmation.
 
 ## Scope
 
@@ -71,7 +71,7 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:components` for field accessibility wiring, sheet/dialog focus management, Escape, and focus restoration; then run `npm run test:browser -- tests/browser/mobile-ui-foundation.spec.ts` for the exact 390 × 844 and 360 × 800 shell geometry/captures, touch targets, horizontal overflow, focused-shell navigation exclusion, overlay Back dismissal, cancel-safe focus, Escape, and focus restoration. Review captures structurally under the frozen v0.3 reference exclusions; do not compare v0.4 colors or corrected cue areas to stale v0.3 pixels.
 - **Authorized commit:** `ded6f9f73e5952eafe645d07142ab456808783b9`
-- **Results:** Against exact then-approved original delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review failed because the Next.js development indicator overlapped Today and Chromium inherited 2.75x instead of 3x. Against exact then-approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`, another clean `npm ci` installed 653 packages with no vulnerabilities and component tests passed 4/4, but zero browser scenarios started: Playwright timed out after 60 seconds because its readiness URL was the T-008 harness, which deliberately returns 404 in production. Direct diagnosis confirmed the production build and server become ready in seconds and `/today` returns normally. T-009 returned to `In Progress`; the readiness-URL correction requires another replacement and new approval before the full plan runs again. Vitest emitted its existing future config-loader warning, and Playwright emitted harmless color-environment warnings.
+- **Results:** Against exact then-approved original delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` on 2026-09-01, a clean `npm ci` installed 653 packages with no vulnerabilities; `npm run test:components` passed 4/4 tests across 2/2 files; the scoped Playwright run passed 8/8 automated Chromium/WebKit scenarios and repeated 8/8 with the HTML reporter. Structural review failed because the Next.js development indicator overlapped Today and Chromium inherited 2.75x instead of 3x. Against exact then-approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`, another clean `npm ci` installed 653 packages with no vulnerabilities and component tests passed 4/4, but zero browser scenarios started: Playwright timed out after 60 seconds because its readiness URL was the T-008 harness, which deliberately returns 404 in production. Direct diagnosis confirmed the production build and server become ready in seconds and `/today` returns normally. Against exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9`, a fresh isolated `npm ci` installed 653 packages with no vulnerabilities, component tests passed 4/4 across 2/2 files, and the scoped production Playwright run passed 8/8 Chromium/WebKit scenarios. All four retained captures passed structural review with no development indicator or horizontal clipping; their physical dimensions were exactly 1170 × 2532 for the 390 × 844 references and 1080 × 2400 for the 360 × 800 references, confirming 3x capture fidelity. Vitest emitted its existing future config-loader warning, and npm/Playwright emitted non-blocking install-script and color-environment warnings.
 
 ## Delivery commit
 
@@ -109,15 +109,15 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -143,3 +143,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T17:01:55+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` with no additional findings and recommended approval |
 | `2026-09-01T17:01:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact latest replacement and authorized the complete recorded T-009 test plan from the beginning |
 | `2026-09-01T17:01:55+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` |
+| `2026-09-01T17:04:42+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Clean install completed without vulnerabilities, component tests passed 4/4, production Chromium/WebKit scenarios passed 8/8, and all four exact-3x captures passed structural review without a development indicator or clipping |

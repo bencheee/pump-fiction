@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T17:01:55+02:00`
-- **Progress:** `4/5 required Tasks Done`
+- **Updated:** `2026-09-01T17:04:42+02:00`
+- **Progress:** `5/5 required Tasks Done; awaiting User feature-result confirmation`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -36,7 +36,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 ## Dependencies and blockers
 
 - Dependencies: completed `F-002`; accepted `T-004` output before any implementation Task starts
-- Blockers: None; `T-009` is in progress
+- Blockers: None; all required Tasks are `Done`
 
 ## Related decisions and documents
 
@@ -54,10 +54,10 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden
 - [ ] User confirms the feature result
 
 ## History
@@ -113,3 +113,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T16:04:54+02:00` | Codex primary agent / Executor | Corrected `T-009` production readiness pending replacement delivery | Playwright now polls `/today`; the correction is statically verified without rerunning feature tests |
 | `2026-09-01T16:05:41+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-009` for review | Replacement `ded6f9f73e5952eafe645d07142ab456808783b9` changes readiness to `/today`; corrected feature tests remain unexecuted |
 | `2026-09-01T17:01:55+02:00` | User / Reviewer and Approver and Codex primary agent / Tester | Approved and began latest `T-009` replacement verification | Exact replacement `ded6f9f73e5952eafe645d07142ab456808783b9` is running the complete recorded plan from the beginning in an isolated worktree |
+| `2026-09-01T17:04:42+02:00` | Codex primary agent / Tester | Completed `T-009`; all five required Tasks are `Done` | Exact latest replacement passed the complete recorded component, production-browser, and structural-capture verification; `F-004` awaits User confirmation of the aggregate feature result |

@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-08-31T15:49:04+02:00`
+- **Updated:** `2026-09-01T17:04:42+02:00`
 - **Progress:** `3/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -32,7 +32,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-001`](../features/F-001-local-technical-architecture.md) — Local Technical Architecture (`Done`)
 - [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`Done`)
 - [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Done`)
-- [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Now / 1`; `3/5 Tasks Done`; paused before `T-008`)
+- [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Now / 1`; `5/5 Tasks Done`; awaiting User feature-result confirmation)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Next / 3`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Next / 4`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Next / 5`)
@@ -90,3 +90,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-08-31T12:06:31+02:00` | User / Owner and Approver | Completed `F-003` and started `F-004` | Approved exact `T-004` delivery and cleared `T-005` to begin application initialization |
 | `2026-08-31T15:26:48+02:00` | Codex primary agent / Tester and Executor | Completed `T-006` and started `T-007` within `F-004` | Approved schema replacement passed all recorded verification; server data and application boundaries are next |
 | `2026-08-31T15:49:04+02:00` | Codex primary agent / Tester | Completed `T-007` within `F-004` and paused | Approved unit and local repository verification passed; Owner explicitly directed that `T-008` not start |
+| `2026-09-01T17:04:42+02:00` | Codex primary agent / Tester | Completed all required Tasks within `F-004` | Approved latest `T-009` replacement passed its full verification; `F-004` remains incomplete until the User confirms the aggregate feature result |
