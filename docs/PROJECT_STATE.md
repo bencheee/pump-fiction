@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` remains `In Progress` after correcting its failed capture fidelity to use production build/start, retained HTML attachments, and explicit 3x browser projects; the correction is statically verified pending replacement delivery.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73` is in review after correcting production-server, report-retention, and explicit 3x capture fidelity; corrected tests remain unexecuted.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the statically verified T-009 replacement delivery and record its exact SHA for new review and approval without rerunning feature tests.
+User reviews exact T-009 replacement `746985808e7e587b1aa4366d00b133f121d6cd73` without rerunning feature tests.
 
 ## Implementation status
 
-`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` is `In Progress` for a test-fidelity correction; domain feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` replacement is `In Review`; domain feature UI behavior and deployment configuration do not exist yet.

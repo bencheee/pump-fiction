@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:48:03+02:00`
+- **Updated:** `2026-09-01T09:48:54+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
-- **Review started:** `2026-09-01T09:39:10+02:00`
+- **Review started:** `2026-09-01T09:48:54+02:00` for replacement
 - **Approval requested:** Not reached for replacement; prior delivery requested and approved at `2026-09-01T09:40:50+02:00`
 - **Approved:** Not reached for replacement; prior approval invalidated at `2026-09-01T09:45:35+02:00`
 - **Testing started:** `2026-09-01T09:42:09+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified replacement delivery for review without rerunning feature tests.
+- **Next action:** User reviews exact replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73`; corrected feature tests remain unexecuted.
 
 ## Scope
 
@@ -75,15 +75,15 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `027b8fb4020f4f1353f38fb005d16d0391e959d8`
-- **Subject:** `T-009: build mobile shell and UI foundation`
-- **Committed scope:** Install frozen licensed assets and application-owned v0.4 tokens; add safe-area-aware main/focused shells, route and shared not-found conventions, Radix-wrapped history-backed overlays, demonstrated shared primitives, canonical usage guidance, repeatable asset checks, and unexecuted component/browser verification source.
+- **Delivery commit SHA:** `746985808e7e587b1aa4366d00b133f121d6cd73` (replaces `027b8fb4020f4f1353f38fb005d16d0391e959d8`)
+- **Subject:** `T-009: correct visual test fidelity`
+- **Committed scope:** Preserve the original mobile shell/UI foundation while changing Playwright visual verification to build/start production, prohibit unknown-server reuse, retain HTML-report captures, set both browser projects to 3x, assert runtime device scale, and record the invalidated prior verification evidence.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Prior delivery reviewed at `2026-09-01T09:40:50+02:00`; replacement not reviewed
-- **Outcome:** Replacement pending
+- **Reviewed at:** Prior delivery reviewed at `2026-09-01T09:40:50+02:00`; replacement review started `2026-09-01T09:48:54+02:00`
+- **Outcome:** Replacement in review
 - **Findings:** Post-approval structural capture review found the Next.js development indicator covering the active Today destination in all four reference-sized captures. It also exposed Chromium captures at the inherited Pixel 5 scale of 2.75x (`1073 × 2321` and `990 × 2200`) instead of the required 3x physical sizes. Visual checks must run against a production server, retain their HTML-report attachments, and assert an explicit 3x device scale in both browser projects.
 
 ## Approval
@@ -133,3 +133,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:42:09+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and mobile-browser verification in an isolated worktree at exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` |
 | `2026-09-01T09:45:35+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and automated browser scenarios passed 8/8, but structural review found the Next.js development indicator in all four reference captures; approval is invalidated and production-server capture requires a replacement delivery |
 | `2026-09-01T09:48:03+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected visual test fidelity to build/start production, retain HTML-report attachments, require 3x in both projects, and assert the runtime device scale; all static checks passed without rerunning feature tests |
+| `2026-09-01T09:48:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73`; static checks passed and corrected feature tests remain unexecuted |

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:48:03+02:00
+- **Last updated:** 2026-09-01T09:48:54+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-008` complete; `T-009` correction in progress
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Prepare the completed T-009 visual-test-fidelity correction for its replacement delivery commit.
+Review exact T-009 replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73` without running corrected feature tests.
 
 ## Immediate next action
 
-Create the T-009 replacement delivery and record its exact SHA for user review; do not rerun feature tests before new approval.
+User reviews `746985808e7e587b1aa4366d00b133f121d6cd73` and either requests changes or recommends it for approval; tests remain gated.
 
 ## Now
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:48:03+02:00`; static correction complete, create replacement delivery without rerunning tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `In Review`; Codex primary agent; updated `2026-09-01T09:48:54+02:00`; user reviews exact replacement `746985808e7e587b1aa4366d00b133f121d6cd73` without running tests.
 
 ## Next
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` correction in progress)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` replacement in review)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
