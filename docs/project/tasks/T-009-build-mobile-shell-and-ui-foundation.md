@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:54:46+02:00`
+- **Updated:** `2026-09-01T09:55:52+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:48:54+02:00` for replacement
 - **Approval requested:** `2026-09-01T09:54:46+02:00` for replacement
 - **Approved:** `2026-09-01T09:54:46+02:00` for replacement
-- **Testing started:** `2026-09-01T09:42:09+02:00`
+- **Testing started:** `2026-09-01T09:55:52+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Repeat the complete recorded T-009 test plan from the beginning against exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` in an isolated worktree.
+- **Next action:** Complete the repeated T-009 component, browser, and retained-capture verification against exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` and record the results.
 
 ## Scope
 
@@ -136,3 +136,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:48:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement delivery `746985808e7e587b1aa4366d00b133f121d6cd73`; static checks passed and corrected feature tests remain unexecuted |
 | `2026-09-01T09:54:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `746985808e7e587b1aa4366d00b133f121d6cd73` with no additional findings and recommended approval |
 | `2026-09-01T09:54:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-009 test plan from the beginning |
+| `2026-09-01T09:55:52+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73` |

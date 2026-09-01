@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T09:54:46+02:00
+- **Last updated:** 2026-09-01T09:55:52+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `T-008` complete; `T-009` replacement approved for testing
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-Verify exact approved T-009 replacement `746985808e7e587b1aa4366d00b133f121d6cd73` with the complete recorded test plan.
+Run the complete recorded T-009 test plan against exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`.
 
 ## Immediate next action
 
-Repeat the complete T-009 test plan from the beginning in an isolated worktree at exact approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`.
+Complete the in-progress replacement verification and record its results.
 
 ## Now
 
-No Task is in progress; exact approved T-009 replacement is ready for its complete recorded tests.
+- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — `Testing`; Codex primary agent; updated `2026-09-01T09:55:52+02:00`; repeat the complete recorded test plan against the exact approved replacement.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — approved replacement `746985808e7e587b1aa4366d00b133f121d6cd73`; repeat the complete recorded verification from the beginning.
+None; `T-009` replacement verification is in progress.
 
 ## Recently completed Tasks
 
@@ -49,6 +49,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` replacement approved for testing)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`4/5 Tasks Done`; `T-009` replacement testing)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
