@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T08:53:05+02:00
+- **Last updated:** 2026-09-01T08:53:52+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` lockfile replacement in progress
+- **Implementation:** `T-007` complete; `T-008` latest replacement in review
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Deliver the statically verified `T-008` platform-metadata correction without changing application or test behavior.
+Review the statically verified `T-008` lockfile-only replacement; feature tests remain locked.
 
 ## Immediate next action
 
-Create and record the lockfile-only `T-008` replacement; do not rerun feature tests before new approval.
+User reviews exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` and either records findings or recommends it for approval.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Progress`; Codex primary agent; updated `2026-09-01T08:53:05+02:00`; create and record the lockfile-only replacement; all feature tests are locked.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Review`; User reviewer; updated `2026-09-01T08:53:52+02:00`; review exact lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; all feature tests are locked.
 
 ## Next
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` lockfile replacement pending delivery)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` latest replacement in review)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

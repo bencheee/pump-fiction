@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. Approved `T-008` replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` returned to `In Progress`: unit tests passed 9/9, but incorrect lockfile platform metadata omitted the Supabase CLI binary before database startup, so remaining tests did not run.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-007` server data and application boundary delivery `14d97227734c812d8b0cd875c372b1ffa0ebdea0` is complete after 3/3 unit tests and 1/1 real local repository integration test passed following a clean database reset. Latest `T-008` lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` is in review after the prior approved replacement passed unit tests 9/9 but omitted the Supabase CLI binary before database startup; feature tests remain unexecuted after the lockfile correction.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create and record the statically verified lockfile-only `T-008` replacement, then obtain review and approval before rerunning the complete feature test plan.
+User reviews exact `T-008` lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; do not rerun feature tests before its approval.
 
 ## Implementation status
 
-`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. The `T-008` lockfile-only replacement is statically verified pending delivery; feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, and `T-007` are `Done`; the application baseline, declarative local schema, generated database types, server-only client and import direction, serializable operation contracts, app-settings repository/query/mutation boundaries, and their approved verification are complete. The latest `T-008` lockfile-only replacement is statically verified in `In Review`; feature UI behavior and deployment configuration do not exist yet.

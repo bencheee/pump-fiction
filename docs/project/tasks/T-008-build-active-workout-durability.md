@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T08:53:05+02:00`
+- **Updated:** `2026-09-01T08:53:52+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
-- **Review started:** `2026-08-31T16:43:18+02:00` for replacement
+- **Review started:** `2026-09-01T08:53:52+02:00` for latest replacement
 - **Approval requested:** Not reached for next replacement
 - **Approved:** Not reached for next replacement
 - **Testing started:** `2026-09-01T08:48:42+02:00` for approved replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create and record the statically verified lockfile-only replacement; do not rerun feature tests.
+- **Next action:** User reviews latest replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; feature tests remain locked.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` (superseded after failed clean-install/runtime setup; next replacement not created)
+- **Delivery commit SHA:** `9dab09e2520be061a1c8832526bfa2bdb19efec3` (replaces `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6`, which replaced `0ed5ebc8c042994c74cc991acc13631ca2ec895f`)
 - **Subject:** `T-008: correct platform lock metadata`
-- **Committed scope:** Replacement pending: restore correct OS/CPU/libc metadata for locked optional binaries, record the failed setup, and clear its approval; application and test behavior remain unchanged.
+- **Committed scope:** Restore correct OS/CPU/libc metadata for locked optional binaries, record the failed clean-install/runtime setup, and clear its approval; application and test behavior remain unchanged.
 
 ## Review
 
@@ -136,3 +136,4 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-08-31T16:45:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-01T08:48:42+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` |
 | `2026-09-01T08:50:04+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 9/9, but incorrect optional-package platform metadata caused the clean installation to omit the Supabase CLI binary; the database stack never started and remaining tests did not run |
+| `2026-09-01T08:53:52+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; a fresh install exposes Supabase CLI `2.116.0`, static checks passed, and feature tests were not rerun |
