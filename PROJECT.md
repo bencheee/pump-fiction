@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T08:59:19+02:00
+- **Last updated:** 2026-09-01T09:05:32+02:00
 - **Current phase:** Application and data foundation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-007` complete; `T-008` latest replacement approved for testing
+- **Implementation:** `T-007` complete; `T-008` test-script replacement in progress
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-Verify the approved `T-008` lockfile-only replacement through the complete recorded test plan.
+Deliver the statically verified explicit `T-008` repository test selection without changing application or test behavior.
 
 ## Immediate next action
 
-Run the complete recorded `T-008` test plan from the beginning against exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` in a fresh isolated worktree.
+Create and record the test-script-only replacement; do not rerun feature tests before new approval.
 
 ## Now
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `Approved`; Codex primary agent; updated `2026-09-01T08:59:19+02:00`; run the complete authorized test plan against exact replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`.
+- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — `In Progress`; Codex primary agent; updated `2026-09-01T09:05:32+02:00`; create and record the test-script-only replacement; all feature tests are locked.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — approved latest replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; rerun unit, clean local repository, and Chromium/WebKit tests from the beginning.
+None.
 
 ## Recently completed Tasks
 
@@ -51,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` latest replacement approved)
+- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`3/5 Tasks Done`; `T-008` test-script replacement pending delivery)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
