@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` is approved for only its recorded component and mobile-browser verification.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-008` active-workout durability replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` is complete after a fresh locked install, unit tests 9/9, clean database reset, repository integration 2/2, and mobile Chromium/WebKit scenarios 6/6 passed. `T-009` is testing exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` with only its recorded component and mobile-browser verification.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run only the recorded T-009 verification against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` in an isolated worktree.
+Complete the in-progress T-009 verification against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` and record its results.
 
 ## Implementation status
 
-`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` is `Approved` for testing; domain feature UI behavior and deployment configuration do not exist yet.
+`T-005`, `T-006`, `T-007`, and `T-008` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, and their approved verification are complete. `T-009` is `Testing`; domain feature UI behavior and deployment configuration do not exist yet.

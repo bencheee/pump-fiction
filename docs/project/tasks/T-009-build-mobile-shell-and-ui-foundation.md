@@ -1,7 +1,7 @@
 # T-009 — Build mobile shell and shared UI foundation
 
 - **Feature:** `F-004`
-- **Status:** `Approved`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T09:40:50+02:00`
+- **Updated:** `2026-09-01T09:42:09+02:00`
 - **Started:** `2026-09-01T09:18:25+02:00`
 - **Review started:** `2026-09-01T09:39:10+02:00`
 - **Approval requested:** `2026-09-01T09:40:50+02:00`
 - **Approved:** `2026-09-01T09:40:50+02:00`
-- **Testing started:** Not reached
+- **Testing started:** `2026-09-01T09:42:09+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded component and mobile-browser test plan against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` in an isolated worktree.
+- **Next action:** Complete only the recorded component and mobile-browser test plan against exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` in an isolated worktree and record the results.
 
 ## Scope
 
@@ -130,3 +130,4 @@ Implement the application-owned v0.4 design tokens, local fonts/icons, normal an
 | `2026-09-01T09:39:10+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery commit `027b8fb4020f4f1353f38fb005d16d0391e959d8`; all planned static checks passed and prepared feature tests remain unexecuted |
 | `2026-09-01T09:40:50+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` with no findings and recommended approval |
 | `2026-09-01T09:40:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only its recorded component and mobile-browser tests |
+| `2026-09-01T09:42:09+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and mobile-browser verification in an isolated worktree at exact approved delivery `027b8fb4020f4f1353f38fb005d16d0391e959d8` |
