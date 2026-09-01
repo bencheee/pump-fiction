@@ -1,7 +1,7 @@
 # T-008 — Build active-workout command durability foundation
 
 - **Feature:** `F-004`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-08-31T11:43:22+02:00`
-- **Updated:** `2026-09-01T08:53:52+02:00`
+- **Updated:** `2026-09-01T08:59:19+02:00`
 - **Started:** `2026-08-31T16:00:01+02:00`
 - **Review started:** `2026-09-01T08:53:52+02:00` for latest replacement
-- **Approval requested:** Not reached for next replacement
-- **Approved:** Not reached for next replacement
+- **Approval requested:** `2026-09-01T08:59:19+02:00` for latest replacement
+- **Approved:** `2026-09-01T08:59:19+02:00` for latest replacement
 - **Testing started:** `2026-09-01T08:48:42+02:00` for approved replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews latest replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; feature tests remain locked.
+- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` in a fresh isolated worktree.
 
 ## Scope
 
@@ -70,7 +70,7 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run `npm run test:unit`; reset local Supabase to the exact migration history, export its server environment, and run `npm run test:repository` for concurrent idempotency, revision conflict, transaction, and timer coverage; install the locked Chromium/WebKit binaries and run `npm run test:browser` for IndexedDB persistence, reload/retry, FIFO, acknowledgement, and conflict recovery scenarios.
-- **Authorized commit:** Not authorized; approval of `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` was invalidated by the failed clean-install/runtime setup.
+- **Authorized commit:** `9dab09e2520be061a1c8832526bfa2bdb19efec3`
 - **Results:** Superseded delivery `0ed5ebc8c042994c74cc991acc13631ca2ec895f` failed as previously recorded. Against exact approved replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` on 2026-09-01 with Node.js `24.20.0` and Vitest `4.1.11`, a fresh `npm ci` completed and `npm run test:unit` passed 9/9 assertions across 3/3 files. The next database phase exited before starting or resetting Supabase because the committed lockfile incorrectly marked the macOS x64 CLI binary with Linux `musl` metadata, causing npm to omit it. Repository integration and Chromium/WebKit tests did not run. A lockfile-only replacement and new approval are required; the passed unit result will be rerun from the beginning after approval.
 
 ## Delivery commit
@@ -82,16 +82,16 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed for next replacement
-- **Outcome:** Changes required after approved replacement verification
+- **Reviewed at:** `2026-09-01T08:59:19+02:00`
+- **Outcome:** Recommended latest replacement for approval
 - **Findings:** Prior test-layer findings are corrected. Fresh installation exposed incorrect optional-package platform metadata in `package-lock.json`, which omitted the Supabase CLI binary required for the database phase.
 
 ## Approval
 
-- **Approved commit:** Not approved; replacement approval invalidated by failed setup
-- **Approved by:** Not approved for next replacement
-- **Approved at:** Not approved for next replacement
-- **Approval note:** Exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` was approved and began verification, but its lockfile omitted the platform CLI binary and requires another replacement delivery.
+- **Approved commit:** `9dab09e2520be061a1c8832526bfa2bdb19efec3`
+- **Approved by:** User
+- **Approved at:** `2026-09-01T08:59:19+02:00`
+- **Approval note:** User explicitly approved the exact lockfile-only replacement, authorizing the complete recorded test plan from the beginning.
 
 ## Definition of Ready
 
@@ -109,8 +109,8 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
 - [x] Scope and acceptance criteria are satisfied
 - [x] Canonical documentation and required ADRs are current
 - [ ] Authorized feature tests passed
@@ -137,3 +137,5 @@ Implement the typed active-workout command envelope, dedicated POST Route Handle
 | `2026-09-01T08:48:42+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification from the beginning in a fresh isolated worktree at exact replacement `3c5ada6590feab5ce2d5ccd0b6732113f3f7f4e6` |
 | `2026-09-01T08:50:04+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 9/9, but incorrect optional-package platform metadata caused the clean installation to omit the Supabase CLI binary; the database stack never started and remaining tests did not run |
 | `2026-09-01T08:53:52+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3`; a fresh install exposes Supabase CLI `2.116.0`, static checks passed, and feature tests were not rerun |
+| `2026-09-01T08:59:19+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` with no additional findings and recommended approval |
+| `2026-09-01T08:59:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved the exact latest replacement and authorized the complete recorded test plan from the beginning |

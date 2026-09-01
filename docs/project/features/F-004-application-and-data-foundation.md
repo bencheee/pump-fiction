@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T08:53:52+02:00`
+- **Updated:** `2026-09-01T08:59:19+02:00`
 - **Progress:** `3/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -93,3 +93,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T08:50:04+02:00` | Codex primary agent / Tester | Returned `T-008` replacement to `In Progress` | Unit tests passed 9/9, but incorrect lockfile platform metadata omitted the Supabase CLI binary before database startup; remaining tests stopped and another replacement approval is required |
 | `2026-09-01T08:53:05+02:00` | Codex primary agent / Executor | Corrected `T-008` lockfile pending replacement delivery | Platform metadata now matches the canonical Node 24/npm 11 lock graph, a fresh install exposes Supabase CLI `2.116.0`, and static checks passed without rerunning feature tests |
 | `2026-09-01T08:53:52+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-008` for review | Lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` restores platform metadata; application and test behavior are unchanged and feature tests remain unexecuted after the correction |
+| `2026-09-01T08:59:19+02:00` | User / Reviewer and Approver | Approved latest `T-008` replacement delivery | Exact lockfile-only replacement `9dab09e2520be061a1c8832526bfa2bdb19efec3` may run the complete recorded test plan from the beginning |
