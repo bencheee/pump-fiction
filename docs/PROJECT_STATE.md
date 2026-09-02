@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create and deliver the active `T-010` Exercise Library operations commit for User review without running feature tests.
+User reviews exact `T-010` Exercise Library operations delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; no feature test may run before approval.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, which owns exercise-domain validation, application operations, transactional persistence, server composition, and prepared approval-gated verification; `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.
+`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, whose exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` is `In Review` with prepared but unexecuted approval-gated verification; `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.

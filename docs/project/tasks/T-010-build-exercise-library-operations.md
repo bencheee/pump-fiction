@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:21:51+02:00`
+- **Updated:** `2026-09-02T09:24:32+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-02T09:24:32+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the one scoped delivery commit and hand its exact SHA to the User for review; feature tests remain unexecuted.
+- **Next action:** User reviews exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; feature tests remain forbidden until exact-commit approval.
 
 ## Scope
 
@@ -78,9 +78,9 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
 - **Subject:** `T-010: build exercise library operations`
-- **Committed scope:** Not created
+- **Committed scope:** Two-Task `F-005` breakdown; feature-owned exercise domain, allowed-mode validation, repository contract and ordinary operations; transactional definition schema/functions, reviewed migration, generated types, server-only Supabase repository/composition and thin Server Actions; compatibility updates and unexecuted unit/database/repository tests; synchronized canonical and project documentation.
 
 ## Review
 
@@ -130,3 +130,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T08:59:17+02:00` | User / Owner | `Backlog` | `Ready` | Directed work to begin on `F-005`; completed dependencies and the accepted canonical scope satisfy readiness |
 | `2026-09-02T08:59:17+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the exercise-library application and persistence delivery |
 | `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped operations, transactional schema/migration, generated types, canonical guidance, and unexecuted tests; all planned static checks passed |
+| `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; all static checks passed and feature tests remain unexecuted |

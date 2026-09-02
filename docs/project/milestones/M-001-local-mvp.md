@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T09:21:51+02:00`
+- **Updated:** `2026-09-02T09:24:32+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -94,3 +94,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T08:55:13+02:00` | User / Owner | Completed `F-004`; Milestone remains incomplete | Confirmed the aggregate Application and Data Foundation result; `M-001` advances to 4/10 required Features Done |
 | `2026-09-02T08:59:17+02:00` | User / Owner | Started `F-005` through `T-010` | Confirmed the two-Task Exercise Library breakdown and began its application/persistence delivery |
 | `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | Completed `T-010` implementation scope pending delivery | Exercise Library operations are statically verified; approval-gated verification remains unexecuted |
+| `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | Delivered `T-010` for review | Exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` awaits User review before any feature testing |

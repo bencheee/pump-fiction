@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:21:51+02:00
+- **Last updated:** 2026-09-02T09:24:32+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is implementing the exercise-domain, application, and persistence operations required by the later mobile experience.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) delivered exercise-domain, application, and persistence operations in exact commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` and is `In Review`.
 
 ## Immediate next action
 
-Codex creates the scoped `T-010` delivery commit and hands its exact SHA to the User for review; feature tests remain unexecuted.
+User reviews exact `T-010` delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; feature tests remain forbidden until approval.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:21:51+02:00`; next: create the scoped delivery commit for User review.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T09:24:32+02:00`; next: User reviews exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`.
 
 ## Next
 
