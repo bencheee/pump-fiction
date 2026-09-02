@@ -2,9 +2,9 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ExerciseForm } from "./exercise-form";
 
@@ -28,19 +28,25 @@ vi.mock("next/navigation", () => ({
 
 describe("ExerciseForm", () => {
   beforeEach(() => vi.clearAllMocks());
+  afterEach(cleanup);
 
   it("shows only load modes compatible with the selected type", async () => {
     const user = userEvent.setup();
     render(<ExerciseForm />);
 
     expect(
-      screen.getByRole("button", { name: /Weight Kilograms and reps/ }),
+      screen.getByRole("button", { name: /WeightKilograms and reps/ }),
     ).toBeVisible();
     expect(
       screen.queryByRole("button", { name: /Assistance weight/ }),
     ).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Assisted" }));
+    await user.click(
+      within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
+        "button",
+        { name: "Assisted" },
+      ),
+    );
 
     expect(
       screen.getByRole("button", { name: /Assistance weight/ }),
@@ -57,9 +63,14 @@ describe("ExerciseForm", () => {
     const user = userEvent.setup();
     render(<ExerciseForm />);
 
-    await user.click(screen.getByRole("button", { name: "Bodyweight" }));
     await user.click(
-      screen.getByRole("button", { name: /Bodyweight Reps only/ }),
+      within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
+        "button",
+        { name: "Bodyweight" },
+      ),
+    );
+    await user.click(
+      screen.getByRole("button", { name: /BodyweightReps only/ }),
     );
     await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 

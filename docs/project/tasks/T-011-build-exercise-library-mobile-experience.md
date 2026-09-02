@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:44:18+02:00`
+- **Updated:** `2026-09-02T10:47:15+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T10:41:09+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct only the component-test matchers and cleanup, statically verify the test-only replacement under Node.js 24.20.0/npm 11.19.0, and deliver a new exact SHA for fresh approval; no further feature test is authorized.
+- **Next action:** Create the statically verified test-only replacement and hand its exact SHA to the User for fresh approval; no further feature test is authorized.
 
 ## Scope
 
@@ -66,7 +66,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Passed on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 81 files, all 570 internal links, and `git diff --check`. No feature or prepared test ran.
+- Results: Passed for the original delivery and pending test-only replacement on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 81 files, all 570 internal links, and `git diff --check`. No feature test ran after the correction.
 
 ## Test plan and results
 
@@ -78,7 +78,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
+- **Delivery commit SHA:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` (replacement required)
 - **Subject:** `T-011: build exercise library mobile experience`
 - **Committed scope:** Dynamic S05 Exercise Library with active/archived search, empty/loading/failure states, and opaque edit routes; S06 create/edit form with compatible mode controls, persistent note and snapshot messaging, split usage, save/retry feedback, archive/reactivate flows, and route validation; prepared but unexecuted component and Chromium/WebKit phone-browser tests; synchronized project records.
 
@@ -136,3 +136,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:41:09+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-011 tests |
 | `2026-09-02T10:43:55+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component verification in an isolated worktree at exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` |
 | `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests failed 0/2 due to test matcher and cleanup defects; browser tests stopped, approval invalidated, and a test-only replacement is required |
+| `2026-09-02T10:47:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Added explicit Testing Library cleanup and corrected accessible-name matchers; all static checks passed under required Node.js 24.20.0/npm 11.19.0 without rerunning feature tests |
