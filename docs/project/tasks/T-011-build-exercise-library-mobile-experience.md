@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T13:10:37+02:00`
+- **Updated:** `2026-09-02T13:11:15+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
-- **Approval requested:** `2026-09-02T13:02:33+02:00`
-- **Approved:** `2026-09-02T13:02:33+02:00`
+- **Approval requested:** Not reached for latest replacement
+- **Approved:** Not reached for latest replacement
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified save-feedback replacement and hand its exact SHA to the User for fresh approval; no further feature test is authorized.
+- **Next action:** User reviews exact save-feedback replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; no further feature test is authorized before fresh approval.
 
 ## Scope
 
@@ -78,16 +78,16 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` (behavioral replacement required)
-- **Subject:** `T-011: isolate exercise component tests`
-- **Committed scope:** Original S05/S06 delivery plus explicit Testing Library cleanup and accessible-name matchers corrected to reflect nested-span names; no application behavior changed.
+- **Delivery commit SHA:** `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` (latest replacement; supersedes `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`)
+- **Subject:** `T-011: preserve create save feedback`
+- **Committed scope:** Original S05/S06 delivery and corrected test isolation plus successful-create `Saved` feedback preserved across redirect with the transient URL marker removed after hydration; regression coverage added.
 
 ## Review
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-02T10:41:09+02:00`
-- **Outcome:** Changes requested after browser verification exposed a behavior correction
-- **Findings:** Successful create redirects to the edit route, remounts the form, and immediately loses the required visible `Saved` feedback state.
+- **Outcome:** Latest replacement awaiting review
+- **Findings:** Browser finding is corrected in replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; fresh review is pending.
 
 ## Approval
 
@@ -142,3 +142,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded verification in isolation at exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0 |
 | `2026-09-02T13:07:55+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/2 and malformed-route browser scenarios passed 2/2, but both full mobile flows exposed lost successful-create save feedback after redirect; approval invalidated and a behavioral replacement is required |
 | `2026-09-02T13:10:37+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Preserved successful-create `Saved` feedback across redirect and added regression coverage; all static checks passed without rerunning feature tests |
+| `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; static checks passed and feature tests remain unexecuted after correction |

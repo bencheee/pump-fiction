@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct and statically verify T-011 successful-create save feedback, then deliver a behavioral replacement for fresh approval.
+User reviews exact T-011 save-feedback replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; no feature test may run before fresh approval.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; replacement verification passed component tests 2/2 and malformed-route browser scenarios 2/2, but both full mobile flows exposed lost successful-create save feedback after redirect. Approval is invalidated pending a behavioral replacement. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; latest replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` preserves successful-create save feedback across redirect and awaits fresh approval. Prior verification passed component tests 2/2 and malformed-route browser scenarios 2/2 before exposing that behavior. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.

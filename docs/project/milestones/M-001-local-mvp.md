@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T13:07:55+02:00`
+- **Updated:** `2026-09-02T13:11:15+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -111,3 +111,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | Approved exact T-011 replacement for testing | Run the complete recorded verification from the beginning against `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` |
 | `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | Began T-011 replacement verification | Running only the approved component and Chromium/WebKit phone-browser plan |
 | `2026-09-02T13:07:55+02:00` | Codex primary agent / Tester | T-011 verification requires a behavioral replacement | Successful-create save feedback is lost after redirect; approval invalidated and remaining lifecycle assertions did not run |
+| `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | Delivered T-011 save-feedback replacement for review | Exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` awaits fresh User approval |
