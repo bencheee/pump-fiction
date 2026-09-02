@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T10:41:09+02:00`
+- **Updated:** `2026-09-02T10:44:18+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -27,7 +27,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 ## Tasks
 
 - [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`Done`; approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`)
-- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Approved`; delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`)
+- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`In Progress`; test-only replacement required)
 
 ## Dependencies and blockers
 
@@ -75,3 +75,4 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | Completed T-011 implementation and static verification | Prepare its exact delivery commit for User review; feature tests remain gated |
 | `2026-09-02T10:35:12+02:00` | Codex primary agent / Executor | Delivered `T-011` for review | Exact commit `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` is ready for User review; feature tests remain unexecuted |
 | `2026-09-02T10:41:09+02:00` | User / Reviewer and Approver | Approved exact `T-011` delivery for testing | Commit `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` may run only its recorded scoped verification |
+| `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | Returned `T-011` to `In Progress` | Component tests exposed matcher and cleanup defects; browser tests stopped and a test-only replacement requires fresh approval |

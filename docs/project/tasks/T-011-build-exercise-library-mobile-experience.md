@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `Approved`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:41:09+02:00`
+- **Updated:** `2026-09-02T10:44:18+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T10:41:09+02:00`
 - **Approved:** `2026-09-02T10:41:09+02:00`
-- **Testing started:** Not reached
+- **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded T-011 component and Chromium/WebKit phone-browser verification against exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` in isolation.
+- **Next action:** Correct only the component-test matchers and cleanup, statically verify the test-only replacement under Node.js 24.20.0/npm 11.19.0, and deliver a new exact SHA for fresh approval; no further feature test is authorized.
 
 ## Scope
 
@@ -73,8 +73,8 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; approval of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` was invalidated by the required test-source correction
+- **Results:** Against exact then-approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` on 2026-09-02, isolated `npm ci` installed 655 packages with no vulnerabilities but exposed Node.js `22.21.0`/npm `10.9.4` instead of the required versions. The scoped component suite failed 0/2 because an accessible-name matcher assumed whitespace between nested spans and the missing explicit cleanup left the failed first render mounted for the second test. Browser tests were not run. The test-only correction and required Node.js 24.20.0/npm 11.19.0 rerun require a replacement delivery and fresh approval.
 
 ## Delivery commit
 
@@ -86,15 +86,15 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-02T10:41:09+02:00`
-- **Outcome:** Recommended for approval with no findings
-- **Findings:** None recorded
+- **Outcome:** Changes requested after verification exposed a test-source correction
+- **Findings:** Component-test accessible-name matchers do not reflect concatenated nested-span names, and explicit Testing Library cleanup is missing between tests.
 
 ## Approval
 
-- **Approved commit:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
-- **Approved by:** User
-- **Approved at:** `2026-09-02T10:41:09+02:00`
-- **Approval note:** User explicitly confirmed the exact SHA and authorized only the recorded T-011 verification scope.
+- **Approved commit:** Not approved for replacement
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** Approval of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` was invalidated when verification required a component-test source correction.
 
 ## Definition of Ready
 
@@ -134,3 +134,5 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:35:12+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; all static checks passed and feature tests remain unexecuted |
 | `2026-09-02T10:41:09+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` with no findings and recommended approval |
 | `2026-09-02T10:41:09+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-011 tests |
+| `2026-09-02T10:43:55+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component verification in an isolated worktree at exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` |
+| `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests failed 0/2 due to test matcher and cleanup defects; browser tests stopped, approval invalidated, and a test-only replacement is required |

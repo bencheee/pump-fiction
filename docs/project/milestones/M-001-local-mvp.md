@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T10:41:09+02:00`
+- **Updated:** `2026-09-02T10:44:18+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -106,3 +106,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | Completed T-011 implementation and static verification | Prepare its exact delivery commit for User review without running feature tests |
 | `2026-09-02T10:35:12+02:00` | Codex primary agent / Executor | Delivered T-011 for review | Exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` awaits User review before any feature testing |
 | `2026-09-02T10:41:09+02:00` | User / Reviewer and Approver | Approved exact T-011 delivery for testing | Run only the recorded verification against `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` |
+| `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | T-011 verification requires a replacement | Component-test matcher/cleanup defects invalidated approval; browser tests did not run |
