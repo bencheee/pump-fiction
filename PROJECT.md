@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T15:04:53+02:00
+- **Last updated:** 2026-09-02T15:07:10+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `In Review` for [`F-006`](docs/project/features/F-006-programs-and-splits.md) at exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `Testing` for [`F-006`](docs/project/features/F-006-programs-and-splits.md) at exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
 
 ## Immediate next action
 
-User reviews exact T-012 delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`; feature tests remain unauthorized.
+Run only the recorded T-012 verification in isolation against exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
 
 ## Now
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Review`; `Now / 1`).
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Testing`; `Now / 1`).
 
 ## Next
 

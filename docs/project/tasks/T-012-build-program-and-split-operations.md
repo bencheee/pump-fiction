@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:04:53+02:00`
+- **Updated:** `2026-09-02T15:07:10+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
 - **Review started:** `2026-09-02T15:04:53+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-02T15:07:10+02:00`
+- **Approved:** `2026-09-02T15:07:10+02:00`
+- **Testing started:** `2026-09-02T15:07:10+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`; feature tests remain unexecuted and unauthorized.
+- **Next action:** Run only the recorded T-012 verification in isolation at exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
 
 ## Scope
 
@@ -75,7 +75,7 @@ Implement feature-owned program and split models, validation, queries, and atomi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped program/split application unit tests; reset local Supabase and run program/split constraints and transactional functions plus real repository integration covering lifecycle replacement, validation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, reactivation, proposed-completion advancement, and retry no-op.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`
 - **Results:** Not run
 
 ## Delivery commit
@@ -87,16 +87,16 @@ Implement feature-owned program and split models, validation, queries, and atomi
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-02T15:07:10+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`
+- **Approved by:** User
+- **Approved at:** `2026-09-02T15:07:10+02:00`
+- **Approval note:** User explicitly confirmed exact commit `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`, authorizing only the recorded T-012 test plan.
 
 ## Definition of Ready
 
@@ -133,3 +133,6 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T14:35:46+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the program/split application and persistence delivery |
 | `2026-09-02T15:01:52+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped operations, generated migration/types, canonical guidance, and unexecuted tests; all planned static checks passed |
 | `2026-09-02T15:04:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`; all static checks passed and feature tests remain unexecuted |
+| `2026-09-02T15:07:10+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` with no findings and recommended approval |
+| `2026-09-02T15:07:10+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-012 tests |
+| `2026-09-02T15:07:10+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |
