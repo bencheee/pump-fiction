@@ -20,19 +20,20 @@ describe("SupabaseActiveWorkoutCommandRepository", () => {
       },
     });
     const repository = new SupabaseActiveWorkoutCommandRepository(client);
-    const exerciseId = randomUUID();
+    let exerciseId: string = randomUUID();
     const workoutId = randomUUID();
     const workoutExerciseId = randomUUID();
     const startedAt = new Date("2026-08-31T12:00:00.000Z");
 
     try {
-      await requireSuccess(
-        client.from("exercises").insert({
-          id: exerciseId,
-          name: `T-008 exercise ${exerciseId}`,
-          base_type: "weights",
-        }),
-      );
+      const createdExercise = await client.rpc("create_exercise_definition", {
+        p_name: `T-008 exercise ${exerciseId}`,
+        p_base_type: "weights",
+        p_persistent_note: "",
+        p_load_modes: ["weight"],
+      });
+      if (createdExercise.error) throw new Error(createdExercise.error.message);
+      exerciseId = createdExercise.data;
       await requireSuccess(
         client.from("workouts").insert({
           id: workoutId,
@@ -128,7 +129,6 @@ describe("SupabaseActiveWorkoutCommandRepository", () => {
       expect(recordedCommands.count).toBe(3);
     } finally {
       await client.from("workouts").delete().eq("id", workoutId);
-      await client.from("exercises").delete().eq("id", exerciseId);
     }
   });
 });

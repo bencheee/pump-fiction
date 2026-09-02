@@ -610,6 +610,25 @@ export type Database = {
           resulting_revision: number
         }[]
       }
+      create_exercise_definition: {
+        Args: {
+          p_base_type: Database["public"]["Enums"]["exercise_base_type"]
+          p_load_modes: Database["public"]["Enums"]["load_mode"][]
+          p_name: string
+          p_persistent_note: string
+        }
+        Returns: string
+      }
+      update_exercise_definition: {
+        Args: {
+          p_base_type: Database["public"]["Enums"]["exercise_base_type"]
+          p_exercise_id: string
+          p_load_modes: Database["public"]["Enums"]["load_mode"][]
+          p_name: string
+          p_persistent_note: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       active_workout_command_operation:

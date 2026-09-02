@@ -12,15 +12,18 @@ select results_eq(
   'the singleton settings row establishes the accepted local time zone'
 );
 
-insert into public.exercises (id, name, base_type)
-values ('00000000-0000-0000-0000-000000000001', 'Bench press', 'weights');
-
 select lives_ok(
   $$
+    with created_exercise as (
+      insert into public.exercises (id, name, base_type)
+      values ('00000000-0000-0000-0000-000000000001', 'Bench press', 'weights')
+      returning id, base_type
+    )
     insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
-    values ('00000000-0000-0000-0000-000000000001', 'weights', 'weight')
+    select id, base_type, 'weight'::public.load_mode
+    from created_exercise
   $$,
-  'a load mode valid for the exercise base type is accepted'
+  'a complete exercise definition with a compatible load mode is accepted'
 );
 
 select throws_ok(

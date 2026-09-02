@@ -43,6 +43,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-008` adds the first dedicated active-workout Route Handler and transactional multi-table command function without changing this dependency direction. Its specialized acknowledgement, retry, and conflict contract is canonical in [`active-workout-durability.md`](active-workout-durability.md).
 
+`T-010` applies the same ordinary-operation boundary to the Exercise Library. Feature-owned validation and repository contracts live under `src/features/exercises`; server composition and the Supabase implementation remain under `src/server`; thin Server Actions expose only serializable inputs and `OperationResult` values. Creating or editing a definition and its allowed-mode rows uses one PostgreSQL function so partial definitions cannot be acknowledged. Queries hydrate neutral exercise shapes with explicit modes and split-usage counts without leaking generated row types.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

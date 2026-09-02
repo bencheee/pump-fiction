@@ -2,12 +2,12 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
-- **Order:** 3
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Progress:** `0/0 required Tasks Done; Task breakdown pending`
+- **Updated:** `2026-09-02T09:21:51+02:00`
+- **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -26,12 +26,13 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 
 ## Tasks
 
-- Task breakdown pending before Feature readiness.
+- [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`In Progress`)
+- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Backlog`)
 
 ## Dependencies and blockers
 
 - Dependencies: `F-003`, `F-004`
-- Blockers: No Task is currently ready
+- Blockers: None for `T-010`; `T-011` depends on `T-010` becoming `Done`
 
 ## Related decisions and documents
 
@@ -42,10 +43,10 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified; the first executable work is `Ready`
+- [x] Required Tasks are identified; the first executable work is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness through the 2026-09-02 direction to start `F-005`
 
 ## Completion
 
@@ -60,3 +61,5 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Assign primary ownership for the exercise-library acceptance group |
+| `2026-09-02T08:59:17+02:00` | User / Owner and Codex primary agent / Planner | Moved Feature to `Now`, accepted the two-Task breakdown, and started `T-010` | Begin Exercise Library delivery with application/persistence operations before the dependent mobile experience |
+| `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | Completed `T-010` implementation scope pending delivery | Exercise operations, atomic definition writes, lifecycle queries, prepared tests, and canonical guidance are statically verified |

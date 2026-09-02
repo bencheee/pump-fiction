@@ -15,6 +15,8 @@ Each exercise has:
 
 Supported base types are `weights`, `bodyweight`, `assisted`, and `band`.
 
+Saving trims surrounding whitespace from the name and requires at least one explicit load mode. Active-name uniqueness ignores case and surrounding whitespace. A `weights` definition always includes the basic `weight` mode and may additionally permit `weight_resistance_band`; a standalone `band` definition has exactly the `resistance_band` mode. Bodyweight and assisted definitions require one or more compatible modes from their respective lists below.
+
 ## Load modes
 
 Load mode and all applicable values are stored per set, not merely per exercise or workout.

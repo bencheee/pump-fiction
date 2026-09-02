@@ -25,6 +25,8 @@ Studio and ad hoc SQL editor changes are never canonical. Make structural change
 
 The initial singleton settings row is migration-owned data because the declarative diff manages structure rather than DML. It starts with `Europe/Zagreb`, matching the accepted local environment, and remains editable as the application's configured IANA time zone. Units remain kilograms and centimeters.
 
+Exercise definitions use deferred constraint triggers to require a complete, type-compatible allowed-mode set at transaction end. The `create_exercise_definition` and `update_exercise_definition` functions are the server mutation boundary for the multi-table definition write; both preserve the exercise UUID, split membership, and workout snapshots as applicable. Direct callers must not split definition and mode writes across transactions.
+
 ## Start and stop
 
 ```sh

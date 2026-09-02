@@ -499,6 +499,154 @@ begin
 end;
 $$;
 
+create or replace function public.validate_exercise_load_modes()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+declare
+  checked_exercise_id uuid;
+  checked_base_type public.exercise_base_type;
+  checked_modes public.load_mode[];
+begin
+  if tg_table_name = 'exercises' then
+    if tg_op = 'DELETE' then
+      checked_exercise_id = old.id;
+    else
+      checked_exercise_id = new.id;
+    end if;
+  else
+    if tg_op = 'DELETE' then
+      checked_exercise_id = old.exercise_id;
+    else
+      checked_exercise_id = new.exercise_id;
+    end if;
+  end if;
+
+  select exercise.base_type
+  into checked_base_type
+  from public.exercises as exercise
+  where exercise.id = checked_exercise_id;
+
+  if not found then
+    return null;
+  end if;
+
+  select array_agg(mode.load_mode order by mode.load_mode::text)
+  into checked_modes
+  from public.exercise_load_modes as mode
+  where mode.exercise_id = checked_exercise_id;
+
+  if checked_modes is null or cardinality(checked_modes) = 0 then
+    raise exception using errcode = 'PF003', message = 'Exercise requires at least one load mode';
+  end if;
+
+  if checked_base_type = 'weights' then
+    if not ('weight'::public.load_mode = any(checked_modes))
+      or not (checked_modes <@ array['weight', 'weight_resistance_band']::public.load_mode[])
+    then
+      raise exception using errcode = 'PF003', message = 'Invalid weights exercise load modes';
+    end if;
+  elsif checked_base_type = 'bodyweight' then
+    if not (
+      checked_modes <@ array[
+        'bodyweight',
+        'bodyweight_added_weight',
+        'bodyweight_resistance_band',
+        'bodyweight_assistance_band'
+      ]::public.load_mode[]
+    ) then
+      raise exception using errcode = 'PF003', message = 'Invalid bodyweight exercise load modes';
+    end if;
+  elsif checked_base_type = 'assisted' then
+    if not (
+      checked_modes <@ array['assistance_weight', 'assistance_band']::public.load_mode[]
+    ) then
+      raise exception using errcode = 'PF003', message = 'Invalid assisted exercise load modes';
+    end if;
+  elsif checked_base_type = 'band' then
+    if cardinality(checked_modes) <> 1
+      or checked_modes[1] <> 'resistance_band'::public.load_mode
+    then
+      raise exception using errcode = 'PF003', message = 'Invalid band exercise load modes';
+    end if;
+  end if;
+
+  return null;
+end;
+$$;
+
+create or replace function public.create_exercise_definition(
+  p_name text,
+  p_base_type public.exercise_base_type,
+  p_persistent_note text,
+  p_load_modes public.load_mode[]
+)
+returns uuid
+language plpgsql
+set search_path = ''
+as $$
+declare
+  created_exercise_id uuid;
+begin
+  insert into public.exercises (name, base_type, persistent_note)
+  values (btrim(p_name), p_base_type, p_persistent_note)
+  returning id into created_exercise_id;
+
+  insert into public.exercise_load_modes (
+    exercise_id,
+    exercise_base_type,
+    load_mode
+  )
+  select created_exercise_id, p_base_type, requested_mode
+  from unnest(p_load_modes) as requested_mode;
+
+  return created_exercise_id;
+end;
+$$;
+
+create or replace function public.update_exercise_definition(
+  p_exercise_id uuid,
+  p_name text,
+  p_base_type public.exercise_base_type,
+  p_persistent_note text,
+  p_load_modes public.load_mode[]
+)
+returns uuid
+language plpgsql
+set search_path = ''
+as $$
+begin
+  if not exists (
+    select 1
+    from public.exercises as exercise
+    where exercise.id = p_exercise_id
+  ) then
+    raise exception using errcode = 'PF004', message = 'Exercise not found';
+  end if;
+
+  delete from public.exercise_load_modes
+  where exercise_id = p_exercise_id;
+
+  update public.exercises
+  set
+    name = btrim(p_name),
+    base_type = p_base_type,
+    persistent_note = p_persistent_note
+  where id = p_exercise_id;
+
+  insert into public.exercise_load_modes (
+    exercise_id,
+    exercise_base_type,
+    load_mode
+  )
+  select p_exercise_id, p_base_type, requested_mode
+  from unnest(p_load_modes) as requested_mode;
+
+  return p_exercise_id;
+end;
+$$;
+
 create or replace function public.apply_active_workout_command(
   p_command_id uuid,
   p_workout_id uuid,
@@ -693,6 +841,16 @@ create trigger exercises_set_updated_at
 before update on public.exercises
 for each row execute function public.set_updated_at();
 
+create constraint trigger exercises_validate_load_modes
+after insert or update on public.exercises
+deferrable initially deferred
+for each row execute function public.validate_exercise_load_modes();
+
+create constraint trigger exercise_load_modes_validate_definition
+after insert or update or delete on public.exercise_load_modes
+deferrable initially deferred
+for each row execute function public.validate_exercise_load_modes();
+
 create trigger programs_set_updated_at
 before update on public.programs
 for each row execute function public.set_updated_at();
@@ -783,16 +941,22 @@ to service_role;
 
 revoke execute on function public.reject_future_local_entry_date() from public, anon, authenticated;
 revoke execute on function public.apply_active_workout_command(uuid, uuid, bigint, public.active_workout_command_operation, jsonb, timestamptz) from public, anon, authenticated;
+revoke execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
 revoke execute on function public.set_updated_at() from public, anon, authenticated;
+revoke execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
 revoke execute on function public.validate_app_time_zone() from public, anon, authenticated;
 revoke execute on function public.validate_active_program_next_split() from public, anon, authenticated;
+revoke execute on function public.validate_exercise_load_modes() from public, anon, authenticated;
 revoke execute on function public.validate_split_archival() from public, anon, authenticated;
 
 grant execute on function public.reject_future_local_entry_date() to service_role;
 grant execute on function public.apply_active_workout_command(uuid, uuid, bigint, public.active_workout_command_operation, jsonb, timestamptz) to service_role;
+grant execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) to service_role;
 grant execute on function public.set_updated_at() to service_role;
+grant execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) to service_role;
 grant execute on function public.validate_app_time_zone() to service_role;
 grant execute on function public.validate_active_program_next_split() to service_role;
+grant execute on function public.validate_exercise_load_modes() to service_role;
 grant execute on function public.validate_split_archival() to service_role;
 
 grant usage on type

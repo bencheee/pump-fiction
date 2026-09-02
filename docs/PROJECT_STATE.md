@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Prepare the `F-005` Exercise Library Task breakdown when the User directs work to continue.
+Create and deliver the active `T-010` Exercise Library operations commit for User review without running feature tests.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-009` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, phone shells, route and overlay foundations, shared UI primitives, and their approved verification are complete. Domain feature UI behavior and deployment configuration do not exist yet; `F-005` Task breakdown is next.
+`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, which owns exercise-domain validation, application operations, transactional persistence, server composition, and prepared approval-gated verification; `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.

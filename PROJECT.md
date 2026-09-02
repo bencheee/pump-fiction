@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T08:55:13+02:00
-- **Current phase:** Exercise Library planning next
+- **Last updated:** 2026-09-02T09:21:51+02:00
+- **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` complete; `F-005` Task breakdown pending
+- **Implementation:** `F-004` complete; `F-005` active through `T-010`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task; `F-005` Exercise Library is the next ordered Feature and still needs a Task breakdown.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is implementing the exercise-domain, application, and persistence operations required by the later mobile experience.
 
 ## Immediate next action
 
-User directs preparation of the `F-005` Task breakdown when ready to continue.
+Codex creates the scoped `T-010` delivery commit and hands its exact SHA to the User for review; feature tests remain unexecuted.
 
 ## Now
 
-No active Task.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:21:51+02:00`; next: create the scoped delivery commit for User review.
 
 ## Next
 
-[`F-005`](docs/project/features/F-005-exercise-library.md) — `Next / 3`; Task breakdown pending Owner direction.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Backlog`, `Next / 1`; Executor: Codex primary agent; updated `2026-09-02T08:59:17+02:00`; next: wait for `T-010` completion and Owner direction.
 
 ## Later
 
