@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T13:04:11+02:00`
+- **Updated:** `2026-09-02T13:07:55+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T13:02:33+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete the recorded component and Chromium/WebKit phone-browser verification in isolation against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+- **Next action:** Preserve successful-create save feedback across the redirect, statically verify a behavioral replacement, and deliver its exact SHA for fresh approval; no further feature test is authorized.
 
 ## Scope
 
@@ -73,8 +73,8 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`
-- **Results:** Against exact then-approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` on 2026-09-02, isolated `npm ci` installed 655 packages with no vulnerabilities but exposed Node.js `22.21.0`/npm `10.9.4` instead of the required versions. The scoped component suite failed 0/2 because an accessible-name matcher assumed whitespace between nested spans and the missing explicit cleanup left the failed first render mounted for the second test. Browser tests were not run. The test-only correction and required Node.js 24.20.0/npm 11.19.0 rerun require a replacement delivery and fresh approval.
+- **Authorized commit:** Not authorized; approval of replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` was invalidated by the required behavior correction
+- **Results:** Against exact then-approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: clean `npm ci` installed 653 packages with no vulnerabilities; the corrected component suite passed 2/2. Chromium/WebKit malformed/missing-route scenarios passed 2/2, while both full create/edit lifecycle scenarios failed after successful create because redirect remount reset visible save feedback from `Saved` to `Not saved yet`; remaining lifecycle assertions did not run. The two created `T-011 mobile-*` fixtures and four mode rows were removed. A behavioral replacement and fresh approval are required.
 
 ## Delivery commit
 
@@ -86,15 +86,15 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-02T10:41:09+02:00`
-- **Outcome:** Replacement recommended for approval with no findings
-- **Findings:** Original test-source findings are corrected in replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+- **Outcome:** Changes requested after browser verification exposed a behavior correction
+- **Findings:** Successful create redirects to the edit route, remounts the form, and immediately loses the required visible `Saved` feedback state.
 
 ## Approval
 
-- **Approved commit:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`
-- **Approved by:** User
-- **Approved at:** `2026-09-02T13:02:33+02:00`
-- **Approval note:** User explicitly confirmed the exact test-only replacement and authorized the complete recorded T-011 verification from the beginning.
+- **Approved commit:** Not approved for replacement
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** Approval of replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` was invalidated when browser verification required a behavior correction.
 
 ## Definition of Ready
 
@@ -140,3 +140,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:47:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; static checks passed and feature tests remain unexecuted after correction |
 | `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` and authorized the complete recorded T-011 verification from the beginning |
 | `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded verification in isolation at exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0 |
+| `2026-09-02T13:07:55+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/2 and malformed-route browser scenarios passed 2/2, but both full mobile flows exposed lost successful-create save feedback after redirect; approval invalidated and a behavioral replacement is required |

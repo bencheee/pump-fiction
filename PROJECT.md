@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T13:04:11+02:00
+- **Last updated:** 2026-09-02T13:07:55+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is running its complete recorded verification against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is correcting successful-create save feedback after browser verification invalidated approval of replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Immediate next action
 
-Codex completes the component and Chromium/WebKit phone-browser verification in isolation and records the result.
+Codex implements and statically verifies the scoped save-feedback correction, then delivers a replacement SHA for fresh User approval.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T13:04:11+02:00`; next: complete and record the authorized verification.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T13:07:55+02:00`; next: deliver the statically verified behavior replacement for fresh approval.
 
 ## Next
 

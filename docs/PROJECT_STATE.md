@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete and record the running T-011 component and Chromium/WebKit phone-browser verification against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+Correct and statically verify T-011 successful-create save feedback, then deliver a behavioral replacement for fresh approval.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`, whose complete recorded verification is running against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; replacement verification passed component tests 2/2 and malformed-route browser scenarios 2/2, but both full mobile flows exposed lost successful-create save feedback after redirect. Approval is invalidated pending a behavioral replacement. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
