@@ -1,6 +1,7 @@
 # Dependencies and Next.js output
 node_modules/
 .next/
+next-env.d.ts
 out/
 
 # Local environment and generated reports
