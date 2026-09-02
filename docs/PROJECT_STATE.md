@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User confirms the aggregate F-005 Exercise Library result now that both required Tasks are Done.
+Plan and break down `F-006` Programs and Splits when the User directs work to continue.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-011` are `Done`. `F-005` has `2/2 Tasks Done` and awaits aggregate User confirmation. Exact T-011 replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` passed component tests 3/3 and Chromium/WebKit scenarios 4/4 with two structural captures; T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. The User confirmed the aggregate Exercise Library result after exact T-011 replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` passed component tests 3/3 and Chromium/WebKit scenarios 4/4 with two structural captures; T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. `F-006` Programs and Splits is next and has no Task breakdown yet. Deployment configuration does not exist yet.

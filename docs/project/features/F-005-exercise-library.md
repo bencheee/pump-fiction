@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T14:02:43+02:00`
-- **Progress:** `2/2 required Tasks Done; aggregate confirmation pending`
+- **Updated:** `2026-09-02T14:25:18+02:00`
+- **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -54,7 +54,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -83,3 +83,4 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | Delivered save-feedback replacement for review | Exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` awaits fresh User approval |
 | `2026-09-02T13:58:41+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved latest T-011 replacement and began verification | Running the complete recorded plan against exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` |
 | `2026-09-02T14:02:43+02:00` | Codex primary agent / Tester | Completed `T-011`; Feature awaits aggregate confirmation | Exact replacement passed component tests 3/3 and Chromium/WebKit scenarios 4/4 with two structural captures; both required F-005 Tasks are Done |
+| `2026-09-02T14:25:18+02:00` | User / Owner | Completed `F-005` | Confirmed the aggregate Exercise Library result works; both required Tasks and all Feature completion criteria are satisfied |

@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T14:02:43+02:00`
-- **Progress:** `4/10 required Features Done`
+- **Updated:** `2026-09-02T14:25:18+02:00`
+- **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -114,3 +114,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | Delivered T-011 save-feedback replacement for review | Exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` awaits fresh User approval |
 | `2026-09-02T13:58:41+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved latest T-011 replacement and began verification | Running the complete recorded plan against exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` |
 | `2026-09-02T14:02:43+02:00` | Codex primary agent / Tester | Completed `T-011` within `F-005` | Exact replacement passed component tests 3/3 and Chromium/WebKit scenarios 4/4; F-005 has 2/2 Tasks Done and awaits aggregate User confirmation |
+| `2026-09-02T14:25:18+02:00` | User / Owner | Completed `F-005`; Milestone remains incomplete | Confirmed the aggregate Exercise Library result; `M-001` advances to 5/10 required Features Done |

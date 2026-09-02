@@ -1,18 +1,18 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T14:02:43+02:00
-- **Current phase:** Exercise Library implementation
+- **Last updated:** 2026-09-02T14:25:18+02:00
+- **Current phase:** Programs and Splits planning
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` complete; `F-005` has `2/2 Tasks Done` and awaits aggregate User confirmation
+- **Implementation:** `F-004` and `F-005` complete; `F-006` is next
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task. [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is complete; both required F-005 Tasks are Done.
+No active Task. [`F-005`](docs/project/features/F-005-exercise-library.md) is complete after aggregate User confirmation.
 
 ## Immediate next action
 
-User confirms the aggregate F-005 Exercise Library result.
+User directs planning and Task breakdown for [`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md).
 
 ## Now
 
@@ -20,7 +20,7 @@ No active Task.
 
 ## Next
 
-No queued Task inside F-005; T-011 is active.
+[`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md) — `Next / 4`; Task breakdown pending.
 
 ## Later
 
