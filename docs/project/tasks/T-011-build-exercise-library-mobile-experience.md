@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T13:07:55+02:00`
+- **Updated:** `2026-09-02T13:10:37+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T13:02:33+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Preserve successful-create save feedback across the redirect, statically verify a behavioral replacement, and deliver its exact SHA for fresh approval; no further feature test is authorized.
+- **Next action:** Create the statically verified save-feedback replacement and hand its exact SHA to the User for fresh approval; no further feature test is authorized.
 
 ## Scope
 
@@ -66,7 +66,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Passed for the original delivery and pending test-only replacement on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 81 files, all 570 internal links, and `git diff --check`. No feature test ran after the correction.
+- Results: Passed for the original delivery, test-only replacement, and pending save-feedback replacement on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 81 files, all 570 internal links, and `git diff --check`. No feature test ran after the behavior correction.
 
 ## Test plan and results
 
@@ -78,7 +78,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` (test-only replacement; supersedes original delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`)
+- **Delivery commit SHA:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` (behavioral replacement required)
 - **Subject:** `T-011: isolate exercise component tests`
 - **Committed scope:** Original S05/S06 delivery plus explicit Testing Library cleanup and accessible-name matchers corrected to reflect nested-span names; no application behavior changed.
 
@@ -141,3 +141,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` and authorized the complete recorded T-011 verification from the beginning |
 | `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded verification in isolation at exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0 |
 | `2026-09-02T13:07:55+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/2 and malformed-route browser scenarios passed 2/2, but both full mobile flows exposed lost successful-create save feedback after redirect; approval invalidated and a behavioral replacement is required |
+| `2026-09-02T13:10:37+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Preserved successful-create `Saved` feedback across redirect and added regression coverage; all static checks passed without rerunning feature tests |

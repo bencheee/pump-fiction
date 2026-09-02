@@ -10,10 +10,13 @@ export const dynamic = "force-dynamic";
 
 export default async function EditExercisePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ saved?: string | string[] }>;
 }) {
   const id = requireUuidRouteParam((await params).id);
+  const saved = (await searchParams).saved;
   const result = await getExercise(id);
   if (!result.ok && result.error.code === "not_found") notFound();
 
@@ -35,5 +38,12 @@ export default async function EditExercisePage({
     );
   }
 
-  return <ExerciseForm exercise={result.value} />;
+  return (
+    <ExerciseForm
+      exercise={result.value}
+      initiallySaved={
+        saved === "1" || (Array.isArray(saved) && saved[0] === "1")
+      }
+    />
+  );
 }

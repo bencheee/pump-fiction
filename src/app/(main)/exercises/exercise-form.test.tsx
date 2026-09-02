@@ -59,6 +59,13 @@ describe("ExerciseForm", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("preserves successful save feedback when create redirects to edit", () => {
+    render(<ExerciseForm initiallySaved />);
+
+    expect(screen.getByText("Saved", { exact: true })).toBeVisible();
+    expect(window.location.search).toBe("");
+  });
+
   it("reports name and load-mode validation before calling the action", async () => {
     const user = userEvent.setup();
     render(<ExerciseForm />);

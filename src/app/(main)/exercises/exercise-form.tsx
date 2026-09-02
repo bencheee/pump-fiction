@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props -- Each focusable mode control carries the accepted group validation state. */
 
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   archiveExerciseAction,
@@ -40,7 +40,13 @@ import {
 type SaveState = "idle" | "saving" | "saved" | "failure";
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
 
-export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
+export function ExerciseForm({
+  exercise,
+  initiallySaved = false,
+}: {
+  exercise?: Exercise;
+  initiallySaved?: boolean;
+}) {
   const router = useRouter();
   const [name, setName] = useState(exercise?.name ?? "");
   const [baseType, setBaseType] = useState<ExerciseBaseType>(
@@ -51,7 +57,9 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   );
   const [note, setNote] = useState(exercise?.persistentNote ?? "");
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [saveState, setSaveState] = useState<SaveState>(
+    initiallySaved ? "saved" : "idle",
+  );
   const [saveMessage, setSaveMessage] = useState<string>();
   const [modeNotice, setModeNotice] = useState<string>();
   const [status, setStatus] = useState(exercise?.status ?? "active");
@@ -65,6 +73,12 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   };
   const archived = status === "archived";
   const isSaving = saveState === "saving";
+
+  useEffect(() => {
+    if (initiallySaved && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, [initiallySaved]);
 
   function markChanged(field?: string) {
     setSaveState("idle");
@@ -138,7 +152,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     setName(result.value.name);
     setSaveState("saved");
     if (!exercise) {
-      router.replace(`/exercises/${result.value.id}/edit`);
+      router.replace(`/exercises/${result.value.id}/edit?saved=1`);
     } else {
       router.refresh();
     }
