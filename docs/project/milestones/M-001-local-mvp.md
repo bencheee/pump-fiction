@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T10:00:54+02:00`
+- **Updated:** `2026-09-02T10:10:10+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -33,7 +33,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-002`](../features/F-002-mvp-delivery-planning.md) — MVP Delivery Planning (`Done`)
 - [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Done`)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
-- [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Now / 1`; `0/2 Tasks Done`)
+- [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Now / 1`; `1/2 Tasks Done`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Next / 4`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Next / 5`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 6`)
@@ -101,3 +101,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T09:55:08+02:00` | Codex primary agent / Executor | Corrected T-010 test isolation pending replacement | Every pgTAP fixture now resets deferred mode; static checks passed without feature tests |
 | `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | Delivered T-010 replacement for review | Exact test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` awaits fresh User approval |
 | `2026-09-02T10:00:54+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-010 replacement and began verification | Running the complete recorded plan against exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` |
+| `2026-09-02T10:10:10+02:00` | Codex primary agent / Tester | Completed `T-010` within `F-005` | Exact replacement passed unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1; `T-011` awaits Owner direction |

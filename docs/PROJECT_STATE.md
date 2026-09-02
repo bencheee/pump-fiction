@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete and record the full T-010 verification against exact approved test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`.
+Start `T-011` Exercise Library mobile experience when the User explicitly directs work to continue.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, which is `Testing` the complete recorded plan against exact approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` after correcting the pgTAP constraint-mode leakage. `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is `1/2 Tasks Done`: approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1. `T-011` owns the remaining S05/S06 mobile experience and awaits explicit Owner direction. Deployment configuration does not exist yet.

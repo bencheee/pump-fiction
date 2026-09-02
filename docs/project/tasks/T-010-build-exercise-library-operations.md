@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:00:54+02:00`
+- **Updated:** `2026-09-02T10:10:10+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
 - **Review started:** `2026-09-02T09:56:40+02:00` for replacement
 - **Approval requested:** `2026-09-02T10:00:54+02:00` for replacement
 - **Approved:** `2026-09-02T10:00:54+02:00` for replacement
 - **Testing started:** `2026-09-02T10:00:54+02:00` for replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-02T10:10:10+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded T-010 verification from the beginning against exact approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` in a fresh isolated worktree.
+- **Next action:** None; `T-010` is complete and `T-011` awaits explicit Owner direction.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped exercise application unit tests; reset local Supabase and run exercise database constraints/functions plus real repository integration covering create, list/detail, edit with split usage, archive, reactivation, duplicate active name, and invalid mode combinations.
 - **Authorized commit:** `410c44edd4f8b1698f7de6b792eed0be16a26052`
-- **Results:** Against exact then-approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: clean `npm ci` installed 653 packages with no vulnerabilities; scoped exercise unit tests passed 5/5; clean database reset applied all three migrations; existing core pgTAP passed 13/13; new exercise-library pgTAP failed 2/5 because `SET CONSTRAINTS ... IMMEDIATE` persisted between subtests and made later fixture inserts validate before their mode rows existed. Repository integration was not run. The required test-fixture correction invalidates approval; no further test may run before replacement approval.
+- **Results:** Against exact then-approved original delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` on 2026-09-02, scoped unit tests passed 5/5 and clean reset plus core pgTAP 13/13 passed, but exercise-library pgTAP failed 2/5 because constraint mode leaked between fixtures; repository integration was stopped and approval invalidated. Against exact approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: fresh isolated `npm ci` installed 653 packages with no vulnerabilities; scoped exercise unit tests passed 5/5; clean reset applied all three migrations; both pgTAP files passed 18/18 total (core 13/13 and Exercise Library 5/5); real Exercise repository integration passed 1/1 across create, list/detail, split usage, edit, archive, active-name replacement, and rejected conflicting reactivation. An initial replacement unit invocation accidentally ran from the evidence-only main tree because of an incorrect working directory; it passed but was discarded and the complete plan restarted in the exact-SHA worktree. A malformed Supabase status invocation returned CLI help before any repository test began; the corrected invocation then passed. Vitest emitted its existing future config-loader warning, npm reported non-blocking install-script approval notices, and Supabase reported optional stopped imgproxy/pooler services.
 
 ## Delivery commit
 
@@ -112,15 +112,15 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -140,3 +140,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T10:00:54+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` with no additional findings and recommended approval |
 | `2026-09-02T10:00:54+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-010 test plan from the beginning |
 | `2026-09-02T10:00:54+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification in a fresh isolated worktree at exact approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` |
+| `2026-09-02T10:10:10+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Fresh isolated install succeeded, exercise unit tests passed 5/5, clean reset and pgTAP passed 18/18, and real Exercise repository integration passed 1/1 against the exact approved replacement |
