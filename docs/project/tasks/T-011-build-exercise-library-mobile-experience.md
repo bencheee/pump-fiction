@@ -1,23 +1,23 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:10:10+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-02T10:32:39+02:00`
+- **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for explicit Owner direction to transition to `Ready` and start.
+- **Next action:** Create the statically verified delivery commit and hand its exact SHA to the User for review; no feature test is authorized.
 
 ## Scope
 
@@ -32,11 +32,11 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Acceptance criteria
 
-- [ ] The S05 library lists and searches active definitions, can expose archived definitions for reactivation, and routes by opaque UUID without owning exercise performance statistics.
-- [ ] The S06 create/edit form exposes only type-compatible allowed modes and presents accepted field/group validation and save/failure states.
-- [ ] Editing shows split usage and future-workout-only messaging; persistent-note and snapshot consequences match canonical copy.
-- [ ] Archive/reactivate behavior preserves identity, uses accepted confirmation where shown, and immediately updates new-selection eligibility.
-- [ ] The complete flow remains usable and accessible throughout the accepted phone-width range and matches the frozen S05/S06 structural references and v0.4 exceptions.
+- [x] The S05 library lists and searches active definitions, can expose archived definitions for reactivation, and routes by opaque UUID without owning exercise performance statistics.
+- [x] The S06 create/edit form exposes only type-compatible allowed modes and presents accepted field/group validation and save/failure states.
+- [x] Editing shows split usage and future-workout-only messaging; persistent-note and snapshot consequences match canonical copy.
+- [x] Archive/reactivate behavior preserves identity, uses accepted confirmation where shown, and immediately updates new-selection eligibility.
+- [x] The complete flow remains usable and accessible throughout the accepted phone-width range and matches the frozen S05/S06 structural references and v0.4 exceptions.
 
 ## Traceability
 
@@ -57,16 +57,16 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Execution checklist
 
-- [ ] Implement S05 library query, search/filter, active/archived, empty, and loading presentation.
-- [ ] Implement S06 create/edit routes and type-dependent accessible form controls.
-- [ ] Wire ordinary Server Actions, validation, retry, archive/reactivate, and not-found handling.
-- [ ] Prepare component and Chromium/WebKit phone-browser tests without executing them.
-- [ ] Run and record only permitted static checks.
+- [x] Implement S05 library query, search/filter, active/archived, empty, and loading presentation.
+- [x] Implement S06 create/edit routes and type-dependent accessible form controls.
+- [x] Wire ordinary Server Actions, validation, retry, archive/reactivate, and not-found handling.
+- [x] Prepare component and Chromium/WebKit phone-browser tests without executing them.
+- [x] Run and record only permitted static checks.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 81 files, all 570 internal links, and `git diff --check`. No feature or prepared test ran.
 
 ## Test plan and results
 
@@ -108,7 +108,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -128,3 +128,6 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | --- | --- | --- | --- | --- |
 | `2026-09-02T08:59:17+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the independently reviewable S05/S06 mobile delivery after exercise operations are complete |
 | `2026-09-02T10:10:10+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | `T-010` completed and cleared the dependency; explicit Owner direction is still required for `Ready` |
+| `2026-09-02T10:23:15+02:00` | User / Owner | `Backlog` | `Ready` | Directed work to continue after T-010; all recorded dependencies and readiness fields are satisfied |
+| `2026-09-02T10:23:15+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted Exercise Library mobile experience scope |
+| `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped S05/S06 implementation and prepared tests; permitted code/build/asset checks passed without executing feature tests |

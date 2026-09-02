@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Start `T-011` Exercise Library mobile experience when the User explicitly directs work to continue.
+Create and deliver the statically verified `T-011` Exercise Library mobile experience commit for User review without running feature tests.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is `1/2 Tasks Done`: approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1. `T-011` owns the remaining S05/S06 mobile experience and awaits explicit Owner direction. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`, which owns the remaining S05/S06 Exercise Library mobile experience. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.

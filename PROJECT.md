@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T10:10:10+02:00
+- **Last updated:** 2026-09-02T10:32:39+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` complete; `F-005` is `1/2 Tasks Done`, with `T-011` next
+- **Implementation:** `F-004` complete; `F-005` active through `T-011`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task. [`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is complete; [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is the remaining Exercise Library mobile delivery.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is implementing the remaining S05/S06 Exercise Library mobile experience.
 
 ## Immediate next action
 
-User directs `T-011` to transition from `Backlog` to `Ready` when ready to continue F-005.
+Codex creates the statically verified T-011 delivery commit and hands its exact SHA to the User for review; feature tests remain unexecuted.
 
 ## Now
 
-No active Task.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T10:32:39+02:00`; next: create and deliver the statically verified commit for review.
 
 ## Next
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Backlog`, `Next / 1`; Executor: Codex primary agent; updated `2026-09-02T10:10:10+02:00`; next: wait for explicit Owner direction to start.
+No queued Task inside F-005; T-011 is active.
 
 ## Later
 

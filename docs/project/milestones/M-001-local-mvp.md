@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T10:10:10+02:00`
+- **Updated:** `2026-09-02T10:32:39+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -102,3 +102,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | Delivered T-010 replacement for review | Exact test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` awaits fresh User approval |
 | `2026-09-02T10:00:54+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-010 replacement and began verification | Running the complete recorded plan against exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` |
 | `2026-09-02T10:10:10+02:00` | Codex primary agent / Tester | Completed `T-010` within `F-005` | Exact replacement passed unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1; `T-011` awaits Owner direction |
+| `2026-09-02T10:23:15+02:00` | User / Owner | Started `T-011` within `F-005` | Continue with the remaining Exercise Library mobile experience delivery |
+| `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | Completed T-011 implementation and static verification | Prepare its exact delivery commit for User review without running feature tests |

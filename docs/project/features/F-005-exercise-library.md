@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T10:10:10+02:00`
+- **Updated:** `2026-09-02T10:32:39+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -27,7 +27,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 ## Tasks
 
 - [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`Done`; approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`)
-- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Backlog`)
+- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`In Progress`)
 
 ## Dependencies and blockers
 
@@ -71,3 +71,5 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | Delivered corrected `T-010` replacement for review | Exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` awaits fresh User review and approval |
 | `2026-09-02T10:00:54+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved replacement and began verification | Running the complete recorded test plan from the beginning against exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` |
 | `2026-09-02T10:10:10+02:00` | Codex primary agent / Tester | Completed `T-010`; Feature remains active | Exact replacement passed unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1; `T-011` awaits Owner direction |
+| `2026-09-02T10:23:15+02:00` | User / Owner | Started `T-011` | Continue F-005 with the remaining S05/S06 mobile experience delivery |
+| `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | Completed T-011 implementation and static verification | Prepare its exact delivery commit for User review; feature tests remain gated |
