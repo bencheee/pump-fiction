@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T10:47:53+02:00`
+- **Updated:** `2026-09-02T13:02:33+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -108,3 +108,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T10:41:09+02:00` | User / Reviewer and Approver | Approved exact T-011 delivery for testing | Run only the recorded verification against `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` |
 | `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | T-011 verification requires a replacement | Component-test matcher/cleanup defects invalidated approval; browser tests did not run |
 | `2026-09-02T10:47:53+02:00` | Codex primary agent / Executor | Delivered T-011 replacement for review | Exact test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` awaits fresh User approval |
+| `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | Approved exact T-011 replacement for testing | Run the complete recorded verification from the beginning against `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` |

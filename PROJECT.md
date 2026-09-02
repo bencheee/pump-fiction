@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T10:47:53+02:00
+- **Last updated:** 2026-09-02T13:02:33+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivered test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` after verification exposed component-test matcher and cleanup defects.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` is approved for its complete recorded verification.
 
 ## Immediate next action
 
-User reviews exact T-011 replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; no feature test may run before fresh approval.
+Codex runs the complete recorded T-011 verification from the beginning against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T10:47:53+02:00`; next: User reviews exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Approved`; Executor: Codex primary agent; updated `2026-09-02T13:02:33+02:00`; next: run the complete recorded verification against the exact approved replacement.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Recently completed Tasks
 

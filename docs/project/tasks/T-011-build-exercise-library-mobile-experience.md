@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:47:53+02:00`
+- **Updated:** `2026-09-02T13:02:33+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
-- **Approval requested:** Not reached for replacement
-- **Approved:** Not reached for replacement
+- **Approval requested:** `2026-09-02T13:02:33+02:00`
+- **Approved:** `2026-09-02T13:02:33+02:00`
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; no further feature test is authorized before fresh approval.
+- **Next action:** Run the complete recorded T-011 verification from the beginning against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** Not authorized; approval of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` was invalidated by the required test-source correction
+- **Authorized commit:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`
 - **Results:** Against exact then-approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` on 2026-09-02, isolated `npm ci` installed 655 packages with no vulnerabilities but exposed Node.js `22.21.0`/npm `10.9.4` instead of the required versions. The scoped component suite failed 0/2 because an accessible-name matcher assumed whitespace between nested spans and the missing explicit cleanup left the failed first render mounted for the second test. Browser tests were not run. The test-only correction and required Node.js 24.20.0/npm 11.19.0 rerun require a replacement delivery and fresh approval.
 
 ## Delivery commit
@@ -86,15 +86,15 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-02T10:41:09+02:00`
-- **Outcome:** Replacement awaiting review
-- **Findings:** Original test-source findings are corrected in replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; fresh review is pending.
+- **Outcome:** Replacement recommended for approval with no findings
+- **Findings:** Original test-source findings are corrected in replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Approval
 
-- **Approved commit:** Not approved for replacement
-- **Approved by:** Not approved for replacement
-- **Approved at:** Not approved for replacement
-- **Approval note:** Approval of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` was invalidated when verification required a component-test source correction.
+- **Approved commit:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`
+- **Approved by:** User
+- **Approved at:** `2026-09-02T13:02:33+02:00`
+- **Approval note:** User explicitly confirmed the exact test-only replacement and authorized the complete recorded T-011 verification from the beginning.
 
 ## Definition of Ready
 
@@ -138,3 +138,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests failed 0/2 due to test matcher and cleanup defects; browser tests stopped, approval invalidated, and a test-only replacement is required |
 | `2026-09-02T10:47:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Added explicit Testing Library cleanup and corrected accessible-name matchers; all static checks passed under required Node.js 24.20.0/npm 11.19.0 without rerunning feature tests |
 | `2026-09-02T10:47:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; static checks passed and feature tests remain unexecuted after correction |
+| `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` and authorized the complete recorded T-011 verification from the beginning |
