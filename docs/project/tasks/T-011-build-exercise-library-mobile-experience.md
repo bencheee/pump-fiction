@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:35:12+02:00`
+- **Updated:** `2026-09-02T10:41:09+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-09-02T10:41:09+02:00`
+- **Approved:** `2026-09-02T10:41:09+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; feature tests remain forbidden until exact-commit approval.
+- **Next action:** Run only the recorded T-011 component and Chromium/WebKit phone-browser verification against exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` in isolation.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
 - **Results:** Not run
 
 ## Delivery commit
@@ -85,16 +85,16 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-02T10:41:09+02:00`
+- **Outcome:** Recommended for approval with no findings
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
+- **Approved by:** User
+- **Approved at:** `2026-09-02T10:41:09+02:00`
+- **Approval note:** User explicitly confirmed the exact SHA and authorized only the recorded T-011 verification scope.
 
 ## Definition of Ready
 
@@ -132,3 +132,5 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:23:15+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted Exercise Library mobile experience scope |
 | `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped S05/S06 implementation and prepared tests; permitted code/build/asset checks passed without executing feature tests |
 | `2026-09-02T10:35:12+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; all static checks passed and feature tests remain unexecuted |
+| `2026-09-02T10:41:09+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` with no findings and recommended approval |
+| `2026-09-02T10:41:09+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-011 tests |

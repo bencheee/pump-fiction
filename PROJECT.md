@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T10:35:12+02:00
+- **Last updated:** 2026-09-02T10:41:09+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivered the remaining S05/S06 Exercise Library mobile experience in exact commit `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` and is `In Review`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` is approved for its recorded verification.
 
 ## Immediate next action
 
-User reviews exact T-011 delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; feature tests remain forbidden until approval.
+Codex runs only the recorded T-011 component and Chromium/WebKit phone-browser tests against exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` in isolation.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T10:35:12+02:00`; next: User reviews exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Approved`; Executor: Codex primary agent; updated `2026-09-02T10:41:09+02:00`; next: run only its recorded verification against the exact approved delivery.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`.
 
 ## Recently completed Tasks
 

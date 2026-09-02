@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews exact `T-011` Exercise Library mobile experience delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; no feature test may run before approval.
+Run only the recorded T-011 verification against exact approved Exercise Library mobile delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` in isolation.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; exact S05/S06 mobile delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` is `In Review` with prepared but unexecuted approval-gated tests. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; exact S05/S06 mobile delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` is approved for its prepared verification. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
