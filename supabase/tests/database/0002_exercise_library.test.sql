@@ -8,6 +8,8 @@ select lives_ok(
   $$
     do $block$
     begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
       insert into public.exercises (id, name, base_type)
       values ('01000000-0000-4000-8000-000000000001', 'Valid weight', 'weights');
 
@@ -25,6 +27,8 @@ select throws_ok(
   $$
     do $block$
     begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
       insert into public.exercises (id, name, base_type)
       values ('01000000-0000-4000-8000-000000000002', 'Missing mode', 'weights');
 
@@ -41,6 +45,8 @@ select throws_ok(
   $$
     do $block$
     begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
       insert into public.exercises (id, name, base_type)
       values ('01000000-0000-4000-8000-000000000003', 'Invalid weight', 'weights');
 
@@ -60,6 +66,8 @@ select throws_ok(
   $$
     do $block$
     begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
       insert into public.exercises (id, name, base_type)
       values ('01000000-0000-4000-8000-000000000004', 'Invalid band', 'band');
 

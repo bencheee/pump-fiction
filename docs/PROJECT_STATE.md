@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the T-010 pgTAP fixture isolation, run only static checks, and deliver a replacement commit for User review; no feature test is currently authorized.
+Create the statically verified T-010 test-only replacement commit for User review; no feature test is currently authorized.
 
 ## Implementation status
 

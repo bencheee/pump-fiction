@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:51:21+02:00`
+- **Updated:** `2026-09-02T09:55:08+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
 - **Review started:** `2026-09-02T09:24:32+02:00`
 - **Approval requested:** Not reached for replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T09:47:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the pgTAP constraint-mode isolation, run only static checks, and create a replacement delivery; no further feature test is authorized.
+- **Next action:** Create the statically verified test-only replacement delivery and hand its exact SHA to the User for fresh review; no feature test is authorized.
 
 ## Scope
 
@@ -66,7 +66,7 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, generated-type consistency review, documentation links, and `git diff --check`
-- Results: Passed on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint dependency boundaries, strict TypeScript, the Next.js production build, 8/8 font and 38/38 icon checksums, Markdown lint across 81 files, and all 572 internal links. Declarative schema convergence with strict coverage reported no schema changes after the reviewed migration, generated database types include both new RPCs, and `git diff --check` passed. No feature test ran.
+- Results: Passed for the original delivery and pending test-only replacement on 2026-09-02 with Node.js `24.20.0` and npm `11.19.0`: `npm run check` passed Prettier, ESLint dependency boundaries, strict TypeScript, the Next.js production build, 8/8 font and 38/38 icon checksums, Markdown lint across 81 files, and all internal links; the replacement's final link run passed all 572 links. Declarative schema convergence with strict coverage reported no schema changes after the reviewed migration, generated database types include both new RPCs, and `git diff --check` passed. No feature test ran after the correction.
 
 ## Test plan and results
 
@@ -135,3 +135,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T09:43:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-010 tests |
 | `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded scoped verification in an isolated worktree at exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` using Node.js `24.20.0` and npm `11.19.0` |
 | `2026-09-02T09:51:21+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 5/5, clean reset and core pgTAP 13/13 passed, but exercise pgTAP failed 2/5 because constraint-mode state leaked between fixtures; repository tests stopped and replacement approval is required |
+| `2026-09-02T09:55:08+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Reset each pgTAP fixture to deferred constraint mode before setup and passed all static checks without rerunning feature tests |

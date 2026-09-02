@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:51:21+02:00
+- **Last updated:** 2026-09-02T09:55:08+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is back `In Progress`: unit 5/5, clean reset, and core pgTAP 13/13 passed, but exercise pgTAP failed 2/5 because constraint mode leaked between test fixtures. Approval is invalidated.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is `In Progress`; the pgTAP fixture-isolation correction is statically verified and awaits a test-only replacement delivery. Original approval remains invalidated.
 
 ## Immediate next action
 
-Codex corrects only the pgTAP fixture isolation, runs static checks without feature tests, and creates a replacement delivery for User review.
+Codex creates the statically verified T-010 test-only replacement delivery for User review; no feature test is authorized.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:51:21+02:00`; next: correct test isolation and deliver a statically checked replacement.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:55:08+02:00`; next: create the test-only replacement for User review.
 
 ## Next
 
