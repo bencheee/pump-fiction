@@ -2,12 +2,12 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
-- **Order:** 4
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Progress:** `0/0 required Tasks Done; Task breakdown pending`
+- **Updated:** `2026-09-02T15:01:52+02:00`
+- **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -26,12 +26,13 @@ The user can create and manage programs, ordered split templates, activation and
 
 ## Tasks
 
-- Task breakdown pending before Feature readiness.
+- [`T-012`](../tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Progress`)
+- [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; depends on `T-012`)
 
 ## Dependencies and blockers
 
 - Dependencies: `F-003`, `F-004`, `F-005`
-- Blockers: No Task is currently ready
+- Blockers: None for `T-012`; `T-013` depends on `T-012`
 
 ## Related decisions and documents
 
@@ -42,10 +43,10 @@ The user can create and manage programs, ordered split templates, activation and
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified; the first executable work is `Ready`
+- [x] Required Tasks are identified; the first executable work is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness through the 2026-09-02 direction to start `F-006`
 
 ## Completion
 
@@ -60,3 +61,5 @@ The user can create and manage programs, ordered split templates, activation and
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Assign primary ownership for programs, splits, and rotation |
+| `2026-09-02T14:35:46+02:00` | User / Owner and Codex primary agent / Planner | Moved Feature to `Now`, accepted the two-Task breakdown, and started `T-012` | Begin Programs and Splits delivery with application/persistence operations before the dependent mobile experience |
+| `2026-09-02T15:01:52+02:00` | Codex primary agent / Executor | Completed `T-012` implementation scope pending delivery | Program/split operations, transactional lifecycle and rotation rules, prepared tests, and canonical guidance are statically verified |

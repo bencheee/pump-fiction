@@ -27,6 +27,8 @@ The initial singleton settings row is migration-owned data because the declarati
 
 Exercise definitions use deferred constraint triggers to require a complete, type-compatible allowed-mode set at transaction end. The `create_exercise_definition` and `update_exercise_definition` functions are the server mutation boundary for the multi-table definition write; both preserve the exercise UUID, split membership, and workout snapshots as applicable. Direct callers must not split definition and mode writes across transactions.
 
+Program and split template writes use database functions for every operation that spans lifecycle state, ordering, prescriptions, or the next-split pointer. Activation archives the previously active program in the same transaction. Split-definition replacement retains already-associated archived exercises but rejects adding a newly archived exercise. Reordering requires the complete identity set and changes only template positions. `archive_split` selects the next active successor from the pre-archive order with wrap and rejects the last active split. `advance_program_after_proposed_completion` is the narrow compare-and-set rotation transition for a future proposed-split completion transaction: it advances only while the completed split is still the active program's current pointer. The later workout-finish transaction owns exact-once invocation and excludes alternate, one-time, incomplete, and historical paths.
+
 ## Start and stop
 
 ```sh

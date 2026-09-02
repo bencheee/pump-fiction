@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation is complete after the User confirmed its aggregate result. Its five Tasks, `T-005` through `T-009`, and all approved verification are complete. `F-005` Exercise Library is the next ordered Feature and awaits Task breakdown and explicit Owner direction.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through `T-012`, the first of its two required Tasks.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Plan and break down `F-006` Programs and Splits when the User directs work to continue.
+Review and approve the exact `T-012` program/split operations delivery before any feature test runs.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. The User confirmed the aggregate Exercise Library result after exact T-011 replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` passed component tests 3/3 and Chromium/WebKit scenarios 4/4 with two structural captures; T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. `F-006` Programs and Splits is next and has no Task breakdown yet. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: `T-012` operations has completed implementation and static verification pending its delivery commit, and dependent `T-013` mobile experience is `Backlog`. Deployment configuration does not exist yet.

@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T14:25:18+02:00
-- **Current phase:** Programs and Splits planning
+- **Last updated:** 2026-09-02T15:01:52+02:00
+- **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` and `F-005` complete; `F-006` is next
+- **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task. [`F-005`](docs/project/features/F-005-exercise-library.md) is complete after aggregate User confirmation.
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `In Progress` for [`F-006`](docs/project/features/F-006-programs-and-splits.md).
 
 ## Immediate next action
 
-User directs planning and Task breakdown for [`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md).
+Create the exact T-012 delivery commit for User review; all static checks passed and feature tests remain unexecuted.
 
 ## Now
 
-No active Task.
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Progress`; `Now / 1`).
 
 ## Next
 
-[`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md) — `Next / 4`; Task breakdown pending.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; depends on `T-012`).
 
 ## Later
 

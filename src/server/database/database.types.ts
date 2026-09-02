@@ -593,6 +593,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      activate_program: {
+        Args: { p_next_split_id: string; p_program_id: string }
+        Returns: string
+      }
+      advance_program_after_proposed_completion: {
+        Args: { p_completed_split_id: string; p_program_id: string }
+        Returns: string
+      }
       apply_active_workout_command: {
         Args: {
           p_client_created_at: string
@@ -610,6 +618,8 @@ export type Database = {
           resulting_revision: number
         }[]
       }
+      archive_program: { Args: { p_program_id: string }; Returns: string }
+      archive_split: { Args: { p_split_id: string }; Returns: string }
       create_exercise_definition: {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -619,6 +629,30 @@ export type Database = {
         }
         Returns: string
       }
+      create_program: { Args: { p_name: string }; Returns: string }
+      create_split_definition: {
+        Args: {
+          p_exercise_ids: string[]
+          p_max_reps: number[]
+          p_min_reps: number[]
+          p_name: string
+          p_planned_sets: number[]
+          p_program_id: string
+        }
+        Returns: string
+      }
+      reorder_program_splits: {
+        Args: { p_program_id: string; p_split_ids: string[] }
+        Returns: string
+      }
+      reorder_split_exercises: {
+        Args: { p_exercise_ids: string[]; p_split_id: string }
+        Returns: string
+      }
+      set_program_next_split: {
+        Args: { p_program_id: string; p_split_id: string }
+        Returns: string
+      }
       update_exercise_definition: {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -626,6 +660,21 @@ export type Database = {
           p_load_modes: Database["public"]["Enums"]["load_mode"][]
           p_name: string
           p_persistent_note: string
+        }
+        Returns: string
+      }
+      update_program_name: {
+        Args: { p_name: string; p_program_id: string }
+        Returns: string
+      }
+      update_split_definition: {
+        Args: {
+          p_exercise_ids: string[]
+          p_max_reps: number[]
+          p_min_reps: number[]
+          p_name: string
+          p_planned_sets: number[]
+          p_split_id: string
         }
         Returns: string
       }
