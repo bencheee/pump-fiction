@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `Approved`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T13:02:33+02:00`
+- **Updated:** `2026-09-02T13:04:11+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T13:02:33+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded T-011 verification from the beginning against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0.
+- **Next action:** Complete the recorded component and Chromium/WebKit phone-browser verification in isolation against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Scope
 
@@ -139,3 +139,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:47:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Added explicit Testing Library cleanup and corrected accessible-name matchers; all static checks passed under required Node.js 24.20.0/npm 11.19.0 without rerunning feature tests |
 | `2026-09-02T10:47:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; static checks passed and feature tests remain unexecuted after correction |
 | `2026-09-02T13:02:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` and authorized the complete recorded T-011 verification from the beginning |
+| `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded verification in isolation at exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` under Node.js 24.20.0/npm 11.19.0 |

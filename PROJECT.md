@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T13:02:33+02:00
+- **Last updated:** 2026-09-02T13:04:11+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` is approved for its complete recorded verification.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is running its complete recorded verification against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Immediate next action
 
-Codex runs the complete recorded T-011 verification from the beginning against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+Codex completes the component and Chromium/WebKit phone-browser verification in isolation and records the result.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Approved`; Executor: Codex primary agent; updated `2026-09-02T13:02:33+02:00`; next: run the complete recorded verification against the exact approved replacement.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T13:04:11+02:00`; next: complete and record the authorized verification.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
+None.
 
 ## Recently completed Tasks
 
