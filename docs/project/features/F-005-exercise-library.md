@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T13:11:15+02:00`
+- **Updated:** `2026-09-02T13:58:41+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -27,7 +27,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 ## Tasks
 
 - [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`Done`; approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`)
-- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`In Review`; replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`)
+- [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Testing`; approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`)
 
 ## Dependencies and blockers
 
@@ -81,3 +81,4 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T13:04:11+02:00` | Codex primary agent / Tester | Began replacement verification | Running the complete recorded component and mobile-browser plan against exact approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` |
 | `2026-09-02T13:07:55+02:00` | Codex primary agent / Tester | Returned `T-011` to `In Progress` | Component 2/2 and malformed routes 2/2 passed, but both full mobile flows exposed lost successful-create save feedback after redirect; replacement approval is invalidated |
 | `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | Delivered save-feedback replacement for review | Exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` awaits fresh User approval |
+| `2026-09-02T13:58:41+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved latest T-011 replacement and began verification | Running the complete recorded plan against exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` |

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T13:11:15+02:00
+- **Last updated:** 2026-09-02T13:58:41+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivered save-feedback replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` after browser verification exposed lost success feedback across redirect.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is running its complete recorded verification against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`.
 
 ## Immediate next action
 
-User reviews exact T-011 replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; no feature test may run before fresh approval.
+Codex completes and records the component and Chromium/WebKit phone-browser verification against the exact approved replacement.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T13:11:15+02:00`; next: User reviews exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T13:58:41+02:00`; next: complete and record the authorized verification.
 
 ## Next
 
