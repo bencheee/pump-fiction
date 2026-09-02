@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:47:00+02:00`
+- **Updated:** `2026-09-02T09:51:21+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
 - **Review started:** `2026-09-02T09:24:32+02:00`
-- **Approval requested:** `2026-09-02T09:43:39+02:00`
-- **Approved:** `2026-09-02T09:43:39+02:00`
+- **Approval requested:** Not reached for replacement
+- **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-02T09:47:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Complete only the recorded scoped tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` and record their results.
+- **Next action:** Correct the pgTAP constraint-mode isolation, run only static checks, and create a replacement delivery; no further feature test is authorized.
 
 ## Scope
 
@@ -73,28 +73,28 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped exercise application unit tests; reset local Supabase and run exercise database constraints/functions plus real repository integration covering create, list/detail, edit with split usage, archive, reactivation, duplicate active name, and invalid mode combinations.
-- **Authorized commit:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; approval of original delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` was invalidated by the required test-source correction
+- **Results:** Against exact then-approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: clean `npm ci` installed 653 packages with no vulnerabilities; scoped exercise unit tests passed 5/5; clean database reset applied all three migrations; existing core pgTAP passed 13/13; new exercise-library pgTAP failed 2/5 because `SET CONSTRAINTS ... IMMEDIATE` persisted between subtests and made later fixture inserts validate before their mode rows existed. Repository integration was not run. The required test-fixture correction invalidates approval; no further test may run before replacement approval.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
+- **Delivery commit SHA:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` (replacement required)
 - **Subject:** `T-010: build exercise library operations`
 - **Committed scope:** Two-Task `F-005` breakdown; feature-owned exercise domain, allowed-mode validation, repository contract and ordinary operations; transactional definition schema/functions, reviewed migration, generated types, server-only Supabase repository/composition and thin Server Actions; compatibility updates and unexecuted unit/database/repository tests; synchronized canonical and project documentation.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-02T09:43:39+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-02T09:51:21+02:00` after verification exposed a replacement requirement
+- **Outcome:** Changes requested
+- **Findings:** The pgTAP scenarios do not reset the two deferred exercise constraint triggers to `DEFERRED` before constructing each multi-statement fixture, so the first scenario's switch to `IMMEDIATE` leaks into later scenarios and causes premature empty-mode failures.
 
 ## Approval
 
-- **Approved commit:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
-- **Approved by:** User
-- **Approved at:** `2026-09-02T09:43:39+02:00`
-- **Approval note:** User explicitly confirmed exact commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`, authorizing only the recorded T-010 test plan.
+- **Approved commit:** Not approved for replacement
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** Approval of original delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` was invalidated when verification required a test-source correction.
 
 ## Definition of Ready
 
@@ -134,3 +134,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T09:43:39+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` with no findings and recommended approval |
 | `2026-09-02T09:43:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-010 tests |
 | `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded scoped verification in an isolated worktree at exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` using Node.js `24.20.0` and npm `11.19.0` |
+| `2026-09-02T09:51:21+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 5/5, clean reset and core pgTAP 13/13 passed, but exercise pgTAP failed 2/5 because constraint-mode state leaked between fixtures; repository tests stopped and replacement approval is required |

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:47:00+02:00
+- **Last updated:** 2026-09-02T09:51:21+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is running only its recorded scoped tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is back `In Progress`: unit 5/5, clean reset, and core pgTAP 13/13 passed, but exercise pgTAP failed 2/5 because constraint mode leaked between test fixtures. Approval is invalidated.
 
 ## Immediate next action
 
-Codex completes the recorded T-010 verification and records the exact-SHA results.
+Codex corrects only the pgTAP fixture isolation, runs static checks without feature tests, and creates a replacement delivery for User review.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T09:47:00+02:00`; next: complete and record only the approved scoped verification.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:51:21+02:00`; next: correct test isolation and deliver a statically checked replacement.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None; `T-010` is already `Testing`.
+None.
 
 ## Recently completed Tasks
 
