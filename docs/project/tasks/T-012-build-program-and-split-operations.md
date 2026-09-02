@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:14:49+02:00`
+- **Updated:** `2026-09-02T15:29:06+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
 - **Review started:** `2026-09-02T15:14:49+02:00` for replacement
-- **Approval requested:** Not reached for replacement
-- **Approved:** Not reached for replacement
-- **Testing started:** `2026-09-02T15:07:10+02:00`
+- **Approval requested:** `2026-09-02T15:29:06+02:00` for replacement
+- **Approved:** `2026-09-02T15:29:06+02:00` for replacement
+- **Testing started:** `2026-09-02T15:29:06+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; corrected feature tests remain unexecuted and unauthorized.
+- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
 
 ## Scope
 
@@ -75,7 +75,7 @@ Implement feature-owned program and split models, validation, queries, and atomi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped program/split application unit tests; reset local Supabase and run program/split constraints and transactional functions plus real repository integration covering lifecycle replacement, validation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, reactivation, proposed-completion advancement, and retry no-op.
-- **Authorized commit:** Not authorized; original approval invalidated after the failed test fixture
+- **Authorized commit:** `5b781802d2bddfc77b55745f12108ae678bd2b76`
 - **Results:** Against then-approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: scoped unit tests passed 4/4; clean reset applied all four migrations; all three pgTAP files passed 26/26 total; repository integration failed 0/1 because its inactive-exercise scenario attempted to add an archived exercise to a split that already contained it, which the accepted retained-membership rule correctly permits. Verification stopped and a corrected test-only replacement requires fresh approval. An initial isolated `npm ci` used system Node.js `22.21.0`/npm `10.9.4`; no test ran under it, the install was discarded by a fresh `npm ci` under the required versions, and 653 packages installed with no vulnerabilities.
 
 ## Delivery commit
@@ -87,16 +87,16 @@ Implement feature-owned program and split models, validation, queries, and atomi
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-02T15:07:10+02:00`
-- **Outcome:** Recommended for approval
+- **Reviewed at:** `2026-09-02T15:29:06+02:00` for replacement
+- **Outcome:** Replacement recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved for replacement; original `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` approval invalidated
-- **Approved by:** Not approved for replacement
-- **Approved at:** Not approved for replacement
-- **Approval note:** User approved the original delivery at `2026-09-02T15:07:10+02:00`; repository verification exposed a test-fixture defect, so a replacement requires fresh approval.
+- **Approved commit:** `5b781802d2bddfc77b55745f12108ae678bd2b76`
+- **Approved by:** User
+- **Approved at:** `2026-09-02T15:29:06+02:00`
+- **Approval note:** User explicitly confirmed exact test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`, authorizing the complete recorded T-012 test plan from the beginning.
 
 ## Definition of Ready
 
@@ -139,3 +139,6 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit 4/4, clean reset, and pgTAP 26/26 passed, but repository integration failed because the inactive-exercise fixture used an already-associated exercise; approval is invalidated and a corrected test-only replacement is required |
 | `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected the repository fixture to add the archived exercise to a split that did not already contain it; all static checks passed without rerunning feature tests |
 | `2026-09-02T15:14:49+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; static checks passed and corrected feature tests remain unexecuted |
+| `2026-09-02T15:29:06+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` with no additional findings and recommended approval |
+| `2026-09-02T15:29:06+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-012 test plan from the beginning |
+| `2026-09-02T15:29:06+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification in a fresh isolated worktree at the exact approved replacement |

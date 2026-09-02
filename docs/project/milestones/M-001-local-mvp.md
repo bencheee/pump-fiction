@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T15:14:49+02:00`
+- **Updated:** `2026-09-02T15:29:06+02:00`
 - **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -122,3 +122,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | T-012 verification requires a replacement | Repository integration used an already-associated archived exercise for its rejection scenario; approval is invalidated after unit 4/4 and pgTAP 26/26 passed |
 | `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | Corrected T-012 test fixture pending replacement | Static checks passed without rerunning feature tests; fresh delivery approval remains required |
 | `2026-09-02T15:14:49+02:00` | Codex primary agent / Executor | Delivered T-012 replacement for review | Exact test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` awaits fresh User approval |
+| `2026-09-02T15:29:06+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-012 replacement and began verification | Running the complete recorded plan from the beginning against exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` |
