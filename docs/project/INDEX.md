@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `3/10 Features Done` | User | `2026-09-01T17:04:42+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `4/10 Features Done` | User | `2026-09-02T08:55:13+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -25,7 +25,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-001`](features/F-001-local-technical-architecture.md) | `M-001` | Local Technical Architecture | `Now / 1` | `1/1 Done` | User | `2026-08-25T16:27:49+02:00` | [`features/F-001-local-technical-architecture.md`](features/F-001-local-technical-architecture.md) |
 | [`F-002`](features/F-002-mvp-delivery-planning.md) | `M-001` | MVP Delivery Planning | `Now / 2` | `1/1 Done` | User | `2026-08-25T16:49:33+02:00` | [`features/F-002-mvp-delivery-planning.md`](features/F-002-mvp-delivery-planning.md) |
 | [`F-003`](features/F-003-mobile-ui-ux-design-package.md) | `M-001` | Mobile UI/UX Design Package | `Now / 1` | `2/2 Done` | User | `2026-08-31T12:06:31+02:00` | [`features/F-003-mobile-ui-ux-design-package.md`](features/F-003-mobile-ui-ux-design-package.md) |
-| [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Now / 1` | `5/5 Done; awaiting User feature confirmation` | User | `2026-09-01T17:04:42+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
+| [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Now / 1` | `5/5 Done` | User | `2026-09-02T08:55:13+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
 | [`F-005`](features/F-005-exercise-library.md) | `M-001` | Exercise Library | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-005-exercise-library.md`](features/F-005-exercise-library.md) |
 | [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Next / 4` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
 | [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Next / 5` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |

@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-01T17:04:42+02:00`
-- **Progress:** `5/5 required Tasks Done; awaiting User feature-result confirmation`
+- **Updated:** `2026-09-02T08:55:13+02:00`
+- **Progress:** `5/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -58,7 +58,7 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -114,3 +114,4 @@ The accepted Next.js and local Supabase foundations provide the phone-only shell
 | `2026-09-01T16:05:41+02:00` | Codex primary agent / Executor | Delivered latest corrected `T-009` for review | Replacement `ded6f9f73e5952eafe645d07142ab456808783b9` changes readiness to `/today`; corrected feature tests remain unexecuted |
 | `2026-09-01T17:01:55+02:00` | User / Reviewer and Approver and Codex primary agent / Tester | Approved and began latest `T-009` replacement verification | Exact replacement `ded6f9f73e5952eafe645d07142ab456808783b9` is running the complete recorded plan from the beginning in an isolated worktree |
 | `2026-09-01T17:04:42+02:00` | Codex primary agent / Tester | Completed `T-009`; all five required Tasks are `Done` | Exact latest replacement passed the complete recorded component, production-browser, and structural-capture verification; `F-004` awaits User confirmation of the aggregate feature result |
+| `2026-09-02T08:55:13+02:00` | User / Owner | Completed `F-004` | Confirmed the aggregate Application and Data Foundation result after all five required Tasks and their approved verification were complete |

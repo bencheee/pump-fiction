@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-01T17:04:42+02:00
-- **Current phase:** Application and data foundation
+- **Last updated:** 2026-09-02T08:55:13+02:00
+- **Current phase:** Exercise Library planning next
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `T-005` through `T-009` complete; `F-004` awaiting aggregate confirmation
+- **Implementation:** `F-004` complete; `F-005` Task breakdown pending
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-User confirms the aggregate `F-004` Application and Data Foundation result now that all five required Tasks are `Done`.
+No active Task; `F-005` Exercise Library is the next ordered Feature and still needs a Task breakdown.
 
 ## Immediate next action
 
-User reviews the completed `F-004` result and either confirms it or records a finding.
+User directs preparation of the `F-005` Task breakdown when ready to continue.
 
 ## Now
 
-No active Task; `F-004` awaits User feature-result confirmation.
+No active Task.
 
 ## Next
 
-No queued Tasks; later Feature breakdown follows completion of `F-004`.
+[`F-005`](docs/project/features/F-005-exercise-library.md) — `Next / 3`; Task breakdown pending Owner direction.
 
 ## Later
 
@@ -49,7 +49,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`3/10 Features Done`)
-- [`F-004`](docs/project/features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`5/5 Tasks Done`; awaiting User feature-result confirmation)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`4/10 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

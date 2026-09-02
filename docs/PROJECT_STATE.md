@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `T-005` through `T-009` are complete. Exact latest `T-009` replacement `ded6f9f73e5952eafe645d07142ab456808783b9` passed a fresh locked install, component tests 4/4, production Chromium/WebKit scenarios 8/8, and structural review of four exact-3x captures. All five `F-004` Tasks are `Done`; the Feature awaits User confirmation of its aggregate result.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation is complete after the User confirmed its aggregate result. Its five Tasks, `T-005` through `T-009`, and all approved verification are complete. `F-005` Exercise Library is the next ordered Feature and awaits Task breakdown and explicit Owner direction.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews and confirms the aggregate `F-004` Application and Data Foundation result, or records a finding.
+Prepare the `F-005` Exercise Library Task breakdown when the User directs work to continue.
 
 ## Implementation status
 
-`T-005` through `T-009` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, phone shells, route and overlay foundations, shared UI primitives, and their approved verification are complete. `F-004` awaits aggregate User confirmation; domain feature UI behavior and deployment configuration do not exist yet.
+`F-004` and `T-005` through `T-009` are `Done`; the application baseline, declarative local schema, generated database types, server-only boundaries, active-workout transactional command path, IndexedDB FIFO outbox, restore/replay recovery, phone shells, route and overlay foundations, shared UI primitives, and their approved verification are complete. Domain feature UI behavior and deployment configuration do not exist yet; `F-005` Task breakdown is next.
