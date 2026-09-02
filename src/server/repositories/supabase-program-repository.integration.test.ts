@@ -99,8 +99,8 @@ describe("SupabaseProgramRepository", () => {
         plannedSets: 5,
       });
       await expect(
-        programs.updateSplit(mixed.id, {
-          name: "Mixed",
+        programs.updateSplit(pull.id, {
+          name: "Pull",
           exercises: [prescription(press.id, 3, 8, 8)],
         }),
       ).rejects.toMatchObject({ code: "inactive_exercise" });

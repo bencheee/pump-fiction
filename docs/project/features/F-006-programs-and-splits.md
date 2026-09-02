@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T15:11:26+02:00`
+- **Updated:** `2026-09-02T15:13:44+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -66,3 +66,4 @@ The user can create and manage programs, ordered split templates, activation and
 | `2026-09-02T15:04:53+02:00` | Codex primary agent / Executor | Delivered `T-012` for review | Exact commit `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` is ready for User review; feature tests remain unexecuted |
 | `2026-09-02T15:07:10+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-012 delivery and began verification | Running only the recorded scoped tests against exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` |
 | `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | Returned `T-012` to `In Progress` | Unit 4/4 and pgTAP 26/26 passed; repository integration exposed an invalid test fixture and a test-only replacement requires fresh approval |
+| `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | Corrected T-012 test fixture pending replacement delivery | The rejection scenario now uses a split without prior archived-exercise membership; static checks passed without feature tests |

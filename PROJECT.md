@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T15:11:26+02:00
+- **Last updated:** 2026-09-02T15:13:44+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
@@ -12,7 +12,7 @@
 
 ## Immediate next action
 
-Correct the T-012 inactive-exercise test fixture, pass static checks without feature tests, and deliver a test-only replacement for fresh User approval.
+Create the statically verified T-012 test-only replacement for fresh User review; feature tests remain unauthorized.
 
 ## Now
 

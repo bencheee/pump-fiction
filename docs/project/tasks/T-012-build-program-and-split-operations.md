@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:11:26+02:00`
+- **Updated:** `2026-09-02T15:13:44+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
 - **Review started:** `2026-09-02T15:04:53+02:00`
 - **Approval requested:** Not reached for replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-02T15:07:10+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the repository test fixture, rerun static checks without feature tests, and create a replacement delivery for fresh User approval.
+- **Next action:** Create the test-only replacement delivery for fresh User review; corrected feature tests remain unexecuted.
 
 ## Scope
 
@@ -68,7 +68,7 @@ Implement feature-owned program and split models, validation, queries, and atomi
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, generated-type consistency review, documentation links, declarative-schema convergence review, and `git diff --check`
-- Results: Passed on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: `npm run check` passed Prettier, ESLint dependency boundaries, strict TypeScript, the Next.js production build across 13 routes, 8/8 font and 38/38 icon checksums, Markdown lint across 83 files, and all 597 internal links. Declarative schema sync generated the reviewed migration with strict coverage and a subsequent convergence check reported no schema changes; generated public database types match local introspection; `supabase db lint --local --level warning` reported no schema errors; and `git diff --check` passed. No feature test ran.
+- Results: Passed for the original delivery and pending test-only replacement on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: `npm run check` passed Prettier, ESLint dependency boundaries, strict TypeScript, the Next.js production build across 13 routes, 8/8 font and 38/38 icon checksums, Markdown lint across 83 files, and all internal links. Declarative schema sync generated the reviewed migration with strict coverage and a subsequent convergence check reported no schema changes; generated public database types match local introspection; `supabase db lint --local --level warning` reported no schema errors; and `git diff --check` passed. No feature test ran after the fixture correction.
 
 ## Test plan and results
 
@@ -137,3 +137,4 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T15:07:10+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-012 tests |
 | `2026-09-02T15:07:10+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |
 | `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit 4/4, clean reset, and pgTAP 26/26 passed, but repository integration failed because the inactive-exercise fixture used an already-associated exercise; approval is invalidated and a corrected test-only replacement is required |
+| `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected the repository fixture to add the archived exercise to a split that did not already contain it; all static checks passed without rerunning feature tests |

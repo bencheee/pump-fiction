@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the T-012 repository test fixture and deliver a statically verified replacement for fresh User approval.
+Deliver the corrected, statically verified T-012 test fixture as a replacement for fresh User approval.
 
 ## Implementation status
 
