@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:56:40+02:00
+- **Last updated:** 2026-09-02T10:00:54+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` is `In Review`. It corrects pgTAP fixture isolation; no feature test is authorized.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is running its complete recorded verification against exact approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`.
 
 ## Immediate next action
 
-User reviews exact T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`; no feature test is authorized before fresh approval.
+Codex completes and records the full T-010 replacement verification from the beginning.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T09:56:40+02:00`; next: User reviews exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T10:00:54+02:00`; next: complete and record the approved replacement verification.
 
 ## Next
 

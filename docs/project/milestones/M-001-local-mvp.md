@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T09:56:40+02:00`
+- **Updated:** `2026-09-02T10:00:54+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -100,3 +100,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T09:51:21+02:00` | Codex primary agent / Tester | Returned `T-010` to `In Progress` | Exercise pgTAP failed 2/5 due test-fixture constraint-mode leakage; repository verification stopped and approval is invalidated |
 | `2026-09-02T09:55:08+02:00` | Codex primary agent / Executor | Corrected T-010 test isolation pending replacement | Every pgTAP fixture now resets deferred mode; static checks passed without feature tests |
 | `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | Delivered T-010 replacement for review | Exact test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` awaits fresh User approval |
+| `2026-09-02T10:00:54+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-010 replacement and began verification | Running the complete recorded plan against exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` |
