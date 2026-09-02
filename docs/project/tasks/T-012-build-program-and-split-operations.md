@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:01:52+02:00`
+- **Updated:** `2026-09-02T15:04:53+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-02T15:04:53+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the exact delivery commit for User review; feature tests remain unexecuted.
+- **Next action:** User reviews exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`; feature tests remain unexecuted and unauthorized.
 
 ## Scope
 
@@ -80,9 +80,9 @@ Implement feature-owned program and split models, validation, queries, and atomi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `08f5e0f415c69f3d7f9800fb617d23cf8806bc`
 - **Subject:** `T-012: build program and split operations`
-- **Committed scope:** Not created
+- **Committed scope:** Program/split domain validation and application contracts; server-only Supabase repository and thin Server Actions; atomic lifecycle, prescription, reorder, next-pointer, split-archival, and proposed-completion rotation functions; generated migration/types; prepared unexecuted unit, pgTAP, and repository verification; canonical architecture and project-state updates.
 
 ## Review
 
@@ -132,3 +132,4 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T14:35:46+02:00` | User / Owner | `Backlog` | `Ready` | Directed work to begin on `F-006`; completed dependencies and accepted canonical scope satisfy readiness |
 | `2026-09-02T14:35:46+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the program/split application and persistence delivery |
 | `2026-09-02T15:01:52+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped operations, generated migration/types, canonical guidance, and unexecuted tests; all planned static checks passed |
+| `2026-09-02T15:04:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`; all static checks passed and feature tests remain unexecuted |
