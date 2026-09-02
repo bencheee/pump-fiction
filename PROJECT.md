@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T10:44:18+02:00
+- **Last updated:** 2026-09-02T10:47:53+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is correcting component-test isolation after verification invalidated approval of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivered test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` after verification exposed component-test matcher and cleanup defects.
 
 ## Immediate next action
 
-Codex prepares and statically verifies a test-only T-011 replacement under the required Node.js/npm versions, then delivers its exact SHA for fresh User approval.
+User reviews exact T-011 replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; no feature test may run before fresh approval.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T10:44:18+02:00`; next: deliver a statically verified test-only replacement for fresh approval.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T10:47:53+02:00`; next: User reviews exact replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`.
 
 ## Next
 

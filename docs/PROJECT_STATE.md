@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct and statically verify only the T-011 component-test matcher/cleanup defects under the required Node.js/npm versions, then deliver a replacement SHA for fresh approval.
+User reviews exact T-011 test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; no feature test may run before fresh approval.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; verification of delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` exposed component-test matcher and cleanup defects, so approval is invalidated pending a test-only replacement. Browser tests did not run. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`; test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` corrects the component-test matcher and cleanup defects exposed in the original verification and awaits fresh approval. Browser tests did not run. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.

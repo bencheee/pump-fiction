@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:47:15+02:00`
+- **Updated:** `2026-09-02T10:47:53+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
-- **Approval requested:** `2026-09-02T10:41:09+02:00`
-- **Approved:** `2026-09-02T10:41:09+02:00`
+- **Approval requested:** Not reached for replacement
+- **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-02T10:43:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified test-only replacement and hand its exact SHA to the User for fresh approval; no further feature test is authorized.
+- **Next action:** User reviews exact test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; no further feature test is authorized before fresh approval.
 
 ## Scope
 
@@ -78,16 +78,16 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` (replacement required)
-- **Subject:** `T-011: build exercise library mobile experience`
-- **Committed scope:** Dynamic S05 Exercise Library with active/archived search, empty/loading/failure states, and opaque edit routes; S06 create/edit form with compatible mode controls, persistent note and snapshot messaging, split usage, save/retry feedback, archive/reactivate flows, and route validation; prepared but unexecuted component and Chromium/WebKit phone-browser tests; synchronized project records.
+- **Delivery commit SHA:** `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` (test-only replacement; supersedes original delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`)
+- **Subject:** `T-011: isolate exercise component tests`
+- **Committed scope:** Original S05/S06 delivery plus explicit Testing Library cleanup and accessible-name matchers corrected to reflect nested-span names; no application behavior changed.
 
 ## Review
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-02T10:41:09+02:00`
-- **Outcome:** Changes requested after verification exposed a test-source correction
-- **Findings:** Component-test accessible-name matchers do not reflect concatenated nested-span names, and explicit Testing Library cleanup is missing between tests.
+- **Outcome:** Replacement awaiting review
+- **Findings:** Original test-source findings are corrected in replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; fresh review is pending.
 
 ## Approval
 
@@ -137,3 +137,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:43:55+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component verification in an isolated worktree at exact approved delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` |
 | `2026-09-02T10:44:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests failed 0/2 due to test matcher and cleanup defects; browser tests stopped, approval invalidated, and a test-only replacement is required |
 | `2026-09-02T10:47:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Added explicit Testing Library cleanup and corrected accessible-name matchers; all static checks passed under required Node.js 24.20.0/npm 11.19.0 without rerunning feature tests |
+| `2026-09-02T10:47:53+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f`; static checks passed and feature tests remain unexecuted after correction |
