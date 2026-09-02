@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:24:32+02:00
+- **Last updated:** 2026-09-02T09:43:39+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) delivered exercise-domain, application, and persistence operations in exact commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` and is `In Review`.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` is approved for only its recorded scoped tests.
 
 ## Immediate next action
 
-User reviews exact `T-010` delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; feature tests remain forbidden until approval.
+Codex runs only the recorded T-010 tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` in an isolated worktree.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T09:24:32+02:00`; next: User reviews exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `Approved`; Executor: Codex primary agent; updated `2026-09-02T09:43:39+02:00`; next: run only its recorded scoped tests against the approved SHA.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — approved commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; run only the recorded scoped tests.
 
 ## Recently completed Tasks
 

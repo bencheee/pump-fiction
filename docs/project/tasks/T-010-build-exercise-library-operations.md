@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `In Review`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:24:32+02:00`
+- **Updated:** `2026-09-02T09:43:39+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
 - **Review started:** `2026-09-02T09:24:32+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
+- **Approval requested:** `2026-09-02T09:43:39+02:00`
+- **Approved:** `2026-09-02T09:43:39+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; feature tests remain forbidden until exact-commit approval.
+- **Next action:** Codex runs only the recorded scoped tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` in an isolated worktree.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped exercise application unit tests; reset local Supabase and run exercise database constraints/functions plus real repository integration covering create, list/detail, edit with split usage, archive, reactivation, duplicate active name, and invalid mode combinations.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
 - **Results:** Not run
 
 ## Delivery commit
@@ -85,16 +85,16 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-02T09:43:39+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`
+- **Approved by:** User
+- **Approved at:** `2026-09-02T09:43:39+02:00`
+- **Approval note:** User explicitly confirmed exact commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`, authorizing only the recorded T-010 test plan.
 
 ## Definition of Ready
 
@@ -131,3 +131,5 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T08:59:17+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the exercise-library application and persistence delivery |
 | `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped operations, transactional schema/migration, generated types, canonical guidance, and unexecuted tests; all planned static checks passed |
 | `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; all static checks passed and feature tests remain unexecuted |
+| `2026-09-02T09:43:39+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` with no findings and recommended approval |
+| `2026-09-02T09:43:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-010 tests |
