@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T15:13:44+02:00
+- **Last updated:** 2026-09-02T15:14:49+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) returned to `In Progress` after a repository-test fixture defect invalidated approval.
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `In Review` at exact test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
 
 ## Immediate next action
 
-Create the statically verified T-012 test-only replacement for fresh User review; feature tests remain unauthorized.
+User reviews exact T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; feature tests remain unauthorized.
 
 ## Now
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Progress`; replacement required; `Now / 1`).
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Review`; replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; `Now / 1`).
 
 ## Next
 

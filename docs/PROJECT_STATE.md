@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through `T-012`, which returned to implementation for a test-fixture-only replacement after partial verification.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through exact T-012 test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`, now in User review.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Deliver the corrected, statically verified T-012 test fixture as a replacement for fresh User approval.
+Review and approve exact T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` before restarting its complete test plan.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: T-012 unit 4/4 and pgTAP 26/26 passed, but its repository integration exposed an invalid test assumption and requires a test-only replacement; dependent `T-013` remains `Backlog`. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: exact T-012 test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `In Review` after static checks passed; dependent `T-013` remains `Backlog`. Deployment configuration does not exist yet.

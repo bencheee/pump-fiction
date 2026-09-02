@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:13:44+02:00`
+- **Updated:** `2026-09-02T15:14:49+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
-- **Review started:** `2026-09-02T15:04:53+02:00`
+- **Review started:** `2026-09-02T15:14:49+02:00` for replacement
 - **Approval requested:** Not reached for replacement
 - **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-02T15:07:10+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the test-only replacement delivery for fresh User review; corrected feature tests remain unexecuted.
+- **Next action:** User reviews exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; corrected feature tests remain unexecuted and unauthorized.
 
 ## Scope
 
@@ -80,9 +80,9 @@ Implement feature-owned program and split models, validation, queries, and atomi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `08f5e0f415c69f3d7f9800fb617d23cf8806bc`
-- **Subject:** `T-012: build program and split operations`
-- **Committed scope:** Program/split domain validation and application contracts; server-only Supabase repository and thin Server Actions; atomic lifecycle, prescription, reorder, next-pointer, split-archival, and proposed-completion rotation functions; generated migration/types; prepared unexecuted unit, pgTAP, and repository verification; canonical architecture and project-state updates.
+- **Delivery commit SHA:** `5b781802d2bddfc77b55745f12108ae678bd2b76` (test-only replacement; supersedes original delivery)
+- **Subject:** `T-012: correct archived exercise fixture`
+- **Committed scope:** Preserve the original program/split operations delivery while correcting the repository integration's inactive-exercise rejection fixture to use a split without prior membership; synchronize lifecycle documentation.
 
 ## Review
 
@@ -138,3 +138,4 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T15:07:10+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |
 | `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit 4/4, clean reset, and pgTAP 26/26 passed, but repository integration failed because the inactive-exercise fixture used an already-associated exercise; approval is invalidated and a corrected test-only replacement is required |
 | `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected the repository fixture to add the archived exercise to a split that did not already contain it; all static checks passed without rerunning feature tests |
+| `2026-09-02T15:14:49+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; static checks passed and corrected feature tests remain unexecuted |
