@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T10:32:39+02:00
+- **Last updated:** 2026-09-02T10:35:12+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-011`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is implementing the remaining S05/S06 Exercise Library mobile experience.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) delivered the remaining S05/S06 Exercise Library mobile experience in exact commit `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa` and is `In Review`.
 
 ## Immediate next action
 
-Codex creates the statically verified T-011 delivery commit and hands its exact SHA to the User for review; feature tests remain unexecuted.
+User reviews exact T-011 delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; feature tests remain forbidden until approval.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T10:32:39+02:00`; next: create and deliver the statically verified commit for review.
+[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T10:35:12+02:00`; next: User reviews exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`.
 
 ## Next
 

@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T10:32:39+02:00`
+- **Updated:** `2026-09-02T10:35:12+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified delivery commit and hand its exact SHA to the User for review; no feature test is authorized.
+- **Next action:** User reviews exact delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; feature tests remain forbidden until exact-commit approval.
 
 ## Scope
 
@@ -78,9 +78,9 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`
 - **Subject:** `T-011: build exercise library mobile experience`
-- **Committed scope:** Not created
+- **Committed scope:** Dynamic S05 Exercise Library with active/archived search, empty/loading/failure states, and opaque edit routes; S06 create/edit form with compatible mode controls, persistent note and snapshot messaging, split usage, save/retry feedback, archive/reactivate flows, and route validation; prepared but unexecuted component and Chromium/WebKit phone-browser tests; synchronized project records.
 
 ## Review
 
@@ -131,3 +131,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T10:23:15+02:00` | User / Owner | `Backlog` | `Ready` | Directed work to continue after T-010; all recorded dependencies and readiness fields are satisfied |
 | `2026-09-02T10:23:15+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the accepted Exercise Library mobile experience scope |
 | `2026-09-02T10:32:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the scoped S05/S06 implementation and prepared tests; permitted code/build/asset checks passed without executing feature tests |
+| `2026-09-02T10:35:12+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `bbcccb7961215a39ed3fe080ef1e0ad6edb56afa`; all static checks passed and feature tests remain unexecuted |
