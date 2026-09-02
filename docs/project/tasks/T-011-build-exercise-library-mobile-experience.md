@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T14:02:43+02:00`
+- **Updated:** `2026-09-02T14:09:49+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T13:58:41+02:00`
@@ -74,7 +74,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
 - **Authorized commit:** `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`
-- **Results:** Against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: clean `npm ci` installed 653 packages with no vulnerabilities; scoped component tests passed 3/3, including successful-create save feedback; Chromium/WebKit phone-browser scenarios passed 4/4, comprising both full create/search/duplicate/archive/reactivate lifecycle flows and both malformed/missing-route flows. Two full-page structural captures were produced. The two archived test definitions and four mode rows were removed after verification.
+- **Results:** Against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: clean `npm ci` installed 653 packages with no vulnerabilities; scoped component tests passed 3/3, including successful-create save feedback; Chromium/WebKit phone-browser scenarios passed 4/4, comprising both full create/search/duplicate/archive/reactivate lifecycle flows and both malformed/missing-route flows. Two full-page structural captures were produced. At the User's explicit request, the same exact-commit Playwright suite was rerun in fresh isolation and again passed 4/4 in 32.7 seconds. Both runs' archived test definitions and mode rows were removed after verification.
 
 ## Delivery commit
 
@@ -146,3 +146,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T13:58:41+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` and authorized the complete recorded T-011 verification from the beginning |
 | `2026-09-02T13:58:41+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification in isolation at exact approved replacement under Node.js 24.20.0/npm 11.19.0 |
 | `2026-09-02T14:02:43+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Exact replacement passed component tests 3/3 and Chromium/WebKit browser scenarios 4/4 with two structural captures; test fixtures were removed and all completion evidence is recorded |
+| `2026-09-02T14:09:49+02:00` | User / Requester and Codex primary agent / Tester | `Done` | `Done` | User-requested fresh isolated Playwright rerun against the exact approved replacement passed Chromium/WebKit scenarios 4/4 in 32.7 seconds; test fixtures were removed |
