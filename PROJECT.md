@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T13:58:41+02:00
+- **Last updated:** 2026-09-02T14:02:43+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` complete; `F-005` active through `T-011`
+- **Implementation:** `F-004` complete; `F-005` has `2/2 Tasks Done` and awaits aggregate User confirmation
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is running its complete recorded verification against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`.
+No active Task. [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) is complete; both required F-005 Tasks are Done.
 
 ## Immediate next action
 
-Codex completes and records the component and Chromium/WebKit phone-browser verification against the exact approved replacement.
+User confirms the aggregate F-005 Exercise Library result.
 
 ## Now
 
-[`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — `Testing`; Executor: Codex primary agent; updated `2026-09-02T13:58:41+02:00`; next: complete and record the authorized verification.
+No active Task.
 
 ## Next
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — completed `2026-09-02T14:02:43+02:00` — approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` — component tests 3/3 and Chromium/WebKit scenarios 4/4 passed with two structural captures.
 - [`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — completed `2026-09-02T10:10:10+02:00` — approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` — unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1 passed.
 - [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — completed `2026-09-01T17:04:42+02:00` — approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` — component tests 4/4, Chromium/WebKit scenarios 8/8, and four exact-3x structural captures passed.
 - [`T-008`](docs/project/tasks/T-008-build-active-workout-durability.md) — completed `2026-09-01T09:15:05+02:00` — approved replacement `b21a7e0631a27f5b633513899fa42aa2d50e5243` — unit tests 9/9, clean reset, repository integration 2/2, and Chromium/WebKit scenarios 6/6 passed.

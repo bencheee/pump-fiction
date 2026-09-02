@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete and record the running T-011 verification against exact approved save-feedback replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`.
+User confirms the aggregate F-005 Exercise Library result now that both required Tasks are Done.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-010` are `Done`. `F-005` is active through `T-011`, whose complete recorded verification is running against exact approved save-feedback replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`. Approved T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.
+`F-004` and `T-005` through `T-011` are `Done`. `F-005` has `2/2 Tasks Done` and awaits aggregate User confirmation. Exact T-011 replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` passed component tests 3/3 and Chromium/WebKit scenarios 4/4 with two structural captures; T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` passed its full verification. Deployment configuration does not exist yet.

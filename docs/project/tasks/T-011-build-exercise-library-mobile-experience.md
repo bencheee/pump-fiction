@@ -1,7 +1,7 @@
 # T-011 — Build Exercise Library mobile experience
 
 - **Feature:** `F-005`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T13:58:41+02:00`
+- **Updated:** `2026-09-02T14:02:43+02:00`
 - **Started:** `2026-09-02T10:23:15+02:00`
 - **Review started:** `2026-09-02T10:35:12+02:00`
 - **Approval requested:** `2026-09-02T13:58:41+02:00`
 - **Approved:** `2026-09-02T13:58:41+02:00`
 - **Testing started:** `2026-09-02T10:43:55+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-02T14:02:43+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded T-011 verification from the beginning against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` under Node.js 24.20.0/npm 11.19.0.
+- **Next action:** User confirms the aggregate F-005 Exercise Library result; T-011 is complete.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S05/S06 validation and accessibility, then Chromium/WebKit phone-browser scenarios for create, duplicate/invalid rejection, edit warning, archive filtering, reactivation, retry/not-found behavior, phone reflow, and approved structural captures.
 - **Authorized commit:** `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`
-- **Results:** Against exact then-approved replacement `7c8240b7060e6a6a27b02681dbcbd8c3daeee81f` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: clean `npm ci` installed 653 packages with no vulnerabilities; the corrected component suite passed 2/2. Chromium/WebKit malformed/missing-route scenarios passed 2/2, while both full create/edit lifecycle scenarios failed after successful create because redirect remount reset visible save feedback from `Saved` to `Not saved yet`; remaining lifecycle assertions did not run. The two created `T-011 mobile-*` fixtures and four mode rows were removed. A behavioral replacement and fresh approval are required.
+- **Results:** Against exact approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: clean `npm ci` installed 653 packages with no vulnerabilities; scoped component tests passed 3/3, including successful-create save feedback; Chromium/WebKit phone-browser scenarios passed 4/4, comprising both full create/search/duplicate/archive/reactivate lifecycle flows and both malformed/missing-route flows. Two full-page structural captures were produced. The two archived test definitions and four mode rows were removed after verification.
 
 ## Delivery commit
 
@@ -112,15 +112,15 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -145,3 +145,4 @@ Implement the phone-only `/exercises`, `/exercises/new`, and `/exercises/:id/edi
 | `2026-09-02T13:11:15+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3`; static checks passed and feature tests remain unexecuted after correction |
 | `2026-09-02T13:58:41+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` and authorized the complete recorded T-011 verification from the beginning |
 | `2026-09-02T13:58:41+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification in isolation at exact approved replacement under Node.js 24.20.0/npm 11.19.0 |
+| `2026-09-02T14:02:43+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Exact replacement passed component tests 3/3 and Chromium/WebKit browser scenarios 4/4 with two structural captures; test fixtures were removed and all completion evidence is recorded |
