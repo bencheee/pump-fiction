@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `Approved`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:43:39+02:00`
+- **Updated:** `2026-09-02T09:47:00+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
 - **Review started:** `2026-09-02T09:24:32+02:00`
 - **Approval requested:** `2026-09-02T09:43:39+02:00`
 - **Approved:** `2026-09-02T09:43:39+02:00`
-- **Testing started:** Not reached
+- **Testing started:** `2026-09-02T09:47:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Codex runs only the recorded scoped tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` in an isolated worktree.
+- **Next action:** Complete only the recorded scoped tests against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` and record their results.
 
 ## Scope
 
@@ -133,3 +133,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; all static checks passed and feature tests remain unexecuted |
 | `2026-09-02T09:43:39+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` with no findings and recommended approval |
 | `2026-09-02T09:43:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-010 tests |
+| `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded scoped verification in an isolated worktree at exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` using Node.js `24.20.0` and npm `11.19.0` |

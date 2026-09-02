@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T09:43:39+02:00`
+- **Updated:** `2026-09-02T09:47:00+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -26,7 +26,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 
 ## Tasks
 
-- [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`Approved`)
+- [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`Testing`)
 - [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Backlog`)
 
 ## Dependencies and blockers
@@ -65,3 +65,4 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | Completed `T-010` implementation scope pending delivery | Exercise operations, atomic definition writes, lifecycle queries, prepared tests, and canonical guidance are statically verified |
 | `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | Delivered `T-010` for review | Exact commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` is ready for User review; feature tests remain unexecuted |
 | `2026-09-02T09:43:39+02:00` | User / Reviewer and Approver | Approved exact `T-010` delivery for testing | Commit `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` may run only its recorded scoped verification |
+| `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | Began T-010 verification | Running only the recorded scoped tests in an isolated worktree at the exact approved delivery |

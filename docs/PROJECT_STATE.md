@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run only the recorded T-010 tests against exact approved Exercise Library operations delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` in an isolated worktree.
+Complete and record only the approved T-010 tests against exact Exercise Library operations delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, whose exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` is `Approved` for only its recorded scoped verification; `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.
+`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, which is `Testing` only its recorded scoped verification against exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`; `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.

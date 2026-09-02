@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T09:43:39+02:00`
+- **Updated:** `2026-09-02T09:47:00+02:00`
 - **Progress:** `4/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -96,3 +96,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T09:21:51+02:00` | Codex primary agent / Executor | Completed `T-010` implementation scope pending delivery | Exercise Library operations are statically verified; approval-gated verification remains unexecuted |
 | `2026-09-02T09:24:32+02:00` | Codex primary agent / Executor | Delivered `T-010` for review | Exact delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` awaits User review before any feature testing |
 | `2026-09-02T09:43:39+02:00` | User / Reviewer and Approver | Approved exact `T-010` delivery for testing | Authorized only the recorded scoped tests against `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` |
+| `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | Began T-010 verification | Running only the approved scoped tests against the exact delivery in an isolated worktree |
