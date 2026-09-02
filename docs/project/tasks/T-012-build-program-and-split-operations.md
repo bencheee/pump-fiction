@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:07:10+02:00`
+- **Updated:** `2026-09-02T15:11:26+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
 - **Review started:** `2026-09-02T15:04:53+02:00`
-- **Approval requested:** `2026-09-02T15:07:10+02:00`
-- **Approved:** `2026-09-02T15:07:10+02:00`
+- **Approval requested:** Not reached for replacement
+- **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-02T15:07:10+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded T-012 verification in isolation at exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
+- **Next action:** Correct the repository test fixture, rerun static checks without feature tests, and create a replacement delivery for fresh User approval.
 
 ## Scope
 
@@ -75,8 +75,8 @@ Implement feature-owned program and split models, validation, queries, and atomi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped program/split application unit tests; reset local Supabase and run program/split constraints and transactional functions plus real repository integration covering lifecycle replacement, validation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, reactivation, proposed-completion advancement, and retry no-op.
-- **Authorized commit:** `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; original approval invalidated after the failed test fixture
+- **Results:** Against then-approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: scoped unit tests passed 4/4; clean reset applied all four migrations; all three pgTAP files passed 26/26 total; repository integration failed 0/1 because its inactive-exercise scenario attempted to add an archived exercise to a split that already contained it, which the accepted retained-membership rule correctly permits. Verification stopped and a corrected test-only replacement requires fresh approval. An initial isolated `npm ci` used system Node.js `22.21.0`/npm `10.9.4`; no test ran under it, the install was discarded by a fresh `npm ci` under the required versions, and 653 packages installed with no vulnerabilities.
 
 ## Delivery commit
 
@@ -93,10 +93,10 @@ Implement feature-owned program and split models, validation, queries, and atomi
 
 ## Approval
 
-- **Approved commit:** `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`
-- **Approved by:** User
-- **Approved at:** `2026-09-02T15:07:10+02:00`
-- **Approval note:** User explicitly confirmed exact commit `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`, authorizing only the recorded T-012 test plan.
+- **Approved commit:** Not approved for replacement; original `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` approval invalidated
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** User approved the original delivery at `2026-09-02T15:07:10+02:00`; repository verification exposed a test-fixture defect, so a replacement requires fresh approval.
 
 ## Definition of Ready
 
@@ -136,3 +136,4 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T15:07:10+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` with no findings and recommended approval |
 | `2026-09-02T15:07:10+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-012 tests |
 | `2026-09-02T15:07:10+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |
+| `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit 4/4, clean reset, and pgTAP 26/26 passed, but repository integration failed because the inactive-exercise fixture used an already-associated exercise; approval is invalidated and a corrected test-only replacement is required |

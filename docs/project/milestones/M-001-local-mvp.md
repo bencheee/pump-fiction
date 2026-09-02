@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T15:07:10+02:00`
+- **Updated:** `2026-09-02T15:11:26+02:00`
 - **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -119,3 +119,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T15:01:52+02:00` | Codex primary agent / Executor | Completed `T-012` implementation scope pending delivery | Programs and Splits operations are statically verified; approval-gated verification remains unexecuted |
 | `2026-09-02T15:04:53+02:00` | Codex primary agent / Executor | Delivered `T-012` for review | Exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` awaits User review before any feature testing |
 | `2026-09-02T15:07:10+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-012 delivery and began verification | Running the complete recorded T-012 plan against exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` |
+| `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | T-012 verification requires a replacement | Repository integration used an already-associated archived exercise for its rejection scenario; approval is invalidated after unit 4/4 and pgTAP 26/26 passed |

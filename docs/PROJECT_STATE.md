@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through exact approved T-012 delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`, now in scoped verification.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through `T-012`, which returned to implementation for a test-fixture-only replacement after partial verification.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run and record only the approved T-012 unit, database, and repository verification against exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
+Correct the T-012 repository test fixture and deliver a statically verified replacement for fresh User approval.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: exact T-012 operations delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` is `Testing` with User authorization, and dependent `T-013` mobile experience is `Backlog`. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: T-012 unit 4/4 and pgTAP 26/26 passed, but its repository integration exposed an invalid test assumption and requires a test-only replacement; dependent `T-013` remains `Backlog`. Deployment configuration does not exist yet.

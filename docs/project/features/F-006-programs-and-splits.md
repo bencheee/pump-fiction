@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T15:07:10+02:00`
+- **Updated:** `2026-09-02T15:11:26+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -26,7 +26,7 @@ The user can create and manage programs, ordered split templates, activation and
 
 ## Tasks
 
-- [`T-012`](../tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Testing`; approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`)
+- [`T-012`](../tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Progress`; test-only replacement required)
 - [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; depends on `T-012`)
 
 ## Dependencies and blockers
@@ -65,3 +65,4 @@ The user can create and manage programs, ordered split templates, activation and
 | `2026-09-02T15:01:52+02:00` | Codex primary agent / Executor | Completed `T-012` implementation scope pending delivery | Program/split operations, transactional lifecycle and rotation rules, prepared tests, and canonical guidance are statically verified |
 | `2026-09-02T15:04:53+02:00` | Codex primary agent / Executor | Delivered `T-012` for review | Exact commit `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` is ready for User review; feature tests remain unexecuted |
 | `2026-09-02T15:07:10+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-012 delivery and began verification | Running only the recorded scoped tests against exact delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` |
+| `2026-09-02T15:11:26+02:00` | Codex primary agent / Tester | Returned `T-012` to `In Progress` | Unit 4/4 and pgTAP 26/26 passed; repository integration exposed an invalid test fixture and a test-only replacement requires fresh approval |

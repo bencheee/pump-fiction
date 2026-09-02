@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T15:07:10+02:00
+- **Last updated:** 2026-09-02T15:11:26+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `Testing` for [`F-006`](docs/project/features/F-006-programs-and-splits.md) at exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) returned to `In Progress` after a repository-test fixture defect invalidated approval.
 
 ## Immediate next action
 
-Run only the recorded T-012 verification in isolation against exact approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc`.
+Correct the T-012 inactive-exercise test fixture, pass static checks without feature tests, and deliver a test-only replacement for fresh User approval.
 
 ## Now
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Testing`; `Now / 1`).
+[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`In Progress`; replacement required; `Now / 1`).
 
 ## Next
 
