@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the statically verified T-010 test-only replacement commit for User review; no feature test is currently authorized.
+User reviews exact T-010 test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`; no feature test is currently authorized.
 
 ## Implementation status
 
-`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, which returned to `In Progress` after its exercise pgTAP failed 2/5 because constraint-mode state leaked between fixtures; original approval is invalidated and repository verification did not run. `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.
+`F-004` and `T-005` through `T-009` are `Done`. `F-005` is active through `T-010`, whose exact test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` is `In Review` after correcting the pgTAP constraint-mode leakage; original approval is invalidated and repository verification did not run. `T-011` owns the dependent S05/S06 mobile experience. Domain feature UI behavior and deployment configuration do not exist yet.

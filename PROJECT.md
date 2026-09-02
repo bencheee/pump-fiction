@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T09:55:08+02:00
+- **Last updated:** 2026-09-02T09:56:40+02:00
 - **Current phase:** Exercise Library implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` complete; `F-005` active through `T-010`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) is `In Progress`; the pgTAP fixture-isolation correction is statically verified and awaits a test-only replacement delivery. Original approval remains invalidated.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` is `In Review`. It corrects pgTAP fixture isolation; no feature test is authorized.
 
 ## Immediate next action
 
-Codex creates the statically verified T-010 test-only replacement delivery for User review; no feature test is authorized.
+User reviews exact T-010 replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`; no feature test is authorized before fresh approval.
 
 ## Now
 
-[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Progress`; Executor: Codex primary agent; updated `2026-09-02T09:55:08+02:00`; next: create the test-only replacement for User review.
+[`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — `In Review`; Executor: Codex primary agent; updated `2026-09-02T09:56:40+02:00`; next: User reviews exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`.
 
 ## Next
 

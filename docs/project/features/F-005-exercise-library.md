@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-02T09:55:08+02:00`
+- **Updated:** `2026-09-02T09:56:40+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -26,7 +26,7 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 
 ## Tasks
 
-- [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`In Progress`; replacement required)
+- [`T-010`](../tasks/T-010-build-exercise-library-operations.md) — Build exercise-library operations (`In Review`; replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`)
 - [`T-011`](../tasks/T-011-build-exercise-library-mobile-experience.md) — Build Exercise Library mobile experience (`Backlog`)
 
 ## Dependencies and blockers
@@ -68,3 +68,4 @@ The user can manage a persistent exercise library with accepted type/load-mode v
 | `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | Began T-010 verification | Running only the recorded scoped tests in an isolated worktree at the exact approved delivery |
 | `2026-09-02T09:51:21+02:00` | Codex primary agent / Tester | Returned `T-010` to `In Progress` | Exercise pgTAP exposed leaking constraint-mode state between fixtures; repository tests stopped and a test-only replacement requires fresh approval |
 | `2026-09-02T09:55:08+02:00` | Codex primary agent / Executor | Corrected T-010 test isolation pending replacement delivery | Every pgTAP scenario now explicitly starts deferred; all static checks passed without rerunning feature tests |
+| `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | Delivered corrected `T-010` replacement for review | Exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` awaits fresh User review and approval |

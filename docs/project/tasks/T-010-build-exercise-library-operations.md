@@ -1,7 +1,7 @@
 # T-010 — Build exercise-library operations
 
 - **Feature:** `F-005`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T08:59:17+02:00`
-- **Updated:** `2026-09-02T09:55:08+02:00`
+- **Updated:** `2026-09-02T09:56:40+02:00`
 - **Started:** `2026-09-02T08:59:17+02:00`
-- **Review started:** `2026-09-02T09:24:32+02:00`
+- **Review started:** `2026-09-02T09:56:40+02:00` for replacement
 - **Approval requested:** Not reached for replacement
 - **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-02T09:47:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the statically verified test-only replacement delivery and hand its exact SHA to the User for fresh review; no feature test is authorized.
+- **Next action:** User reviews exact replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`; no feature test is authorized before fresh approval.
 
 ## Scope
 
@@ -78,16 +78,16 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` (replacement required)
-- **Subject:** `T-010: build exercise library operations`
-- **Committed scope:** Two-Task `F-005` breakdown; feature-owned exercise domain, allowed-mode validation, repository contract and ordinary operations; transactional definition schema/functions, reviewed migration, generated types, server-only Supabase repository/composition and thin Server Actions; compatibility updates and unexecuted unit/database/repository tests; synchronized canonical and project documentation.
+- **Delivery commit SHA:** `410c44edd4f8b1698f7de6b792eed0be16a26052` (replaces `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7`)
+- **Subject:** `T-010: isolate exercise database tests`
+- **Committed scope:** Preserve the original exercise-library operations delivery while resetting the two deferred constraint triggers at the start of every pgTAP fixture so one scenario's immediate mode cannot leak into the next; synchronize lifecycle documentation.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-02T09:51:21+02:00` after verification exposed a replacement requirement
-- **Outcome:** Changes requested
-- **Findings:** The pgTAP scenarios do not reset the two deferred exercise constraint triggers to `DEFERRED` before constructing each multi-statement fixture, so the first scenario's switch to `IMMEDIATE` leaks into later scenarios and causes premature empty-mode failures.
+- **Reviewed at:** Not reviewed for replacement
+- **Outcome:** Not reviewed for replacement
+- **Findings:** Original finding corrected; replacement review pending.
 
 ## Approval
 
@@ -136,3 +136,4 @@ Implement the feature-owned exercise models and validation, atomic create/edit/a
 | `2026-09-02T09:47:00+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded scoped verification in an isolated worktree at exact approved delivery `320749fc8b3e7bc3c4bccc7ad0e93a0e5ba300c7` using Node.js `24.20.0` and npm `11.19.0` |
 | `2026-09-02T09:51:21+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Unit tests passed 5/5, clean reset and core pgTAP 13/13 passed, but exercise pgTAP failed 2/5 because constraint-mode state leaked between fixtures; repository tests stopped and replacement approval is required |
 | `2026-09-02T09:55:08+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Reset each pgTAP fixture to deferred constraint mode before setup and passed all static checks without rerunning feature tests |
+| `2026-09-02T09:56:40+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `410c44edd4f8b1698f7de6b792eed0be16a26052`; static checks passed and corrected feature tests remain unexecuted |
