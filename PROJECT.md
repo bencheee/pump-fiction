@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T10:27:22+02:00
+- **Last updated:** 2026-09-03T10:46:33+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,19 +8,19 @@
 
 ## Current focus
 
-No active Task. [`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is complete; `F-006` continues with `T-013` after explicit Owner direction.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) has completed its S07–S09 implementation and permitted static verification pending delivery.
 
 ## Immediate next action
 
-User directs whether to start [`T-013 — Build Programs mobile experience`](docs/project/tasks/T-013-build-programs-mobile-experience.md).
+Create the exact T-013 delivery commit for User review; feature tests remain gated.
 
 ## Now
 
-No active Task.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Progress`).
 
 ## Next
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; dependency cleared; awaits Owner direction).
+No queued Task within `F-006`.
 
 ## Later
 

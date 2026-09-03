@@ -17,7 +17,7 @@ export function Sheet({
   trigger: ReactElement;
   title: string;
   description?: string;
-  children: ReactNode;
+  children: ReactNode | ((close: () => void) => ReactNode);
   closeLabel?: string;
 }) {
   const overlay = useTransientOverlay();
@@ -45,7 +45,11 @@ export function Sheet({
               {description}
             </Dialog.Description>
           ) : null}
-          <div className="mt-5">{children}</div>
+          <div className="mt-5">
+            {typeof children === "function"
+              ? children(() => overlay.requestOpenChange(false))
+              : children}
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

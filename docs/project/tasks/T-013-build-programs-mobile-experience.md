@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:27:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-03T10:46:33+02:00`
+- **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await explicit Owner direction to transition to `Ready` and begin the S07–S09 mobile delivery.
+- **Next action:** Create the exact delivery commit for User review; feature tests remain unexecuted pending approval.
 
 ## Scope
 
@@ -32,12 +32,12 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Acceptance criteria
 
-- [ ] S07 presents active, draft, and archived programs with accepted empty/loading states and routes by opaque UUID.
-- [ ] S08 creates drafts and edits program name, ordered splits, status, next-split selection, set-next, archive, and reactivation through explicit accessible actions.
-- [ ] S09 creates and edits split name and ordered active-library exercise prescriptions with field/group validation and duplicate prevention.
-- [ ] Visible drag handles provide accessible split and exercise reordering without changing current next-split identity.
-- [ ] Split archival explains and applies successor/wrap behavior, preserves History identity, and clearly rejects the last-active-split case.
-- [ ] The complete flow matches accepted S07–S09 structure, copy, save states, overlays, phone reflow, and accessibility behavior.
+- [x] S07 presents active, draft, and archived programs with accepted empty/loading states and routes by opaque UUID.
+- [x] S08 creates drafts and edits program name, ordered splits, status, next-split selection, set-next, archive, and reactivation through explicit accessible actions.
+- [x] S09 creates and edits split name and ordered active-library exercise prescriptions with field/group validation and duplicate prevention.
+- [x] Visible drag handles provide accessible split and exercise reordering without changing current next-split identity.
+- [x] Split archival explains and applies successor/wrap behavior, preserves History identity, and clearly rejects the last-active-split case.
+- [x] The complete flow matches accepted S07–S09 structure, copy, save states, overlays, phone reflow, and accessibility behavior.
 
 ## Traceability
 
@@ -58,16 +58,16 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Execution checklist
 
-- [ ] Implement S07 list, status grouping, empty/loading, and route handling.
-- [ ] Implement S08 program create/edit, activation/reactivation, set-next, archive, and split ordering.
-- [ ] Implement S09 split create/edit, exercise selection, prescriptions, ordering, validation, and archival.
-- [ ] Wire ordinary Server Actions, retry/not-found behavior, and accessible overlays/reorder controls.
-- [ ] Prepare component and Chromium/WebKit phone-browser tests without executing them; run only permitted static checks.
+- [x] Implement S07 list, status grouping, empty/loading, and route handling.
+- [x] Implement S08 program create/edit, activation/reactivation, set-next, archive, and split ordering.
+- [x] Implement S09 split create/edit, exercise selection, prescriptions, ordering, validation, and archival.
+- [x] Wire ordinary Server Actions, retry/not-found behavior, and accessible overlays/reorder controls.
+- [x] Prepare component and Chromium/WebKit phone-browser tests without executing them; run only permitted static checks.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries and accessibility rules, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on 2026-09-03 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 83 files, all 596 internal links, and `git diff --check`. Feature tests were prepared but not run.
 
 ## Test plan and results
 
@@ -104,12 +104,12 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -129,3 +129,5 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | --- | --- | --- | --- | --- |
 | `2026-09-02T14:35:46+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the dependent S07–S09 mobile delivery after program/split operations are complete |
 | `2026-09-03T10:27:22+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | `T-012` completed and cleared the dependency; explicit Owner direction is still required for `Ready` |
+| `2026-09-03T10:34:57+02:00` | User / Owner and Codex primary agent / Executor | `Backlog` | `In Progress` | Owner confirmed continuation; the Task met Ready and implementation began |
+| `2026-09-03T10:46:33+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S07–S09 implementation, prepared scoped tests, and passed all permitted static checks without running feature tests |
