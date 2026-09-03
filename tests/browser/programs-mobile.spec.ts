@@ -50,6 +50,7 @@ test.describe("programs mobile experience", () => {
       .getByRole("button", { name: exerciseB })
       .click();
     await page.getByRole("button", { name: "Save Split" }).click();
+    await expect(page).toHaveURL(/\/splits\/[0-9a-f-]+\/edit$/);
     await page.getByRole("link", { name: program }).click();
 
     await page.getByRole("button", { name: "Activate Program" }).click();

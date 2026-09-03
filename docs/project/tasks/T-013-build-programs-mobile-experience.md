@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T11:22:58+02:00`
+- **Updated:** `2026-09-03T11:27:57+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T10:55:23+02:00` for replacement
-- **Approval requested:** `2026-09-03T11:22:58+02:00`
-- **Approved:** `2026-09-03T11:22:58+02:00`
+- **Approval requested:** Not reached for second replacement
+- **Approved:** Not reached for second replacement
 - **Testing started:** `2026-09-03T11:22:58+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded scoped verification against exact approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`.
+- **Next action:** Create the second corrected test-only replacement delivery for fresh User approval; feature tests must not rerun yet.
 
 ## Scope
 
@@ -67,15 +67,15 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries and accessibility rules, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Passed for the original delivery and pending test-only replacement on 2026-09-03 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 83 files, all 596 internal links, and `git diff --check`. No feature test ran after the matcher correction.
+- Results: Passed for the original delivery and both pending test-only corrections on 2026-09-03 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 83 files, all 596 internal links, and `git diff --check`. No feature test ran after the redirect-wait correction.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S07–S09 validation, ordering, lifecycle, and accessibility; then Chromium/WebKit phone-browser scenarios for draft creation, split prescriptions and invalid ranges, activation/reactivation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`
-- **Results:** Against then-approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; scoped component tests passed 4/4; malformed program/split route scenarios passed 2/2; both full Chromium/WebKit flows stopped before program creation because the case-insensitive `Add program` locator matched both the icon link and empty-state action. Four created exercise fixtures were archived after the stopped run. Application behavior was not implicated; corrected test source requires a fresh exact-commit approval and complete rerun.
+- **Authorized commit:** Not authorized for second replacement; approval of `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` is invalidated
+- **Results:** Against then-approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`, component tests passed 4/4 and malformed routes passed 2/2 before an ambiguous locator stopped both full flows. Against then-approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; component tests passed 4/4; browser scenarios passed 3/4, comprising the full WebKit lifecycle and both malformed-route scenarios. Chromium timed out after saving the second split because test source clicked Back before awaiting the create redirect; its page snapshot showed the successfully saved split editor. Four active exercise fixtures and one draft program fixture were archived after the stopped run. Application behavior was not implicated; a second test-only replacement requires fresh approval and complete rerun.
 
 ## Delivery commit
 
@@ -92,10 +92,10 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Approval
 
-- **Approved commit:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`
-- **Approved by:** User
-- **Approved at:** `2026-09-03T11:22:58+02:00`
-- **Approval note:** User explicitly confirmed the exact test-only replacement and authorized the complete recorded T-013 verification from the beginning.
+- **Approved commit:** Not approved for second replacement; approval of `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` invalidated
+- **Approved by:** Not approved for second replacement
+- **Approved at:** Not approved for second replacement
+- **Approval note:** User approved `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` at `2026-09-03T11:22:58+02:00`; Chromium exposed a test-only redirect race, so another replacement requires fresh approval.
 
 ## Definition of Ready
 
@@ -140,3 +140,5 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:55:23+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; static checks passed and feature tests remain unexecuted after correction |
 | `2026-09-03T11:22:58+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` and authorized the complete recorded T-013 verification from the beginning |
 | `2026-09-03T11:22:58+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted component and Chromium/WebKit verification in isolation at the exact approved replacement |
+| `2026-09-03T11:26:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and browser scenarios passed 3/4, including full WebKit; Chromium exposed a missing redirect wait in test source, approval was invalidated, and remaining active/draft fixtures were archived |
+| `2026-09-03T11:27:57+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Awaited the second split edit-route redirect before Back and passed all static checks without rerunning feature tests |

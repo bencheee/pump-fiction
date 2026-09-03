@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-03T11:22:58+02:00`
+- **Updated:** `2026-09-03T11:27:57+02:00`
 - **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -132,3 +132,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | Corrected T-013 browser matcher pending replacement | The Add-program icon locator now requires an exact accessible name; all static checks passed without rerunning feature tests |
 | `2026-09-03T10:55:23+02:00` | Codex primary agent / Executor | Delivered T-013 test-only replacement for review | Exact replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` awaits fresh User approval |
 | `2026-09-03T11:22:58+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-013 replacement and restarted verification | Running the complete recorded plan from the beginning against exact replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` |
+| `2026-09-03T11:26:18+02:00` | Codex primary agent / Tester | T-013 verification requires another replacement | Component 4/4 and browser 3/4 passed, including the full WebKit flow; Chromium exposed a missing redirect wait in test source, so approval is invalidated |
+| `2026-09-03T11:27:57+02:00` | Codex primary agent / Executor | Corrected T-013 redirect race pending replacement | The second split save now awaits its edit-route redirect before Back; all static checks passed without rerunning feature tests |
