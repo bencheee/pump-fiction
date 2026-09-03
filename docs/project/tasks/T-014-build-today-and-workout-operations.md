@@ -1,7 +1,7 @@
 # T-014 — Build Today and active-workout operations
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-03T12:22:54+02:00`
+- **Updated:** `2026-09-03T12:24:31+02:00`
 - **Started:** `2026-09-03T12:03:59+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-03T12:24:31+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the exact delivery commit and hand it to the User for review; feature tests remain prohibited.
+- **Next action:** User reviews exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; feature tests remain prohibited until explicit approval.
 
 ## Scope
 
@@ -80,9 +80,9 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Pending
+- **Delivery commit SHA:** `4f924d51af2e55681f2e5a517a8963bc58048d81`
 - **Subject:** `T-014: build Today and workout operations`
-- **Committed scope:** Pending
+- **Committed scope:** Today/current-workout domain and server operations; atomic proposed/alternate/one-time snapshot creation; complete revisioned set/exercise/note/order/timer/finish/discard command transaction; generated schema migration/types; prepared unit, pgTAP, and repository verification; synchronized canonical and project documentation.
 
 ## Review
 
@@ -132,3 +132,4 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 | `2026-09-03T12:03:59+02:00` | User / Owner | `Backlog` | `Ready` | Directed work to begin on `F-007`; completed dependencies and accepted canonical scope satisfy readiness |
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began Today and active-workout application and persistence delivery |
 | `2026-09-03T12:22:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed scoped operations, migrations/types, canonical guidance, and unexecuted tests; all planned static checks passed |
+| `2026-09-03T12:24:31+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; all static checks passed and feature tests remain unexecuted |

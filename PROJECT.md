@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T12:22:54+02:00
+- **Last updated:** 2026-09-03T12:24:31+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`0/3 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) is `In Progress`: implementation and static verification are complete pending exact delivery creation.
+[`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) is `In Review` at exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
 
 ## Immediate next action
 
-Complete `T-014` implementation and permitted static verification without running feature tests, then deliver the exact commit for User review.
+User reviews exact `T-014` delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; do not run feature tests before explicit approval.
 
 ## Now
 
-- [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-03T12:22:54+02:00` — create the exact delivery and request User review.
+- [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) — `In Review` — Executor: Codex primary agent — updated `2026-09-03T12:24:31+02:00` — User review of exact delivery required.
 
 ## Next
 

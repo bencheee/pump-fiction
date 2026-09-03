@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-03T12:22:54+02:00`
+- **Updated:** `2026-09-03T12:24:31+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -140,3 +140,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-03T12:00:56+02:00` | User / Owner | Completed `F-006`; Milestone remains incomplete and paused | Confirmed the aggregate Programs and Splits result, advancing M-001 to 6/10 Features Done, and explicitly directed that `F-007` must not start |
 | `2026-09-03T12:03:59+02:00` | User / Owner | Started `F-007` through `T-014` | Confirmed the three-Task Today and Active Workout breakdown and began its application/persistence delivery |
 | `2026-09-03T12:22:54+02:00` | Codex primary agent / Executor | Completed `T-014` implementation scope pending delivery | Today and active-workout operations are statically verified; approval-gated verification remains unexecuted |
+| `2026-09-03T12:24:31+02:00` | Codex primary agent / Executor | Delivered `T-014` for review | Exact operations delivery awaits User review before any feature testing |
