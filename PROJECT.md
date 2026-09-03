@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T11:31:08+02:00
+- **Last updated:** 2026-09-03T11:35:06+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
+- **Implementation:** `F-004` and `F-005` complete; `F-006` is `2/2 Tasks Done` and awaits aggregate confirmation
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) exact second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` is approved and undergoing complete scoped verification.
+No active Task. [`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) is complete; `F-006` has 2/2 Tasks Done and awaits aggregate User confirmation.
 
 ## Immediate next action
 
-Run the complete T-013 component and Chromium/WebKit plan against exact approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`.
+User confirms the aggregate [`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md) result.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Testing`; approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`).
+No active Task.
 
 ## Next
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — completed `2026-09-03T11:35:06+02:00` — approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` — component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 passed with two structural captures.
 - [`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — completed `2026-09-03T10:27:22+02:00` — approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` — unit 4/4, clean reset, pgTAP 26/26, repository integration 1/1, and generated-type comparison passed.
 - [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — completed `2026-09-02T14:02:43+02:00` — approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` — component tests 3/3 and Chromium/WebKit scenarios 4/4 passed with two structural captures.
 - [`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — completed `2026-09-02T10:10:10+02:00` — approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` — unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1 passed.
@@ -50,6 +51,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`4/10 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`5/10 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

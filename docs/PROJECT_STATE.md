@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is verifying exact approved T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has 2/2 Tasks Done and awaits aggregate User confirmation.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run the complete recorded T-013 verification against exact approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`.
+User confirms the aggregate `F-006` Programs and Splits result.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`; exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` is approved and in `Testing`. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, T-012 and T-013 are `Done`: exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures. `F-006` awaits aggregate User confirmation. Deployment configuration does not exist yet.

@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T11:31:08+02:00`
+- **Updated:** `2026-09-03T11:35:06+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T11:28:42+02:00` for second replacement
 - **Approval requested:** `2026-09-03T11:31:08+02:00`
 - **Approved:** `2026-09-03T11:31:08+02:00`
 - **Testing started:** `2026-09-03T11:31:08+02:00` for latest replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-03T11:35:06+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded verification against exact approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`.
+- **Next action:** User confirms the aggregate F-006 Programs and Splits result; T-013 is complete.
 
 ## Scope
 
@@ -75,7 +75,7 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S07–S09 validation, ordering, lifecycle, and accessibility; then Chromium/WebKit phone-browser scenarios for draft creation, split prescriptions and invalid ranges, activation/reactivation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, retry/not-found behavior, phone reflow, and approved structural captures.
 - **Authorized commit:** `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`
-- **Results:** Against then-approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`, component tests passed 4/4 and malformed routes passed 2/2 before an ambiguous locator stopped both full flows. Against then-approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; component tests passed 4/4; browser scenarios passed 3/4, comprising the full WebKit lifecycle and both malformed-route scenarios. Chromium timed out after saving the second split because test source clicked Back before awaiting the create redirect; its page snapshot showed the successfully saved split editor. Four active exercise fixtures and one draft program fixture were archived after the stopped run. Application behavior was not implicated; a second test-only replacement requires fresh approval and complete rerun.
+- **Results:** Earlier approved snapshots exposed and corrected two test-only issues without implicating application behavior. Against exact approved latest replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; scoped component tests passed 4/4; the initial two-project browser run passed the full WebKit flow and both malformed-route scenarios but Chromium encountered expected cross-project interference when WebKit activation archived its program under the single-active-program rule. The isolated one-worker Chromium rerun passed 2/2 in 23.0 seconds. Together the isolated platform outcomes passed 4/4, covering both full lifecycle flows and both malformed-route flows, with two structural captures. Six active exercise fixtures from the final attempts were archived; created programs were already archived by the tested lifecycle except the prior stopped draft, which had been archived during cleanup.
 
 ## Delivery commit
 
@@ -113,15 +113,15 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -145,3 +145,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T11:28:42+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`; static checks passed and feature tests remain unexecuted after correction |
 | `2026-09-03T11:31:08+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact latest replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` and authorized the complete recorded verification from the beginning |
 | `2026-09-03T11:31:08+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted component and Chromium/WebKit verification in isolation at the exact approved replacement |
+| `2026-09-03T11:35:06+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Exact replacement passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures; test fixtures were archived and all completion evidence is recorded |
