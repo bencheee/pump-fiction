@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-03T11:28:42+02:00`
+- **Updated:** `2026-09-03T11:31:08+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -27,7 +27,7 @@ The user can create and manage programs, ordered split templates, activation and
 ## Tasks
 
 - [`T-012`](../tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Done`; approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`)
-- [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`)
+- [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Testing`; approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`)
 
 ## Dependencies and blockers
 
@@ -81,3 +81,4 @@ The user can create and manage programs, ordered split templates, activation and
 | `2026-09-03T11:26:18+02:00` | Codex primary agent / Tester | Returned `T-013` to `In Progress` | Component 4/4 and browser 3/4 passed, including the full WebKit flow; Chromium exposed a missing redirect wait in test source, so approval is invalidated |
 | `2026-09-03T11:27:57+02:00` | Codex primary agent / Executor | Corrected T-013 redirect race pending replacement | The second split save now awaits its edit-route redirect before Back; all static checks passed without rerunning feature tests |
 | `2026-09-03T11:28:42+02:00` | Codex primary agent / Executor | Delivered second T-013 test-only replacement | Exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` awaits fresh User approval |
+| `2026-09-03T11:31:08+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved second T-013 replacement and restarted verification | Running the complete recorded plan from the beginning against exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` |
