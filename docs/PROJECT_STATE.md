@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews exact `T-014` delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; feature tests remain prohibited until explicit approval.
+Complete the recorded T-014 verification against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures, and the User confirmed the aggregate F-006 result. `F-007` is `0/3 Tasks Done`; exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` is `In Review`, with `T-015` and `T-016` in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures, and the User confirmed the aggregate F-006 result. `F-007` is `0/3 Tasks Done`; exact approved T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` is `Testing`, with `T-015` and `T-016` in `Backlog`. Deployment configuration does not exist yet.

@@ -1,7 +1,7 @@
 # T-014 — Build Today and active-workout operations
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-03T12:24:31+02:00`
+- **Updated:** `2026-09-03T12:31:15+02:00`
 - **Started:** `2026-09-03T12:03:59+02:00`
 - **Review started:** `2026-09-03T12:24:31+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-03T12:31:15+02:00`
+- **Approved:** `2026-09-03T12:31:15+02:00`
+- **Testing started:** `2026-09-03T12:31:15+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; feature tests remain prohibited until explicit approval.
+- **Next action:** Run only the recorded T-014 verification against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
 
 ## Scope
 
@@ -75,7 +75,7 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped Today/workout application unit tests; reset local Supabase and run workout snapshot/constraint/transaction pgTAP coverage plus real repository integration for all three start sources, singleton restoration, latest eligible performance, every command family, duplicate delivery, stale revision, removal safeguards, timer transitions, all terminal outcomes, and exact-once rotation.
-- **Authorized commit:** None; approval required before execution
+- **Authorized commit:** `4f924d51af2e55681f2e5a517a8963bc58048d81`
 - **Results:** Not run; feature testing is prohibited before exact-commit approval.
 
 ## Delivery commit
@@ -87,16 +87,16 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-03T12:31:15+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Pending
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** Pending
+- **Approved commit:** `4f924d51af2e55681f2e5a517a8963bc58048d81`
+- **Approved by:** User
+- **Approved at:** `2026-09-03T12:31:15+02:00`
+- **Approval note:** User explicitly said “odobravam nastavi,” fully approving the exact T-014 delivery and authorizing its recorded verification plan.
 
 ## Definition of Ready
 
@@ -133,3 +133,6 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began Today and active-workout application and persistence delivery |
 | `2026-09-03T12:22:54+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed scoped operations, migrations/types, canonical guidance, and unexecuted tests; all planned static checks passed |
 | `2026-09-03T12:24:31+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; all static checks passed and feature tests remain unexecuted |
+| `2026-09-03T12:31:15+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` with no findings and recommended approval |
+| `2026-09-03T12:31:15+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact delivery and authorized only the recorded T-014 tests |
+| `2026-09-03T12:31:15+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |

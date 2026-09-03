@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T12:24:31+02:00
+- **Last updated:** 2026-09-03T12:31:15+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`0/3 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) is `In Review` at exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
+[`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) is `Testing` against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
 
 ## Immediate next action
 
-User reviews exact `T-014` delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`; do not run feature tests before explicit approval.
+Complete the recorded T-014 verification against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
 
 ## Now
 
-- [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) — `In Review` — Executor: Codex primary agent — updated `2026-09-03T12:24:31+02:00` — User review of exact delivery required.
+- [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) — `Testing` — Executor: Codex primary agent — updated `2026-09-03T12:31:15+02:00` — run the approved scoped verification.
 
 ## Next
 
