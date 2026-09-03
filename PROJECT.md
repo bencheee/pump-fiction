@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T10:55:23+02:00
+- **Last updated:** 2026-09-03T11:22:58+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` is `In Review`; application behavior is unchanged.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` is approved and undergoing complete scoped verification.
 
 ## Immediate next action
 
-User explicitly approves or returns exact T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain gated.
+Run the complete recorded T-013 component and Chromium/WebKit plan against exact approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Testing`; approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`).
 
 ## Next
 

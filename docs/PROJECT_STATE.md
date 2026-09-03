@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has exact T-013 test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` in review after correcting an ambiguous browser matcher without changing application behavior.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is verifying exact approved T-013 test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` after correcting an ambiguous browser matcher without changing application behavior.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User explicitly approves or returns exact T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain unauthorized.
+Run the complete recorded T-013 verification against exact approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. T-013 component tests passed 4/4 and malformed-route browser scenarios passed 2/2, while both full browser scenarios stopped at an ambiguous test matcher; exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` awaits fresh approval. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. Exact T-013 test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` is approved and in `Testing`. Deployment configuration does not exist yet.

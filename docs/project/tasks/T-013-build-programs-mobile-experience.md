@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:55:23+02:00`
+- **Updated:** `2026-09-03T11:22:58+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T10:55:23+02:00` for replacement
-- **Approval requested:** Not reached for replacement
-- **Approved:** Not reached for replacement
-- **Testing started:** `2026-09-03T10:49:36+02:00`
+- **Approval requested:** `2026-09-03T11:22:58+02:00`
+- **Approved:** `2026-09-03T11:22:58+02:00`
+- **Testing started:** `2026-09-03T11:22:58+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User explicitly approves or returns exact replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain unexecuted after correction.
+- **Next action:** Run the complete recorded scoped verification against exact approved replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S07–S09 validation, ordering, lifecycle, and accessibility; then Chromium/WebKit phone-browser scenarios for draft creation, split prescriptions and invalid ranges, activation/reactivation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** Not authorized for replacement; original approval invalidated after test-source failure
+- **Authorized commit:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`
 - **Results:** Against then-approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; scoped component tests passed 4/4; malformed program/split route scenarios passed 2/2; both full Chromium/WebKit flows stopped before program creation because the case-insensitive `Add program` locator matched both the icon link and empty-state action. Four created exercise fixtures were archived after the stopped run. Application behavior was not implicated; corrected test source requires a fresh exact-commit approval and complete rerun.
 
 ## Delivery commit
@@ -86,16 +86,16 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-03T10:49:36+02:00`
-- **Outcome:** Recommended for approval with no findings
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-03T11:22:58+02:00` for replacement
+- **Outcome:** Replacement recommended for approval with no findings
+- **Findings:** Prior ambiguous matcher is corrected in the test-only replacement.
 
 ## Approval
 
-- **Approved commit:** Not approved for replacement; original `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` approval invalidated
-- **Approved by:** Not approved for replacement
-- **Approved at:** Not approved for replacement
-- **Approval note:** User approved the original delivery at `2026-09-03T10:49:36+02:00`; browser verification exposed an ambiguous test matcher, so a replacement requires fresh approval.
+- **Approved commit:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`
+- **Approved by:** User
+- **Approved at:** `2026-09-03T11:22:58+02:00`
+- **Approval note:** User explicitly confirmed the exact test-only replacement and authorized the complete recorded T-013 verification from the beginning.
 
 ## Definition of Ready
 
@@ -138,3 +138,5 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:52:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and malformed-route browser scenarios passed 2/2; both full flows stopped at an ambiguous Add-program test matcher, approval was invalidated, and four created exercise fixtures were archived |
 | `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Required an exact accessible-name match for the Add-program icon locator and passed all static checks without rerunning feature tests |
 | `2026-09-03T10:55:23+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; static checks passed and feature tests remain unexecuted after correction |
+| `2026-09-03T11:22:58+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` and authorized the complete recorded T-013 verification from the beginning |
+| `2026-09-03T11:22:58+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted component and Chromium/WebKit verification in isolation at the exact approved replacement |
