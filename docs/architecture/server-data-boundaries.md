@@ -47,6 +47,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-012` applies the ordinary-operation boundary to Programs and Splits under `src/features/programs`. Program and split queries hydrate neutral ordered aggregates, while server-only composition and Supabase row/RPC handling remain under `src/server`. Multi-row lifecycle, prescription, reorder, pointer, archival-successor, and proposed-completion rotation changes cross one repository call and one PostgreSQL transaction. Thin Server Actions expose only validated serializable inputs and `OperationResult` values; the rotation-advance operation remains server-only for the later workout-finish transaction.
 
+`T-014` adds feature-owned Today/current-workout aggregates and start validation under `src/features/active-workout`. Read functions return nested JSON that the server repository exposes only as domain shapes. The thin start Server Action calls one transactional snapshot function. All in-session edits and terminal outcomes continue through the dedicated command Route Handler, and raw PostgreSQL failures remain mapped to validation, not-found, conflict, retry, or acknowledgement contracts.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

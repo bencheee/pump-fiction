@@ -29,6 +29,8 @@ Exercise definitions use deferred constraint triggers to require a complete, typ
 
 Program and split template writes use database functions for every operation that spans lifecycle state, ordering, prescriptions, or the next-split pointer. Activation archives the previously active program in the same transaction. Split-definition replacement retains already-associated archived exercises but rejects adding a newly archived exercise. Reordering requires the complete identity set and changes only template positions. `archive_split` selects the next active successor from the pre-archive order with wrap and rejects the last active split. `advance_program_after_proposed_completion` is the narrow compare-and-set rotation transition for a future proposed-split completion transaction: it advances only while the completed split is still the active program's current pointer. The later workout-finish transaction owns exact-once invocation and excludes alternate, one-time, incomplete, and historical paths.
 
+Today and workout reads use `get_today_view()` and `get_current_workout()` to return server-only domain aggregates. `start_workout(...)` atomically enforces the singleton resumable session and copies split or one-time exercise snapshots. The extended `apply_active_workout_command(...)` owns all workout-local set/exercise/note/order/timer edits and terminal outcomes; proposed rotation comparison and advancement occur inside the completion transaction. A discarded workout is deleted, while its foreign-key-free command acknowledgement remains only for retry idempotency.
+
 ## Start and stop
 
 ```sh

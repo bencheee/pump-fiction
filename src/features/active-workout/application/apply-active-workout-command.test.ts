@@ -81,6 +81,73 @@ describe("applyActiveWorkoutCommand", () => {
       },
     });
   });
+
+  it("accepts valid set, ordering, removal, and finish command payloads", async () => {
+    const payloads = [
+      {
+        operation: "update_set",
+        payload: {
+          workoutSetId: "10000000-0000-4000-8000-000000000004",
+          loadMode: "weight",
+          loadKg: 42.5,
+          bandDirection: null,
+          bandStrength: null,
+          reps: 8,
+          isConfirmed: true,
+        },
+      },
+      {
+        operation: "remove_set",
+        payload: {
+          workoutSetId: "10000000-0000-4000-8000-000000000004",
+          confirmedPopulatedRemoval: true,
+        },
+      },
+      {
+        operation: "reorder_exercises",
+        payload: {
+          workoutExerciseIds: ["10000000-0000-4000-8000-000000000003"],
+        },
+      },
+      {
+        operation: "finish_workout",
+        payload: {
+          outcome: "completed",
+          finishedAt: "2026-09-03T12:30:00.000Z",
+        },
+      },
+    ] as const;
+
+    for (const item of payloads) {
+      const repository = createRepository();
+      const result = await applyActiveWorkoutCommand(repository, {
+        ...command,
+        ...item,
+      });
+      expect(result.kind).toBe("acknowledged");
+      expect(repository.apply).toHaveBeenCalledOnce();
+    }
+  });
+
+  it("rejects incomplete confirmed sets and unconfirmed populated removal payloads only when malformed", async () => {
+    const repository = createRepository();
+    const result = await applyActiveWorkoutCommand(repository, {
+      ...command,
+      operation: "update_set",
+      payload: {
+        workoutSetId: "10000000-0000-4000-8000-000000000004",
+        loadMode: "weight",
+        loadKg: -1,
+        bandDirection: null,
+        bandStrength: null,
+        reps: 0,
+        isConfirmed: true,
+      },
+    });
+
+    expect(result).toMatchObject({ kind: "rejected", code: "validation" });
+    expect(repository.apply).not.toHaveBeenCalled();
+  });
 });
 
 function createRepository(): ActiveWorkoutCommandRepository {

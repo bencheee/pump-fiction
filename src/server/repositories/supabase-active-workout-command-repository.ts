@@ -76,6 +76,10 @@ function mapPostgrestError(
   if (
     error.code === "PF001" ||
     error.code === "PF002" ||
+    error.code === "PF203" ||
+    error.code === "PF204" ||
+    error.code === "PF205" ||
+    error.code === "PF206" ||
     error.code.startsWith("22") ||
     error.code.startsWith("23")
   ) {

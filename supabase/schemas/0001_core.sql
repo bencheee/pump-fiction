@@ -21,7 +21,14 @@ create type public.workout_source_kind as enum ('proposed_split', 'alternate_spl
 create type public.active_workout_command_operation as enum (
   'set_workout_exercise_note',
   'pause_timer',
-  'resume_timer'
+  'resume_timer',
+  'update_set',
+  'add_set',
+  'remove_set',
+  'add_exercise',
+  'remove_exercise',
+  'reorder_exercises',
+  'finish_workout'
 );
 
 create table public.app_settings (
@@ -343,7 +350,7 @@ create table public.workout_sets (
 
 create table public.active_workout_commands (
   command_id uuid primary key,
-  workout_id uuid not null references public.workouts (id) on delete cascade,
+  workout_id uuid not null,
   expected_revision bigint not null check (expected_revision >= 0),
   resulting_revision bigint not null check (resulting_revision = expected_revision + 1),
   operation public.active_workout_command_operation not null,

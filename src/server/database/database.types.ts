@@ -40,15 +40,7 @@ export type Database = {
           resulting_revision?: number
           workout_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "active_workout_commands_workout_id_fkey"
-            columns: ["workout_id"]
-            isOneToOne: false
-            referencedRelation: "workouts"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       app_settings: {
         Row: {
@@ -641,6 +633,8 @@ export type Database = {
         }
         Returns: string
       }
+      get_current_workout: { Args: never; Returns: Json }
+      get_today_view: { Args: never; Returns: Json }
       reorder_program_splits: {
         Args: { p_program_id: string; p_split_ids: string[] }
         Returns: string
@@ -651,6 +645,16 @@ export type Database = {
       }
       set_program_next_split: {
         Args: { p_program_id: string; p_split_id: string }
+        Returns: string
+      }
+      start_workout: {
+        Args: {
+          p_exercise_ids: string[]
+          p_one_time_name: string
+          p_source_kind: Database["public"]["Enums"]["workout_source_kind"]
+          p_split_id: string
+          p_started_at: string
+        }
         Returns: string
       }
       update_exercise_definition: {
@@ -684,6 +688,13 @@ export type Database = {
         | "set_workout_exercise_note"
         | "pause_timer"
         | "resume_timer"
+        | "update_set"
+        | "add_set"
+        | "remove_set"
+        | "add_exercise"
+        | "remove_exercise"
+        | "reorder_exercises"
+        | "finish_workout"
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
       entity_status: "active" | "archived"
@@ -832,6 +843,13 @@ export const Constants = {
         "set_workout_exercise_note",
         "pause_timer",
         "resume_timer",
+        "update_set",
+        "add_set",
+        "remove_set",
+        "add_exercise",
+        "remove_exercise",
+        "reorder_exercises",
+        "finish_workout",
       ],
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],

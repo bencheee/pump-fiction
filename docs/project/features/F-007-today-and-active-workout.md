@@ -2,12 +2,12 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
-- **Order:** 5
+- **Horizon:** `Now`
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-08-25T16:35:55+02:00`
-- **Progress:** `0/0 required Tasks Done; Task breakdown pending`
+- **Updated:** `2026-09-03T12:22:54+02:00`
+- **Progress:** `0/3 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -26,12 +26,14 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 ## Tasks
 
-- Task breakdown pending before Feature readiness.
+- [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`In Progress`)
+- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Backlog`; depends on `T-014`)
+- [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; depends on `T-014` and `T-015`)
 
 ## Dependencies and blockers
 
 - Dependencies: `F-003` through `F-006`
-- Blockers: No Task is currently ready
+- Blockers: None for `T-014`; later Tasks retain planned dependencies
 
 ## Related decisions and documents
 
@@ -42,10 +44,10 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified; the first executable work is `Ready`
+- [x] Required Tasks are identified; the first executable work is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness through the 2026-09-03 direction to start `F-007`
 
 ## Completion
 
@@ -60,3 +62,5 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Keep the tightly coupled Today and durable active-workout flow in one outcome |
+| `2026-09-03T12:03:59+02:00` | User / Owner and Codex primary agent / Planner | Moved Feature to `Now`, accepted the three-Task breakdown, and started `T-014` | Begin Today and Active Workout delivery with operations before the dependent mobile experiences |
+| `2026-09-03T12:22:54+02:00` | Codex primary agent / Executor | Completed `T-014` implementation scope pending delivery | Today/workout operations, atomic snapshot lifecycle, prepared tests, and canonical guidance are statically verified |

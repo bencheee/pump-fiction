@@ -1,27 +1,49 @@
-export type SetWorkoutExerciseNoteCommand = Readonly<{
+import type { ExerciseLoadMode } from "@/features/exercises/domain/exercise";
+
+export type BandDirection = "resistance" | "assistance";
+export type BandStrength = "light" | "medium" | "strong";
+type Envelope<O extends string, P> = Readonly<{
   commandId: string;
   workoutId: string;
   expectedRevision: number;
-  operation: "set_workout_exercise_note";
-  payload: Readonly<{
-    workoutExerciseId: string;
-    note: string;
-  }>;
+  operation: O;
+  payload: Readonly<P>;
   clientCreatedAt: string;
 }>;
 
-export type TimerCommand = Readonly<{
-  commandId: string;
-  workoutId: string;
-  expectedRevision: number;
-  operation: "pause_timer" | "resume_timer";
-  payload: Readonly<{
-    transitionedAt: string;
-  }>;
-  clientCreatedAt: string;
-}>;
-
-export type ActiveWorkoutCommand = SetWorkoutExerciseNoteCommand | TimerCommand;
+export type ActiveWorkoutCommand =
+  | Envelope<
+      "set_workout_exercise_note",
+      { workoutExerciseId: string; note: string }
+    >
+  | Envelope<"pause_timer" | "resume_timer", { transitionedAt: string }>
+  | Envelope<
+      "update_set",
+      {
+        workoutSetId: string;
+        loadMode: ExerciseLoadMode | null;
+        loadKg: number | null;
+        bandDirection: BandDirection | null;
+        bandStrength: BandStrength | null;
+        reps: number | null;
+        isConfirmed: boolean;
+      }
+    >
+  | Envelope<"add_set", { workoutExerciseId: string }>
+  | Envelope<
+      "remove_set",
+      { workoutSetId: string; confirmedPopulatedRemoval: boolean }
+    >
+  | Envelope<"add_exercise", { exerciseId: string }>
+  | Envelope<
+      "remove_exercise",
+      { workoutExerciseId: string; confirmedPopulatedRemoval: boolean }
+    >
+  | Envelope<"reorder_exercises", { workoutExerciseIds: string[] }>
+  | Envelope<
+      "finish_workout",
+      { outcome: "completed" | "incomplete" | "discarded"; finishedAt: string }
+    >;
 
 export type CommandValidationResult =
   | Readonly<{ ok: true; command: ActiveWorkoutCommand }>
@@ -32,69 +54,203 @@ export type CommandValidationResult =
 
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const loadModes = new Set<ExerciseLoadMode>([
+  "weight",
+  "weight_resistance_band",
+  "bodyweight",
+  "bodyweight_added_weight",
+  "bodyweight_resistance_band",
+  "bodyweight_assistance_band",
+  "assistance_weight",
+  "assistance_band",
+  "resistance_band",
+]);
 
 export function parseActiveWorkoutCommand(
   input: unknown,
 ): CommandValidationResult {
-  if (!isRecord(input)) {
+  if (!isRecord(input))
     return invalid("command", "Provide an active-workout command object.");
-  }
-
   const commonError = validateCommonEnvelope(input);
-  if (commonError !== null) {
-    return commonError;
-  }
-
+  if (commonError !== null) return commonError;
   const common = {
     commandId: input.commandId as string,
     workoutId: input.workoutId as string,
     expectedRevision: input.expectedRevision as number,
     clientCreatedAt: input.clientCreatedAt as string,
   };
+  const payload = input.payload;
 
   if (input.operation === "set_workout_exercise_note") {
     if (
-      !hasExactKeys(input.payload, ["workoutExerciseId", "note"]) ||
-      !isUuid(input.payload.workoutExerciseId) ||
-      typeof input.payload.note !== "string"
-    ) {
+      !hasExactKeys(payload, ["workoutExerciseId", "note"]) ||
+      !isUuid(payload.workoutExerciseId) ||
+      typeof payload.note !== "string"
+    )
       return invalid("payload", "Provide a workout exercise ID and note text.");
-    }
-
     return {
       ok: true,
       command: {
         ...common,
         operation: input.operation,
         payload: {
-          workoutExerciseId: input.payload.workoutExerciseId,
-          note: input.payload.note,
+          workoutExerciseId: payload.workoutExerciseId,
+          note: payload.note,
         },
       },
     };
   }
-
   if (input.operation === "pause_timer" || input.operation === "resume_timer") {
     if (
-      !hasExactKeys(input.payload, ["transitionedAt"]) ||
-      !isTimestamp(input.payload.transitionedAt)
-    ) {
+      !hasExactKeys(payload, ["transitionedAt"]) ||
+      !isTimestamp(payload.transitionedAt)
+    )
       return invalid(
         "payload.transitionedAt",
         "Provide a valid timer transition timestamp.",
       );
-    }
-
     return {
       ok: true,
       command: {
         ...common,
         operation: input.operation,
-        payload: { transitionedAt: input.payload.transitionedAt },
+        payload: { transitionedAt: payload.transitionedAt },
       },
     };
   }
+  if (input.operation === "update_set") {
+    if (
+      !hasExactKeys(payload, [
+        "workoutSetId",
+        "loadMode",
+        "loadKg",
+        "bandDirection",
+        "bandStrength",
+        "reps",
+        "isConfirmed",
+      ]) ||
+      !isUuid(payload.workoutSetId) ||
+      !(
+        payload.loadMode === null ||
+        (typeof payload.loadMode === "string" &&
+          loadModes.has(payload.loadMode as ExerciseLoadMode))
+      ) ||
+      !isNullablePositiveNumber(payload.loadKg) ||
+      !(
+        payload.bandDirection === null ||
+        payload.bandDirection === "resistance" ||
+        payload.bandDirection === "assistance"
+      ) ||
+      !(
+        payload.bandStrength === null ||
+        payload.bandStrength === "light" ||
+        payload.bandStrength === "medium" ||
+        payload.bandStrength === "strong"
+      ) ||
+      !isNullablePositiveInteger(payload.reps) ||
+      typeof payload.isConfirmed !== "boolean"
+    )
+      return invalid("payload", "Provide valid values for the workout set.");
+    return {
+      ok: true,
+      command: {
+        ...common,
+        operation: input.operation,
+        payload,
+      } as ActiveWorkoutCommand,
+    };
+  }
 
+  if (
+    input.operation === "remove_set" ||
+    input.operation === "remove_exercise"
+  ) {
+    const idKey =
+      input.operation === "remove_set" ? "workoutSetId" : "workoutExerciseId";
+    if (
+      !hasExactKeys(payload, [idKey, "confirmedPopulatedRemoval"]) ||
+      !isUuid(payload[idKey]) ||
+      typeof payload.confirmedPopulatedRemoval !== "boolean"
+    )
+      return invalid(
+        "payload",
+        "Confirm the populated-data removal when required.",
+      );
+    return {
+      ok: true,
+      command: {
+        ...common,
+        operation: input.operation,
+        payload: {
+          [idKey]: payload[idKey],
+          confirmedPopulatedRemoval: payload.confirmedPopulatedRemoval,
+        },
+      } as ActiveWorkoutCommand,
+    };
+  }
+  const idOperations = {
+    add_set: "workoutExerciseId",
+    add_exercise: "exerciseId",
+  } as const;
+  if (typeof input.operation === "string" && input.operation in idOperations) {
+    const operation = input.operation as keyof typeof idOperations;
+    const key = idOperations[operation];
+    if (!hasExactKeys(payload, [key]) || !isUuid(payload[key]))
+      return invalid("payload", "Provide a valid target ID.");
+    return {
+      ok: true,
+      command: {
+        ...common,
+        operation,
+        payload: { [key]: payload[key] },
+      } as ActiveWorkoutCommand,
+    };
+  }
+  if (input.operation === "reorder_exercises") {
+    if (
+      !hasExactKeys(payload, ["workoutExerciseIds"]) ||
+      !Array.isArray(payload.workoutExerciseIds) ||
+      payload.workoutExerciseIds.some((id) => !isUuid(id)) ||
+      new Set(payload.workoutExerciseIds).size !==
+        payload.workoutExerciseIds.length
+    )
+      return invalid(
+        "payload.workoutExerciseIds",
+        "Provide each workout exercise ID exactly once.",
+      );
+    return {
+      ok: true,
+      command: {
+        ...common,
+        operation: input.operation,
+        payload: { workoutExerciseIds: payload.workoutExerciseIds as string[] },
+      },
+    };
+  }
+  if (input.operation === "finish_workout") {
+    if (
+      !hasExactKeys(payload, ["outcome", "finishedAt"]) ||
+      !["completed", "incomplete", "discarded"].includes(
+        payload.outcome as string,
+      ) ||
+      !isTimestamp(payload.finishedAt)
+    )
+      return invalid(
+        "payload",
+        "Choose a finish outcome and provide its timestamp.",
+      );
+    return {
+      ok: true,
+      command: {
+        ...common,
+        operation: input.operation,
+        payload: {
+          outcome: payload.outcome as "completed" | "incomplete" | "discarded",
+          finishedAt: payload.finishedAt,
+        },
+      },
+    };
+  }
   return invalid("operation", "Choose a supported active-workout operation.");
 }
 
@@ -110,65 +266,58 @@ function validateCommonEnvelope(
       "payload",
       "clientCreatedAt",
     ])
-  ) {
+  )
     return invalid("command", "Use the active-workout command envelope.");
-  }
-
-  if (!isUuid(input.commandId)) {
+  if (!isUuid(input.commandId))
     return invalid("commandId", "Provide a valid command ID.");
-  }
-
-  if (!isUuid(input.workoutId)) {
+  if (!isUuid(input.workoutId))
     return invalid("workoutId", "Provide a valid workout ID.");
-  }
-
   if (
     !Number.isSafeInteger(input.expectedRevision) ||
     (input.expectedRevision as number) < 0
-  ) {
+  )
     return invalid(
       "expectedRevision",
       "Provide a non-negative workout revision.",
     );
-  }
-
-  if (!isTimestamp(input.clientCreatedAt)) {
+  if (!isTimestamp(input.clientCreatedAt))
     return invalid(
       "clientCreatedAt",
       "Provide a valid command creation timestamp.",
     );
-  }
-
   return null;
 }
-
 function hasExactKeys(
   value: unknown,
-  expectedKeys: readonly string[],
+  expected: readonly string[],
 ): value is Record<string, unknown> {
-  if (!isRecord(value)) {
-    return false;
-  }
-
+  if (!isRecord(value)) return false;
   const keys = Object.keys(value).sort();
   return (
-    keys.length === expectedKeys.length &&
-    [...expectedKeys].sort().every((key, index) => key === keys[index])
+    keys.length === expected.length &&
+    [...expected].sort().every((key, index) => key === keys[index])
   );
 }
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
-
 function isUuid(value: unknown): value is string {
   return typeof value === "string" && uuidPattern.test(value);
 }
-
 function isTimestamp(value: unknown): value is string {
   return typeof value === "string" && Number.isFinite(Date.parse(value));
 }
-
+function isNullablePositiveNumber(value: unknown): boolean {
+  return (
+    value === null ||
+    (typeof value === "number" && Number.isFinite(value) && value > 0)
+  );
+}
+function isNullablePositiveInteger(value: unknown): boolean {
+  return (
+    value === null || (Number.isSafeInteger(value) && (value as number) > 0)
+  );
+}
 function invalid(
   field: string,
   message: string,

@@ -2,7 +2,7 @@
 
 - **Status:** Implemented foundation
 
-This document records the concrete `T-008` command transport, PostgreSQL transaction, pending-outbox, delivery, and recovery contracts under [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). It does not claim complete workout feature behavior or general offline support.
+This document records the concrete `T-008` command transport foundation and the `T-014` Today/workout application and persistence operations under [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). It does not claim completed workout screens or general offline support.
 
 ## Command envelope and endpoint
 
@@ -16,13 +16,20 @@ type ActiveWorkoutCommand = {
   operation:
     | "set_workout_exercise_note"
     | "pause_timer"
-    | "resume_timer";
+    | "resume_timer"
+    | "update_set"
+    | "add_set"
+    | "remove_set"
+    | "add_exercise"
+    | "remove_exercise"
+    | "reorder_exercises"
+    | "finish_workout";
   payload: OperationSpecificPayload;
   clientCreatedAt: string; // timestamp retained unchanged through retries
 };
 ```
 
-`set_workout_exercise_note` proves the workout-local autosave path without completing workout screens. `pause_timer` and `resume_timer` persist transitions and timestamps rather than display ticks. Later feature Tasks must extend this discriminated union and the same database function when they add agreed set, exercise, ordering, finish, or discard operations; they must not create a parallel mutation path.
+`update_set` replaces the complete current set payload, including confirmation state, so mode changes cannot retain inapplicable hidden values. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI Tasks consume this union and must not create a parallel mutation path.
 
 The thin Route Handler parses JSON, calls the server composition boundary, and maps the application result to HTTP:
 
@@ -48,6 +55,16 @@ Raw PostgreSQL, PostgREST, and environment details never cross this transport bo
 
 The command record stores only server-applied idempotency evidence. It is not a queue. Browser-pending commands remain a separate transport concern.
 
+Discard deletes the canonical workout and its owned occurrences/sets while retaining the command acknowledgement as idempotency evidence. The command record therefore keeps the workout UUID without a foreign key; it is not a surviving workout or History record.
+
+## Today, start, and restore operations
+
+`get_today_view()` derives the configured local date, active program proposal, alternate active splits, eligible completed-workout duration averages, and the optional current-workout summary. `start_workout(...)` takes a transaction-scoped singleton lock, revalidates the active program/split or active one-time exercises, derives `workout_date` in the configured IANA time zone, and creates the workout-owned snapshot atomically.
+
+Split starts copy program/split identity and names, ordered exercise identity/definition/note/modes, prescription, and exactly the planned number of empty set rows. One-time starts copy the ordered active exercise definitions without inventing a split prescription; their set rows are added workout-locally. Starting never advances rotation.
+
+`get_current_workout()` returns the authoritative resumable aggregate, including revision, timer persistence, ordered exercises/sets, snapshots, workout notes, and the latest eligible completed performance for each persistent exercise identity. Incomplete workouts are excluded from Last time.
+
 ## IndexedDB outbox and delivery
 
 `IndexedDbActiveWorkoutOutbox` owns one narrow IndexedDB database and one auto-incremented pending-command store. `enqueue()` resolves only after its read-write transaction commits. The generated sequence is the FIFO order; client timestamps are metadata rather than queue ordering.
@@ -60,7 +77,7 @@ The command record stores only server-applied idempotency evidence. It is not a 
 - status is explicitly `saving`, `saved`, or `save_failed` with pending count;
 - conflict status carries `refresh_and_replay`, the authoritative revision conflict, and the retained FIFO command list.
 
-On reload or reopen, `restoreActiveWorkout()` first calls the supplied authoritative server loader, then reads pending commands for that workout and replays them through the supplied pure feature reducer. The later workout UI owns the authoritative state shape and reducer; IndexedDB never becomes an application cache or canonical workout store.
+On reload or reopen, `restoreActiveWorkout()` first calls the supplied authoritative server loader, then reads pending commands for that workout and replays them through the supplied pure feature reducer. The workout UI owns the authoritative state shape and reducer; IndexedDB never becomes an application cache or canonical workout store.
 
 ## Approval-gated verification
 
