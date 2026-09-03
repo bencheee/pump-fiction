@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-03T10:49:36+02:00`
+- **Updated:** `2026-09-03T10:54:20+02:00`
 - **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -128,3 +128,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-03T10:46:33+02:00` | Codex primary agent / Executor | Completed `T-013` implementation scope pending delivery | S07–S09 mobile flows and approval-gated tests are prepared; all permitted static checks passed without executing feature tests |
 | `2026-09-03T10:47:48+02:00` | Codex primary agent / Executor | Delivered `T-013` for review | Exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` awaits User review; feature tests remain unexecuted |
 | `2026-09-03T10:49:36+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-013 delivery and began verification | Running only the recorded component and Chromium/WebKit phone-browser plan against exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` |
+| `2026-09-03T10:52:46+02:00` | Codex primary agent / Tester | T-013 verification requires a replacement | Component 4/4 and malformed routes 2/2 passed; both full browser flows stopped at an ambiguous Add-program matcher, so approval is invalidated and a test-only replacement is required |
+| `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | Corrected T-013 browser matcher pending replacement | The Add-program icon locator now requires an exact accessible name; all static checks passed without rerunning feature tests |

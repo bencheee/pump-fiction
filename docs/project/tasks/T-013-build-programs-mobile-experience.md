@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:49:36+02:00`
+- **Updated:** `2026-09-03T10:54:20+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T10:47:48+02:00`
-- **Approval requested:** `2026-09-03T10:49:36+02:00`
-- **Approved:** `2026-09-03T10:49:36+02:00`
+- **Approval requested:** Not reached for replacement
+- **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-03T10:49:36+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the recorded scoped verification against exact approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`.
+- **Next action:** Create the corrected test-only replacement delivery for fresh User approval; feature tests must not rerun yet.
 
 ## Scope
 
@@ -67,15 +67,15 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries and accessibility rules, strict TypeScript, production build, design asset/reference inventory, documentation links, and `git diff --check`
-- Results: Passed on 2026-09-03 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 83 files, all 596 internal links, and `git diff --check`. Feature tests were prepared but not run.
+- Results: Passed for the original delivery and pending test-only replacement on 2026-09-03 with Node.js `24.20.0` and npm `11.19.0`: Prettier formatting, ESLint dependency and accessibility rules, strict TypeScript, Next.js production build, 8/8 font and 38/38 icon asset checksums, Markdown lint across 83 files, all 596 internal links, and `git diff --check`. No feature test ran after the matcher correction.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S07–S09 validation, ordering, lifecycle, and accessibility; then Chromium/WebKit phone-browser scenarios for draft creation, split prescriptions and invalid ranges, activation/reactivation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
-- **Results:** Not run
+- **Authorized commit:** Not authorized for replacement; original approval invalidated after test-source failure
+- **Results:** Against then-approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: fresh `npm ci` installed 653 packages; scoped component tests passed 4/4; malformed program/split route scenarios passed 2/2; both full Chromium/WebKit flows stopped before program creation because the case-insensitive `Add program` locator matched both the icon link and empty-state action. Four created exercise fixtures were archived after the stopped run. Application behavior was not implicated; corrected test source requires a fresh exact-commit approval and complete rerun.
 
 ## Delivery commit
 
@@ -92,10 +92,10 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Approval
 
-- **Approved commit:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
-- **Approved by:** User
-- **Approved at:** `2026-09-03T10:49:36+02:00`
-- **Approval note:** User explicitly confirmed the exact delivery SHA and authorized only the recorded T-013 verification.
+- **Approved commit:** Not approved for replacement; original `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` approval invalidated
+- **Approved by:** Not approved for replacement
+- **Approved at:** Not approved for replacement
+- **Approval note:** User approved the original delivery at `2026-09-03T10:49:36+02:00`; browser verification exposed an ambiguous test matcher, so a replacement requires fresh approval.
 
 ## Definition of Ready
 
@@ -135,3 +135,5 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:49:36+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` with no findings and recommended approval |
 | `2026-09-03T10:49:36+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-013 tests |
 | `2026-09-03T10:49:36+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component and Chromium/WebKit verification in isolation at the exact approved delivery |
+| `2026-09-03T10:52:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and malformed-route browser scenarios passed 2/2; both full flows stopped at an ambiguous Add-program test matcher, approval was invalidated, and four created exercise fixtures were archived |
+| `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Required an exact accessible-name match for the Add-program icon locator and passed all static checks without rerunning feature tests |

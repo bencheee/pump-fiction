@@ -19,7 +19,7 @@ test.describe("programs mobile experience", () => {
     }
 
     await page.goto("/programs");
-    await page.getByRole("link", { name: "Add program" }).click();
+    await page.getByRole("link", { name: "Add program", exact: true }).click();
     await page.getByLabel("Program name").fill(program);
     await page.getByRole("button", { name: "Save as Draft" }).click();
     await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
