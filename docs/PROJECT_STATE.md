@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits requires a T-013 test-only replacement after exact delivery verification exposed an ambiguous browser matcher without implicating application behavior.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has exact T-013 test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` in review after correcting an ambiguous browser matcher without changing application behavior.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the corrected T-013 test-only replacement for fresh User approval without rerunning feature tests.
+User explicitly approves or returns exact T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain unauthorized.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. T-013 component tests passed 4/4 and malformed-route browser scenarios passed 2/2, while both full browser scenarios stopped at an ambiguous test matcher; approval of `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` is invalidated and a test-only replacement is required. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. T-013 component tests passed 4/4 and malformed-route browser scenarios passed 2/2, while both full browser scenarios stopped at an ambiguous test matcher; exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` awaits fresh approval. Deployment configuration does not exist yet.

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T10:54:20+02:00
+- **Last updated:** 2026-09-03T10:55:23+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) has a corrected, statically verified browser matcher pending replacement delivery; application behavior was not changed.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` is `In Review`; application behavior is unchanged.
 
 ## Immediate next action
 
-Create the T-013 test-only replacement commit for fresh User approval; do not rerun feature tests yet.
+User explicitly approves or returns exact T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain gated.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Progress`; test-only replacement required).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`).
 
 ## Next
 

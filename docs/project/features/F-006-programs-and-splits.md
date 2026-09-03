@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-03T10:54:20+02:00`
+- **Updated:** `2026-09-03T10:55:23+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -27,7 +27,7 @@ The user can create and manage programs, ordered split templates, activation and
 ## Tasks
 
 - [`T-012`](../tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Done`; approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`)
-- [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Progress`; test-only replacement required)
+- [`T-013`](../tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`)
 
 ## Dependencies and blockers
 
@@ -76,3 +76,4 @@ The user can create and manage programs, ordered split templates, activation and
 | `2026-09-03T10:49:36+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-013 delivery and began verification | Running only the recorded component and Chromium/WebKit phone-browser plan against exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` |
 | `2026-09-03T10:52:46+02:00` | Codex primary agent / Tester | Returned `T-013` to `In Progress` | Component 4/4 and malformed routes 2/2 passed; both full browser flows stopped at an ambiguous Add-program matcher, so approval is invalidated and a test-only replacement is required |
 | `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | Corrected T-013 browser matcher pending replacement | The Add-program icon locator now requires an exact accessible name; all static checks passed without rerunning feature tests |
+| `2026-09-03T10:55:23+02:00` | Codex primary agent / Executor | Delivered T-013 test-only replacement for review | Exact replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` awaits fresh User approval |

@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:54:20+02:00`
+- **Updated:** `2026-09-03T10:55:23+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
-- **Review started:** `2026-09-03T10:47:48+02:00`
+- **Review started:** `2026-09-03T10:55:23+02:00` for replacement
 - **Approval requested:** Not reached for replacement
 - **Approved:** Not reached for replacement
 - **Testing started:** `2026-09-03T10:49:36+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the corrected test-only replacement delivery for fresh User approval; feature tests must not rerun yet.
+- **Next action:** User explicitly approves or returns exact replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; feature tests remain unexecuted after correction.
 
 ## Scope
 
@@ -79,9 +79,9 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
-- **Subject:** `T-013: build Programs mobile experience`
-- **Committed scope:** S07 grouped Programs list and states; S08 draft/edit lifecycle, split ordering, next selection, archive/reactivation, feedback, and routes; S09 ordered active-library prescriptions, validation, archive successor/rejection guidance, feedback, and routes; accessible sheet closing and reorder controls; prepared component and Chromium/WebKit scenarios; synchronized project evidence.
+- **Delivery commit SHA:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` (test-only replacement; supersedes `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`)
+- **Subject:** `T-013: disambiguate browser matcher`
+- **Committed scope:** Original S07–S09 delivery plus an exact accessible-name match for the Add-program icon locator; application behavior is unchanged.
 
 ## Review
 
@@ -137,3 +137,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:49:36+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component and Chromium/WebKit verification in isolation at the exact approved delivery |
 | `2026-09-03T10:52:46+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and malformed-route browser scenarios passed 2/2; both full flows stopped at an ambiguous Add-program test matcher, approval was invalidated, and four created exercise fixtures were archived |
 | `2026-09-03T10:54:20+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Required an exact accessible-name match for the Add-program icon locator and passed all static checks without rerunning feature tests |
+| `2026-09-03T10:55:23+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact test-only replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`; static checks passed and feature tests remain unexecuted after correction |
