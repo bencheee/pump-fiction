@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T10:46:33+02:00
+- **Last updated:** 2026-09-03T10:47:48+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) has completed its S07–S09 implementation and permitted static verification pending delivery.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` is `In Review`.
 
 ## Immediate next action
 
-Create the exact T-013 delivery commit for User review; feature tests remain gated.
+User reviews and explicitly approves or returns exact T-013 delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; feature tests remain gated.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Progress`).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`).
 
 ## Next
 

@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:46:33+02:00`
+- **Updated:** `2026-09-03T10:47:48+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-03T10:47:48+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the exact delivery commit for User review; feature tests remain unexecuted pending approval.
+- **Next action:** User reviews and explicitly approves or returns exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; feature tests remain unexecuted.
 
 ## Scope
 
@@ -79,9 +79,9 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
 - **Subject:** `T-013: build Programs mobile experience`
-- **Committed scope:** Not created
+- **Committed scope:** S07 grouped Programs list and states; S08 draft/edit lifecycle, split ordering, next selection, archive/reactivation, feedback, and routes; S09 ordered active-library prescriptions, validation, archive successor/rejection guidance, feedback, and routes; accessible sheet closing and reorder controls; prepared component and Chromium/WebKit scenarios; synchronized project evidence.
 
 ## Review
 
@@ -131,3 +131,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:27:22+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | `T-012` completed and cleared the dependency; explicit Owner direction is still required for `Ready` |
 | `2026-09-03T10:34:57+02:00` | User / Owner and Codex primary agent / Executor | `Backlog` | `In Progress` | Owner confirmed continuation; the Task met Ready and implementation began |
 | `2026-09-03T10:46:33+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S07–S09 implementation, prepared scoped tests, and passed all permitted static checks without running feature tests |
+| `2026-09-03T10:47:48+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; static checks passed and feature tests remain unexecuted |
