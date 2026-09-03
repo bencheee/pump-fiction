@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits requires a second T-013 test-only replacement after Chromium exposed a missing redirect wait; WebKit completed the full application flow.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has exact second T-013 test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` in review after adding the missing redirect wait without changing application behavior.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the second corrected T-013 test-only replacement for fresh User approval without rerunning feature tests.
+User explicitly approves or returns exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`; feature tests remain unauthorized.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. Against T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`, component tests passed 4/4 and browser scenarios passed 3/4, including the complete WebKit flow; Chromium exposed a test-only redirect race and a second replacement is required. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done`. Against T-013 replacement `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`, component tests passed 4/4 and browser scenarios passed 3/4, including the complete WebKit flow; exact second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` awaits fresh approval. Deployment configuration does not exist yet.

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T11:27:57+02:00
+- **Last updated:** 2026-09-03T11:28:42+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) has a corrected and statically verified redirect wait pending second replacement delivery; application behavior is unchanged.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` is `In Review`; application behavior is unchanged.
 
 ## Immediate next action
 
-Create the second T-013 test-only replacement commit for fresh User approval; do not rerun feature tests yet.
+User explicitly approves or returns exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`; feature tests remain gated.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Progress`; second test-only replacement required).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`).
 
 ## Next
 

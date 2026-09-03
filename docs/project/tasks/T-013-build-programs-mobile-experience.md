@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T11:27:57+02:00`
+- **Updated:** `2026-09-03T11:28:42+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
-- **Review started:** `2026-09-03T10:55:23+02:00` for replacement
+- **Review started:** `2026-09-03T11:28:42+02:00` for second replacement
 - **Approval requested:** Not reached for second replacement
 - **Approved:** Not reached for second replacement
 - **Testing started:** `2026-09-03T11:22:58+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the second corrected test-only replacement delivery for fresh User approval; feature tests must not rerun yet.
+- **Next action:** User explicitly approves or returns exact second replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`; feature tests remain unexecuted after correction.
 
 ## Scope
 
@@ -79,9 +79,9 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8` (test-only replacement; supersedes `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`)
-- **Subject:** `T-013: disambiguate browser matcher`
-- **Committed scope:** Original S07–S09 delivery plus an exact accessible-name match for the Add-program icon locator; application behavior is unchanged.
+- **Delivery commit SHA:** `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` (latest test-only replacement; supersedes `85c7b3d5eb8e33989c426e6fbafaf7c642000cf8`)
+- **Subject:** `T-013: await split create redirect`
+- **Committed scope:** Original S07–S09 delivery plus the exact Add-program locator and an explicit wait for the second split create redirect before navigating Back; application behavior is unchanged.
 
 ## Review
 
@@ -142,3 +142,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T11:22:58+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted component and Chromium/WebKit verification in isolation at the exact approved replacement |
 | `2026-09-03T11:26:18+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 4/4 and browser scenarios passed 3/4, including full WebKit; Chromium exposed a missing redirect wait in test source, approval was invalidated, and remaining active/draft fixtures were archived |
 | `2026-09-03T11:27:57+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Awaited the second split edit-route redirect before Back and passed all static checks without rerunning feature tests |
+| `2026-09-03T11:28:42+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact second test-only replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe`; static checks passed and feature tests remain unexecuted after correction |
