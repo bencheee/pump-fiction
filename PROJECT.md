@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-02T15:29:06+02:00
+- **Last updated:** 2026-09-03T10:27:22+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` and `F-005` complete; `F-006` active through `T-012`
+- **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is `Testing` at exact approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
+No active Task. [`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) is complete; `F-006` continues with `T-013` after explicit Owner direction.
 
 ## Immediate next action
 
-Run the complete recorded T-012 test plan from the beginning against exact approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
+User directs whether to start [`T-013 — Build Programs mobile experience`](docs/project/tasks/T-013-build-programs-mobile-experience.md).
 
 ## Now
 
-[`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — Build program and split operations (`Testing`; approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`; `Now / 1`).
+No active Task.
 
 ## Next
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; depends on `T-012`).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Backlog`; dependency cleared; awaits Owner direction).
 
 ## Later
 
@@ -40,6 +40,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — completed `2026-09-03T10:27:22+02:00` — approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` — unit 4/4, clean reset, pgTAP 26/26, repository integration 1/1, and generated-type comparison passed.
 - [`T-011`](docs/project/tasks/T-011-build-exercise-library-mobile-experience.md) — completed `2026-09-02T14:02:43+02:00` — approved replacement `c700a78421eb2ea5b65e43eee7e7b8c796d311d3` — component tests 3/3 and Chromium/WebKit scenarios 4/4 passed with two structural captures.
 - [`T-010`](docs/project/tasks/T-010-build-exercise-library-operations.md) — completed `2026-09-02T10:10:10+02:00` — approved replacement `410c44edd4f8b1698f7de6b792eed0be16a26052` — unit 5/5, clean reset, pgTAP 18/18, and Exercise repository integration 1/1 passed.
 - [`T-009`](docs/project/tasks/T-009-build-mobile-shell-and-ui-foundation.md) — completed `2026-09-01T17:04:42+02:00` — approved latest replacement `ded6f9f73e5952eafe645d07142ab456808783b9` — component tests 4/4, Chromium/WebKit scenarios 8/8, and four exact-3x structural captures passed.

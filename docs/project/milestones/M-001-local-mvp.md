@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-02T15:29:06+02:00`
+- **Updated:** `2026-09-03T10:27:22+02:00`
 - **Progress:** `5/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -34,7 +34,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Done`)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
-- [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Now / 1`; `0/2 Tasks Done`)
+- [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Now / 1`; `1/2 Tasks Done`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Next / 5`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 6`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 7`)
@@ -123,3 +123,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-02T15:13:44+02:00` | Codex primary agent / Executor | Corrected T-012 test fixture pending replacement | Static checks passed without rerunning feature tests; fresh delivery approval remains required |
 | `2026-09-02T15:14:49+02:00` | Codex primary agent / Executor | Delivered T-012 replacement for review | Exact test-only replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` awaits fresh User approval |
 | `2026-09-02T15:29:06+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-012 replacement and began verification | Running the complete recorded plan from the beginning against exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` |
+| `2026-09-03T10:27:22+02:00` | Codex primary agent / Tester | Completed `T-012` within `F-006` | Exact replacement passed unit 4/4, clean reset, pgTAP 26/26, repository integration 1/1, and generated-type comparison; `T-013` awaits Owner direction |

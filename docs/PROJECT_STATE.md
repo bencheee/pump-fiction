@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits is active through exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`, now in scoped verification.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has completed `T-012` operations and awaits Owner direction for `T-013` mobile experience.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Run and record the complete approved T-012 test plan against exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
+Start `T-013` Programs mobile experience when the User directs work to continue.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. `F-006` has a two-Task breakdown: exact T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Testing` with User authorization; dependent `T-013` remains `Backlog`. Deployment configuration does not exist yet.
+`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, exact approved T-012 replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` is `Done` after unit 4/4, clean reset, pgTAP 26/26, repository integration 1/1, and generated-type comparison passed. `T-013` remains `Backlog` with its dependency cleared. Deployment configuration does not exist yet.

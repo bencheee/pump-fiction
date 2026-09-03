@@ -1,7 +1,7 @@
 # T-012 — Build program and split operations
 
 - **Feature:** `F-006`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T15:29:06+02:00`
+- **Updated:** `2026-09-03T10:27:22+02:00`
 - **Started:** `2026-09-02T14:35:46+02:00`
 - **Review started:** `2026-09-02T15:14:49+02:00` for replacement
 - **Approval requested:** `2026-09-02T15:29:06+02:00` for replacement
 - **Approved:** `2026-09-02T15:29:06+02:00` for replacement
 - **Testing started:** `2026-09-02T15:29:06+02:00` for replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-03T10:27:22+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded test plan from the beginning against exact approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76`.
+- **Next action:** None; `T-012` is complete and `T-013` awaits explicit Owner direction.
 
 ## Scope
 
@@ -76,7 +76,7 @@ Implement feature-owned program and split models, validation, queries, and atomi
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped program/split application unit tests; reset local Supabase and run program/split constraints and transactional functions plus real repository integration covering lifecycle replacement, validation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, reactivation, proposed-completion advancement, and retry no-op.
 - **Authorized commit:** `5b781802d2bddfc77b55745f12108ae678bd2b76`
-- **Results:** Against then-approved delivery `08f5e0f415c69f3d3d7f9800fb617d23cf8806bc` on 2026-09-02 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: scoped unit tests passed 4/4; clean reset applied all four migrations; all three pgTAP files passed 26/26 total; repository integration failed 0/1 because its inactive-exercise scenario attempted to add an archived exercise to a split that already contained it, which the accepted retained-membership rule correctly permits. Verification stopped and a corrected test-only replacement requires fresh approval. An initial isolated `npm ci` used system Node.js `22.21.0`/npm `10.9.4`; no test ran under it, the install was discarded by a fresh `npm ci` under the required versions, and 653 packages installed with no vulnerabilities.
+- **Results:** Against exact approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` on 2026-09-03 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: fresh isolated `npm ci` installed 653 packages with no vulnerabilities; scoped program/split unit tests passed 4/4; clean reset applied all four migrations; all three pgTAP files passed 26/26 total; real Program repository integration passed 1/1 across draft creation, prescriptions, activation/reactivation, both ordering levels, set-next, current-next archive successor/wrap, last-active rejection, archived-membership retention, new archived-exercise rejection, and proposed-completion advancement/retry no-op; regenerated public database types matched the committed file. Vitest emitted its existing future config-loader warning, npm reported non-blocking install-script approval notices, and Supabase reported no blocking service issue. Against the original delivery on 2026-09-02, unit 4/4 and pgTAP 26/26 passed before repository integration exposed and stopped on the corrected test-fixture defect; those partial results were discarded for completion.
 
 ## Delivery commit
 
@@ -114,15 +114,15 @@ Implement feature-owned program and split models, validation, queries, and atomi
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -142,3 +142,5 @@ Implement feature-owned program and split models, validation, queries, and atomi
 | `2026-09-02T15:29:06+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` with no additional findings and recommended approval |
 | `2026-09-02T15:29:06+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact replacement and authorized the complete recorded T-012 test plan from the beginning |
 | `2026-09-02T15:29:06+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete recorded verification in a fresh isolated worktree at the exact approved replacement |
+| `2026-09-03T10:25:54+02:00` | User / Requester and Codex primary agent / Tester | `Testing` | `Testing` | User directed continuation; restarted the complete approved plan from the beginning in a fresh exact-replacement worktree |
+| `2026-09-03T10:27:22+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Fresh isolated install succeeded, unit tests passed 4/4, clean reset and pgTAP passed 26/26, Program repository integration passed 1/1, and generated types matched the exact approved replacement |
