@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T10:47:48+02:00
+- **Last updated:** 2026-09-03T10:49:36+02:00
 - **Current phase:** Programs and Splits implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` and `F-005` complete; `F-006` is `1/2 Tasks Done`
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` is `In Review`.
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` is approved and undergoing scoped verification.
 
 ## Immediate next action
 
-User reviews and explicitly approves or returns exact T-013 delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; feature tests remain gated.
+Run only the recorded T-013 component and Chromium/WebKit phone-browser verification against exact approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`.
 
 ## Now
 
-[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`In Review`; delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`).
+[`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — Build Programs mobile experience (`Testing`; approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`).
 
 ## Next
 

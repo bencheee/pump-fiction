@@ -1,7 +1,7 @@
 # T-013 — Build Programs mobile experience
 
 - **Feature:** `F-006`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T10:47:48+02:00`
+- **Updated:** `2026-09-03T10:49:36+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T10:47:48+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-03T10:49:36+02:00`
+- **Approved:** `2026-09-03T10:49:36+02:00`
+- **Testing started:** `2026-09-03T10:49:36+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews and explicitly approves or returns exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; feature tests remain unexecuted.
+- **Next action:** Run the recorded scoped verification against exact approved delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped component tests for S07–S09 validation, ordering, lifecycle, and accessibility; then Chromium/WebKit phone-browser scenarios for draft creation, split prescriptions and invalid ranges, activation/reactivation, both reorder levels, set-next, current-next archival successor/wrap, last-active rejection, retry/not-found behavior, phone reflow, and approved structural captures.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
 - **Results:** Not run
 
 ## Delivery commit
@@ -86,16 +86,16 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-03T10:49:36+02:00`
+- **Outcome:** Recommended for approval with no findings
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`
+- **Approved by:** User
+- **Approved at:** `2026-09-03T10:49:36+02:00`
+- **Approval note:** User explicitly confirmed the exact delivery SHA and authorized only the recorded T-013 verification.
 
 ## Definition of Ready
 
@@ -132,3 +132,6 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T10:34:57+02:00` | User / Owner and Codex primary agent / Executor | `Backlog` | `In Progress` | Owner confirmed continuation; the Task met Ready and implementation began |
 | `2026-09-03T10:46:33+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S07–S09 implementation, prepared scoped tests, and passed all permitted static checks without running feature tests |
 | `2026-09-03T10:47:48+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4`; static checks passed and feature tests remain unexecuted |
+| `2026-09-03T10:49:36+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `5c83acf4e5a2fe74f4ec1b3de76d99e48493bda4` with no findings and recommended approval |
+| `2026-09-03T10:49:36+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly confirmed the exact delivery and authorized only the recorded T-013 tests |
+| `2026-09-03T10:49:36+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded component and Chromium/WebKit verification in isolation at the exact approved delivery |
