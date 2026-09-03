@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-03T11:35:06+02:00`
-- **Progress:** `5/10 required Features Done`
+- **Updated:** `2026-09-03T12:00:56+02:00`
+- **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -34,7 +34,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-003`](../features/F-003-mobile-ui-ux-design-package.md) — Mobile UI/UX Design Package (`Done`)
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
-- [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Now / 1`; `2/2 Tasks Done`; awaits aggregate confirmation)
+- [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Next / 5`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 6`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 7`)
@@ -58,7 +58,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-006` is active through `T-013`
+- Blockers: None; work is paused after `F-006`, and `F-007` must not start without explicit User direction
 
 ## Related decisions and documents
 
@@ -137,3 +137,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-03T11:28:42+02:00` | Codex primary agent / Executor | Delivered second T-013 test-only replacement | Exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` awaits fresh User approval |
 | `2026-09-03T11:31:08+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved second T-013 replacement and restarted verification | Running the complete recorded plan from the beginning against exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` |
 | `2026-09-03T11:35:06+02:00` | Codex primary agent / Tester | Completed `T-013` within `F-006` | Exact replacement passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures; `F-006` has 2/2 Tasks Done and awaits aggregate User confirmation |
+| `2026-09-03T12:00:56+02:00` | User / Owner | Completed `F-006`; Milestone remains incomplete and paused | Confirmed the aggregate Programs and Splits result, advancing M-001 to 6/10 Features Done, and explicitly directed that `F-007` must not start |

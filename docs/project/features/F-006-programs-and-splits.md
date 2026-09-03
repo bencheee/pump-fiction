@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-03T11:35:06+02:00`
+- **Updated:** `2026-09-03T12:00:56+02:00`
 - **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -32,7 +32,7 @@ The user can create and manage programs, ordered split templates, activation and
 ## Dependencies and blockers
 
 - Dependencies: `F-003`, `F-004`, `F-005`
-- Blockers: None; `T-013` is active after `T-012` completion
+- Blockers: None; Feature is complete
 
 ## Related decisions and documents
 
@@ -50,11 +50,11 @@ The user can create and manage programs, ordered split templates, activation and
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden
+- [x] User confirms the feature result
 
 ## History
 
@@ -83,3 +83,4 @@ The user can create and manage programs, ordered split templates, activation and
 | `2026-09-03T11:28:42+02:00` | Codex primary agent / Executor | Delivered second T-013 test-only replacement | Exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` awaits fresh User approval |
 | `2026-09-03T11:31:08+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved second T-013 replacement and restarted verification | Running the complete recorded plan from the beginning against exact replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` |
 | `2026-09-03T11:35:06+02:00` | Codex primary agent / Tester | Completed `T-013` within `F-006` | Exact replacement passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures; `F-006` has 2/2 Tasks Done and awaits aggregate User confirmation |
+| `2026-09-03T12:00:56+02:00` | User / Owner | Completed `F-006`; paused before `F-007` | Confirmed the aggregate Programs and Splits result and explicitly directed that Today and Active Workout must not start |

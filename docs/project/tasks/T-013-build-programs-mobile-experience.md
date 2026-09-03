@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-03T11:35:06+02:00`
+- **Updated:** `2026-09-03T12:00:56+02:00`
 - **Started:** `2026-09-03T10:34:57+02:00`
 - **Review started:** `2026-09-03T11:28:42+02:00` for second replacement
 - **Approval requested:** `2026-09-03T11:31:08+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-03T11:31:08+02:00` for latest replacement
 - **Completed:** `2026-09-03T11:35:06+02:00`
 - **Canceled:** Not reached
-- **Next action:** User confirms the aggregate F-006 Programs and Splits result; T-013 is complete.
+- **Next action:** No further T-013 action; F-006 is complete and work is paused before F-007.
 
 ## Scope
 
@@ -146,3 +146,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | `2026-09-03T11:31:08+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved exact latest replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` and authorized the complete recorded verification from the beginning |
 | `2026-09-03T11:31:08+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Restarted component and Chromium/WebKit verification in isolation at the exact approved replacement |
 | `2026-09-03T11:35:06+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Exact replacement passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures; test fixtures were archived and all completion evidence is recorded |
+| `2026-09-03T12:00:56+02:00` | User / Owner | `Done` | `Done` | Confirmed the aggregate F-006 Programs and Splits result and explicitly directed that F-007 must not start |

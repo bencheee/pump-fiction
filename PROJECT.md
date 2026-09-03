@@ -1,18 +1,18 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-03T11:35:06+02:00
-- **Current phase:** Programs and Splits implementation
+- **Last updated:** 2026-09-03T12:00:56+02:00
+- **Current phase:** Local MVP paused after Programs and Splits completion
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` and `F-005` complete; `F-006` is `2/2 Tasks Done` and awaits aggregate confirmation
+- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` is not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task. [`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) is complete; `F-006` has 2/2 Tasks Done and awaits aggregate User confirmation.
+No active Task. [`F-006`](docs/project/features/F-006-programs-and-splits.md) is complete; the User explicitly directed that `F-007` must not start.
 
 ## Immediate next action
 
-User confirms the aggregate [`F-006 — Programs and Splits`](docs/project/features/F-006-programs-and-splits.md) result.
+Await explicit User direction. Do not start [`F-007 — Today and Active Workout`](docs/project/features/F-007-today-and-active-workout.md).
 
 ## Now
 
@@ -20,7 +20,7 @@ No active Task.
 
 ## Next
 
-No queued Task within `F-006`.
+[`F-007`](docs/project/features/F-007-today-and-active-workout.md) remains planned in `Next` and is not started by explicit User direction.
 
 ## Later
 

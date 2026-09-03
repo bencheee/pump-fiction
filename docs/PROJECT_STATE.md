@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation and `F-005` Exercise Library are complete. `F-006` Programs and Splits has 2/2 Tasks Done and awaits aggregate User confirmation.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. Work is paused; the User explicitly directed that `F-007` must not start.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User confirms the aggregate `F-006` Programs and Splits result.
+Await explicit User direction. `F-007` Today and Active Workout remains planned but must not start.
 
 ## Implementation status
 
-`F-004` and `F-005`, including `T-005` through `T-011`, are `Done`. Within `F-006`, T-012 and T-013 are `Done`: exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures. `F-006` awaits aggregate User confirmation. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures, and the User confirmed the aggregate F-006 result. `F-007` is not started. Deployment configuration does not exist yet.

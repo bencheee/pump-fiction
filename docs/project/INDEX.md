@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `4/10 Features Done` | User | `2026-09-02T08:55:13+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `6/10 Features Done` | User | `2026-09-03T12:00:56+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -27,7 +27,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-003`](features/F-003-mobile-ui-ux-design-package.md) | `M-001` | Mobile UI/UX Design Package | `Now / 1` | `2/2 Done` | User | `2026-08-31T12:06:31+02:00` | [`features/F-003-mobile-ui-ux-design-package.md`](features/F-003-mobile-ui-ux-design-package.md) |
 | [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Now / 1` | `5/5 Done` | User | `2026-09-02T08:55:13+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
 | [`F-005`](features/F-005-exercise-library.md) | `M-001` | Exercise Library | `Now / 1` | `2/2 Done` | User | `2026-09-02T14:25:18+02:00` | [`features/F-005-exercise-library.md`](features/F-005-exercise-library.md) |
-| [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Now / 1` | `2/2 Tasks Done` | User | `2026-09-03T11:35:06+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
+| [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Now / 1` | `2/2 Done` | User | `2026-09-03T12:00:56+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
 | [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Next / 5` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 6` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 7` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
