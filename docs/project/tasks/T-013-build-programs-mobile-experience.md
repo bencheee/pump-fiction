@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-02T14:35:46+02:00`
-- **Updated:** `2026-09-02T14:35:46+02:00`
+- **Updated:** `2026-09-03T10:27:22+02:00`
 - **Started:** Not reached
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-012` completion and explicit Owner direction.
+- **Next action:** Await explicit Owner direction to transition to `Ready` and begin the S07–S09 mobile delivery.
 
 ## Scope
 
@@ -48,7 +48,7 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 ## Dependencies and blockers
 
 - Dependencies: `T-012` Done
-- Blockers: `T-012` is in progress
+- Blockers: None; `T-012` is Done
 - Blocked from status: Not blocked; dependency is planned
 
 ## Documentation impact
@@ -128,3 +128,4 @@ Implement the phone-only S07 Programs list, S08 Program create/edit experience, 
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-02T14:35:46+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Reserve the dependent S07–S09 mobile delivery after program/split operations are complete |
+| `2026-09-03T10:27:22+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | `T-012` completed and cleared the dependency; explicit Owner direction is still required for `Ready` |
