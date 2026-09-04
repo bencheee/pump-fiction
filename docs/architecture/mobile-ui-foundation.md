@@ -1,6 +1,6 @@
 # Mobile UI foundation
 
-- **Status:** Implemented through `T-015`
+- **Status:** Implemented through `T-016`
 - **Design source:** [`../design/T-004-v0.4-frozen/README.md`](../design/T-004-v0.4-frozen/README.md)
 
 This document defines how later Feature Tasks consume the application-owned mobile shell, assets, tokens, routes, and shared UI. It does not add feature-screen behavior.
@@ -65,6 +65,15 @@ Feature-specific set rows, workout exercise cards, reorder behavior, restored-wo
 `T-015` keeps Today data access in the server composition boundary and passes the serializable `TodayView` aggregate into a feature-owned client experience. The client may make a temporary today-only split selection, start the proposed or alternate split through the thin workout Server Action, or use the existing program operation to persistently **Set as Next**; the copy and controls distinguish those two rotation effects. When a current workout exists, the restore card replaces every second-start entry point and derives a running display from the persisted accumulated duration plus the active segment start without resetting the timer.
 
 The one-time route loads only active Exercise Library definitions on the server. Its client form owns arbitrary-name validation, add/remove/up/down ordering, retained input after failure, and the ordered IDs sent to the same workout-start action. Successful starts enter `/workout/current`; generic persistence failures expose retry while unavailable sources remain non-retryable. The Today weight surface remains owned by `F-009` and is intentionally absent from this delivery.
+
+## Active-workout composition
+
+`T-016` keeps the focused `/workout/current` and `/workout/current/finish` pages in the server composition boundary: each loads the authoritative current-workout aggregate (plus the active library for the add-exercise sheet) and redirects to Today when no resumable workout exists. The feature-owned client experiences apply every mutation through the accepted command union and delivery controller; there is no parallel mutation path.
+
+- Set rows adapt per load mode with only applicable inputs, band strength as an explicit chip group, and the band direction derived from the mode. A load-mode change keeps reps, carries a kilogram value only between modes that share the same kilogram field meaning, clears everything else, names what was cleared in an inline notice, and returns the set to unconfirmed. Confirmation validates on submit, composes `Enter {missing fields} to confirm this set.`, and mirrors the first outstanding message into the single sticky-cue live region beside Review & Finish; the same cue owns save state and exactly one Retry (or conflict Refresh) control.
+- Populated set/exercise removal is gated by the shared destructive dialog and sends explicit confirmation evidence; empty rows remove directly. Reordering uses explicit up/down buttons that deliver the complete identity order. Workout exercise notes auto-save on blur.
+- The header shows the workout name and the live active-duration clock derived from accumulated seconds plus the running segment; Continue Later and Resume send the timer commands, and the paused state shows a non-color banner. A reopen is detected through a session-scoped marker (or retained pending commands) and shows the restored banner without resetting the timer.
+- The finish review derives active duration, exercise count, confirmed sets, and — for split-sourced workouts only — empty planned sets, listing the unconfirmed prescribed rows. One-time workouts omit that metric entirely and state that their rows are workout-local. Complete, Save as Incomplete, and confirmed Discard all deliver `finish_workout` through the same queue and return to Today when acknowledged; the failure cue adds "Nothing was recorded. Your review is unchanged."
 
 ## Overlay history
 

@@ -1,23 +1,23 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
-- **Executor:** Codex primary agent
+- **Executor:** Claude Code primary agent (continued from Codex primary agent)
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T09:00:13+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-04T15:31:24+02:00`
+- **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-017` and `T-015` completion and explicit Owner direction.
+- **Next action:** Create the exact delivery commit, record its SHA, and request User review; feature tests remain unexecuted.
 
 ## Scope
 
@@ -47,8 +47,8 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 ## Dependencies and blockers
 
 - Dependencies: `T-014`, `T-017`, and `T-015` Done
-- Blockers: `T-017` is in progress; `T-015` is planned
-- Blocked from status: Not blocked; dependencies are planned
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -57,23 +57,23 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Execution checklist
 
-- [ ] Implement S10 focused workout and duration/save-status behavior.
-- [ ] Implement cards, modes, validation, notes, add/remove, and ordering through the durable controller.
-- [ ] Implement S11 selection, S12 review/outcomes, and conflict recovery.
-- [ ] Prepare component and Chromium/WebKit tests without running them; run only static checks.
+- [x] Implement S10 focused workout and duration/save-status behavior.
+- [x] Implement cards, modes, validation, notes, add/remove, and ordering through the durable controller.
+- [x] Implement S11 selection, S12 review/outcomes, and conflict recovery.
+- [x] Prepare component and Chromium/WebKit tests without running them; run only static checks.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency/accessibility rules, strict TypeScript, production build, design assets/references, documentation links, and `git diff --check`
-- Results: Pending
+- Results: Passed on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes with dynamic `/workout/current` and `/workout/current/finish`; all 8 font and 38 icon checksums plus license files passed; Markdown lint and all internal links passed; and `git diff --check` passed. No feature test or manual application test ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit scenarios covering every mode, confirmation, Last time/notes, local edits, timer/reload, pending replay/retry/conflict, finish outcomes, rotation, reflow, and structural captures.
+- **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes) and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
 - **Authorized commit:** None
-- **Results:** Not run; Task is not started.
+- **Results:** Not run; feature testing is prohibited before exact-commit approval.
 
 ## Delivery commit
 
@@ -102,12 +102,12 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -127,3 +127,6 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | --- | --- | --- | --- | --- |
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Created as the dependent active-workout mobile delivery within `F-007` |
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | Added dependency on required one-time starter-set correction T-017 and shifted order after that inserted Task |
+| `2026-09-04T15:02:00+02:00` | User / Owner | `Backlog` | `Ready` | `T-014`, `T-017`, and `T-015` are Done; the User's 2026-09-04 direction to finish `F-007` and continue with `T-016` confirms readiness |
+| `2026-09-04T15:02:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the accepted S10–S12 active-workout phone implementation on the durable command foundation |
+| `2026-09-04T15:31:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed S10–S12, the local command reducer with conflict rebase, canonical UI/durability guidance, and unexecuted unit/component/browser coverage; all static checks passed |

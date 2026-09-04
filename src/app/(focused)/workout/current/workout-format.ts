@@ -1,0 +1,42 @@
+import type {
+  LastPerformance,
+  WorkoutSet,
+} from "@/features/active-workout/domain/workout";
+import { setModeFields } from "@/features/active-workout/domain/set-entry";
+
+export function formatWorkoutClock(seconds: number): string {
+  const whole = Math.max(0, Math.floor(seconds));
+  const hours = Math.floor(whole / 3600);
+  const minutes = Math.floor((whole % 3600) / 60);
+  const remainder = whole % 60;
+  return hours > 0
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`
+    : `${minutes}:${String(remainder).padStart(2, "0")}`;
+}
+
+export function formatSetSummary(set: WorkoutSet): string {
+  const parts: string[] = [];
+  if (set.loadMode !== null) {
+    const fields = setModeFields[set.loadMode];
+    if (fields.load === "kg" && set.loadKg !== null)
+      parts.push(`${set.loadKg} kg`);
+    if (fields.load === "added_kg" && set.loadKg !== null)
+      parts.push(`+${set.loadKg} kg`);
+    if (fields.load === "assistance_kg" && set.loadKg !== null)
+      parts.push(`−${set.loadKg} kg assistance`);
+    if (fields.band !== null && set.bandStrength !== null)
+      parts.push(`${set.bandStrength} ${fields.band} band`);
+  }
+  if (set.reps !== null) parts.push(`× ${set.reps}`);
+  return parts.length > 0 ? parts.join(" ") : "No values";
+}
+
+export function formatLastPerformance(performance: LastPerformance): string {
+  const date = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  }).format(new Date(`${performance.workoutDate}T00:00:00Z`));
+  const sets = performance.sets.map(formatSetSummary).join(", ");
+  return sets.length > 0 ? `${date} · ${sets}` : date;
+}

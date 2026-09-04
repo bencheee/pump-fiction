@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-04T15:00:50+02:00`
+- **Updated:** `2026-09-04T15:31:24+02:00`
 - **Progress:** `3/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -29,7 +29,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 - [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-017`](../tasks/T-017-correct-one-time-workout-starter-sets.md) — Correct one-time workout starter sets (`Done`; approved delivery `8d5779258505bb94383368e13eff97a4346320ca`)
 - [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Done`; approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`)
-- [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; dependencies `T-014`, `T-017`, and `T-015` are Done)
+- [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`In Progress`; delivery commit being created)
 
 ## Dependencies and blockers
 
@@ -86,3 +86,5 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | Delivered the T-015 second test-only replacement for review | Exact replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` awaits fresh User approval before the complete test plan restarts |
 | `2026-09-04T14:56:18+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved the T-015 second replacement and restarted verification | Running the complete component and serialized Chromium/WebKit plan from the beginning against exact second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` |
 | `2026-09-04T15:00:50+02:00` | Claude Code primary agent / Tester | Completed `T-015` within `F-007` | Exact approved second replacement passed component 3/3 and serialized Chromium 1/1 plus WebKit 1/1 with structural captures; the User's continuation direction authorizes dependent `T-016` |
+| `2026-09-04T15:02:00+02:00` | User / Owner and Claude Code primary agent / Executor | Started `T-016` | All dependencies are Done and the User's direction to finish `F-007` authorizes the accepted active-workout phone delivery |
+| `2026-09-04T15:31:24+02:00` | Claude Code primary agent / Executor | Completed `T-016` implementation scope pending delivery | S10–S12, the local command reducer with conflict rebase, canonical guidance, and prepared approval-gated tests are statically verified |

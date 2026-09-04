@@ -79,6 +79,12 @@ Split starts copy program/split identity and names, ordered exercise identity/de
 
 On reload or reopen, `restoreActiveWorkout()` first calls the supplied authoritative server loader, then reads pending commands for that workout and replays them through the supplied pure feature reducer. The workout UI owns the authoritative state shape and reducer; IndexedDB never becomes an application cache or canonical workout store.
 
+## Workout-screen consumption
+
+`T-016` supplies that reducer as `applyCommandToWorkout`, a pure local mirror of the persistence function that also assigns each optimistic structural addition (`add_set`, `add_exercise`) the command ID as a synthetic placeholder identity. Placeholder rows stay non-interactive until the queue drains, after which the screen refreshes the authoritative aggregate through the read operation and replaces synthetic identities with server-created rows.
+
+Conflict recovery follows the recorded `refresh_and_replay` contract: the screen fetches the authoritative workout, then re-enqueues the retained FIFO commands as fresh envelopes with new command IDs rebased onto the refreshed revision before flushing again. Original command IDs are never reused with a different expected revision because they are consumed idempotency evidence. A refreshed aggregate that no longer contains the workout returns the user to Today. Rejected commands stay pending and visible as a failed save with Retry; they are resolved explicitly rather than silently discarded.
+
 ## Approval-gated verification
 
 Prepared tests remain separate from static checks and must not run before the exact delivery commit is approved:

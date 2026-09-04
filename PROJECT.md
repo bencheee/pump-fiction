@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T15:00:50+02:00
+- **Last updated:** 2026-09-04T15:31:24+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) starts under the Owner's continuation direction; all dependencies (`T-014`, `T-017`, `T-015`) are `Done`.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: the S10–S12 implementation scope is complete and statically verified; the delivery commit is being created.
 
 ## Immediate next action
 
-Implement `T-016` S10–S12 active-workout mobile experience, prepare unexecuted feature tests, run static checks, and create one delivery commit for User review.
+Create the exact `T-016` delivery commit, record its SHA, and request User review; feature tests remain unexecuted.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Backlog` → starting — Executor: Claude Code primary agent — dependencies complete; Owner direction received `2026-09-04`.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T15:31:24+02:00` — implementation scope complete; delivery pending.
 
 ## Next
 
