@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T16:09:58+02:00
+- **Last updated:** 2026-09-04T16:11:24+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: the position-renumbering correction and its pgTAP regression are prepared; the replacement delivery is being created.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Review` at exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
 
 ## Immediate next action
 
-Create the T-016 replacement delivery with the corrective migration, record its exact SHA, and request fresh User approval before the complete test plan restarts.
+User reviews and explicitly approves exact T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; only then does the complete unit/component, pgTAP, and serialized Chromium/WebKit plan restart from the beginning.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T16:09:58+02:00` — renumbering corrected; replacement delivery pending.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Review` — Executor: Claude Code primary agent — updated `2026-09-04T16:11:24+02:00` — replacement with the corrective migration awaits fresh User review and approval.
 
 ## Next
 

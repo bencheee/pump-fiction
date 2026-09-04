@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T16:09:58+02:00`
+- **Updated:** `2026-09-04T16:11:24+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
-- **Review started:** `2026-09-04T15:33:30+02:00`
+- **Review started:** `2026-09-04T16:11:24+02:00` for replacement
 - **Approval requested:** `2026-09-04T15:58:06+02:00`
 - **Approved:** `2026-09-04T15:58:06+02:00`
 - **Testing started:** `2026-09-04T15:58:06+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the replacement delivery with the corrective migration, record its exact SHA, and request fresh User approval before restarting the complete test plan.
+- **Next action:** User reviews exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; do not restart any feature test before fresh explicit approval.
 
 ## Scope
 
@@ -77,16 +77,16 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `63126a1635421cf042186446216e7921025e6105` (original; replacement with the persistence correction required)
-- **Subject:** `T-016: build active workout experience`
-- **Committed scope:** Phone-only S10 active/paused/restored workout with live active-duration timer, per-mode set rows, submit-time confirmation validation mirrored in the single sticky cue, mode chooser with least-destructive carryover, populated-removal confirmation, explicit reordering, auto-saved workout notes; S11 multi-select add-exercise sheet; S12 finish review with source-aware metrics, empty-planned-set detail, and complete/incomplete/continue/confirmed-discard outcomes; a pure local command reducer with synthetic structural placeholders and conflict rebase-and-replay recovery; canonical UI/durability guidance; and prepared, unexecuted unit, component, and serialized Chromium/WebKit coverage.
+- **Delivery commit SHA:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` (replacement; supersedes original delivery `63126a1635421cf042186446216e7921025e6105`)
+- **Subject:** `T-016: correct workout position renumbering`
+- **Committed scope:** Preserve the original S10–S12 delivery — phone-only active/paused/restored workout with live timer, per-mode set rows, mirrored confirmation validation, mode chooser, populated-removal confirmation, explicit reordering, auto-saved notes, S11 multi-select add-exercise sheet, S12 source-aware finish review, and the local command reducer with conflict rebase — while correcting the inherited T-014 persistence renumbering: the declarative schema and a reviewed migration replace the negative-position updates with the accepted offset-above-maximum technique for `remove_set`, `remove_exercise`, and `reorder_exercises`, with a new prepared pgTAP regression; lifecycle documentation is synchronized.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending for replacement
-- **Outcome:** Original approval invalidated; replacement pending
-- **Findings:** The approved T-014 renumbering technique violates the positive-position check constraints during workout-local removals and reordering; T-016 verification exposed it end to end.
+- **Reviewed at:** Pending
+- **Outcome:** Pending
+- **Findings:** Pending
 
 ## Approval
 
@@ -136,3 +136,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T15:58:06+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit/component and serialized Chromium/WebKit verification against the exact approved delivery |
 | `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9 and component 11/11 passed before serialized Chromium stopped on a rejected `remove_set`: the approved T-014 renumbering violates the positive-position checks when siblings remain; browser tests stopped and the approval is invalidated |
 | `2026-09-04T16:09:58+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Replaced the negative-position renumbering with the accepted offset-above-maximum technique in the declarative schema and a reviewed migration, and prepared the pgTAP regression; static checks passed without feature tests |
+| `2026-09-04T16:11:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |
