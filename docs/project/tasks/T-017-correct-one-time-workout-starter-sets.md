@@ -1,7 +1,7 @@
 # T-017 — Correct one-time workout starter sets
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-04T09:00:13+02:00`
-- **Updated:** `2026-09-04T09:05:38+02:00`
+- **Updated:** `2026-09-04T09:06:26+02:00`
 - **Started:** `2026-09-04T09:00:13+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-04T09:06:26+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the exact correction delivery and hand it to the User for review; regression tests remain unexecuted.
+- **Next action:** User reviews exact correction `8d5779258505bb94383368e13eff97a4346320ca`; regression tests remain prohibited until explicit approval.
 
 ## Scope
 
@@ -75,9 +75,9 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Pending
+- **Delivery commit SHA:** `8d5779258505bb94383368e13eff97a4346320ca`
 - **Subject:** `T-017: correct one-time workout starter sets`
-- **Committed scope:** Pending
+- **Committed scope:** Add exactly one empty workout-local starter set for every selected one-time exercise; synchronize workout/domain/durability documentation; add the focused migration and unexecuted pgTAP/repository regression assertions; record the required F-007 Task dependency.
 
 ## Review
 
@@ -127,3 +127,4 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 | `2026-09-04T09:00:13+02:00` | User / Owner | `Backlog` | `Ready` | Prior OD-001 confirmation plus the explicit direction to continue makes the correction ready |
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the narrow behavior and documentation correction before T-015 |
 | `2026-09-04T09:05:38+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the starter-row correction, canonical documentation, migration, and unexecuted regression assertions; all static checks passed |
+| `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact correction `8d5779258505bb94383368e13eff97a4346320ca`; static checks passed and regression tests remain unexecuted |
