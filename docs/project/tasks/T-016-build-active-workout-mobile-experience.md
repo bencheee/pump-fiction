@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T15:33:30+02:00`
+- **Updated:** `2026-09-04T15:58:06+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-04T15:33:30+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-04T15:58:06+02:00`
+- **Approved:** `2026-09-04T15:58:06+02:00`
+- **Testing started:** `2026-09-04T15:58:06+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `63126a1635421cf042186446216e7921025e6105`; do not run any feature test before explicit approval of that SHA.
+- **Next action:** Run only the recorded unit/component and serialized Chromium/WebKit verification against exact approved delivery `63126a1635421cf042186446216e7921025e6105` in a fresh isolated clean-reset worktree.
 
 ## Scope
 
@@ -72,8 +72,8 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes) and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
-- **Authorized commit:** None
-- **Results:** Not run; feature testing is prohibited before exact-commit approval.
+- **Authorized commit:** `63126a1635421cf042186446216e7921025e6105`
+- **Results:** In progress against the exact approved delivery.
 
 ## Delivery commit
 
@@ -84,16 +84,16 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T15:58:06+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None
 
 ## Approval
 
-- **Approved commit:** Pending
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** Pending
+- **Approved commit:** `63126a1635421cf042186446216e7921025e6105`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T15:58:06+02:00`
+- **Approval note:** User explicitly said `potvrđujem 63126a1635421cf042186446216e7921025e6105`; approval is bound to the exact delivery commit above and authorizes only the recorded T-016 tests.
 
 ## Definition of Ready
 
@@ -131,3 +131,6 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T15:02:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the accepted S10–S12 active-workout phone implementation on the durable command foundation |
 | `2026-09-04T15:31:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed S10–S12, the local command reducer with conflict rebase, canonical UI/durability guidance, and unexecuted unit/component/browser coverage; all static checks passed |
 | `2026-09-04T15:33:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `63126a1635421cf042186446216e7921025e6105`; static checks passed and prepared feature tests remain unexecuted |
+| `2026-09-04T15:58:06+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings and recommended approval |
+| `2026-09-04T15:58:06+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `63126a1635421cf042186446216e7921025e6105` |
+| `2026-09-04T15:58:06+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit/component and serialized Chromium/WebKit verification against the exact approved delivery |

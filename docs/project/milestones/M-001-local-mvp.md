@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T15:33:30+02:00`
+- **Updated:** `2026-09-04T15:58:06+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -163,3 +163,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T15:02:00+02:00` | User / Owner and Claude Code primary agent / Executor | Started T-016 within F-007 | Began the accepted S10–S12 active-workout phone experience after all dependencies completed |
 | `2026-09-04T15:31:24+02:00` | Claude Code primary agent / Executor | Completed T-016 implementation scope pending delivery | Active-workout, add-exercise, and finish-review UI plus prepared tests are statically verified |
 | `2026-09-04T15:33:30+02:00` | Claude Code primary agent / Executor | Delivered T-016 for review | Exact delivery awaits User review before approved verification |
+| `2026-09-04T15:58:06+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved T-016 and began verification | Running the recorded unit/component and serialized Chromium/WebKit tests against the exact approved delivery |
