@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T14:50:30+02:00
+- **Last updated:** 2026-09-04T14:52:30+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress`: the two test-only browser queries are corrected and the second test-only replacement delivery is being created.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Review` at exact second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`.
 
 ## Immediate next action
 
-Create the second T-015 test-only replacement delivery, record its exact SHA, and request fresh User approval before the complete test plan restarts.
+User reviews and explicitly approves exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; only then does the complete component and serialized Chromium/WebKit plan restart from the beginning.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T14:50:30+02:00` — browser queries corrected; second test-only replacement delivery pending.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Review` — Executor: Claude Code primary agent — updated `2026-09-04T14:52:30+02:00` — second test-only replacement delivered; awaits fresh User review and approval.
 
 ## Next
 

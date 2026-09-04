@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:50:30+02:00`
+- **Updated:** `2026-09-04T14:52:30+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
-- **Review started:** `2026-09-04T14:18:18+02:00` for replacement
+- **Review started:** `2026-09-04T14:52:30+02:00` for second replacement
 - **Approval requested:** `2026-09-04T14:28:43+02:00` for replacement
 - **Approved:** `2026-09-04T14:28:43+02:00` for replacement
 - **Testing started:** `2026-09-04T14:28:43+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the second test-only replacement delivery, record its exact SHA, and request fresh User approval before restarting the complete test plan.
+- **Next action:** User reviews exact second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; do not restart any feature test before fresh explicit approval.
 
 ## Scope
 
@@ -77,16 +77,16 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `466341380d0f479e2ce04a08c3a34690ff5a5052` (first test-only replacement; second test-only replacement required)
-- **Subject:** `T-015: correct mirrored validation assertion`
-- **Committed scope:** Preserve the original Today/workout-start implementation while correcting only the component assertion to accept the intentionally mirrored inline and sticky validation message; synchronize lifecycle documentation.
+- **Delivery commit SHA:** `f52c0447db67007fba7cce8d0c790164e8447fe9` (second test-only replacement; supersedes both prior deliveries)
+- **Subject:** `T-015: correct singular browser text queries`
+- **Committed scope:** Preserve the original Today/workout-start implementation while correcting only the two prepared browser queries — the proposed-split assertion now targets the S01 heading role and the one-time name validation assertion accepts the intentionally mirrored inline/sticky message; synchronize lifecycle documentation.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending for second replacement
-- **Outcome:** First-replacement approval invalidated; second replacement pending
-- **Findings:** Prepared browser scenario used singular text queries for the proposed split name and the mirrored one-time name validation message, both intentionally rendered in two places.
+- **Reviewed at:** Pending
+- **Outcome:** Pending
+- **Findings:** Pending
 
 ## Approval
 
@@ -142,3 +142,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:28:43+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
 | `2026-09-04T14:48:30+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Continuing on the User's direction to finish `F-007`: component tests passed 3/3, then the serialized Chromium scenario failed on a test-only singular query for the split name mirrored in the S01 heading and rotation message; browser verification stopped and the first-replacement approval is invalidated |
 | `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the two prepared browser queries to target the S01 heading role and accept the mirrored inline/sticky validation message; all static checks passed without rerunning feature tests |
+| `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |

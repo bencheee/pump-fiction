@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T14:50:30+02:00`
+- **Updated:** `2026-09-04T14:52:30+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -157,3 +157,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T14:28:43+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved the T-015 replacement and restarted verification | Running the complete component and serialized Chromium/WebKit plan from the beginning against the exact replacement |
 | `2026-09-04T14:48:30+02:00` | Claude Code primary agent / Tester | Returned T-015 to In Progress again | Component 3/3 passed before serialized Chromium verification exposed two test-only singular queries; browser tests stopped and a second test-only replacement requires fresh approval |
 | `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | Corrected the T-015 test-only browser queries pending second replacement delivery | Static checks passed and feature tests remain stopped until fresh approval |
+| `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | Delivered the T-015 second test-only replacement for review | Exact replacement awaits fresh User approval before complete verification restarts |
