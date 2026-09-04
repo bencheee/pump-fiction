@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the T-015 test-only singular validation assertion, create a statically verified replacement delivery, and request fresh approval before restarting the complete test plan.
+Create the statically verified T-015 test-only replacement delivery and request fresh approval before restarting the complete test plan.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 is back `In Progress` for a test-only replacement after original approval was invalidated, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 is `In Progress` with its test-only correction statically verified pending replacement delivery, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.

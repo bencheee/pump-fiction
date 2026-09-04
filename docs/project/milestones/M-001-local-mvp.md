@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T14:15:48+02:00`
+- **Updated:** `2026-09-04T14:17:28+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -152,3 +152,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T12:59:57+02:00` | Codex primary agent / Executor | Delivered T-015 for review | Exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` awaits User review before approved verification |
 | `2026-09-04T14:13:57+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-015 and began verification | Running the recorded component and serialized Chromium/WebKit tests against the exact approved delivery |
 | `2026-09-04T14:15:48+02:00` | Codex primary agent / Tester | Returned T-015 to In Progress | A prepared component assertion failed after 2/3 scenarios; browser verification stopped and a test-only replacement requires fresh approval |
+| `2026-09-04T14:17:28+02:00` | Codex primary agent / Executor | Corrected the T-015 test-only assertion pending replacement delivery | Static checks passed and feature tests remain stopped until fresh approval |

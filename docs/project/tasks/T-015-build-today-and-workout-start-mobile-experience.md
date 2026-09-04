@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:15:48+02:00`
+- **Updated:** `2026-09-04T14:17:28+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T12:59:57+02:00`
 - **Approval requested:** `2026-09-04T14:13:57+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-04T14:13:57+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the test-only duplicate-validation assertion, run static checks without feature tests, create a replacement delivery, and request fresh approval.
+- **Next action:** Create the test-only replacement delivery, record its exact SHA, and request fresh User approval before restarting the complete test plan.
 
 ## Scope
 
@@ -65,7 +65,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency/accessibility rules, strict TypeScript, production build, design assets/references, documentation links, and `git diff --check`
-- Results: Passed on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes including dynamic `/today` and `/today/one-time`; all 8 font and 38 icon checksums plus license files passed; Markdown lint passed across 87 files; all 648 internal links passed; and `git diff --check` passed. No feature test or manual application test ran.
+- Results: Passed for both the original delivery and pending test-only replacement on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes including dynamic `/today` and `/today/one-time`; all 8 font and 38 icon checksums plus license files passed; Markdown lint passed across 87 files; all 648 internal links passed; and `git diff --check` passed. No feature test ran after the assertion correction.
 
 ## Test plan and results
 
@@ -135,3 +135,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:13:57+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` |
 | `2026-09-04T14:13:57+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and serialized Chromium/WebKit verification against the exact approved delivery |
 | `2026-09-04T14:15:48+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/3 before a test-only singular-query defect failed on the intentionally mirrored validation copy; stopped before browser tests and invalidated approval |
+| `2026-09-04T14:17:28+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected only the prepared assertion to accept the intentionally mirrored inline/sticky message; all static checks passed without rerunning feature tests |

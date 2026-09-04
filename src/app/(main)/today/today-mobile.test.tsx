@@ -153,7 +153,9 @@ describe("Today and workout-start mobile experience", () => {
     render(<OneTimeWorkoutForm exercises={exercises} />);
 
     await user.click(screen.getByRole("button", { name: "Start Workout" }));
-    expect(screen.getByText("Enter a name for this workout.")).toBeVisible();
+    expect(
+      screen.getAllByText("Enter a name for this workout."),
+    ).not.toHaveLength(0);
     expect(
       screen.getAllByText("Add at least one exercise before starting."),
     ).not.toHaveLength(0);

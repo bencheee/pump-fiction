@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T14:15:48+02:00
+- **Last updated:** 2026-09-04T14:17:28+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is back `In Progress`; original approval is invalidated and a test-only replacement is required.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress`; the test-only correction is statically verified pending replacement delivery.
 
 ## Immediate next action
 
-Correct the T-015 singular validation assertion, statically verify it without feature tests, and deliver a replacement for fresh approval.
+Create and record the T-015 test-only replacement delivery, then request fresh approval before restarting the complete test plan.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T14:15:48+02:00` — test-only replacement required before fresh approval.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T14:17:28+02:00` — corrected assertion and static checks complete; replacement delivery next.
 
 ## Next
 
