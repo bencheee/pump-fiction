@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca`; regression tests and T-015 remain gated until approval and successful verification.
+Complete focused regression verification of exact approved T-017 correction `8d5779258505bb94383368e13eff97a4346320ca`; T-015 remains gated until successful verification.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed its complete verification. `F-007` is `1/4 Tasks Done`; exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` is `In Review`, `T-015` waits on its approval/verification with Owner continuation already recorded, and `T-016` remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed its complete verification. `F-007` is `1/4 Tasks Done`; exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` is approved and `Testing`, `T-015` waits on successful verification with Owner continuation already recorded, and `T-016` remains in `Backlog`. Deployment configuration does not exist yet.

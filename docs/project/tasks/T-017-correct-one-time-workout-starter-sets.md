@@ -1,7 +1,7 @@
 # T-017 — Correct one-time workout starter sets
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-04T09:00:13+02:00`
-- **Updated:** `2026-09-04T09:06:26+02:00`
+- **Updated:** `2026-09-04T12:38:07+02:00`
 - **Started:** `2026-09-04T09:00:13+02:00`
 - **Review started:** `2026-09-04T09:06:26+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-04T12:38:07+02:00`
+- **Approved:** `2026-09-04T12:38:07+02:00`
+- **Testing started:** `2026-09-04T12:38:07+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact correction `8d5779258505bb94383368e13eff97a4346320ca`; regression tests remain prohibited until explicit approval.
+- **Next action:** Run the recorded focused regression tests against exact approved correction `8d5779258505bb94383368e13eff97a4346320ca` in an isolated clean-reset worktree.
 
 ## Scope
 
@@ -70,8 +70,8 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, clean-reset the exact delivery and run focused pgTAP plus real repository integration proving one empty starter set per selected one-time exercise and unchanged split prescription counts.
-- **Authorized commit:** None
-- **Results:** Not run; approval required.
+- **Authorized commit:** `8d5779258505bb94383368e13eff97a4346320ca`
+- **Results:** In progress against the exact approved correction.
 
 ## Delivery commit
 
@@ -82,16 +82,16 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T12:38:07+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None
 
 ## Approval
 
-- **Approved commit:** Pending
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** Pending
+- **Approved commit:** `8d5779258505bb94383368e13eff97a4346320ca`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T12:38:07+02:00`
+- **Approval note:** User explicitly said `odobravam`; approval is bound to the exact delivery commit above.
 
 ## Definition of Ready
 
@@ -128,3 +128,6 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began the narrow behavior and documentation correction before T-015 |
 | `2026-09-04T09:05:38+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed the starter-row correction, canonical documentation, migration, and unexecuted regression assertions; all static checks passed |
 | `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact correction `8d5779258505bb94383368e13eff97a4346320ca`; static checks passed and regression tests remain unexecuted |
+| `2026-09-04T12:38:07+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact correction with no findings and recommended approval |
+| `2026-09-04T12:38:07+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact correction `8d5779258505bb94383368e13eff97a4346320ca` |
+| `2026-09-04T12:38:07+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded focused regression tests against the exact approved correction |

@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T09:06:26+02:00`
+- **Updated:** `2026-09-04T12:38:07+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -145,3 +145,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T08:58:15+02:00` | Codex primary agent / Tester | Completed `T-014` within `F-007` | Exact approved operations delivery passed its complete verification; User directed continuation with `T-015` |
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | Started required F-007 correction `T-017` | Preserve accepted one-time starter-set behavior before the dependent mobile experience |
 | `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | Delivered required T-017 correction for review | Exact correction awaits User review before regression testing and T-015 |
+| `2026-09-04T12:38:07+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-017 and began verification | Running the focused regression tests against the exact approved correction before T-015 |

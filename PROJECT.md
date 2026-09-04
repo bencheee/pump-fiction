@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T09:06:26+02:00
+- **Last updated:** 2026-09-04T12:38:07+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`1/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) is `In Review` at exact correction `8d5779258505bb94383368e13eff97a4346320ca`.
+[`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) is `Testing` at exact approved correction `8d5779258505bb94383368e13eff97a4346320ca`.
 
 ## Immediate next action
 
-User reviews exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca`; do not run regression tests before approval.
+Complete the recorded focused regression tests against exact approved T-017 correction `8d5779258505bb94383368e13eff97a4346320ca`.
 
 ## Now
 
-- [`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) — `In Review` — Executor: Codex primary agent — updated `2026-09-04T09:06:26+02:00` — User review of exact correction required.
+- [`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) — `Testing` — Executor: Codex primary agent — updated `2026-09-04T12:38:07+02:00` — Exact correction approved; focused verification in progress.
 
 ## Next
 
