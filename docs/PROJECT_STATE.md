@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Create the statically verified T-015 test-only replacement delivery and request fresh approval before restarting the complete test plan.
+User reviews exact T-015 test-only replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`; the complete test plan remains gated until fresh approval.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 is `In Progress` with its test-only correction statically verified pending replacement delivery, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; exact T-015 test-only replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` is `In Review`, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.

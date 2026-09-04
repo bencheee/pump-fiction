@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T14:17:28+02:00
+- **Last updated:** 2026-09-04T14:18:18+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress`; the test-only correction is statically verified pending replacement delivery.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Review` at exact test-only replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`.
 
 ## Immediate next action
 
-Create and record the T-015 test-only replacement delivery, then request fresh approval before restarting the complete test plan.
+User reviews exact T-015 replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`; do not restart feature tests before fresh approval.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T14:17:28+02:00` — corrected assertion and static checks complete; replacement delivery next.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Review` — Executor: Codex primary agent — updated `2026-09-04T14:18:18+02:00` — fresh User approval of the test-only replacement required.
 
 ## Next
 
