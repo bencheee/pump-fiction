@@ -61,7 +61,7 @@ Discard deletes the canonical workout and its owned occurrences/sets while retai
 
 `get_today_view()` derives the configured local date, active program proposal, alternate active splits, eligible completed-workout duration averages, and the optional current-workout summary. `start_workout(...)` takes a transaction-scoped singleton lock, revalidates the active program/split or active one-time exercises, derives `workout_date` in the configured IANA time zone, and creates the workout-owned snapshot atomically.
 
-Split starts copy program/split identity and names, ordered exercise identity/definition/note/modes, prescription, and exactly the planned number of empty set rows. One-time starts copy the ordered active exercise definitions without inventing a split prescription; their set rows are added workout-locally. Starting never advances rotation.
+Split starts copy program/split identity and names, ordered exercise identity/definition/note/modes, prescription, and exactly the planned number of empty set rows. One-time starts copy the ordered active exercise definitions and create one empty workout-local starter set per selected exercise without inventing a split prescription. Starting never advances rotation.
 
 `get_current_workout()` returns the authoritative resumable aggregate, including revision, timer persistence, ordered exercises/sets, snapshots, workout notes, and the latest eligible completed performance for each persistent exercise identity. Incomplete workouts are excluded from Last time.
 

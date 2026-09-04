@@ -8,7 +8,7 @@ import { SupabaseProgramRepository } from "./supabase-program-repository";
 import { SupabaseWorkoutRepository } from "./supabase-workout-repository";
 
 describe("SupabaseWorkoutRepository", () => {
-  it("starts, restores, edits, pauses, resumes, and completes a proposed snapshot", async () => {
+  it("persists proposed and one-time starter rows and the workout lifecycle", async () => {
     const client = createClient<Database>(
       requireEnvironment("SUPABASE_URL"),
       requireEnvironment("SUPABASE_SERVICE_ROLE_KEY"),
@@ -27,7 +27,7 @@ describe("SupabaseWorkoutRepository", () => {
     const suffix = randomUUID();
     let programId: string | null = null;
     let exerciseId: string | null = null;
-    let workoutId: string | null = null;
+    const workoutIds: string[] = [];
 
     try {
       const exercise = await exercises.create({
@@ -60,7 +60,7 @@ describe("SupabaseWorkoutRepository", () => {
         splitId: push.id,
         startedAt: startedAt.toISOString(),
       });
-      workoutId = current.id;
+      workoutIds.push(current.id);
       expect(current.exercises).toHaveLength(1);
       expect(current.exercises[0]?.sets).toHaveLength(3);
       expect((await workouts.getToday()).currentWorkout?.id).toBe(current.id);
@@ -145,13 +145,47 @@ describe("SupabaseWorkoutRepository", () => {
       expect((await programs.getProgram(program.id))?.nextSplitId).toBe(
         next.id,
       );
+
+      const oneTime = await workouts.start({
+        sourceKind: "one_time",
+        name: "Hotel",
+        exerciseIds: [exercise.id],
+        startedAt: new Date(startedAt.getTime() + 240_000).toISOString(),
+      });
+      workoutIds.push(oneTime.id);
+      expect(oneTime.exercises[0]?.plannedSets).toBeNull();
+      expect(oneTime.exercises[0]?.sets).toEqual([
+        expect.objectContaining({
+          position: 1,
+          loadMode: null,
+          reps: null,
+          isConfirmed: false,
+        }),
+      ]);
+      expect(
+        (
+          await commands.apply({
+            commandId: randomUUID(),
+            workoutId: oneTime.id,
+            expectedRevision: 0,
+            operation: "finish_workout",
+            payload: {
+              outcome: "discarded",
+              finishedAt: new Date(startedAt.getTime() + 300_000).toISOString(),
+            },
+            clientCreatedAt: new Date(
+              startedAt.getTime() + 300_000,
+            ).toISOString(),
+          })
+        ).kind,
+      ).toBe("applied");
     } finally {
-      if (workoutId) {
+      if (workoutIds.length > 0) {
         await client
           .from("active_workout_commands")
           .delete()
-          .eq("workout_id", workoutId);
-        await client.from("workouts").delete().eq("id", workoutId);
+          .in("workout_id", workoutIds);
+        await client.from("workouts").delete().in("id", workoutIds);
       }
       if (programId) {
         await client

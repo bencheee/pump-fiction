@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Start `T-015` Today and workout-start mobile experience under the User's explicit continuation direction.
+Create the exact T-017 correction delivery for User review; regression tests remain prohibited until approval.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed unit 8/8, clean reset, pgTAP 16/16, repository integration 2/2, and generated-type comparison, advancing `F-007` to `1/3 Tasks Done`. The User directed continuation with `T-015`; `T-016` remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed its complete verification. `F-007` is `1/4 Tasks Done`; T-017 correction implementation and static verification are complete pending delivery, `T-015` waits on it with Owner continuation already recorded, and `T-016` remains in `Backlog`. Deployment configuration does not exist yet.

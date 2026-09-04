@@ -66,6 +66,8 @@ Starting a workout copies the then-current display and prescription values into 
 
 Program and split fields are absent where they do not apply to a one-time workout. Exercises added during an active workout receive the same exercise-definition snapshot at the time they are added; workout-local ordering and prescriptions are then authoritative for that workout.
 
+Each exercise selected when starting a one-time workout receives one empty workout-local starter set row without prescription semantics. Split-sourced workouts instead receive exactly the snapshotted planned set count.
+
 Snapshots make old workouts faithful to what was performed even if a source definition is later renamed, edited, reordered, or archived. Retained references allow identity-based statistics across those changes. This separation is accepted in [ADR-0002](../decisions/0002-template-snapshot-history-model.md).
 
 ## Progress

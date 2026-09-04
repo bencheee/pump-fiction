@@ -200,6 +200,8 @@ begin
       values (created_workout_id, item.id, item.position, item.name, item.base_type, item.persistent_note) returning id into created_occurrence_id;
       insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
       select created_occurrence_id, item.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = item.id;
+      insert into public.workout_sets(workout_exercise_id, position)
+      values (created_occurrence_id, 1);
     end loop;
   else
     raise exception using errcode = 'PF206', message = 'Workout source kind is invalid';

@@ -3,13 +3,13 @@
 - **Feature:** `F-007`
 - **Status:** `Backlog`
 - **Horizon:** `Now`
-- **Order:** 3
+- **Order:** 4
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-03T12:03:59+02:00`
+- **Updated:** `2026-09-04T09:00:13+02:00`
 - **Started:** Not reached
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-014` and `T-015` completion and explicit Owner direction.
+- **Next action:** Wait for `T-017` and `T-015` completion and explicit Owner direction.
 
 ## Scope
 
@@ -46,8 +46,8 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Dependencies and blockers
 
-- Dependencies: `T-014` and `T-015` Done
-- Blockers: `T-014` is in progress; `T-015` is planned
+- Dependencies: `T-014`, `T-017`, and `T-015` Done
+- Blockers: `T-017` is in progress; `T-015` is planned
 - Blocked from status: Not blocked; dependencies are planned
 
 ## Documentation impact
@@ -126,3 +126,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Created as the dependent active-workout mobile delivery within `F-007` |
+| `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | Added dependency on required one-time starter-set correction T-017 and shifted order after that inserted Task |

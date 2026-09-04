@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T08:58:15+02:00`
+- **Updated:** `2026-09-04T09:05:38+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -35,7 +35,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
-- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `1/3 Tasks Done`)
+- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `1/4 Tasks Done`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 1`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 2`)
 - [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
@@ -143,3 +143,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-03T12:24:31+02:00` | Codex primary agent / Executor | Delivered `T-014` for review | Exact operations delivery awaits User review before any feature testing |
 | `2026-09-03T12:31:15+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-014 delivery and began verification | Running the recorded plan against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` |
 | `2026-09-04T08:58:15+02:00` | Codex primary agent / Tester | Completed `T-014` within `F-007` | Exact approved operations delivery passed its complete verification; User directed continuation with `T-015` |
+| `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | Started required F-007 correction `T-017` | Preserve accepted one-time starter-set behavior before the dependent mobile experience |

@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(16);
+select plan(18);
 
 insert into public.exercises (id, name, base_type, persistent_note)
 values ('14000000-0000-4000-8000-000000000001', 'T-014 Press', 'weights', 'Brace hard');
@@ -51,6 +51,8 @@ select lives_ok(
   'a named one-time workout starts with active exercises'
 );
 select is((select source_kind::text from public.workouts where status = 'active'), 'one_time', 'one-time source is retained');
+select is((select count(*)::integer from public.workout_sets), 4, 'the one-time exercise adds exactly one starter set alongside retained History sets');
+select ok((select load_mode is null and reps is null and not is_confirmed from public.workout_sets order by created_at desc limit 1), 'the one-time starter set is empty and unconfirmed');
 select is((select kind from public.apply_active_workout_command(
   '14000000-0000-4000-8000-000000000012',
   (select id from public.workouts where status = 'active'), 0, 'finish_workout',

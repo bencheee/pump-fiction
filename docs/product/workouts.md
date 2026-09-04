@@ -12,6 +12,8 @@ Only one workout may be active at a time. Reopening the application must restore
 
 Starting from a split generates exactly its planned number of set rows. A three-set prescription creates Set 1, Set 2, and Set 3.
 
+A one-time workout has no split prescription. Each exercise selected in its builder starts with exactly one empty workout-local starter set row so entry can begin immediately. That row is not a prescribed set and does not count as an empty planned set.
+
 The user may add another set or remove any set. Planned count is the initial state, not a limit. These changes apply only to this workout.
 
 If a removed set or exercise already contains data, the UI requires confirmation.

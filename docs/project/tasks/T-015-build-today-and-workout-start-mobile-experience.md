@@ -3,13 +3,13 @@
 - **Feature:** `F-007`
 - **Status:** `Backlog`
 - **Horizon:** `Now`
-- **Order:** 2
+- **Order:** 3
 - **Target date:** None
 - **Executor:** Codex primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-03T12:03:59+02:00`
+- **Updated:** `2026-09-04T09:00:13+02:00`
 - **Started:** Not reached
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-014` completion and explicit Owner direction.
+- **Next action:** Wait for required OD-001 correction `T-017`; Owner direction to continue is already recorded.
 
 ## Scope
 
@@ -46,8 +46,8 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Dependencies and blockers
 
-- Dependencies: `T-014` Done
-- Blockers: `T-014` is in progress
+- Dependencies: `T-014` Done; `T-017` Done
+- Blockers: `T-017` is in progress
 - Blocked from status: Not blocked; dependency is planned
 
 ## Documentation impact
@@ -126,3 +126,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Created as the dependent Today and workout-start mobile delivery within `F-007` |
+| `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | Added required dependency on T-017 after detecting that accepted OD-001 starter-set behavior was omitted from T-014 |

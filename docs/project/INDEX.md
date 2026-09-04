@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-011` |
-| Task | `T-017` |
+| Task | `T-018` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -28,7 +28,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-004`](features/F-004-application-and-data-foundation.md) | `M-001` | Application and Data Foundation | `Now / 1` | `5/5 Done` | User | `2026-09-02T08:55:13+02:00` | [`features/F-004-application-and-data-foundation.md`](features/F-004-application-and-data-foundation.md) |
 | [`F-005`](features/F-005-exercise-library.md) | `M-001` | Exercise Library | `Now / 1` | `2/2 Done` | User | `2026-09-02T14:25:18+02:00` | [`features/F-005-exercise-library.md`](features/F-005-exercise-library.md) |
 | [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Now / 1` | `2/2 Done` | User | `2026-09-03T12:00:56+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
-| [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Now / 1` | `1/3 Done` | User | `2026-09-04T08:58:15+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
+| [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Now / 1` | `1/4 Done` | User | `2026-09-04T09:05:38+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 1` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 2` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
@@ -51,8 +51,9 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-012`](tasks/T-012-build-program-and-split-operations.md) | `F-006` | Build program and split operations | `Now / 1` | `Done` | Codex primary agent | `2026-09-03T10:27:22+02:00` | [`tasks/T-012-build-program-and-split-operations.md`](tasks/T-012-build-program-and-split-operations.md) |
 | [`T-013`](tasks/T-013-build-programs-mobile-experience.md) | `F-006` | Build Programs mobile experience | `Now / 2` | `Done` | Codex primary agent | `2026-09-03T11:35:06+02:00` | [`tasks/T-013-build-programs-mobile-experience.md`](tasks/T-013-build-programs-mobile-experience.md) |
 | [`T-014`](tasks/T-014-build-today-and-workout-operations.md) | `F-007` | Build Today and active-workout operations | `Now / 1` | `Done` | Codex primary agent | `2026-09-04T08:58:15+02:00` | [`tasks/T-014-build-today-and-workout-operations.md`](tasks/T-014-build-today-and-workout-operations.md) |
-| [`T-015`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) | `F-007` | Build Today and workout-start mobile experience | `Now / 2` | `Backlog` | Codex primary agent | `2026-09-03T12:03:59+02:00` | [`tasks/T-015-build-today-and-workout-start-mobile-experience.md`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) |
-| [`T-016`](tasks/T-016-build-active-workout-mobile-experience.md) | `F-007` | Build active-workout mobile experience | `Now / 3` | `Backlog` | Codex primary agent | `2026-09-03T12:03:59+02:00` | [`tasks/T-016-build-active-workout-mobile-experience.md`](tasks/T-016-build-active-workout-mobile-experience.md) |
+| [`T-015`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) | `F-007` | Build Today and workout-start mobile experience | `Now / 3` | `Backlog` | Codex primary agent | `2026-09-04T09:00:13+02:00` | [`tasks/T-015-build-today-and-workout-start-mobile-experience.md`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) |
+| [`T-016`](tasks/T-016-build-active-workout-mobile-experience.md) | `F-007` | Build active-workout mobile experience | `Now / 4` | `Backlog` | Codex primary agent | `2026-09-03T12:03:59+02:00` | [`tasks/T-016-build-active-workout-mobile-experience.md`](tasks/T-016-build-active-workout-mobile-experience.md) |
+| [`T-017`](tasks/T-017-correct-one-time-workout-starter-sets.md) | `F-007` | Correct one-time workout starter sets | `Now / 2` | `In Progress` | Codex primary agent | `2026-09-04T09:05:38+02:00` | [`tasks/T-017-correct-one-time-workout-starter-sets.md`](tasks/T-017-correct-one-time-workout-starter-sets.md) |
 
 ## Templates
 

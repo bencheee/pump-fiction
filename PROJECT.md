@@ -1,27 +1,27 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T08:58:15+02:00
+- **Last updated:** 2026-09-04T09:05:38+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`1/3 Tasks Done`)
+- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`1/4 Tasks Done`)
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-No active Task. [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) is complete; the User directed continuation with `T-015`.
+[`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) is `In Progress`: implementation and static verification are complete pending delivery.
 
 ## Immediate next action
 
-Start [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) under the User's explicit continuation direction.
+Complete and deliver `T-017` for User review without running its prepared regression tests.
 
 ## Now
 
-No active Task.
+- [`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T09:05:38+02:00` — create the exact correction delivery for User review.
 
 ## Next
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `Backlog` — waits for `T-014` and Owner direction.
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Backlog` — waits for `T-014`, `T-015`, and Owner direction.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `Backlog` — waits for `T-017`; Owner continuation direction is recorded.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Backlog` — waits for `T-017`, `T-015`, and Owner direction.
 - [`F-008`](docs/project/features/F-008-history-and-statistics.md) remains the next Feature after `F-007`.
 
 ## Later
