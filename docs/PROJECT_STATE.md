@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the recorded T-014 verification against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
+Start `T-015` Today and workout-start mobile experience under the User's explicit continuation direction.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-013 replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` passed component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 with two structural captures, and the User confirmed the aggregate F-006 result. `F-007` is `0/3 Tasks Done`; exact approved T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` is `Testing`, with `T-015` and `T-016` in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed unit 8/8, clean reset, pgTAP 16/16, repository integration 2/2, and generated-type comparison, advancing `F-007` to `1/3 Tasks Done`. The User directed continuation with `T-015`; `T-016` remains in `Backlog`. Deployment configuration does not exist yet.

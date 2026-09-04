@@ -1,7 +1,7 @@
 # T-014 — Build Today and active-workout operations
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-03T12:31:15+02:00`
+- **Updated:** `2026-09-04T08:58:15+02:00`
 - **Started:** `2026-09-03T12:03:59+02:00`
 - **Review started:** `2026-09-03T12:24:31+02:00`
 - **Approval requested:** `2026-09-03T12:31:15+02:00`
 - **Approved:** `2026-09-03T12:31:15+02:00`
 - **Testing started:** `2026-09-03T12:31:15+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-04T08:58:15+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded T-014 verification against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`.
+- **Next action:** None; `T-014` is complete and the User directed continuation with `T-015`.
 
 ## Scope
 
@@ -76,7 +76,7 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit, run scoped Today/workout application unit tests; reset local Supabase and run workout snapshot/constraint/transaction pgTAP coverage plus real repository integration for all three start sources, singleton restoration, latest eligible performance, every command family, duplicate delivery, stale revision, removal safeguards, timer transitions, all terminal outcomes, and exact-once rotation.
 - **Authorized commit:** `4f924d51af2e55681f2e5a517a8963bc58048d81`
-- **Results:** Not run; feature testing is prohibited before exact-commit approval.
+- **Results:** Against exact approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` on 2026-09-04 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: fresh `npm ci` installed 653 packages with no vulnerabilities; a clean database reset applied all migrations; scoped active-workout application tests passed 8/8; T-014 pgTAP passed 16/16; active-workout command and workout repository integrations passed 2/2; regenerated public types matched the committed file. Vitest emitted its existing future config-loader warning and npm reported non-blocking install-script approval notices. An earlier interrupted install used Node.js 22 and was discarded before any test ran.
 
 ## Delivery commit
 
@@ -114,15 +114,15 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -136,3 +136,5 @@ Implement domain validation, queries, atomic workout start/snapshot creation, cu
 | `2026-09-03T12:31:15+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` with no findings and recommended approval |
 | `2026-09-03T12:31:15+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact delivery and authorized only the recorded T-014 tests |
 | `2026-09-03T12:31:15+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the recorded verification in an isolated worktree at the exact approved delivery |
+| `2026-09-04T08:58:15+02:00` | User / Requester and Codex primary agent / Tester | `Testing` | `Testing` | User directed resume/retry; restarted the complete approved plan from the beginning with the required Node.js 24 toolchain |
+| `2026-09-04T08:58:15+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Clean reset succeeded; unit 8/8, pgTAP 16/16, repository integration 2/2, and generated-type comparison passed against the exact approved delivery |

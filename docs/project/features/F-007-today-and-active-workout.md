@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-03T12:31:15+02:00`
-- **Progress:** `0/3 required Tasks Done`
+- **Updated:** `2026-09-04T08:58:15+02:00`
+- **Progress:** `1/3 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -26,7 +26,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 ## Tasks
 
-- [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Testing`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
+- [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Backlog`; depends on `T-014`)
 - [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; depends on `T-014` and `T-015`)
 
@@ -66,3 +66,4 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-03T12:22:54+02:00` | Codex primary agent / Executor | Completed `T-014` implementation scope pending delivery | Today/workout operations, atomic snapshot lifecycle, prepared tests, and canonical guidance are statically verified |
 | `2026-09-03T12:24:31+02:00` | Codex primary agent / Executor | Delivered `T-014` for review | Exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` is ready for User review; feature tests remain unexecuted |
 | `2026-09-03T12:31:15+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved `T-014` and began verification | Running only the recorded scoped tests against exact delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` |
+| `2026-09-04T08:58:15+02:00` | Codex primary agent / Tester | Completed `T-014` within `F-007` | Exact approved delivery passed unit 8/8, clean reset, pgTAP 16/16, repository integration 2/2, and generated-type comparison; User directed continuation with `T-015` |
