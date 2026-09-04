@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:18:18+02:00`
+- **Updated:** `2026-09-04T14:28:43+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T14:18:18+02:00` for replacement
-- **Approval requested:** `2026-09-04T14:13:57+02:00`
-- **Approved:** `2026-09-04T14:13:57+02:00`
-- **Testing started:** `2026-09-04T14:13:57+02:00`
+- **Approval requested:** `2026-09-04T14:28:43+02:00` for replacement
+- **Approved:** `2026-09-04T14:28:43+02:00` for replacement
+- **Testing started:** `2026-09-04T14:28:43+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact test-only replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`; do not restart any feature test before fresh explicit approval.
+- **Next action:** Restart the complete recorded component and serialized Chromium/WebKit verification against exact approved replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` in a fresh isolated clean-reset worktree.
 
 ## Scope
 
@@ -72,7 +72,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
-- **Authorized commit:** None; approval of `c3c9f33795757d455029746ccefe1fec52f071f6` was invalidated by the failed prepared assertion.
+- **Authorized commit:** `466341380d0f479e2ce04a08c3a34690ff5a5052`
 - **Results:** Against the formerly approved original delivery `c3c9f33795757d455029746ccefe1fec52f071f6`, a fresh isolated `npm ci` installed and audited 653 packages with no vulnerabilities. The component run passed 2/3 scenarios, then the one-time scenario failed before its interaction steps because the test used a singular text query for a validation message intentionally rendered both inline and in the sticky status cue. Browser verification did not run. These partial results are discarded for completion; the corrected replacement requires fresh approval and a complete restart.
 
 ## Delivery commit
@@ -84,16 +84,16 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T14:28:43+02:00` for replacement
+- **Outcome:** Replacement recommended for approval
+- **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Pending replacement
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** Original approval was invalidated when its prepared component suite failed; no corrected test may run before a replacement is explicitly approved.
+- **Approved commit:** `466341380d0f479e2ce04a08c3a34690ff5a5052`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T14:28:43+02:00`
+- **Approval note:** User explicitly said `odobravam`; fresh approval is bound to the exact test-only replacement and authorizes the complete recorded plan from the beginning.
 
 ## Definition of Ready
 
@@ -137,3 +137,6 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:15:48+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/3 before a test-only singular-query defect failed on the intentionally mirrored validation copy; stopped before browser tests and invalidated approval |
 | `2026-09-04T14:17:28+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Corrected only the prepared assertion to accept the intentionally mirrored inline/sticky message; all static checks passed without rerunning feature tests |
 | `2026-09-04T14:18:18+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created test-only replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |
+| `2026-09-04T14:28:43+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` with no additional findings and recommended approval |
+| `2026-09-04T14:28:43+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-04T14:28:43+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
