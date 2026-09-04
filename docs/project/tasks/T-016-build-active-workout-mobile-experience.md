@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T15:58:06+02:00`
+- **Updated:** `2026-09-04T16:07:01+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-04T15:33:30+02:00`
 - **Approval requested:** `2026-09-04T15:58:06+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-04T15:58:06+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded unit/component and serialized Chromium/WebKit verification against exact approved delivery `63126a1635421cf042186446216e7921025e6105` in a fresh isolated clean-reset worktree.
+- **Next action:** Correct the workout position renumbering inherited from the approved T-014 persistence function, add its pgTAP regression, run static checks without feature tests, create a replacement delivery, and request fresh approval.
 
 ## Scope
 
@@ -72,28 +72,28 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes) and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
-- **Authorized commit:** `63126a1635421cf042186446216e7921025e6105`
-- **Results:** In progress against the exact approved delivery.
+- **Authorized commit:** None; approval of `63126a1635421cf042186446216e7921025e6105` was invalidated by the failed browser verification.
+- **Results:** Against the formerly approved delivery `63126a1635421cf042186446216e7921025e6105` in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`, `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` completed cleanly, the reducer/set-entry unit suite passed 9/9, and the S10/S12 component suite passed 11/11. The serialized mobile-Chromium scenario then stopped when the first `remove_set` command was rejected: the approved T-014 persistence function renumbers positions through a temporary `position = -position` update, which violates the `workout_sets_position_check`/`workout_exercises_position_check` constraints whenever sibling rows remain; the defect was reproduced directly against `public.apply_active_workout_command` and equally affects `remove_exercise` and `reorder_exercises`. T-014 verification never exposed it because those tests removed rows without remaining siblings and never reordered workout exercises. WebKit did not run; partial results are discarded and the corrected replacement requires fresh approval and a complete restart.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `63126a1635421cf042186446216e7921025e6105`
+- **Delivery commit SHA:** `63126a1635421cf042186446216e7921025e6105` (original; replacement with the persistence correction required)
 - **Subject:** `T-016: build active workout experience`
 - **Committed scope:** Phone-only S10 active/paused/restored workout with live active-duration timer, per-mode set rows, submit-time confirmation validation mirrored in the single sticky cue, mode chooser with least-destructive carryover, populated-removal confirmation, explicit reordering, auto-saved workout notes; S11 multi-select add-exercise sheet; S12 finish review with source-aware metrics, empty-planned-set detail, and complete/incomplete/continue/confirmed-discard outcomes; a pure local command reducer with synthetic structural placeholders and conflict rebase-and-replay recovery; canonical UI/durability guidance; and prepared, unexecuted unit, component, and serialized Chromium/WebKit coverage.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-04T15:58:06+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None
+- **Reviewed at:** Pending for replacement
+- **Outcome:** Original approval invalidated; replacement pending
+- **Findings:** The approved T-014 renumbering technique violates the positive-position check constraints during workout-local removals and reordering; T-016 verification exposed it end to end.
 
 ## Approval
 
-- **Approved commit:** `63126a1635421cf042186446216e7921025e6105`
-- **Approved by:** User
-- **Approved at:** `2026-09-04T15:58:06+02:00`
-- **Approval note:** User explicitly said `potvrđujem 63126a1635421cf042186446216e7921025e6105`; approval is bound to the exact delivery commit above and authorizes only the recorded T-016 tests.
+- **Approved commit:** Pending replacement
+- **Approved by:** Pending
+- **Approved at:** Pending
+- **Approval note:** The original approval (`potvrđujem 63126a1635421cf042186446216e7921025e6105`) was invalidated when its authorized verification failed on the inherited persistence defect; no test may run before the replacement is explicitly approved.
 
 ## Definition of Ready
 
@@ -134,3 +134,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T15:58:06+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings and recommended approval |
 | `2026-09-04T15:58:06+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `63126a1635421cf042186446216e7921025e6105` |
 | `2026-09-04T15:58:06+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit/component and serialized Chromium/WebKit verification against the exact approved delivery |
+| `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9 and component 11/11 passed before serialized Chromium stopped on a rejected `remove_set`: the approved T-014 renumbering violates the positive-position checks when siblings remain; browser tests stopped and the approval is invalidated |

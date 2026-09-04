@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the recorded unit/component and serialized Chromium/WebKit verification against exact approved T-016 delivery `63126a1635421cf042186446216e7921025e6105`.
+Correct the workout position renumbering inherited from the approved T-014 persistence function, add its pgTAP regression, deliver the T-016 replacement, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `3/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` passed its complete verification, and exact T-016 delivery `63126a1635421cf042186446216e7921025e6105` is approved and `Testing`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `3/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` passed its complete verification, and T-016 returned to `In Progress` after unit 9/9 and component 11/11 passed but browser verification exposed a latent T-014 position-renumbering defect on workout-local removals/reordering, invalidating the approval. Deployment configuration does not exist yet.
