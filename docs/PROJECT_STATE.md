@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the full component and serialized Chromium/WebKit plan from the beginning against exact approved T-015 replacement `466341380d0f479e2ce04a08c3a34690ff5a5052`.
+Correct the two singular browser-spec text queries, run static checks, deliver the second T-015 test-only replacement, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; exact T-015 replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` is approved and `Testing`, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 returned to `In Progress` after component 3/3 passed and serialized Chromium verification exposed two test-only singular queries, invalidating the first-replacement approval, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.
