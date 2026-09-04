@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T15:31:24+02:00`
+- **Updated:** `2026-09-04T15:33:30+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-04T15:33:30+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the exact delivery commit, record its SHA, and request User review; feature tests remain unexecuted.
+- **Next action:** User reviews exact delivery `63126a1635421cf042186446216e7921025e6105`; do not run any feature test before explicit approval of that SHA.
 
 ## Scope
 
@@ -77,9 +77,9 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Pending
+- **Delivery commit SHA:** `63126a1635421cf042186446216e7921025e6105`
 - **Subject:** `T-016: build active workout experience`
-- **Committed scope:** Pending
+- **Committed scope:** Phone-only S10 active/paused/restored workout with live active-duration timer, per-mode set rows, submit-time confirmation validation mirrored in the single sticky cue, mode chooser with least-destructive carryover, populated-removal confirmation, explicit reordering, auto-saved workout notes; S11 multi-select add-exercise sheet; S12 finish review with source-aware metrics, empty-planned-set detail, and complete/incomplete/continue/confirmed-discard outcomes; a pure local command reducer with synthetic structural placeholders and conflict rebase-and-replay recovery; canonical UI/durability guidance; and prepared, unexecuted unit, component, and serialized Chromium/WebKit coverage.
 
 ## Review
 
@@ -130,3 +130,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T15:02:00+02:00` | User / Owner | `Backlog` | `Ready` | `T-014`, `T-017`, and `T-015` are Done; the User's 2026-09-04 direction to finish `F-007` and continue with `T-016` confirms readiness |
 | `2026-09-04T15:02:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the accepted S10–S12 active-workout phone implementation on the durable command foundation |
 | `2026-09-04T15:31:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed S10–S12, the local command reducer with conflict rebase, canonical UI/durability guidance, and unexecuted unit/component/browser coverage; all static checks passed |
+| `2026-09-04T15:33:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `63126a1635421cf042186446216e7921025e6105`; static checks passed and prepared feature tests remain unexecuted |

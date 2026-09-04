@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T15:31:24+02:00
+- **Last updated:** 2026-09-04T15:33:30+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: the S10–S12 implementation scope is complete and statically verified; the delivery commit is being created.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Review` at exact delivery `63126a1635421cf042186446216e7921025e6105`.
 
 ## Immediate next action
 
-Create the exact `T-016` delivery commit, record its SHA, and request User review; feature tests remain unexecuted.
+User reviews and explicitly approves exact T-016 delivery `63126a1635421cf042186446216e7921025e6105`; only then do the recorded component and serialized Chromium/WebKit tests run.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T15:31:24+02:00` — implementation scope complete; delivery pending.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Review` — Executor: Claude Code primary agent — updated `2026-09-04T15:33:30+02:00` — exact delivery awaits User review and approval.
 
 ## Next
 
