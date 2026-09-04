@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T12:58:39+02:00
+- **Last updated:** 2026-09-04T12:59:57+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress` with implementation and static verification complete pending its delivery commit.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Review` at exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6`.
 
 ## Immediate next action
 
-Create the T-015 delivery commit, record its exact SHA, and request User review before running prepared component or browser tests.
+User reviews exact T-015 delivery `c3c9f33795757d455029746ccefe1fec52f071f6`; prepared component and browser tests remain prohibited until approval.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T12:58:39+02:00` — implementation and static checks complete; delivery commit next.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Review` — Executor: Codex primary agent — updated `2026-09-04T12:59:57+02:00` — User review of exact delivery required.
 
 ## Next
 

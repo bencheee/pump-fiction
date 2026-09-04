@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T12:58:39+02:00`
+- **Updated:** `2026-09-04T12:59:57+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-04T12:59:57+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the single delivery commit, record its exact SHA in an evidence commit, and request User review; do not run prepared feature tests before approval.
+- **Next action:** User reviews exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6`; do not run prepared component or browser tests before explicit approval.
 
 ## Scope
 
@@ -77,9 +77,9 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Pending
+- **Delivery commit SHA:** `c3c9f33795757d455029746ccefe1fec52f071f6`
 - **Subject:** `T-015: build Today workout-start experience`
-- **Committed scope:** Pending
+- **Committed scope:** Phone-only S01 Today proposed/no-program/restored/loading states; S02 history-backed alternate-split sheet with today-only selection/start and distinct persistent Set Next; S03 active-exercise one-time builder with add/remove/up/down ordering and retained validation/failure input; focused-route start entry; canonical UI guidance; and prepared, unexecuted component plus isolated Chromium/WebKit coverage.
 
 ## Review
 
@@ -130,3 +130,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T12:48:59+02:00` | User / Owner | `Backlog` | `Ready` | T-014 and T-017 are complete; prior explicit direction to continue authorizes dependent T-015 |
 | `2026-09-04T12:48:59+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted S01–S03 phone implementation and workout-start wiring |
 | `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S01–S03, operation wiring, canonical guidance, and unexecuted component/browser coverage; all static checks passed |
+| `2026-09-04T12:59:57+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6`; static checks passed and prepared feature tests remain unexecuted |
