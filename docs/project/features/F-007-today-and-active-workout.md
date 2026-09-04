@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-04T14:52:30+02:00`
+- **Updated:** `2026-09-04T14:56:18+02:00`
 - **Progress:** `2/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -28,7 +28,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 - [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-017`](../tasks/T-017-correct-one-time-workout-starter-sets.md) — Correct one-time workout starter sets (`Done`; approved delivery `8d5779258505bb94383368e13eff97a4346320ca`)
-- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`In Review`; second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`)
+- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Testing`; approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`)
 - [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; depends on `T-014`, `T-017`, and `T-015`)
 
 ## Dependencies and blockers
@@ -84,3 +84,4 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T14:48:30+02:00` | Claude Code primary agent / Tester | Returned `T-015` to `In Progress` again | Component tests passed 3/3, then serialized Chromium verification exposed two test-only singular queries on intentionally duplicated Today/one-time copy; browser tests stopped and the first-replacement approval is invalidated |
 | `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | Corrected the T-015 prepared browser queries pending second replacement delivery | Queries now target the S01 heading role and accept the mirrored inline/sticky validation message; all static checks passed without feature tests |
 | `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | Delivered the T-015 second test-only replacement for review | Exact replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` awaits fresh User approval before the complete test plan restarts |
+| `2026-09-04T14:56:18+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved the T-015 second replacement and restarted verification | Running the complete component and serialized Chromium/WebKit plan from the beginning against exact second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` |

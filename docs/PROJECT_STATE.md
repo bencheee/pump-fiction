@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-User reviews and explicitly approves exact T-015 second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; only then does the complete component and serialized Chromium/WebKit plan restart from the beginning.
+Complete the full component and serialized Chromium/WebKit plan from the beginning against exact approved T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; then start `T-016` per the Owner's continuation direction.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 is `In Review` at exact second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` after component 3/3 passed and serialized Chromium verification exposed two test-only singular queries, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` is approved and `Testing`, and T-016 remains in `Backlog` pending T-015 completion under the Owner's continuation direction. Deployment configuration does not exist yet.

@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:52:30+02:00`
+- **Updated:** `2026-09-04T14:56:18+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T14:52:30+02:00` for second replacement
-- **Approval requested:** `2026-09-04T14:28:43+02:00` for replacement
-- **Approved:** `2026-09-04T14:28:43+02:00` for replacement
-- **Testing started:** `2026-09-04T14:28:43+02:00` for replacement
+- **Approval requested:** `2026-09-04T14:56:18+02:00` for second replacement
+- **Approved:** `2026-09-04T14:56:18+02:00` for second replacement
+- **Testing started:** `2026-09-04T14:56:18+02:00` for second replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; do not restart any feature test before fresh explicit approval.
+- **Next action:** Restart the complete recorded component and serialized Chromium/WebKit verification against exact approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` in a fresh isolated clean-reset worktree.
 
 ## Scope
 
@@ -72,7 +72,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
-- **Authorized commit:** None; approval of `466341380d0f479e2ce04a08c3a34690ff5a5052` was invalidated by the failed prepared browser assertion.
+- **Authorized commit:** `f52c0447db67007fba7cce8d0c790164e8447fe9`
 - **Results:** Against the formerly approved first replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`, `npm ci` installed 653 packages, `supabase db reset` completed cleanly, and the scoped component suite passed 3/3. The serialized mobile-Chromium browser scenario then failed at its first Today assertion because the test used a singular text query for the proposed split name intentionally rendered both in the S01 heading and in the rotation-position message; Playwright strict mode resolved two elements while the page snapshot showed the correct proposed state. The same singular-query defect exists at the mirrored inline/sticky one-time name validation assertion. WebKit did not run. These partial results are discarded for completion; the corrected second replacement requires fresh approval and a complete restart. Earlier, against the formerly approved original delivery `c3c9f33795757d455029746ccefe1fec52f071f6`, the component run passed 2/3 scenarios before the equivalent singular-query defect on the mirrored validation message stopped verification.
 
 ## Delivery commit
@@ -84,16 +84,16 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T14:56:18+02:00` for second replacement
+- **Outcome:** Second replacement recommended for approval
+- **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Pending second replacement
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** The first-replacement approval was invalidated when its prepared browser suite failed; no corrected test may run before the second replacement is explicitly approved.
+- **Approved commit:** `f52c0447db67007fba7cce8d0c790164e8447fe9`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T14:56:18+02:00`
+- **Approval note:** User explicitly said `odobravam f52c0447db67007fba7cce8d0c790164e8447fe9`; fresh approval is bound to the exact second test-only replacement and authorizes the complete recorded plan from the beginning.
 
 ## Definition of Ready
 
@@ -143,3 +143,6 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:48:30+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Continuing on the User's direction to finish `F-007`: component tests passed 3/3, then the serialized Chromium scenario failed on a test-only singular query for the split name mirrored in the S01 heading and rotation message; browser verification stopped and the first-replacement approval is invalidated |
 | `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the two prepared browser queries to target the S01 heading role and accept the mirrored inline/sticky validation message; all static checks passed without rerunning feature tests |
 | `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created second test-only replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |
+| `2026-09-04T14:56:18+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` with no additional findings and recommended approval |
+| `2026-09-04T14:56:18+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact second replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-04T14:56:18+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved second replacement |
