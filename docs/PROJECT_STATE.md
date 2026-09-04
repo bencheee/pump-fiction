@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. `F-007` Today and Active Workout is active through `T-014` application/persistence operations.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. `F-007` Today and Active Workout is active with `T-014` application/persistence operations and `T-017` one-time starter-set correction complete.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete focused regression verification of exact approved T-017 correction `8d5779258505bb94383368e13eff97a4346320ca`; T-015 remains gated until successful verification.
+Start T-015 under the Owner's recorded continuation direction and implement the Today/workout-start mobile experience.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` passed its complete verification. `F-007` is `1/4 Tasks Done`; exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` is approved and `Testing`, `T-015` waits on successful verification with Owner continuation already recorded, and `T-016` remains in `Backlog`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; T-015 is unblocked with Owner continuation already recorded, and T-016 remains in `Backlog`. Deployment configuration does not exist yet.

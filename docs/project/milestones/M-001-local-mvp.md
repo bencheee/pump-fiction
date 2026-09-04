@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T12:38:07+02:00`
+- **Updated:** `2026-09-04T12:46:55+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -35,7 +35,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
-- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `1/4 Tasks Done`)
+- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `2/4 Tasks Done`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 1`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 2`)
 - [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
@@ -58,7 +58,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-007` is active through `T-014`
+- Blockers: None; `F-007` is active with `T-014` and `T-017` complete
 
 ## Related decisions and documents
 
@@ -146,3 +146,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | Started required F-007 correction `T-017` | Preserve accepted one-time starter-set behavior before the dependent mobile experience |
 | `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | Delivered required T-017 correction for review | Exact correction awaits User review before regression testing and T-015 |
 | `2026-09-04T12:38:07+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-017 and began verification | Running the focused regression tests against the exact approved correction before T-015 |
+| `2026-09-04T12:46:55+02:00` | Codex primary agent / Tester | Completed T-017 within F-007 | Exact approved correction passed clean reset, pgTAP 18/18, and Workout repository integration 1/1; T-015 is unblocked |

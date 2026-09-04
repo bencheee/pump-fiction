@@ -1,7 +1,7 @@
 # T-017 — Correct one-time workout starter sets
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-04T09:00:13+02:00`
-- **Updated:** `2026-09-04T12:38:07+02:00`
+- **Updated:** `2026-09-04T12:46:55+02:00`
 - **Started:** `2026-09-04T09:00:13+02:00`
 - **Review started:** `2026-09-04T09:06:26+02:00`
 - **Approval requested:** `2026-09-04T12:38:07+02:00`
 - **Approved:** `2026-09-04T12:38:07+02:00`
 - **Testing started:** `2026-09-04T12:38:07+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-04T12:46:55+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the recorded focused regression tests against exact approved correction `8d5779258505bb94383368e13eff97a4346320ca` in an isolated clean-reset worktree.
+- **Next action:** None; Task complete. Continue F-007 with dependent T-015 under the Owner's recorded direction.
 
 ## Scope
 
@@ -71,7 +71,7 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, clean-reset the exact delivery and run focused pgTAP plus real repository integration proving one empty starter set per selected one-time exercise and unchanged split prescription counts.
 - **Authorized commit:** `8d5779258505bb94383368e13eff97a4346320ca`
-- **Results:** In progress against the exact approved correction.
+- **Results:** Passed against exact approved correction `8d5779258505bb94383368e13eff97a4346320ca` on 2026-09-04 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: a fresh isolated `npm ci` installed 653 packages; a clean database reset applied all migrations; focused T-014/T-017 pgTAP passed 18/18; and the real Workout repository integration passed 1/1, covering both proposed-workout prescription rows and the corrected one-time starter row. The first integration invocation lacked the documented Supabase environment aliases and exited before a database operation; the correctly configured repeat passed. Vitest emitted its existing future config-loader warning and npm reported non-blocking install-script approval notices.
 
 ## Delivery commit
 
@@ -109,15 +109,15 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required decisions are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required decisions are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -131,3 +131,4 @@ Correct `start_workout(...)` so each exercise selected for a one-time workout re
 | `2026-09-04T12:38:07+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact correction with no findings and recommended approval |
 | `2026-09-04T12:38:07+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact correction `8d5779258505bb94383368e13eff97a4346320ca` |
 | `2026-09-04T12:38:07+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded focused regression tests against the exact approved correction |
+| `2026-09-04T12:46:55+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Fresh isolated install and clean reset succeeded; pgTAP passed 18/18 and real Workout repository integration passed 1/1 against the exact approved correction |
