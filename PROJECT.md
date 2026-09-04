@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T16:07:01+02:00
+- **Last updated:** 2026-09-04T16:09:58+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: unit 9/9 and component 11/11 passed, then browser verification exposed a latent T-014 position-renumbering defect and invalidated the approval.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: the position-renumbering correction and its pgTAP regression are prepared; the replacement delivery is being created.
 
 ## Immediate next action
 
-Correct the workout position renumbering with a reviewed migration plus pgTAP regression, run static checks, deliver the T-016 replacement, and request fresh User approval.
+Create the T-016 replacement delivery with the corrective migration, record its exact SHA, and request fresh User approval before the complete test plan restarts.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T16:07:01+02:00` — approval invalidated; corrective replacement in preparation.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T16:09:58+02:00` — renumbering corrected; replacement delivery pending.
 
 ## Next
 

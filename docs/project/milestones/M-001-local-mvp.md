@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T16:07:01+02:00`
+- **Updated:** `2026-09-04T16:09:58+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -165,3 +165,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T15:33:30+02:00` | Claude Code primary agent / Executor | Delivered T-016 for review | Exact delivery awaits User review before approved verification |
 | `2026-09-04T15:58:06+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved T-016 and began verification | Running the recorded unit/component and serialized Chromium/WebKit tests against the exact approved delivery |
 | `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | Returned T-016 to In Progress | Browser verification exposed a latent T-014 renumbering defect on workout-local removals/reordering; a replacement with the corrective migration requires fresh approval |
+| `2026-09-04T16:09:58+02:00` | Claude Code primary agent / Executor | Corrected the T-016 position renumbering pending replacement delivery | Static checks passed and feature tests remain stopped until fresh approval |

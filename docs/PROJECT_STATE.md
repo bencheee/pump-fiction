@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the workout position renumbering inherited from the approved T-014 persistence function, add its pgTAP regression, deliver the T-016 replacement, and request fresh User approval before the complete test plan restarts.
+Create the T-016 replacement delivery with the corrective renumbering migration, record its exact SHA, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 
