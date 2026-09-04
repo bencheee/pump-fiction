@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the two singular browser-spec text queries, run static checks, deliver the second T-015 test-only replacement, and request fresh User approval before the complete test plan restarts.
+Create the second T-015 test-only replacement delivery, record its exact SHA, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 

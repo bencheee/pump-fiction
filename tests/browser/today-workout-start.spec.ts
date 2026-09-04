@@ -55,7 +55,7 @@ test.describe("Today workout-start experience", () => {
     await expect(page.getByText("Program activated.")).toBeVisible();
 
     await page.goto("/today");
-    await expect(page.getByText(splitA)).toBeVisible();
+    await expect(page.getByRole("heading", { name: splitA })).toBeVisible();
     await page.getByRole("button", { name: "Choose another split" }).click();
     await expect(
       page.getByRole("dialog", { name: "Choose Another Split" }),
@@ -81,7 +81,7 @@ test.describe("Today workout-start experience", () => {
     await page.goto("/today/one-time");
     await page.getByRole("button", { name: "Start Workout" }).click();
     await expect(
-      page.getByText("Enter a name for this workout."),
+      page.getByText("Enter a name for this workout.").first(),
     ).toBeVisible();
     await page.getByLabel("Workout name").fill(`Hotel ${stamp}`);
     await page.getByRole("button", { name: "Add Exercise" }).click();

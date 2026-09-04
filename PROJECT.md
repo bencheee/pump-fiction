@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T14:48:30+02:00
+- **Last updated:** 2026-09-04T14:50:30+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress`: component tests passed 3/3, then serialized Chromium verification exposed two test-only singular queries and invalidated the first-replacement approval.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `In Progress`: the two test-only browser queries are corrected and the second test-only replacement delivery is being created.
 
 ## Immediate next action
 
-Correct the two singular browser-spec text queries, run static checks, deliver the second T-015 test-only replacement, and request fresh User approval.
+Create the second T-015 test-only replacement delivery, record its exact SHA, and request fresh User approval before the complete test plan restarts.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T14:48:30+02:00` — first-replacement approval invalidated; second test-only replacement in preparation.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-04T14:50:30+02:00` — browser queries corrected; second test-only replacement delivery pending.
 
 ## Next
 

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:48:30+02:00`
+- **Updated:** `2026-09-04T14:50:30+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T14:18:18+02:00` for replacement
 - **Approval requested:** `2026-09-04T14:28:43+02:00` for replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-04T14:28:43+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the two singular browser-spec text queries, run static checks without feature tests, create a second test-only replacement delivery, and request fresh approval.
+- **Next action:** Create the second test-only replacement delivery, record its exact SHA, and request fresh User approval before restarting the complete test plan.
 
 ## Scope
 
@@ -65,7 +65,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency/accessibility rules, strict TypeScript, production build, design assets/references, documentation links, and `git diff --check`
-- Results: Passed for both the original delivery and pending test-only replacement on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes including dynamic `/today` and `/today/one-time`; all 8 font and 38 icon checksums plus license files passed; Markdown lint passed across 87 files; all 648 internal links passed; and `git diff --check` passed. No feature test ran after the assertion correction.
+- Results: Passed for the original delivery, the first test-only replacement, and the pending second test-only replacement on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes including dynamic `/today` and `/today/one-time`; all 8 font and 38 icon checksums plus license files passed; Markdown lint passed across 87 files; all 648 internal links passed; and `git diff --check` passed. No feature test ran after the browser-query correction.
 
 ## Test plan and results
 
@@ -141,3 +141,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:28:43+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-04T14:28:43+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
 | `2026-09-04T14:48:30+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Continuing on the User's direction to finish `F-007`: component tests passed 3/3, then the serialized Chromium scenario failed on a test-only singular query for the split name mirrored in the S01 heading and rotation message; browser verification stopped and the first-replacement approval is invalidated |
+| `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the two prepared browser queries to target the S01 heading role and accept the mirrored inline/sticky validation message; all static checks passed without rerunning feature tests |
