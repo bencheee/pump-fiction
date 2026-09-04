@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:56:18+02:00`
+- **Updated:** `2026-09-04T15:00:50+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T14:52:30+02:00` for second replacement
 - **Approval requested:** `2026-09-04T14:56:18+02:00` for second replacement
 - **Approved:** `2026-09-04T14:56:18+02:00` for second replacement
 - **Testing started:** `2026-09-04T14:56:18+02:00` for second replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-04T15:00:50+02:00`
 - **Canceled:** Not reached
-- **Next action:** Restart the complete recorded component and serialized Chromium/WebKit verification against exact approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` in a fresh isolated clean-reset worktree.
+- **Next action:** None; `T-015` is complete and the User directed continuation with `T-016`.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
 - **Authorized commit:** `f52c0447db67007fba7cce8d0c790164e8447fe9`
-- **Results:** Against the formerly approved first replacement `466341380d0f479e2ce04a08c3a34690ff5a5052` in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`, `npm ci` installed 653 packages, `supabase db reset` completed cleanly, and the scoped component suite passed 3/3. The serialized mobile-Chromium browser scenario then failed at its first Today assertion because the test used a singular text query for the proposed split name intentionally rendered both in the S01 heading and in the rotation-position message; Playwright strict mode resolved two elements while the page snapshot showed the correct proposed state. The same singular-query defect exists at the mirrored inline/sticky one-time name validation assertion. WebKit did not run. These partial results are discarded for completion; the corrected second replacement requires fresh approval and a complete restart. Earlier, against the formerly approved original delivery `c3c9f33795757d455029746ccefe1fec52f071f6`, the component run passed 2/3 scenarios before the equivalent singular-query defect on the mirrored validation message stopped verification.
+- **Results:** Against exact approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` on 2026-09-04 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities; a clean `supabase db reset` applied all migrations; the scoped component suite passed 3/3; the serialized one-worker mobile-Chromium scenario passed 1/1 in 27.6 seconds and the serialized one-worker mobile-WebKit scenario passed 1/1 in 22.6 seconds, together covering no-program, proposed, alternate today-only, one-time validation/ordering, restore, overlay Back, and phone reflow, with the one-time-builder and today-restored structural captures per platform. The four fixture exercises were archived after the runs and the spec's own cleanup archived both fixture programs and removed active workouts. Two earlier verification attempts against the superseded original delivery and first replacement each stopped on a test-only singular-query defect and are recorded above the corrected queries; their partial results were discarded.
 
 ## Delivery commit
 
@@ -111,15 +111,15 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -146,3 +146,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:56:18+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` with no additional findings and recommended approval |
 | `2026-09-04T14:56:18+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact second replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-04T14:56:18+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved second replacement |
+| `2026-09-04T15:00:50+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete plan passed: component 3/3 plus serialized Chromium 1/1 and WebKit 1/1 with structural captures; fixtures cleaned; the User's continuation direction moves work to `T-016` |

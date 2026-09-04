@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. `F-007` Today and Active Workout is active with `T-014` application/persistence operations and `T-017` one-time starter-set correction complete.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. `F-007` Today and Active Workout is active with `T-014` application/persistence operations, `T-017` one-time starter-set correction, and `T-015` Today/workout-start mobile experience complete.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the full component and serialized Chromium/WebKit plan from the beginning against exact approved T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`; then start `T-016` per the Owner's continuation direction.
+Implement `T-016` S10–S12 active-workout mobile experience under the Owner's continuation direction, prepare unexecuted feature tests, run static checks, and create one delivery commit for User review.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `2/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` is approved and `Testing`, and T-016 remains in `Backlog` pending T-015 completion under the Owner's continuation direction. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `3/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` passed its complete verification, and T-016 is starting under the Owner's continuation direction. Deployment configuration does not exist yet.

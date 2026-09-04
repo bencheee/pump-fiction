@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T14:56:18+02:00`
+- **Updated:** `2026-09-04T15:00:50+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -35,7 +35,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-004`](../features/F-004-application-and-data-foundation.md) — Application and Data Foundation (`Done`)
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
-- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `2/4 Tasks Done`)
+- [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Now / 1`; `3/4 Tasks Done`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 1`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 2`)
 - [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
@@ -159,3 +159,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T14:50:30+02:00` | Claude Code primary agent / Executor | Corrected the T-015 test-only browser queries pending second replacement delivery | Static checks passed and feature tests remain stopped until fresh approval |
 | `2026-09-04T14:52:30+02:00` | Claude Code primary agent / Executor | Delivered the T-015 second test-only replacement for review | Exact replacement awaits fresh User approval before complete verification restarts |
 | `2026-09-04T14:56:18+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved the T-015 second replacement and restarted verification | Running the complete component and serialized Chromium/WebKit plan from the beginning against the exact second replacement |
+| `2026-09-04T15:00:50+02:00` | Claude Code primary agent / Tester | Completed T-015 within F-007 | Exact approved second replacement passed component 3/3 and serialized Chromium/WebKit 2/2 with structural captures; T-016 is unblocked under the User's continuation direction |
