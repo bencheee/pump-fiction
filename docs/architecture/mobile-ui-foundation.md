@@ -1,6 +1,6 @@
 # Mobile UI foundation
 
-- **Status:** Implemented in `T-009`, pending delivery review and approval
+- **Status:** Implemented through `T-015`
 - **Design source:** [`../design/T-004-v0.4-frozen/README.md`](../design/T-004-v0.4-frozen/README.md)
 
 This document defines how later Feature Tasks consume the application-owned mobile shell, assets, tokens, routes, and shared UI. It does not add feature-screen behavior.
@@ -59,6 +59,12 @@ Reusable implementation lives under `src/shared/ui` and is exported through its 
 The sheet and destructive dialog are application-owned wrappers around Radix. They provide modal semantics, focus containment, Escape dismissal, trigger focus restoration, and cancel-safe initial focus for destructive confirmation. Feature modules must import these wrappers, not Radix directly.
 
 Feature-specific set rows, workout exercise cards, reorder behavior, restored-workout cards, and chart rendering are intentionally absent from `src/shared/ui`. Later Tasks implement them within a Feature first and promote only reuse that is demonstrated across Features. Business calculations never move into shared presentation components.
+
+## Today and workout-start composition
+
+`T-015` keeps Today data access in the server composition boundary and passes the serializable `TodayView` aggregate into a feature-owned client experience. The client may make a temporary today-only split selection, start the proposed or alternate split through the thin workout Server Action, or use the existing program operation to persistently **Set as Next**; the copy and controls distinguish those two rotation effects. When a current workout exists, the restore card replaces every second-start entry point and derives a running display from the persisted accumulated duration plus the active segment start without resetting the timer.
+
+The one-time route loads only active Exercise Library definitions on the server. Its client form owns arbitrary-name validation, add/remove/up/down ordering, retained input after failure, and the ordered IDs sent to the same workout-start action. Successful starts enter `/workout/current`; generic persistence failures expose retry while unavailable sources remain non-retryable. The Today weight surface remains owned by `F-009` and is intentionally absent from this delivery.
 
 ## Overlay history
 

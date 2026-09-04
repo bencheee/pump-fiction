@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T12:46:55+02:00`
+- **Updated:** `2026-09-04T12:58:39+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -147,3 +147,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | Delivered required T-017 correction for review | Exact correction awaits User review before regression testing and T-015 |
 | `2026-09-04T12:38:07+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-017 and began verification | Running the focused regression tests against the exact approved correction before T-015 |
 | `2026-09-04T12:46:55+02:00` | Codex primary agent / Tester | Completed T-017 within F-007 | Exact approved correction passed clean reset, pgTAP 18/18, and Workout repository integration 1/1; T-015 is unblocked |
+| `2026-09-04T12:48:59+02:00` | User / Owner and Codex primary agent / Executor | Started T-015 within F-007 | Began the accepted Today and workout-start phone experience after both dependencies completed |
+| `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | Completed T-015 implementation scope pending delivery | Today, alternate-split, and one-time-start UI plus prepared tests are statically verified |

@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T09:00:13+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-04T12:58:39+02:00`
+- **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for required OD-001 correction `T-017`; Owner direction to continue is already recorded.
+- **Next action:** Create the single delivery commit, record its exact SHA in an evidence commit, and request User review; do not run prepared feature tests before approval.
 
 ## Scope
 
@@ -31,12 +31,12 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Acceptance criteria
 
-- [ ] S01 shows local date, proposed split and optional eligible average, or the accepted no-program state, while retaining the one-time entry point.
-- [ ] A current workout replaces second-start actions with a restore card and accurate timer-state treatment.
-- [ ] S02 starts another active split for this workout only and distinguishes the choice from persistent Set Next.
-- [ ] S03 requires a valid arbitrary name and at least one ordered active exercise, with add/remove/reorder and inline validation.
-- [ ] Start failures retain input and expose retry/not-found feedback; successful starts enter the focused route.
-- [ ] S01–S03 match accepted structure, states, phone reflow, overlay history, thumb reach, and accessibility behavior.
+- [x] S01 shows local date, proposed split and optional eligible average, or the accepted no-program state, while retaining the one-time entry point.
+- [x] A current workout replaces second-start actions with a restore card and accurate timer-state treatment.
+- [x] S02 starts another active split for this workout only and distinguishes the choice from persistent Set Next.
+- [x] S03 requires a valid arbitrary name and at least one ordered active exercise, with add/remove/reorder and inline validation.
+- [x] Start failures retain input and expose retry/not-found feedback; successful starts enter the focused route.
+- [x] S01–S03 match accepted structure, states, phone reflow, overlay history, thumb reach, and accessibility behavior.
 
 ## Traceability
 
@@ -47,8 +47,8 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Dependencies and blockers
 
 - Dependencies: `T-014` Done; `T-017` Done
-- Blockers: `T-017` is in progress
-- Blocked from status: Not blocked; dependency is planned
+- Blockers: None
+- Blocked from status: Not blocked
 
 ## Documentation impact
 
@@ -57,15 +57,15 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 
 ## Execution checklist
 
-- [ ] Implement S01 proposed/no-program/restored states and loading treatment.
-- [ ] Implement S02 alternate-split sheet and S03 one-time builder with ordering and validation.
-- [ ] Wire adapters, retry/not-found behavior, accessible overlays, and focused-route entry.
-- [ ] Prepare component and Chromium/WebKit tests without running them; run only static checks.
+- [x] Implement S01 proposed/no-program/restored states and loading treatment.
+- [x] Implement S02 alternate-split sheet and S03 one-time builder with ordering and validation.
+- [x] Wire adapters, retry/not-found behavior, accessible overlays, and focused-route entry.
+- [x] Prepare component and Chromium/WebKit tests without running them; run only static checks.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency/accessibility rules, strict TypeScript, production build, design assets/references, documentation links, and `git diff --check`
-- Results: Pending
+- Results: Passed on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes including dynamic `/today` and `/today/one-time`; all 8 font and 38 icon checksums plus license files passed; Markdown lint passed across 87 files; all 648 internal links passed; and `git diff --check` passed. No feature test or manual application test ran.
 
 ## Test plan and results
 
@@ -73,7 +73,7 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
 - **Authorized commit:** None
-- **Results:** Not run; Task is not started.
+- **Results:** Not run; focused component and isolated Chromium/WebKit tests are prepared but remain approval-gated.
 
 ## Delivery commit
 
@@ -102,12 +102,12 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -127,3 +127,6 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | --- | --- | --- | --- | --- |
 | `2026-09-03T12:03:59+02:00` | Codex primary agent / Planner | Not allocated | `Backlog` | Created as the dependent Today and workout-start mobile delivery within `F-007` |
 | `2026-09-04T09:00:13+02:00` | Codex primary agent / Planner | `Backlog` | `Backlog` | Added required dependency on T-017 after detecting that accepted OD-001 starter-set behavior was omitted from T-014 |
+| `2026-09-04T12:48:59+02:00` | User / Owner | `Backlog` | `Ready` | T-014 and T-017 are complete; prior explicit direction to continue authorizes dependent T-015 |
+| `2026-09-04T12:48:59+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted S01–S03 phone implementation and workout-start wiring |
+| `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S01–S03, operation wiring, canonical guidance, and unexecuted component/browser coverage; all static checks passed |

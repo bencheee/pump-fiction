@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-04T12:46:55+02:00`
+- **Updated:** `2026-09-04T12:58:39+02:00`
 - **Progress:** `2/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -28,7 +28,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 - [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-017`](../tasks/T-017-correct-one-time-workout-starter-sets.md) — Correct one-time workout starter sets (`Done`; approved delivery `8d5779258505bb94383368e13eff97a4346320ca`)
-- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Backlog`; depends on `T-014` and `T-017`)
+- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`In Progress`)
 - [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; depends on `T-014`, `T-017`, and `T-015`)
 
 ## Dependencies and blockers
@@ -73,3 +73,5 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T09:06:26+02:00` | Codex primary agent / Executor | Delivered `T-017` correction for review | Exact delivery `8d5779258505bb94383368e13eff97a4346320ca` awaits User review before regression testing and T-015 |
 | `2026-09-04T12:38:07+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved `T-017` and began verification | Running only the recorded focused regression tests against exact delivery `8d5779258505bb94383368e13eff97a4346320ca` |
 | `2026-09-04T12:46:55+02:00` | Codex primary agent / Tester | Completed `T-017` within `F-007` | Exact approved correction passed a fresh isolated install, clean reset, pgTAP 18/18, and real Workout repository integration 1/1; T-015 is unblocked |
+| `2026-09-04T12:48:59+02:00` | User / Owner and Codex primary agent / Executor | Started `T-015` | Both dependencies are Done and the prior continuation direction authorizes the accepted Today/workout-start phone delivery |
+| `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | Completed `T-015` implementation scope pending delivery | S01–S03, workout-start wiring, canonical UI guidance, and prepared approval-gated tests are statically verified |
