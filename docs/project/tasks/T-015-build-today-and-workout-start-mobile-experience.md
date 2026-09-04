@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T12:59:57+02:00`
+- **Updated:** `2026-09-04T14:13:57+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T12:59:57+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-04T14:13:57+02:00`
+- **Approved:** `2026-09-04T14:13:57+02:00`
+- **Testing started:** `2026-09-04T14:13:57+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6`; do not run prepared component or browser tests before explicit approval.
+- **Next action:** Run the recorded component and serialized Chromium/WebKit phone-browser verification against exact approved delivery `c3c9f33795757d455029746ccefe1fec52f071f6` in an isolated clean-reset worktree.
 
 ## Scope
 
@@ -72,8 +72,8 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
-- **Authorized commit:** None
-- **Results:** Not run; focused component and isolated Chromium/WebKit tests are prepared but remain approval-gated.
+- **Authorized commit:** `c3c9f33795757d455029746ccefe1fec52f071f6`
+- **Results:** In progress against the exact approved delivery.
 
 ## Delivery commit
 
@@ -84,16 +84,16 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T14:13:57+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None
 
 ## Approval
 
-- **Approved commit:** Pending
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** Pending
+- **Approved commit:** `c3c9f33795757d455029746ccefe1fec52f071f6`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T14:13:57+02:00`
+- **Approval note:** User explicitly said `odobreno`; approval is bound to the exact delivery commit above.
 
 ## Definition of Ready
 
@@ -131,3 +131,6 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T12:48:59+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began accepted S01–S03 phone implementation and workout-start wiring |
 | `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | `In Progress` | `In Progress` | Completed S01–S03, operation wiring, canonical guidance, and unexecuted component/browser coverage; all static checks passed |
 | `2026-09-04T12:59:57+02:00` | Codex primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6`; static checks passed and prepared feature tests remain unexecuted |
+| `2026-09-04T14:13:57+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings and recommended approval |
+| `2026-09-04T14:13:57+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` |
+| `2026-09-04T14:13:57+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and serialized Chromium/WebKit verification against the exact approved delivery |

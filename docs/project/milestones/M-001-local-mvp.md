@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T12:59:57+02:00`
+- **Updated:** `2026-09-04T14:13:57+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -150,3 +150,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T12:48:59+02:00` | User / Owner and Codex primary agent / Executor | Started T-015 within F-007 | Began the accepted Today and workout-start phone experience after both dependencies completed |
 | `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | Completed T-015 implementation scope pending delivery | Today, alternate-split, and one-time-start UI plus prepared tests are statically verified |
 | `2026-09-04T12:59:57+02:00` | Codex primary agent / Executor | Delivered T-015 for review | Exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` awaits User review before approved verification |
+| `2026-09-04T14:13:57+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved T-015 and began verification | Running the recorded component and serialized Chromium/WebKit tests against the exact approved delivery |
