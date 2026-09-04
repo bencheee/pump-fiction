@@ -1,7 +1,7 @@
 # T-015 — Build Today and workout-start mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T14:13:57+02:00`
+- **Updated:** `2026-09-04T14:15:48+02:00`
 - **Started:** `2026-09-04T12:48:59+02:00`
 - **Review started:** `2026-09-04T12:59:57+02:00`
 - **Approval requested:** `2026-09-04T14:13:57+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-04T14:13:57+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the recorded component and serialized Chromium/WebKit phone-browser verification against exact approved delivery `c3c9f33795757d455029746ccefe1fec52f071f6` in an isolated clean-reset worktree.
+- **Next action:** Correct the test-only duplicate-validation assertion, run static checks without feature tests, create a replacement delivery, and request fresh approval.
 
 ## Scope
 
@@ -72,28 +72,28 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run scoped component and isolated Chromium/WebKit phone-browser scenarios for proposed/alternate/one-time starts, no-program/restored states, validation, ordering, failure handling, overlay Back, reflow, and structural captures.
-- **Authorized commit:** `c3c9f33795757d455029746ccefe1fec52f071f6`
-- **Results:** In progress against the exact approved delivery.
+- **Authorized commit:** None; approval of `c3c9f33795757d455029746ccefe1fec52f071f6` was invalidated by the failed prepared assertion.
+- **Results:** Against the formerly approved original delivery `c3c9f33795757d455029746ccefe1fec52f071f6`, a fresh isolated `npm ci` installed and audited 653 packages with no vulnerabilities. The component run passed 2/3 scenarios, then the one-time scenario failed before its interaction steps because the test used a singular text query for a validation message intentionally rendered both inline and in the sticky status cue. Browser verification did not run. These partial results are discarded for completion; the corrected replacement requires fresh approval and a complete restart.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `c3c9f33795757d455029746ccefe1fec52f071f6`
+- **Delivery commit SHA:** `c3c9f33795757d455029746ccefe1fec52f071f6` (original; test-only replacement required)
 - **Subject:** `T-015: build Today workout-start experience`
 - **Committed scope:** Phone-only S01 Today proposed/no-program/restored/loading states; S02 history-backed alternate-split sheet with today-only selection/start and distinct persistent Set Next; S03 active-exercise one-time builder with add/remove/up/down ordering and retained validation/failure input; focused-route start entry; canonical UI guidance; and prepared, unexecuted component plus isolated Chromium/WebKit coverage.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-04T14:13:57+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None
+- **Reviewed at:** Pending for replacement
+- **Outcome:** Original approval invalidated; replacement pending
+- **Findings:** Prepared component assertion incorrectly assumed the mirrored validation message had only one rendered occurrence.
 
 ## Approval
 
-- **Approved commit:** `c3c9f33795757d455029746ccefe1fec52f071f6`
-- **Approved by:** User
-- **Approved at:** `2026-09-04T14:13:57+02:00`
-- **Approval note:** User explicitly said `odobreno`; approval is bound to the exact delivery commit above.
+- **Approved commit:** Pending replacement
+- **Approved by:** Pending
+- **Approved at:** Pending
+- **Approval note:** Original approval was invalidated when its prepared component suite failed; no corrected test may run before a replacement is explicitly approved.
 
 ## Definition of Ready
 
@@ -134,3 +134,4 @@ Implement phone-only S01 Today, S02 alternate-split sheet, and S03 one-time-work
 | `2026-09-04T14:13:57+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings and recommended approval |
 | `2026-09-04T14:13:57+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` |
 | `2026-09-04T14:13:57+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and serialized Chromium/WebKit verification against the exact approved delivery |
+| `2026-09-04T14:15:48+02:00` | Codex primary agent / Tester | `Testing` | `In Progress` | Component tests passed 2/3 before a test-only singular-query defect failed on the intentionally mirrored validation copy; stopped before browser tests and invalidated approval |

@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T14:13:57+02:00
+- **Last updated:** 2026-09-04T14:15:48+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`2/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is `Testing` at exact approved delivery `c3c9f33795757d455029746ccefe1fec52f071f6`.
+[`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) is back `In Progress`; original approval is invalidated and a test-only replacement is required.
 
 ## Immediate next action
 
-Complete the recorded component and serialized Chromium/WebKit verification against exact approved T-015 delivery `c3c9f33795757d455029746ccefe1fec52f071f6`.
+Correct the T-015 singular validation assertion, statically verify it without feature tests, and deliver a replacement for fresh approval.
 
 ## Now
 
-- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `Testing` — Executor: Codex primary agent — updated `2026-09-04T14:13:57+02:00` — Exact delivery approved; focused verification in progress.
+- [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — `In Progress` — Executor: Codex primary agent — updated `2026-09-04T14:15:48+02:00` — test-only replacement required before fresh approval.
 
 ## Next
 

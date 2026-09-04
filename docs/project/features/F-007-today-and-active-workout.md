@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-04T14:13:57+02:00`
+- **Updated:** `2026-09-04T14:15:48+02:00`
 - **Progress:** `2/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -28,7 +28,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 
 - [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-017`](../tasks/T-017-correct-one-time-workout-starter-sets.md) — Correct one-time workout starter sets (`Done`; approved delivery `8d5779258505bb94383368e13eff97a4346320ca`)
-- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Testing`; approved delivery `c3c9f33795757d455029746ccefe1fec52f071f6`)
+- [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`In Progress`; test-only replacement required)
 - [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Backlog`; depends on `T-014`, `T-017`, and `T-015`)
 
 ## Dependencies and blockers
@@ -77,3 +77,4 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T12:58:39+02:00` | Codex primary agent / Executor | Completed `T-015` implementation scope pending delivery | S01–S03, workout-start wiring, canonical UI guidance, and prepared approval-gated tests are statically verified |
 | `2026-09-04T12:59:57+02:00` | Codex primary agent / Executor | Delivered `T-015` for review | Exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` awaits User review before component/browser verification |
 | `2026-09-04T14:13:57+02:00` | User / Reviewer and Approver; Codex primary agent / Tester | Approved `T-015` and began verification | Running only the recorded component and serialized Chromium/WebKit tests against exact delivery `c3c9f33795757d455029746ccefe1fec52f071f6` |
+| `2026-09-04T14:15:48+02:00` | Codex primary agent / Tester | Returned `T-015` to `In Progress` | Component verification exposed a test-only singular-query defect after 2/3 scenarios passed; browser tests stopped and original approval is invalidated |
