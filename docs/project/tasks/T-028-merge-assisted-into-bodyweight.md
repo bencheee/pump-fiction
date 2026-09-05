@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:36:12+02:00`
+- **Updated:** `2026-09-05T20:57:19+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** `2026-09-05T20:36:12+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T20:57:19+02:00`
+- **Approved:** `2026-09-05T20:57:19+02:00`
+- **Testing started:** `2026-09-05T20:57:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `481ef7dc410733ad1b0502a8cea0a02ac53259bc`; the reset, pgTAP, and the suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Run the authorized cycle for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`: snapshot, clean reset, pgTAP, generated types, unit, component and repository suites, then restore.
 
 ## Scope
 
@@ -88,7 +88,7 @@ No local row used the retired type when this Task was delivered, so the migratio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests for the two types and the four options, repository integration tests, and pgTAP constraint tests for the retired type and the single-option rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
 - **Results:** Not run
 
 ## Delivery commit
@@ -100,16 +100,16 @@ No local row used the retired type when this Task was delivered, so the migratio
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T20:57:19+02:00`
+- **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T20:57:19+02:00`
+- **Approval note:** Approved the exact delivery commit and the clean reset the verification requires; the Owner's local data is snapshotted first
 
 ## Definition of Ready
 
@@ -145,3 +145,5 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T20:24:07+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness after `F-013` was delivered and confirmed |
 | `2026-09-05T20:24:07+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the exercise-type merge |
 | `2026-09-05T20:36:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `481ef7dc410733ad1b0502a8cea0a02ac53259bc`; static checks passed and no feature test ran |
+| `2026-09-05T20:57:19+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
+| `2026-09-05T20:57:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized cycle against `481ef7dc410733ad1b0502a8cea0a02ac53259bc` |
