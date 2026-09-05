@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:09:38+02:00`
+- **Updated:** `2026-09-05T13:10:43+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** `2026-09-05T13:04:55+02:00`
 - **Approval requested:** `2026-09-05T13:09:38+02:00`
 - **Approved:** `2026-09-05T13:09:38+02:00`
 - **Testing started:** `2026-09-05T13:09:38+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T13:10:43+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
+- **Next action:** None; Task complete. Continue `F-011` with `T-023`.
 
 ## Scope
 
@@ -46,15 +46,15 @@ Screen changes absorbed from `T-022`:
 
 ## Acceptance criteria
 
-- [ ] No status enum, status column, or reactivation operation for exercises, splits, programs, or measurement types remains.
-- [ ] Deleting an exercise removes it and its split rows, and every completed and incomplete workout that used it keeps its snapshot, sets, notes, and duration.
-- [ ] Deleting a split or a program keeps every workout that came from it in History with its name snapshots intact.
-- [ ] Deleting the last split of the current program is rejected with an explanatory failure that the split screen explains in place.
-- [ ] Deleting a non-last split of the current program leaves a valid rotation pointer.
-- [ ] Exactly one program can be current, and deleting it leaves no current program instead of failing.
-- [ ] `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, and the release-boundary archiving bullet describe deletion.
-- [ ] No screen offers archiving or reactivation, and deletion returns to the parent screen with a toast.
-- [ ] A program becomes current through an explicit control, and at most one program is current.
+- [x] No status enum, status column, or reactivation operation for exercises, splits, programs, or measurement types remains.
+- [x] Deleting an exercise removes it and its split rows, and every completed and incomplete workout that used it keeps its snapshot, sets, notes, and duration.
+- [x] Deleting a split or a program keeps every workout that came from it in History with its name snapshots intact.
+- [x] Deleting the last split of the current program is rejected with an explanatory failure that the split screen explains in place.
+- [x] Deleting a non-last split of the current program leaves a valid rotation pointer.
+- [x] Exactly one program can be current, and deleting it leaves no current program instead of failing.
+- [x] `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, and the release-boundary archiving bullet describe deletion.
+- [x] No screen offers archiving or reactivation, and deletion returns to the parent screen with a toast.
+- [x] A program becomes current through an explicit control, and at most one program is current.
 
 ## Traceability
 
@@ -96,7 +96,7 @@ Screen changes absorbed from `T-022`:
 - **No-test reason:** Not applicable
 - **Planned tests:** unit tests for delete operations and failures, repository integration tests for exercise, split, and program deletion with surviving History, and pgTAP tests for the nullable snapshot references and the last-split rule; must not run before Owner approval of the exact commit
 - **Authorized commit:** `a049287a74a7dccf5ba2146bea09671913dca9d7`
-- **Results:** Failed on `2026-09-05T13:03:51+02:00` against exact approved commit `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history, pgTAP passed 57/57 across five files including the new current-program and split-deletion assertions, the shared UI component suites passed 4/4, and 64 of 66 unit and component tests passed. Two test-only assertions failed: both program scenarios still clicked `Save as Draft`, although the delivered form renames that action to `Save Program` now that programs have no draft status. No implementation defect was found. The repository integration run was not started because the failure already invalidates this attempt.
+- **Results:** Passed against exact approved replacement `a049287a74a7dccf5ba2146bea09671913dca9d7` on `2026-09-05T13:10:43+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, local PostgreSQL `17`, and Vitest `4.1.11`, restarted from the beginning: `supabase db reset` applied the complete migration history to a clean database; pgTAP passed 57/57 across five files, including the current program keeping a next-split pointer, the rejected deletion of the current program's last split, an unrelated split deletion leaving the pointer intact, and the retired `set_current_program` and `delete_split` privilege checks; unit and component suites passed 66/66, including the delete confirmation that names the affected split count, the blocked last-split case, and split deletion returning to its program; shared UI suites passed 4/4; repository integration passed 4/4, covering exercise deletion that clears split prescriptions, split and program deletion, current-program replacement, and the rejected last-split deletion; and regenerated types matched the committed file exactly. One earlier verification attempt is recorded above: it failed on two test-only queries for a renamed action, and its partial results were discarded even though the reset and pgTAP had already passed.
 
 ## Delivery commit
 
@@ -134,15 +134,15 @@ Screen changes absorbed from `T-022`:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -159,3 +159,4 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T13:04:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `a049287a74a7dccf5ba2146bea09671913dca9d7`; static checks passed and no feature test ran |
 | `2026-09-05T13:09:38+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
 | `2026-09-05T13:09:38+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the complete verification from the beginning against `a049287a74a7dccf5ba2146bea09671913dca9d7` |
+| `2026-09-05T13:10:43+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: clean reset, pgTAP 57/57, unit and component 66/66, shared UI 4/4, repository 4/4, and unchanged generated types |
