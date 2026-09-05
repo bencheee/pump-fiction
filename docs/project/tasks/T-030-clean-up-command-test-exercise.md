@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:12:12+02:00`
+- **Updated:** `2026-09-05T20:15:12+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T20:15:12+02:00`
+- **Approved:** `2026-09-05T20:15:12+02:00`
+- **Testing started:** `2026-09-05T20:15:12+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `cfb8ee5fa42e8655553809a159bc422502737069`; the repository run stays unauthorized until the Owner approves that exact SHA.
+- **Next action:** Run the authorized repository suite for `cfb8ee5fa42e8655553809a159bc422502737069` and compare the exercise-library row count before and after.
 
 ## Scope
 
@@ -68,7 +68,7 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** an authorized `npm run test:repository` run with the exercise-library row count compared before and after; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `cfb8ee5fa42e8655553809a159bc422502737069`
 - **Results:** Not run
 
 ## Delivery commit
@@ -80,16 +80,16 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T20:15:12+02:00`
+- **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `cfb8ee5fa42e8655553809a159bc422502737069`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T20:15:12+02:00`
+- **Approval note:** Approved the exact delivery commit, and the removal of the orphan row an earlier run had already left in the library
 
 ## Definition of Ready
 
@@ -125,3 +125,5 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 | `2026-09-05T20:09:42+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the fix before `F-014`, keeping `F-013` first in the working order |
 | `2026-09-05T20:09:42+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the test cleanup |
 | `2026-09-05T20:12:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `cfb8ee5fa42e8655553809a159bc422502737069`; static checks passed and no feature test ran |
+| `2026-09-05T20:15:12+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit |
+| `2026-09-05T20:15:12+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted first, then started the authorized repository run against `cfb8ee5fa42e8655553809a159bc422502737069` |
