@@ -1,7 +1,7 @@
 # T-026 — Recover from a permanently rejected active-workout command
 
 - **Feature:** `F-012`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:36:33+02:00`
+- **Updated:** `2026-09-05T21:37:13+02:00`
 - **Started:** `2026-09-05T21:29:41+02:00`
 - **Review started:** `2026-09-05T21:35:40+02:00`
 - **Approval requested:** `2026-09-05T21:36:33+02:00`
 - **Approved:** `2026-09-05T21:36:33+02:00`
 - **Testing started:** `2026-09-05T21:36:33+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T21:37:13+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized unit and component suites for `90875783eda308cdb95b33ad43a336bbd6060ccd`.
+- **Next action:** None; `T-026` is `Done`. `F-012` awaits the Owner's confirmation of the Feature result.
 
 ## Scope
 
@@ -38,10 +38,10 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 ## Acceptance criteria
 
-- [ ] A permanently rejected command is delivered at most once and never blocks a later command.
-- [ ] After a rejection the queue behind it is delivered and the workout can be finished.
-- [ ] The user sees which change was lost, and the displayed workout matches the server after recovery.
-- [ ] Retryable failures still retry, and revision conflicts still refresh and replay.
+- [x] A permanently rejected command is delivered at most once and never blocks a later command — a controller scenario refuses the head of a two-command queue and asserts exactly one delivery attempt at it while the second command stays pending.
+- [x] After a rejection the queue behind it is delivered and the workout can be finished — the next flush drains the retained command and returns the controller to `saved`; the component scenario saves a further change after the refusal.
+- [x] The user sees which change was lost, and the displayed workout matches the server after recovery — the notice names `set 2 of Squat`, and recovery adopts the refreshed authoritative workout with the remaining commands rebased onto it.
+- [x] Retryable failures still retry, and revision conflicts still refresh and replay — the existing conflict and retry scenarios pass unchanged.
 
 ## Traceability
 
@@ -80,7 +80,7 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 - **No-test reason:** Not applicable
 - **Planned tests:** delivery-controller unit scenarios for a terminal rejection followed by successful delivery of the queued commands, and an active-workout component scenario that finishes a workout after a rejection; must not run before Owner approval of the exact commit
 - **Authorized commit:** `90875783eda308cdb95b33ad43a336bbd6060ccd`
-- **Results:** Not run
+- **Results:** Passed on `2026-09-05T21:37:13+02:00` for `90875783eda308cdb95b33ad43a336bbd6060ccd`. The unit suite passed 72/72, up from 69 by the two controller scenarios and the component rejection scenario, and the component suite passed 4/4. No reset, pgTAP, or repository run was required, because this Task changes no schema and no server behavior.
 
 ## Delivery commit
 
@@ -118,15 +118,15 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -138,3 +138,4 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 | `2026-09-05T21:35:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `90875783eda308cdb95b33ad43a336bbd6060ccd`; static checks passed and no feature test ran |
 | `2026-09-05T21:36:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit |
 | `2026-09-05T21:36:33+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized unit and component suites against `90875783eda308cdb95b33ad43a336bbd6060ccd` |
+| `2026-09-05T21:37:13+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Authorized verification passed: unit 72/72 and component 4/4, covering the terminal drop, the drained queue behind it, and the named undone change |
