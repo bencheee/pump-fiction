@@ -1,7 +1,7 @@
 # T-018 — Return to the parent screen after saving
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:01:13+02:00`
+- **Updated:** `2026-09-05T12:03:40+02:00`
 - **Started:** `2026-09-05T11:54:40+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T12:03:40+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit against Task scope, then decides on approval.
 
 ## Scope
 
@@ -90,7 +90,7 @@ Affected forms and their parent screens:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `613dae3da605c329e22e07a82a7b9d1439c0320b`
 - **Subject:** `T-018: return to the parent screen after saving`
 - **Committed scope:** Shell-owned toast provider and `useToast`; `useSaveOutcome` and `useSavedSnapshot` helpers; `SaveStatus` states `clean`/`unsaved`/`saving`/`failure`; exercise, program, and split forms returning to their parent screens with toasts and dirty-state save status; removal of the `?saved=1` round trip from the three edit routes; updated component tests; and the save-contract sections in the mobile UI foundation and wireframe decisions.
 
@@ -141,3 +141,4 @@ Affected forms and their parent screens:
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 1 and 4 recorded on 2026-09-05 |
 | `2026-09-05T11:54:40+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the `F-011` plan and directed execution |
 | `2026-09-05T11:54:40+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the save-and-return and unsaved-changes correction |
+| `2026-09-05T12:03:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `613dae3da605c329e22e07a82a7b9d1439c0320b` with static checks passed and no feature test run |
