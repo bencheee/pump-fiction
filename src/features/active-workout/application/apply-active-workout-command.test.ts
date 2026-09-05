@@ -93,7 +93,6 @@ describe("applyActiveWorkoutCommand", () => {
           bandDirection: null,
           bandStrength: null,
           reps: 8,
-          isConfirmed: true,
         },
       },
       {
@@ -141,7 +140,6 @@ describe("applyActiveWorkoutCommand", () => {
         bandDirection: null,
         bandStrength: null,
         reps: 0,
-        isConfirmed: true,
       },
     });
 

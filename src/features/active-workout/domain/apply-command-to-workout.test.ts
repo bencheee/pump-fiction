@@ -4,7 +4,8 @@ import { applyCommandToWorkout } from "./apply-command-to-workout";
 import type { ActiveWorkoutCommand } from "./active-workout-command";
 import {
   changeSetMode,
-  missingConfirmValues,
+  isSetRecorded,
+  missingSetValues,
   setModeFields,
 } from "./set-entry";
 import type { CurrentWorkout, WorkoutSet } from "./workout";
@@ -24,7 +25,6 @@ function makeSet(overrides: Partial<WorkoutSet> & { id: string }): WorkoutSet {
     bandDirection: null,
     bandStrength: null,
     reps: null,
-    isConfirmed: false,
     ...overrides,
   };
 }
@@ -62,7 +62,6 @@ function makeWorkout(): CurrentWorkout {
             loadMode: "weight",
             loadKg: 82.5,
             reps: 6,
-            isConfirmed: true,
           }),
           makeSet({ id: setTwo, position: 2, loadMode: "weight" }),
         ],
@@ -117,11 +116,11 @@ describe("applyCommandToWorkout", () => {
         bandDirection: null,
         bandStrength: null,
         reps: 5,
-        isConfirmed: true,
       }),
     );
     const set = next.exercises[0]!.sets[1]!;
-    expect(set).toMatchObject({ loadKg: 90, reps: 5, isConfirmed: true });
+    expect(set).toMatchObject({ loadKg: 90, reps: 5 });
+    expect(isSetRecorded(set.loadMode, set)).toBe(true);
     expect(next.revision).toBe(5);
   });
 
@@ -161,7 +160,8 @@ describe("applyCommandToWorkout", () => {
     expect(sets[2]).toMatchObject({
       id: "00000000-0000-4000-8000-000000000c02",
       position: 3,
-      isConfirmed: false,
+      loadMode: null,
+      reps: null,
     });
   });
 
@@ -248,7 +248,8 @@ describe("set entry rules", () => {
       assistance_band: ["band strength", "reps"],
     };
     for (const mode of exerciseLoadModes) {
-      expect(missingConfirmValues(mode, emptySet)).toEqual(expected[mode]);
+      expect(missingSetValues(mode, emptySet)).toEqual(expected[mode]);
+      expect(isSetRecorded(mode, emptySet)).toBe(false);
       const fields = setModeFields[mode];
       expect(
         fields.band === null ||
@@ -265,7 +266,6 @@ describe("set entry rules", () => {
         loadMode: "weight",
         loadKg: 82.5,
         reps: 6,
-        isConfirmed: true,
       }),
       "weight_resistance_band",
     );
@@ -274,8 +274,8 @@ describe("set entry rules", () => {
       loadKg: 82.5,
       reps: 6,
       bandDirection: "resistance",
-      isConfirmed: false,
     });
+    expect(isSetRecorded(kept.set.loadMode, kept.set)).toBe(false);
     expect(kept.clearedLabels).toEqual([]);
 
     const cleared = changeSetMode(
@@ -291,7 +291,6 @@ describe("set entry rules", () => {
       loadKg: null,
       reps: 8,
       bandDirection: "resistance",
-      isConfirmed: false,
     });
     expect(cleared.clearedLabels).toEqual(["added kg"]);
   });

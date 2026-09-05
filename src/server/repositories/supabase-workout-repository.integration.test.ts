@@ -89,7 +89,6 @@ describe("SupabaseWorkoutRepository", () => {
           bandDirection: null,
           bandStrength: null,
           reps: 8,
-          isConfirmed: true,
         },
         clientCreatedAt: new Date(startedAt.getTime() + 1_000).toISOString(),
       };
@@ -168,7 +167,6 @@ describe("SupabaseWorkoutRepository", () => {
           position: 1,
           loadMode: null,
           reps: null,
-          isConfirmed: false,
         }),
       ]);
       expect(

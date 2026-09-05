@@ -46,7 +46,7 @@ Ordered exercise performances within a workout. Each retains the original exerci
 
 ### `workout_sets`
 
-Each set stores position, load mode, a decimal weight/assistance value when applicable, band direction and strength when applicable, reps, and confirmed/completed status. An unconfirmed set may be partially filled, including a band mode whose strength is not chosen yet; confirmation is what requires the complete value set. Assistance kilograms remain positive; meaning comes from load mode.
+Each set stores position, load mode, a decimal weight/assistance value when applicable, band direction and strength when applicable, and reps. It stores no confirmation flag: a set is *recorded* when it holds everything its mode requires, derived from those values by `workout_set_is_recorded` in the database and `isSetRecorded` in the domain, as defined by [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). A partially filled set, including a band mode whose strength is not chosen yet, is stored as entered and does not count. Assistance kilograms remain positive; meaning comes from load mode.
 
 Detailed lifecycle behavior is in [`workouts.md`](../product/workouts.md).
 

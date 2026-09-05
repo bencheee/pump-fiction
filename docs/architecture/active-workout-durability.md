@@ -29,7 +29,7 @@ type ActiveWorkoutCommand = {
 };
 ```
 
-`update_set` replaces the complete current set payload, including confirmation state, so mode changes cannot retain inapplicable hidden values. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI Tasks consume this union and must not create a parallel mutation path.
+`update_set` replaces the complete current set payload, so mode changes cannot retain inapplicable hidden values. It carries no confirmation field: whether a set counts is derived from its values, not sent by the client. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI Tasks consume this union and must not create a parallel mutation path.
 
 The thin Route Handler parses JSON, calls the server composition boundary, and maps the application result to HTTP:
 

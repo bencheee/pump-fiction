@@ -60,7 +60,6 @@ function applyOperation(
         bandDirection: command.payload.bandDirection,
         bandStrength: command.payload.bandStrength,
         reps: command.payload.reps,
-        isConfirmed: command.payload.isConfirmed,
       }));
     case "add_set":
       return mapExercise(
@@ -78,7 +77,6 @@ function applyOperation(
               bandDirection: null,
               bandStrength: null,
               reps: null,
-              isConfirmed: false,
             },
           ],
         }),

@@ -41,7 +41,6 @@ export type WorkoutSet = Readonly<{
   bandDirection: BandDirection | null;
   bandStrength: BandStrength | null;
   reps: number | null;
-  isConfirmed: boolean;
 }>;
 
 export type LastPerformance = Readonly<{

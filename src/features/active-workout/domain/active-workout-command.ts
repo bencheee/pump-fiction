@@ -29,7 +29,6 @@ export type ActiveWorkoutCommand =
         bandDirection: BandDirection | null;
         bandStrength: BandStrength | null;
         reps: number | null;
-        isConfirmed: boolean;
       }
     >
   | Envelope<"add_set", { workoutExerciseId: string }>
@@ -120,7 +119,6 @@ export function parseActiveWorkoutCommand(
         "bandDirection",
         "bandStrength",
         "reps",
-        "isConfirmed",
       ]) ||
       !isUuid(payload.workoutSetId) ||
       !(
@@ -140,8 +138,7 @@ export function parseActiveWorkoutCommand(
         payload.bandStrength === "medium" ||
         payload.bandStrength === "strong"
       ) ||
-      !isNullablePositiveInteger(payload.reps) ||
-      typeof payload.isConfirmed !== "boolean"
+      !isNullablePositiveInteger(payload.reps)
     )
       return invalid("payload", "Provide valid values for the workout set.");
     return {

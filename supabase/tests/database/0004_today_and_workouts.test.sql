@@ -26,10 +26,13 @@ select is(public.get_today_view() #>> '{currentWorkout,name}', 'Push', 'Today ex
 select is((select kind from public.apply_active_workout_command(
   '14000000-0000-4000-8000-000000000010',
   (select id from public.workouts where status = 'active'), 0, 'update_set',
-  jsonb_build_object('workoutSetId', (select id from public.workout_sets order by position limit 1), 'loadMode', 'weight', 'loadKg', 42.5, 'bandDirection', null, 'bandStrength', null, 'reps', 8, 'isConfirmed', true),
+  jsonb_build_object('workoutSetId', (select id from public.workout_sets order by position limit 1), 'loadMode', 'weight', 'loadKg', 42.5, 'bandDirection', null, 'bandStrength', null, 'reps', 8),
   '2026-09-03T10:01:00Z'
 )), 'applied', 'a valid set update is applied');
-select ok((select is_confirmed from public.workout_sets order by position limit 1), 'the valid set is confirmed immediately');
+select ok(
+  (select public.workout_set_is_recorded(load_mode, load_kg, band_strength, reps) from public.workout_sets order by position limit 1),
+  'the complete set is recorded by its values alone'
+);
 
 select is((select kind from public.apply_active_workout_command(
   '14000000-0000-4000-8000-000000000011',
@@ -52,7 +55,10 @@ select lives_ok(
 );
 select is((select source_kind::text from public.workouts where status = 'active'), 'one_time', 'one-time source is retained');
 select is((select count(*)::integer from public.workout_sets), 4, 'the one-time exercise adds exactly one starter set alongside retained History sets');
-select ok((select load_mode is null and reps is null and not is_confirmed from public.workout_sets order by created_at desc limit 1), 'the one-time starter set is empty and unconfirmed');
+select ok(
+  (select load_mode is null and reps is null and not public.workout_set_is_recorded(load_mode, load_kg, band_strength, reps) from public.workout_sets order by created_at desc limit 1),
+  'the one-time starter set is empty and not recorded'
+);
 select is((select kind from public.apply_active_workout_command(
   '14000000-0000-4000-8000-000000000012',
   (select id from public.workouts where status = 'active'), 0, 'finish_workout',

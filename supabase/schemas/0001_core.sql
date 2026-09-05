@@ -275,7 +275,6 @@ create table public.workout_sets (
   band_direction public.band_direction,
   band_strength public.band_strength,
   reps integer,
-  is_confirmed boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (workout_exercise_id, position),
@@ -284,8 +283,9 @@ create table public.workout_sets (
     on delete restrict,
   check (load_kg is null or load_kg > 0),
   check (reps is null or reps > 0),
-  -- Shape only: an unconfirmed set may still be missing its band strength,
-  -- because entry order is the user's choice. Completeness is the check below.
+  -- Shape only: a partially entered set may still be missing its band strength,
+  -- because entry order is the user's choice. Completeness is not a constraint:
+  -- `workout_set_is_recorded` derives it from the stored values instead.
   check (
     (load_mode is null and load_kg is null and band_direction is null and band_strength is null)
     or (load_mode = 'weight' and band_direction is null and band_strength is null)
@@ -306,21 +306,6 @@ create table public.workout_sets (
       load_mode = 'assistance_band'
       and load_kg is null
       and band_direction = 'assistance'
-    )
-  ),
-  check (
-    not is_confirmed
-    or (
-      load_mode is not null
-      and reps is not null
-      and (
-        (load_mode in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight') and load_kg is not null)
-        or (load_mode not in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight') and load_kg is null)
-      )
-      and (
-        load_mode not in ('weight_resistance_band', 'bodyweight_resistance_band', 'assistance_band')
-        or band_strength is not null
-      )
     )
   )
 );
@@ -368,6 +353,38 @@ create table public.measurement_entries (
   updated_at timestamptz not null default now(),
   unique (measurement_type_id, entry_date)
 );
+
+-- A set is recorded once it holds everything its mode requires. Nothing marks
+-- it: the state is derived from the stored values, so History, statistics, and
+-- last-performance reads share one definition of what counts.
+create or replace function public.workout_set_is_recorded(
+  p_load_mode public.load_mode,
+  p_load_kg numeric,
+  p_band_strength public.band_strength,
+  p_reps integer
+)
+returns boolean
+language sql
+immutable
+set search_path = ''
+as $$
+  select p_load_mode is not null
+    and p_reps is not null
+    and (
+      (
+        p_load_mode in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight')
+        and p_load_kg is not null
+      )
+      or (
+        p_load_mode not in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight')
+        and p_load_kg is null
+      )
+    )
+    and (
+      p_load_mode not in ('weight_resistance_band', 'bodyweight_resistance_band', 'assistance_band')
+      or p_band_strength is not null
+    );
+$$;
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -1426,6 +1443,7 @@ revoke execute on function public.validate_app_time_zone() from public, anon, au
 revoke execute on function public.validate_current_program() from public, anon, authenticated;
 revoke execute on function public.validate_exercise_load_modes() from public, anon, authenticated;
 revoke execute on function public.validate_split_deletion() from public, anon, authenticated;
+revoke execute on function public.workout_set_is_recorded(public.load_mode, numeric, public.band_strength, integer) from public, anon, authenticated;
 
 grant execute on function public.reject_future_local_entry_date() to service_role;
 grant execute on function public.apply_active_workout_command(uuid, uuid, bigint, public.active_workout_command_operation, jsonb, timestamptz) to service_role;
@@ -1448,6 +1466,7 @@ grant execute on function public.validate_app_time_zone() to service_role;
 grant execute on function public.validate_current_program() to service_role;
 grant execute on function public.validate_exercise_load_modes() to service_role;
 grant execute on function public.validate_split_deletion() to service_role;
+grant execute on function public.workout_set_is_recorded(public.load_mode, numeric, public.band_strength, integer) to service_role;
 
 grant usage on type
   public.active_workout_command_operation,

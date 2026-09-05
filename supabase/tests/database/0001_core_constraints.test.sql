@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(16);
+select plan(19);
 
 set constraints all immediate;
 
@@ -187,20 +187,27 @@ insert into public.workout_exercise_load_modes (
 )
 values ('40000000-0000-0000-0000-000000000001', 'weights', 'weight');
 
-select throws_ok(
+select lives_ok(
   $$
     insert into public.workout_sets (
       workout_exercise_id,
       position,
       load_mode,
-      reps,
-      is_confirmed
+      reps
     )
-    values ('40000000-0000-0000-0000-000000000001', 1, 'weight', 8, true)
+    values ('40000000-0000-0000-0000-000000000001', 1, 'weight', 8)
   $$,
-  '23514'::character(5),
-  null,
-  'a confirmed weight set requires a positive kilogram value'
+  'a weight set without its kilograms is stored as entered'
+);
+
+select ok(
+  not public.workout_set_is_recorded('weight', null, null, 8),
+  'a weight set without kilograms is not recorded'
+);
+
+select ok(
+  public.workout_set_is_recorded('weight', 82.5, null, 8),
+  'a weight set with kilograms and reps is recorded'
 );
 
 with created_exercise as (
@@ -246,24 +253,21 @@ select lives_ok(
       position,
       load_mode,
       band_direction,
-      reps,
-      is_confirmed
+      reps
     )
-    values ('40000000-0000-0000-0000-000000000002', 1, 'assistance_band', 'assistance', 10, false)
+    values ('40000000-0000-0000-0000-000000000002', 1, 'assistance_band', 'assistance', 10)
   $$,
-  'an unconfirmed band set may still be missing its strength'
+  'a band set may still be missing its strength'
 );
 
-select throws_ok(
-  $$
-    update public.workout_sets
-    set is_confirmed = true
-    where workout_exercise_id = '40000000-0000-0000-0000-000000000002'
-      and position = 1
-  $$,
-  '23514'::character(5),
-  null,
-  'a confirmed band set requires its strength'
+select ok(
+  not public.workout_set_is_recorded('assistance_band', null, null, 10),
+  'a band set without its strength is not recorded'
+);
+
+select ok(
+  public.workout_set_is_recorded('assistance_band', null, 'strong', 10),
+  'a band set with its strength and reps is recorded'
 );
 
 select throws_ok(

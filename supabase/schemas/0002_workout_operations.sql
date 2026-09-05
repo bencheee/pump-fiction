@@ -44,8 +44,7 @@ as $$
                 'loadKg', workout_set.load_kg,
                 'bandDirection', workout_set.band_direction,
                 'bandStrength', workout_set.band_strength,
-                'reps', workout_set.reps,
-                'isConfirmed', workout_set.is_confirmed
+                'reps', workout_set.reps
               ) order by workout_set.position)
               from public.workout_sets as workout_set
               where workout_set.workout_exercise_id = occurrence.id
@@ -62,12 +61,16 @@ as $$
                     'loadKg', previous_set.load_kg,
                     'bandDirection', previous_set.band_direction,
                     'bandStrength', previous_set.band_strength,
-                    'reps', previous_set.reps,
-                    'isConfirmed', previous_set.is_confirmed
+                    'reps', previous_set.reps
                   ) order by previous_set.position)
                   from public.workout_sets as previous_set
                   where previous_set.workout_exercise_id = previous_occurrence.id
-                    and previous_set.is_confirmed
+                    and public.workout_set_is_recorded(
+                      previous_set.load_mode,
+                      previous_set.load_kg,
+                      previous_set.band_strength,
+                      previous_set.reps
+                    )
                 ), '[]'::jsonb)
               )
               from public.workout_exercises as previous_occurrence
@@ -77,7 +80,12 @@ as $$
                 and exists (
                   select 1 from public.workout_sets as eligible_set
                   where eligible_set.workout_exercise_id = previous_occurrence.id
-                    and eligible_set.is_confirmed
+                    and public.workout_set_is_recorded(
+                      eligible_set.load_mode,
+                      eligible_set.load_kg,
+                      eligible_set.band_strength,
+                      eligible_set.reps
+                    )
                 )
               order by previous_workout.workout_date desc, previous_workout.finished_at desc
               limit 1
@@ -274,8 +282,7 @@ begin
       load_kg = nullif(p_payload ->> 'loadKg', '')::numeric,
       band_direction = nullif(p_payload ->> 'bandDirection', '')::public.band_direction,
       band_strength = nullif(p_payload ->> 'bandStrength', '')::public.band_strength,
-      reps = nullif(p_payload ->> 'reps', '')::integer,
-      is_confirmed = (p_payload ->> 'isConfirmed')::boolean
+      reps = nullif(p_payload ->> 'reps', '')::integer
     from public.workout_exercises as occurrence
     where workout_set.id = target_id and occurrence.id = workout_set.workout_exercise_id and occurrence.workout_id = p_workout_id;
     if not found then raise exception using errcode = 'PF002', message = 'Workout set does not belong to workout'; end if;
@@ -289,7 +296,7 @@ begin
     target_id = (p_payload ->> 'workoutSetId')::uuid;
     select workout_set.* into target_set from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id where workout_set.id = target_id and occurrence.workout_id = p_workout_id for update of workout_set;
     if not found then raise exception using errcode = 'PF002', message = 'Workout set does not belong to workout'; end if;
-    populated = target_set.load_mode is not null or target_set.load_kg is not null or target_set.band_direction is not null or target_set.band_strength is not null or target_set.reps is not null or target_set.is_confirmed;
+    populated = target_set.load_mode is not null or target_set.load_kg is not null or target_set.band_direction is not null or target_set.band_strength is not null or target_set.reps is not null;
     if populated and coalesce((p_payload ->> 'confirmedPopulatedRemoval')::boolean, false) is not true then raise exception using errcode = 'PF204', message = 'Populated set removal requires confirmation'; end if;
     delete from public.workout_sets where id = target_id;
     select coalesce(max(position), 0) into next_position from public.workout_sets where workout_exercise_id = target_set.workout_exercise_id;
@@ -309,7 +316,7 @@ begin
     target_id = (p_payload ->> 'workoutExerciseId')::uuid;
     select occurrence.* into target_occurrence from public.workout_exercises as occurrence where occurrence.id = target_id and occurrence.workout_id = p_workout_id for update;
     if not found then raise exception using errcode = 'PF002', message = 'Workout exercise does not belong to workout'; end if;
-    select btrim(target_occurrence.workout_note) <> '' or exists (select 1 from public.workout_sets where workout_exercise_id = target_id and (load_mode is not null or load_kg is not null or band_direction is not null or band_strength is not null or reps is not null or is_confirmed)) into populated;
+    select btrim(target_occurrence.workout_note) <> '' or exists (select 1 from public.workout_sets where workout_exercise_id = target_id and (load_mode is not null or load_kg is not null or band_direction is not null or band_strength is not null or reps is not null)) into populated;
     if populated and coalesce((p_payload ->> 'confirmedPopulatedRemoval')::boolean, false) is not true then raise exception using errcode = 'PF204', message = 'Populated exercise removal requires confirmation'; end if;
     delete from public.workout_exercises where id = target_id;
     select coalesce(max(position), 0) into next_position from public.workout_exercises where workout_id = p_workout_id;

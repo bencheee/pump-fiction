@@ -429,7 +429,6 @@ export type Database = {
           band_strength: Database["public"]["Enums"]["band_strength"] | null
           created_at: string
           id: string
-          is_confirmed: boolean
           load_kg: number | null
           load_mode: Database["public"]["Enums"]["load_mode"] | null
           position: number
@@ -442,7 +441,6 @@ export type Database = {
           band_strength?: Database["public"]["Enums"]["band_strength"] | null
           created_at?: string
           id?: string
-          is_confirmed?: boolean
           load_kg?: number | null
           load_mode?: Database["public"]["Enums"]["load_mode"] | null
           position: number
@@ -455,7 +453,6 @@ export type Database = {
           band_strength?: Database["public"]["Enums"]["band_strength"] | null
           created_at?: string
           id?: string
-          is_confirmed?: boolean
           load_kg?: number | null
           load_mode?: Database["public"]["Enums"]["load_mode"] | null
           position?: number
@@ -681,6 +678,15 @@ export type Database = {
           p_split_id: string
         }
         Returns: string
+      }
+      workout_set_is_recorded: {
+        Args: {
+          p_band_strength: Database["public"]["Enums"]["band_strength"]
+          p_load_kg: number
+          p_load_mode: Database["public"]["Enums"]["load_mode"]
+          p_reps: number
+        }
+        Returns: boolean
       }
     }
     Enums: {

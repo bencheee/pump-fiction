@@ -135,15 +135,15 @@ Each snapshotted split exercise initially receives exactly its planned number of
 
 ### MVP-WRK-003 — Per-set mode and validation
 
-Each set displays only the inputs of its snapshot's implied mode, and where the definition permits an addition each set can independently apply or remove exactly that addition. No set offers a menu of modes. Decimal load/assistance values are allowed where applicable, reps must be positive integers, and an invalid or incomplete set cannot be confirmed as eligible data.
+Each set displays only the inputs of its snapshot's implied mode, and where the definition permits an addition each set can independently apply or remove exactly that addition. No set offers a menu of modes. Decimal load/assistance values are allowed where applicable, reps must be positive integers, and no screen offers a confirmation control. An incomplete set is kept as entered and is not eligible data.
 
 ### MVP-WRK-004 — Immediate persistence
 
-Confirming a valid set persists it immediately. Reordering exercises, adding/removing exercises or sets, changing set values/modes, timer changes, and workout-specific notes also auto-save without an explicit workout-wide save action.
+Entering a set value persists it immediately, and a set that holds everything its mode requires is recorded without any further action. Reordering exercises, adding/removing exercises or sets, changing set values/modes, timer changes, and workout-specific notes also auto-save without an explicit workout-wide save action.
 
 ### MVP-WRK-005 — Restore one current workout
 
-At most one current active or paused workout exists. Reloading or reopening restores that workout with its order, entered and confirmed sets, notes, timer state, and accumulated active duration intact.
+At most one current active or paused workout exists. Reloading or reopening restores that workout with its order, entered sets, notes, timer state, and accumulated active duration intact.
 
 ### MVP-WRK-006 — Last time
 
@@ -167,7 +167,7 @@ The timer counts active workout time. **Continue Later** pauses it; elapsed wall
 
 ### MVP-WRK-011 — Finish review
 
-Before finalization, the review shows active duration, exercise count, confirmed-set count, and empty planned sets, with actions for **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and separately confirmed discard.
+Before finalization, the review shows active duration, exercise count, recorded-set count, and the planned sets left without values, which it names rather than blocking the finish, with actions for **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and separately confirmed discard.
 
 ### MVP-WRK-012 — Completion outcomes
 
@@ -199,11 +199,11 @@ Exercises with historical performances appear in Exercise History even after the
 
 ### MVP-HIS-006 — Statistics eligibility
 
-Only confirmed sets from completed workouts feed exercise PRs and charts. Only completed split workouts feed their persistent split's duration statistics. One-time workouts feed exercise statistics only; incomplete workouts feed neither.
+Only recorded sets from completed workouts feed exercise PRs and charts. Only completed split workouts feed their persistent split's duration statistics. One-time workouts feed exercise statistics only; incomplete workouts feed neither.
 
 ### MVP-HIS-007 — Weights PRs
 
-For weights exercises, the app derives highest entered weight, highest reps at each weight, highest set volume (`weight × reps`), and highest summed confirmed-set exercise volume in one workout. No-band and each resistance-band strength are compared separately.
+For weights exercises, the app derives highest entered weight, highest reps at each weight, highest set volume (`weight × reps`), and highest summed recorded-set exercise volume in one workout. No-band and each resistance-band strength are compared separately.
 
 ### MVP-HIS-008 — Bodyweight and assisted PRs
 

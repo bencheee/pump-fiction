@@ -113,7 +113,6 @@ function makeSet(overrides: Partial<WorkoutSet> & { id: string }): WorkoutSet {
     bandDirection: null,
     bandStrength: null,
     reps: null,
-    isConfirmed: false,
     ...overrides,
   };
 }
@@ -151,7 +150,6 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
             loadMode: "weight",
             loadKg: 82.5,
             reps: 6,
-            isConfirmed: true,
           }),
           makeSet({
             id: "00000000-0000-4000-8000-0000000000d2",
@@ -173,7 +171,6 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
               loadMode: "weight",
               loadKg: 85,
               reps: 6,
-              isConfirmed: true,
             }),
           ],
         },
@@ -256,15 +253,17 @@ describe("Active-workout mobile experience", () => {
     renderExperience();
 
     expect(
-      screen.getByText("3 planned × 5–8 reps · 1 of 3 confirmed"),
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
     ).toBeVisible();
     expect(
-      screen.getByText("2 planned × 6–10 reps · 0 of 2 confirmed"),
+      screen.getByText("2 planned × 6–10 reps · 0 of 2 recorded"),
     ).toBeVisible();
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
     expect(screen.getByText("22 Aug · 85 kg × 6")).toBeVisible();
     expect(screen.getByText("No completed performance yet.")).toBeVisible();
-    expect(screen.getByText("Confirmed", { exact: true })).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: /Confirm set/ }),
+    ).not.toBeInTheDocument();
 
     const squat = screen.getByRole("region", { name: "Squat" });
     expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
@@ -306,35 +305,32 @@ describe("Active-workout mobile experience", () => {
     expect(screen.getByLabelText("Active duration")).toBeVisible();
   });
 
-  it("blocks confirmation without required values and mirrors the message", async () => {
+  it("records a set from its entered values with no confirmation step", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const squat = screen.getByRole("region", { name: "Squat" });
 
-    await user.click(
-      within(squat).getByRole("button", { name: "Confirm set 2 of Squat" }),
-    );
     expect(
-      screen.getAllByText("Enter kg and reps to confirm this set."),
-    ).toHaveLength(2);
-    expect(transport.commands).toHaveLength(0);
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
+    ).toBeVisible();
 
     await user.type(within(squat).getAllByLabelText("kg")[1]!, "90");
+    await user.tab();
     await user.type(within(squat).getAllByLabelText("Reps")[1]!, "5");
-    await user.click(
-      within(squat).getByRole("button", { name: "Confirm set 2 of Squat" }),
-    );
+    await user.tab();
 
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
         loadKg: 90,
         reps: 5,
-        isConfirmed: true,
       });
     });
+    expect(transport.last("update_set").payload).not.toHaveProperty(
+      "isConfirmed",
+    );
     expect(
-      screen.queryByText("Enter kg and reps to confirm this set."),
-    ).not.toBeInTheDocument();
+      await screen.findByText("3 planned × 5–8 reps · 2 of 3 recorded"),
+    ).toBeVisible();
   });
 
   it("removes the definition's addition from a set and keeps its reps", async () => {
@@ -350,15 +346,12 @@ describe("Active-workout mobile experience", () => {
       within(pullUp).getByRole("button", { name: "Remove added weight" }),
     );
 
-    expect(
-      await screen.findByText("Cleared added kg. Set returned to unconfirmed."),
-    ).toBeVisible();
+    expect(await screen.findByText("Cleared added kg.")).toBeVisible();
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
         loadMode: "bodyweight",
         loadKg: null,
         reps: 8,
-        isConfirmed: false,
       });
     });
   });
@@ -382,7 +375,6 @@ describe("Active-workout mobile experience", () => {
       expect(transport.last("update_set").payload).toMatchObject({
         workoutSetId: "00000000-0000-4000-8000-0000000000d2",
         loadMode: "weight_resistance_band",
-        isConfirmed: false,
       });
     });
     expect(
@@ -391,7 +383,7 @@ describe("Active-workout mobile experience", () => {
     expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
   });
 
-  it("returns a confirmed set to unconfirmed when a value changes", async () => {
+  it("keeps a recorded set recorded when one of its values changes", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const squat = screen.getByRole("region", { name: "Squat" });
@@ -402,12 +394,11 @@ describe("Active-workout mobile experience", () => {
     await user.tab();
 
     expect(
-      await screen.findByText("Set returned to unconfirmed."),
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
     ).toBeVisible();
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
         loadKg: 80,
-        isConfirmed: false,
       });
     });
   });
@@ -520,11 +511,11 @@ describe("Finish review", () => {
 
     expect(screen.getByText("Proposed split · active rotation")).toBeVisible();
     expect(screen.getByText("Exercises")).toBeVisible();
-    expect(screen.getByText("Confirmed sets")).toBeVisible();
+    expect(screen.getByText("Recorded sets")).toBeVisible();
     expect(screen.getByText("Empty planned sets")).toBeVisible();
     expect(
       screen.getByText(
-        "Planned but unconfirmed. These are not saved as performances:",
+        "Planned but left without values. These are not saved as performances:",
       ),
     ).toBeVisible();
     expect(screen.getByText("Squat set 2")).toBeVisible();

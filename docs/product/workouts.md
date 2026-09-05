@@ -6,7 +6,7 @@ Starting a split creates a separate workout snapshot. It includes the workout na
 
 The snapshot boundary and stored fields are canonical in [`domain-model.md`](../architecture/domain-model.md#workout-snapshots). The source split remains unchanged by all workout-local edits.
 
-Only one workout may be active at a time. Reopening the application must restore it without losing confirmed sets, notes, ordering, or timer state.
+Only one workout may be active at a time. Reopening the application must restore it without losing entered sets, notes, ordering, or timer state.
 
 ## Initial and editable sets
 
@@ -29,7 +29,7 @@ Examples of resulting fields:
 - weights: kg, optional resistance-band strength when allowed, and reps;
 - bodyweight with assistance: assistance kg and reps, or assistance-band strength and reps, according to the single addition its definition allows.
 
-Weights permit decimal values. Reps are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save; completeness is required only when the set is confirmed. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
+Weights permit decimal values. Reps are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save. Entering the values is the record: a set is *recorded* once it holds everything its mode requires, and nothing else marks it; see [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). A partially entered set is kept as entered and simply does not count. Active-workout auto-save is a functionally important requirement.
 
 The accepted technical durability mechanism is defined in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md); this document remains authoritative for user-visible workout behavior.
 
@@ -70,7 +70,7 @@ The exact timestamps retained for completed History are described in [`domain-mo
 
 ## Finishing a workout
 
-The finish review shows active duration, exercise count, confirmed-set count, and any empty planned sets. Its actions stay together in one sticky group:
+The finish review shows active duration, exercise count, recorded-set count, and any planned sets left without values, which it names instead of blocking the finish. Its actions stay together in one sticky group:
 
 - **Complete Workout**;
 - **Save as Incomplete**;

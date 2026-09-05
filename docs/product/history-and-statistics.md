@@ -46,7 +46,7 @@ The exercise list contains every exercise with at least one historical performan
 
 ## Statistics eligibility and recalculation
 
-Only confirmed sets in completed workouts contribute to PRs and exercise charts. Only completed split-based workouts contribute to that split's duration statistics. One-time workouts contribute to exercise but not split statistics. Incomplete workouts contribute to neither.
+Only recorded sets in completed workouts contribute to PRs and exercise charts; a set is recorded once it holds everything its mode requires, as defined by [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). Only completed split-based workouts contribute to that split's duration statistics. One-time workouts contribute to exercise but not split statistics. Incomplete workouts contribute to neither.
 
 Statistics are derived from canonical history rather than stored as authoritative aggregates. Editing, deleting, or changing completion status causes recalculation. See [`domain-model.md`](../architecture/domain-model.md#derived-statistics).
 
@@ -63,7 +63,7 @@ Track:
 
 `set volume = weight × reps`
 
-`workout exercise volume = sum of volumes of confirmed sets`
+`workout exercise volume = sum of volumes of recorded sets`
 
 When a weights exercise uses an optional resistance band, calculate and present comparable records separately for no-band sets and each resistance-band strength. Never treat the band as kilograms.
 
@@ -75,7 +75,7 @@ For bodyweight with added weight, track highest added weight, highest reps at th
 
 ### Assisted
 
-For assistance measured in kilograms, track the least assistance in a successfully confirmed set and the highest reps at the same assistance amount. Lower assistance is better progress; assistance remains a positive value.
+For assistance measured in kilograms, track the least assistance in a successfully recorded set and the highest reps at the same assistance amount. Lower assistance is better progress; assistance remains a positive value.
 
 ### Bands
 

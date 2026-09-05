@@ -9,8 +9,7 @@ import { applyCommandToWorkout } from "@/features/active-workout/domain/apply-co
 import type { ActiveWorkoutCommand } from "@/features/active-workout/domain/active-workout-command";
 import {
   changeSetMode,
-  confirmValidationMessage,
-  missingConfirmValues,
+  isSetRecorded,
   setLoadFieldLabels,
   setModeFields,
 } from "@/features/active-workout/domain/set-entry";
@@ -254,12 +253,8 @@ export function ActiveWorkoutExperience({
   function updateSet(
     set: WorkoutSet,
     mode: ExerciseLoadMode,
-    changes: Partial<
-      Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps" | "isConfirmed">
-    >,
+    changes: Partial<Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps">>,
   ) {
-    const wasConfirmed = set.isConfirmed;
-    const isConfirmed = changes.isConfirmed ?? false;
     send("update_set", {
       workoutSetId: set.id,
       loadMode: mode,
@@ -270,15 +265,8 @@ export function ActiveWorkoutExperience({
           ? changes.bandStrength
           : set.bandStrength,
       reps: changes.reps !== undefined ? changes.reps : set.reps,
-      isConfirmed,
     });
-    if (wasConfirmed && !isConfirmed)
-      setRowFeedback(set.id, {
-        kind: "notice",
-        message: "Set returned to unconfirmed.",
-      });
-    else if (feedback[set.id]?.kind === "error")
-      setRowFeedback(set.id, undefined);
+    if (feedback[set.id]?.kind === "error") setRowFeedback(set.id, undefined);
   }
 
   function changeMode(set: WorkoutSet, mode: ExerciseLoadMode) {
@@ -290,15 +278,16 @@ export function ActiveWorkoutExperience({
       bandDirection: change.set.bandDirection,
       bandStrength: change.set.bandStrength,
       reps: change.set.reps,
-      isConfirmed: false,
     });
-    setRowFeedback(set.id, {
-      kind: "notice",
-      message:
-        change.clearedLabels.length > 0
-          ? `Cleared ${change.clearedLabels.join(" and ")}. Set returned to unconfirmed.`
-          : "Set returned to unconfirmed.",
-    });
+    setRowFeedback(
+      set.id,
+      change.clearedLabels.length > 0
+        ? {
+            kind: "notice",
+            message: `Cleared ${change.clearedLabels.join(" and ")}.`,
+          }
+        : undefined,
+    );
   }
 
   function moveExercise(index: number, direction: -1 | 1) {
@@ -401,9 +390,6 @@ export function ActiveWorkoutExperience({
               }
               onUpdateSet={updateSet}
               onChangeMode={changeMode}
-              onConfirmError={(setId, message) =>
-                setRowFeedback(setId, { kind: "error", message })
-              }
               onClearFeedback={(setId) => setRowFeedback(setId, undefined)}
             />
           ),
@@ -504,7 +490,6 @@ function ExerciseCard({
   onNoteCommit,
   onUpdateSet,
   onChangeMode,
-  onConfirmError,
   onClearFeedback,
 }: {
   exercise: WorkoutExercise;
@@ -520,12 +505,9 @@ function ExerciseCard({
   onUpdateSet: (
     set: WorkoutSet,
     mode: ExerciseLoadMode,
-    changes: Partial<
-      Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps" | "isConfirmed">
-    >,
+    changes: Partial<Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps">>,
   ) => void;
   onChangeMode: (set: WorkoutSet, mode: ExerciseLoadMode) => void;
-  onConfirmError: (setId: string, message: string) => void;
   onClearFeedback: (setId: string) => void;
 }) {
   const [noteState, setNoteState] = useState(() => ({
@@ -538,7 +520,9 @@ function ExerciseCard({
       draft: exercise.workoutNote,
     });
   const noteDraft = noteState.draft;
-  const confirmedCount = exercise.sets.filter((set) => set.isConfirmed).length;
+  const recordedCount = exercise.sets.filter((set) =>
+    isSetRecorded(set.loadMode ?? setBaseMode(exercise), set),
+  ).length;
   const populated = exercise.sets.some(isPopulatedSet);
   const meta =
     exercise.plannedSets !== null
@@ -546,8 +530,8 @@ function ExerciseCard({
           exercise.minReps !== null && exercise.maxReps !== null
             ? ` × ${exercise.minReps}–${exercise.maxReps} reps`
             : ""
-        } · ${confirmedCount} of ${exercise.sets.length} confirmed`
-      : `Workout-local, no prescription · ${confirmedCount} of ${exercise.sets.length} confirmed`;
+        } · ${recordedCount} of ${exercise.sets.length} recorded`
+      : `Workout-local, no prescription · ${recordedCount} of ${exercise.sets.length} recorded`;
 
   const removeTrigger = (
     <button
@@ -657,7 +641,6 @@ function ExerciseCard({
               onUpdate={onUpdateSet}
               onChangeMode={onChangeMode}
               onRemove={onRemoveSet}
-              onConfirmError={onConfirmError}
               onClearFeedback={onClearFeedback}
             />
           ),
@@ -700,7 +683,6 @@ function SetRow({
   onUpdate,
   onChangeMode,
   onRemove,
-  onConfirmError,
   onClearFeedback,
 }: {
   exercise: WorkoutExercise;
@@ -709,13 +691,10 @@ function SetRow({
   onUpdate: (
     set: WorkoutSet,
     mode: ExerciseLoadMode,
-    changes: Partial<
-      Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps" | "isConfirmed">
-    >,
+    changes: Partial<Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps">>,
   ) => void;
   onChangeMode: (set: WorkoutSet, mode: ExerciseLoadMode) => void;
   onRemove: (set: WorkoutSet, confirmedPopulatedRemoval: boolean) => void;
-  onConfirmError: (setId: string, message: string) => void;
   onClearFeedback: (setId: string) => void;
 }) {
   const baseMode = setBaseMode(exercise);
@@ -753,44 +732,10 @@ function SetRow({
     const parsed = parsePositiveInteger(repsDraft);
     if (parsed !== set.reps) onUpdate(set, mode, { reps: parsed });
   }
-  function confirm() {
-    if (set.isConfirmed) {
-      onUpdate(set, mode, { isConfirmed: false });
-      return;
-    }
-    const candidate = {
-      loadKg: fields.load !== null ? parsePositiveDecimal(loadDraft) : null,
-      bandStrength: fields.band !== null ? set.bandStrength : null,
-      reps: parsePositiveInteger(repsDraft),
-    };
-    const missing = missingConfirmValues(mode, candidate);
-    if (missing.length > 0) {
-      onConfirmError(set.id, confirmValidationMessage(missing));
-      return;
-    }
-    onUpdate(set, mode, { ...candidate, isConfirmed: true });
-    onClearFeedback(set.id);
-  }
-
   return (
     <div className="py-4 first:pt-2 last:pb-2">
       <div className="flex flex-wrap items-center gap-2">
-        <span
-          aria-hidden="true"
-          className={`flex size-6 items-center justify-center rounded-[var(--pf-r1)] border ${
-            set.isConfirmed
-              ? "border-[var(--pf-ok)] bg-[var(--pf-ok)] text-[var(--pf-bg-canvas)]"
-              : "border-[var(--pf-border-control)] text-transparent"
-          }`}
-        >
-          <Icon name="check" size={13} />
-        </span>
         <span className="font-semibold">Set {set.position}</span>
-        {set.isConfirmed ? (
-          <span className="ml-auto text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-ok)] uppercase">
-            Confirmed
-          </span>
-        ) : null}
       </div>
 
       <div className="mt-3 flex flex-wrap items-end gap-3">
@@ -857,19 +802,6 @@ function SetRow({
             onBlur={commitReps}
           />
         </div>
-        <button
-          type="button"
-          aria-pressed={set.isConfirmed}
-          aria-label={`Confirm set ${set.position} of ${exercise.exerciseName}`}
-          onClick={confirm}
-          className={`flex size-12 items-center justify-center rounded-[var(--pf-r2)] border ${
-            set.isConfirmed
-              ? "border-[var(--pf-ok)] bg-[var(--pf-ok)] text-[var(--pf-bg-canvas)]"
-              : "border-[var(--pf-border-control)] text-[var(--pf-text-2)]"
-          }`}
-        >
-          <Icon name="check" size={18} />
-        </button>
       </div>
 
       {optionalMode !== null ? (
@@ -1045,12 +977,7 @@ function AddExerciseSheet({
 }
 
 function isPopulatedSet(set: WorkoutSet): boolean {
-  return (
-    set.isConfirmed ||
-    set.loadKg !== null ||
-    set.bandStrength !== null ||
-    set.reps !== null
-  );
+  return set.loadKg !== null || set.bandStrength !== null || set.reps !== null;
 }
 
 function parsePositiveDecimal(text: string): number | null {

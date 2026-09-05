@@ -11,6 +11,7 @@ import type { CurrentWorkout } from "@/features/active-workout/domain/workout";
 import { newCommandId } from "@/features/active-workout/client/command-id";
 import { rebasePendingCommands } from "@/features/active-workout/client/rebase-pending-commands";
 import { restoreActiveWorkout } from "@/features/active-workout/client/restore-active-workout";
+import { isSetRecorded } from "@/features/active-workout/domain/set-entry";
 import {
   ActiveWorkoutDeliveryController,
   type ActiveWorkoutSaveStatus,
@@ -136,18 +137,20 @@ export function FinishReview({
     workout.accumulatedActiveSeconds + activeSegmentSeconds;
 
   const isOneTime = workout.sourceKind === "one_time";
-  const confirmedSets = workout.exercises.reduce(
+  const recordedSets = workout.exercises.reduce(
     (total, exercise) =>
-      total + exercise.sets.filter((set) => set.isConfirmed).length,
+      total +
+      exercise.sets.filter((set) => isSetRecorded(set.loadMode, set)).length,
     0,
   );
-  const emptyPlanned = workout.exercises.flatMap((exercise) =>
+  const plannedWithoutValues = workout.exercises.flatMap((exercise) =>
     exercise.plannedSets === null
       ? []
       : exercise.sets
           .filter(
             (set) =>
-              set.position <= (exercise.plannedSets ?? 0) && !set.isConfirmed,
+              set.position <= (exercise.plannedSets ?? 0) &&
+              !isSetRecorded(set.loadMode, set),
           )
           .map((set) => `${exercise.exerciseName} set ${set.position}`),
   );
@@ -188,30 +191,31 @@ export function FinishReview({
               {workout.exercises.length}
             </span>
           </ReviewRow>
-          <ReviewRow label="Confirmed sets">
+          <ReviewRow label="Recorded sets">
             <span className="pf-numeric text-[21px] font-semibold text-[var(--pf-ok)]">
-              {confirmedSets}
+              {recordedSets}
             </span>
           </ReviewRow>
           {!isOneTime ? (
-            <ReviewRow label="Empty planned sets">
+            <ReviewRow label="Sets left without values">
               <span
-                className={`pf-numeric text-[21px] font-semibold ${emptyPlanned.length > 0 ? "text-[var(--pf-warn)]" : ""}`}
+                className={`pf-numeric text-[21px] font-semibold ${plannedWithoutValues.length > 0 ? "text-[var(--pf-warn)]" : ""}`}
               >
-                {emptyPlanned.length}
+                {plannedWithoutValues.length}
               </span>
             </ReviewRow>
           ) : null}
         </dl>
 
-        {!isOneTime && emptyPlanned.length > 0 ? (
+        {!isOneTime && plannedWithoutValues.length > 0 ? (
           <div className="text-[13px] leading-[1.5] text-[var(--pf-warn)]">
             <p className="flex items-start gap-2">
               <Icon name="triangle-alert" size={14} className="mt-0.5" />
-              Planned but unconfirmed. These are not saved as performances:
+              Planned but left without values. These are not saved as
+              performances:
             </p>
             <ul className="mt-2 list-disc space-y-1 pl-9">
-              {emptyPlanned.map((entry) => (
+              {plannedWithoutValues.map((entry) => (
                 <li key={entry}>{entry}</li>
               ))}
             </ul>

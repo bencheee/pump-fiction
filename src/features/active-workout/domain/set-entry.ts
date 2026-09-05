@@ -26,7 +26,8 @@ export const setLoadFieldLabels: Readonly<Record<SetLoadField, string>> = {
   assistance_kg: "assistance kg",
 };
 
-export function missingConfirmValues(
+/** The values a set of this mode still needs before it counts as recorded. */
+export function missingSetValues(
   mode: ExerciseLoadMode,
   set: Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps">,
 ): readonly string[] {
@@ -40,8 +41,16 @@ export function missingConfirmValues(
   return missing;
 }
 
-export function confirmValidationMessage(missing: readonly string[]): string {
-  return `Enter ${missing.join(" and ")} to confirm this set.`;
+/**
+ * A set is recorded once it holds everything its mode requires. Nothing marks
+ * it; the state is derived from the entered values, exactly as
+ * `workout_set_is_recorded` derives it in the database.
+ */
+export function isSetRecorded(
+  mode: ExerciseLoadMode | null,
+  set: Pick<WorkoutSet, "loadKg" | "bandStrength" | "reps">,
+): boolean {
+  return mode !== null && missingSetValues(mode, set).length === 0;
 }
 
 export function changeSetMode(
@@ -72,7 +81,6 @@ export function changeSetMode(
       loadKg,
       bandStrength,
       bandDirection: next.band,
-      isConfirmed: false,
     },
     clearedLabels: cleared,
   };

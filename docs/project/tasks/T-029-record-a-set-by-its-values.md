@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:07:30+02:00`
+- **Updated:** `2026-09-05T21:17:55+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the recorded-by-values model as one reviewable commit.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset and the suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -65,19 +65,19 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Execution checklist
 
-- [ ] Record the ADR with the completeness rule and the removed flag.
-- [ ] Drop the confirmation column and its check from the declarative schema, generate the migration, and regenerate types.
-- [ ] Remove `isConfirmed` from the command contract, its validation, and the optimistic application.
-- [ ] Remove both confirmation controls and derive the recorded state in the set row and the finish review.
-- [ ] Update the finish-review counts and their copy.
-- [ ] Extend pgTAP, unit, and component assertions without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record the ADR with the completeness rule and the removed flag — [ADR-0027](../../decisions/0027-a-set-is-recorded-by-its-values.md).
+- [x] Drop the confirmation column and its check from the declarative schema, generate the migration, and regenerate types — the rule moves into the immutable `workout_set_is_recorded(load_mode, load_kg, band_strength, reps)`, which `get_current_workout` uses for last-performance eligibility; the generated migration applied and converged unchanged.
+- [x] Remove `isConfirmed` from the command contract, its validation, and the optimistic application.
+- [x] Remove both confirmation controls and derive the recorded state in the set row and the finish review — `isSetRecorded` mirrors the database rule, and the exercise card reads `N of M recorded`.
+- [x] Update the finish-review counts and their copy — `Recorded sets` and `Sets left without values`, which the review names instead of blocking the finish.
+- [x] Extend pgTAP, unit, and component assertions — pgTAP `0001` grows from 16 to 19 assertions, replacing the two confirmation-constraint cases with stored-as-entered plus derived-rule checks, and `0004` asserts the rule through the applied command and the one-time starter set.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T21:17:55+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 852 internal links. The generated migration applied with `migration up` against the local database and needed no correction; a repeated declarative sync against a freshly built shadow database reported no schema changes; `supabase db lint --local` reported no schema errors; regenerated types drop `is_confirmed` and add the new function; and `git diff --check` was clean. No feature test ran.
 
 ## Test plan and results
 
@@ -91,7 +91,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-029: record a set by its entered values`
-- **Committed scope:** Not created
+- **Committed scope:** the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
 
