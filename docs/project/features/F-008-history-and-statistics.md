@@ -7,7 +7,7 @@
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
 - **Updated:** `2026-09-05T22:02:36+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is `In Progress``
+- **Progress:** `0/6 required Tasks Done; T-031 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
