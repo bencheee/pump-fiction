@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:23:55+02:00`
+- **Updated:** `2026-09-05T21:24:47+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** `2026-09-05T21:23:55+02:00`
-- **Approval requested:** `2026-09-05T21:19:46+02:00`
-- **Approved:** `2026-09-05T21:19:46+02:00`
-- **Testing started:** `2026-09-05T21:19:46+02:00`
+- **Approval requested:** `2026-09-05T21:24:47+02:00`
+- **Approved:** `2026-09-05T21:24:47+02:00`
+- **Testing started:** `2026-09-05T21:24:47+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `9374b8c23f55882f4c813a3e9a761f26b291e2b5`; its run needs the Owner's approval of that SHA and of the clean reset.
+- **Next action:** Run the authorized cycle for `9374b8c23f55882f4c813a3e9a761f26b291e2b5`: clean reset, pgTAP, generated types, unit, component, and repository suites.
 
 ## Scope
 
@@ -84,7 +84,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** command and reducer unit tests without the flag, active-workout and finish-review component scenarios for a complete and an incomplete set, repository integration tests, and pgTAP tests for the changed set table; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `9374b8c23f55882f4c813a3e9a761f26b291e2b5`
 - **Results:** Failed on `2026-09-05T21:21:57+02:00` for `a64adcc3a1b547ac2af2ec9121c958653323d2f2`, on test expectations rather than on delivered behavior. The clean reset succeeded, pgTAP passed 65/65 — up from 62 by the three added assertions — regenerated types matched the committed file, and the component suite passed 4/4. The unit suite failed 2 of 69, both in `active-workout-mobile.test.tsx`:
 
   1. it still expected `2 planned × 6–10 reps · 0 of 2 recorded` for Pull-Up. Under the removed flag neither set was confirmed, but set 1 holds added weight and reps, so the derived rule now correctly records it and the card reads `1 of 2 recorded`. The delivery renamed the copy mechanically without re-deriving the count.
@@ -107,10 +107,10 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Approval
 
-- **Approved commit:** Approval cleared by the failed run
+- **Approved commit:** `9374b8c23f55882f4c813a3e9a761f26b291e2b5`
 - **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T21:19:46+02:00`
-- **Approval note:** Approval of `a64adcc3a1b547ac2af2ec9121c958653323d2f2` was cleared when its authorized run failed on two component expectations the delivery had not updated
+- **Approved at:** `2026-09-05T21:24:47+02:00`
+- **Approval note:** Approved the exact replacement and the clean reset its run requires, after the first approval was cleared by the failed run
 
 ## Definition of Ready
 
@@ -150,3 +150,5 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T21:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Started the authorized cycle against `a64adcc3a1b547ac2af2ec9121c958653323d2f2` |
 | `2026-09-05T21:21:57+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 69 unit tests on stale component expectations, including a set the derived rule now correctly records; approval and test authorization cleared |
 | `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` with the re-derived component expectations; static checks passed and no feature test ran |
+| `2026-09-05T21:24:47+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset it requires |
+| `2026-09-05T21:24:47+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the authorized cycle against `9374b8c23f55882f4c813a3e9a761f26b291e2b5` |

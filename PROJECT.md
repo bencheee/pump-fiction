@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:23:55+02:00
+- **Last updated:** 2026-09-05T21:24:47+02:00
 - **Current phase:** Local MVP implementation — `F-013` confirmed; starting the Owner's exercise and set-entry model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007`, `F-011`, and `F-013` complete; `T-028` verified under `F-014` and `T-029` awaits readiness; `F-012` queued in `Next`; `F-008` intentionally not started
@@ -15,12 +15,12 @@
 
 ## Immediate next action
 
-Owner approves replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` and the clean reset its run needs; that completes `F-014`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Run and record the authorized `T-029` verification, then ask the Owner to confirm the `F-014` result. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`1/2 Tasks Done`) — the two-type model is verified; values instead of confirmation remain
-  - [`T-029`](docs/project/tasks/T-029-record-a-set-by-its-values.md) — `In Review` — Claude Code primary agent — `2026-09-05T21:23:55+02:00` — review replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5`; its run needs approval of that SHA and of a clean reset
+  - [`T-029`](docs/project/tasks/T-029-record-a-set-by-its-values.md) — `Testing` — Claude Code primary agent — `2026-09-05T21:24:47+02:00` — run the authorized cycle for `9374b8c23f55882f4c813a3e9a761f26b291e2b5`
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
