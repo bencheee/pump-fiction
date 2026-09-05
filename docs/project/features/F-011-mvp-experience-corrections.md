@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:10:43+02:00`
-- **Progress:** `4/6 required Tasks Done`
+- **Updated:** `2026-09-05T13:15:59+02:00`
+- **Progress:** `5/6 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -56,7 +56,7 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 - `T-020` — Derive per-set load from the exercise definition (`Done`)
 - `T-021` — Replace archiving with deletion in data and operations (`Done`)
 - `T-022` — Replace archiving in the mobile experience (`Canceled`; absorbed into `T-021`)
-- `T-023` — Correct active-workout screen details
+- `T-023` — Correct active-workout screen details (`Done`)
 - `T-024` — Keep primary navigation during an active workout
 
 ## Dependencies and blockers
@@ -98,3 +98,4 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 | `2026-09-05T12:39:28+02:00` | Claude Code primary agent / Executor | Completed `T-020`; `F-011` advances to `3/7` | Owner correction 7 is delivered, approved, and verified |
 | `2026-09-05T12:41:51+02:00` | User / Owner | Canceled `T-022` and absorbed its screen scope into `T-021` | The screens cannot compile without the status fields the data change removes, so both belong in one reviewable commit |
 | `2026-09-05T13:10:43+02:00` | Claude Code primary agent / Executor | Completed `T-021`; `F-011` advances to `4/6` | Owner correction 3 is delivered, approved, and verified, and `ADR-0024` is accepted |
+| `2026-09-05T13:15:59+02:00` | Claude Code primary agent / Executor | Completed `T-023`; `F-011` advances to `5/6` | Owner corrections 5, 6, and 8 are delivered, approved, and verified |

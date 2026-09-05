@@ -1,7 +1,7 @@
 # T-023 — Correct active-workout screen details
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:15:27+02:00`
+- **Updated:** `2026-09-05T13:15:59+02:00`
 - **Started:** `2026-09-05T13:11:36+02:00`
 - **Review started:** `2026-09-05T13:14:24+02:00`
 - **Approval requested:** `2026-09-05T13:15:27+02:00`
 - **Approved:** `2026-09-05T13:15:27+02:00`
 - **Testing started:** `2026-09-05T13:15:27+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T13:15:59+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized component verification and record its results.
+- **Next action:** None; Task complete. Continue `F-011` with `T-024`.
 
 ## Scope
 
@@ -35,10 +35,10 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 
 ## Acceptance criteria
 
-- [ ] The active workout renders no restored-session banner in any restore path.
-- [ ] The exercise note heading reads exactly `Exercise note` and the note stays read-only.
-- [ ] `Discard Workout` sits in the finish sticky action group and remains visible without scrolling.
-- [ ] Discard still requires its separate confirmation and still records nothing.
+- [x] The active workout renders no restored-session banner in any restore path.
+- [x] The exercise note heading reads exactly `Exercise note` and the note stays read-only.
+- [x] `Discard Workout` sits in the finish sticky action group and remains visible without scrolling.
+- [x] Discard still requires its separate confirmation and still records nothing.
 
 ## Traceability
 
@@ -77,7 +77,7 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 - **No-test reason:** Not applicable
 - **Planned tests:** active-workout and finish component scenarios for the absent banner, the heading, and the relocated discard control; must not run before Owner approval of the exact commit
 - **Authorized commit:** `f72e7dde3bcc9cb8f80d98935e42e7411603403f`
-- **Results:** Not run
+- **Results:** Passed against exact approved commit `f72e7dde3bcc9cb8f80d98935e42e7411603403f` on `2026-09-05T13:15:59+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. Unit and component suites passed 66/66 across 13 files and shared UI suites passed 4/4. The active-workout scenarios confirm that a restore with pending commands replays them without rendering any restored-workout region, and that the finish review exposes Complete Workout and the separately confirmed Discard Workout inside the labelled finish action group.
 
 ## Delivery commit
 
@@ -115,15 +115,15 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -135,3 +135,4 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 | `2026-09-05T13:14:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `f72e7dde3bcc9cb8f80d98935e42e7411603403f` with static checks passed and no feature test run |
 | `2026-09-05T13:15:27+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit |
 | `2026-09-05T13:15:27+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `f72e7dde3bcc9cb8f80d98935e42e7411603403f` |
+| `2026-09-05T13:15:59+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Authorized unit and component suites passed 66/66 and shared UI 4/4 against the approved commit |
