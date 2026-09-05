@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:30:15+02:00`
+- **Updated:** `2026-09-05T12:31:50+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
 - **Review started:** `2026-09-05T12:27:32+02:00`
 - **Approval requested:** `2026-09-05T12:30:15+02:00`
 - **Approved:** `2026-09-05T12:30:15+02:00`
 - **Testing started:** `2026-09-05T12:30:15+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T12:31:50+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
+- **Next action:** None; Task complete. Continue `F-011` with `T-020`.
 
 ## Scope
 
@@ -43,12 +43,12 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Acceptance criteria
 
-- [ ] The exercise form never renders a mode the user cannot change; a weights exercise offers only the resistance-band addition and a bodyweight exercise offers only added weight or a resistance band.
-- [ ] A bodyweight exercise cannot save both added weight and a resistance band.
-- [ ] An assisted exercise cannot save zero or both of assistance weight and assistance band.
-- [ ] The `band` base type is not offered anywhere and no longer exists in the database.
-- [ ] The database rejects every retired combination, independently of the UI.
-- [ ] `MVP-EXE-001`, `MVP-EXE-003`, and `MVP-EXE-004` describe the accepted model, and `exercises.md` matches it.
+- [x] The exercise form never renders a mode the user cannot change; a weights exercise offers only the resistance-band addition and a bodyweight exercise offers only added weight or a resistance band.
+- [x] A bodyweight exercise cannot save both added weight and a resistance band.
+- [x] An assisted exercise cannot save zero or both of assistance weight and assistance band.
+- [x] The `band` base type is not offered anywhere and no longer exists in the database.
+- [x] The database rejects every retired combination, independently of the UI.
+- [x] `MVP-EXE-001`, `MVP-EXE-003`, and `MVP-EXE-004` describe the accepted model, and `exercises.md` matches it.
 
 ## Traceability
 
@@ -90,7 +90,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests, exercise repository integration tests, and pgTAP constraint tests for every retired and permitted combination; must not run before Owner approval of the exact commit
 - **Authorized commit:** `e265c48f4e376ccbdcc657eef7930830a0573013`
-- **Results:** Failed on `2026-09-05T12:26:11+02:00` against exact approved commit `db5a42026270393d17a11ecded5578e756f6d1e4` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history including the new migration, pgTAP passed 56/56 across five files, the shared UI component suites passed 4/4, and 62 of 63 unit and component tests passed. One test-only assertion failed: `offers only the optional additions of the selected type` queried buttons with `/^Weight/` across the whole screen, which also matches the `Weights` exercise-type button, so it failed even though the form correctly offers no selectable row for the implied `weight` mode. No implementation defect was found. The remaining repository integration run was not started because the failure already invalidates this attempt.
+- **Results:** Passed against exact approved replacement `e265c48f4e376ccbdcc657eef7930830a0573013` on `2026-09-05T12:31:50+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, local PostgreSQL `17`, and Vitest `4.1.11`, restarted from the beginning: `supabase db reset` applied the complete migration history to a clean database; pgTAP passed 56/56 across five files, including the extended exercise-library file 8/8 with the retired `band` type rejected as an invalid enum input, an incompatible bodyweight mode rejected by the row check, a second optional addition rejected by `exercise_load_modes_single_modifier`, and an assisted definition left without its assistance mode rejected by the deferred trigger; unit and component suites passed 63/63, including the rebuilt exercise-form scenarios for optional additions, mutual exclusion, and the assisted single choice; shared UI suites passed 4/4; repository integration passed 4/4 against the local stack; and regenerated types matched the committed file exactly. One earlier verification attempt is recorded above: it failed on a test-only assertion, whose partial results were discarded even though the reset and pgTAP had already passed.
 
 ## Delivery commit
 
@@ -128,15 +128,15 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -152,3 +152,4 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T12:27:32+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e265c48f4e376ccbdcc657eef7930830a0573013`; static checks passed and no feature test ran |
 | `2026-09-05T12:30:15+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
 | `2026-09-05T12:30:15+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the complete verification from the beginning against `e265c48f4e376ccbdcc657eef7930830a0573013` |
+| `2026-09-05T12:31:50+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: clean reset, pgTAP 56/56, unit and component 63/63, shared UI 4/4, repository 4/4, and unchanged generated types |

@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:07:13+02:00`
-- **Progress:** `1/7 required Tasks Done`
+- **Updated:** `2026-09-05T12:31:50+02:00`
+- **Progress:** `2/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -52,7 +52,7 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 ## Tasks
 
 - `T-018` — Return to the parent screen after saving (`Done`)
-- `T-019` — Simplify the exercise load-mode model
+- `T-019` — Simplify the exercise load-mode model (`Done`)
 - `T-020` — Derive per-set load from the exercise definition
 - `T-021` — Replace archiving with deletion in data and operations
 - `T-022` — Replace archiving in the mobile experience
@@ -94,3 +94,4 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | Created `F-011` in `Now / 1` with seven Tasks in `Backlog` | Record the nine Owner corrections to delivered `F-005`, `F-006`, and `F-007` behavior before `F-008` starts |
 | `2026-09-05T11:54:40+02:00` | User / Owner | Confirmed `F-011` readiness and started `T-018` | Directed execution of the recorded corrections before `F-008` |
 | `2026-09-05T12:07:13+02:00` | Claude Code primary agent / Executor | Completed `T-018`; `F-011` advances to `1/7` | Owner corrections 1 and 4 are delivered, approved, and verified |
+| `2026-09-05T12:31:50+02:00` | Claude Code primary agent / Executor | Completed `T-019`; `F-011` advances to `2/7` | Owner correction 2 is delivered, approved, and verified, and `ADR-0023` is accepted |
