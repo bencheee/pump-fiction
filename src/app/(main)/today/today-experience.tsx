@@ -199,7 +199,7 @@ function RestoreCard({
         href="/workout/current"
         className="mt-5 flex min-h-[var(--pf-size-primary-action)] w-full items-center justify-center rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 font-semibold text-[var(--pf-on-accent)]"
       >
-        Return to Workout
+        Resume Workout
       </Link>
     </section>
   );

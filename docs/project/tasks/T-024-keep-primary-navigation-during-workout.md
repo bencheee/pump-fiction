@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:16:19+02:00`
+- **Updated:** `2026-09-05T13:19:14+02:00`
 - **Started:** `2026-09-05T13:16:19+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the shell change and `ADR-0025` as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -61,18 +61,18 @@ Make the active workout part of the normally navigable application instead of a 
 
 ## Execution checklist
 
-- [ ] Record `ADR-0025` and mark the superseded focused-shell rule in both canonical documents.
-- [ ] Move the active-workout and finish routes into the navigable shell, keeping their top bar and sticky actions correct with the bottom navigation present.
-- [ ] Rename Today's return affordance to `Resume Workout`.
-- [ ] Remove or retain the focused shell explicitly, depending on whether any route still needs it.
-- [ ] Update component tests without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record `ADR-0025` and mark the superseded focused-shell rule in both canonical documents.
+- [x] Move the active-workout and finish routes into the navigable shell, keeping their top bar and sticky actions correct with the bottom navigation present.
+- [x] Rename Today's return affordance to `Resume Workout`.
+- [x] Remove the focused shell, because no route needs it any more.
+- [x] Update component tests without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T13:19:14+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build with `/workout/current` and `/workout/current/finish` now served from the single shell, UI asset checksums, Markdown lint, and all 751 internal links. `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 
@@ -84,9 +84,9 @@ Make the active workout part of the normally navigable application instead of a 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-024: keep primary navigation during an active workout`
-- **Committed scope:** Not created
+- **Committed scope:** `ADR-0025` and its index row; the active-workout and finish routes moved from the deleted `(focused)` group into `(main)`; the removed `FocusedShell` primitive and its export; Today's `Resume Workout` action; a component scenario that renders the workout inside the shell and asserts all four destinations plus the live duration; the updated Today assertion; and the information-architecture, UI-foundation, workout, and screen documentation.
 
 ## Review
 

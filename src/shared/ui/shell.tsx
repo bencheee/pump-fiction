@@ -80,24 +80,6 @@ export function MainShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function FocusedShell({ children }: { children: ReactNode }) {
-  const keyboardOpen = useKeyboardOpen();
-
-  return (
-    <div
-      data-shell="focused"
-      className={classNames(
-        "h-dvh min-h-0 w-full bg-[var(--pf-bg-canvas)]",
-        keyboardOpen && "pf-keyboard-open",
-      )}
-    >
-      <main id="pf-scroll" className="pf-scroll h-full">
-        {children}
-      </main>
-    </div>
-  );
-}
-
 function useKeyboardOpen(): boolean {
   const [keyboardOpen, setKeyboardOpen] = useState(false);
 

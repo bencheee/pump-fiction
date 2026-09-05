@@ -19,7 +19,7 @@ History owns its five subsections—Workouts, Exercises, Splits, Weight, and Bod
 
 ## Active-workout shell
 
-An active workout opens a separate focused screen without bottom navigation. The user can finish, pause with **Continue Later**, or enter the discard flow. Because only one workout can be active, reopening the application returns the user to that persisted session.
+An active workout opens its own screen but keeps the bottom navigation, so the user can browse Today, History, Programs, and Exercises during a workout and come back; see [ADR-0025](../decisions/0025-active-workout-in-the-main-shell.md). Leaving the screen keeps the workout running, and only **Continue Later** pauses it. The user can finish, pause, or enter the discard flow. Because only one workout can be active, reopening the application returns the user to that persisted session, and Today offers **Resume Workout**.
 
 ## Mobile interaction rules
 

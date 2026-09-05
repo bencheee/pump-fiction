@@ -59,7 +59,7 @@ None of these actions changes the originating split.
 
 ## Timer and continuation
 
-The timer measures active workout duration. **Continue Later** pauses it, so time spent away from the workout is excluded.
+The timer measures active workout duration. **Continue Later** pauses it, so time spent away from the workout is excluded. Browsing to another screen during a workout does not pause anything: the workout stays active, the duration keeps growing, and Today offers **Resume Workout** to return.
 
 Persist:
 

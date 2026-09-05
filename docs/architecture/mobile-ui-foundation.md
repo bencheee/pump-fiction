@@ -38,10 +38,7 @@ The copied font and SVG binaries must continue to match their committed manifest
 
 ## Shells and route surface
 
-Route groups own two shells:
-
-- `(main)` provides one scroll container and the four-destination bottom navigation;
-- `(focused)/workout/current` provides the active-workout and finish routes without bottom navigation.
+One shell owns every route: `(main)` provides one scroll container, the shell-owned toast, and the four-destination bottom navigation. `T-024` moved the active-workout and finish routes into it and removed the `(focused)` group and the `FocusedShell` primitive, so navigation stays available during a workout; see [ADR-0025](../decisions/0025-active-workout-in-the-main-shell.md). The bottom navigation highlights no destination while the workout screen is open.
 
 The root route redirects to `/today`; `/history` redirects to `/history/workouts`. URLs use no trailing slash. Persisted-entity routes must validate parameters with `requireUuidRouteParam` from `src/shared/routing/uuid-route-param.ts` before querying. A malformed, missing, deleted, or otherwise unavailable identifier resolves through the shared App Router `not-found.tsx` boundary. The boundary deliberately uses neutral copy and returns to Today; feature-specific missing-record screens must not replace it.
 
@@ -51,7 +48,7 @@ The initial Today, History, Programs, Exercises, active-workout, and finish rout
 
 Reusable implementation lives under `src/shared/ui` and is exported through its `index.ts`. Current shared primitives are:
 
-- normal/focused shells, bottom navigation, page frame, top bar, and sticky action bar;
+- the main shell, bottom navigation, page frame, top bar, and sticky action bar;
 - actions, text/numeric/textarea fields, validation wiring, and selectable chips;
 - bottom sheet and destructive alert dialog wrappers;
 - save status with one retry control, a sticky action bar that forwards its container attributes, badges, list rows, stat cards, skeletons, empty states, icons, and the shell-owned transient toast with its `useToast`, `useSaveOutcome`, and `useSavedSnapshot` helpers.
@@ -79,7 +76,7 @@ The one-time route loads only active Exercise Library definitions on the server.
 
 ## Active-workout composition
 
-`T-016` keeps the focused `/workout/current` and `/workout/current/finish` pages in the server composition boundary: each loads the authoritative current-workout aggregate (plus the active library for the add-exercise sheet) and redirects to Today when no resumable workout exists. The feature-owned client experiences apply every mutation through the accepted command union and delivery controller; there is no parallel mutation path.
+`T-016` keeps the `/workout/current` and `/workout/current/finish` pages in the server composition boundary: each loads the authoritative current-workout aggregate (plus the active library for the add-exercise sheet) and redirects to Today when no resumable workout exists. The feature-owned client experiences apply every mutation through the accepted command union and delivery controller; there is no parallel mutation path.
 
 - Set rows adapt per load mode with only applicable inputs, band strength as an explicit chip group, and the band direction derived from the mode. `T-020` replaced the per-set mode sheet: a row renders its snapshot's implied mode and, when the snapshot permits an addition, one control that applies or removes exactly that addition. The resulting mode change keeps reps, carries a kilogram value only between modes that share the same kilogram field meaning, clears everything else, names what was cleared in an inline notice, and returns the set to unconfirmed. Confirmation validates on submit, composes `Enter {missing fields} to confirm this set.`, and mirrors the first outstanding message into the single sticky-cue live region beside Review & Finish; the same cue owns save state and exactly one Retry (or conflict Refresh) control.
 - The finish review keeps every finish action, including the separately confirmed discard, inside one labelled sticky action group. Populated set/exercise removal is gated by the shared destructive dialog and sends explicit confirmation evidence; empty rows remove directly. Reordering uses explicit up/down buttons that deliver the complete identity order. Workout exercise notes auto-save on blur.

@@ -25,6 +25,8 @@ import type {
 } from "@/features/active-workout/domain/workout";
 import type { Exercise } from "@/features/exercises/domain/exercise";
 
+import { MainShell } from "@/shared/ui";
+
 import { ActiveWorkoutExperience } from "./active-workout-experience";
 import { FinishReview } from "./finish/finish-review";
 
@@ -41,6 +43,7 @@ vi.mock("next/navigation", () => ({
     replace: actions.replace,
     refresh: actions.refresh,
   }),
+  usePathname: () => "/workout/current",
 }));
 vi.mock("@/app/actions/workouts", () => ({
   getCurrentWorkoutAction: actions.getCurrent,
@@ -278,6 +281,29 @@ describe("Active-workout mobile experience", () => {
     ).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
     expect(await screen.findByText("All changes saved")).toBeVisible();
+  });
+
+  it("keeps primary navigation available during the workout", () => {
+    const outbox = new FakeOutbox();
+    const transport = new FakeTransport();
+    render(
+      <MainShell>
+        <ActiveWorkoutExperience
+          initial={makeWorkout()}
+          exercises={library}
+          outbox={outbox}
+          transport={transport}
+        />
+      </MainShell>,
+    );
+
+    const navigation = within(
+      screen.getByRole("navigation", { name: "Primary" }),
+    );
+    for (const destination of ["Today", "History", "Programs", "Exercises"]) {
+      expect(navigation.getByRole("link", { name: destination })).toBeVisible();
+    }
+    expect(screen.getByLabelText("Active duration")).toBeVisible();
   });
 
   it("blocks confirmation without required values and mirrors the message", async () => {

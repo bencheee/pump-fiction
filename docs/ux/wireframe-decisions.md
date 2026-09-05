@@ -57,7 +57,7 @@ Restoring a workout shows no banner: the restored workout itself is the evidence
 
 The finish review keeps **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and the separately confirmed **Discard Workout** together in one sticky action group, so discard stays reachable without scrolling.
 
-The workout uses the focused shell and finish flow defined in [`workouts.md`](../product/workouts.md).
+The workout keeps the bottom navigation and uses the finish flow defined in [`workouts.md`](../product/workouts.md).
 
 ## History
 

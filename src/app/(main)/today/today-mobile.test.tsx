@@ -131,9 +131,7 @@ describe("Today and workout-start mobile experience", () => {
     expect(screen.getByLabelText("Restored workout")).toHaveTextContent(
       "Paused · 24:18",
     );
-    expect(
-      screen.getByRole("link", { name: "Return to Workout" }),
-    ).toBeVisible();
+    expect(screen.getByRole("link", { name: "Resume Workout" })).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Start Workout" }),
     ).not.toBeInTheDocument();
