@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Deliver `T-027` so a clean reset lands on a usable seeded baseline and the Owner's own data can be snapshotted around a verification. `F-014` then delivers the Owner's two new model corrections: two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control. The Owner set the order `F-013`, `F-014`, `F-012`, `F-008` on 2026-09-05.
+Deliver `T-027`, now `In Progress`, so a clean reset lands on a usable seeded baseline and the Owner's own data can be snapshotted around a verification. The Owner confirmed on `2026-09-05` that both mechanisms are built, with the seed as the fallback when no snapshot exists. `F-014` then delivers the Owner's two new model corrections: two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control. The Owner set the order `F-013`, `F-014`, `F-012`, `F-008` on 2026-09-05.
 
 ## Implementation status
 

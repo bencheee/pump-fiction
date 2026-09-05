@@ -1,29 +1,29 @@
 # T-027 — Restore usable local data after a verification reset
 
 - **Feature:** `F-013`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:17:58+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T19:42:31+02:00`
+- **Started:** `2026-09-05T19:42:31+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner chooses the approach and confirms the transition to `Ready`.
+- **Next action:** Deliver the seed, the snapshot/restore pair, and their documentation in one reviewable commit.
 
 ## Scope
 
 Stop the approval-gated database verification from costing the Owner their local data.
 
-Proposed approach, which the Owner confirms or narrows at `Ready`:
+Approach confirmed by the Owner on `2026-09-05`, choosing both mechanisms with the seed as the fallback:
 
 - a committed `supabase/seed.sql` that the CLI applies on every reset, giving a small baseline of exercises, one program with its splits, and no workout history, so the application is immediately usable;
 - an `npm run db:snapshot` and `npm run db:restore` pair that dumps and reloads the Owner's own `public` data around a verification, with the dump ignored by git;
@@ -114,7 +114,7 @@ The verification gate itself does not change: a clean reset stays required befor
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner chooses the approach and confirms the transition to `Ready`
+- [x] Owner chooses the approach and confirms the transition to `Ready`
 
 ## Definition of Done
 
@@ -133,3 +133,5 @@ The verification gate itself does not change: a clean reset stays required befor
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T19:17:58+02:00` | User / Owner | None | `Backlog` | Requested after the 2026-09-05 verification reset destroyed the local programs, exercises, and workout |
+| `2026-09-05T19:42:31+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed both mechanisms with the seed as the fallback, completing the Definition of Ready |
+| `2026-09-05T19:42:31+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the seed and the snapshot/restore pair |
