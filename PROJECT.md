@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:27:54+02:00
+- **Last updated:** 2026-09-05T21:29:41+02:00
 - **Current phase:** Local MVP implementation — `F-014` confirmed; planning the active-workout command recovery
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007`, `F-011`, `F-013`, and `F-014` complete; `F-012` is the current focus; `F-008` intentionally not started
@@ -9,18 +9,18 @@
 
 ## Current focus
 
-[`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) Active-Workout Command Recovery closes the gap the `T-025` defect exposed: the outbox delivers commands in order, so one permanently rejected command blocks every later one and strands the workout, including its finish. Its single Task [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) is still `Backlog`, because the recovery rule itself needs the Owner's decision.
+[`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) Active-Workout Command Recovery closes the gap the `T-025` defect exposed: the outbox delivers commands in order, so one permanently rejected command blocks every later one and strands the workout, including its finish. The Owner confirmed the recovery rule unchanged on `2026-09-05`: a rejection is terminal for that command, the client refreshes and replays the rest, and the screen names the lost change.
 
 [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) is `Done` with the Owner's confirmed result on `2026-09-05`: exercises have two types with assistance as a bodyweight option, and a set is recorded by its entered values with no confirmation control anywhere.
 
 ## Immediate next action
 
-Owner confirms the recovery rule proposed in [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md), or changes it, so the Task can become `Ready`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) as one reviewable commit, which completes `F-012`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`0/1 Tasks Done`) — a permanently rejected command must not strand a workout
-  - [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) — `Backlog` — Claude Code primary agent — `2026-09-05T19:17:58+02:00` — Owner confirms the recovery rule and the transition to `Ready`
+  - [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) — `In Progress` — Claude Code primary agent — `2026-09-05T21:29:41+02:00` — deliver one reviewable commit
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next

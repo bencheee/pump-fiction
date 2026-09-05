@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:27:54+02:00`
+- **Updated:** `2026-09-05T21:29:41+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -48,11 +48,11 @@ The durability model accepted in [ADR-0019](../../decisions/0019-application-bou
 ## Readiness
 
 - [x] Outcome and boundaries are clear
-- [ ] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified with a defined recovery rule
+- [x] Acceptance criteria are observable and linked
+- [x] Required Tasks are identified with a defined recovery rule
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness
 
 ## Completion
 
@@ -70,3 +70,4 @@ The durability model accepted in [ADR-0019](../../decisions/0019-application-bou
 | `2026-09-05T20:09:42+02:00` | User / Owner | Moved `Next / 3` to `Next / 2` | Reconfirmed the order `F-013`, `F-014`, `F-012`, `F-008` after `F-013` became the current focus |
 | `2026-09-05T20:24:07+02:00` | User / Owner | Moved `Next / 2` to `Next / 1` | `F-014` became the current focus once `F-013` was confirmed |
 | `2026-09-05T21:27:54+02:00` | User / Owner | Moved to `Now / 1` | `F-014` was confirmed, so `F-012` becomes the current focus |
+| `2026-09-05T21:29:41+02:00` | User / Owner | Confirmed the proposed recovery rule and started `F-012` | A rejection becomes terminal, the client refreshes and replays the rest, and the screen names the lost change |

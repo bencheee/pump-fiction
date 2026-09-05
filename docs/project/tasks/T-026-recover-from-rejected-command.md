@@ -1,29 +1,29 @@
 # T-026 — Recover from a permanently rejected active-workout command
 
 - **Feature:** `F-012`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:17:58+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T21:29:41+02:00`
+- **Started:** `2026-09-05T21:29:41+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms the recovery rule and the transition to `Ready`.
+- **Next action:** Deliver the terminal-rejection recovery as one reviewable commit.
 
 ## Scope
 
 Give the delivery controller an answer for a command the server permanently refuses, so one bad change cannot strand a workout.
 
-Proposed rule, which the Owner confirms or changes at `Ready`:
+Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 - a `rejected` result is terminal for that command; it is removed from the outbox instead of retried;
 - the client then refreshes the authoritative workout and replays the remaining pending commands onto it, exactly as it already does after a conflict;
@@ -114,7 +114,7 @@ Proposed rule, which the Owner confirms or changes at `Ready`:
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms the recovery rule and the transition to `Ready`
+- [x] Owner confirms the recovery rule and the transition to `Ready`
 
 ## Definition of Done
 
@@ -133,3 +133,5 @@ Proposed rule, which the Owner confirms or changes at `Ready`:
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T19:17:58+02:00` | User / Owner | None | `Backlog` | Requested after the 2026-09-05 workout was stranded by one refused command |
+| `2026-09-05T21:29:41+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the proposed recovery rule unchanged |
+| `2026-09-05T21:29:41+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the terminal-rejection recovery |
