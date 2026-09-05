@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T13:16:19+02:00
+- **Last updated:** 2026-09-05T13:19:31+02:00
 - **Current phase:** Local MVP implementation — correcting delivered behavior under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; `F-011` corrections planned and awaiting Owner readiness; `F-008` intentionally not started
@@ -12,13 +12,13 @@
 
 ## Immediate next action
 
-Deliver [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) as one reviewable commit covering the shell change, `ADR-0025`, and Today's resume action. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+User reviews delivery commit `09a2477e18686ac7aa776b6b52c6c45d35adaad2` for [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md), the final `F-011` Task, and decides on approval. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`5/6 Tasks Done`) — Owner confirmed readiness
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
-  - [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) — `In Progress` — Claude Code primary agent — `2026-09-05T13:16:19+02:00` — deliver one reviewable commit (correction 9)
+  - [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) — `In Review` — Claude Code primary agent — `2026-09-05T13:16:19+02:00` — deliver one reviewable commit (correction 9)
 
 ## Next
 

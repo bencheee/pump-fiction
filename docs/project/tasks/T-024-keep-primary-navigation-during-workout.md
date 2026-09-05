@@ -1,7 +1,7 @@
 # T-024 — Keep primary navigation during an active workout
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:19:14+02:00`
+- **Updated:** `2026-09-05T13:19:31+02:00`
 - **Started:** `2026-09-05T13:16:19+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T13:19:31+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit and decides on approval.
 
 ## Scope
 
@@ -84,7 +84,7 @@ Make the active workout part of the normally navigable application instead of a 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `09a2477e18686ac7aa776b6b52c6c45d35adaad2`
 - **Subject:** `T-024: keep primary navigation during an active workout`
 - **Committed scope:** `ADR-0025` and its index row; the active-workout and finish routes moved from the deleted `(focused)` group into `(main)`; the removed `FocusedShell` primitive and its export; Today's `Resume Workout` action; a component scenario that renders the workout inside the shell and asserts all four destinations plus the live duration; the updated Today assertion; and the information-architecture, UI-foundation, workout, and screen documentation.
 
@@ -135,3 +135,4 @@ Make the active workout part of the normally navigable application instead of a 
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 9 recorded on 2026-09-05 |
 | `2026-09-05T13:16:19+02:00` | User / Owner | `Backlog` | `Ready` | Directed execution of the final `F-011` correction |
 | `2026-09-05T13:16:19+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the shell and Today resume changes |
+| `2026-09-05T13:19:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `09a2477e18686ac7aa776b6b52c6c45d35adaad2` with static checks passed and no feature test run |
