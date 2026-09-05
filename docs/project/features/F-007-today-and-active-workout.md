@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T10:26:58+02:00`
+- **Updated:** `2026-09-05T10:43:18+02:00`
 - **Progress:** `4/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -56,7 +56,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -100,3 +100,4 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-05T10:14:35+02:00` | Claude Code primary agent / Executor | Delivered the T-016 second test-only replacement for review | Exact replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` awaits fresh User approval before the complete test plan restarts |
 | `2026-09-05T10:22:42+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved the T-016 second replacement and restarted verification | Running the complete unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against exact second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` |
 | `2026-09-05T10:26:58+02:00` | Claude Code primary agent / Tester | Completed `T-016` within `F-007` | Exact approved second replacement passed unit 9/9, component 11/11, pgTAP 53/53, and serialized Chromium/WebKit 2/2 with structural captures; all four required Tasks are `Done` and only the Owner's feature-result confirmation remains |
+| `2026-09-05T10:43:18+02:00` | User / Owner | Completed `F-007` | Explicitly confirmed the aggregate Today and Active Workout result (`potvrdujem`) and directed that `F-008` must not start yet |

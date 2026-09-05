@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, and `F-006` Programs and Splits are complete. `F-007` Today and Active Workout has all four Tasks complete (`T-014` operations, `T-017` starter-set correction, `T-015` Today/workout-start, `T-016` active workout and finish review) pending the Owner's feature-result confirmation.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, `F-006` Programs and Splits, and `F-007` Today and Active Workout are complete, the last with the Owner's confirmed feature result covering Today, workout start, the active workout, and the finish review.
 
 ## Conceptually completed
 
@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Owner confirms the `F-007` feature result; then plan `F-008` History and Statistics.
+Wait for explicit Owner direction to plan and start `F-008` History and Statistics; the Owner directed on 2026-09-05 that it must not start yet.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `4/4 Tasks Done`: exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` and exact T-016 second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` both passed their complete verification; the feature awaits only the Owner's confirmation of the feature result. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is complete with the Owner's confirmed result: exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` and exact T-016 second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` both passed their complete verification, and `M-001` stands at `7/10 required Features Done`. Deployment configuration does not exist yet.

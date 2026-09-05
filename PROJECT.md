@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T10:26:58+02:00
-- **Current phase:** Local MVP Today and Active Workout implementation
+- **Last updated:** 2026-09-05T10:43:18+02:00
+- **Current phase:** Local MVP implementation — awaiting Owner direction for the next Feature
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` at `4/4 Tasks Done` pending Owner feature-result confirmation
+- **Implementation:** `F-004` through `F-007` complete; `F-008` is next and intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-All four [`F-007`](docs/project/features/F-007-today-and-active-workout.md) Tasks are `Done`; the feature's completion checklist waits only on the Owner's confirmation of the feature result.
+[`F-007`](docs/project/features/F-007-today-and-active-workout.md) Today and Active Workout is `Done` with the Owner's confirmed feature result. No work item is in progress; the Owner directed that `F-008` must not start yet.
 
 ## Immediate next action
 
-Owner confirms the `F-007` feature result; then `F-008` History and Statistics becomes the next Feature to plan.
+Wait for explicit Owner direction to plan and start `F-008` History and Statistics.
 
 ## Now
 
-- [`F-007`](docs/project/features/F-007-today-and-active-workout.md) — `4/4 Tasks Done` — awaiting the Owner's feature-result confirmation.
+- No active work item.
 
 ## Next
 
-- [`F-008`](docs/project/features/F-008-history-and-statistics.md) remains the next Feature after `F-007`.
+- [`F-008`](docs/project/features/F-008-history-and-statistics.md) is the next Feature, awaiting Owner direction.
 
 ## Later
 
@@ -48,6 +48,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`5/10 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/10 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
