@@ -1,4 +1,7 @@
-import type { ExerciseLoadMode } from "@/features/exercises/domain/exercise";
+import {
+  exerciseLoadModes,
+  type ExerciseLoadMode,
+} from "@/features/exercises/domain/exercise";
 
 export type BandDirection = "resistance" | "assistance";
 export type BandStrength = "light" | "medium" | "strong";
@@ -54,17 +57,7 @@ export type CommandValidationResult =
 
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const loadModes = new Set<ExerciseLoadMode>([
-  "weight",
-  "weight_resistance_band",
-  "bodyweight",
-  "bodyweight_added_weight",
-  "bodyweight_resistance_band",
-  "bodyweight_assistance_band",
-  "assistance_weight",
-  "assistance_band",
-  "resistance_band",
-]);
+const loadModes = new Set<ExerciseLoadMode>(exerciseLoadModes);
 
 export function parseActiveWorkoutCommand(
   input: unknown,

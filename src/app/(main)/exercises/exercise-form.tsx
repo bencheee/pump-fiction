@@ -12,9 +12,10 @@ import {
   updateExerciseAction,
 } from "@/app/actions/exercises";
 import {
-  allowedLoadModesByBaseType,
+  baseLoadModeByBaseType,
   defaultLoadModesByBaseType,
   exerciseBaseTypes,
+  optionalLoadModesByBaseType,
   type Exercise,
   type ExerciseBaseType,
   type ExerciseLoadMode,
@@ -36,7 +37,7 @@ import {
 
 import {
   exerciseModeDetails,
-  exerciseModeLabels,
+  exerciseOptionalModeLabels,
   exerciseTypeLabels,
 } from "@/features/exercises/ui/exercise-presentation";
 
@@ -92,15 +93,14 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 
   function chooseType(nextType: ExerciseBaseType) {
     if (nextType === baseType) return;
-    const compatible = allowedLoadModesByBaseType[nextType];
-    const retained = modes.filter((mode) => compatible.includes(mode));
-    const required = defaultLoadModesByBaseType[nextType];
-    const nextModes = retained.length > 0 ? retained : required;
+    const hadOptionalMode = modes.some(
+      (mode) => mode !== baseLoadModeByBaseType[baseType],
+    );
     setBaseType(nextType);
-    setModes(nextModes);
+    setModes(defaultLoadModesByBaseType[nextType]);
     setModeNotice(
-      modes.some((mode) => !compatible.includes(mode))
-        ? "Modes that do not apply to this type were cleared."
+      hadOptionalMode
+        ? "Choices that do not apply to this type were cleared."
         : undefined,
     );
     markChanged("baseType");
@@ -112,12 +112,12 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   }
 
   function toggleMode(mode: ExerciseLoadMode) {
-    if (isRequiredMode(baseType, mode)) return;
-    setModes((current) =>
-      current.includes(mode)
-        ? current.filter((candidate) => candidate !== mode)
-        : [...current, mode],
-    );
+    const baseMode = baseLoadModeByBaseType[baseType];
+    if (baseMode === null) {
+      setModes([mode]);
+    } else {
+      setModes(modes.includes(mode) ? [baseMode] : [baseMode, mode]);
+    }
     setModeNotice(undefined);
     markChanged("allowedLoadModes");
   }
@@ -234,12 +234,16 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 
           <fieldset disabled={isSaving}>
             <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
-              Allowed per-set modes
+              {baseType === "assisted"
+                ? "Assistance mode"
+                : "Optional per-set additions"}
             </legend>
+            <p className="mb-2 text-[12.5px] text-[var(--pf-text-2)]">
+              {baseModeSummary[baseType]}
+            </p>
             <div className="space-y-2">
-              {allowedLoadModesByBaseType[baseType].map((mode, index) => {
+              {optionalLoadModesByBaseType[baseType].map((mode, index) => {
                 const selected = modes.includes(mode);
-                const required = isRequiredMode(baseType, mode);
                 return (
                   <button
                     key={mode}
@@ -271,11 +275,10 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block font-semibold">
-                        {exerciseModeLabels[mode]}
+                        {exerciseOptionalModeLabels[mode]}
                       </span>
                       <span className="mt-0.5 block text-[12.5px] text-[var(--pf-text-2)]">
                         {exerciseModeDetails[mode]}
-                        {required ? " · Required" : ""}
                       </span>
                     </span>
                   </button>
@@ -376,12 +379,8 @@ function snapshotOf(definition: {
   ]);
 }
 
-function isRequiredMode(
-  baseType: ExerciseBaseType,
-  mode: ExerciseLoadMode,
-): boolean {
-  return (
-    (baseType === "weights" && mode === "weight") ||
-    (baseType === "band" && mode === "resistance_band")
-  );
-}
+const baseModeSummary: Readonly<Record<ExerciseBaseType, string>> = {
+  weights: "Every set stores kilograms and reps.",
+  bodyweight: "Every set stores reps.",
+  assisted: "Choose exactly one; every set stores it with reps.",
+};

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:09:18+02:00`
+- **Updated:** `2026-09-05T12:20:06+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the simplified load-mode model as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -70,19 +70,19 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Execution checklist
 
-- [ ] Record `ADR-0023` with the accepted model, the clean-reset decision, and the criteria it revises.
-- [ ] Update the declarative schema: enum values, exercise and snapshot load-mode checks, and the per-exercise exclusivity rule.
-- [ ] Generate the migration and regenerate database types.
-- [ ] Update domain constants, validation, application operations, and presentation labels.
-- [ ] Rebuild the Allowed per-set modes section of the exercise form around optional choices only.
-- [ ] Extend pgTAP and unit assertions without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record `ADR-0023` with the accepted model, the clean-reset decision, and the criteria it revises.
+- [x] Update the declarative schema: enum values, exercise and snapshot load-mode checks, and the per-exercise exclusivity rule.
+- [x] Generate the migration and regenerate database types.
+- [x] Update domain constants, validation, application operations, and presentation labels.
+- [x] Rebuild the Allowed per-set modes section of the exercise form around optional choices only.
+- [x] Extend pgTAP and unit assertions without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T12:20:06+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint across 96 files, and all 732 internal links. The generated migration needed one reviewed correction: the generator swapped the enum types before dropping the composite foreign keys that carry them, so the migration now drops and restores `exercise_load_modes_exercise_id_exercise_base_type_fkey`, `workout_exercise_load_modes_workout_exercise_id_exercise_b_fkey`, and `workout_sets_workout_exercise_id_load_mode_fkey` around the swap and restores the type grants that recreation dropped. With that correction the migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types differ only by the retired enum values, and `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 
@@ -94,9 +94,9 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-019: simplify the exercise load-mode model`
-- **Committed scope:** Not created
+- **Committed scope:** `ADR-0023` and its index row; declarative schema without the `band` base type, the `resistance_band` and `bodyweight_assistance_band` modes, and with the `exercise_load_modes_single_modifier` index plus the rewritten definition trigger; the reviewed migration and regenerated database types; domain constants for implied and optional modes, rewritten definition validation, and presentation labels; the Exercise Library form rebuilt around optional additions only; updated unit, component, integration, and pgTAP assertions; and revised `MVP-EXE-001`, `MVP-EXE-003`, `MVP-EXE-004` with the exercise, workout, domain-model, database-workflow, and screen documentation.
 
 ## Review
 

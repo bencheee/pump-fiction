@@ -27,7 +27,7 @@ Saving an exercise, program, or split closes the screen: the app returns to the 
 
 ## Exercises
 
-**Add Exercise** contains name, exercise type, allowed modifications, exercise note, and **Save Exercise**.
+**Add Exercise** contains name, exercise type, the optional per-set addition its type offers, exercise note, and **Save Exercise**. The mode a type implies is stated as a sentence rather than offered as a selectable row.
 
 **Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Archive Exercise**.
 

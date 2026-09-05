@@ -1,5 +1,6 @@
 import {
   allowedLoadModesByBaseType,
+  baseLoadModeByBaseType,
   exerciseBaseTypes,
   exerciseLoadModes,
   type ExerciseBaseType,
@@ -43,32 +44,11 @@ export function validateExerciseDefinition(
     fieldErrors.persistentNote = ["Enter a valid exercise note."];
   }
 
-  if (allowedLoadModes === null || allowedLoadModes.length === 0) {
+  if (allowedLoadModes === null) {
     fieldErrors.allowedLoadModes = ["Select at least one permitted load mode."];
-  } else if (baseType !== null && !hasValidModes(baseType, allowedLoadModes)) {
-    fieldErrors.allowedLoadModes = [
-      "Select only load modes supported by this exercise type.",
-    ];
-  }
-
-  if (
-    baseType === "weights" &&
-    allowedLoadModes !== null &&
-    !allowedLoadModes.includes("weight")
-  ) {
-    fieldErrors.allowedLoadModes = [
-      "Weights exercises must permit the basic weight mode.",
-    ];
-  }
-
-  if (
-    baseType === "band" &&
-    allowedLoadModes !== null &&
-    (allowedLoadModes.length !== 1 || allowedLoadModes[0] !== "resistance_band")
-  ) {
-    fieldErrors.allowedLoadModes = [
-      "Band exercises use the resistance-band mode.",
-    ];
+  } else if (baseType !== null) {
+    const modeError = loadModeError(baseType, allowedLoadModes);
+    if (modeError !== null) fieldErrors.allowedLoadModes = [modeError];
   }
 
   if (
@@ -104,12 +84,31 @@ function parseLoadModes(value: unknown): ExerciseLoadMode[] | null {
   return modes;
 }
 
-function hasValidModes(
+function loadModeError(
   baseType: ExerciseBaseType,
   modes: readonly ExerciseLoadMode[],
-): boolean {
+): string | null {
   const compatibleModes = allowedLoadModesByBaseType[baseType];
-  return modes.every((mode) => compatibleModes.includes(mode));
+  if (!modes.every((mode) => compatibleModes.includes(mode))) {
+    return "Select only load modes supported by this exercise type.";
+  }
+
+  const baseMode = baseLoadModeByBaseType[baseType];
+  if (baseMode !== null && !modes.includes(baseMode)) {
+    return baseType === "weights"
+      ? "Weights exercises always include the basic weight mode."
+      : "Bodyweight exercises always include the bodyweight mode.";
+  }
+
+  const optionalModes = modes.filter((mode) => mode !== baseMode);
+  if (baseMode === null && optionalModes.length !== 1) {
+    return "Choose exactly one assistance mode.";
+  }
+  if (baseMode !== null && optionalModes.length > 1) {
+    return "Choose at most one additional mode.";
+  }
+
+  return null;
 }
 
 function isExerciseBaseType(value: unknown): value is ExerciseBaseType {

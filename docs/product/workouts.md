@@ -25,11 +25,9 @@ Load mode and values are selected per set. The exercise definition controls whic
 Examples of resulting fields:
 
 - bodyweight: reps;
-- bodyweight with added load: added kg and reps;
-- bodyweight with an allowed assistance or resistance band: direction, strength, and reps;
+- bodyweight with its allowed addition: added kg and reps, or resistance-band strength and reps;
 - weights: kg, optional resistance-band strength when allowed, and reps;
-- assisted: assistance kg and reps, or assistance-band strength and reps;
-- standalone band: resistance-band strength and reps.
+- assisted: assistance kg and reps, or assistance-band strength and reps, according to its single defined mode.
 
 Weights permit decimal values. Reps are positive integers. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
 

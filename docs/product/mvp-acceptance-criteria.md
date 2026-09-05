@@ -59,7 +59,7 @@ Canonical behavior: [`exercises.md`](exercises.md).
 
 ### MVP-EXE-001 — Create and validate an exercise
 
-The user can create an exercise with a unique active name, one of `weights`, `bodyweight`, `assisted`, or `band`, explicitly allowed load modes, and an optional persistent note. Saving is rejected when the active name is not unique or the type/mode combination is invalid.
+The user can create an exercise with a unique active name, one of `weights`, `bodyweight`, or `assisted`, at most one optional addition on top of the mode its type implies, and an optional persistent note. The implied mode is never offered as a choice. Saving is rejected when the active name is not unique or the type/mode combination is invalid.
 
 ### MVP-EXE-002 — Weights modes
 
@@ -67,11 +67,11 @@ A weights set accepts decimal kilograms and positive-integer reps. If the defini
 
 ### MVP-EXE-003 — Bodyweight modes
 
-A bodyweight set supports only the modes enabled by its definition: reps-only bodyweight, decimal added kilograms plus reps, resistance-band strength plus reps, or assistance-band strength plus reps. One set cannot combine added weight with either band mode.
+A bodyweight definition always allows reps-only bodyweight and may additionally allow either decimal added kilograms or a resistance band, never both. A set uses the definition's implied mode or its single addition, and never combines added weight with a band.
 
-### MVP-EXE-004 — Assisted and standalone-band modes
+### MVP-EXE-004 — Assisted modes
 
-An assisted set accepts either positive decimal assistance kilograms plus reps or an assistance-band strength plus reps, as allowed. A standalone-band set accepts a resistance-band strength plus reps. A band is never entered or stored as kilograms.
+An assisted definition allows exactly one assistance form, so its sets accept either positive decimal assistance kilograms plus reps or an assistance-band strength plus reps. Saving zero or both assistance modes is rejected. A band is never entered or stored as kilograms.
 
 ### MVP-EXE-005 — Band identity
 

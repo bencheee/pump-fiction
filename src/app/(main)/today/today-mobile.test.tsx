@@ -73,8 +73,8 @@ const exercises: Exercise[] = [
   {
     id: exerciseBId,
     name: "Face Pull",
-    baseType: "band",
-    allowedLoadModes: ["resistance_band"],
+    baseType: "bodyweight",
+    allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
     persistentNote: "",
     status: "active",
     splitUsageCount: 0,

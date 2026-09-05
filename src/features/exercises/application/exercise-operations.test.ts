@@ -61,8 +61,48 @@ describe("exercise operations", () => {
         fieldErrors: {
           name: ["Enter a name for this exercise."],
           allowedLoadModes: [
-            "Weights exercises must permit the basic weight mode.",
+            "Select only load modes supported by this exercise type.",
           ],
+        },
+      },
+    });
+    expect(repository.create).not.toHaveBeenCalled();
+  });
+
+  it("rejects more than one addition and a missing assistance mode", async () => {
+    const repository = createRepository();
+
+    const bothAdditions = await createExercise(repository, {
+      name: "Pull-up",
+      baseType: "bodyweight",
+      allowedLoadModes: [
+        "bodyweight",
+        "bodyweight_added_weight",
+        "bodyweight_resistance_band",
+      ],
+      persistentNote: "",
+    });
+
+    const noAssistance = await createExercise(repository, {
+      name: "Assisted dip",
+      baseType: "assisted",
+      allowedLoadModes: [],
+      persistentNote: "",
+    });
+
+    expect(bothAdditions).toMatchObject({
+      ok: false,
+      error: {
+        fieldErrors: {
+          allowedLoadModes: ["Choose at most one additional mode."],
+        },
+      },
+    });
+    expect(noAssistance).toMatchObject({
+      ok: false,
+      error: {
+        fieldErrors: {
+          allowedLoadModes: ["Choose exactly one assistance mode."],
         },
       },
     });

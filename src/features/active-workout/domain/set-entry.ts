@@ -16,10 +16,8 @@ export const setModeFields: Readonly<Record<ExerciseLoadMode, SetModeFields>> =
     bodyweight: { load: null, band: null },
     bodyweight_added_weight: { load: "added_kg", band: null },
     bodyweight_resistance_band: { load: null, band: "resistance" },
-    bodyweight_assistance_band: { load: null, band: "assistance" },
     assistance_weight: { load: "assistance_kg", band: null },
     assistance_band: { load: null, band: "assistance" },
-    resistance_band: { load: null, band: "resistance" },
   };
 
 export const setLoadFieldLabels: Readonly<Record<SetLoadField, string>> = {

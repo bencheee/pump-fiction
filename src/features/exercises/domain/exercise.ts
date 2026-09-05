@@ -1,9 +1,4 @@
-export const exerciseBaseTypes = [
-  "weights",
-  "bodyweight",
-  "assisted",
-  "band",
-] as const;
+export const exerciseBaseTypes = ["weights", "bodyweight", "assisted"] as const;
 
 export type ExerciseBaseType = (typeof exerciseBaseTypes)[number];
 
@@ -13,10 +8,8 @@ export const exerciseLoadModes = [
   "bodyweight",
   "bodyweight_added_weight",
   "bodyweight_resistance_band",
-  "bodyweight_assistance_band",
   "assistance_weight",
   "assistance_band",
-  "resistance_band",
 ] as const;
 
 export type ExerciseLoadMode = (typeof exerciseLoadModes)[number];
@@ -47,10 +40,26 @@ export const allowedLoadModesByBaseType: Readonly<
     "bodyweight",
     "bodyweight_added_weight",
     "bodyweight_resistance_band",
-    "bodyweight_assistance_band",
   ],
   assisted: ["assistance_weight", "assistance_band"],
-  band: ["resistance_band"],
+};
+
+/** The mode every set of this type always has; it is never a user choice. */
+export const baseLoadModeByBaseType: Readonly<
+  Record<ExerciseBaseType, ExerciseLoadMode | null>
+> = {
+  weights: "weight",
+  bodyweight: "bodyweight",
+  assisted: null,
+};
+
+/** The optional additions the user chooses from, at most one per exercise. */
+export const optionalLoadModesByBaseType: Readonly<
+  Record<ExerciseBaseType, readonly ExerciseLoadMode[]>
+> = {
+  weights: ["weight_resistance_band"],
+  bodyweight: ["bodyweight_added_weight", "bodyweight_resistance_band"],
+  assisted: ["assistance_weight", "assistance_band"],
 };
 
 export const defaultLoadModesByBaseType: Readonly<
@@ -59,5 +68,4 @@ export const defaultLoadModesByBaseType: Readonly<
   weights: ["weight"],
   bodyweight: ["bodyweight"],
   assisted: ["assistance_weight"],
-  band: ["resistance_band"],
 };

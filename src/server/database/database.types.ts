@@ -698,17 +698,15 @@ export type Database = {
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
       entity_status: "active" | "archived"
-      exercise_base_type: "weights" | "bodyweight" | "assisted" | "band"
+      exercise_base_type: "weights" | "bodyweight" | "assisted"
       load_mode:
         | "weight"
         | "weight_resistance_band"
         | "bodyweight"
         | "bodyweight_added_weight"
         | "bodyweight_resistance_band"
-        | "bodyweight_assistance_band"
         | "assistance_weight"
         | "assistance_band"
-        | "resistance_band"
       program_status: "draft" | "active" | "archived"
       workout_source_kind: "proposed_split" | "alternate_split" | "one_time"
       workout_status: "active" | "paused" | "completed" | "incomplete"
@@ -854,17 +852,15 @@ export const Constants = {
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],
       entity_status: ["active", "archived"],
-      exercise_base_type: ["weights", "bodyweight", "assisted", "band"],
+      exercise_base_type: ["weights", "bodyweight", "assisted"],
       load_mode: [
         "weight",
         "weight_resistance_band",
         "bodyweight",
         "bodyweight_added_weight",
         "bodyweight_resistance_band",
-        "bodyweight_assistance_band",
         "assistance_weight",
         "assistance_band",
-        "resistance_band",
       ],
       program_status: ["draft", "active", "archived"],
       workout_source_kind: ["proposed_split", "alternate_split", "one_time"],

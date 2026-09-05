@@ -78,7 +78,6 @@ function makeWorkout(): CurrentWorkout {
           "bodyweight",
           "bodyweight_added_weight",
           "bodyweight_resistance_band",
-          "bodyweight_assistance_band",
         ],
         persistentNote: "",
         plannedSets: null,
@@ -245,10 +244,8 @@ describe("set entry rules", () => {
       bodyweight: ["reps"],
       bodyweight_added_weight: ["added kg", "reps"],
       bodyweight_resistance_band: ["band strength", "reps"],
-      bodyweight_assistance_band: ["band strength", "reps"],
       assistance_weight: ["assistance kg", "reps"],
       assistance_band: ["band strength", "reps"],
-      resistance_band: ["band strength", "reps"],
     };
     for (const mode of exerciseLoadModes) {
       expect(missingConfirmValues(mode, emptySet)).toEqual(expected[mode]);
@@ -288,12 +285,12 @@ describe("set entry rules", () => {
         loadKg: 5,
         reps: 8,
       }),
-      "bodyweight_assistance_band",
+      "bodyweight_resistance_band",
     );
     expect(cleared.set).toMatchObject({
       loadKg: null,
       reps: 8,
-      bandDirection: "assistance",
+      bandDirection: "resistance",
       isConfirmed: false,
     });
     expect(cleared.clearedLabels).toEqual(["added kg"]);

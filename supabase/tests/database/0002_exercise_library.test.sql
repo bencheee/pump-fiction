@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(5);
+select plan(8);
 
 select lives_ok(
   $$
@@ -69,12 +69,12 @@ select throws_ok(
       set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
 
       insert into public.exercises (id, name, base_type)
-      values ('01000000-0000-4000-8000-000000000004', 'Invalid band', 'band');
+      values ('01000000-0000-4000-8000-000000000004', 'Invalid bodyweight', 'bodyweight');
 
       insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
       values
-        ('01000000-0000-4000-8000-000000000004', 'band', 'resistance_band'),
-        ('01000000-0000-4000-8000-000000000004', 'band', 'weight');
+        ('01000000-0000-4000-8000-000000000004', 'bodyweight', 'bodyweight'),
+        ('01000000-0000-4000-8000-000000000004', 'bodyweight', 'weight');
 
       set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition immediate;
     end
@@ -82,7 +82,65 @@ select throws_ok(
   $$,
   '23514'::character(5),
   null,
-  'a standalone band cannot accept a non-band mode'
+  'a bodyweight definition cannot accept a weights mode'
+);
+
+select throws_ok(
+  $$
+    insert into public.exercises (id, name, base_type)
+    values ('01000000-0000-4000-8000-000000000005', 'Retired band type', 'band')
+  $$,
+  '22P02'::character(5),
+  null,
+  'the standalone band base type no longer exists'
+);
+
+select throws_ok(
+  $$
+    do $block$
+    begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
+      insert into public.exercises (id, name, base_type)
+      values ('01000000-0000-4000-8000-000000000006', 'Two additions', 'bodyweight');
+
+      insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
+      values
+        ('01000000-0000-4000-8000-000000000006', 'bodyweight', 'bodyweight'),
+        ('01000000-0000-4000-8000-000000000006', 'bodyweight', 'bodyweight_added_weight'),
+        ('01000000-0000-4000-8000-000000000006', 'bodyweight', 'bodyweight_resistance_band');
+
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition immediate;
+    end
+    $block$
+  $$,
+  '23505'::character(5),
+  null,
+  'an exercise cannot store two optional additions'
+);
+
+select throws_ok(
+  $$
+    do $block$
+    begin
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition deferred;
+
+      insert into public.exercises (id, name, base_type)
+      values ('01000000-0000-4000-8000-000000000007', 'No assistance', 'assisted');
+
+      insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
+      values ('01000000-0000-4000-8000-000000000007', 'assisted', 'assistance_weight');
+
+      delete from public.exercise_load_modes
+      where exercise_id = '01000000-0000-4000-8000-000000000007';
+
+      set constraints exercises_validate_load_modes, exercise_load_modes_validate_definition immediate;
+    end
+    $block$
+  $$,
+  'PF003'::character(5),
+  'Exercise requires at least one load mode',
+  'an assisted definition cannot finish without its single assistance mode'
 );
 
 select function_privs_are(

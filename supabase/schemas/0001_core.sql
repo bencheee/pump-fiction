@@ -1,17 +1,15 @@
 create extension if not exists pgcrypto with schema extensions;
 
 create type public.entity_status as enum ('active', 'archived');
-create type public.exercise_base_type as enum ('weights', 'bodyweight', 'assisted', 'band');
+create type public.exercise_base_type as enum ('weights', 'bodyweight', 'assisted');
 create type public.load_mode as enum (
   'weight',
   'weight_resistance_band',
   'bodyweight',
   'bodyweight_added_weight',
   'bodyweight_resistance_band',
-  'bodyweight_assistance_band',
   'assistance_weight',
-  'assistance_band',
-  'resistance_band'
+  'assistance_band'
 );
 create type public.band_direction as enum ('resistance', 'assistance');
 create type public.band_strength as enum ('light', 'medium', 'strong');
@@ -73,17 +71,25 @@ create table public.exercise_load_modes (
       and load_mode in (
         'bodyweight',
         'bodyweight_added_weight',
-        'bodyweight_resistance_band',
-        'bodyweight_assistance_band'
+        'bodyweight_resistance_band'
       )
     )
     or (
       exercise_base_type = 'assisted'
       and load_mode in ('assistance_weight', 'assistance_band')
     )
-    or (exercise_base_type = 'band' and load_mode = 'resistance_band')
   )
 );
+
+create unique index exercise_load_modes_single_modifier
+  on public.exercise_load_modes (exercise_id)
+  where load_mode in (
+    'weight_resistance_band',
+    'bodyweight_added_weight',
+    'bodyweight_resistance_band',
+    'assistance_weight',
+    'assistance_band'
+  );
 
 create table public.programs (
   id uuid primary key default gen_random_uuid(),
@@ -265,15 +271,13 @@ create table public.workout_exercise_load_modes (
       and load_mode in (
         'bodyweight',
         'bodyweight_added_weight',
-        'bodyweight_resistance_band',
-        'bodyweight_assistance_band'
+        'bodyweight_resistance_band'
       )
     )
     or (
       exercise_base_type_snapshot = 'assisted'
       and load_mode in ('assistance_weight', 'assistance_band')
     )
-    or (exercise_base_type_snapshot = 'band' and load_mode = 'resistance_band')
   )
 );
 
@@ -315,23 +319,11 @@ create table public.workout_sets (
       and band_direction = 'resistance'
       and band_strength is not null
     )
-    or (
-      load_mode = 'bodyweight_assistance_band'
-      and load_kg is null
-      and band_direction = 'assistance'
-      and band_strength is not null
-    )
     or (load_mode = 'assistance_weight' and band_direction is null and band_strength is null)
     or (
       load_mode = 'assistance_band'
       and load_kg is null
       and band_direction = 'assistance'
-      and band_strength is not null
-    )
-    or (
-      load_mode = 'resistance_band'
-      and load_kg is null
-      and band_direction = 'resistance'
       and band_strength is not null
     )
   ),
@@ -551,31 +543,30 @@ begin
   if checked_base_type = 'weights' then
     if not ('weight'::public.load_mode = any(checked_modes))
       or not (checked_modes <@ array['weight', 'weight_resistance_band']::public.load_mode[])
+      or cardinality(checked_modes) > 2
     then
       raise exception using errcode = 'PF003', message = 'Invalid weights exercise load modes';
     end if;
   elsif checked_base_type = 'bodyweight' then
-    if not (
-      checked_modes <@ array[
-        'bodyweight',
-        'bodyweight_added_weight',
-        'bodyweight_resistance_band',
-        'bodyweight_assistance_band'
-      ]::public.load_mode[]
-    ) then
+    if not ('bodyweight'::public.load_mode = any(checked_modes))
+      or not (
+        checked_modes <@ array[
+          'bodyweight',
+          'bodyweight_added_weight',
+          'bodyweight_resistance_band'
+        ]::public.load_mode[]
+      )
+      or cardinality(checked_modes) > 2
+    then
       raise exception using errcode = 'PF003', message = 'Invalid bodyweight exercise load modes';
     end if;
   elsif checked_base_type = 'assisted' then
-    if not (
-      checked_modes <@ array['assistance_weight', 'assistance_band']::public.load_mode[]
-    ) then
-      raise exception using errcode = 'PF003', message = 'Invalid assisted exercise load modes';
-    end if;
-  elsif checked_base_type = 'band' then
     if cardinality(checked_modes) <> 1
-      or checked_modes[1] <> 'resistance_band'::public.load_mode
+      or not (
+        checked_modes <@ array['assistance_weight', 'assistance_band']::public.load_mode[]
+      )
     then
-      raise exception using errcode = 'PF003', message = 'Invalid band exercise load modes';
+      raise exception using errcode = 'PF003', message = 'Invalid assisted exercise load modes';
     end if;
   end if;
 

@@ -10,7 +10,7 @@ Persistent exercise definitions: identity, unique active name, base type, persis
 
 ### `exercise_load_modes`
 
-The allowed per-set modes for an exercise. A mode distinguishes kilograms, bodyweight, added weight, resistance band, assistance kilograms, and assistance band as applicable. Band direction and strength are separate concepts.
+The allowed per-set modes for an exercise: the mode implied by its base type plus at most one optional addition, as defined by [ADR-0023](../decisions/0023-simplified-exercise-load-mode-model.md). A mode distinguishes kilograms, bodyweight, added weight, resistance band, assistance kilograms, and assistance band as applicable. Band direction and strength are separate concepts.
 
 Validation and behavior are canonical in [`exercises.md`](../product/exercises.md).
 

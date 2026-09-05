@@ -37,13 +37,19 @@ describe("ExerciseForm", () => {
   beforeEach(() => vi.clearAllMocks());
   afterEach(cleanup);
 
-  it("shows only load modes compatible with the selected type", async () => {
+  it("offers only the optional additions of the selected type", async () => {
     const user = userEvent.setup();
     renderForm(<ExerciseForm />);
 
     expect(
-      screen.getByRole("button", { name: /WeightKilograms and reps/ }),
+      screen.getByText("Every set stores kilograms and reps."),
     ).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: /Add resistance band/ }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: /^Weight/ }),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: /Assistance weight/ }),
     ).not.toBeInTheDocument();
@@ -62,8 +68,39 @@ describe("ExerciseForm", () => {
       screen.getByRole("button", { name: /Assistance band/ }),
     ).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: /Kilograms and reps/ }),
+      screen.queryByRole("button", { name: /Add resistance band/ }),
     ).not.toBeInTheDocument();
+  });
+
+  it("keeps at most one addition and exactly one assistance mode", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({ ok: true, value: { id: "created" } });
+    renderForm(<ExerciseForm />);
+
+    await user.type(screen.getByLabelText("Name"), "Pull-up");
+    await user.click(
+      within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
+        "button",
+        { name: "Bodyweight" },
+      ),
+    );
+
+    const addWeight = screen.getByRole("button", { name: /Add weight/ });
+    const addBand = screen.getByRole("button", { name: /Add resistance band/ });
+    await user.click(addWeight);
+    await user.click(addBand);
+
+    expect(addWeight).toHaveAttribute("aria-pressed", "false");
+    expect(addBand).toHaveAttribute("aria-pressed", "true");
+
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
+
+    expect(actions.create).toHaveBeenCalledWith({
+      name: "Pull-up",
+      baseType: "bodyweight",
+      allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
+      persistentNote: "",
+    });
   });
 
   it("reports unsaved changes only after the form is edited", async () => {
@@ -114,25 +151,33 @@ describe("ExerciseForm", () => {
     ).toHaveLength(2);
   });
 
-  it("reports name and load-mode validation before calling the action", async () => {
+  it("keeps one assistance mode selected and reports name validation", async () => {
     const user = userEvent.setup();
     renderForm(<ExerciseForm />);
 
     await user.click(
       within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
         "button",
-        { name: "Bodyweight" },
+        { name: "Assisted" },
       ),
     );
-    await user.click(
-      screen.getByRole("button", { name: /BodyweightReps only/ }),
-    );
+
+    const assistanceWeight = screen.getByRole("button", {
+      name: /Assistance weight/,
+    });
+    const assistanceBand = screen.getByRole("button", {
+      name: /Assistance band/,
+    });
+    expect(assistanceWeight).toHaveAttribute("aria-pressed", "true");
+
+    await user.click(assistanceBand);
+
+    expect(assistanceWeight).toHaveAttribute("aria-pressed", "false");
+    expect(assistanceBand).toHaveAttribute("aria-pressed", "true");
+
     await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
     expect(screen.getByText("Enter a name for this exercise.")).toBeVisible();
-    expect(
-      screen.getByText("Select at least one permitted load mode."),
-    ).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
   });
 });

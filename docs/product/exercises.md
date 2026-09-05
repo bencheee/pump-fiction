@@ -13,9 +13,17 @@ Each exercise has:
 - a persistent exercise note;
 - `active` or `archived` status.
 
-Supported base types are `weights`, `bodyweight`, `assisted`, and `band`.
+Supported base types are `weights`, `bodyweight`, and `assisted`.
 
-Saving trims surrounding whitespace from the name and requires at least one explicit load mode. Active-name uniqueness ignores case and surrounding whitespace. A `weights` definition always includes the basic `weight` mode and may additionally permit `weight_resistance_band`; a standalone `band` definition has exactly the `resistance_band` mode. Bodyweight and assisted definitions require one or more compatible modes from their respective lists below.
+Each type implies the mode every one of its sets always has, and the user chooses at most one optional addition on top of it. A mode the user cannot change is never offered as a choice; see [ADR-0023](../decisions/0023-simplified-exercise-load-mode-model.md).
+
+| Base type | Implied mode | Optional choices | Rule |
+| --- | --- | --- | --- |
+| `weights` | `weight` | `weight_resistance_band` | The resistance band is a single optional addition |
+| `bodyweight` | `bodyweight` | `bodyweight_added_weight`, `bodyweight_resistance_band` | At most one of the two |
+| `assisted` | none | `assistance_weight`, `assistance_band` | Exactly one of the two |
+
+Saving trims surrounding whitespace from the name and stores the implied mode together with the chosen addition. Active-name uniqueness ignores case and surrounding whitespace. A definition can never store two optional additions, and an assisted definition can never store zero or two assistance modes.
 
 ## Load modes
 
@@ -27,27 +35,22 @@ A basic set stores kilograms and reps, for example `60 kg × 8`. An exercise may
 
 ### Bodyweight
 
-A basic bodyweight set stores reps. An exercise may allow pure bodyweight, added kilograms, a resistance band, and/or an assistance band:
+A basic bodyweight set stores reps. An exercise may additionally allow either added kilograms or a resistance band, never both:
 
 - `BW × 12`
 - `BW + 10 kg × 8`
 - `BW + strong resistance band × 10`
-- `BW · medium assistance band × 8`
 
-One bodyweight set uses at most one modification. Added weight and a band cannot be combined in the same set.
+One bodyweight set uses at most one modification. Assistance belongs to the `assisted` type rather than to a bodyweight exercise.
 
 ### Assisted
 
-An assisted exercise permits either assistance expressed in kilograms or an assistance band:
+An assisted exercise uses exactly one assistance form, expressed either in kilograms or as an assistance band:
 
 - `25 kg assistance × 10`
 - `strong band assistance × 8`
 
 More kilograms of assistance means an easier performance. Assistance is stored as a positive value; it is never represented as negative weight.
-
-### Band
-
-A standalone band exercise stores resistance-band strength and reps. Strength is `light`, `medium`, or `strong`.
 
 ## Band semantics
 
