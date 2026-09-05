@@ -1,7 +1,7 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:39:11+02:00`
+- **Updated:** `2026-09-05T23:42:19+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
 - **Review started:** `2026-09-05T23:35:01+02:00`
 - **Approval requested:** `2026-09-05T23:39:11+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T23:39:11+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded verification against exact approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e`.
+- **Next action:** Correct two range expectations in the prepared unit suite, deliver a replacement, and request fresh approval.
 
 ## Scope
 
@@ -91,8 +91,10 @@ Queries:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for the PR matrix, eligibility, band separation, range boundaries, and identity retention; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new exercise-history suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `bf787976b69602ed4358eb79f053d48486c3d30e`
-- **Results:** Not run
+- **Authorized commit:** `bf787976b69602ed4358eb79f053d48486c3d30e` — approval invalidated by the failed verification below
+- **Results:** Failed on `2026-09-05T23:42:19+02:00` against exact approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. Everything about the delivery passed. `supabase db reset` applied all 21 migrations and the seed; `npm run test:db` passed **124/124 across seven suites**, including the new `0007_exercise_statistics` 12/12; `npm run test:repository` passed **6/6**; and regenerated types matched the committed file.
+
+  `npm run test:unit` passed 115 of 117 and failed two assertions in the new domain suite, both mine and both arithmetic. The trailing week window ends on the local date and reaches back six days, so its first day is `2026-08-30`, and the fixture workout dated exactly `2026-08-30` falls inside it: the suite expected one point and the rule correctly produced two. The volume assertion then read the first point of that same window, which is the earlier workout rather than the one it described. The derivation is right and the expectations are wrong. The approval is invalidated and `npm run db:restore` did not run; the local database is on the seed baseline.
 
 ## Delivery commit
 
