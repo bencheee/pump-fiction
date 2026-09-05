@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:22:36+02:00`
+- **Updated:** `2026-09-05T22:25:34+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:22:36+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T22:25:34+02:00`
+- **Approved:** `2026-09-05T22:25:34+02:00`
+- **Testing started:** `2026-09-05T22:25:34+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`. Approving it authorizes the recorded verification; nothing runs before that.
+- **Next action:** Run only the recorded verification against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`.
 
 ## Scope
 
@@ -97,7 +97,7 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new history suite (list order and grouping, detail snapshot, every correction family, the rejection cases, template and rotation invariance, completion marking, cascade deletion, identity columns if added); `npm run test:repository` including the new history repository test; `npm run test:unit` for grouping and validation; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
 - **Results:** Not run
 
 ## Delivery commit
@@ -109,16 +109,16 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T22:25:34+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T22:25:34+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, which approves it and authorizes only the recorded verification plan.
 
 ## Definition of Ready
 
@@ -155,3 +155,6 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:02:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the workout History operations, the first delivery of `F-008` |
 | `2026-09-05T22:21:33+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the reads, the ten corrections, the identity snapshots, and the prepared suites; all permitted static checks passed |
 | `2026-09-05T22:22:36+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-05T22:25:34+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-05T22:25:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` with `potvrda` |
+| `2026-09-05T22:25:34+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded verification against the exact approved delivery |
