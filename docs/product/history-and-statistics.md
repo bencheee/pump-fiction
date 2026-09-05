@@ -16,6 +16,8 @@ Weight and Body calculations are canonical in [`weight-and-body.md`](weight-and-
 
 Workouts are ordered newest first and grouped by month. Each item shows date, split or one-time-workout name, active duration, performed exercise count, and incomplete status where applicable.
 
+Months group by the workout's local date, which is already stored in the configured time zone. The performed exercise count counts the exercises holding at least one recorded set, so an exercise the user opened but left empty is not counted as performed.
+
 A workout detail renders its saved snapshot:
 
 - start and finish time;
@@ -31,11 +33,15 @@ A workout detail renders its saved snapshot:
 
 The user can edit date, start and finish, exercises and order, sets, load modes, weight or assistance, band data, reps, and workout-specific notes.
 
+The recorded active duration is not among them. It stays as measured, because the paused wall-clock time it already excludes cannot be reconstructed from corrected timestamps.
+
+An incomplete workout can be marked completed, which makes it eligible data. The reverse is not offered: returning a completed workout to incomplete would silently withdraw statistics that already exist.
+
 Any historical edit recalculates all affected derived statistics. It does not update a split template or affect rotation. A workout can be deleted after confirmation; deletion also recalculates affected statistics and does not rewind rotation.
 
 ## Exercise history
 
-The exercise list contains every exercise with at least one historical performance, including exercises whose definition was later deleted; the workout snapshot keeps their name and type. An exercise detail shows:
+The exercise list contains every exercise with at least one historical performance, including exercises whose definition was later deleted; the workout snapshot keeps their name and type, and a persistent identity snapshot keeps their performances combined as one exercise. Deletion is therefore visible as a marker on the exercise rather than as a lost record; see the identity amendment in [ADR-0024](../decisions/0024-deletion-with-preserved-history.md). An exercise detail shows:
 
 - latest eligible performance;
 - personal records;

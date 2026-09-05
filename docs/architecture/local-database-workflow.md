@@ -108,4 +108,6 @@ After approval, reset applies the exact migration history to a clean local datab
 
 Approved repository integration tests write to the same local database. They create suffixed fixtures, delete them afterwards, and restore the current-program pointer they moved, so an authorized verification leaves the seeded or restored data usable.
 
+`T-031` adds the `0006_workout_history` pgTAP suite and a workout-History repository integration test to that set. The suite creates and finishes its own workouts, so it shares the precondition below.
+
 Those tests share the pgTAP precondition: two of them start their own workout, and `workouts_single_resumable` allows one active or paused workout per database, so they fail with a duplicate-key error whenever a resumable workout already exists. Run them on a freshly reset database, before restoring a snapshot that contains an active workout. The usual full cycle is `npm run db:snapshot`, the reset, `npm run test:db`, `npm run test:repository`, and only then `npm run db:restore`.

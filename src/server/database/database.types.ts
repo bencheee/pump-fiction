@@ -365,6 +365,7 @@ export type Database = {
           created_at: string
           exercise_base_type_snapshot: Database["public"]["Enums"]["exercise_base_type"]
           exercise_id: string | null
+          exercise_identity_id: string
           exercise_name_snapshot: string
           id: string
           max_reps_snapshot: number | null
@@ -380,6 +381,7 @@ export type Database = {
           created_at?: string
           exercise_base_type_snapshot: Database["public"]["Enums"]["exercise_base_type"]
           exercise_id?: string | null
+          exercise_identity_id: string
           exercise_name_snapshot: string
           id?: string
           max_reps_snapshot?: number | null
@@ -395,6 +397,7 @@ export type Database = {
           created_at?: string
           exercise_base_type_snapshot?: Database["public"]["Enums"]["exercise_base_type"]
           exercise_id?: string | null
+          exercise_identity_id?: string
           exercise_name_snapshot?: string
           id?: string
           max_reps_snapshot?: number | null
@@ -491,7 +494,9 @@ export type Database = {
           rotation_advanced_to_split_id: string | null
           source_kind: Database["public"]["Enums"]["workout_source_kind"]
           source_program_id: string | null
+          source_program_identity_id: string | null
           source_split_id: string | null
+          source_split_identity_id: string | null
           split_name_snapshot: string | null
           started_at: string
           status: Database["public"]["Enums"]["workout_status"]
@@ -511,7 +516,9 @@ export type Database = {
           rotation_advanced_to_split_id?: string | null
           source_kind: Database["public"]["Enums"]["workout_source_kind"]
           source_program_id?: string | null
+          source_program_identity_id?: string | null
           source_split_id?: string | null
+          source_split_identity_id?: string | null
           split_name_snapshot?: string | null
           started_at: string
           status: Database["public"]["Enums"]["workout_status"]
@@ -531,7 +538,9 @@ export type Database = {
           rotation_advanced_to_split_id?: string | null
           source_kind?: Database["public"]["Enums"]["workout_source_kind"]
           source_program_id?: string | null
+          source_program_identity_id?: string | null
           source_split_id?: string | null
+          source_split_identity_id?: string | null
           split_name_snapshot?: string | null
           started_at?: string
           status?: Database["public"]["Enums"]["workout_status"]
@@ -581,6 +590,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_history_set: {
+        Args: { p_workout_exercise_id: string }
+        Returns: string
+      }
+      add_history_workout_exercise: {
+        Args: { p_exercise_id: string; p_workout_id: string }
+        Returns: string
+      }
       advance_program_after_proposed_completion: {
         Args: { p_completed_split_id: string; p_program_id: string }
         Returns: string
@@ -624,10 +641,38 @@ export type Database = {
         Returns: string
       }
       delete_exercise: { Args: { p_exercise_id: string }; Returns: string }
+      delete_history_workout: {
+        Args: { p_workout_id: string }
+        Returns: undefined
+      }
       delete_program: { Args: { p_program_id: string }; Returns: string }
       delete_split: { Args: { p_split_id: string }; Returns: string }
       get_current_workout: { Args: never; Returns: Json }
+      get_history_workout: { Args: { p_workout_id: string }; Returns: Json }
       get_today_view: { Args: never; Returns: Json }
+      list_workout_history: { Args: never; Returns: Json }
+      mark_history_workout_completed: {
+        Args: { p_workout_id: string }
+        Returns: undefined
+      }
+      remove_history_set: {
+        Args: {
+          p_confirmed_populated_removal: boolean
+          p_workout_set_id: string
+        }
+        Returns: undefined
+      }
+      remove_history_workout_exercise: {
+        Args: {
+          p_confirmed_populated_removal: boolean
+          p_workout_exercise_id: string
+        }
+        Returns: undefined
+      }
+      reorder_history_workout_exercises: {
+        Args: { p_workout_exercise_ids: string[]; p_workout_id: string }
+        Returns: undefined
+      }
       reorder_program_splits: {
         Args: { p_program_id: string; p_split_ids: string[] }
         Returns: string
@@ -636,9 +681,44 @@ export type Database = {
         Args: { p_exercise_ids: string[]; p_split_id: string }
         Returns: string
       }
+      require_history_workout: {
+        Args: { p_workout_id: string }
+        Returns: {
+          accumulated_active_seconds: number
+          active_segment_started_at: string | null
+          created_at: string
+          finished_at: string | null
+          id: string
+          one_time_name: string | null
+          program_name_snapshot: string | null
+          revision: number
+          rotation_advanced_at: string | null
+          rotation_advanced_to_split_id: string | null
+          source_kind: Database["public"]["Enums"]["workout_source_kind"]
+          source_program_id: string | null
+          source_program_identity_id: string | null
+          source_split_id: string | null
+          source_split_identity_id: string | null
+          split_name_snapshot: string | null
+          started_at: string
+          status: Database["public"]["Enums"]["workout_status"]
+          updated_at: string
+          workout_date: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "workouts"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       set_current_program: {
         Args: { p_next_split_id: string; p_program_id: string }
         Returns: string
+      }
+      set_history_workout_exercise_note: {
+        Args: { p_note: string; p_workout_exercise_id: string }
+        Returns: undefined
       }
       set_program_next_split: {
         Args: { p_program_id: string; p_split_id: string }
@@ -663,6 +743,19 @@ export type Database = {
           p_persistent_note: string
         }
         Returns: string
+      }
+      update_history_set: {
+        Args: { p_values: Json; p_workout_set_id: string }
+        Returns: undefined
+      }
+      update_history_workout_timing: {
+        Args: {
+          p_finished_at: string
+          p_started_at: string
+          p_workout_date: string
+          p_workout_id: string
+        }
+        Returns: undefined
       }
       update_program_name: {
         Args: { p_name: string; p_program_id: string }

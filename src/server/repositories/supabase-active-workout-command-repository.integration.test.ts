@@ -50,6 +50,7 @@ describe("SupabaseActiveWorkoutCommandRepository", () => {
           id: workoutExerciseId,
           workout_id: workoutId,
           exercise_id: exerciseId,
+          exercise_identity_id: exerciseId,
           position: 1,
           exercise_name_snapshot: "T-008 exercise",
           exercise_base_type_snapshot: "weights",

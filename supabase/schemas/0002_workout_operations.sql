@@ -183,8 +183,8 @@ begin
     if not found then raise exception using errcode = 'PF201', message = 'Split is unavailable'; end if;
     if (p_source_kind = 'proposed_split') <> (selected_program.next_split_id = selected_split.id) then raise exception using errcode = 'PF206', message = 'Split does not match requested source kind'; end if;
 
-    insert into public.workouts(status, source_kind, source_program_id, source_split_id, program_name_snapshot, split_name_snapshot, workout_date, started_at, active_segment_started_at)
-    values ('active', p_source_kind, selected_program.id, selected_split.id, selected_program.name, selected_split.name, (p_started_at at time zone configured_time_zone)::date, p_started_at, p_started_at)
+    insert into public.workouts(status, source_kind, source_program_id, source_split_id, source_program_identity_id, source_split_identity_id, program_name_snapshot, split_name_snapshot, workout_date, started_at, active_segment_started_at)
+    values ('active', p_source_kind, selected_program.id, selected_split.id, selected_program.id, selected_split.id, selected_program.name, selected_split.name, (p_started_at at time zone configured_time_zone)::date, p_started_at, p_started_at)
     returning id into created_workout_id;
 
     for item in
@@ -192,8 +192,8 @@ begin
       from public.split_exercises as split_item join public.exercises as exercise on exercise.id = split_item.exercise_id
       where split_item.split_id = selected_split.id order by split_item.position
     loop
-      insert into public.workout_exercises(workout_id, exercise_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot, planned_sets_snapshot, min_reps_snapshot, max_reps_snapshot)
-      values (created_workout_id, item.id, item.position, item.name, item.base_type, item.persistent_note, item.planned_sets, item.min_reps, item.max_reps)
+      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot, planned_sets_snapshot, min_reps_snapshot, max_reps_snapshot)
+      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.persistent_note, item.planned_sets, item.min_reps, item.max_reps)
       returning id into created_occurrence_id;
       insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
       select created_occurrence_id, item.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = item.id;
@@ -207,8 +207,8 @@ begin
     values ('active', 'one_time', btrim(p_one_time_name), (p_started_at at time zone configured_time_zone)::date, p_started_at, p_started_at)
     returning id into created_workout_id;
     for item in select exercise.*, selected.ordinality::integer as position from pg_catalog.unnest(p_exercise_ids) with ordinality as selected(id, ordinality) join public.exercises as exercise on exercise.id = selected.id order by selected.ordinality loop
-      insert into public.workout_exercises(workout_id, exercise_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)
-      values (created_workout_id, item.id, item.position, item.name, item.base_type, item.persistent_note) returning id into created_occurrence_id;
+      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)
+      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.persistent_note) returning id into created_occurrence_id;
       insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
       select created_occurrence_id, item.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = item.id;
       insert into public.workout_sets(workout_exercise_id, position)
@@ -308,8 +308,8 @@ begin
     select exercise.* into source_exercise from public.exercises as exercise where exercise.id = target_id;
     if not found then raise exception using errcode = 'PF203', message = 'Exercise is unavailable'; end if;
     select coalesce(max(position), 0) + 1 into next_position from public.workout_exercises where workout_id = p_workout_id;
-    insert into public.workout_exercises(workout_id, exercise_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)
-    values (p_workout_id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.persistent_note) returning * into target_occurrence;
+    insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)
+    values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.persistent_note) returning * into target_occurrence;
     insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
     select target_occurrence.id, source_exercise.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = source_exercise.id;
   elsif p_operation = 'remove_exercise' then

@@ -143,6 +143,11 @@ create table public.workouts (
   source_kind public.workout_source_kind not null,
   source_program_id uuid references public.programs (id) on delete set null,
   source_split_id uuid references public.splits (id) on delete set null,
+  -- Persistent identity snapshots. The references above become null when a
+  -- template is deleted under ADR-0024; these never do, so split History keeps
+  -- grouping the same split across renames, edits, and deletion.
+  source_program_identity_id uuid,
+  source_split_identity_id uuid,
   program_name_snapshot text,
   split_name_snapshot text,
   one_time_name text,
@@ -185,7 +190,19 @@ create table public.workouts (
     rotation_advanced_at is null
     or (source_kind = 'proposed_split' and status = 'completed')
   ),
-  check (rotation_advanced_to_split_id is null or rotation_advanced_at is not null)
+  check (rotation_advanced_to_split_id is null or rotation_advanced_at is not null),
+  check (
+    (
+      source_kind = 'one_time'
+      and source_program_identity_id is null
+      and source_split_identity_id is null
+    )
+    or (
+      source_kind in ('proposed_split', 'alternate_split')
+      and source_program_identity_id is not null
+      and source_split_identity_id is not null
+    )
+  )
 );
 
 create unique index workouts_single_resumable
@@ -197,13 +214,17 @@ create index workouts_history_order
   where status in ('completed', 'incomplete');
 
 create index workouts_source_split_history
-  on public.workouts (source_split_id, workout_date desc)
-  where source_split_id is not null;
+  on public.workouts (source_split_identity_id, workout_date desc)
+  where source_split_identity_id is not null;
 
 create table public.workout_exercises (
   id uuid primary key default gen_random_uuid(),
   workout_id uuid not null references public.workouts (id) on delete cascade,
   exercise_id uuid references public.exercises (id) on delete set null,
+  -- Persistent identity snapshot. `exercise_id` becomes null when the
+  -- definition is deleted under ADR-0024; this never does, so Exercise History
+  -- keeps combining performances of the same exercise after deletion.
+  exercise_identity_id uuid not null,
   position integer not null check (position > 0),
   exercise_name_snapshot text not null,
   exercise_base_type_snapshot public.exercise_base_type not null,
@@ -215,7 +236,7 @@ create table public.workout_exercises (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (workout_id, position),
-  unique (workout_id, exercise_id),
+  unique (workout_id, exercise_identity_id),
   unique (id, exercise_base_type_snapshot),
   check (btrim(exercise_name_snapshot) <> ''),
   check (
@@ -241,7 +262,7 @@ alter table public.workouts
   on delete set null (rotation_advanced_to_split_id);
 
 create index workout_exercises_exercise_history
-  on public.workout_exercises (exercise_id, workout_id);
+  on public.workout_exercises (exercise_identity_id, workout_id);
 
 create table public.workout_exercise_load_modes (
   workout_exercise_id uuid not null,

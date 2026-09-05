@@ -49,6 +49,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-014` adds feature-owned Today/current-workout aggregates and start validation under `src/features/active-workout`. Read functions return nested JSON that the server repository exposes only as domain shapes. The thin start Server Action calls one transactional snapshot function. All in-session edits and terminal outcomes continue through the dedicated command Route Handler, and raw PostgreSQL failures remain mapped to validation, not-found, conflict, retry, or acknowledgement contracts.
 
+`T-031` adds workout History under `src/features/history`. Its read functions return the month-grouped list and one saved workout as nested JSON that the server repository exposes only as domain shapes. Historical corrections are **ordinary transactional operations**, not idempotent revisioned commands: the Owner confirmed on `2026-09-05` that History carries no offline outbox, so each correction is one Server Action, one repository call, one PostgreSQL function, and the generic retry contract. Each returns the reloaded workout so the caller sees every recalculated value. Set values cross as one JSON object because a cleared field is a real null, which a generated scalar RPC argument type cannot express.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

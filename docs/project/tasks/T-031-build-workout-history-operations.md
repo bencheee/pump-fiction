@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:02:36+02:00`
+- **Updated:** `2026-09-05T22:21:33+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -78,19 +78,19 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Execution checklist
 
-- [ ] Define history domain shapes: workout summary, month group, workout detail, correction inputs, validation, the repository contract, and failures under `src/features/history`.
-- [ ] Add read functions that return nested JSON for the list and the detail, mapped in the Supabase repository to domain shapes.
-- [ ] Add one transactional function per correction family and one for deletion, reusing the set shape constraints, `workout_set_is_recorded`, and the offset renumbering technique.
-- [ ] If accepted: add the identity snapshot columns, backfill them from the live references, and amend ADR-0024 and the domain model.
-- [ ] Generate and review the migration with `db schema declarative sync --strict-coverage`; regenerate and review the database types.
-- [ ] Add server composition and thin Server Actions that return `OperationResult` values.
-- [ ] Prepare the pgTAP suite, unit tests for grouping and validation, and a repository integration test; add the integration file to `test:repository`; do not run any of them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Define history domain shapes: workout summary, month group, workout detail, correction inputs, validation, the repository contract, and failures under `src/features/history`. Corrections are one discriminated union so a single Server Action and a single validator cover every family.
+- [x] Add read functions that return nested JSON for the list and the detail, mapped in the Supabase repository to domain shapes. `get_history_workout` returns JSON null for an unknown id and for the current workout, so History cannot open it.
+- [x] Add one transactional function per correction family and one for deletion, reusing the set shape constraints, `workout_set_is_recorded`, and the offset renumbering technique. `require_history_workout` locks the target and refuses an `active` or `paused` workout, so the two write paths cannot overlap.
+- [x] Add the identity snapshot columns, backfill them from the live references, and amend ADR-0024 and the domain model. The migration also backfills occurrences already orphaned by an earlier deletion, grouped by their snapshotted name and base type.
+- [x] Generate and review the migration with `db schema declarative sync --strict-coverage`; regenerate and review the database types. The review changed `update_history_set` to take one `jsonb` value object, because a generated scalar RPC argument type cannot express a cleared field as null.
+- [x] Add server composition and thin Server Actions that return `OperationResult` values.
+- [x] Prepare the pgTAP suite, unit tests, and a repository integration test; add the integration file to `test:repository`; do not run any of them. Month grouping is a database-side read shape, so the pgTAP suite covers it and the unit suite covers correction validation and the failure contract.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T22:21:33+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. `npm run check` passed Prettier, ESLint boundaries, strict TypeScript, the Next.js `16.3.3` production build across 18 routes, 8 font and 38 icon checksums with their licenses, Markdown lint across 115 files, and all 949 internal links. The declarative sync produced one migration under `--strict-coverage`; the complete migration chain then applied cleanly to a throwaway database created and dropped for the check, producing all 13 History functions and the identity column. Regenerated types matched the committed file on a second run, `supabase db lint --level error` reported no schema errors, and `git diff --check` was clean. No feature test ran: the pgTAP, unit, and repository suites are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -102,9 +102,9 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-031: build workout History operations`
-- **Committed scope:** Not created
+- **Committed scope:** the `0003_workout_history.sql` declarative schema and the identity snapshot columns in `0001_core.sql` and `0002_workout_operations.sql`; the generated migration with its backfill; regenerated database types; the `src/features/history` domain, validation, repository contract, and operations; the Supabase repository, server composition, and Server Actions; the prepared `0006_workout_history` pgTAP suite, unit suite, and repository integration test with its `test:repository` registration; the ADR-0024 identity amendment; and the domain-model, server-boundary, History product, and local-database-workflow documents
 
 ## Review
 

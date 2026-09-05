@@ -36,6 +36,34 @@ A measurement type keeps no snapshot layer, because its entries are the only rec
 - `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, the History wording for deleted exercises, and the release-boundary archiving bullet are rewritten for deletion.
 - [ADR-0002](0002-template-snapshot-history-model.md) keeps its snapshot decision; only its archiving language is superseded here.
 
+## Amendment — persistent identity snapshots (T-031)
+
+Nulling the reference preserves the record but loses the identity that
+[`history-and-statistics.md`](../product/history-and-statistics.md) needs:
+`MVP-HIS-005` combines an exercise's performances by persistent identity, and
+`MVP-HIS-011` keeps same-named splits from different programs apart by
+persistent split identity. Both would fail for exactly the definitions this ADR
+deletes.
+
+The Owner accepted the fix on `2026-09-05`. Every workout row now snapshots the
+identity alongside the nullable reference:
+
+| Column | Meaning |
+| --- | --- |
+| `workout_exercises.exercise_identity_id` | The exercise's id at snapshot time; `not null` and never cleared |
+| `workouts.source_program_identity_id` | The program's id at snapshot time; null only for a one-time workout |
+| `workouts.source_split_identity_id` | The split's id at snapshot time; null only for a one-time workout |
+
+The existing references keep their `on delete set null` behavior and still say
+whether the definition is currently in the library. Statistics group by the
+identity columns instead. Occurrences orphaned before this change were
+backfilled by their snapshotted name and base type, which merges two deleted
+definitions that once shared a name; that reconstruction affects only rows
+orphaned earlier and is recorded in the `T-031` migration.
+
+Nothing else in this decision changes: deletion is still permanent, still
+immediate, and still costs History no record.
+
 ## Related documents
 
 - [`../product/exercises.md`](../product/exercises.md)
@@ -44,3 +72,4 @@ A measurement type keeps no snapshot layer, because its entries are the only rec
 - [`../product/weight-and-body.md`](../product/weight-and-body.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
 - [`../project/tasks/T-021-replace-archiving-with-deletion-in-data.md`](../project/tasks/T-021-replace-archiving-with-deletion-in-data.md)
+- [`../project/tasks/T-031-build-workout-history-operations.md`](../project/tasks/T-031-build-workout-history-operations.md)

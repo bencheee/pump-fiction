@@ -27,7 +27,7 @@
     "test:db": "supabase test db",
     "test:unit": "vitest run src --exclude '**/*.integration.test.ts'",
     "test:components": "vitest run src/shared/ui --environment jsdom",
-    "test:repository": "vitest run src/server/repositories/supabase-app-settings-repository.integration.test.ts src/server/repositories/supabase-active-workout-command-repository.integration.test.ts src/server/repositories/supabase-exercise-repository.integration.test.ts src/server/repositories/supabase-workout-repository.integration.test.ts",
+    "test:repository": "vitest run src/server/repositories/supabase-app-settings-repository.integration.test.ts src/server/repositories/supabase-active-workout-command-repository.integration.test.ts src/server/repositories/supabase-exercise-repository.integration.test.ts src/server/repositories/supabase-workout-repository.integration.test.ts src/server/repositories/supabase-workout-history-repository.integration.test.ts",
     "test:browser": "playwright test",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run assets:check && npm run docs:lint && npm run links:internal"
   },
