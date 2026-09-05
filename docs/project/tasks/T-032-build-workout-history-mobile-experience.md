@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:10:00+02:00`
+- **Updated:** `2026-09-05T23:07:42+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** `2026-09-05T23:10:00+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T23:07:42+02:00`
+- **Approved:** `2026-09-05T23:07:42+02:00`
+- **Testing started:** `2026-09-05T23:07:42+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`. Approving it authorizes the recorded verification.
+- **Next action:** Run only the recorded verification against exact approved delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`.
 
 ## Scope
 
@@ -95,7 +95,7 @@ Shell:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which now carries the new component suite covering the `S14` snapshot with a deleted definition, mark-completed, confirmed deletion, the failure path, unsaved-changes reporting, the corrections a save actually sends, both removal confirmations, the structural lock, and the presentation helpers; then the serialized Chromium and WebKit run of the new History browser scenario covering the subsection shell, `S13` to `S14`, an applied correction, the unchanged Today proposal, confirmed deletion, 320 px reflow, and two structural captures per platform. Only that one spec runs: the whole browser command cannot run until [`T-037`](T-037-repair-stale-browser-specs.md) repairs two older specs that still call the archiving artifacts `T-021` removed. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`
 - **Results:** Not run.
 
   Recorded incident on `2026-09-05T23:05:00+02:00`: while writing this Task file, an unquoted shell heredoc expanded the backticked command names inside its own prose, so the shell executed the unit and browser test commands against the uncommitted working tree. No commit was approved and no commit existed, so **these runs are not verification of anything and their results are not recorded as evidence**. What they left behind was cleaned up: two fixture exercises the browser specs create were deleted, restoring the seeded ten, and the generated report directory was removed. The runs did surface two ambiguous queries in the new component suite, which are corrected here; that correction is ordinary implementation work, not an authorized test result. The recorded plan above still runs in full, from the beginning, after this exact delivery is approved. Every heredoc in this Task now quotes its delimiter.
@@ -109,16 +109,16 @@ Shell:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T23:07:42+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T23:07:42+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, having also read the recorded incident about the accidental unapproved test run, which approves the commit and authorizes only the recorded verification plan.
 
 ## Definition of Ready
 
@@ -155,3 +155,6 @@ Shell:
 | `2026-09-05T22:46:10+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the History shell and the Workouts subsection on the `T-031` operations |
 | `2026-09-05T23:05:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the History shell, `S13`, `S14`, the correction form, and the prepared suites; all permitted static checks passed |
 | `2026-09-05T23:10:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-05T23:07:42+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-05T23:07:42+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` with `potvrda` |
+| `2026-09-05T23:07:42+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
