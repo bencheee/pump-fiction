@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Correct the singular `Confirmed sets` browser query, run static checks, deliver the second T-016 test-only replacement, and request fresh User approval before the complete test plan restarts.
+Create the second T-016 test-only replacement delivery, record its exact SHA, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-05T10:11:16+02:00`
+- **Updated:** `2026-09-05T10:13:09+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-04T16:11:24+02:00` for replacement
 - **Approval requested:** `2026-09-04T16:23:50+02:00` for replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T10:07:03+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the singular review-metric browser query, run static checks without feature tests, create a second test-only replacement delivery, and request fresh approval.
+- **Next action:** Create the second test-only replacement delivery, record its exact SHA, and request fresh User approval before restarting the complete test plan.
 
 ## Scope
 
@@ -65,7 +65,7 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency/accessibility rules, strict TypeScript, production build, design assets/references, documentation links, and `git diff --check`
-- Results: Passed for both the original delivery and the pending replacement on 2026-09-04 with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes with dynamic `/workout/current` and `/workout/current/finish`; all 8 font and 38 icon checksums plus license files passed; Markdown lint and all internal links passed; `git diff --check` passed; and the corrective migration compiled cleanly inside an immediately rolled-back transaction. No feature test or manual application test ran after the correction.
+- Results: Passed for the original delivery, the first replacement, and the pending second test-only replacement (2026-09-04 and 2026-09-05) with Node.js `24.20.0` and npm `11.19.0`: formatting, ESLint, and strict TypeScript passed; the Next.js `16.3.3` production build compiled all 18 routes with dynamic `/workout/current` and `/workout/current/finish`; all 8 font and 38 icon checksums plus license files passed; Markdown lint and all internal links passed; `git diff --check` passed; and the corrective migration compiled cleanly inside an immediately rolled-back transaction. No feature test or manual application test ran after the query correction.
 
 ## Test plan and results
 
@@ -141,3 +141,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T16:23:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
 | `2026-09-05T10:11:16+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before a test-only substring query on the `Confirmed sets` metric hit the intentional completion bullet; browser tests stopped and the first-replacement approval is invalidated |
+| `2026-09-05T10:13:09+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the prepared S12 metric queries to exact-text matching so the intentional completion bullet no longer collides; all static checks passed without rerunning feature tests |

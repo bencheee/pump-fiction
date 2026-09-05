@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T10:11:16+02:00`
+- **Updated:** `2026-09-05T10:13:09+02:00`
 - **Progress:** `3/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -96,3 +96,4 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T16:23:50+02:00` | User / Reviewer and Approver | Approved the T-016 replacement | Explicit `odobreno` binds fresh approval to exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` and authorizes the complete recorded plan |
 | `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | Restarted the T-016 verification | Running the complete unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against the exact approved replacement |
 | `2026-09-05T10:11:16+02:00` | Claude Code primary agent / Tester | Returned `T-016` to `In Progress` again | Unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before one test-only substring query on the S12 `Confirmed sets` metric failed; the first-replacement approval is invalidated |
+| `2026-09-05T10:13:09+02:00` | Claude Code primary agent / Executor | Corrected the T-016 prepared metric queries pending second replacement delivery | The S12 metric assertions now use exact-text matching; all static checks passed without feature tests |

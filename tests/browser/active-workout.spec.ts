@@ -158,8 +158,12 @@ test.describe("Active workout experience", () => {
     await expect(
       page.getByText("Proposed split · active rotation"),
     ).toBeVisible();
-    await expect(page.getByText("Confirmed sets")).toBeVisible();
-    await expect(page.getByText("Empty planned sets")).toBeVisible();
+    await expect(
+      page.getByText("Confirmed sets", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Empty planned sets", { exact: true }),
+    ).toBeVisible();
     await expect(page.getByText(`${exerciseA} set 2`)).toBeVisible();
     await expect(
       page.getByText(
@@ -191,7 +195,9 @@ test.describe("Active workout experience", () => {
 
     await page.getByRole("link", { name: "Review & Finish" }).click();
     await expect(page.getByText("One-time workout · no split")).toBeVisible();
-    await expect(page.getByText("Empty planned sets")).not.toBeAttached();
+    await expect(
+      page.getByText("Empty planned sets", { exact: true }),
+    ).not.toBeAttached();
     await expect(
       page.getByText(
         "No planned-set metric: this workout has no prescription, so its set rows are workout-local rather than planned.",
