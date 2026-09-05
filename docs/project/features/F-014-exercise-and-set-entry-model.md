@@ -3,10 +3,10 @@
 - **Milestone:** `M-001`
 - **Owner:** User
 - **Horizon:** `Next`
-- **Order:** 2
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T19:28:05+02:00`
+- **Updated:** `2026-09-05T20:09:42+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -77,3 +77,4 @@ Recorded on `2026-09-05`:
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-05T19:28:05+02:00` | User / Owner | Created `F-014` in `Next / 2` with both decisions recorded | Asked for two types with assistance under bodyweight, and for entered values to replace explicit confirmation |
+| `2026-09-05T20:09:42+02:00` | User / Owner | Moved `Next / 2` to `Next / 1` | Reconfirmed the order `F-013`, `F-014`, `F-012`, `F-008` after `F-013` became the current focus |

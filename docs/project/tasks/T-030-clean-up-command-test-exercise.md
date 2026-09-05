@@ -1,23 +1,23 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:01:16+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T20:09:42+02:00`
+- **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms the transition to `Ready`.
+- **Next action:** Deliver the test cleanup as one reviewable commit.
 
 ## Scope
 
@@ -103,7 +103,7 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms the transition to `Ready`
+- [x] Owner confirms the transition to `Ready`
 
 ## Definition of Done
 
@@ -122,3 +122,5 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Found during the authorized `T-027` verification: the command repository test leaves its exercise behind |
+| `2026-09-05T20:09:42+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the fix before `F-014`, keeping `F-013` first in the working order |
+| `2026-09-05T20:09:42+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the test cleanup |

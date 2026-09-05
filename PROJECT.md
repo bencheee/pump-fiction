@@ -1,10 +1,11 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T20:01:16+02:00
+- **Last updated:** 2026-09-05T20:09:42+02:00
 - **Current phase:** Local MVP implementation — `T-027` verified; awaiting the Owner's `F-013` confirmation before `F-014`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` and `F-011` complete; `T-027` verified under `F-013` with `T-030` recorded; `F-012` and `F-014` queued in `Next`; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
+- **Working order:** `F-013` (seed and snapshot) → `F-014` (`T-028`, then `T-029`) → `F-012` (command recovery) → `F-008`; reconfirmed by the Owner on `2026-09-05`
 
 ## Current focus
 
@@ -12,12 +13,12 @@
 
 ## Immediate next action
 
-Owner confirms the `F-013` result and decides whether [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) becomes `Ready` now or after `F-014`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) as one reviewable commit so `F-013` can be confirmed, then start `F-014` with `T-028`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-013`](docs/project/features/F-013-local-verification-data.md) — Local Verification Data (`1/2 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
-  - [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) — `Backlog` — Claude Code primary agent — `2026-09-05T20:01:16+02:00` — Owner confirms the transition to `Ready`
+  - [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) — `In Progress` — Claude Code primary agent — `2026-09-05T20:09:42+02:00` — deliver one reviewable commit
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next

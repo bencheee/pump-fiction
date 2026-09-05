@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-05T19:28:05+02:00`
+- **Updated:** `2026-09-05T20:09:42+02:00`
 - **Progress:** `8/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -37,12 +37,12 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Done`)
 - [`F-011`](../features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`Done`)
-- [`F-013`](../features/F-013-local-verification-data.md) — Local Verification Data (`Next / 1`)
-- [`F-014`](../features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`Next / 2`)
-- [`F-012`](../features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`Next / 3`)
-- [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 4`)
-- [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 5`)
-- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 6`)
+- [`F-013`](../features/F-013-local-verification-data.md) — Local Verification Data (`Now / 1`)
+- [`F-014`](../features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`Next / 1`)
+- [`F-012`](../features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`Next / 2`)
+- [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 3`)
+- [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 4`)
+- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 5`)
 
 ### Primary MVP-criteria ownership
 
@@ -183,3 +183,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-05T19:17:58+02:00` | User / Owner | Added `F-012` and `F-013` to `Next` | Asked for the stuck-command recovery and for verification to stop destroying local data |
 | `2026-09-05T19:26:04+02:00` | User / Owner | Completed `F-011`; `M-001` advances to 8/13 required Features Done | Confirmed the aggregate result of the nine corrections and the follow-up defect fix |
 | `2026-09-05T19:28:05+02:00` | User / Owner | Added `F-014` and set the `Next` order to `F-013`, `F-014`, `F-012`, `F-008` | Requested two exercise types with assistance under bodyweight, values instead of confirmation, and local data protection first |
+| `2026-09-05T20:09:42+02:00` | User / Owner | Reconfirmed the working order and renumbered `Next` | `F-013` is the current focus, then `F-014` with `T-028` before `T-029`, then `F-012`, then `F-008`; the projections had drifted from the Feature files |
