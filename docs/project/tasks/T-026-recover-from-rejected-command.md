@@ -1,7 +1,7 @@
 # T-026 — Recover from a permanently rejected active-workout command
 
 - **Feature:** `F-012`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:35:40+02:00`
+- **Updated:** `2026-09-05T21:36:33+02:00`
 - **Started:** `2026-09-05T21:29:41+02:00`
 - **Review started:** `2026-09-05T21:35:40+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T21:36:33+02:00`
+- **Approved:** `2026-09-05T21:36:33+02:00`
+- **Testing started:** `2026-09-05T21:36:33+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `90875783eda308cdb95b33ad43a336bbd6060ccd`; the suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Run the authorized unit and component suites for `90875783eda308cdb95b33ad43a336bbd6060ccd`.
 
 ## Scope
 
@@ -79,7 +79,7 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** delivery-controller unit scenarios for a terminal rejection followed by successful delivery of the queued commands, and an active-workout component scenario that finishes a workout after a rejection; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `90875783eda308cdb95b33ad43a336bbd6060ccd`
 - **Results:** Not run
 
 ## Delivery commit
@@ -91,16 +91,16 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T21:36:33+02:00`
+- **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `90875783eda308cdb95b33ad43a336bbd6060ccd`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T21:36:33+02:00`
+- **Approval note:** Approved the exact delivery commit. This Task changes no schema, so the verification is the unit and component suites; no reset was required or requested
 
 ## Definition of Ready
 
@@ -136,3 +136,5 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 | `2026-09-05T21:29:41+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the proposed recovery rule unchanged |
 | `2026-09-05T21:29:41+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the terminal-rejection recovery |
 | `2026-09-05T21:35:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `90875783eda308cdb95b33ad43a336bbd6060ccd`; static checks passed and no feature test ran |
+| `2026-09-05T21:36:33+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit |
+| `2026-09-05T21:36:33+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized unit and component suites against `90875783eda308cdb95b33ad43a336bbd6060ccd` |

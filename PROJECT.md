@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:35:40+02:00
+- **Last updated:** 2026-09-05T21:36:33+02:00
 - **Current phase:** Local MVP implementation — `F-014` confirmed; planning the active-workout command recovery
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007`, `F-011`, `F-013`, and `F-014` complete; `F-012` is the current focus; `F-008` intentionally not started
@@ -15,12 +15,12 @@
 
 ## Immediate next action
 
-Owner approves `90875783eda308cdb95b33ad43a336bbd6060ccd`, which unlocks the suites for `T-026` and completes `F-012`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Run and record the authorized `T-026` verification, then ask the Owner to confirm the `F-012` result. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`0/1 Tasks Done`) — a permanently rejected command must not strand a workout
-  - [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) — `In Review` — Claude Code primary agent — `2026-09-05T21:35:40+02:00` — review `90875783eda308cdb95b33ad43a336bbd6060ccd`; the suites need the Owner's approval of that SHA
+  - [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) — `Testing` — Claude Code primary agent — `2026-09-05T21:36:33+02:00` — run the authorized suites for `90875783eda308cdb95b33ad43a336bbd6060ccd`
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
