@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Deliver `T-025`: the `workout_sets` shape constraint rejects a band mode without a strength, so typing reps on a band set before choosing its strength returns a validation rejection and the ordered outbox then blocks every later command, including finishing. The `F-011` confirmation waits for that fix.
+Review `T-025` delivery commit `75fd3d78d71c599cfcd54026080e51c79fade3af`, which lets a band set hold a mode before its strength is chosen and moves that requirement into the confirmation check. Its pgTAP verification stays forbidden until the User approves that exact commit, and the `F-011` confirmation waits for the result.
 
 ## Implementation status
 

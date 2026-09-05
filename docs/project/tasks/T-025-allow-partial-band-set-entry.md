@@ -1,7 +1,7 @@
 # T-025 — Allow partial band set entry
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 8
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:07:32+02:00`
+- **Updated:** `2026-09-05T19:07:51+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T19:07:51+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit and decides on approval; pgTAP verification stays blocked until then.
 
 ## Scope
 
@@ -86,7 +86,7 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `75fd3d78d71c599cfcd54026080e51c79fade3af`
 - **Subject:** `T-025: allow partial band set entry`
 - **Committed scope:** The `workout_sets` shape check without the band-strength requirement, the confirmation check with it, the generated migration, extended pgTAP coverage for the accepted partial band set and the rejected incomplete confirmation, and the workout, domain-model, and database-workflow documentation.
 
@@ -137,3 +137,4 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 | `2026-09-05T19:03:35+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from the Owner's reproduced active-workout failure on 2026-09-05 |
 | `2026-09-05T19:03:35+02:00` | User / Owner | `Backlog` | `Ready` | Reported the blocking defect and asked what was happening |
 | `2026-09-05T19:03:35+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the constraint correction |
+| `2026-09-05T19:07:51+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `75fd3d78d71c599cfcd54026080e51c79fade3af` with static checks passed and no feature test run |
