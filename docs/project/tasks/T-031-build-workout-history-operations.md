@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:33:33+02:00`
+- **Updated:** `2026-09-05T22:35:56+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:33:33+02:00` for the replacement
-- **Approval requested:** `2026-09-05T22:25:34+02:00`
-- **Approved:** `2026-09-05T22:25:34+02:00` for the superseded first delivery; the replacement is not approved
-- **Testing started:** `2026-09-05T22:25:34+02:00`
+- **Approval requested:** `2026-09-05T22:35:56+02:00` for the replacement
+- **Approved:** `2026-09-05T22:35:56+02:00` for the replacement
+- **Testing started:** `2026-09-05T22:35:56+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the replacement delivery. Approving it restarts the complete recorded verification from the beginning.
+- **Next action:** Run the complete recorded plan from the beginning against exact approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54`.
 
 ## Scope
 
@@ -97,7 +97,7 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new history suite (list order and grouping, detail snapshot, every correction family, the rejection cases, template and rotation invariance, completion marking, cascade deletion, identity columns if added); `npm run test:repository` including the new history repository test; `npm run test:unit` for grouping and validation; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27` — approval invalidated by the failed verification below
+- **Authorized commit:** `b5e4cda609d478453eccd562087d1f18bfec7f54`; the earlier approval of `95de9212848755c956cb0dc5d50b5cfc8796dc27` was invalidated by the failed verification recorded below
 - **Results:** Failed on `2026-09-05T22:29:27+02:00` against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0`. `npm ci` installed 653 packages with no vulnerabilities, `npm run db:snapshot` saved the local data, and `supabase db reset` applied all 20 migrations and the seed. `npm run test:db` then failed two suites and passed the other four. `0001_core_constraints` ran 10 of its 19 assertions before its two direct `workout_exercises` inserts hit the new `exercise_identity_id not null` column, which this delivery added without updating that suite. `0006_workout_history` ran 0 of 47: its second fixture workout starts `T-031 Pull` as an `alternate_split`, but completing the first workout advanced rotation onto that split, so `start_workout` correctly refused the mismatch. Both defects are in test source; no delivered behavior is implicated. Testing stopped there, so the unit, repository, and generated-type steps did not run.
 
 ## Delivery commit
@@ -110,16 +110,16 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T22:25:34+02:00` for the superseded first delivery; the replacement awaits review
-- **Outcome:** The first delivery was approved and its verification then failed; the replacement is not yet reviewed
+- **Reviewed at:** `2026-09-05T22:35:56+02:00` for the replacement
+- **Outcome:** Replacement recommended for approval
 - **Findings:** The authorized verification found two prepared-test defects, recorded above
 
 ## Approval
 
-- **Approved commit:** None; the approval of `95de9212848755c956cb0dc5d50b5cfc8796dc27` was invalidated by its failed verification
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** The Owner replied `potvrda` on `2026-09-05`, approving `95de9212848755c956cb0dc5d50b5cfc8796dc27`. That approval no longer stands: its verification failed, so replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` needs a fresh decision before any test runs again.
+- **Approved commit:** `b5e4cda609d478453eccd562087d1f18bfec7f54`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T22:35:56+02:00`
+- **Approval note:** The Owner replied `potvrda` a second time on `2026-09-05`, binding fresh approval to exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` and authorizing the complete recorded plan from the beginning. The earlier approval of `95de9212848755c956cb0dc5d50b5cfc8796dc27` does not carry over.
 
 ## Definition of Ready
 
@@ -162,3 +162,6 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:29:27+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Reset and seed succeeded and four pgTAP suites passed, before `0001_core_constraints` hit the new not-null identity column and `0006_workout_history` refused its own rotation-invalid fixture; remaining steps stopped and the approval is invalidated |
 | `2026-09-05T22:33:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected both prepared suites and the inaccurate return-value sentence; all permitted static checks passed without running a feature test |
 | `2026-09-05T22:33:33+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54`; it awaits fresh approval before the complete recorded plan restarts |
+| `2026-09-05T22:35:56+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact replacement with no further findings |
+| `2026-09-05T22:35:56+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` with `potvrda` |
+| `2026-09-05T22:35:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
