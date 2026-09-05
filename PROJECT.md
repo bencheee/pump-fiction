@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T12:03:40+02:00
+- **Last updated:** 2026-09-05T12:06:25+02:00
 - **Current phase:** Local MVP implementation — correcting delivered behavior under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; `F-011` corrections planned and awaiting Owner readiness; `F-008` intentionally not started
@@ -12,12 +12,12 @@
 
 ## Immediate next action
 
-User reviews delivery commit `613dae3da605c329e22e07a82a7b9d1439c0320b` for [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) and decides on approval; feature tests stay blocked until that approval. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Run and record the authorized component tests for approved [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) commit `613dae3da605c329e22e07a82a7b9d1439c0320b`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`0/7 Tasks Done`) — Owner confirmed readiness
-  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `In Review` — Claude Code primary agent — `2026-09-05T12:03:40+02:00` — User reviews `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
+  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
   - [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 2)
   - [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 7)
   - [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` and the current-program mechanism (correction 3)
@@ -43,7 +43,7 @@ None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — approved commit `613dae3da605c329e22e07a82a7b9d1439c0320b`; authorized component scenarios are running.
 
 ## Recently completed Tasks
 

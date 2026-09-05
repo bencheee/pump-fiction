@@ -1,7 +1,7 @@
 # T-018 — Return to the parent screen after saving
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:03:40+02:00`
+- **Updated:** `2026-09-05T12:06:25+02:00`
 - **Started:** `2026-09-05T11:54:40+02:00`
 - **Review started:** `2026-09-05T12:03:40+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T12:06:25+02:00`
+- **Approved:** `2026-09-05T12:06:25+02:00`
+- **Testing started:** `2026-09-05T12:06:25+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit against Task scope, then decides on approval.
+- **Next action:** Run the authorized component tests against the approved commit and record their results.
 
 ## Scope
 
@@ -85,7 +85,7 @@ Affected forms and their parent screens:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** existing exercise-form, programs, and Today component suites plus new assertions for save navigation, success and failure toasts, and dirty-state save status; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `613dae3da605c329e22e07a82a7b9d1439c0320b`
 - **Results:** Not run
 
 ## Delivery commit
@@ -97,16 +97,16 @@ Affected forms and their parent screens:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T12:06:25+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the delivered scope and confirmed it in chat together with the two open mechanism questions.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `613dae3da605c329e22e07a82a7b9d1439c0320b`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T12:06:25+02:00`
+- **Approval note:** The User answered `potvrdujem` to the request to approve this exact commit and to confirm the per-set control placement in `T-020` and the `app_settings.current_program_id` mechanism in `T-021`. Feature testing is authorized for this commit's scope only.
 
 ## Definition of Ready
 
@@ -142,3 +142,5 @@ Affected forms and their parent screens:
 | `2026-09-05T11:54:40+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the `F-011` plan and directed execution |
 | `2026-09-05T11:54:40+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the save-and-return and unsaved-changes correction |
 | `2026-09-05T12:03:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `613dae3da605c329e22e07a82a7b9d1439c0320b` with static checks passed and no feature test run |
+| `2026-09-05T12:06:25+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Confirmed the delivered save-and-return behavior and approved the exact commit |
+| `2026-09-05T12:06:25+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `613dae3da605c329e22e07a82a7b9d1439c0320b` |
