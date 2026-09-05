@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T00:56:00+02:00`
+- **Updated:** `2026-09-06T00:53:12+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T00:53:12+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767`. Approving it authorizes the recorded verification.
 
 ## Scope
 
@@ -96,7 +96,7 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `b5772adb87d244bfc2404481e90f58a4046a7767`
 - **Subject:** `T-034: build Exercise History screens`
 - **Committed scope:** `S15` with its loading state and client-side search; `S16` with its loading state, category record panels, metric and range selectors, series summary, accessible value list, and performance list; the route-local Recharts progress chart; the prepared component suite and browser scenario; and the mobile UI foundation and wireframe decisions
 
@@ -147,3 +147,5 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the Exercises subsection delivery within `F-008`; the Owner directed that implementation must not start |
 | `2026-09-06T00:46:12+02:00` | User / Owner | `Backlog` | `Ready` | Both dependencies are `Done` and the go-ahead for the whole `F-008` authorizes the dependent screens |
 | `2026-09-06T00:46:12+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Exercise History screens on the `T-033` derivation |
+| `2026-09-06T00:56:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed `S15`, `S16`, the route-local chart, and the prepared suites; all permitted static checks passed |
+| `2026-09-06T00:53:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767`; static checks passed and every prepared feature test remains unexecuted |
