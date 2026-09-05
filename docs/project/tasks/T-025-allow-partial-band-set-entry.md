@@ -1,7 +1,7 @@
 # T-025 — Allow partial band set entry
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 8
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:12:45+02:00`
+- **Updated:** `2026-09-05T19:13:37+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
 - **Review started:** `2026-09-05T19:12:45+02:00`
-- **Approval requested:** `2026-09-05T19:10:30+02:00`
-- **Approved:** `2026-09-05T19:10:30+02:00`
-- **Testing started:** `2026-09-05T19:10:30+02:00`
+- **Approval requested:** `2026-09-05T19:13:37+02:00`
+- **Approved:** `2026-09-05T19:13:37+02:00`
+- **Testing started:** `2026-09-05T19:13:37+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the clean reset and pgTAP then restart from the beginning.
+- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
 
 ## Scope
 
@@ -81,7 +81,7 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** pgTAP assertions for a partial band set and for a confirmed band set without a strength, plus the existing clean-reset suites; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized; the failed verification cleared it
+- **Authorized commit:** `e0fe573dedfe8803032b89be8a50a11805d09e60`
 - **Results:** Failed on `2026-09-05T19:12:24+02:00` against exact approved commit `75fd3d78d71c599cfcd54026080e51c79fade3af` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0`. The authorized clean `supabase db reset` applied the complete migration history, and four of the five pgTAP files passed, but `0001_core_constraints` aborted at the new fixture with `Exercise requires at least one load mode`. The cause is test-only: the file runs with `set constraints all immediate`, so the deferred definition trigger fires at the end of each statement, and the new fixture inserted the exercise and its load mode as two statements instead of the single statement the file's existing fixtures use. The corrected constraints themselves were not reached by the failing file; the other 43 assertions across the remaining files passed.
 
 ## Delivery commit
@@ -94,13 +94,13 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T19:10:30+02:00`
-- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded; the User reviewed the reproduced cause and the corrected constraints.
 
 ## Approval
 
-- **Approved commit:** Void; approval of `75fd3d78d71c599cfcd54026080e51c79fade3af` was cleared by the failed verification below
-- **Approved by:** Cleared
+- **Approved commit:** `e0fe573dedfe8803032b89be8a50a11805d09e60` (test-only replacement)
+- **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T19:10:30+02:00`
 - **Approval note:** The User answered `odobreno` to the request to approve this exact commit and then chose `Resetiraj odmah` when told that the pgTAP gate requires a clean reset that destroys the live workout and every other local row.
 
@@ -142,3 +142,5 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 | `2026-09-05T19:10:30+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the clean reset and pgTAP against `75fd3d78d71c599cfcd54026080e51c79fade3af` |
 | `2026-09-05T19:12:24+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | pgTAP aborted on a test-only fixture that split a definition insert into two statements; approval and test authorization cleared |
 | `2026-09-05T19:12:45+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`; static checks passed and no feature test ran |
+| `2026-09-05T19:13:37+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
+| `2026-09-05T19:13:37+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the clean reset and pgTAP against `e0fe573dedfe8803032b89be8a50a11805d09e60` |
