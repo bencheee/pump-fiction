@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -12,12 +12,12 @@
 - **Updated:** `2026-09-05T12:20:26+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
 - **Review started:** `2026-09-05T12:20:26+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T12:24:17+02:00`
+- **Approved:** `2026-09-05T12:24:17+02:00`
+- **Testing started:** `2026-09-05T12:24:17+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit, then decides on approval; the database verification gate stays closed until then.
+- **Next action:** Run the authorized clean reset, pgTAP, unit, component, and repository verification against the approved commit.
 
 ## Scope
 
@@ -89,7 +89,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests, exercise repository integration tests, and pgTAP constraint tests for every retired and permitted combination; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `db5a42026270393d17a11ecded5578e756f6d1e4`
 - **Results:** Not run
 
 ## Delivery commit
@@ -101,16 +101,16 @@ The Owner accepted a clean local database reset, so the migration removes the re
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T12:24:17+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the delivered model, the reviewed migration correction, and the revised criteria.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `db5a42026270393d17a11ecded5578e756f6d1e4`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T12:24:17+02:00`
+- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, which authorizes the clean local reset accepted for this model change.
 
 ## Definition of Ready
 
@@ -146,3 +146,5 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T12:09:18+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the accepted load-mode model and directed execution after approving `T-018` |
 | `2026-09-05T12:09:18+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, domain, and Exercise Library changes |
 | `2026-09-05T12:20:26+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `db5a42026270393d17a11ecded5578e756f6d1e4` with static checks passed and no feature test run |
+| `2026-09-05T12:24:17+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and the accepted clean local reset |
+| `2026-09-05T12:24:17+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized database and application verification against `db5a42026270393d17a11ecded5578e756f6d1e4` |
