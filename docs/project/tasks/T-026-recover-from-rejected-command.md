@@ -1,7 +1,7 @@
 # T-026 — Recover from a permanently rejected active-workout command
 
 - **Feature:** `F-012`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:35:07+02:00`
+- **Updated:** `2026-09-05T21:35:40+02:00`
 - **Started:** `2026-09-05T21:29:41+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T21:35:40+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Reviewer checks `90875783eda308cdb95b33ad43a336bbd6060ccd`; the suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -84,7 +84,7 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `90875783eda308cdb95b33ad43a336bbd6060ccd`
 - **Subject:** `T-026: recover from a permanently rejected active-workout command`
 - **Committed scope:** the delivery controller and its test, the new `describe-command-target` domain helper, the active-workout experience and its component test, the finish review, `active-workout-durability.md`, `workouts.md`, and this Task
 
@@ -135,3 +135,4 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 | `2026-09-05T19:17:58+02:00` | User / Owner | None | `Backlog` | Requested after the 2026-09-05 workout was stranded by one refused command |
 | `2026-09-05T21:29:41+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the proposed recovery rule unchanged |
 | `2026-09-05T21:29:41+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the terminal-rejection recovery |
+| `2026-09-05T21:35:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `90875783eda308cdb95b33ad43a336bbd6060ccd`; static checks passed and no feature test ran |
