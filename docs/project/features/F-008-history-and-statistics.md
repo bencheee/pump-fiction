@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T22:44:18+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is Testing`
+- **Updated:** `2026-09-05T22:46:10+02:00`
+- **Progress:** `1/6 required Tasks Done; T-032 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -32,14 +32,14 @@ Recorded on `2026-09-05` at the Owner's request, without starting implementation
 
 | Order | Task | Delivers | Depends on |
 | --- | --- | --- | --- |
-| 1 | [`T-031`](../tasks/T-031-build-workout-history-operations.md) — Build workout History operations | Workout list and detail queries, correction and deletion transactions, completion-status change | `F-007` and `F-014` Done |
+| 1 | [`T-031`](../tasks/T-031-build-workout-history-operations.md) — Build workout History operations (`Done`; approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`) | Workout list and detail queries, correction and deletion transactions, completion-status change | `F-007` and `F-014` Done |
 | 2 | [`T-032`](../tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience | Subsection navigation, `S13`, `S14`, `O01`, `O06` | `T-031` |
 | 3 | [`T-033`](../tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations | Eligibility, PR derivation, chart series, exercise history queries | `T-031` |
 | 4 | [`T-034`](../tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience | `S15`, `S16` with chart | `T-032`, `T-033` |
 | 5 | [`T-035`](../tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations | Split identity, duration statistics, chart series, split history queries | `T-031` |
 | 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience | `S17`, `S18` with chart | `T-032`, `T-035` |
 
-All six are in `Backlog`. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
+`T-031` is `Done` and `T-032` is `In Progress`; the remaining four are in `Backlog`. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
 
 ## Boundary against F-009
 
@@ -121,3 +121,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T22:39:55+02:00` | Claude Code primary agent / Tester | Returned `T-031` to `In Progress` | pgTAP, unit, and type checks passed; the parallel repository script collided on the shared database |
 | `2026-09-05T22:41:38+02:00` | Claude Code primary agent / Executor | Delivered the `T-031` second replacement | Exact replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` serializes the repository script and awaits fresh approval |
 | `2026-09-05T22:44:18+02:00` | User / Approver | Approved the `T-031` second replacement | Authorized the complete recorded plan from the beginning |
+| `2026-09-05T22:46:10+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-031` and started `T-032` | The complete plan passed; the Owner's go-ahead for the whole Feature authorizes the dependent screens |

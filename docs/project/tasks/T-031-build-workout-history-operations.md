@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:44:18+02:00`
+- **Updated:** `2026-09-05T22:46:10+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:41:38+02:00` for the second replacement
 - **Approval requested:** `2026-09-05T22:44:18+02:00` for the second replacement
 - **Approved:** `2026-09-05T22:44:18+02:00` for the second replacement
 - **Testing started:** `2026-09-05T22:44:18+02:00` for the second replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T22:46:10+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`.
+- **Next action:** None; `T-031` is `Done`. `F-008` continues with `T-032`.
 
 ## Scope
 
@@ -50,14 +50,14 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Acceptance criteria
 
-- [ ] The list query returns only `completed` and `incomplete` workouts, newest first, grouped by local month, with every `S13` field and no database row type crossing the boundary.
-- [ ] The detail query returns the complete saved snapshot for one workout id, and a not-found failure for an unknown, malformed, or current (`active` or `paused`) workout id.
-- [ ] Every correction and the deletion is one repository call backed by one transactional function; a failed correction changes nothing.
-- [ ] A correction is rejected as a validation failure when it would break the snapshotted allowed modes, the set shape check, positive-integer reps, or `finished_at >= started_at`.
-- [ ] After any correction or deletion, `programs.next_split_id`, `split_exercises`, `splits`, and `exercises` are unchanged, and the latest eligible performance read by the active workout reflects the correction (`MVP-WRK-006`).
-- [ ] Marking an incomplete workout completed changes only its status and keeps `rotation_advanced_at` null.
-- [ ] Deleting a workout removes it with its occurrences and sets and nothing else.
-- [ ] Prepared pgTAP, unit, and repository tests cover the above and remain unexecuted.
+- [x] The list query returns only `completed` and `incomplete` workouts, newest first, grouped by local month, with every `S13` field and no database row type crossing the boundary.
+- [x] The detail query returns the complete saved snapshot for one workout id, and a not-found failure for an unknown, malformed, or current (`active` or `paused`) workout id.
+- [x] Every correction and the deletion is one repository call backed by one transactional function; a failed correction changes nothing.
+- [x] A correction is rejected as a validation failure when it would break the snapshotted allowed modes, the set shape check, positive-integer reps, or `finished_at >= started_at`.
+- [x] After any correction or deletion, `programs.next_split_id`, `split_exercises`, `splits`, and `exercises` are unchanged, and the latest eligible performance read by the active workout reflects the correction (`MVP-WRK-006`).
+- [x] Marking an incomplete workout completed changes only its status and keeps `rotation_advanced_at` null.
+- [x] Deleting a workout removes it with its occurrences and sets and nothing else.
+- [x] The pgTAP, unit, and repository tests covering the above passed against the approved second replacement.
 
 ## Traceability
 
@@ -102,6 +102,8 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
   Second verification, against exact approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` on `2026-09-05T22:39:55+02:00` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities, `npm run db:snapshot` saved the local data, and `supabase db reset` applied all 20 migrations and the seed. `npm run test:db` passed **112/112 across all six suites**, including the new `0006_workout_history` 47/47. `npm run test:unit` passed **86/86 across 14 files**, up from 72 by the new correction-validation suite. Regenerated types matched the committed file. `npm run test:repository` **failed**: the script runs its files in parallel against one shared database, and this Task added a third file that starts a workout, so `workouts_single_resumable` and the shared rotation state made them collide. Running the same five files with `--no-file-parallelism` passed 5/5, and the new file alone passed 1/1, which isolates the cause to the script rather than to any test or to delivered behavior. The approval is invalidated and `npm run db:restore` did not run.
 
+  Third verification, against exact approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` on `2026-09-05T22:46:10+02:00` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: **the complete plan passed**. `npm ci` installed 653 packages with no vulnerabilities; `npm run db:snapshot` saved the local data; `supabase db reset` applied all 20 migrations and the seed; `npm run test:db` passed **112/112 across six suites**, including the new `0006_workout_history` 47/47 covering the month-grouped reads, the detail snapshot, every correction family, the rejection cases, template and rotation invariance, identity survival after a definition is deleted, and cascade deletion; the now-serial `npm run test:repository` passed **5/5**; `npm run test:unit` passed **86/86 across 14 files**; regenerated types matched the committed file; and `npm run db:restore` reloaded the snapshot faithfully, leaving the local application usable.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `c00c6e92072c98aec5e0e449797bb154bf314ccf` (second replacement; supersedes `b5e4cda609d478453eccd562087d1f18bfec7f54` and `95de9212848755c956cb0dc5d50b5cfc8796dc27`)
@@ -140,15 +142,15 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -174,3 +176,4 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:44:18+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact second replacement with no further findings |
 | `2026-09-05T22:44:18+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` with `potvrda` |
 | `2026-09-05T22:44:18+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved second replacement |
+| `2026-09-05T22:46:10+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed: pgTAP 112/112, repository 5/5, unit 86/86, matching generated types, and a faithful restore |

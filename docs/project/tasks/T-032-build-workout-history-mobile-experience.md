@@ -1,23 +1,23 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T21:58:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T22:46:10+02:00`
+- **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-031` to be `Done` and for the Owner's answers to `F-008` readiness questions 3, 4, and 6; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -67,8 +67,8 @@ Shell:
 
 ## Dependencies and blockers
 
-- Dependencies: `T-031` Done
-- Blockers: `F-008` is held at the Owner's direction; readiness questions 3, 4, and 6 are unanswered
+- Dependencies: `T-031` Done, through approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`
+- Blockers: None; `T-031` is `Done` and the Owner answered readiness questions 3, 4, and 6 on `2026-09-05`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -125,12 +125,12 @@ Shell:
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — `T-031` is not `Done`; readiness questions 3, 4, and 6 are open
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -149,3 +149,5 @@ Shell:
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the History shell and Workouts subsection delivery within `F-008`; the Owner directed that implementation must not start |
+| `2026-09-05T22:46:10+02:00` | User / Owner | `Backlog` | `Ready` | `T-031` is `Done` and the go-ahead for the whole `F-008` authorizes the dependent screens |
+| `2026-09-05T22:46:10+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the History shell and the Workouts subsection on the `T-031` operations |
