@@ -110,4 +110,6 @@ Approved repository integration tests write to the same local database. They cre
 
 `T-031` adds the `0006_workout_history` pgTAP suite and a workout-History repository integration test to that set. The suite creates and finishes its own workouts, so it shares the precondition below.
 
+`npm run test:repository` runs with `--no-file-parallelism`. Three of its files now start a workout, and they share one local database: `workouts_single_resumable` allows one resumable workout at a time and rotation pointers are shared state, so running the files concurrently makes them fail each other. Serial execution is a correctness requirement of these tests, not a speed preference; a new repository test that writes workouts must keep it.
+
 Those tests share the pgTAP precondition: two of them start their own workout, and `workouts_single_resumable` allows one active or paused workout per database, so they fail with a duplicate-key error whenever a resumable workout already exists. Run them on a freshly reset database, before restoring a snapshot that contains an active workout. The usual full cycle is `npm run db:snapshot`, the reset, `npm run test:db`, `npm run test:repository`, and only then `npm run db:restore`.
