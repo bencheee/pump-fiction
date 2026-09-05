@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:03:35+02:00`
+- **Updated:** `2026-09-05T19:07:32+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the relaxed set-shape constraint as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -62,17 +62,19 @@ The set-entry model already treats an unconfirmed set as incomplete and validate
 
 ## Execution checklist
 
-- [ ] Relax the set-shape check so a band mode may hold a null strength.
-- [ ] Require a band strength in the confirmed-set check.
-- [ ] Generate the migration, apply it without a reset so the Owner's workout survives, and regenerate types.
-- [ ] Extend pgTAP with both the accepted partial state and the rejected confirmed state, without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Relax the set-shape check so a band mode may hold a null strength.
+- [x] Require a band strength in the confirmed-set check.
+- [x] Generate the migration, apply it without a reset so the Owner's workout survives, and regenerate types.
+- [x] Extend pgTAP with both the accepted partial state and the rejected confirmed state, without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T19:07:32+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 758 internal links. The migration applied to the local database with `migration up`, deliberately without a reset, so the Owner's blocked workout survived; a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database; `supabase db lint` reported no schema errors; generated types were unchanged because only check constraints moved; and `git diff --check` passed.
+
+Diagnosis evidence, all inside transactions that were rolled back: the Owner's exact rejected command replayed against the pre-fix constraint failed with `new row for relation "workout_sets" violates check constraint "workout_sets_check"` on a row holding `assistance_band` with a null strength; after the fix the same command reports `applied`, while the same command with `isConfirmed: true` is still rejected by `workout_sets_check1`. No feature test ran.
 
 ## Test plan and results
 
@@ -84,9 +86,9 @@ The set-entry model already treats an unconfirmed set as incomplete and validate
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-025: allow partial band set entry`
-- **Committed scope:** Not created
+- **Committed scope:** The `workout_sets` shape check without the band-strength requirement, the confirmation check with it, the generated migration, extended pgTAP coverage for the accepted partial band set and the rejected incomplete confirmation, and the workout, domain-model, and database-workflow documentation.
 
 ## Review
 

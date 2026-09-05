@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(14);
+select plan(16);
 
 set constraints all immediate;
 
@@ -201,6 +201,63 @@ select throws_ok(
   '23514'::character(5),
   null,
   'a confirmed weight set requires a positive kilogram value'
+);
+
+insert into public.exercises (id, name, base_type)
+values ('00000000-0000-0000-0000-000000000009', 'Assisted pull-up', 'assisted');
+
+insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
+values ('00000000-0000-0000-0000-000000000009', 'assisted', 'assistance_band');
+
+insert into public.workout_exercises (
+  id,
+  workout_id,
+  exercise_id,
+  position,
+  exercise_name_snapshot,
+  exercise_base_type_snapshot
+)
+values (
+  '40000000-0000-0000-0000-000000000002',
+  '30000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000009',
+  2,
+  'Assisted pull-up',
+  'assisted'
+);
+
+insert into public.workout_exercise_load_modes (
+  workout_exercise_id,
+  exercise_base_type_snapshot,
+  load_mode
+)
+values ('40000000-0000-0000-0000-000000000002', 'assisted', 'assistance_band');
+
+select lives_ok(
+  $$
+    insert into public.workout_sets (
+      workout_exercise_id,
+      position,
+      load_mode,
+      band_direction,
+      reps,
+      is_confirmed
+    )
+    values ('40000000-0000-0000-0000-000000000002', 1, 'assistance_band', 'assistance', 10, false)
+  $$,
+  'an unconfirmed band set may still be missing its strength'
+);
+
+select throws_ok(
+  $$
+    update public.workout_sets
+    set is_confirmed = true
+    where workout_exercise_id = '40000000-0000-0000-0000-000000000002'
+      and position = 1
+  $$,
+  '23514'::character(5),
+  null,
+  'a confirmed band set requires its strength'
 );
 
 select throws_ok(

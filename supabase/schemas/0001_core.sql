@@ -288,14 +288,12 @@ create table public.workout_sets (
     on delete restrict,
   check (load_kg is null or load_kg > 0),
   check (reps is null or reps > 0),
+  -- Shape only: an unconfirmed set may still be missing its band strength,
+  -- because entry order is the user's choice. Completeness is the check below.
   check (
     (load_mode is null and load_kg is null and band_direction is null and band_strength is null)
     or (load_mode = 'weight' and band_direction is null and band_strength is null)
-    or (
-      load_mode = 'weight_resistance_band'
-      and band_direction = 'resistance'
-      and band_strength is not null
-    )
+    or (load_mode = 'weight_resistance_band' and band_direction = 'resistance')
     or (load_mode = 'bodyweight' and load_kg is null and band_direction is null and band_strength is null)
     or (
       load_mode = 'bodyweight_added_weight'
@@ -306,14 +304,12 @@ create table public.workout_sets (
       load_mode = 'bodyweight_resistance_band'
       and load_kg is null
       and band_direction = 'resistance'
-      and band_strength is not null
     )
     or (load_mode = 'assistance_weight' and band_direction is null and band_strength is null)
     or (
       load_mode = 'assistance_band'
       and load_kg is null
       and band_direction = 'assistance'
-      and band_strength is not null
     )
   ),
   check (
@@ -324,6 +320,10 @@ create table public.workout_sets (
       and (
         (load_mode in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight') and load_kg is not null)
         or (load_mode not in ('weight', 'weight_resistance_band', 'bodyweight_added_weight', 'assistance_weight') and load_kg is null)
+      )
+      and (
+        load_mode not in ('weight_resistance_band', 'bodyweight_resistance_band', 'assistance_band')
+        or band_strength is not null
       )
     )
   )

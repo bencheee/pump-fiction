@@ -29,7 +29,7 @@ Examples of resulting fields:
 - weights: kg, optional resistance-band strength when allowed, and reps;
 - assisted: assistance kg and reps, or assistance-band strength and reps, according to its single defined mode.
 
-Weights permit decimal values. Reps are positive integers. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
+Weights permit decimal values. Reps are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save; completeness is required only when the set is confirmed. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
 
 The accepted technical durability mechanism is defined in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md); this document remains authoritative for user-visible workout behavior.
 
