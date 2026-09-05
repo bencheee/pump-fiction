@@ -1,23 +1,23 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T21:58:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T23:24:46+02:00`
+- **Started:** `2026-09-05T23:24:46+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the Owner's answer to `F-008` readiness question 1 and for `T-031` when that answer adds the identity snapshot; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -62,8 +62,8 @@ Queries:
 
 ## Dependencies and blockers
 
-- Dependencies: `F-007` and `F-014` Done; `T-031` Done when readiness question 1 adds the identity snapshot
-- Blockers: `F-008` is held at the Owner's direction; readiness question 1 is unanswered
+- Dependencies: `F-007` and `F-014` Done; `T-031` Done, which added the identity snapshot readiness answer 1 accepted
+- Blockers: None; the Owner answered readiness question 1 on `2026-09-05` and `T-031` delivered the identity columns
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -121,12 +121,12 @@ Queries:
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — readiness question 1 is open
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -145,3 +145,5 @@ Queries:
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the exercise statistics derivation within `F-008`; the Owner directed that implementation must not start |
+| `2026-09-05T23:24:46+02:00` | User / Owner | `Backlog` | `Ready` | `T-031` delivered the identity snapshot and the go-ahead for the whole `F-008` authorizes the statistics |
+| `2026-09-05T23:24:46+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the exercise statistics derivation |

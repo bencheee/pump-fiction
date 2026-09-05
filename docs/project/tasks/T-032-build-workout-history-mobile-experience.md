@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:23:20+02:00`
+- **Updated:** `2026-09-05T23:24:46+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** `2026-09-05T23:21:02+02:00` for the second replacement
 - **Approval requested:** `2026-09-05T23:23:20+02:00` for the second replacement
 - **Approved:** `2026-09-05T23:23:20+02:00` for the second replacement
 - **Testing started:** `2026-09-05T23:23:20+02:00` for the second replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T23:24:46+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`.
+- **Next action:** None; `T-032` is `Done`. `F-008` continues with `T-033`.
 
 ## Scope
 
@@ -51,13 +51,13 @@ Shell:
 
 ## Acceptance criteria
 
-- [ ] The subsection navigation shows all five entries in the accepted order, marks the current one with a non-color cue, and keeps the bottom navigation visible.
-- [ ] `S13` groups workouts by month newest first with every required field, marks incomplete workouts with the `O06` badge and explanation, and renders the empty and loading states.
-- [ ] `S14` renders the full saved snapshot and links back to `S13`.
-- [ ] Editing every documented field saves through the `T-031` operations, shows the recalculation feedback, and leaves the visible split templates and Today's proposed split unchanged.
-- [ ] Removing a populated set or exercise asks for confirmation; removing an empty row does not.
-- [ ] Mark-completed changes the badge and eligibility explanation; delete requires `O01` confirmation and returns to `S13`.
-- [ ] `S13` and `S14` match the accepted `v0.3` structure, reflow from 320 to 430 px, respect overlay history, touch, motion, and accessibility behavior, and use no horizontal table scrolling.
+- [x] The subsection navigation shows all five entries in the accepted order, marks the current one with a non-color cue, and keeps the bottom navigation visible.
+- [x] `S13` groups workouts by month newest first with every required field, marks incomplete workouts with the `O06` badge and explanation, and renders the empty and loading states.
+- [x] `S14` renders the full saved snapshot and links back to `S13`.
+- [x] Editing every documented field saves through the `T-031` operations, shows the recalculation feedback, and leaves the visible split templates and Today's proposed split unchanged.
+- [x] Removing a populated set or exercise asks for confirmation; removing an empty row does not.
+- [x] Mark-completed changes the badge and eligibility explanation; delete requires `O01` confirmation and returns to `S13`.
+- [x] `S13` and `S14` match the accepted `v0.3` structure, reflow from 320 to 430 px, respect overlay history, touch, motion, and accessibility behavior, and use no horizontal table scrolling.
 
 ## Traceability
 
@@ -102,6 +102,8 @@ Shell:
 
   Second verification, against exact approved replacement `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` on `2026-09-05T23:19:16+02:00` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **99/99 across 15 files**, up from 98 by the empty-set regression scenario. The browser scenario got past the correction on both platforms, which confirms the mode fix, and then failed on both at the Today check. The behavior there is right: Today proposes the next split exactly as expected. The assertion is wrong. It matched the split name by text, and the name appears twice on Today, in the proposed-split heading and in the rotation-position sentence, so Playwright's strict mode refused the ambiguous match. That is a test-only defect; the approval is invalidated and the steps after it, the confirmed deletion and the reflow check, were never reached.
 
+  Third verification, against exact approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` on `2026-09-05T23:24:46+02:00` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: **the complete plan passed**. `npm ci` installed 653 packages with no vulnerabilities; `npm run test:unit` passed **99/99 across 15 files**; and the serialized one-worker History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 27.3 seconds together**, covering the five-entry subsection shell with its current-page marker, the month-grouped list, the saved snapshot, a correction that filled a set left empty and showed the new values on the detail, the unchanged Today proposal, the `O01`-confirmed deletion that emptied the list, and reflow to 320 px with no horizontal overflow, with four structural captures across the two platforms. Fixtures were deleted afterwards, leaving the seeded ten exercises, one program, and no workout.
+
   Recorded incident on `2026-09-05T23:05:00+02:00`: while writing this Task file, an unquoted shell heredoc expanded the backticked command names inside its own prose, so the shell executed the unit and browser test commands against the uncommitted working tree. No commit was approved and no commit existed, so **these runs are not verification of anything and their results are not recorded as evidence**. What they left behind was cleaned up: two fixture exercises the browser specs create were deleted, restoring the seeded ten, and the generated report directory was removed. The runs did surface two ambiguous queries in the new component suite, which are corrected here; that correction is ordinary implementation work, not an authorized test result. The recorded plan above still runs in full, from the beginning, after this exact delivery is approved. Every heredoc in this Task now quotes its delimiter.
 
 ## Delivery commit
@@ -142,15 +144,15 @@ Shell:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks, namely `T-037`
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -174,3 +176,4 @@ Shell:
 | `2026-09-05T23:23:20+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact second replacement with no further findings |
 | `2026-09-05T23:23:20+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` with `potvrda` |
 | `2026-09-05T23:23:20+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved second replacement |
+| `2026-09-05T23:24:46+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed: unit and component 99/99 and the serialized Chromium and WebKit scenario 2/2 with four structural captures |
