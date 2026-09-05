@@ -1,7 +1,7 @@
 # T-018 — Return to the parent screen after saving
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:06:25+02:00`
+- **Updated:** `2026-09-05T12:07:13+02:00`
 - **Started:** `2026-09-05T11:54:40+02:00`
 - **Review started:** `2026-09-05T12:03:40+02:00`
 - **Approval requested:** `2026-09-05T12:06:25+02:00`
 - **Approved:** `2026-09-05T12:06:25+02:00`
 - **Testing started:** `2026-09-05T12:06:25+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T12:07:13+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized component tests against the approved commit and record their results.
+- **Next action:** None; Task complete. Continue `F-011` with `T-019`.
 
 ## Scope
 
@@ -42,12 +42,12 @@ Affected forms and their parent screens:
 
 ## Acceptance criteria
 
-- [ ] Saving a new exercise, program, or split navigates to its parent screen and shows a success toast there.
-- [ ] Saving an edited exercise, program, or split behaves identically to creation.
-- [ ] A failed save keeps the form mounted with its entered values, shows a failure toast, and still renders field-level validation errors.
-- [ ] An unchanged form shows no unsaved-changes text.
-- [ ] A form changed from its opening state shows `Unsaved changes` until it is saved or reset.
-- [ ] `Saving…`, failure, and retry save-status behavior is otherwise unchanged.
+- [x] Saving a new exercise, program, or split navigates to its parent screen and shows a success toast there.
+- [x] Saving an edited exercise, program, or split behaves identically to creation.
+- [x] A failed save keeps the form mounted with its entered values, shows a failure toast, and still renders field-level validation errors.
+- [x] An unchanged form shows no unsaved-changes text.
+- [x] A form changed from its opening state shows `Unsaved changes` until it is saved or reset.
+- [x] `Saving…`, failure, and retry save-status behavior is otherwise unchanged.
 
 ## Traceability
 
@@ -86,7 +86,7 @@ Affected forms and their parent screens:
 - **No-test reason:** Not applicable
 - **Planned tests:** existing exercise-form, programs, and Today component suites plus new assertions for save navigation, success and failure toasts, and dirty-state save status; must not run before Owner approval of the exact commit
 - **Authorized commit:** `613dae3da605c329e22e07a82a7b9d1439c0320b`
-- **Results:** Not run
+- **Results:** Passed against exact approved commit `613dae3da605c329e22e07a82a7b9d1439c0320b` on `2026-09-05T12:07:13+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. The exercise-form and programs form suites passed 11/11, covering save-and-return navigation to `/exercises`, `/programs`, and the owning program's edit route, the success toasts, a failed save that keeps the form mounted without navigating, the absent unsaved-changes text on an untouched form, and its appearance after an edit. The shared UI component suites passed 4/4. The source tree under test was identical to the approved commit; the preceding evidence commits changed only project-management documents.
 
 ## Delivery commit
 
@@ -124,15 +124,15 @@ Affected forms and their parent screens:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -144,3 +144,4 @@ Affected forms and their parent screens:
 | `2026-09-05T12:03:40+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `613dae3da605c329e22e07a82a7b9d1439c0320b` with static checks passed and no feature test run |
 | `2026-09-05T12:06:25+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Confirmed the delivered save-and-return behavior and approved the exact commit |
 | `2026-09-05T12:06:25+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `613dae3da605c329e22e07a82a7b9d1439c0320b` |
+| `2026-09-05T12:07:13+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Authorized component scenarios passed 11/11 and shared UI 4/4 against the approved commit |

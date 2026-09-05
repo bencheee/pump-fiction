@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the authorized component verification of approved `T-018` commit `613dae3da605c329e22e07a82a7b9d1439c0320b`, then continue `F-011` with `T-019`. The User confirmed the per-set control placement for `T-020` and the `app_settings.current_program_id` mechanism for `T-021` on 2026-09-05. `F-011` records the nine corrections the Owner raised on 2026-09-05 after using the delivered application; three of them change accepted decisions and locked criteria and therefore create `ADR-0023`, `ADR-0024`, and `ADR-0025`. `F-008` History and Statistics starts only after `F-011` is complete.
+Deliver `T-019`, the simplified exercise load-mode model, as the second Task of `F-011`. `T-018` is `Done`: exact approved commit `613dae3da605c329e22e07a82a7b9d1439c0320b` passed its authorized component verification. The User confirmed the per-set control placement for `T-020` and the `app_settings.current_program_id` mechanism for `T-021` on 2026-09-05. `F-011` records the nine corrections the Owner raised on 2026-09-05 after using the delivered application; three of them change accepted decisions and locked criteria and therefore create `ADR-0023`, `ADR-0024`, and `ADR-0025`. `F-008` History and Statistics starts only after `F-011` is complete.
 
 ## Implementation status
 
