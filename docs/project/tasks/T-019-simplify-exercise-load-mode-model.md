@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:20:26+02:00`
+- **Updated:** `2026-09-05T12:27:32+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
-- **Review started:** `2026-09-05T12:20:26+02:00`
+- **Review started:** `2026-09-05T12:27:32+02:00`
 - **Approval requested:** `2026-09-05T12:24:17+02:00`
 - **Approved:** `2026-09-05T12:24:17+02:00`
 - **Testing started:** `2026-09-05T12:24:17+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the replacement commit SHA through an evidence commit and request fresh approval before the complete verification restarts.
+- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the complete verification then restarts from the beginning.
 
 ## Scope
 
@@ -94,15 +94,15 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `db5a42026270393d17a11ecded5578e756f6d1e4`
+- **Delivery commit SHA:** `e265c48f4e376ccbdcc657eef7930830a0573013` (test-only replacement; supersedes `db5a42026270393d17a11ecded5578e756f6d1e4`)
 - **Subject:** `T-019: simplify the exercise load-mode model`
-- **Committed scope:** `ADR-0023` and its index row; declarative schema without the `band` base type, the `resistance_band` and `bodyweight_assistance_band` modes, and with the `exercise_load_modes_single_modifier` index plus the rewritten definition trigger; the reviewed migration and regenerated database types; domain constants for implied and optional modes, rewritten definition validation, and presentation labels; the Exercise Library form rebuilt around optional additions only; updated unit, component, integration, and pgTAP assertions; and revised `MVP-EXE-001`, `MVP-EXE-003`, `MVP-EXE-004` with the exercise, workout, domain-model, database-workflow, and screen documentation.
+- **Committed scope:** The replacement changes only `exercise-form.test.tsx`, scoping the additions assertions to their fieldset groups. The superseded delivery contained: `ADR-0023` and its index row; declarative schema without the `band` base type, the `resistance_band` and `bodyweight_assistance_band` modes, and with the `exercise_load_modes_single_modifier` index plus the rewritten definition trigger; the reviewed migration and regenerated database types; domain constants for implied and optional modes, rewritten definition validation, and presentation labels; the Exercise Library form rebuilt around optional additions only; updated unit, component, integration, and pgTAP assertions; and revised `MVP-EXE-001`, `MVP-EXE-003`, `MVP-EXE-004` with the exercise, workout, domain-model, database-workflow, and screen documentation.
 
 ## Review
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T12:24:17+02:00`
-- **Outcome:** Recommended for approval
+- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
 - **Findings:** None recorded; the User reviewed the delivered model, the reviewed migration correction, and the revised criteria.
 
 ## Approval
@@ -149,3 +149,4 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T12:24:17+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and the accepted clean local reset |
 | `2026-09-05T12:24:17+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized database and application verification against `db5a42026270393d17a11ecded5578e756f6d1e4` |
 | `2026-09-05T12:26:11+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on a test-only query that also matched the exercise-type button; approval and test authorization cleared |
+| `2026-09-05T12:27:32+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e265c48f4e376ccbdcc657eef7930830a0573013`; static checks passed and no feature test ran |
