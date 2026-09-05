@@ -1,7 +1,7 @@
 # T-020 — Derive per-set load from the exercise definition
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:36:44+02:00`
+- **Updated:** `2026-09-05T12:39:15+02:00`
 - **Started:** `2026-09-05T12:33:15+02:00`
 - **Review started:** `2026-09-05T12:36:44+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T12:39:15+02:00`
+- **Approved:** `2026-09-05T12:39:15+02:00`
+- **Testing started:** `2026-09-05T12:39:15+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit and decides on approval; component verification stays blocked until then.
+- **Next action:** Run the authorized component verification against the approved commit and record its results.
 
 ## Scope
 
@@ -83,7 +83,7 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** active-workout component scenarios for each base type, including applying and undoing a modifier; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `c48cbdcaf0bc348888ef2e1eff7193269a6f049c`
 - **Results:** Not run
 
 ## Delivery commit
@@ -95,16 +95,16 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T12:39:15+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the definition-derived set entry and the revised criterion.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `c48cbdcaf0bc348888ef2e1eff7193269a6f049c`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T12:39:15+02:00`
+- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, authorizing the component verification for its scope.
 
 ## Definition of Ready
 
@@ -140,3 +140,5 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 | `2026-09-05T12:33:15+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the per-set control placement on 2026-09-05 and directed execution after `T-019` |
 | `2026-09-05T12:33:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout set-entry change |
 | `2026-09-05T12:36:44+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` with static checks passed and no feature test run |
+| `2026-09-05T12:39:15+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit |
+| `2026-09-05T12:39:15+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` |
