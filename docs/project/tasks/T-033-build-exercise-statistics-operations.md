@@ -1,7 +1,7 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:34:00+02:00`
+- **Updated:** `2026-09-05T23:35:01+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T23:35:01+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e`. Approving it authorizes the recorded verification.
 
 ## Scope
 
@@ -96,7 +96,7 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `bf787976b69602ed4358eb79f053d48486c3d30e`
 - **Subject:** `T-033: build exercise statistics operations`
 - **Committed scope:** the `0004_exercise_statistics.sql` declarative schema with its function-only migration and regenerated types; the `exercise-statistics` domain with its eligibility, category, record, metric, and series rules; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the prepared unit suite, the `0007_exercise_statistics` pgTAP suite, and the repository integration test with its `test:repository` registration; and the History product, domain-model, server-boundary, and local-database-workflow documents
 
@@ -147,3 +147,5 @@ Queries:
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the exercise statistics derivation within `F-008`; the Owner directed that implementation must not start |
 | `2026-09-05T23:24:46+02:00` | User / Owner | `Backlog` | `Ready` | `T-031` delivered the identity snapshot and the go-ahead for the whole `F-008` authorizes the statistics |
 | `2026-09-05T23:24:46+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the exercise statistics derivation |
+| `2026-09-05T23:34:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the reads, the derivation rules, the boundary, and the prepared suites; all permitted static checks passed |
+| `2026-09-05T23:35:01+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e`; static checks passed and every prepared feature test remains unexecuted |
