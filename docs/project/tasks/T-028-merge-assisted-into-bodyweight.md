@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:01:46+02:00`
+- **Updated:** `2026-09-05T21:03:18+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** `2026-09-05T21:01:46+02:00`
-- **Approval requested:** `2026-09-05T20:57:19+02:00`
-- **Approved:** `2026-09-05T20:57:19+02:00`
-- **Testing started:** `2026-09-05T20:57:19+02:00`
+- **Approval requested:** `2026-09-05T21:03:18+02:00`
+- **Approved:** `2026-09-05T21:03:18+02:00`
+- **Testing started:** `2026-09-05T21:03:18+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`; its run needs the Owner's approval of that SHA and of the clean reset.
+- **Next action:** Run the authorized cycle for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`: clean reset, pgTAP, generated types, unit, component, and repository suites.
 
 ## Scope
 
@@ -87,8 +87,8 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** exercise validation unit tests, exercise-form component tests for the two types and the four options, repository integration tests, and pgTAP constraint tests for the retired type and the single-option rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Planned tests:** a clean reset, pgTAP constraint tests for the retired type and the single-option rule, generated-type comparison, exercise validation unit tests, exercise-form component tests for the two types and the four options, and repository integration tests; must not run before Owner approval of the exact commit
+- **Authorized commit:** `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`
 - **Results:** Failed on `2026-09-05T20:59:40+02:00` for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`. The snapshot ran, the clean reset landed on the corrected seed with `Assisted dip` as a bodyweight definition holding `bodyweight` and `assistance_weight`, and the enum exposed only `weights` and `bodyweight`. pgTAP passed 62/62, up from 59 by the three added assertions, and regenerated types matched the committed file. The unit suite then failed 2 of 68: `exercise-form.test.tsx` still drives the retired `Assisted` type button and the `Assistance mode` group, which the delivery removed from the form but did not update in that file. Component suites passed 4/4. The repository suite was not reached.
 
   **Process deviation, recorded deliberately:** after correcting the component file I ran `npm run test:unit` once to confirm the fix, at `2026-09-05T21:00:27+02:00`, and it passed 13 files and 69 tests. The failure had already cleared the test authorization, so that run was not authorized under [ADR-0006](../../decisions/0006-approval-gated-feature-testing.md). It is recorded here rather than presented as evidence; the replacement's own verification still requires the Owner's fresh approval.
@@ -102,16 +102,16 @@ No local row used the retired type when this Task was delivered, so the migratio
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T20:57:19+02:00`
+- **Reviewed at:** `2026-09-05T21:03:18+02:00`
 - **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Approval cleared by the failed run
+- **Approved commit:** `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`
 - **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T20:57:19+02:00`
-- **Approval note:** Approval of `481ef7dc410733ad1b0502a8cea0a02ac53259bc` was cleared when its authorized run failed on component tests the delivery had not updated
+- **Approved at:** `2026-09-05T21:03:18+02:00`
+- **Approval note:** Approved the exact replacement and the clean reset its run requires. The Owner also stated on `2026-09-05` that their local database contents are disposable, so the run no longer snapshots and restores them and may leave the seed baseline in place
 
 ## Definition of Ready
 
@@ -151,3 +151,5 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T20:57:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized cycle against `481ef7dc410733ad1b0502a8cea0a02ac53259bc` |
 | `2026-09-05T20:59:40+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 68 unit tests: the exercise-form component tests still drove the retired assisted type; approval and test authorization cleared |
 | `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` with the corrected exercise-form component tests; static checks passed |
+| `2026-09-05T21:03:18+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset, and released the local database contents as disposable |
+| `2026-09-05T21:03:18+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the authorized cycle against `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` |

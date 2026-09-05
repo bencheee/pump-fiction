@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:01:46+02:00
+- **Last updated:** 2026-09-05T21:03:18+02:00
 - **Current phase:** Local MVP implementation — `F-013` confirmed; starting the Owner's exercise and set-entry model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007`, `F-011`, and `F-013` complete; `F-014` starting with `T-028`; `F-012` queued in `Next`; `F-008` intentionally not started
@@ -15,12 +15,12 @@
 
 ## Immediate next action
 
-Owner approves replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` and the clean reset its run needs; `T-029` follows. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Run and record the authorized `T-028` verification, then continue with `T-029`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`0/2 Tasks Done`) — two exercise types with assistance under bodyweight, then values instead of confirmation
-  - [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) — `In Review` — Claude Code primary agent — `2026-09-05T21:01:46+02:00` — review replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`; its run needs approval of that SHA and of a clean reset
+  - [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) — `Testing` — Claude Code primary agent — `2026-09-05T21:03:18+02:00` — run the authorized cycle for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
