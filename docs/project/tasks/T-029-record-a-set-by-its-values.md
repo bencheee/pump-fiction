@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:18:30+02:00`
+- **Updated:** `2026-09-05T21:19:46+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** `2026-09-05T21:18:30+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T21:19:46+02:00`
+- **Approved:** `2026-09-05T21:19:46+02:00`
+- **Testing started:** `2026-09-05T21:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `a64adcc3a1b547ac2af2ec9121c958653323d2f2`; the reset and the suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Run the authorized cycle for `a64adcc3a1b547ac2af2ec9121c958653323d2f2`: clean reset, pgTAP, generated types, unit, component, and repository suites.
 
 ## Scope
 
@@ -84,7 +84,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** command and reducer unit tests without the flag, active-workout and finish-review component scenarios for a complete and an incomplete set, repository integration tests, and pgTAP tests for the changed set table; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
 - **Results:** Not run
 
 ## Delivery commit
@@ -96,16 +96,16 @@ The finish review keeps its counts but renames them for the new model: recorded 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T21:19:46+02:00`
+- **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T21:19:46+02:00`
+- **Approval note:** Approved the exact delivery commit and the clean reset its run requires; the Owner's local database contents remain disposable, so no snapshot is taken
 
 ## Definition of Ready
 
@@ -141,3 +141,5 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T21:07:30+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness once `T-028` was verified and `Done` |
 | `2026-09-05T21:07:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started removing explicit set confirmation |
 | `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2`; static checks passed and no feature test ran |
+| `2026-09-05T21:19:46+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
+| `2026-09-05T21:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Started the authorized cycle against `a64adcc3a1b547ac2af2ec9121c958653323d2f2` |
