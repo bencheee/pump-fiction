@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:05:10+02:00`
+- **Updated:** `2026-09-05T21:18:30+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -82,3 +82,4 @@ Recorded on `2026-09-05`:
 | `2026-09-05T20:36:12+02:00` | Claude Code primary agent / Executor | `T-028` delivered `481ef7dc410733ad1b0502a8cea0a02ac53259bc` and entered review | The two-type model with assistance under bodyweight is ready for the Owner's review |
 | `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `T-028` returned to `In Progress` and delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The authorized run failed on exercise-form component tests the first delivery had not updated |
 | `2026-09-05T21:05:10+02:00` | Claude Code primary agent / Tester | `T-028` verified and `Done` for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The two-type model is delivered and verified; `T-029` needs the Owner's confirmation of readiness |
+| `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `T-029` delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2` and entered review | Explicit set confirmation is removed and the recorded state is derived from the entered values |

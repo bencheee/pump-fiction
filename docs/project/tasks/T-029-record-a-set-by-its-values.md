@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:17:55+02:00`
+- **Updated:** `2026-09-05T21:18:30+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T21:18:30+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset and the suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Reviewer checks `a64adcc3a1b547ac2af2ec9121c958653323d2f2`; the reset and the suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -89,7 +89,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
 - **Subject:** `T-029: record a set by its entered values`
 - **Committed scope:** the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
@@ -140,3 +140,4 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T19:28:05+02:00` | User / Owner | None | `Backlog` | Requested that entered values replace the confirmation controls |
 | `2026-09-05T21:07:30+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness once `T-028` was verified and `Done` |
 | `2026-09-05T21:07:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started removing explicit set confirmation |
+| `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2`; static checks passed and no feature test ran |
