@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T12:39:28+02:00
+- **Last updated:** 2026-09-05T12:41:51+02:00
 - **Current phase:** Local MVP implementation — correcting delivered behavior under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; `F-011` corrections planned and awaiting Owner readiness; `F-008` intentionally not started
@@ -16,10 +16,9 @@ Start [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data
 
 ## Now
 
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`3/7 Tasks Done`) — Owner confirmed readiness
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`3/6 Tasks Done`) — Owner confirmed readiness
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
   - [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` and the current-program mechanism (correction 3)
-  - [`T-022`](docs/project/tasks/T-022-replace-archiving-in-mobile-experience.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 3)
   - [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (corrections 5, 6, 8)
   - [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 9)
 
@@ -54,6 +53,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/11 Features Done`)
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`3/7 Tasks Done`)
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`3/6 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

@@ -1,7 +1,7 @@
 # T-022 — Replace archiving in the mobile experience
 
 - **Feature:** `F-011`
-- **Status:** `Backlog`
+- **Status:** `Canceled`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,17 +9,19 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T11:41:11+02:00`
+- **Updated:** `2026-09-05T12:41:51+02:00`
 - **Started:** Not reached
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
-- **Canceled:** Not reached
-- **Next action:** Owner confirms `Ready` after `T-021` is approved.
+- **Canceled:** `2026-09-05T12:41:51+02:00`
+- **Next action:** None; this Task is terminal. Its scope is delivered by `T-021`.
 
 ## Scope
+
+Canceled on `2026-09-05`: removing the status fields from the domain types cannot leave the screens compiling in a separate commit, so this scope was absorbed into `T-021` with the Owner's confirmation. The original scope follows for audit.
 
 Replace every archiving affordance in the Exercise Library, Programs, and Splits screens with deletion built on the operations delivered by `T-021`, and replace program status controls with the current-program selection.
 
@@ -136,3 +138,4 @@ Screen changes:
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 3 recorded on 2026-09-05 |
+| `2026-09-05T12:41:51+02:00` | User / Owner | `Backlog` | `Canceled` | Absorbed into `T-021` because the screens cannot compile without the removed status fields |
