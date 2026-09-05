@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T20:57:19+02:00
+- **Last updated:** 2026-09-05T20:59:40+02:00
 - **Current phase:** Local MVP implementation — `F-013` confirmed; starting the Owner's exercise and set-entry model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007`, `F-011`, and `F-013` complete; `F-014` starting with `T-028`; `F-012` queued in `Next`; `F-008` intentionally not started
@@ -15,12 +15,12 @@
 
 ## Immediate next action
 
-Run and record the authorized `T-028` verification, then continue with `T-029`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver the `T-028` replacement that updates the exercise-form component tests, then get fresh approval for it and for the reset its run needs. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`0/2 Tasks Done`) — two exercise types with assistance under bodyweight, then values instead of confirmation
-  - [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) — `Testing` — Claude Code primary agent — `2026-09-05T20:57:19+02:00` — run the authorized cycle for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
+  - [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) — `In Progress` — Claude Code primary agent — `2026-09-05T20:59:40+02:00` — the authorized run failed on component tests the delivery had not updated; deliver a replacement
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next

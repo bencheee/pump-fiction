@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:57:19+02:00`
+- **Updated:** `2026-09-05T20:59:40+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** `2026-09-05T20:36:12+02:00`
 - **Approval requested:** `2026-09-05T20:57:19+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T20:57:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized cycle for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`: snapshot, clean reset, pgTAP, generated types, unit, component and repository suites, then restore.
+- **Next action:** Deliver a replacement that updates the exercise-form component tests, then request fresh approval for it and for the reset its run needs.
 
 ## Scope
 
@@ -72,7 +72,7 @@ No local row used the retired type when this Task was delivered, so the migratio
 - [x] Update domain constants, validation, and presentation labels, including `Assist with weight` and `Assist with band` — every type now has an implied base mode, so the nullable base-mode branch and the "Choose exactly one assistance mode." message are gone.
 - [x] Update the exercise form and every type-dependent screen — the form drops its assistance-only legend and summary; set entry is keyed by load mode, not base type, so no workout screen changed.
 - [x] Move the committed seed's assisted exercise to a bodyweight definition.
-- [x] Extend pgTAP, unit, and component assertions without running them — pgTAP `0002` grows from 8 to 11 assertions covering the retired type, an accepted bodyweight assistance definition, and two rejected assistance modes; `0001` snapshots an assisted movement as bodyweight; the unit suite gains an accepted assistance definition and a rejected retired type.
+- [ ] Extend pgTAP, unit, and component assertions without running them — pgTAP `0002` grows from 8 to 11 assertions covering the retired type, an accepted bodyweight assistance definition, and two rejected assistance modes; `0001` snapshots an assisted movement as bodyweight; the unit suite gains an accepted assistance definition and a rejected retired type.
 - [x] Synchronize canonical documentation and project-management projections.
 - [x] Run only permitted static checks and deliver one reviewable commit.
 
@@ -88,8 +88,8 @@ No local row used the retired type when this Task was delivered, so the migratio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests for the two types and the four options, repository integration tests, and pgTAP constraint tests for the retired type and the single-option rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
-- **Results:** Not run
+- **Authorized commit:** Not authorized
+- **Results:** Failed on `2026-09-05T20:59:40+02:00` for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`. The snapshot ran, the clean reset landed on the corrected seed with `Assisted dip` as a bodyweight definition holding `bodyweight` and `assistance_weight`, and the enum exposed only `weights` and `bodyweight`. pgTAP passed 62/62, up from 59 by the three added assertions, and regenerated types matched the committed file. The unit suite then failed 2 of 68: `exercise-form.test.tsx` still drives the retired `Assisted` type button and the `Assistance mode` group, which the delivery removed from the form but did not update in that file. Component suites passed 4/4. The repository suite was not reached.
 
 ## Delivery commit
 
@@ -106,10 +106,10 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 ## Approval
 
-- **Approved commit:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
+- **Approved commit:** Approval cleared by the failed run
 - **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T20:57:19+02:00`
-- **Approval note:** Approved the exact delivery commit and the clean reset the verification requires; the Owner's local data is snapshotted first
+- **Approval note:** Approval of `481ef7dc410733ad1b0502a8cea0a02ac53259bc` was cleared when its authorized run failed on component tests the delivery had not updated
 
 ## Definition of Ready
 
@@ -147,3 +147,4 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T20:36:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `481ef7dc410733ad1b0502a8cea0a02ac53259bc`; static checks passed and no feature test ran |
 | `2026-09-05T20:57:19+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
 | `2026-09-05T20:57:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized cycle against `481ef7dc410733ad1b0502a8cea0a02ac53259bc` |
+| `2026-09-05T20:59:40+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 68 unit tests: the exercise-form component tests still drove the retired assisted type; approval and test authorization cleared |
