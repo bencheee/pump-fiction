@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-012` |
-| Task | `T-025` |
+| Task | `T-026` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -29,7 +29,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-005`](features/F-005-exercise-library.md) | `M-001` | Exercise Library | `Now / 1` | `2/2 Done` | User | `2026-09-02T14:25:18+02:00` | [`features/F-005-exercise-library.md`](features/F-005-exercise-library.md) |
 | [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Now / 1` | `2/2 Done` | User | `2026-09-03T12:00:56+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
 | [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Now / 1` | `4/4 Done` | User | `2026-09-05T10:43:18+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
-| [`F-011`](features/F-011-mvp-experience-corrections.md) | `M-001` | MVP Experience Corrections | `Now / 1` | `6/6 Done` | User | `2026-09-05T12:07:13+02:00` | [`features/F-011-mvp-experience-corrections.md`](features/F-011-mvp-experience-corrections.md) |
+| [`F-011`](features/F-011-mvp-experience-corrections.md) | `M-001` | MVP Experience Corrections | `Now / 1` | `6/7 Done` | User | `2026-09-05T12:07:13+02:00` | [`features/F-011-mvp-experience-corrections.md`](features/F-011-mvp-experience-corrections.md) |
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 1` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 2` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
@@ -62,6 +62,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-022`](tasks/T-022-replace-archiving-in-mobile-experience.md) | `F-011` | Replace archiving in the mobile experience | `Now / 5` | `Canceled` | Claude Code primary agent | `2026-09-05T12:41:51+02:00` | [`tasks/T-022-replace-archiving-in-mobile-experience.md`](tasks/T-022-replace-archiving-in-mobile-experience.md) |
 | [`T-023`](tasks/T-023-correct-active-workout-screen-details.md) | `F-011` | Correct active-workout screen details | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-05T13:15:59+02:00` | [`tasks/T-023-correct-active-workout-screen-details.md`](tasks/T-023-correct-active-workout-screen-details.md) |
 | [`T-024`](tasks/T-024-keep-primary-navigation-during-workout.md) | `F-011` | Keep primary navigation during an active workout | `Now / 7` | `Done` | Claude Code primary agent | `2026-09-05T13:21:29+02:00` | [`tasks/T-024-keep-primary-navigation-during-workout.md`](tasks/T-024-keep-primary-navigation-during-workout.md) |
+| [`T-025`](tasks/T-025-allow-partial-band-set-entry.md) | `F-011` | Allow partial band set entry | `Now / 8` | `In Progress` | Claude Code primary agent | `2026-09-05T19:03:35+02:00` | [`tasks/T-025-allow-partial-band-set-entry.md`](tasks/T-025-allow-partial-band-set-entry.md) |
 
 ## Templates
 

@@ -1,22 +1,23 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T13:21:29+02:00
-- **Current phase:** Local MVP implementation — `F-011` corrections complete, awaiting the Owner's confirmation before `F-008`
+- **Last updated:** 2026-09-05T19:03:35+02:00
+- **Current phase:** Local MVP implementation — correcting a blocking active-workout defect under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` complete; all six `F-011` Tasks are `Done`; `F-008` intentionally not started
+- **Implementation:** `F-004` through `F-007` complete; six `F-011` Tasks are `Done` and `T-025` corrects a reported defect; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) MVP Experience Corrections records the nine corrections the Owner raised on `2026-09-05` after using the delivered application. All six required Tasks are `Done` and every one of the nine corrections is delivered, approved, and verified. The Feature now needs only the Owner's confirmation of the aggregate result; `F-008` waits for that.
+[`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) MVP Experience Corrections records the nine corrections the Owner raised on `2026-09-05` after using the delivered application. All nine recorded corrections are delivered, approved, and verified. The Owner then hit a blocking active-workout defect that predates this Feature, so `T-025` was added and the Feature stays open until it is fixed and confirmed.
 
 ## Immediate next action
 
-Owner confirms the aggregate `F-011` result; `F-008` planning starts only after that confirmation. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver [`T-025`](docs/project/tasks/T-025-allow-partial-band-set-entry.md) so a band set saves before its strength is chosen; the `F-011` confirmation waits for it. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`6/6 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`6/7 Tasks Done`) — `T-025` corrects a reported blocking defect
+  - [`T-025`](docs/project/tasks/T-025-allow-partial-band-set-entry.md) — `In Progress` — Claude Code primary agent — `2026-09-05T19:03:35+02:00` — deliver one reviewable commit
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
@@ -50,6 +51,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/11 Features Done`)
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`6/6 Tasks Done`)
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`6/7 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
