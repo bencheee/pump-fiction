@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:18:41+02:00`
+- **Updated:** `2026-09-05T20:19:56+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
-- **Approval requested:** `2026-09-05T20:15:12+02:00`
-- **Approved:** `2026-09-05T20:15:12+02:00`
-- **Testing started:** `2026-09-05T20:15:12+02:00`
+- **Approval requested:** `2026-09-05T20:19:56+02:00`
+- **Approved:** `2026-09-05T20:19:56+02:00`
+- **Testing started:** `2026-09-05T20:19:56+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `ae1870380a0657d71846b0c7eb9566c2b979edf7`; its run needs the Owner's approval of that SHA and of the clean reset the precondition requires.
+- **Next action:** Run the authorized cycle for `ae1870380a0657d71846b0c7eb9566c2b979edf7`: snapshot, clean reset, repository suite with the row count compared, restore, then remove the old orphan row.
 
 ## Scope
 
@@ -72,7 +72,7 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** a snapshot, a clean reset so no resumable workout exists, an authorized `npm run test:repository` run with the exercise-library row count compared before and after, then a restore; must not run before Owner approval of the exact commit and of the reset
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `ae1870380a0657d71846b0c7eb9566c2b979edf7`
 - **Results:** Failed on `2026-09-05T20:16:37+02:00` for a precondition, not for the delivered change. `npm run db:snapshot` ran first, then `npm run test:repository` against the Owner's restored data reported 2 failed and 2 passed: both suites that start their own workout hit `duplicate key value violates unique constraint "workouts_single_resumable"`, because the Owner's restored workout is still active and the schema allows one resumable workout. The repository suite therefore shares the pgTAP precondition of a database without a resumable workout, which no document recorded. The delivered change still behaved correctly under the failure: every table held exactly its pre-run count afterwards, including one exercise, so the failing run left no new orphan where the old code would have left one.
 
 ## Delivery commit
@@ -84,16 +84,16 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T20:15:12+02:00`
+- **Reviewed at:** `2026-09-05T20:19:56+02:00`
 - **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Approval cleared by the failed run
+- **Approved commit:** `ae1870380a0657d71846b0c7eb9566c2b979edf7`
 - **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T20:15:12+02:00`
-- **Approval note:** Approval of `cfb8ee5fa42e8655553809a159bc422502737069` was cleared when the authorized run failed on a precondition the Task had not recorded
+- **Approved at:** `2026-09-05T20:19:56+02:00`
+- **Approval note:** Approved the exact replacement and the clean reset its run requires, after the first approval was cleared by the failed run
 
 ## Definition of Ready
 
@@ -133,3 +133,5 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 | `2026-09-05T20:15:12+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted first, then started the authorized repository run against `cfb8ee5fa42e8655553809a159bc422502737069` |
 | `2026-09-05T20:16:37+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed on the singleton resumable-workout constraint because the Owner's workout is active; approval and test authorization cleared |
 | `2026-09-05T20:17:59+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered a replacement that keeps the test cleanup and records the repository suite's no-resumable-workout precondition; static checks passed and no feature test ran |
+| `2026-09-05T20:19:56+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset its run requires |
+| `2026-09-05T20:19:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the cycle against `ae1870380a0657d71846b0c7eb9566c2b979edf7`: snapshot, reset, repository suite, restore |
