@@ -1,7 +1,7 @@
 # T-027 — Restore usable local data after a verification reset
 
 - **Feature:** `F-013`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:51:11+02:00`
+- **Updated:** `2026-09-05T19:57:07+02:00`
 - **Started:** `2026-09-05T19:42:31+02:00`
 - **Review started:** `2026-09-05T19:51:11+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T19:57:07+02:00`
+- **Approved:** `2026-09-05T19:57:07+02:00`
+- **Testing started:** `2026-09-05T19:57:07+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reviewer checks `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` against the scope and acceptance criteria; the reset, pgTAP, and snapshot round trip stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Run the authorized verification for `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`: snapshot, clean reset onto the seed, pgTAP, generated types, unit, component and repository suites, then restore.
 
 ## Scope
 
@@ -82,7 +82,7 @@ The verification gate itself does not change: a clean reset stays required befor
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** a clean reset that lands on the seeded baseline, an unchanged pgTAP run against it, and a snapshot/restore round trip that returns a workout; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`
 - **Results:** Not run
 
 ## Delivery commit
@@ -94,16 +94,16 @@ The verification gate itself does not change: a clean reset stays required befor
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T19:57:07+02:00`
+- **Outcome:** Approved
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T19:57:07+02:00`
+- **Approval note:** Approved the exact delivery commit and the destructive clean reset the verification requires; the Owner's local data was snapshotted first
 
 ## Definition of Ready
 
@@ -139,3 +139,5 @@ The verification gate itself does not change: a clean reset stays required befor
 | `2026-09-05T19:42:31+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed both mechanisms with the seed as the fallback, completing the Definition of Ready |
 | `2026-09-05T19:42:31+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the seed and the snapshot/restore pair |
 | `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; static checks passed and no feature test ran |
+| `2026-09-05T19:57:07+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the destructive clean reset it requires |
+| `2026-09-05T19:57:07+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized reset, pgTAP, and suite run against `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` |
