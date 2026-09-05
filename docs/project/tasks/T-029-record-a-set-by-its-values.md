@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:24:47+02:00`
+- **Updated:** `2026-09-05T21:26:21+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** `2026-09-05T21:23:55+02:00`
 - **Approval requested:** `2026-09-05T21:24:47+02:00`
 - **Approved:** `2026-09-05T21:24:47+02:00`
 - **Testing started:** `2026-09-05T21:24:47+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T21:26:21+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized cycle for `9374b8c23f55882f4c813a3e9a761f26b291e2b5`: clean reset, pgTAP, generated types, unit, component, and repository suites.
+- **Next action:** None; `T-029` is `Done`. `F-014` awaits the Owner's confirmation of the Feature result.
 
 ## Scope
 
@@ -39,11 +39,11 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Acceptance criteria
 
-- [ ] No screen shows a confirmation control or a per-set tick.
-- [ ] Entering a value saves it immediately, and a complete set is recorded without any further action.
-- [ ] An incomplete set is kept, is not counted, and is named in the finish review.
-- [ ] The stored model no longer carries a confirmation flag, and no command sends one.
-- [ ] `MVP-WRK-003`, `MVP-WRK-004`, `MVP-WRK-011`, and the confirmed-set wording in the History criteria describe the recorded-by-values model.
+- [x] No screen shows a confirmation control or a per-set tick — a component test asserts that no `Confirm set` button exists.
+- [x] Entering a value saves it immediately, and a complete set is recorded without any further action — typing kilograms and reps into an empty set moves the card from `1 of 3 recorded` to `2 of 3 recorded` with no further gesture, and the emitted `update_set` carries no `isConfirmed`.
+- [x] An incomplete set is kept, is not counted, and is named in the finish review — pgTAP stores a band set without its strength and the derived rule reports it as not recorded; the review lists `Squat set 2`, `Squat set 3`, and `Pull-Up set 2` under `Sets left without values`.
+- [x] The stored model no longer carries a confirmation flag, and no command sends one — `information_schema` shows no `is_confirmed` column on `workout_sets` after the reset, and the command contract rejects the field.
+- [x] `MVP-WRK-003`, `MVP-WRK-004`, `MVP-WRK-011`, and the confirmed-set wording in the History criteria describe the recorded-by-values model.
 
 ## Traceability
 
@@ -96,6 +96,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 - **Delivery commit SHA:** `9374b8c23f55882f4c813a3e9a761f26b291e2b5` — replacement; it supersedes the first delivery `a64adcc3a1b547ac2af2ec9121c958653323d2f2`, whose changes it carries unchanged
 - **Subject:** `T-029: record a set by its entered values`
+- **Results:** Passed on `2026-09-05T21:26:21+02:00` for `9374b8c23f55882f4c813a3e9a761f26b291e2b5`. The clean reset landed on the seed, pgTAP passed 65/65, regenerated types matched the committed file, the unit suite passed 69/69, the component suite 4/4, and the repository suite 4/4. Afterwards the database held the 10 seeded exercises, no workout, the pointer on `Baseline program`, and no `is_confirmed` column on `workout_sets`.
 - **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the two corrected component expectations; the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
@@ -128,15 +129,15 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -152,3 +153,4 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` with the re-derived component expectations; static checks passed and no feature test ran |
 | `2026-09-05T21:24:47+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset it requires |
 | `2026-09-05T21:24:47+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the authorized cycle against `9374b8c23f55882f4c813a3e9a761f26b291e2b5` |
+| `2026-09-05T21:26:21+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: seeded reset, pgTAP 65/65, unchanged types, unit 69/69, component 4/4, repository 4/4, and no `is_confirmed` column remaining |

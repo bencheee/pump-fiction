@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:23:55+02:00`
-- **Progress:** `1/2 required Tasks Done`
+- **Updated:** `2026-09-05T21:26:21+02:00`
+- **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -43,7 +43,7 @@ Recorded on `2026-09-05`:
 ## Tasks
 
 - `T-028` — Merge assisted exercises into bodyweight options — `Done`
-- `T-029` — Record a set by its entered values — `Backlog`
+- `T-029` — Record a set by its entered values — `Done`
 
 ## Dependencies and blockers
 
@@ -66,10 +66,10 @@ Recorded on `2026-09-05`:
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden
 - [ ] User confirms the feature result
 
 ## History
@@ -84,3 +84,4 @@ Recorded on `2026-09-05`:
 | `2026-09-05T21:05:10+02:00` | Claude Code primary agent / Tester | `T-028` verified and `Done` for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The two-type model is delivered and verified; `T-029` needs the Owner's confirmation of readiness |
 | `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `T-029` delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2` and entered review | Explicit set confirmation is removed and the recorded state is derived from the entered values |
 | `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `T-029` returned to `In Progress` and delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` | The authorized run exposed two component expectations the first delivery renamed without re-deriving what the new rule counts |
+| `2026-09-05T21:26:21+02:00` | Claude Code primary agent / Tester | `T-029` verified and `Done` for `9374b8c23f55882f4c813a3e9a761f26b291e2b5` | Both corrections are delivered and verified; the Feature result awaits the Owner's confirmation |
