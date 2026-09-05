@@ -1,23 +1,23 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T19:28:05+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T21:07:30+02:00`
+- **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms the transition to `Ready` after `T-028`.
+- **Next action:** Deliver the recorded-by-values model as one reviewable commit.
 
 ## Scope
 
@@ -119,7 +119,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -138,3 +138,5 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T19:28:05+02:00` | User / Owner | None | `Backlog` | Requested that entered values replace the confirmation controls |
+| `2026-09-05T21:07:30+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness once `T-028` was verified and `Done` |
+| `2026-09-05T21:07:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started removing explicit set confirmation |
