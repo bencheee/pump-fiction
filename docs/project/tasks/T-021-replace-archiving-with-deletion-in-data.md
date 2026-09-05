@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:04:35+02:00`
+- **Updated:** `2026-09-05T13:04:55+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
-- **Review started:** `2026-09-05T13:00:15+02:00`
+- **Review started:** `2026-09-05T13:04:55+02:00`
 - **Approval requested:** `2026-09-05T13:02:05+02:00`
 - **Approved:** `2026-09-05T13:02:05+02:00`
 - **Testing started:** `2026-09-05T13:02:05+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the replacement commit SHA through an evidence commit and request fresh approval before the complete verification restarts.
+- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the complete verification then restarts from the beginning.
 
 ## Scope
 
@@ -100,15 +100,15 @@ Screen changes absorbed from `T-022`:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
+- **Delivery commit SHA:** `a049287a74a7dccf5ba2146bea09671913dca9d7` (test-only replacement; supersedes `dfd6d7a9587740717af43ef23f33e3d545a20c4c`)
 - **Subject:** `T-021: replace archiving with deletion in data and operations`
-- **Committed scope:** `ADR-0024` and its index row; the declarative schema without `entity_status`, `program_status`, and every `status` column, with unconditional name uniqueness, `app_settings.current_program_id`, the current-program and split-deletion triggers, `set_current_program`, `delete_program`, `delete_split`, `delete_exercise`, and the cascading and null-setting references that keep History intact; the reviewed migration and regenerated types; exercise and program domain types, repositories, operations, failures, server composition, and Server Actions rebuilt around deletion; the Exercises, Programs, and Splits screens with delete confirmations and the current-program control; updated unit, component, integration, and pgTAP assertions; and the revised `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, History wording, release boundary, and every affected product, architecture, and screen document.
+- **Committed scope:** The replacement changes only `programs-mobile.test.tsx`, clicking the renamed `Save Program` action. The superseded delivery contained: `ADR-0024` and its index row; the declarative schema without `entity_status`, `program_status`, and every `status` column, with unconditional name uniqueness, `app_settings.current_program_id`, the current-program and split-deletion triggers, `set_current_program`, `delete_program`, `delete_split`, `delete_exercise`, and the cascading and null-setting references that keep History intact; the reviewed migration and regenerated types; exercise and program domain types, repositories, operations, failures, server composition, and Server Actions rebuilt around deletion; the Exercises, Programs, and Splits screens with delete confirmations and the current-program control; updated unit, component, integration, and pgTAP assertions; and the revised `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, History wording, release boundary, and every affected product, architecture, and screen document.
 
 ## Review
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T13:02:05+02:00`
-- **Outcome:** Recommended for approval
+- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
 - **Findings:** None recorded; the User reviewed the deletion model, the current-program mechanism, the absorbed screen scope, and the revised criteria.
 
 ## Approval
@@ -156,3 +156,4 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T13:02:05+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and its database verification |
 | `2026-09-05T13:02:05+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the complete authorized verification against `dfd6d7a9587740717af43ef23f33e3d545a20c4c` |
 | `2026-09-05T13:03:51+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on two test-only queries for the renamed program save action; approval and test authorization cleared |
+| `2026-09-05T13:04:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `a049287a74a7dccf5ba2146bea09671913dca9d7`; static checks passed and no feature test ran |
