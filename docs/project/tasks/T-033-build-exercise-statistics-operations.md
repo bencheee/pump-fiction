@@ -1,7 +1,7 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:35:01+02:00`
+- **Updated:** `2026-09-05T23:39:11+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
 - **Review started:** `2026-09-05T23:35:01+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T23:39:11+02:00`
+- **Approved:** `2026-09-05T23:39:11+02:00`
+- **Testing started:** `2026-09-05T23:39:11+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e`. Approving it authorizes the recorded verification.
+- **Next action:** Run only the recorded verification against exact approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e`.
 
 ## Scope
 
@@ -91,7 +91,7 @@ Queries:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for the PR matrix, eligibility, band separation, range boundaries, and identity retention; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new exercise-history suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `bf787976b69602ed4358eb79f053d48486c3d30e`
 - **Results:** Not run
 
 ## Delivery commit
@@ -103,16 +103,16 @@ Queries:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-05T23:39:11+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `bf787976b69602ed4358eb79f053d48486c3d30e`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T23:39:11+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, which approves it and authorizes only the recorded verification plan.
 
 ## Definition of Ready
 
@@ -149,3 +149,6 @@ Queries:
 | `2026-09-05T23:24:46+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the exercise statistics derivation |
 | `2026-09-05T23:34:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the reads, the derivation rules, the boundary, and the prepared suites; all permitted static checks passed |
 | `2026-09-05T23:35:01+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-05T23:39:11+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-05T23:39:11+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e` with `potvrda` |
+| `2026-09-05T23:39:11+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |

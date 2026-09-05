@@ -1,25 +1,25 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T23:35:01+02:00
+- **Last updated:** 2026-09-05T23:39:11+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` and `T-032` of `F-008` are `Done` and `T-033` is `In Review`
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` and `T-032` of `F-008` are `Done` and `T-033` is `Testing`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Review`, Executor Claude Code primary agent, last change 2026-09-05T23:35:01+02:00. It derives the personal records, eligibility, and chart series behind `S15` and `S16`.
+[`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `Testing`, Executor Claude Code primary agent, last change 2026-09-05T23:39:11+02:00. It derives the personal records, eligibility, and chart series behind `S15` and `S16`.
 
 History already has its data and its first screens. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) delivered the month-grouped reads, the saved-workout detail, and ten transactional corrections, verified through approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) delivered the subsection shell, `S13`, `S14`, and the correction screen, verified through approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`.
 
 ## Immediate next action
 
-Review exact `T-033` delivery `bf787976b69602ed4358eb79f053d48486c3d30e` and approve or reject it. Approval authorizes its recorded unit, pgTAP, and repository verification.
+Run only the recorded `T-033` verification against approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e`, then record the result.
 
 ## Now
 
-- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Review` — Claude Code primary agent — 2026-09-05T23:35:01+02:00 — next: the Owner's decision on the exact delivery.
+- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `Testing` — Claude Code primary agent — 2026-09-05T23:39:11+02:00 — next: record the verification result.
 
 ## Next
 
@@ -38,11 +38,11 @@ None.
 
 ## Awaiting approval
 
-- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e` — Claude Code primary agent — 2026-09-05T23:35:01+02:00 — requested action: review and approve or reject the exact commit.
+None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e` — Claude Code primary agent — 2026-09-05T23:39:11+02:00 — next required action: the recorded unit, pgTAP, and repository verification.
 
 ## Recently completed Tasks
 
