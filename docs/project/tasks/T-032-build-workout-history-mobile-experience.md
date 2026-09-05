@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:17:13+02:00`
+- **Updated:** `2026-09-05T23:19:16+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** `2026-09-05T23:13:58+02:00` for the replacement
 - **Approval requested:** `2026-09-05T23:17:13+02:00` for the replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T23:17:13+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved replacement `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf`.
+- **Next action:** Correct the ambiguous Today assertion, deliver a second replacement, and request fresh approval.
 
 ## Scope
 
@@ -95,10 +95,12 @@ Shell:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which now carries the new component suite covering the `S14` snapshot with a deleted definition, mark-completed, confirmed deletion, the failure path, unsaved-changes reporting, the corrections a save actually sends, both removal confirmations, the structural lock, and the presentation helpers; then the serialized Chromium and WebKit run of the new History browser scenario covering the subsection shell, `S13` to `S14`, an applied correction, the unchanged Today proposal, confirmed deletion, 320 px reflow, and two structural captures per platform. Only that one spec runs: the whole browser command cannot run until [`T-037`](T-037-repair-stale-browser-specs.md) repairs two older specs that still call the archiving artifacts `T-021` removed. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf`; the approval of `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` was invalidated by the failed verification below
+- **Authorized commit:** none currently; the approvals of `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` and `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` were both invalidated by the failed verifications below
 - **Results:** Failed on `2026-09-05T23:10:34+02:00` against exact approved delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`. `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **98/98 across 15 files**, up from 86 by the twelve new component scenarios. The serialized History browser scenario then failed on both mobile Chromium and mobile WebKit, at the same place: the second set of the seeded workout has no kilograms field to fill.
 
   That is a defect in delivered behavior, not in the test. A set that was never given values has `loadMode` null, and the correction form rendered its inputs from that column, so an empty historical set showed only reps and could never be completed. The active workout does not read the column: it derives the mode from the exercise definition, as [ADR-0023](../../decisions/0023-simplified-exercise-load-mode-model.md) requires, and the History form has to do the same and send that derived mode with the correction. The approval is invalidated.
+
+  Second verification, against exact approved replacement `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` on `2026-09-05T23:19:16+02:00` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **99/99 across 15 files**, up from 98 by the empty-set regression scenario. The browser scenario got past the correction on both platforms, which confirms the mode fix, and then failed on both at the Today check. The behavior there is right: Today proposes the next split exactly as expected. The assertion is wrong. It matched the split name by text, and the name appears twice on Today, in the proposed-split heading and in the rotation-position sentence, so Playwright's strict mode refused the ambiguous match. That is a test-only defect; the approval is invalidated and the steps after it, the confirmed deletion and the reflow check, were never reached.
 
   Recorded incident on `2026-09-05T23:05:00+02:00`: while writing this Task file, an unquoted shell heredoc expanded the backticked command names inside its own prose, so the shell executed the unit and browser test commands against the uncommitted working tree. No commit was approved and no commit existed, so **these runs are not verification of anything and their results are not recorded as evidence**. What they left behind was cleaned up: two fixture exercises the browser specs create were deleted, restoring the seeded ten, and the generated report directory was removed. The runs did surface two ambiguous queries in the new component suite, which are corrected here; that correction is ordinary implementation work, not an authorized test result. The recorded plan above still runs in full, from the beginning, after this exact delivery is approved. Every heredoc in this Task now quotes its delimiter.
 
