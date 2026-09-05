@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:15:12+02:00`
+- **Updated:** `2026-09-05T20:16:37+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
 - **Approval requested:** `2026-09-05T20:15:12+02:00`
@@ -17,13 +17,15 @@
 - **Testing started:** `2026-09-05T20:15:12+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized repository suite for `cfb8ee5fa42e8655553809a159bc422502737069` and compare the exercise-library row count before and after.
+- **Next action:** Deliver a replacement that also documents the no-resumable-workout precondition, then request fresh approval for the commit and for the reset the run needs.
 
 ## Scope
 
 `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts` creates an exercise through `create_exercise_definition` and its `finally` block deletes only the workout, so every authorized repository run leaves one orphan `T-008 exercise <uuid>` in the Owner's exercise library. The `T-027` verification on `2026-09-05` found one such row already present from an earlier run.
 
 Delete the created exercise in the same `finally` block, in the order the foreign keys require.
+
+The failed run on `2026-09-05` added one item: the repository suite needs a database without a resumable workout, exactly as pgTAP does, and no document said so. Record that precondition in the local database workflow next to the verification gate.
 
 ## Out of scope
 
@@ -35,6 +37,7 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 - [ ] After an authorized `npm run test:repository` run the exercise library holds exactly the rows it held before.
 - [ ] The suite still passes unchanged.
+- [ ] The database workflow records that the repository suite needs a database without a resumable workout.
 
 ## Traceability
 
@@ -50,13 +53,14 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 ## Documentation impact
 
-- Documents to update: this Task, `F-013`, registry, dashboard, and project state
+- Documents to update: the local database workflow with the repository-suite precondition, this Task, `F-013`, registry, dashboard, and project state
 - Documentation that should remain unchanged: the verification gate, the seed and snapshot sections, and the schema guidance
 
 ## Execution checklist
 
 - [x] Delete the created exercise in the test's `finally` block — after the workout deletion, so the cascading `workout_exercises` rows are gone before the `on delete set null` reference is removed.
-- [x] Run only permitted static checks and deliver one reviewable commit.
+- [ ] Document the no-resumable-workout precondition for the repository suite.
+- [ ] Run only permitted static checks and deliver one reviewable replacement commit.
 
 ## Static-check plan and results
 
@@ -68,8 +72,8 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** an authorized `npm run test:repository` run with the exercise-library row count compared before and after; must not run before Owner approval of the exact commit
-- **Authorized commit:** `cfb8ee5fa42e8655553809a159bc422502737069`
-- **Results:** Not run
+- **Authorized commit:** Not authorized
+- **Results:** Failed on `2026-09-05T20:16:37+02:00` for a precondition, not for the delivered change. `npm run db:snapshot` ran first, then `npm run test:repository` against the Owner's restored data reported 2 failed and 2 passed: both suites that start their own workout hit `duplicate key value violates unique constraint "workouts_single_resumable"`, because the Owner's restored workout is still active and the schema allows one resumable workout. The repository suite therefore shares the pgTAP precondition of a database without a resumable workout, which no document recorded. The delivered change still behaved correctly under the failure: every table held exactly its pre-run count afterwards, including one exercise, so the failing run left no new orphan where the old code would have left one.
 
 ## Delivery commit
 
@@ -86,10 +90,10 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 ## Approval
 
-- **Approved commit:** `cfb8ee5fa42e8655553809a159bc422502737069`
+- **Approved commit:** Approval cleared by the failed run
 - **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T20:15:12+02:00`
-- **Approval note:** Approved the exact delivery commit, and the removal of the orphan row an earlier run had already left in the library
+- **Approval note:** Approval of `cfb8ee5fa42e8655553809a159bc422502737069` was cleared when the authorized run failed on a precondition the Task had not recorded
 
 ## Definition of Ready
 
@@ -127,3 +131,4 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 | `2026-09-05T20:12:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `cfb8ee5fa42e8655553809a159bc422502737069`; static checks passed and no feature test ran |
 | `2026-09-05T20:15:12+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit |
 | `2026-09-05T20:15:12+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted first, then started the authorized repository run against `cfb8ee5fa42e8655553809a159bc422502737069` |
+| `2026-09-05T20:16:37+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed on the singleton resumable-workout constraint because the Owner's workout is active; approval and test authorization cleared |
