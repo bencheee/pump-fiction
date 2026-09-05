@@ -3,10 +3,10 @@
 - **Milestone:** `M-001`
 - **Owner:** User
 - **Horizon:** `Next`
-- **Order:** 5
+- **Order:** 4
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T20:09:42+02:00`
+- **Updated:** `2026-09-05T20:24:07+02:00`
 - **Progress:** `0/0 required Tasks Done; Task breakdown pending`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -63,3 +63,4 @@ All completed domain Features operate as one persistent, accessible, phone-only 
 | --- | --- | --- | --- |
 | `2026-08-25T16:35:55+02:00` | Codex primary agent / Planner | Created in `Next` | Reserve explicit ownership for cross-feature persistence, mobile interaction, and final accepted verification |
 | `2026-09-05T20:09:42+02:00` | User / Owner | Moved `Next / 8` to `Next / 5` | Reconfirmed the order `F-013`, `F-014`, `F-012`, `F-008` after `F-013` became the current focus |
+| `2026-09-05T20:24:07+02:00` | User / Owner | Moved `Next / 5` to `Next / 4` | `F-014` became the current focus once `F-013` was confirmed |

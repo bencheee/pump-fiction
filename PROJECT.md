@@ -1,30 +1,32 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T20:21:55+02:00
-- **Current phase:** Local MVP implementation — `F-013` complete and awaiting the Owner's confirmation before `F-014`
+- **Last updated:** 2026-09-05T20:24:07+02:00
+- **Current phase:** Local MVP implementation — `F-013` confirmed; starting the Owner's exercise and set-entry model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` complete; both `F-013` Tasks verified; `F-014` and `F-012` queued in `Next`; `F-008` intentionally not started
+- **Implementation:** `F-004` through `F-007`, `F-011`, and `F-013` complete; `F-014` starting with `T-028`; `F-012` queued in `Next`; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013` (seed and snapshot) → `F-014` (`T-028`, then `T-029`) → `F-012` (command recovery) → `F-008`; reconfirmed by the Owner on `2026-09-05`
+- **Working order:** `F-013` (seed and snapshot, `Done`) → `F-014` (`T-028`, then `T-029`) → `F-012` (command recovery) → `F-008`; reconfirmed by the Owner on `2026-09-05`
 
 ## Current focus
 
-[`F-013`](docs/project/features/F-013-local-verification-data.md) Local Verification Data stops the approval-gated clean reset from costing the Owner their local data. [`T-027`](docs/project/tasks/T-027-restore-local-data-after-reset.md) is `Done`: the verification of `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` seeded the reset, kept pgTAP at 59/59, and returned the Owner's active workout through the snapshot round trip. The run also exposed an orphan exercise the command repository test left behind, fixed and verified in [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md), whose own first run additionally showed that the repository suite needs a database without a resumable workout. Both Tasks are `Done` and the Feature awaits the Owner's confirmation.
+[`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) Exercise and Set-Entry Model Corrections carries the Owner's two model corrections: reduce the exercise types to `weights` and `bodyweight` with assistance as a bodyweight option in [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md), then record a set by its entered values instead of an explicit confirmation in [`T-029`](docs/project/tasks/T-029-record-a-set-by-its-values.md).
+
+[`F-013`](docs/project/features/F-013-local-verification-data.md) is `Done` with the Owner's confirmed result on `2026-09-05`: a reset now lands on the committed seed baseline, `npm run db:snapshot` and `npm run db:restore` carry the Owner's own data across a verification, and the repository suite no longer pollutes the exercise library.
 
 ## Immediate next action
 
-Owner confirms the `F-013` result; `F-014` then starts with [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md). The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) as one reviewable commit, then `T-029`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- [`F-013`](docs/project/features/F-013-local-verification-data.md) — Local Verification Data (`2/2 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
+- [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`0/2 Tasks Done`) — two exercise types with assistance under bodyweight, then values instead of confirmation
+  - [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) — `In Progress` — Claude Code primary agent — `2026-09-05T20:24:07+02:00` — deliver one reviewable commit
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
 
-1. [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — two exercise types with assistance under bodyweight (`T-028`), then values instead of confirmation (`T-029`).
-2. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout (`T-026`).
-3. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
+1. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout (`T-026`).
+2. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
 
 ## Later
 
@@ -55,6 +57,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/14 Features Done`)
-- [`F-013`](docs/project/features/F-013-local-verification-data.md) — Local Verification Data (`2/2 Tasks Done`)
+- [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`0/2 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

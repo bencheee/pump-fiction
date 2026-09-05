@@ -1,16 +1,16 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T19:28:05+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T20:24:07+02:00`
+- **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
@@ -120,7 +120,7 @@ The local database holds no rows after the `2026-09-05` verification reset, so t
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -139,3 +139,5 @@ The local database holds no rows after the `2026-09-05` verification reset, so t
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T19:28:05+02:00` | User / Owner | None | `Backlog` | Requested two exercise types with assistance offered under bodyweight |
+| `2026-09-05T20:24:07+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness after `F-013` was delivered and confirmed |
+| `2026-09-05T20:24:07+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the exercise-type merge |
