@@ -27,7 +27,7 @@ Examples of resulting fields:
 - bodyweight: reps;
 - bodyweight with its allowed addition: added kg and reps, or resistance-band strength and reps;
 - weights: kg, optional resistance-band strength when allowed, and reps;
-- assisted: assistance kg and reps, or assistance-band strength and reps, according to its single defined mode.
+- bodyweight with assistance: assistance kg and reps, or assistance-band strength and reps, according to the single addition its definition allows.
 
 Weights permit decimal values. Reps are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save; completeness is required only when the set is confirmed. A confirmed set saves immediately; active-workout auto-save is a functionally important requirement.
 

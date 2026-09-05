@@ -108,11 +108,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 
   function toggleMode(mode: ExerciseLoadMode) {
     const baseMode = baseLoadModeByBaseType[baseType];
-    if (baseMode === null) {
-      setModes([mode]);
-    } else {
-      setModes(modes.includes(mode) ? [baseMode] : [baseMode, mode]);
-    }
+    setModes(modes.includes(mode) ? [baseMode] : [baseMode, mode]);
     setModeNotice(undefined);
     markChanged("allowedLoadModes");
   }
@@ -212,9 +208,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 
           <fieldset disabled={isSaving}>
             <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
-              {baseType === "assisted"
-                ? "Assistance mode"
-                : "Optional per-set additions"}
+              Optional per-set additions
             </legend>
             <p className="mb-2 text-[12.5px] text-[var(--pf-text-2)]">
               {baseModeSummary[baseType]}
@@ -359,5 +353,4 @@ function deleteDescription(splitUsageCount: number): string {
 const baseModeSummary: Readonly<Record<ExerciseBaseType, string>> = {
   weights: "Every set stores kilograms and reps.",
   bodyweight: "Every set stores reps.",
-  assisted: "Choose exactly one; every set stores it with reps.",
 };

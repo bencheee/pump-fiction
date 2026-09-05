@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:24:07+02:00`
+- **Updated:** `2026-09-05T20:35:08+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms the transition to `Ready` when `F-013` is delivered.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset, pgTAP, and suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -30,7 +30,7 @@ Reduce the exercise types to `weights` and `bodyweight`, and express assistance 
 
 The `assisted` base type disappears. The two assistance modes keep their identity, their values, and their statistics meaning; only the type that offers them changes. Assistance stays a positive value and is never negative weight, so `MVP-EXE-005` and the History comparison rules are untouched.
 
-The local database holds no rows after the `2026-09-05` verification reset, so the migration removes the retired type without converting data.
+No local row used the retired type when this Task was delivered, so the migration removes it without converting data. The committed seed did carry an `assisted` exercise, so `T-028` also moves that seed row to a bodyweight definition with `assistance_weight`; otherwise the next reset would fail.
 
 ## Out of scope
 
@@ -66,19 +66,22 @@ The local database holds no rows after the `2026-09-05` verification reset, so t
 
 ## Execution checklist
 
-- [ ] Record the superseding ADR with the two-type table and the single-option rule.
-- [ ] Update the declarative schema: the base-type enum, the exercise and snapshot mode checks, and the definition trigger.
-- [ ] Generate the migration and regenerate database types.
-- [ ] Update domain constants, validation, and presentation labels, including `Assist with weight` and `Assist with band`.
-- [ ] Update the exercise form and every type-dependent screen.
-- [ ] Extend pgTAP, unit, and component assertions without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record the superseding ADR with the two-type table and the single-option rule — [ADR-0026](../../decisions/0026-two-exercise-types-with-assistance-under-bodyweight.md), with ADR-0023's status and type table marked superseded.
+- [x] Update the declarative schema: the base-type enum, the exercise and snapshot mode checks, and the definition trigger.
+- [x] Generate the migration and regenerate database types — the generated migration needed two hand corrections, recorded under static checks.
+- [x] Update domain constants, validation, and presentation labels, including `Assist with weight` and `Assist with band` — every type now has an implied base mode, so the nullable base-mode branch and the "Choose exactly one assistance mode." message are gone.
+- [x] Update the exercise form and every type-dependent screen — the form drops its assistance-only legend and summary; set entry is keyed by load mode, not base type, so no workout screen changed.
+- [x] Move the committed seed's assisted exercise to a bodyweight definition.
+- [x] Extend pgTAP, unit, and component assertions without running them — pgTAP `0002` grows from 8 to 11 assertions covering the retired type, an accepted bodyweight assistance definition, and two rejected assistance modes; `0001` snapshots an assisted movement as bodyweight; the unit suite gains an accepted assistance definition and a rejected retired type.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T20:35:08+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 838 internal links. `supabase db lint --local` reported no schema errors and `git diff --check` was clean.
+
+  The generated migration did not apply as written and needed two corrections, both recorded in the file and in the database workflow. It converted `exercise_load_modes.exercise_base_type` before `exercises.base_type`, so the composite foreign key had one side on the replaced type and Postgres rejected it with SQLSTATE 42804; the migration now drops both composite foreign keys, converts all four columns, and restores the keys unchanged. It also left the recreated type without the `service_role` usage grant the declarative schema declares, which a repeated sync reported as a remaining difference; the grant is now part of the migration. After both corrections the migration applied with `migration up` against the local database, deliberately without a reset, and a repeated declarative sync against a freshly built shadow database reported no schema changes. Regenerated types differ only by the removed enum value. No feature test ran.
 
 ## Test plan and results
 
@@ -92,7 +95,7 @@ The local database holds no rows after the `2026-09-05` verification reset, so t
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-028: merge assisted exercises into bodyweight options`
-- **Committed scope:** Not created
+- **Committed scope:** the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
 

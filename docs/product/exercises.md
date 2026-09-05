@@ -12,17 +12,16 @@ Each exercise has:
 - explicitly allowed load or assistance modes;
 - a persistent exercise note.
 
-Supported base types are `weights`, `bodyweight`, and `assisted`.
+Supported base types are `weights` and `bodyweight`.
 
-Each type implies the mode every one of its sets always has, and the user chooses at most one optional addition on top of it. A mode the user cannot change is never offered as a choice; see [ADR-0023](../decisions/0023-simplified-exercise-load-mode-model.md).
+Each type implies the mode every one of its sets always has, and the user chooses at most one optional addition on top of it. A mode the user cannot change is never offered as a choice; see [ADR-0023](../decisions/0023-simplified-exercise-load-mode-model.md) and [ADR-0026](../decisions/0026-two-exercise-types-with-assistance-under-bodyweight.md), which moves assistance under `bodyweight`.
 
 | Base type | Implied mode | Optional choices | Rule |
 | --- | --- | --- | --- |
 | `weights` | `weight` | `weight_resistance_band` | The resistance band is a single optional addition |
-| `bodyweight` | `bodyweight` | `bodyweight_added_weight`, `bodyweight_resistance_band` | At most one of the two |
-| `assisted` | none | `assistance_weight`, `assistance_band` | Exactly one of the two |
+| `bodyweight` | `bodyweight` | `bodyweight_added_weight`, `bodyweight_resistance_band`, `assistance_weight`, `assistance_band` | At most one of the four |
 
-Saving trims surrounding whitespace from the name and stores the implied mode together with the chosen addition. Active-name uniqueness ignores case and surrounding whitespace. A definition can never store two optional additions, and an assisted definition can never store zero or two assistance modes.
+Saving trims surrounding whitespace from the name and stores the implied mode together with the chosen addition. Active-name uniqueness ignores case and surrounding whitespace. A definition can never store two optional additions, and every definition is valid with none: a plain bodyweight exercise chooses nothing.
 
 ## Load modes
 
@@ -34,22 +33,15 @@ A basic set stores kilograms and reps, for example `60 kg × 8`. An exercise may
 
 ### Bodyweight
 
-A basic bodyweight set stores reps. An exercise may additionally allow either added kilograms or a resistance band, never both:
+A basic bodyweight set stores reps. An exercise may additionally allow one of added kilograms, a resistance band, assistance kilograms, or an assistance band, never more than one:
 
 - `BW × 12`
 - `BW + 10 kg × 8`
 - `BW + strong resistance band × 10`
-
-One bodyweight set uses at most one modification. Assistance belongs to the `assisted` type rather than to a bodyweight exercise.
-
-### Assisted
-
-An assisted exercise uses exactly one assistance form, expressed either in kilograms or as an assistance band:
-
 - `25 kg assistance × 10`
 - `strong band assistance × 8`
 
-More kilograms of assistance means an easier performance. Assistance is stored as a positive value; it is never represented as negative weight.
+An assisted movement is therefore a bodyweight exercise whose optional addition is assistance. More kilograms of assistance means an easier performance. Assistance is stored as a positive value; it is never represented as negative weight.
 
 ## Band semantics
 

@@ -697,7 +697,7 @@ export type Database = {
         | "finish_workout"
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
-      exercise_base_type: "weights" | "bodyweight" | "assisted"
+      exercise_base_type: "weights" | "bodyweight"
       load_mode:
         | "weight"
         | "weight_resistance_band"
@@ -849,7 +849,7 @@ export const Constants = {
       ],
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],
-      exercise_base_type: ["weights", "bodyweight", "assisted"],
+      exercise_base_type: ["weights", "bodyweight"],
       load_mode: [
         "weight",
         "weight_resistance_band",

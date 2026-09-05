@@ -67,7 +67,7 @@ describe("exercise operations", () => {
     expect(repository.create).not.toHaveBeenCalled();
   });
 
-  it("rejects more than one addition and a missing assistance mode", async () => {
+  it("rejects more than one addition and the retired assisted type", async () => {
     const repository = createRepository();
 
     const bothAdditions = await createExercise(repository, {
@@ -81,10 +81,17 @@ describe("exercise operations", () => {
       persistentNote: "",
     });
 
-    const noAssistance = await createExercise(repository, {
+    const assistanceAndBand = await createExercise(repository, {
       name: "Assisted dip",
+      baseType: "bodyweight",
+      allowedLoadModes: ["bodyweight", "assistance_weight", "assistance_band"],
+      persistentNote: "",
+    });
+
+    const retiredType = await createExercise(repository, {
+      name: "Assisted pull-up",
       baseType: "assisted",
-      allowedLoadModes: [],
+      allowedLoadModes: ["assistance_weight"],
       persistentNote: "",
     });
 
@@ -96,15 +103,38 @@ describe("exercise operations", () => {
         },
       },
     });
-    expect(noAssistance).toMatchObject({
+    expect(assistanceAndBand).toMatchObject({
       ok: false,
       error: {
         fieldErrors: {
-          allowedLoadModes: ["Choose exactly one assistance mode."],
+          allowedLoadModes: ["Choose at most one additional mode."],
         },
       },
     });
+    expect(retiredType).toMatchObject({
+      ok: false,
+      error: { fieldErrors: { baseType: ["Choose an exercise type."] } },
+    });
     expect(repository.create).not.toHaveBeenCalled();
+  });
+
+  it("accepts a bodyweight exercise that assists with weight", async () => {
+    const repository = createRepository();
+
+    const result = await createExercise(repository, {
+      name: "Assisted dip",
+      baseType: "bodyweight",
+      allowedLoadModes: ["bodyweight", "assistance_weight"],
+      persistentNote: "",
+    });
+
+    expect(result.ok).toBe(true);
+    expect(repository.create).toHaveBeenCalledWith({
+      name: "Assisted dip",
+      baseType: "bodyweight",
+      allowedLoadModes: ["bodyweight", "assistance_weight"],
+      persistentNote: "",
+    });
   });
 
   it("maps a duplicate active name to the accepted name error", async () => {

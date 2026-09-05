@@ -94,17 +94,13 @@ function loadModeError(
   }
 
   const baseMode = baseLoadModeByBaseType[baseType];
-  if (baseMode !== null && !modes.includes(baseMode)) {
+  if (!modes.includes(baseMode)) {
     return baseType === "weights"
       ? "Weights exercises always include the basic weight mode."
       : "Bodyweight exercises always include the bodyweight mode.";
   }
 
-  const optionalModes = modes.filter((mode) => mode !== baseMode);
-  if (baseMode === null && optionalModes.length !== 1) {
-    return "Choose exactly one assistance mode.";
-  }
-  if (baseMode !== null && optionalModes.length > 1) {
+  if (modes.filter((mode) => mode !== baseMode).length > 1) {
     return "Choose at most one additional mode.";
   }
 

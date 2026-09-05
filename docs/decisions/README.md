@@ -29,6 +29,7 @@ ADRs preserve important cross-cutting product, technical, and delivery-governanc
 | [0023](0023-simplified-exercise-load-mode-model.md) | Accepted | Implied base load mode plus at most one optional addition; no standalone band type |
 | [0024](0024-deletion-with-preserved-history.md) | Accepted | Deletion replaces archiving; snapshots and optional references keep History intact |
 | [0025](0025-active-workout-in-the-main-shell.md) | Accepted | The active workout keeps the bottom navigation; the focused shell is removed |
+| [0026](0026-two-exercise-types-with-assistance-under-bodyweight.md) | Accepted | Two exercise types; assistance becomes a bodyweight option and supersedes the ADR-0023 type table |
 
 ## Lifecycle
 

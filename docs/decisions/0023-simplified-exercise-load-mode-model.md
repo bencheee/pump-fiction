@@ -1,6 +1,6 @@
 # ADR-0023: Simplified exercise load-mode model
 
-- **Status:** Accepted
+- **Status:** Accepted; its type table is superseded by [ADR-0026](0026-two-exercise-types-with-assistance-under-bodyweight.md)
 
 ## Context
 
@@ -16,7 +16,7 @@ An exercise definition now stores a base mode that is implied by its type plus a
 | --- | --- | --- | --- |
 | `weights` | `weight` | `weight_resistance_band` | The resistance band is a single optional addition |
 | `bodyweight` | `bodyweight` | `bodyweight_added_weight`, `bodyweight_resistance_band` | At most one of the two |
-| `assisted` | none | `assistance_weight`, `assistance_band` | Exactly one of the two |
+| `assisted` | none | `assistance_weight`, `assistance_band` | Exactly one of the two; superseded by [ADR-0026](0026-two-exercise-types-with-assistance-under-bodyweight.md), which moves both modes under `bodyweight` |
 
 The `band` base type and the `resistance_band` and `bodyweight_assistance_band` load modes are removed. Assistance bands remain available through the `assisted` type, which is where assistance belongs.
 

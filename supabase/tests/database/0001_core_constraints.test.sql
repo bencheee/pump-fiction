@@ -205,12 +205,13 @@ select throws_ok(
 
 with created_exercise as (
   insert into public.exercises (id, name, base_type)
-  values ('00000000-0000-0000-0000-000000000009', 'Assisted pull-up', 'assisted')
+  values ('00000000-0000-0000-0000-000000000009', 'Assisted pull-up', 'bodyweight')
   returning id, base_type
 )
 insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
-select id, base_type, 'assistance_band'::public.load_mode
-from created_exercise;
+select id, base_type, mode
+from created_exercise,
+  unnest(array['bodyweight', 'assistance_band']::public.load_mode[]) as mode;
 
 insert into public.workout_exercises (
   id,
@@ -226,7 +227,7 @@ values (
   '00000000-0000-0000-0000-000000000009',
   2,
   'Assisted pull-up',
-  'assisted'
+  'bodyweight'
 );
 
 insert into public.workout_exercise_load_modes (
@@ -234,7 +235,9 @@ insert into public.workout_exercise_load_modes (
   exercise_base_type_snapshot,
   load_mode
 )
-values ('40000000-0000-0000-0000-000000000002', 'assisted', 'assistance_band');
+values
+  ('40000000-0000-0000-0000-000000000002', 'bodyweight', 'bodyweight'),
+  ('40000000-0000-0000-0000-000000000002', 'bodyweight', 'assistance_band');
 
 select lives_ok(
   $$

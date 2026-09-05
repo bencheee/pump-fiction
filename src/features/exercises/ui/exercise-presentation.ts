@@ -3,7 +3,6 @@ import type { ExerciseBaseType, ExerciseLoadMode } from "../domain/exercise";
 export const exerciseTypeLabels: Readonly<Record<ExerciseBaseType, string>> = {
   weights: "Weights",
   bodyweight: "Bodyweight",
-  assisted: "Assisted",
 };
 
 export const exerciseModeLabels: Readonly<Record<ExerciseLoadMode, string>> = {
@@ -35,6 +34,6 @@ export const exerciseOptionalModeLabels: Readonly<
   bodyweight: "Bodyweight",
   bodyweight_added_weight: "Add weight",
   bodyweight_resistance_band: "Add resistance band",
-  assistance_weight: "Assistance weight",
-  assistance_band: "Assistance band",
+  assistance_weight: "Assist with weight",
+  assistance_band: "Assist with band",
 };

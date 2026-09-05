@@ -59,7 +59,7 @@ Canonical behavior: [`exercises.md`](exercises.md).
 
 ### MVP-EXE-001 — Create and validate an exercise
 
-The user can create an exercise with a unique active name, one of `weights`, `bodyweight`, or `assisted`, at most one optional addition on top of the mode its type implies, and an optional persistent note. The implied mode is never offered as a choice. Saving is rejected when the active name is not unique or the type/mode combination is invalid.
+The user can create an exercise with a unique active name, either `weights` or `bodyweight`, at most one optional addition on top of the mode its type implies, and an optional persistent note. The implied mode is never offered as a choice. Saving is rejected when the active name is not unique or the type/mode combination is invalid.
 
 ### MVP-EXE-002 — Weights modes
 
@@ -67,11 +67,11 @@ A weights set accepts decimal kilograms and positive-integer reps. If the defini
 
 ### MVP-EXE-003 — Bodyweight modes
 
-A bodyweight definition always allows reps-only bodyweight and may additionally allow either decimal added kilograms or a resistance band, never both. A set uses the definition's implied mode or its single addition, and never combines added weight with a band.
+A bodyweight definition always allows reps-only bodyweight and may additionally allow exactly one of decimal added kilograms, a resistance band, assistance kilograms, or an assistance band. A set uses the definition's implied mode or its single addition, and never combines two of them.
 
-### MVP-EXE-004 — Assisted modes
+### MVP-EXE-004 — Assistance modes
 
-An assisted definition allows exactly one assistance form, so its sets accept either positive decimal assistance kilograms plus reps or an assistance-band strength plus reps. Saving zero or both assistance modes is rejected. A band is never entered or stored as kilograms.
+Assistance is a bodyweight addition rather than a separate type. A bodyweight definition that allows assistance accepts either positive decimal assistance kilograms plus reps or an assistance-band strength plus reps, and saving both assistance modes is rejected. A band is never entered or stored as kilograms.
 
 ### MVP-EXE-005 — Band identity
 

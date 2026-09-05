@@ -53,7 +53,8 @@ begin
     'Dumbbell lateral raise', 'weights', '', array['weight']::public.load_mode[]
   );
   assisted_dip_id = public.create_exercise_definition(
-    'Assisted dip', 'assisted', '', array['assistance_weight']::public.load_mode[]
+    'Assisted dip', 'bodyweight', '',
+    array['bodyweight', 'assistance_weight']::public.load_mode[]
   );
   pull_up_id = public.create_exercise_definition(
     'Pull-up', 'bodyweight', '',

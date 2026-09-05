@@ -1,6 +1,6 @@
 create extension if not exists pgcrypto with schema extensions;
 
-create type public.exercise_base_type as enum ('weights', 'bodyweight', 'assisted');
+create type public.exercise_base_type as enum ('weights', 'bodyweight');
 create type public.load_mode as enum (
   'weight',
   'weight_resistance_band',
@@ -68,12 +68,10 @@ create table public.exercise_load_modes (
       and load_mode in (
         'bodyweight',
         'bodyweight_added_weight',
-        'bodyweight_resistance_band'
+        'bodyweight_resistance_band',
+        'assistance_weight',
+        'assistance_band'
       )
-    )
-    or (
-      exercise_base_type = 'assisted'
-      and load_mode in ('assistance_weight', 'assistance_band')
     )
   )
 );
@@ -260,12 +258,10 @@ create table public.workout_exercise_load_modes (
       and load_mode in (
         'bodyweight',
         'bodyweight_added_weight',
-        'bodyweight_resistance_band'
+        'bodyweight_resistance_band',
+        'assistance_weight',
+        'assistance_band'
       )
-    )
-    or (
-      exercise_base_type_snapshot = 'assisted'
-      and load_mode in ('assistance_weight', 'assistance_band')
     )
   )
 );
@@ -533,20 +529,14 @@ begin
         checked_modes <@ array[
           'bodyweight',
           'bodyweight_added_weight',
-          'bodyweight_resistance_band'
+          'bodyweight_resistance_band',
+          'assistance_weight',
+          'assistance_band'
         ]::public.load_mode[]
       )
       or cardinality(checked_modes) > 2
     then
       raise exception using errcode = 'PF003', message = 'Invalid bodyweight exercise load modes';
-    end if;
-  elsif checked_base_type = 'assisted' then
-    if cardinality(checked_modes) <> 1
-      or not (
-        checked_modes <@ array['assistance_weight', 'assistance_band']::public.load_mode[]
-      )
-    then
-      raise exception using errcode = 'PF003', message = 'Invalid assisted exercise load modes';
     end if;
   end if;
 
