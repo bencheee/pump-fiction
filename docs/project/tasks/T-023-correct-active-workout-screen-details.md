@@ -1,7 +1,7 @@
 # T-023 — Correct active-workout screen details
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:14:24+02:00`
+- **Updated:** `2026-09-05T13:15:27+02:00`
 - **Started:** `2026-09-05T13:11:36+02:00`
 - **Review started:** `2026-09-05T13:14:24+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T13:15:27+02:00`
+- **Approved:** `2026-09-05T13:15:27+02:00`
+- **Testing started:** `2026-09-05T13:15:27+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit and decides on approval.
+- **Next action:** Run the authorized component verification and record its results.
 
 ## Scope
 
@@ -76,7 +76,7 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** active-workout and finish component scenarios for the absent banner, the heading, and the relocated discard control; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `f72e7dde3bcc9cb8f80d98935e42e7411603403f`
 - **Results:** Not run
 
 ## Delivery commit
@@ -88,16 +88,16 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T13:15:27+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the removed banner, the shortened heading, and the relocated discard control.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `f72e7dde3bcc9cb8f80d98935e42e7411603403f`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T13:15:27+02:00`
+- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, authorizing the component verification for its scope.
 
 ## Definition of Ready
 
@@ -133,3 +133,5 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 | `2026-09-05T13:11:36+02:00` | User / Owner | `Backlog` | `Ready` | Directed execution after `T-021` |
 | `2026-09-05T13:11:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout screen corrections |
 | `2026-09-05T13:14:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `f72e7dde3bcc9cb8f80d98935e42e7411603403f` with static checks passed and no feature test run |
+| `2026-09-05T13:15:27+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit |
+| `2026-09-05T13:15:27+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `f72e7dde3bcc9cb8f80d98935e42e7411603403f` |
