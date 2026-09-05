@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T12:24:17+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a test-only replacement commit that queries the optional-additions group precisely, then request fresh approval; the previous approval and its test authorization are void.
+- **Next action:** Record the replacement commit SHA through an evidence commit and request fresh approval before the complete verification restarts.
 
 ## Scope
 
@@ -82,7 +82,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Passed on `2026-09-05T12:20:06+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint across 96 files, and all 732 internal links. The generated migration needed one reviewed correction: the generator swapped the enum types before dropping the composite foreign keys that carry them, so the migration now drops and restores `exercise_load_modes_exercise_id_exercise_base_type_fkey`, `workout_exercise_load_modes_workout_exercise_id_exercise_b_fkey`, and `workout_sets_workout_exercise_id_load_mode_fkey` around the swap and restores the type grants that recreation dropped. With that correction the migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types differ only by the retired enum values, and `git diff --check` passed. No feature test ran.
+- Results: Re-run for the test-only replacement on `2026-09-05T12:27:09+02:00` and passed again; originally passed on `2026-09-05T12:20:06+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint across 96 files, and all 732 internal links. The generated migration needed one reviewed correction: the generator swapped the enum types before dropping the composite foreign keys that carry them, so the migration now drops and restores `exercise_load_modes_exercise_id_exercise_base_type_fkey`, `workout_exercise_load_modes_workout_exercise_id_exercise_b_fkey`, and `workout_sets_workout_exercise_id_load_mode_fkey` around the swap and restores the type grants that recreation dropped. With that correction the migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types differ only by the retired enum values, and `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 

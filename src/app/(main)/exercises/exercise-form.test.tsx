@@ -41,18 +41,16 @@ describe("ExerciseForm", () => {
     const user = userEvent.setup();
     renderForm(<ExerciseForm />);
 
+    const additions = within(
+      screen.getByRole("group", { name: "Optional per-set additions" }),
+    );
     expect(
       screen.getByText("Every set stores kilograms and reps."),
     ).toBeVisible();
     expect(
-      screen.getByRole("button", { name: /Add resistance band/ }),
+      additions.getByRole("button", { name: /Add resistance band/ }),
     ).toBeVisible();
-    expect(
-      screen.queryByRole("button", { name: /^Weight/ }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /Assistance weight/ }),
-    ).not.toBeInTheDocument();
+    expect(additions.getAllByRole("button")).toHaveLength(1);
 
     await user.click(
       within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
@@ -61,11 +59,14 @@ describe("ExerciseForm", () => {
       ),
     );
 
+    const assistance = within(
+      screen.getByRole("group", { name: "Assistance mode" }),
+    );
     expect(
-      screen.getByRole("button", { name: /Assistance weight/ }),
+      assistance.getByRole("button", { name: /Assistance weight/ }),
     ).toBeVisible();
     expect(
-      screen.getByRole("button", { name: /Assistance band/ }),
+      assistance.getByRole("button", { name: /Assistance band/ }),
     ).toBeVisible();
     expect(
       screen.queryByRole("button", { name: /Add resistance band/ }),
