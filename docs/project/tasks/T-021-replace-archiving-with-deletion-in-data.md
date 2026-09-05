@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:00:15+02:00`
+- **Updated:** `2026-09-05T13:02:05+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** `2026-09-05T13:00:15+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T13:02:05+02:00`
+- **Approved:** `2026-09-05T13:02:05+02:00`
+- **Testing started:** `2026-09-05T13:02:05+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit and decides on approval; the clean reset, pgTAP, component, and integration verification stays blocked until then.
+- **Next action:** Run the authorized clean reset, pgTAP, unit, component, and repository verification and record its results.
 
 ## Scope
 
@@ -95,7 +95,7 @@ Screen changes absorbed from `T-022`:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** unit tests for delete operations and failures, repository integration tests for exercise, split, and program deletion with surviving History, and pgTAP tests for the nullable snapshot references and the last-split rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
 - **Results:** Not run
 
 ## Delivery commit
@@ -107,16 +107,16 @@ Screen changes absorbed from `T-022`:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T13:02:05+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the deletion model, the current-program mechanism, the absorbed screen scope, and the revised criteria.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T13:02:05+02:00`
+- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, authorizing the clean reset, pgTAP, application, and repository verification for its scope.
 
 ## Definition of Ready
 
@@ -153,3 +153,5 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T12:42:09+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the `app_settings.current_program_id` mechanism and the absorbed screen scope |
 | `2026-09-05T12:42:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, operations, and screen changes |
 | `2026-09-05T13:00:15+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with static checks passed and no feature test run |
+| `2026-09-05T13:02:05+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and its database verification |
+| `2026-09-05T13:02:05+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the complete authorized verification against `dfd6d7a9587740717af43ef23f33e3d545a20c4c` |
