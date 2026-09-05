@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T12:24:17+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized clean reset, pgTAP, unit, component, and repository verification against the approved commit.
+- **Next action:** Deliver a test-only replacement commit that queries the optional-additions group precisely, then request fresh approval; the previous approval and its test authorization are void.
 
 ## Scope
 
@@ -89,8 +89,8 @@ The Owner accepted a clean local database reset, so the migration removes the re
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests, exercise repository integration tests, and pgTAP constraint tests for every retired and permitted combination; must not run before Owner approval of the exact commit
-- **Authorized commit:** `db5a42026270393d17a11ecded5578e756f6d1e4`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; the failed verification cleared it
+- **Results:** Failed on `2026-09-05T12:26:11+02:00` against exact approved commit `db5a42026270393d17a11ecded5578e756f6d1e4` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history including the new migration, pgTAP passed 56/56 across five files, the shared UI component suites passed 4/4, and 62 of 63 unit and component tests passed. One test-only assertion failed: `offers only the optional additions of the selected type` queried buttons with `/^Weight/` across the whole screen, which also matches the `Weights` exercise-type button, so it failed even though the form correctly offers no selectable row for the implied `weight` mode. No implementation defect was found. The remaining repository integration run was not started because the failure already invalidates this attempt.
 
 ## Delivery commit
 
@@ -107,8 +107,8 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Approval
 
-- **Approved commit:** `db5a42026270393d17a11ecded5578e756f6d1e4`
-- **Approved by:** User / Approver
+- **Approved commit:** Void; approval of `db5a42026270393d17a11ecded5578e756f6d1e4` was cleared by the failed verification below
+- **Approved by:** Cleared
 - **Approved at:** `2026-09-05T12:24:17+02:00`
 - **Approval note:** The User answered `odobravam` to the request to approve this exact commit, which authorizes the clean local reset accepted for this model change.
 
@@ -148,3 +148,4 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T12:20:26+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `db5a42026270393d17a11ecded5578e756f6d1e4` with static checks passed and no feature test run |
 | `2026-09-05T12:24:17+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and the accepted clean local reset |
 | `2026-09-05T12:24:17+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized database and application verification against `db5a42026270393d17a11ecded5578e756f6d1e4` |
+| `2026-09-05T12:26:11+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on a test-only query that also matched the exercise-type button; approval and test authorization cleared |

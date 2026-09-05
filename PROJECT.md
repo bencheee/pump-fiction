@@ -12,13 +12,13 @@
 
 ## Immediate next action
 
-Run and record the authorized clean reset, pgTAP, and application verification for approved [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) commit `db5a42026270393d17a11ecded5578e756f6d1e4`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver the `T-019` test-only replacement commit and request fresh approval; the prior approval was cleared by a failed verification. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`1/7 Tasks Done`) — Owner confirmed readiness
-  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
-  - [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:20:26+02:00` — User reviews `db5a42026270393d17a11ecded5578e756f6d1e4` (correction 2)
+  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `In Progress` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
+  - [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) — `In Progress` — Claude Code primary agent — `2026-09-05T12:20:26+02:00` — User reviews `db5a42026270393d17a11ecded5578e756f6d1e4` (correction 2)
   - [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 7)
   - [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` and the current-program mechanism (correction 3)
   - [`T-022`](docs/project/tasks/T-022-replace-archiving-in-mobile-experience.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 3)
@@ -43,7 +43,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) — approved commit `db5a42026270393d17a11ecded5578e756f6d1e4`; the authorized database and application verification is running.
+None.
 
 ## Recently completed Tasks
 
