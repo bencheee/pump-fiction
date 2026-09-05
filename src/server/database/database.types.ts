@@ -648,8 +648,13 @@ export type Database = {
       delete_program: { Args: { p_program_id: string }; Returns: string }
       delete_split: { Args: { p_split_id: string }; Returns: string }
       get_current_workout: { Args: never; Returns: Json }
+      get_exercise_performances: {
+        Args: { p_exercise_identity_id: string }
+        Returns: Json
+      }
       get_history_workout: { Args: { p_workout_id: string }; Returns: Json }
       get_today_view: { Args: never; Returns: Json }
+      list_exercise_history: { Args: never; Returns: Json }
       list_workout_history: { Args: never; Returns: Json }
       mark_history_workout_completed: {
         Args: { p_workout_id: string }
@@ -780,6 +785,10 @@ export type Database = {
           p_reps: number
         }
         Returns: boolean
+      }
+      workout_set_snapshots: {
+        Args: { p_workout_exercise_id: string }
+        Returns: Json
       }
     }
     Enums: {

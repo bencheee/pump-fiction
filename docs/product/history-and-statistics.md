@@ -46,7 +46,7 @@ The exercise list contains every exercise with at least one historical performan
 - latest eligible performance;
 - personal records;
 - a progress chart;
-- all performances across all splits and one-time workouts;
+- all performances across all splits and one-time workouts, including those from incomplete workouts, which are marked as excluded from statistics;
 - workout-specific notes;
 - links from performances to their workouts.
 
@@ -73,6 +73,8 @@ Track:
 
 When a weights exercise uses an optional resistance band, calculate and present comparable records separately for no-band sets and each resistance-band strength. Never treat the band as kilograms.
 
+Highest reps is derived per distinct entered weight, so the whole list is available; the exercise detail leads with the entry for the heaviest weight in that category and keeps the rest in its accessible data list.
+
 ### Bodyweight
 
 For pure bodyweight, track highest reps in a set and highest total reps in a workout.
@@ -86,6 +88,8 @@ For assistance measured in kilograms, track the least assistance in a successful
 ### Bands
 
 Compare band results only within the same direction (`resistance` or `assistance`) and strength (`light`, `medium`, or `strong`). Never convert bands to kilograms or merge assistance and resistance categories.
+
+A band category that carries no kilograms tracks highest reps in a set and highest total reps in a workout, the same two records as pure bodyweight, because reps are the only comparable quantity it holds.
 
 ## Exercise charts
 

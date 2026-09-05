@@ -51,6 +51,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-031` adds workout History under `src/features/history`. Its read functions return the month-grouped list and one saved workout as nested JSON that the server repository exposes only as domain shapes. Historical corrections are **ordinary transactional operations**, not idempotent revisioned commands: the Owner confirmed on `2026-09-05` that History carries no offline outbox, so each correction is one Server Action, one repository call, one PostgreSQL function, and the generic retry contract. A correction that names its workout returns that workout reloaded, so the caller sees the recalculated values without a second call; a correction addressed to a set or an occurrence returns none, and the screen reloads the workout it is already showing. Set values cross as one JSON object because a cleared field is a real null, which a generated scalar RPC argument type cannot express.
 
+`T-033` adds the exercise statistics reads beside them. `list_exercise_history` and `get_exercise_performances` group by `exercise_identity_id`, never by the live reference, so an exercise keeps one history after its definition is deleted. They shape and return raw performances; the personal records, eligibility, metrics, and chart series are derived in `src/features/history/domain/exercise-statistics.ts`, which keeps every product rule in one testable place and matches the neutral chart-data boundary [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md) requires.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

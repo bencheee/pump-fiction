@@ -107,4 +107,6 @@ Correcting a set applies the same snapshotted allowed modes, shape check, and po
 
 Do not initially create authoritative aggregate tables for weekly weight averages, PRs, or split statistics. Derive them from canonical historical entries so historical edits, deletion, and completion-status changes produce correct results.
 
+`T-033` puts those calculations in the History domain rather than in SQL: eligibility, the comparison category of a set, every personal record, the latest eligible performance, and the chart series are pure functions over the stored performances, so each product rule is testable without a database. The database supplies the raw performances and nothing more. Chart ranges are trailing windows ending on the configured local date, and `all` is unbounded.
+
 Caching can be considered later only if demonstrated necessary. Calculation eligibility is canonical in [`history-and-statistics.md`](../product/history-and-statistics.md#statistics-eligibility-and-recalculation).

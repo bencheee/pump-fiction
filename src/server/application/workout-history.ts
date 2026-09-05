@@ -1,10 +1,20 @@
 import "server-only";
 
 import {
+  getExerciseStatistics as runGetExerciseStatistics,
+  listExerciseHistory as runListExerciseHistory,
+  type ExerciseStatistics,
+} from "@/features/history/application/exercise-statistics-operations";
+import {
   correctHistoryWorkout as runCorrectHistoryWorkout,
   getHistoryWorkout as runGetHistoryWorkout,
   listWorkoutHistory as runListWorkoutHistory,
 } from "@/features/history/application/workout-history-operations";
+import type {
+  ChartMetric,
+  ChartRange,
+  ExerciseHistoryEntry,
+} from "@/features/history/domain/exercise-statistics";
 import type {
   HistoryMonthGroup,
   HistoryWorkout,
@@ -12,6 +22,7 @@ import type {
 import type { OperationResult } from "@/shared/application/operation-result";
 
 import { createServerDatabaseClient } from "../database/client";
+import { SupabaseExerciseStatisticsRepository } from "../repositories/supabase-exercise-statistics-repository";
 import { SupabaseWorkoutHistoryRepository } from "../repositories/supabase-workout-history-repository";
 
 function repository(): SupabaseWorkoutHistoryRepository {
@@ -34,4 +45,29 @@ export async function correctHistoryWorkout(
   input: unknown,
 ): Promise<OperationResult<HistoryWorkout | null>> {
   return runCorrectHistoryWorkout(repository(), input);
+}
+
+function statisticsRepository(): SupabaseExerciseStatisticsRepository {
+  return new SupabaseExerciseStatisticsRepository(createServerDatabaseClient());
+}
+
+export async function listExerciseHistory(): Promise<
+  OperationResult<readonly ExerciseHistoryEntry[]>
+> {
+  return runListExerciseHistory(statisticsRepository());
+}
+
+export async function getExerciseStatistics(
+  exerciseIdentityId: string,
+  options: Readonly<{
+    metric?: ChartMetric;
+    range?: ChartRange;
+    localDate: string;
+  }>,
+): Promise<OperationResult<ExerciseStatistics>> {
+  return runGetExerciseStatistics(
+    statisticsRepository(),
+    exerciseIdentityId,
+    options,
+  );
 }

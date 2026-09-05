@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:24:46+02:00`
+- **Updated:** `2026-09-05T23:34:00+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -73,18 +73,18 @@ Queries:
 
 ## Execution checklist
 
-- [ ] Define the statistics domain shapes: category key, personal-record set, latest performance, chart series and range, performance entry, and the exercise history repository contract.
-- [ ] Implement the eligibility filter, category derivation, PR derivation per mode family, latest performance, and range and series builders as pure functions.
-- [ ] Add read functions for the exercise list and the raw performances of one identity, mapped in the Supabase repository to domain shapes.
-- [ ] Add application operations that reduce raw performances to the `S16` view and return `OperationResult` values through server composition.
-- [ ] Generate and review the migration; regenerate and review the database types.
-- [ ] Prepare the unit suite, the pgTAP suite, and a repository integration test; add the integration file to `test:repository`; do not run them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Define the statistics domain shapes: comparison category, personal record, latest performance, chart series and range, performance entry, and the repository contract.
+- [x] Implement the eligibility filter, category derivation, PR derivation per mode family, latest performance, and range and series builders as pure functions.
+- [x] Add read functions for the exercise list and the raw performances of one identity, mapped in the Supabase repository to domain shapes. Both group by `exercise_identity_id`, so a deleted definition keeps one history.
+- [x] Add application operations that reduce raw performances to the `S16` view and return `OperationResult` values through server composition. The caller passes the configured local date, so the trailing ranges stay pure.
+- [x] Generate and review the migration; regenerate and review the database types. The migration adds only functions, so it carries no structural statement and no backfill.
+- [x] Prepare the unit suite, the pgTAP suite, and a repository integration test; add the integration file to `test:repository`; do not run them.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T23:34:00+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, which compiled inside an immediately rolled-back transaction; regenerated types matched the committed file on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the unit, pgTAP, and repository suites are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -96,9 +96,9 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-033: build exercise statistics operations`
-- **Committed scope:** Not created
+- **Committed scope:** the `0004_exercise_statistics.sql` declarative schema with its function-only migration and regenerated types; the `exercise-statistics` domain with its eligibility, category, record, metric, and series rules; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the prepared unit suite, the `0007_exercise_statistics` pgTAP suite, and the repository integration test with its `test:repository` registration; and the History product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
 
