@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:20:06+02:00`
+- **Updated:** `2026-09-05T12:20:26+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T12:20:26+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit, then decides on approval; the database verification gate stays closed until then.
 
 ## Scope
 
@@ -94,7 +94,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `db5a42026270393d17a11ecded5578e756f6d1e4`
 - **Subject:** `T-019: simplify the exercise load-mode model`
 - **Committed scope:** `ADR-0023` and its index row; declarative schema without the `band` base type, the `resistance_band` and `bodyweight_assistance_band` modes, and with the `exercise_load_modes_single_modifier` index plus the rewritten definition trigger; the reviewed migration and regenerated database types; domain constants for implied and optional modes, rewritten definition validation, and presentation labels; the Exercise Library form rebuilt around optional additions only; updated unit, component, integration, and pgTAP assertions; and revised `MVP-EXE-001`, `MVP-EXE-003`, `MVP-EXE-004` with the exercise, workout, domain-model, database-workflow, and screen documentation.
 
@@ -145,3 +145,4 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 2 recorded on 2026-09-05 |
 | `2026-09-05T12:09:18+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the accepted load-mode model and directed execution after approving `T-018` |
 | `2026-09-05T12:09:18+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, domain, and Exercise Library changes |
+| `2026-09-05T12:20:26+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `db5a42026270393d17a11ecded5578e756f6d1e4` with static checks passed and no feature test run |
