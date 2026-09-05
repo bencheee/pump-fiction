@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import { classNames } from "./class-names";
 import { Icon, type IconName } from "./icon";
+import { ToastProvider } from "./toast";
 
 type Destination = {
   href: string;
@@ -69,9 +70,11 @@ export function MainShell({ children }: { children: ReactNode }) {
         keyboardOpen && "pf-keyboard-open",
       )}
     >
-      <main id="pf-scroll" className="pf-scroll flex-1">
-        {children}
-      </main>
+      <ToastProvider>
+        <main id="pf-scroll" className="pf-scroll flex-1">
+          {children}
+        </main>
+      </ToastProvider>
       <BottomNavigation />
     </div>
   );

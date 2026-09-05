@@ -4,10 +4,12 @@ import "@testing-library/jest-dom/vitest";
 
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Exercise } from "@/features/exercises/domain/exercise";
 import type { Program, Split } from "@/features/programs/domain/program";
+import { ToastProvider } from "@/shared/ui";
 
 import { ProgramForm } from "./program-form";
 import { SplitForm } from "./split-form";
@@ -38,9 +40,13 @@ vi.mock("@/app/actions/programs", () => ({
   updateSplitAction: actions.updateSplit,
 }));
 
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({ refresh: vi.fn(), replace: vi.fn() }),
-}));
+const router = vi.hoisted(() => ({ refresh: vi.fn(), replace: vi.fn() }));
+
+vi.mock("next/navigation", () => ({ useRouter: () => router }));
+
+function renderForm(ui: ReactNode) {
+  return render(<ToastProvider>{ui}</ToastProvider>);
+}
 
 const programId = "11111111-1111-4111-8111-111111111111";
 const splitAId = "22222222-2222-4222-8222-222222222222";
@@ -99,7 +105,7 @@ describe("Programs mobile forms", () => {
 
   it("validates a draft name before creating it", async () => {
     const user = userEvent.setup();
-    render(<ProgramForm />);
+    renderForm(<ProgramForm />);
 
     await user.click(screen.getByRole("button", { name: "Save as Draft" }));
 
@@ -113,7 +119,7 @@ describe("Programs mobile forms", () => {
       ok: true,
       value: { ...program, splits: [...program.splits].reverse() },
     });
-    render(<ProgramForm program={program} />);
+    renderForm(<ProgramForm program={program} />);
 
     await user.click(screen.getByRole("button", { name: "Move Upper down" }));
 
@@ -129,7 +135,7 @@ describe("Programs mobile forms", () => {
 
   it("reports invalid rep ranges before saving a split", async () => {
     const user = userEvent.setup();
-    render(
+    renderForm(
       <SplitForm program={program} split={split} exerciseLibrary={exercises} />,
     );
 
@@ -149,7 +155,7 @@ describe("Programs mobile forms", () => {
   it("reorders prescriptions and rejects archiving the last active split in the UI", async () => {
     const user = userEvent.setup();
     actions.reorderExercises.mockResolvedValue({ ok: true, value: split });
-    render(
+    renderForm(
       <SplitForm
         program={{ ...program, splits: [program.splits[0]!] }}
         split={split}
@@ -170,5 +176,39 @@ describe("Programs mobile forms", () => {
     expect(
       screen.getByText("At least one active split must remain in the program."),
     ).toBeVisible();
+  });
+
+  it("returns to the program list with a toast after saving a program", async () => {
+    const user = userEvent.setup();
+    actions.createProgram.mockResolvedValue({
+      ok: true,
+      value: { ...program, id: "created", name: "Hypertrophy" },
+    });
+    renderForm(<ProgramForm />);
+
+    await user.type(screen.getByLabelText("Program name"), "Hypertrophy");
+    await user.click(screen.getByRole("button", { name: "Save as Draft" }));
+
+    expect(router.replace).toHaveBeenCalledWith("/programs");
+    expect(screen.getByText("Program saved.")).toBeVisible();
+  });
+
+  it("returns to its program with a toast after saving a split", async () => {
+    const user = userEvent.setup();
+    actions.updateSplit.mockResolvedValue({ ok: true, value: split });
+    renderForm(
+      <SplitForm program={program} split={split} exerciseLibrary={exercises} />,
+    );
+
+    expect(screen.queryByText("Unsaved changes")).not.toBeInTheDocument();
+
+    await user.type(screen.getByLabelText("Split name"), " A");
+
+    expect(screen.getByText("Unsaved changes")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Save Split" }));
+
+    expect(router.replace).toHaveBeenCalledWith(`/programs/${programId}/edit`);
+    expect(screen.getByText("Split saved.")).toBeVisible();
   });
 });

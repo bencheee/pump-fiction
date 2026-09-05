@@ -4,7 +4,10 @@ import "@testing-library/jest-dom/vitest";
 
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { ToastProvider } from "@/shared/ui";
 
 import { ExerciseForm } from "./exercise-form";
 
@@ -22,9 +25,13 @@ vi.mock("@/app/actions/exercises", () => ({
   updateExerciseAction: actions.update,
 }));
 
-vi.mock("next/navigation", () => ({
-  useRouter: () => ({ refresh: vi.fn(), replace: vi.fn() }),
-}));
+const router = vi.hoisted(() => ({ refresh: vi.fn(), replace: vi.fn() }));
+
+vi.mock("next/navigation", () => ({ useRouter: () => router }));
+
+function renderForm(ui: ReactNode) {
+  return render(<ToastProvider>{ui}</ToastProvider>);
+}
 
 describe("ExerciseForm", () => {
   beforeEach(() => vi.clearAllMocks());
@@ -32,7 +39,7 @@ describe("ExerciseForm", () => {
 
   it("shows only load modes compatible with the selected type", async () => {
     const user = userEvent.setup();
-    render(<ExerciseForm />);
+    renderForm(<ExerciseForm />);
 
     expect(
       screen.getByRole("button", { name: /WeightKilograms and reps/ }),
@@ -59,16 +66,57 @@ describe("ExerciseForm", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("preserves successful save feedback when create redirects to edit", () => {
-    render(<ExerciseForm initiallySaved />);
+  it("reports unsaved changes only after the form is edited", async () => {
+    const user = userEvent.setup();
+    renderForm(<ExerciseForm />);
 
-    expect(screen.getByText("Saved", { exact: true })).toBeVisible();
-    expect(window.location.search).toBe("");
+    expect(screen.queryByText("Unsaved changes")).not.toBeInTheDocument();
+
+    await user.type(screen.getByLabelText("Name"), "Bench press");
+
+    expect(screen.getByText("Unsaved changes")).toBeVisible();
+  });
+
+  it("returns to the exercise list with a toast after saving", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({
+      ok: true,
+      value: { id: "created", name: "Bench press" },
+    });
+    renderForm(<ExerciseForm />);
+
+    await user.type(screen.getByLabelText("Name"), "Bench press");
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
+
+    expect(actions.create).toHaveBeenCalledTimes(1);
+    expect(router.replace).toHaveBeenCalledWith("/exercises");
+    expect(screen.getByText("Exercise saved.")).toBeVisible();
+  });
+
+  it("keeps the form open and reports a failed save", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({
+      ok: false,
+      error: {
+        code: "conflict",
+        message: "Another active exercise already uses this name.",
+        retryable: false,
+      },
+    });
+    renderForm(<ExerciseForm />);
+
+    await user.type(screen.getByLabelText("Name"), "Bench press");
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
+
+    expect(router.replace).not.toHaveBeenCalled();
+    expect(
+      screen.getAllByText("Another active exercise already uses this name."),
+    ).toHaveLength(2);
   });
 
   it("reports name and load-mode validation before calling the action", async () => {
     const user = userEvent.setup();
-    render(<ExerciseForm />);
+    renderForm(<ExerciseForm />);
 
     await user.click(
       within(screen.getByRole("group", { name: "Exercise type" })).getByRole(

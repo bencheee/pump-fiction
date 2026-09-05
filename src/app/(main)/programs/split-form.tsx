@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   archiveSplitAction,
@@ -27,11 +26,13 @@ import {
   Sheet,
   StickyActionBar,
   TextField,
-  Toast,
   TopBar,
+  useSaveOutcome,
+  useSavedSnapshot,
+  useToast,
+  type SavePhase,
 } from "@/shared/ui";
 
-type SaveState = "idle" | "saving" | "saved" | "failure";
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
 type DraftPrescription = Omit<
   SplitExercisePrescription,
@@ -46,14 +47,11 @@ export function SplitForm({
   program,
   split,
   exerciseLibrary,
-  initiallySaved = false,
 }: {
   program: Program;
   split?: Split;
   exerciseLibrary: readonly Exercise[];
-  initiallySaved?: boolean;
 }) {
-  const router = useRouter();
   const [name, setName] = useState(split?.name ?? "");
   const [status, setStatus] = useState(split?.status ?? "active");
   const [prescriptions, setPrescriptions] = useState<
@@ -61,11 +59,21 @@ export function SplitForm({
   >(() => (split?.exercises ?? []).map(toDraftPrescription));
   const [errors, setErrors] = useState<FieldErrors>({});
   const [message, setMessage] = useState<string>();
-  const [saveState, setSaveState] = useState<SaveState>(
-    initiallySaved ? "saved" : "idle",
+  const [phase, setPhase] = useState<SavePhase>("editing");
+  const { returnToParent, reportFailure } = useSaveOutcome(
+    `/programs/${program.id}/edit`,
   );
-  const [toast, setToast] = useState<string>();
-  const busy = saveState === "saving";
+  const { showToast } = useToast();
+  const { savedSnapshot, acceptAsSaved } = useSavedSnapshot(
+    snapshotOf(name, prescriptions),
+  );
+  const busy = phase === "saving";
+  const saveState =
+    phase === "editing"
+      ? snapshotOf(name, prescriptions) === savedSnapshot
+        ? "clean"
+        : "unsaved"
+      : phase;
   const archived = status === "archived";
   const activeProgramSplits = program.splits.filter(
     (item) => item.status === "active",
@@ -75,16 +83,8 @@ export function SplitForm({
       !prescriptions.some((item) => item.exerciseId === exercise.id),
   );
 
-  useEffect(() => {
-    if (initiallySaved && window.location.search) {
-      window.history.replaceState(null, "", window.location.pathname);
-    }
-  }, [initiallySaved]);
-
-  const dismissToast = useCallback(() => setToast(undefined), []);
-
   function changed(field?: string) {
-    setSaveState("idle");
+    setPhase("editing");
     setMessage(undefined);
     if (!field) return;
     setErrors((current) => {
@@ -142,7 +142,7 @@ export function SplitForm({
     ];
     setPrescriptions(reordered);
     if (!split) {
-      setToast("Order updated. Save the split to keep it.");
+      showToast("Order updated. Save the split to keep it.");
       changed();
       return;
     }
@@ -153,11 +153,13 @@ export function SplitForm({
     if (!result.ok) {
       setPrescriptions(previous);
       setMessage(result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
-    setSaveState("saved");
-    setToast("Order saved.");
+    setPhase("editing");
+    acceptAsSaved(snapshotOf(name, reordered));
+    showToast("Order saved.");
   }
 
   async function save() {
@@ -173,41 +175,40 @@ export function SplitForm({
     const validation = validateSplitDefinition(input);
     if (!validation.ok) {
       setErrors(validation.fieldErrors);
-      setMessage("Check the highlighted fields.");
-      setSaveState("idle");
+      setMessage(validationMessage);
+      setPhase("editing");
+      reportFailure(validationMessage);
       return;
     }
 
     setErrors({});
     setMessage(undefined);
-    setSaveState("saving");
+    setPhase("saving");
     const result = split
       ? await updateSplitAction(split.id, validation.value)
       : await createSplitAction(program.id, validation.value);
     if (!result.ok) {
       setErrors(result.error.fieldErrors ?? {});
       setMessage(result.error.retryable ? undefined : result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
-    setName(result.value.name);
-    setSaveState("saved");
-    if (!split) router.replace(`/splits/${result.value.id}/edit?saved=1`);
-    else router.refresh();
+    returnToParent("Split saved.");
   }
 
   async function archive() {
     if (!split) return;
-    setSaveState("saving");
+    setPhase("saving");
     const result = await archiveSplitAction(split.id);
     if (!result.ok) {
       setMessage(result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
     setStatus("archived");
-    setSaveState("saved");
-    router.replace(`/programs/${program.id}/edit?splitArchived=1`);
+    returnToParent("Split archived.");
   }
 
   const successor = split ? successorAfter(program, split.id) : undefined;
@@ -459,13 +460,25 @@ export function SplitForm({
           ) : null}
         </StickyActionBar>
       </main>
-      <Toast
-        message={toast ?? ""}
-        visible={toast !== undefined}
-        onDismiss={dismissToast}
-      />
     </div>
   );
+}
+
+const validationMessage = "Check the highlighted fields.";
+
+function snapshotOf(
+  name: string,
+  prescriptions: readonly DraftPrescription[],
+): string {
+  return JSON.stringify([
+    name,
+    prescriptions.map((item) => [
+      item.exerciseId,
+      item.plannedSets,
+      item.minReps,
+      item.maxReps,
+    ]),
+  ]);
 }
 
 function toDraftPrescription(

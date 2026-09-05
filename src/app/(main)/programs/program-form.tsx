@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   activateProgramAction,
@@ -28,19 +28,14 @@ import {
   Sheet,
   StickyActionBar,
   TextField,
-  Toast,
   TopBar,
+  useSaveOutcome,
+  useSavedSnapshot,
+  useToast,
+  type SavePhase,
 } from "@/shared/ui";
 
-type SaveState = "idle" | "saving" | "saved" | "failure";
-
-export function ProgramForm({
-  program,
-  initiallySaved = false,
-}: {
-  program?: Program;
-  initiallySaved?: boolean;
-}) {
+export function ProgramForm({ program }: { program?: Program }) {
   const router = useRouter();
   const [name, setName] = useState(program?.name ?? "");
   const [status, setStatus] = useState<ProgramStatus>(
@@ -54,57 +49,54 @@ export function ProgramForm({
   );
   const [error, setError] = useState<string>();
   const [nameError, setNameError] = useState<string>();
-  const [saveState, setSaveState] = useState<SaveState>(
-    initiallySaved ? "saved" : "idle",
-  );
-  const [toast, setToast] = useState<string>();
-  const busy = saveState === "saving";
+  const [phase, setPhase] = useState<SavePhase>("editing");
+  const { returnToParent, reportFailure } = useSaveOutcome("/programs");
+  const { showToast } = useToast();
+  const { savedSnapshot } = useSavedSnapshot(snapshotOf(name));
+  const busy = phase === "saving";
+  const saveState =
+    phase === "editing"
+      ? snapshotOf(name) === savedSnapshot
+        ? "clean"
+        : "unsaved"
+      : phase;
   const activeSplits = splits.filter((split) => split.status === "active");
-
-  useEffect(() => {
-    if (initiallySaved && window.location.search) {
-      window.history.replaceState(null, "", window.location.pathname);
-    }
-  }, [initiallySaved]);
-
-  const dismissToast = useCallback(() => setToast(undefined), []);
 
   function changed() {
     setNameError(undefined);
     setError(undefined);
-    setSaveState("idle");
+    setPhase("editing");
   }
 
   async function save() {
     const validation = validateProgramDefinition({ name });
     if (!validation.ok) {
       setNameError(validation.fieldErrors.name?.[0]);
-      setError("Check the highlighted fields.");
-      setSaveState("idle");
+      setError(validationMessage);
+      setPhase("editing");
+      reportFailure(validationMessage);
       return;
     }
 
     setError(undefined);
     setNameError(undefined);
-    setSaveState("saving");
+    setPhase("saving");
     const result = program
       ? await updateProgramAction(program.id, validation.value)
       : await createProgramAction(validation.value);
     if (!result.ok) {
       setNameError(result.error.fieldErrors?.name?.[0]);
       setError(result.error.retryable ? undefined : result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
-    setName(result.value.name);
-    setSaveState("saved");
-    if (!program) router.replace(`/programs/${result.value.id}/edit?saved=1`);
-    else router.refresh();
+    returnToParent("Program saved.");
   }
 
   async function chooseNext(splitId: string, close: () => void) {
     if (!program) return;
-    setSaveState("saving");
+    setPhase("saving");
     setError(undefined);
     const wasActive = status === "active";
     const result = wasActive
@@ -112,15 +104,16 @@ export function ProgramForm({
       : await activateProgramAction(program.id, splitId);
     if (!result.ok) {
       setError(result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
     setStatus(result.value.status);
     setNextSplitId(result.value.nextSplitId);
     setSplits(result.value.splits);
-    setSaveState("saved");
+    setPhase("editing");
     close();
-    setToast(wasActive ? "Next split updated." : "Program activated.");
+    showToast(wasActive ? "Next split updated." : "Program activated.");
     router.refresh();
   }
 
@@ -142,26 +135,28 @@ export function ProgramForm({
     if (!result.ok) {
       setSplits(previous);
       setError(result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
     setSplits(result.value.splits);
     setNextSplitId(result.value.nextSplitId);
-    setSaveState("saved");
-    setToast("Order saved.");
+    setPhase("editing");
+    showToast("Order saved.");
   }
 
   async function archive() {
     if (!program) return;
-    setSaveState("saving");
+    setPhase("saving");
     const result = await archiveProgramAction(program.id);
     if (!result.ok) {
       setError(result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
     setStatus("archived");
-    setSaveState("saved");
+    setPhase("editing");
     router.refresh();
   }
 
@@ -368,11 +363,12 @@ export function ProgramForm({
           ) : null}
         </StickyActionBar>
       </main>
-      <Toast
-        message={toast ?? ""}
-        visible={toast !== undefined}
-        onDismiss={dismissToast}
-      />
     </div>
   );
+}
+
+const validationMessage = "Check the highlighted fields.";
+
+function snapshotOf(name: string): string {
+  return JSON.stringify([name]);
 }

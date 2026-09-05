@@ -54,11 +54,22 @@ Reusable implementation lives under `src/shared/ui` and is exported through its 
 - normal/focused shells, bottom navigation, page frame, top bar, and sticky action bar;
 - actions, text/numeric/textarea fields, validation wiring, and selectable chips;
 - bottom sheet and destructive alert dialog wrappers;
-- save status with one retry control, badges, list rows, stat cards, skeletons, empty states, icons, and transient toasts.
+- save status with one retry control, badges, list rows, stat cards, skeletons, empty states, icons, and the shell-owned transient toast with its `useToast`, `useSaveOutcome`, and `useSavedSnapshot` helpers.
 
 The sheet and destructive dialog are application-owned wrappers around Radix. They provide modal semantics, focus containment, Escape dismissal, trigger focus restoration, and cancel-safe initial focus for destructive confirmation. Feature modules must import these wrappers, not Radix directly.
 
 Feature-specific set rows, workout exercise cards, reorder behavior, restored-workout cards, and chart rendering are intentionally absent from `src/shared/ui`. Later Tasks implement them within a Feature first and promote only reuse that is demonstrated across Features. Business calculations never move into shared presentation components.
+
+## Definition-form save contract
+
+`T-018` makes every definition form behave the same way, so a save is an act of leaving the screen rather than a state shown on it.
+
+- A successful save raises a toast and returns to the form's parent screen: `/exercises` for an exercise, `/programs` for a program, and the owning program's edit screen for a split. The parent is refreshed so the saved value is visible immediately.
+- A failed save, including client-side validation, raises a toast and keeps the form mounted with its entered values, its field-level errors, and the existing retry control for retryable failures.
+- The toast lives in the shell above the routed screens, so a toast raised immediately before navigation is shown on the destination screen. `MainShell` owns exactly one toast.
+- `SaveStatus` reports `clean`, `unsaved`, `saving`, or `failure`. A form that still matches the state it opened with renders no text at all; only a real difference from that baseline reads `Unsaved changes`. Forms compare a normalized snapshot of their own editable values and rebase that baseline when an in-place action, such as reordering split exercises, auto-saves.
+
+The parent-return rule applies to explicit save actions. Auto-saving surfaces, such as the active workout, have no save action and keep their own cue.
 
 ## Today and workout-start composition
 

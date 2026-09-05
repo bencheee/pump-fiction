@@ -1,6 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import type { ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export function Toast({
   message,
@@ -30,4 +38,43 @@ export function Toast({
       {message}
     </div>
   );
+}
+
+type ToastContextValue = Readonly<{ showToast: (message: string) => void }>;
+
+const ToastContext = createContext<ToastContextValue | null>(null);
+
+type PendingToast = Readonly<{ id: number; message: string }>;
+
+// Lives above the routed screens so a toast raised just before navigation is
+// still shown on the destination screen.
+export function ToastProvider({ children }: { children: ReactNode }) {
+  const [pending, setPending] = useState<PendingToast>();
+  const showToast = useCallback(
+    (message: string) =>
+      setPending((current) => ({ id: (current?.id ?? 0) + 1, message })),
+    [],
+  );
+  const dismiss = useCallback(() => setPending(undefined), []);
+  const value = useMemo<ToastContextValue>(() => ({ showToast }), [showToast]);
+
+  return (
+    <ToastContext.Provider value={value}>
+      {children}
+      <Toast
+        key={pending?.id}
+        message={pending?.message ?? ""}
+        visible={pending !== undefined}
+        onDismiss={dismiss}
+      />
+    </ToastContext.Provider>
+  );
+}
+
+export function useToast(): ToastContextValue {
+  const context = useContext(ToastContext);
+  if (context === null) {
+    throw new Error("useToast requires a ToastProvider ancestor.");
+  }
+  return context;
 }

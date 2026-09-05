@@ -4,14 +4,14 @@ import Link from "next/link";
 import { classNames } from "./class-names";
 import { Icon, type IconName } from "./icon";
 
-type SaveState = "idle" | "saving" | "saved" | "failure";
+type SaveState = "clean" | "unsaved" | "saving" | "failure";
 
 const saveStates: Record<
-  SaveState,
+  Exclude<SaveState, "clean">,
   { text: string; icon: IconName; className: string }
 > = {
-  idle: {
-    text: "Not saved yet",
+  unsaved: {
+    text: "Unsaved changes",
     icon: "circle-alert",
     className: "text-[var(--pf-text-2)]",
   },
@@ -19,11 +19,6 @@ const saveStates: Record<
     text: "Saving…",
     icon: "loader-circle",
     className: "text-[var(--pf-text-2)]",
-  },
-  saved: {
-    text: "Saved",
-    icon: "circle-check",
-    className: "text-[var(--pf-ok)]",
   },
   failure: {
     text: "Couldn't save your latest changes",
@@ -41,25 +36,35 @@ export function SaveStatus({
   validationMessage?: string;
   onRetry?: () => void;
 }) {
-  const current = saveStates[state];
+  const current = state === "clean" ? undefined : saveStates[state];
   const failed = state === "failure" && !validationMessage;
+  const text = validationMessage ?? current?.text;
 
   return (
     <div
       role="status"
       aria-live="polite"
       className={classNames(
-        "flex min-h-11 items-center gap-2 text-[13px] font-medium",
-        validationMessage ? "text-[var(--pf-danger)]" : current.className,
+        "flex items-center gap-2 text-[13px] font-medium",
+        text !== undefined && "min-h-11",
+        validationMessage ? "text-[var(--pf-danger)]" : current?.className,
       )}
     >
-      <Icon
-        name={validationMessage ? "triangle-alert" : current.icon}
-        size={14}
-      />
-      <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
-        {validationMessage ?? current.text}
-      </span>
+      {text !== undefined ? (
+        <>
+          <Icon
+            name={
+              validationMessage
+                ? "triangle-alert"
+                : (current?.icon ?? "circle-alert")
+            }
+            size={14}
+          />
+          <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+            {text}
+          </span>
+        </>
+      ) : null}
       {failed && onRetry ? (
         <button
           type="button"

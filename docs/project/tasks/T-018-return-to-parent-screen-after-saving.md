@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T11:54:40+02:00`
+- **Updated:** `2026-09-05T12:01:13+02:00`
 - **Started:** `2026-09-05T11:54:40+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,11 +17,13 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver one reviewable commit with the save-and-return contract, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
 Make every definition form close on a successful save: show a success toast and navigate to the screen the user came from, while a failure keeps the form open and reports the failure as a toast. In the same change, make the save status report `Unsaved changes` only when the form differs from the state it opened with, instead of the current `Not saved yet` shown immediately on open.
+
+Creating a program keeps its existing rule that splits are added after the program exists, so a new program now returns to the Programs list and its splits are added by reopening it.
 
 Affected forms and their parent screens:
 
@@ -66,17 +68,17 @@ Affected forms and their parent screens:
 
 ## Execution checklist
 
-- [ ] Add a shared dirty-state and save-outcome helper to the mobile UI foundation rather than duplicating it per form.
-- [ ] Apply it to the exercise, program, and split forms with their parent destinations.
-- [ ] Replace the `idle` save-status text with dirty-state-driven copy.
-- [ ] Update the affected component tests without running them.
-- [ ] Synchronize canonical UI documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Add a shared dirty-state and save-outcome helper to the mobile UI foundation rather than duplicating it per form.
+- [x] Apply it to the exercise, program, and split forms with their parent destinations.
+- [x] Replace the `idle` save-status text with dirty-state-driven copy.
+- [x] Update the affected component tests without running them.
+- [x] Synchronize canonical UI documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T12:01:13+02:00` with Node.js `24.20.0`, npm `11.19.0`. `npm run check` passed Prettier formatting, ESLint, strict TypeScript, the production build of all 19 routes, UI asset checksums, Markdown lint across 95 files, and all 724 internal links across 147 unique targets. `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 
@@ -88,9 +90,9 @@ Affected forms and their parent screens:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-018: return to the parent screen after saving`
-- **Committed scope:** Not created
+- **Committed scope:** Shell-owned toast provider and `useToast`; `useSaveOutcome` and `useSavedSnapshot` helpers; `SaveStatus` states `clean`/`unsaved`/`saving`/`failure`; exercise, program, and split forms returning to their parent screens with toasts and dirty-state save status; removal of the `?saved=1` round trip from the three edit routes; updated component tests; and the save-contract sections in the mobile UI foundation and wireframe decisions.
 
 ## Review
 

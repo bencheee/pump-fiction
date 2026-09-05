@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props -- Each focusable mode control carries the accepted group validation state. */
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import {
   archiveExerciseAction,
@@ -29,6 +29,9 @@ import {
   TextAreaField,
   TextField,
   TopBar,
+  useSaveOutcome,
+  useSavedSnapshot,
+  type SavePhase,
 } from "@/shared/ui";
 
 import {
@@ -37,16 +40,11 @@ import {
   exerciseTypeLabels,
 } from "@/features/exercises/ui/exercise-presentation";
 
-type SaveState = "idle" | "saving" | "saved" | "failure";
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
 
-export function ExerciseForm({
-  exercise,
-  initiallySaved = false,
-}: {
-  exercise?: Exercise;
-  initiallySaved?: boolean;
-}) {
+const validationMessage = "Check the highlighted fields.";
+
+export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   const router = useRouter();
   const [name, setName] = useState(exercise?.name ?? "");
   const [baseType, setBaseType] = useState<ExerciseBaseType>(
@@ -57,9 +55,7 @@ export function ExerciseForm({
   );
   const [note, setNote] = useState(exercise?.persistentNote ?? "");
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [saveState, setSaveState] = useState<SaveState>(
-    initiallySaved ? "saved" : "idle",
-  );
+  const [phase, setPhase] = useState<SavePhase>("editing");
   const [saveMessage, setSaveMessage] = useState<string>();
   const [modeNotice, setModeNotice] = useState<string>();
   const [status, setStatus] = useState(exercise?.status ?? "active");
@@ -71,17 +67,19 @@ export function ExerciseForm({
     allowedLoadModes: modes,
     persistentNote: note,
   };
+  const { returnToParent, reportFailure } = useSaveOutcome("/exercises");
+  const { savedSnapshot } = useSavedSnapshot(snapshotOf(definition));
   const archived = status === "archived";
-  const isSaving = saveState === "saving";
-
-  useEffect(() => {
-    if (initiallySaved && window.location.search) {
-      window.history.replaceState(null, "", window.location.pathname);
-    }
-  }, [initiallySaved]);
+  const isSaving = phase === "saving";
+  const saveState =
+    phase === "editing"
+      ? snapshotOf(definition) === savedSnapshot
+        ? "clean"
+        : "unsaved"
+      : phase;
 
   function markChanged(field?: string) {
-    setSaveState("idle");
+    setPhase("editing");
     setSaveMessage(undefined);
     if (!field) return;
     setErrors((current) => {
@@ -128,8 +126,9 @@ export function ExerciseForm({
     const validation = validateExerciseDefinition(definition);
     if (!validation.ok) {
       setErrors(validation.fieldErrors);
-      setSaveState("idle");
-      setSaveMessage("Check the highlighted fields.");
+      setPhase("editing");
+      setSaveMessage(validationMessage);
+      reportFailure(validationMessage);
       if (validation.fieldErrors.allowedLoadModes)
         modeGroupRef.current?.focus();
       return;
@@ -137,7 +136,7 @@ export function ExerciseForm({
 
     setErrors({});
     setSaveMessage(undefined);
-    setSaveState("saving");
+    setPhase("saving");
     const result = exercise
       ? await updateExerciseAction(exercise.id, validation.value)
       : await createExerciseAction(validation.value);
@@ -145,34 +144,30 @@ export function ExerciseForm({
     if (!result.ok) {
       setErrors(result.error.fieldErrors ?? {});
       setSaveMessage(result.error.retryable ? undefined : result.error.message);
-      setSaveState("failure");
+      setPhase("failure");
+      reportFailure(result.error.message);
       return;
     }
 
-    setName(result.value.name);
-    setSaveState("saved");
-    if (!exercise) {
-      router.replace(`/exercises/${result.value.id}/edit?saved=1`);
-    } else {
-      router.refresh();
-    }
+    returnToParent("Exercise saved.");
   }
 
   async function changeStatus(nextStatus: "active" | "archived") {
     if (!exercise) return;
-    setSaveState("saving");
+    setPhase("saving");
     setSaveMessage(undefined);
     const result =
       nextStatus === "archived"
         ? await archiveExerciseAction(exercise.id)
         : await reactivateExerciseAction(exercise.id);
     if (!result.ok) {
-      setSaveState("failure");
+      setPhase("failure");
       setSaveMessage(result.error.retryable ? undefined : result.error.message);
+      reportFailure(result.error.message);
       return;
     }
     setStatus(result.value.status);
-    setSaveState("saved");
+    setPhase("editing");
     router.refresh();
   }
 
@@ -365,6 +360,20 @@ export function ExerciseForm({
       </main>
     </div>
   );
+}
+
+function snapshotOf(definition: {
+  name: string;
+  baseType: ExerciseBaseType;
+  allowedLoadModes: readonly ExerciseLoadMode[];
+  persistentNote: string;
+}): string {
+  return JSON.stringify([
+    definition.name,
+    definition.baseType,
+    [...definition.allowedLoadModes].sort(),
+    definition.persistentNote,
+  ]);
 }
 
 function isRequiredMode(

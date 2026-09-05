@@ -21,6 +21,10 @@ The accepted handoff narrows the existing v0.3 PNG authority: those images remai
 
 These are design-reference constraints, not an expansion of product behavior. The user-facing name remains open beyond the replaceable working-name treatment.
 
+## Saving a definition
+
+Saving an exercise, program, or split closes the screen: the app returns to the parent screen and confirms the save with a toast there. A failure keeps the screen open, shows its field errors, and reports the failure as a toast. The parent screens are the Exercises list, the Programs list, and the owning program's edit screen. A form reports `Unsaved changes` only while it actually differs from the state it opened with. The implementation contract is in [`../architecture/mobile-ui-foundation.md`](../architecture/mobile-ui-foundation.md#definition-form-save-contract).
+
 ## Exercises
 
 **Add Exercise** contains name, exercise type, allowed modifications, exercise note, and **Save Exercise**.

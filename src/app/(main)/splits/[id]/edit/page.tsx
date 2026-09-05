@@ -11,13 +11,10 @@ export const dynamic = "force-dynamic";
 
 export default async function EditSplitPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ saved?: string | string[] }>;
 }) {
   const id = requireUuidRouteParam((await params).id);
-  const saved = (await searchParams).saved;
   const splitResult = await getSplit(id);
   if (!splitResult.ok && splitResult.error.code === "not_found") notFound();
   if (!splitResult.ok)
@@ -47,9 +44,6 @@ export default async function EditSplitPage({
       exerciseLibrary={exerciseResult.value.filter(
         (exercise) => exercise.status === "active",
       )}
-      initiallySaved={
-        saved === "1" || (Array.isArray(saved) && saved[0] === "1")
-      }
     />
   );
 }
