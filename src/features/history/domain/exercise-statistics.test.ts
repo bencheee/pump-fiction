@@ -299,12 +299,12 @@ describe("chart series", () => {
   const performances = [
     performance({
       workoutId: "33000000-0000-4000-8000-0000000000a1",
-      workoutDate: "2026-06-01",
+      workoutDate: "2026-05-01",
       sets: [set({ loadMode: "weight", loadKg: 50, reps: 10 })],
     }),
     performance({
       workoutId: "33000000-0000-4000-8000-0000000000a2",
-      workoutDate: "2026-08-30",
+      workoutDate: "2026-08-20",
       sets: [set({ loadMode: "weight", loadKg: 70, reps: 6 })],
     }),
     performance({
@@ -324,6 +324,8 @@ describe("chart series", () => {
   });
 
   it("keeps only workouts inside a trailing range", () => {
+    // The windows end on the local date: week reaches back to 2026-08-30,
+    // month to 2026-08-05, quarter to 2026-06-05, and year to 2025-09-05.
     expect(
       chartSeries(performances, "top_load", "week", "2026-09-05").points,
     ).toHaveLength(1);
@@ -332,7 +334,23 @@ describe("chart series", () => {
     ).toHaveLength(2);
     expect(
       chartSeries(performances, "top_load", "quarter", "2026-09-05").points,
+    ).toHaveLength(2);
+    expect(
+      chartSeries(performances, "top_load", "year", "2026-09-05").points,
     ).toHaveLength(3);
+  });
+
+  it("includes a workout falling exactly on the window boundary", () => {
+    const boundary = [
+      performance({
+        workoutId: "33000000-0000-4000-8000-0000000000b9",
+        workoutDate: "2026-08-30",
+        sets: [set({ loadMode: "weight", loadKg: 55, reps: 5 })],
+      }),
+    ];
+    expect(
+      chartSeries(boundary, "top_load", "week", "2026-09-05").points,
+    ).toHaveLength(1);
   });
 
   it("sums volume per workout", () => {
