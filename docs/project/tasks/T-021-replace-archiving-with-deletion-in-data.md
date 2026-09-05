@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:02:05+02:00`
+- **Updated:** `2026-09-05T13:03:51+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** `2026-09-05T13:00:15+02:00`
 - **Approval requested:** `2026-09-05T13:02:05+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T13:02:05+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized clean reset, pgTAP, unit, component, and repository verification and record its results.
+- **Next action:** Deliver a test-only replacement commit that queries the renamed program save action, then request fresh approval; the previous approval and its test authorization are void.
 
 ## Scope
 
@@ -95,8 +95,8 @@ Screen changes absorbed from `T-022`:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** unit tests for delete operations and failures, repository integration tests for exercise, split, and program deletion with surviving History, and pgTAP tests for the nullable snapshot references and the last-split rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
-- **Results:** Not run
+- **Authorized commit:** Not authorized; the failed verification cleared it
+- **Results:** Failed on `2026-09-05T13:03:51+02:00` against exact approved commit `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history, pgTAP passed 57/57 across five files including the new current-program and split-deletion assertions, the shared UI component suites passed 4/4, and 64 of 66 unit and component tests passed. Two test-only assertions failed: both program scenarios still clicked `Save as Draft`, although the delivered form renames that action to `Save Program` now that programs have no draft status. No implementation defect was found. The repository integration run was not started because the failure already invalidates this attempt.
 
 ## Delivery commit
 
@@ -113,8 +113,8 @@ Screen changes absorbed from `T-022`:
 
 ## Approval
 
-- **Approved commit:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
-- **Approved by:** User / Approver
+- **Approved commit:** Void; approval of `dfd6d7a9587740717af43ef23f33e3d545a20c4c` was cleared by the failed verification below
+- **Approved by:** Cleared
 - **Approved at:** `2026-09-05T13:02:05+02:00`
 - **Approval note:** The User answered `odobravam` to the request to approve this exact commit, authorizing the clean reset, pgTAP, application, and repository verification for its scope.
 
@@ -155,3 +155,4 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T13:00:15+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with static checks passed and no feature test run |
 | `2026-09-05T13:02:05+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and its database verification |
 | `2026-09-05T13:02:05+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the complete authorized verification against `dfd6d7a9587740717af43ef23f33e3d545a20c4c` |
+| `2026-09-05T13:03:51+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on two test-only queries for the renamed program save action; approval and test authorization cleared |
