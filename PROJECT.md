@@ -1,25 +1,25 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T23:42:19+02:00
+- **Last updated:** 2026-09-05T23:43:49+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` and `T-032` of `F-008` are `Done` and `T-033` is back in `In Progress` after a failed verification
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` and `T-032` of `F-008` are `Done` and `T-033` is `In Review` with a replacement
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-05T23:42:19+02:00. pgTAP 124/124, repository 6/6, and the type comparison passed; two arithmetic expectations in the new unit suite were wrong about the trailing week boundary. It derives the personal records, eligibility, and chart series behind `S15` and `S16`.
+[`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Review`, Executor Claude Code primary agent, last change 2026-09-05T23:43:49+02:00. pgTAP 124/124, repository 6/6, and the type comparison passed; two arithmetic expectations in the new unit suite were wrong about the trailing week boundary. It derives the personal records, eligibility, and chart series behind `S15` and `S16`.
 
 History already has its data and its first screens. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) delivered the month-grouped reads, the saved-workout detail, and ten transactional corrections, verified through approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) delivered the subsection shell, `S13`, `S14`, and the correction screen, verified through approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`.
 
 ## Immediate next action
 
-Deliver the `T-033` replacement that corrects two range expectations, then request fresh approval.
+Review exact `T-033` replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11` and approve or reject it. Approval restarts the complete recorded plan from the beginning.
 
 ## Now
 
-- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Progress` — Claude Code primary agent — 2026-09-05T23:42:19+02:00 — next: deliver the replacement for fresh approval.
+- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — `In Review` — Claude Code primary agent — 2026-09-05T23:43:49+02:00 — next: the Owner's decision on the exact replacement.
 
 ## Next
 
@@ -38,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations — exact replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11` — Claude Code primary agent — 2026-09-05T23:43:49+02:00 — requested action: review and approve or reject it. It changes the prepared unit suite and nothing else.
 
 ## Approved — ready for testing
 

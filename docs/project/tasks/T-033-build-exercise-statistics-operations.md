@@ -1,7 +1,7 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:42:19+02:00`
+- **Updated:** `2026-09-05T23:43:49+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
-- **Review started:** `2026-09-05T23:35:01+02:00`
+- **Review started:** `2026-09-05T23:43:49+02:00` for the replacement
 - **Approval requested:** `2026-09-05T23:39:11+02:00`
-- **Approved:** `2026-09-05T23:39:11+02:00`
+- **Approved:** `2026-09-05T23:39:11+02:00` for the superseded delivery; the replacement is not approved
 - **Testing started:** `2026-09-05T23:39:11+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct two range expectations in the prepared unit suite, deliver a replacement, and request fresh approval.
+- **Next action:** The Owner reviews the replacement. Approving it restarts the complete recorded plan from the beginning.
 
 ## Scope
 
@@ -91,30 +91,31 @@ Queries:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for the PR matrix, eligibility, band separation, range boundaries, and identity retention; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new exercise-history suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `bf787976b69602ed4358eb79f053d48486c3d30e` — approval invalidated by the failed verification below
+- **Authorized commit:** none currently; the approval of `bf787976b69602ed4358eb79f053d48486c3d30e` was invalidated by the failed verification below
 - **Results:** Failed on `2026-09-05T23:42:19+02:00` against exact approved delivery `bf787976b69602ed4358eb79f053d48486c3d30e` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. Everything about the delivery passed. `supabase db reset` applied all 21 migrations and the seed; `npm run test:db` passed **124/124 across seven suites**, including the new `0007_exercise_statistics` 12/12; `npm run test:repository` passed **6/6**; and regenerated types matched the committed file.
 
   `npm run test:unit` passed 115 of 117 and failed two assertions in the new domain suite, both mine and both arithmetic. The trailing week window ends on the local date and reaches back six days, so its first day is `2026-08-30`, and the fixture workout dated exactly `2026-08-30` falls inside it: the suite expected one point and the rule correctly produced two. The volume assertion then read the first point of that same window, which is the earlier workout rather than the one it described. The derivation is right and the expectations are wrong. The approval is invalidated and `npm run db:restore` did not run; the local database is on the seed baseline.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `bf787976b69602ed4358eb79f053d48486c3d30e`
-- **Subject:** `T-033: build exercise statistics operations`
+- **Delivery commit SHA:** `d1f15d90151d3a7f43786da52dd3c8affc633a11` (test-only replacement; supersedes `bf787976b69602ed4358eb79f053d48486c3d30e`)
+- **Subject:** `T-033: correct the trailing-range expectations`
+- **Replacement scope:** four assertions and one new boundary scenario in the prepared unit suite; no application code, schema, migration, or generated type changed
 - **Committed scope:** the `0004_exercise_statistics.sql` declarative schema with its function-only migration and regenerated types; the `exercise-statistics` domain with its eligibility, category, record, metric, and series rules; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the prepared unit suite, the `0007_exercise_statistics` pgTAP suite, and the repository integration test with its `test:repository` registration; and the History product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T23:39:11+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T23:43:49+02:00` for the replacement
+- **Outcome:** Replacement recommended for approval
+- **Findings:** The authorized verification found the two range expectations, recorded above
 
 ## Approval
 
-- **Approved commit:** `bf787976b69602ed4358eb79f053d48486c3d30e`
-- **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T23:39:11+02:00`
-- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, which approves it and authorizes only the recorded verification plan.
+- **Approved commit:** None; the approval of `bf787976b69602ed4358eb79f053d48486c3d30e` was invalidated by its failed verification
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** The Owner approved `bf787976b69602ed4358eb79f053d48486c3d30e` with `potvrda` on `2026-09-05`. That approval no longer stands: its verification failed, so replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11` needs a fresh decision.
 
 ## Definition of Ready
 
@@ -154,3 +155,5 @@ Queries:
 | `2026-09-05T23:39:11+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-05T23:39:11+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e` with `potvrda` |
 | `2026-09-05T23:39:11+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |
+| `2026-09-05T23:44:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Spread the fixture dates, stated every window explicitly, and pinned the boundary day; all permitted static checks passed |
+| `2026-09-05T23:43:49+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11`; it awaits fresh approval before the complete recorded plan restarts |
