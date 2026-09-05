@@ -33,7 +33,9 @@ test.describe("Workout History experience", () => {
 
       // S13 groups by month and summarises the saved workout.
       await expect(page.getByText("August 2026")).toBeVisible();
-      const row = page.getByRole("link", { name: new RegExp(fixture.split) });
+      const row = page
+        .getByRole("link", { name: new RegExp(fixture.split) })
+        .first();
       await expect(row).toBeVisible();
       await expect(row).toContainText("1 exercise");
       await testInfo.attach(`history-workouts-${testInfo.project.name}.png`, {
@@ -64,19 +66,28 @@ test.describe("Workout History experience", () => {
       });
 
       // The correction changed no template and moved no rotation pointer.
+      // Today prints the split name twice, in the heading and in the
+      // rotation-position sentence, so match the heading.
       await page.goto("/today");
-      await expect(page.getByText(fixture.nextSplit)).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: fixture.nextSplit }),
+      ).toBeVisible();
 
       // Deleting requires confirmation and returns to the list.
       await page.goto(`/history/workouts/${fixture.workoutId}`);
-      await page.getByRole("button", { name: "Delete workout" }).click();
+      await page
+        .getByRole("button", { name: "Delete workout", exact: true })
+        .first()
+        .click();
       const dialog = page.getByRole("alertdialog");
       await expect(dialog).toContainText("Rotation is not affected");
-      await dialog.getByRole("button", { name: "Delete workout" }).click();
+      await dialog
+        .getByRole("button", { name: "Delete workout", exact: true })
+        .click();
       await expect(page).toHaveURL(/\/history\/workouts$/);
       await expect(
         page.getByRole("link", { name: new RegExp(fixture.split) }),
-      ).not.toBeAttached();
+      ).toHaveCount(0);
 
       // The list reflows to the narrow end of the supported phone range.
       await page.setViewportSize({ width: 320, height: 720 });
