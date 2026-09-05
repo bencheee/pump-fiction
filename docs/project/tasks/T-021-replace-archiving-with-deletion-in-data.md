@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:41:51+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T12:42:09+02:00`
+- **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms `Ready` after `T-020` is approved.
+- **Next action:** Deliver deletion with preserved History as one reviewable commit, then request review.
 
 ## Scope
 
@@ -130,7 +130,7 @@ Screen changes absorbed from `T-022`:
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`, including the proposed current-program mechanism
+- [x] Owner confirms transition to `Ready`, including the proposed current-program mechanism
 
 ## Definition of Done
 
@@ -150,3 +150,5 @@ Screen changes absorbed from `T-022`:
 | --- | --- | --- | --- | --- |
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 3 recorded on 2026-09-05 |
 | `2026-09-05T12:41:51+02:00` | User / Owner | `Backlog` | `Backlog` | Absorbed the canceled `T-022` screen scope into this Task |
+| `2026-09-05T12:42:09+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the `app_settings.current_program_id` mechanism and the absorbed screen scope |
+| `2026-09-05T12:42:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, operations, and screen changes |
