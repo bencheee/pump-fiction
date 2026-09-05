@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:35:56+02:00`
+- **Updated:** `2026-09-05T22:39:55+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:33:33+02:00` for the replacement
 - **Approval requested:** `2026-09-05T22:35:56+02:00` for the replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T22:35:56+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54`.
+- **Next action:** Serialize the repository suite, deliver a second replacement, and request fresh approval.
 
 ## Scope
 
@@ -100,6 +100,8 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 - **Authorized commit:** `b5e4cda609d478453eccd562087d1f18bfec7f54`; the earlier approval of `95de9212848755c956cb0dc5d50b5cfc8796dc27` was invalidated by the failed verification recorded below
 - **Results:** Failed on `2026-09-05T22:29:27+02:00` against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0`. `npm ci` installed 653 packages with no vulnerabilities, `npm run db:snapshot` saved the local data, and `supabase db reset` applied all 20 migrations and the seed. `npm run test:db` then failed two suites and passed the other four. `0001_core_constraints` ran 10 of its 19 assertions before its two direct `workout_exercises` inserts hit the new `exercise_identity_id not null` column, which this delivery added without updating that suite. `0006_workout_history` ran 0 of 47: its second fixture workout starts `T-031 Pull` as an `alternate_split`, but completing the first workout advanced rotation onto that split, so `start_workout` correctly refused the mismatch. Both defects are in test source; no delivered behavior is implicated. Testing stopped there, so the unit, repository, and generated-type steps did not run.
 
+  Second verification, against exact approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` on `2026-09-05T22:39:55+02:00` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities, `npm run db:snapshot` saved the local data, and `supabase db reset` applied all 20 migrations and the seed. `npm run test:db` passed **112/112 across all six suites**, including the new `0006_workout_history` 47/47. `npm run test:unit` passed **86/86 across 14 files**, up from 72 by the new correction-validation suite. Regenerated types matched the committed file. `npm run test:repository` **failed**: the script runs its files in parallel against one shared database, and this Task added a third file that starts a workout, so `workouts_single_resumable` and the shared rotation state made them collide. Running the same five files with `--no-file-parallelism` passed 5/5, and the new file alone passed 1/1, which isolates the cause to the script rather than to any test or to delivered behavior. The approval is invalidated and `npm run db:restore` did not run.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `b5e4cda609d478453eccd562087d1f18bfec7f54` (test-and-documentation-only replacement; supersedes `95de9212848755c956cb0dc5d50b5cfc8796dc27`)
@@ -165,3 +167,4 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:35:56+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact replacement with no further findings |
 | `2026-09-05T22:35:56+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` with `potvrda` |
 | `2026-09-05T22:35:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
+| `2026-09-05T22:39:55+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | pgTAP 112/112, unit 86/86, and the type comparison passed, before the parallel repository script collided on the single-resumable-workout invariant this Task added a third writer to; the approval is invalidated |

@@ -1,23 +1,23 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T22:35:56+02:00
+- **Last updated:** 2026-09-05T22:39:55+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus after the Owner released the hold
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is `Testing` against an approved replacement after a failed verification, as the first of the six `F-008` Tasks
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is back in `In Progress` after a second failed verification, as the first of the six `F-008` Tasks
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `Testing`, Executor Claude Code primary agent, last change 2026-09-05T22:35:56+02:00. The authorized verification failed on two prepared pgTAP suites, so the first delivery's approval is invalidated and replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
+[`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-05T22:39:55+02:00. pgTAP 112/112 and unit 86/86 passed; the repository script collided because it runs its files in parallel against one shared database. The authorized verification failed on two prepared pgTAP suites, so the first delivery's approval is invalidated and replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
 
 ## Immediate next action
 
-Run the complete recorded `T-031` plan from the beginning against approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54`, then record the result.
+Deliver the `T-031` second replacement that serializes the repository suite, then request fresh approval.
 
 ## Now
 
-- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `Testing` — Claude Code primary agent — 2026-09-05T22:35:56+02:00 — next: record the verification result.
+- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress` — Claude Code primary agent — 2026-09-05T22:39:55+02:00 — next: deliver the second replacement for fresh approval.
 
 ## Next
 
@@ -41,7 +41,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — approved replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` — Claude Code primary agent — 2026-09-05T22:35:56+02:00 — next required action: the complete recorded plan, restarted from the beginning.
+None. The `T-031` replacement approval was invalidated by its failed verification.
 
 ## Recently completed Tasks
 

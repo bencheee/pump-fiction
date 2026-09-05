@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T22:35:56+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is Testing`
+- **Updated:** `2026-09-05T22:39:55+02:00`
+- **Progress:** `0/6 required Tasks Done; T-031 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -118,3 +118,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T22:29:27+02:00` | Claude Code primary agent / Tester | Returned `T-031` to `In Progress` | Two prepared pgTAP suites failed on test-source defects; a replacement needs fresh approval |
 | `2026-09-05T22:33:33+02:00` | Claude Code primary agent / Executor | Delivered the `T-031` replacement | Exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence, and awaits fresh approval |
 | `2026-09-05T22:35:56+02:00` | User / Approver | Approved the `T-031` replacement | Authorized the complete recorded plan from the beginning against the exact replacement |
+| `2026-09-05T22:39:55+02:00` | Claude Code primary agent / Tester | Returned `T-031` to `In Progress` | pgTAP, unit, and type checks passed; the parallel repository script collided on the shared database |
