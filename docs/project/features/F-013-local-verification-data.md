@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:51:11+02:00`
-- **Progress:** `0/1 required Tasks Done`
+- **Updated:** `2026-09-05T20:01:16+02:00`
+- **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -31,7 +31,8 @@ pgTAP requires a clean database, because its fixtures create their own active wo
 
 ## Tasks
 
-- `T-027` — Restore usable local data after a verification reset
+- `T-027` — Restore usable local data after a verification reset — `Done`
+- `T-030` — Delete the exercise the command repository test creates — `Backlog`, found during the `T-027` verification
 
 ## Dependencies and blockers
 
@@ -63,8 +64,8 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 ## Completion
 
 - [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
 - [ ] No required follow-up scope is hidden
 - [ ] User confirms the feature result
 
@@ -76,3 +77,4 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 | `2026-09-05T19:28:05+02:00` | User / Owner | Confirmed readiness and moved `F-013` to `Next / 1` | Chose to protect local data before the next model corrections |
 | `2026-09-05T19:42:31+02:00` | User / Owner | Confirmed the approach and started `F-013` | Chose the seed and the snapshot/restore pair together, with the seed as the fallback |
 | `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `T-027` delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` and entered review | The seed, the snapshot/restore pair, and their documentation are ready for the Owner's review |
+| `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Tester | `T-027` verified and `Done` for `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; added `T-030` | The seeded reset and the snapshot round trip both passed, and the run exposed an orphan exercise the command repository test leaves behind |

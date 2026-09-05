@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review and approve `T-027` delivery `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`, which adds a committed reset seed and the snapshot/restore pair so a clean reset lands on a usable baseline and the Owner's own data survives a verification. The seeded reset and the snapshot round trip stay unverified until that approval. The Owner confirmed on `2026-09-05` that both mechanisms are built, with the seed as the fallback when no snapshot exists. `F-014` then delivers the Owner's two new model corrections: two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control. The Owner set the order `F-013`, `F-014`, `F-012`, `F-008` on 2026-09-05.
+`T-027` delivery `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` is approved and verified, so a clean reset now lands on the committed seed baseline and `npm run db:snapshot` and `npm run db:restore` carry the Owner's own data across a verification. The Owner confirms the `F-013` result and decides whether `T-030`, the orphan exercise the command repository test leaves behind, is fixed before `F-014`. The Owner confirmed on `2026-09-05` that both mechanisms are built, with the seed as the fallback when no snapshot exists. `F-014` then delivers the Owner's two new model corrections: two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control. The Owner set the order `F-013`, `F-014`, `F-012`, `F-008` on 2026-09-05.
 
 ## Implementation status
 

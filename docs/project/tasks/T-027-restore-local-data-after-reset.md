@@ -1,7 +1,7 @@
 # T-027 — Restore usable local data after a verification reset
 
 - **Feature:** `F-013`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:57:07+02:00`
+- **Updated:** `2026-09-05T20:01:16+02:00`
 - **Started:** `2026-09-05T19:42:31+02:00`
 - **Review started:** `2026-09-05T19:51:11+02:00`
 - **Approval requested:** `2026-09-05T19:57:07+02:00`
 - **Approved:** `2026-09-05T19:57:07+02:00`
 - **Testing started:** `2026-09-05T19:57:07+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T20:01:16+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized verification for `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`: snapshot, clean reset onto the seed, pgTAP, generated types, unit, component and repository suites, then restore.
+- **Next action:** None; `T-027` is `Done`. The orphan exercise the command-repository test leaves behind is recorded separately as `T-030`.
 
 ## Scope
 
@@ -41,11 +41,11 @@ The verification gate itself does not change: a clean reset stays required befor
 
 ## Acceptance criteria
 
-- [ ] After a clean reset the application opens with a usable program, splits, and exercises without manual re-entry.
-- [ ] The seed contains no workout history, so statistics and rotation start empty and pgTAP stays unaffected.
-- [ ] A snapshot taken before a verification restores the Owner's own data afterwards, including workouts.
-- [ ] Snapshot files are ignored by git and never committed.
-- [ ] `npm run check` and the pgTAP suites behave exactly as before.
+- [x] After a clean reset the application opens with a usable program, splits, and exercises without manual re-entry — the reset seeded 10 exercises, `Baseline program`, and its three splits, with the current-program pointer on `Chest and back`.
+- [x] The seed contains no workout history, so statistics and rotation start empty and pgTAP stays unaffected — 0 workouts and 0 sets after the reset, and pgTAP passed 59/59.
+- [x] A snapshot taken before a verification restores the Owner's own data afterwards, including workouts — the round trip returned all seven populated tables at their pre-reset counts, including the active workout, which `get_today_view()` resolves again.
+- [x] Snapshot files are ignored by git and never committed — `supabase/snapshots/` is ignored and `git status` stayed clean through the whole cycle.
+- [x] `npm run check` and the pgTAP suites behave exactly as before — `npm run check` passed and pgTAP stayed at 59/59.
 
 ## Traceability
 
@@ -83,7 +83,9 @@ The verification gate itself does not change: a clean reset stays required befor
 - **No-test reason:** Not applicable
 - **Planned tests:** a clean reset that lands on the seeded baseline, an unchanged pgTAP run against it, and a snapshot/restore round trip that returns a workout; must not run before Owner approval of the exact commit
 - **Authorized commit:** `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`
-- **Results:** Not run
+- **Results:** Passed on `2026-09-05T20:01:16+02:00`. `npm run db:snapshot` dumped the Owner's live data, whose pre-reset counts were 1 exercise, 1 program, 1 split, 1 prescription, 1 active workout, 3 sets, and 3 commands. `supabase db reset` applied all 17 migrations and then the seed, landing on 10 exercises, 1 program, 3 splits, 10 prescriptions, 0 workouts, and 0 sets, with `Baseline program` current and `Chest and back` as the next split. pgTAP passed 59/59 across all five suites, unchanged. `npm run db:types` produced no diff. Unit and component suites passed 67/67 and 4/4, and the repository suite passed 4/4 with the current-program pointer still on `Baseline program` afterwards, which the delivered test change is responsible for. `npm run db:restore` returned every pre-reset count exactly, including the active workout that `get_today_view()` resolves again, with `updated_at` values identical to the snapshot.
+
+The run also exposed scope this Task does not cover: the active-workout command repository test creates an exercise through `create_exercise_definition` and never deletes it, so each authorized repository run leaves one orphan `T-008 exercise <uuid>` in the library. It is recorded as `T-030`.
 
 ## Delivery commit
 
@@ -121,15 +123,15 @@ The verification gate itself does not change: a clean reset stays required befor
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -141,3 +143,4 @@ The verification gate itself does not change: a clean reset stays required befor
 | `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; static checks passed and no feature test ran |
 | `2026-09-05T19:57:07+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the destructive clean reset it requires |
 | `2026-09-05T19:57:07+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized reset, pgTAP, and suite run against `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` |
+| `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: snapshot, seeded reset, pgTAP 59/59, unchanged types, unit and component 67/67 and 4/4, repository 4/4, and a faithful restore including the active workout |
