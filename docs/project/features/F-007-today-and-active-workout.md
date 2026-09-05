@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-04T16:11:24+02:00`
+- **Updated:** `2026-09-05T10:07:03+02:00`
 - **Progress:** `3/4 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -29,7 +29,7 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 - [`T-014`](../tasks/T-014-build-today-and-workout-operations.md) — Build Today and active-workout operations (`Done`; approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81`)
 - [`T-017`](../tasks/T-017-correct-one-time-workout-starter-sets.md) — Correct one-time workout starter sets (`Done`; approved delivery `8d5779258505bb94383368e13eff97a4346320ca`)
 - [`T-015`](../tasks/T-015-build-today-and-workout-start-mobile-experience.md) — Build Today and workout-start mobile experience (`Done`; approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9`)
-- [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`In Review`; replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` with the corrective renumbering migration)
+- [`T-016`](../tasks/T-016-build-active-workout-mobile-experience.md) — Build active-workout mobile experience (`Testing`; approved replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`)
 
 ## Dependencies and blockers
 
@@ -93,3 +93,5 @@ Today proposes the correct workout and the user can reliably start, edit, pause,
 | `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | Returned `T-016` to `In Progress` | Unit 9/9 and component 11/11 passed before browser verification exposed a latent T-014 persistence defect: negative-position renumbering violates the positive-position checks on workout-local removals/reordering; a replacement with the corrective migration requires fresh approval |
 | `2026-09-04T16:09:58+02:00` | Claude Code primary agent / Executor | Corrected the workout position renumbering pending replacement delivery | The declarative schema and a reviewed migration now use the accepted offset technique, with a prepared pgTAP regression; static checks passed without feature tests |
 | `2026-09-04T16:11:24+02:00` | Claude Code primary agent / Executor | Delivered the T-016 replacement for review | Exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` awaits fresh User approval before the complete test plan restarts |
+| `2026-09-04T16:23:50+02:00` | User / Reviewer and Approver | Approved the T-016 replacement | Explicit `odobreno` binds fresh approval to exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` and authorizes the complete recorded plan |
+| `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | Restarted the T-016 verification | Running the complete unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against the exact approved replacement |

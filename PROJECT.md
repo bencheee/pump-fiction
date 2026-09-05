@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-04T16:11:24+02:00
+- **Last updated:** 2026-09-05T10:07:03+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Review` at exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `Testing` at exact approved replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
 
 ## Immediate next action
 
-User reviews and explicitly approves exact T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; only then does the complete unit/component, pgTAP, and serialized Chromium/WebKit plan restart from the beginning.
+Complete the full unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against exact approved T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Review` — Executor: Claude Code primary agent — updated `2026-09-04T16:11:24+02:00` — replacement with the corrective migration awaits fresh User review and approval.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Testing` — Executor: Claude Code primary agent — updated `2026-09-05T10:07:03+02:00` — exact replacement approved; complete verification restarted.
 
 ## Next
 

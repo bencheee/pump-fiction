@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-04T16:11:24+02:00`
+- **Updated:** `2026-09-05T10:07:03+02:00`
 - **Progress:** `6/10 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -167,3 +167,5 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | Returned T-016 to In Progress | Browser verification exposed a latent T-014 renumbering defect on workout-local removals/reordering; a replacement with the corrective migration requires fresh approval |
 | `2026-09-04T16:09:58+02:00` | Claude Code primary agent / Executor | Corrected the T-016 position renumbering pending replacement delivery | Static checks passed and feature tests remain stopped until fresh approval |
 | `2026-09-04T16:11:24+02:00` | Claude Code primary agent / Executor | Delivered the T-016 replacement for review | Exact replacement awaits fresh User approval before complete verification restarts |
+| `2026-09-04T16:23:50+02:00` | User / Reviewer and Approver | Approved the T-016 replacement | Fresh approval is bound to the exact replacement and authorizes the complete recorded plan |
+| `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | Restarted the T-016 verification | Running the complete unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against the exact approved replacement |

@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-04T16:11:24+02:00`
+- **Updated:** `2026-09-05T10:07:03+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-04T16:11:24+02:00` for replacement
-- **Approval requested:** `2026-09-04T15:58:06+02:00`
-- **Approved:** `2026-09-04T15:58:06+02:00`
-- **Testing started:** `2026-09-04T15:58:06+02:00`
+- **Approval requested:** `2026-09-04T16:23:50+02:00` for replacement
+- **Approved:** `2026-09-04T16:23:50+02:00` for replacement
+- **Testing started:** `2026-09-05T10:07:03+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; do not restart any feature test before fresh explicit approval.
+- **Next action:** Restart the complete recorded unit/component, clean-reset pgTAP, and serialized Chromium/WebKit verification against exact approved replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` in a fresh isolated worktree.
 
 ## Scope
 
@@ -72,7 +72,7 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes), the clean-reset pgTAP suites including the new position-renumbering regression, and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
-- **Authorized commit:** None; approval of `63126a1635421cf042186446216e7921025e6105` was invalidated by the failed browser verification.
+- **Authorized commit:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`
 - **Results:** Against the formerly approved delivery `63126a1635421cf042186446216e7921025e6105` in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`, `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` completed cleanly, the reducer/set-entry unit suite passed 9/9, and the S10/S12 component suite passed 11/11. The serialized mobile-Chromium scenario then stopped when the first `remove_set` command was rejected: the approved T-014 persistence function renumbers positions through a temporary `position = -position` update, which violates the `workout_sets_position_check`/`workout_exercises_position_check` constraints whenever sibling rows remain; the defect was reproduced directly against `public.apply_active_workout_command` and equally affects `remove_exercise` and `reorder_exercises`. T-014 verification never exposed it because those tests removed rows without remaining siblings and never reordered workout exercises. WebKit did not run; partial results are discarded and the corrected replacement requires fresh approval and a complete restart.
 
 ## Delivery commit
@@ -84,16 +84,16 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-04T16:23:50+02:00` for replacement
+- **Outcome:** Replacement recommended for approval
+- **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Pending replacement
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** The original approval (`potvrđujem 63126a1635421cf042186446216e7921025e6105`) was invalidated when its authorized verification failed on the inherited persistence defect; no test may run before the replacement is explicitly approved.
+- **Approved commit:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`
+- **Approved by:** User
+- **Approved at:** `2026-09-04T16:23:50+02:00`
+- **Approval note:** User explicitly said `odobreno` for the requested exact replacement; fresh approval is bound to it and authorizes the complete recorded plan from the beginning.
 
 ## Definition of Ready
 
@@ -137,3 +137,6 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T16:07:01+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9 and component 11/11 passed before serialized Chromium stopped on a rejected `remove_set`: the approved T-014 renumbering violates the positive-position checks when siblings remain; browser tests stopped and the approval is invalidated |
 | `2026-09-04T16:09:58+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Replaced the negative-position renumbering with the accepted offset-above-maximum technique in the declarative schema and a reviewed migration, and prepared the pgTAP regression; static checks passed without feature tests |
 | `2026-09-04T16:11:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |
+| `2026-09-04T16:23:50+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` with no additional findings and recommended approval |
+| `2026-09-04T16:23:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
