@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:05:00+02:00`
+- **Updated:** `2026-09-05T23:10:00+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T23:10:00+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews exact delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`. Approving it authorizes the recorded verification.
 
 ## Scope
 
@@ -102,7 +102,7 @@ Shell:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`
 - **Subject:** `T-032: build the History shell and workout History screens`
 - **Committed scope:** the History layout and subsection navigation; the four placeholder subsection routes; `S13` with its loading state; `S14` detail, its loading state, and the correction form; the History presentation helpers; the promoted `workout-presentation` module with its two updated importers; the prepared component suite and browser scenario; the eslint ignore for generated Playwright artifacts; the mobile UI foundation and wireframe decisions; the discovered follow-up `T-037`; and this Task
 
@@ -153,3 +153,5 @@ Shell:
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the History shell and Workouts subsection delivery within `F-008`; the Owner directed that implementation must not start |
 | `2026-09-05T22:46:10+02:00` | User / Owner | `Backlog` | `Ready` | `T-031` is `Done` and the go-ahead for the whole `F-008` authorizes the dependent screens |
 | `2026-09-05T22:46:10+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the History shell and the Workouts subsection on the `T-031` operations |
+| `2026-09-05T23:05:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the History shell, `S13`, `S14`, the correction form, and the prepared suites; all permitted static checks passed |
+| `2026-09-05T23:10:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`; static checks passed and every prepared feature test remains unexecuted |
