@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:19:56+02:00`
+- **Updated:** `2026-09-05T20:21:55+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
 - **Approval requested:** `2026-09-05T20:19:56+02:00`
 - **Approved:** `2026-09-05T20:19:56+02:00`
 - **Testing started:** `2026-09-05T20:19:56+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T20:21:55+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized cycle for `ae1870380a0657d71846b0c7eb9566c2b979edf7`: snapshot, clean reset, repository suite with the row count compared, restore, then remove the old orphan row.
+- **Next action:** None; `T-030` is `Done`. The pre-existing `T-008 exercise` row was deliberately not deleted, because it is referenced by the Owner's split and active workout.
 
 ## Scope
 
@@ -35,8 +35,8 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 
 ## Acceptance criteria
 
-- [ ] After an authorized `npm run test:repository` run the exercise library holds exactly the rows it held before.
-- [ ] The suite still passes unchanged.
+- [x] After an authorized `npm run test:repository` run the exercise library holds exactly the rows it held before — 10 seeded exercises before and the same 10 names after, with no `T-008 exercise` row left behind.
+- [x] The suite still passes unchanged — 4/4 on a freshly reset database.
 - [x] The database workflow records that the repository suite needs a database without a resumable workout.
 
 ## Traceability
@@ -74,6 +74,8 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 - **Planned tests:** a snapshot, a clean reset so no resumable workout exists, an authorized `npm run test:repository` run with the exercise-library row count compared before and after, then a restore; must not run before Owner approval of the exact commit and of the reset
 - **Authorized commit:** `ae1870380a0657d71846b0c7eb9566c2b979edf7`
 - **Results:** Failed on `2026-09-05T20:16:37+02:00` for a precondition, not for the delivered change. `npm run db:snapshot` ran first, then `npm run test:repository` against the Owner's restored data reported 2 failed and 2 passed: both suites that start their own workout hit `duplicate key value violates unique constraint "workouts_single_resumable"`, because the Owner's restored workout is still active and the schema allows one resumable workout. The repository suite therefore shares the pgTAP precondition of a database without a resumable workout, which no document recorded. The delivered change still behaved correctly under the failure: every table held exactly its pre-run count afterwards, including one exercise, so the failing run left no new orphan where the old code would have left one.
+- **Results:** Passed on `2026-09-05T20:21:55+02:00` for `ae1870380a0657d71846b0c7eb9566c2b979edf7`. `npm run db:snapshot` ran first, then the authorized clean reset landed on the seeded baseline of 10 exercises, 1 program, 3 splits, and no workout. `npm run test:repository` passed 4/4, and afterwards the library still held exactly those 10 seeded names with no `T-008 exercise` row, the program and splits were untouched, and the current-program pointer was back on `Baseline program`. `npm run db:restore` then returned every one of the Owner's pre-reset counts, and `get_today_view()` resolves their active workout again.
+- **Not performed:** the pre-existing `T-008 exercise f257de3a-f15b-4914-822c-fa4aed121637` row was left in place. It is not a free-standing orphan: it is the Owner's only exercise, prescribed in their split and snapshotted into their active workout, so deleting it would empty the split and strip the workout's exercise. Its removal needs a separate Owner decision.
 
 ## Delivery commit
 
@@ -111,15 +113,15 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -135,3 +137,4 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 | `2026-09-05T20:17:59+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered a replacement that keeps the test cleanup and records the repository suite's no-resumable-workout precondition; static checks passed and no feature test ran |
 | `2026-09-05T20:19:56+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset its run requires |
 | `2026-09-05T20:19:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the cycle against `ae1870380a0657d71846b0c7eb9566c2b979edf7`: snapshot, reset, repository suite, restore |
+| `2026-09-05T20:21:55+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: seeded reset, repository 4/4, an unchanged 10-row library with no orphan, and a faithful restore of the Owner's data |

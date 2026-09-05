@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T20:18:41+02:00`
-- **Progress:** `1/2 required Tasks Done`
+- **Updated:** `2026-09-05T20:21:55+02:00`
+- **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -32,7 +32,7 @@ pgTAP requires a clean database, because its fixtures create their own active wo
 ## Tasks
 
 - `T-027` — Restore usable local data after a verification reset — `Done`
-- `T-030` — Delete the exercise the command repository test creates — `Backlog`, found during the `T-027` verification
+- `T-030` — Delete the exercise the command repository test creates — `Done`, found during the `T-027` verification
 
 ## Dependencies and blockers
 
@@ -63,10 +63,10 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
+- [x] All required Tasks are `Done`
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] No required follow-up scope is hidden
 - [ ] User confirms the feature result
 
 ## History
@@ -80,3 +80,4 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 | `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Tester | `T-027` verified and `Done` for `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; added `T-030` | The seeded reset and the snapshot round trip both passed, and the run exposed an orphan exercise the command repository test leaves behind |
 | `2026-09-05T20:12:12+02:00` | Claude Code primary agent / Executor | `T-030` delivered `cfb8ee5fa42e8655553809a159bc422502737069` and entered review | The command repository test now deletes the exercise it creates |
 | `2026-09-05T20:18:41+02:00` | Claude Code primary agent / Executor | `T-030` returned to `In Progress` and delivered replacement `ae1870380a0657d71846b0c7eb9566c2b979edf7` | The authorized run exposed that the repository suite needs a database without a resumable workout, which no document recorded |
+| `2026-09-05T20:21:55+02:00` | Claude Code primary agent / Tester | `T-030` verified and `Done` for `ae1870380a0657d71846b0c7eb9566c2b979edf7` | Both required Tasks are complete; the Feature result awaits the Owner's confirmation |
