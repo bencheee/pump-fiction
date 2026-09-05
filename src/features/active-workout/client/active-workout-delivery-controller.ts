@@ -25,6 +25,16 @@ export type ActiveWorkoutSaveStatus =
             conflict: ActiveWorkoutConflict;
             pendingCommands: readonly PendingActiveWorkoutCommand[];
           }>
+        /**
+         * The server refused this command for good, so it left the outbox and
+         * will never be delivered again. The remaining commands are still
+         * pending and recover exactly as they do after a conflict.
+         */
+        | Readonly<{
+            kind: "discard_and_replay";
+            discarded: ActiveWorkoutCommand;
+            pendingCommands: readonly PendingActiveWorkoutCommand[];
+          }>
         | Readonly<{ kind: "retry_delivery" }>;
     }>;
 
@@ -115,6 +125,13 @@ export class ActiveWorkoutDeliveryController {
         result.kind === "acknowledged"
           ? invalidAcknowledgementResult()
           : result;
+
+      // A rejection is terminal: retrying it would only block every command
+      // behind it, so it leaves the outbox before the status is reported.
+      if (stoppedResult.kind === "rejected") {
+        await this.outbox.remove(next.command.commandId);
+      }
+
       const currentPending = await this.outbox.list();
 
       this.setStatus({
@@ -131,7 +148,13 @@ export class ActiveWorkoutDeliveryController {
                 conflict: stoppedResult.conflict,
                 pendingCommands: currentPending,
               }
-            : { kind: "retry_delivery" },
+            : stoppedResult.kind === "rejected"
+              ? {
+                  kind: "discard_and_replay",
+                  discarded: next.command,
+                  pendingCommands: currentPending,
+                }
+              : { kind: "retry_delivery" },
       });
 
       return { kind: "stopped", result: stoppedResult };

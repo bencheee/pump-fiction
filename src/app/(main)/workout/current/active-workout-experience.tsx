@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { getCurrentWorkoutAction } from "@/app/actions/workouts";
 import { applyCommandToWorkout } from "@/features/active-workout/domain/apply-command-to-workout";
+import { describeCommandTarget } from "@/features/active-workout/domain/describe-command-target";
 import type { ActiveWorkoutCommand } from "@/features/active-workout/domain/active-workout-command";
 import {
   changeSetMode,
@@ -106,6 +107,7 @@ export function ActiveWorkoutExperience({
     Readonly<Record<string, RowFeedback>>
   >({});
   const [now, setNow] = useState(() => Date.now());
+  const [discardedChange, setDiscardedChange] = useState<string | null>(null);
   const recoveringRef = useRef(false);
 
   const adoptWorkout = useCallback((next: CurrentWorkout) => {
@@ -218,6 +220,20 @@ export function ActiveWorkoutExperience({
     if (status.state === "saved" && placeholderIds.size > 0)
       void refreshAuthoritative();
   }, [placeholderIds.size, refreshAuthoritative, status]);
+
+  // A refused command is already out of the outbox, so recovery runs without a
+  // gesture: the workout must never sit stranded behind a change it cannot save.
+  useEffect(() => {
+    if (
+      status.state !== "save_failed" ||
+      status.recovery.kind !== "discard_and_replay"
+    )
+      return;
+    setDiscardedChange(
+      describeCommandTarget(workoutRef.current, status.recovery.discarded),
+    );
+    void recoverFromConflict();
+  }, [recoverFromConflict, status]);
 
   const exercisesById = useMemo(
     () => new Map(exercises.map((exercise) => [exercise.id, exercise])),
@@ -350,6 +366,26 @@ export function ActiveWorkoutExperience({
       ) : null}
 
       <main className="flex flex-1 flex-col gap-4 px-[var(--pf-gutter)] pt-4">
+        {discardedChange !== null ? (
+          <div
+            role="alert"
+            className="flex items-start gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-warn)] bg-[var(--pf-bg-surface)] p-3 text-[13px] leading-[1.5]"
+          >
+            <Icon name="triangle-alert" size={14} className="mt-0.5 shrink-0" />
+            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+              One change could not be saved and was undone: {discardedChange}.
+              Everything else is saved and the workout continues.
+            </span>
+            <button
+              type="button"
+              aria-label="Dismiss the undone change notice"
+              onClick={() => setDiscardedChange(null)}
+              className="min-h-11 min-w-11 shrink-0 text-[var(--pf-accent-strong)]"
+            >
+              <Icon name="x" size={16} />
+            </button>
+          </div>
+        ) : null}
         {workout.exercises.map((exercise, index) =>
           placeholderIds.has(exercise.id) ? (
             <PlaceholderExerciseCard
@@ -439,7 +475,7 @@ export function ActiveWorkoutExperience({
               >
                 Refresh
               </button>
-            ) : (
+            ) : cue.recovery === "discard_and_replay" ? null : (
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}

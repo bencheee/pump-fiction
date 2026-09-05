@@ -37,7 +37,7 @@ The thin Route Handler parses JSON, calls the server composition boundary, and m
 | --- | --- | --- |
 | `acknowledged` | `200` | Verify command/workout/revisions, then remove that command from the outbox |
 | `conflict` | `409` | Keep pending commands, refresh the authoritative workout, and replay them for recovery |
-| `rejected` | `400` or `404` | Keep the command and expose a failed save for explicit resolution |
+| `rejected` | `400` or `404` | Terminal for that command: drop it from the outbox, report the change it lost, and recover the rest |
 | `retry` | `503` | Keep the command and retry delivery later |
 
 Raw PostgreSQL, PostgREST, and environment details never cross this transport boundary.
@@ -73,9 +73,10 @@ Split starts copy program/split identity and names, ordered exercise identity/de
 
 - it sends only the oldest pending command;
 - an acknowledgement must match command ID, workout ID, expected revision, and resulting revision before removal;
-- retry, rejection, malformed acknowledgement, and conflict retain the command and stop the queue;
+- retry, malformed acknowledgement, and conflict retain the command and stop the queue; a rejection stops the queue too, but leaves the outbox first, so it is delivered at most once and never blocks what follows;
 - status is explicitly `saving`, `saved`, or `save_failed` with pending count;
-- conflict status carries `refresh_and_replay`, the authoritative revision conflict, and the retained FIFO command list.
+- conflict status carries `refresh_and_replay`, the authoritative revision conflict, and the retained FIFO command list;
+- rejection status carries `discard_and_replay`, the command that was dropped, and the commands still pending behind it.
 
 On reload or reopen, `restoreActiveWorkout()` first calls the supplied authoritative server loader, then reads pending commands for that workout and replays them through the supplied pure feature reducer. The workout UI owns the authoritative state shape and reducer; IndexedDB never becomes an application cache or canonical workout store.
 
@@ -83,7 +84,7 @@ On reload or reopen, `restoreActiveWorkout()` first calls the supplied authorita
 
 `T-016` supplies that reducer as `applyCommandToWorkout`, a pure local mirror of the persistence function that also assigns each optimistic structural addition (`add_set`, `add_exercise`) the command ID as a synthetic placeholder identity. Placeholder rows stay non-interactive until the queue drains, after which the screen refreshes the authoritative aggregate through the read operation and replaces synthetic identities with server-created rows.
 
-Conflict recovery follows the recorded `refresh_and_replay` contract: the screen fetches the authoritative workout, then re-enqueues the retained FIFO commands as fresh envelopes with new command IDs rebased onto the refreshed revision before flushing again. Original command IDs are never reused with a different expected revision because they are consumed idempotency evidence. A refreshed aggregate that no longer contains the workout returns the user to Today. Rejected commands stay pending and visible as a failed save with Retry; they are resolved explicitly rather than silently discarded.
+Conflict recovery follows the recorded `refresh_and_replay` contract: the screen fetches the authoritative workout, then re-enqueues the retained FIFO commands as fresh envelopes with new command IDs rebased onto the refreshed revision before flushing again. Original command IDs are never reused with a different expected revision because they are consumed idempotency evidence. A refreshed aggregate that no longer contains the workout returns the user to Today. Rejection recovery, accepted by the Owner on `2026-09-05` after a permanently refused command stranded a workout under `T-025`, reuses that same path. The refused command is terminal: it leaves the outbox before the status is reported, so it is never retried and never blocks the commands behind it. The screen then runs the refresh-and-replay recovery without waiting for a gesture, because a workout must not sit stranded behind a change it cannot save, and it states plainly that one change could not be saved and was undone, naming the affected set or exercise. The remaining commands are rebased onto the refreshed revision exactly as after a conflict. Nothing offers Retry for a refused command, since retrying it would only fail the same way.
 
 ## Approval-gated verification
 

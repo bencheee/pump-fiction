@@ -294,7 +294,9 @@ export function FinishReview({
               <>
                 {failure.message}
                 <span className="block text-[var(--pf-text-2)]">
-                  Nothing was recorded. Your review is unchanged.
+                  {failure.recovery.kind === "discard_and_replay"
+                    ? "That attempt was discarded. Your review is unchanged, so you can finish again."
+                    : "Nothing was recorded. Your review is unchanged."}
                 </span>
               </>
             ) : status.state === "saving" ? (
@@ -312,7 +314,7 @@ export function FinishReview({
               >
                 Refresh
               </button>
-            ) : (
+            ) : failure.recovery.kind === "discard_and_replay" ? null : (
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}

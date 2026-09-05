@@ -79,11 +79,21 @@ class FakeOutbox implements ActiveWorkoutOutbox {
 
 class FakeTransport implements ActiveWorkoutCommandTransport {
   commands: ActiveWorkoutCommand[] = [];
+  /** Refuses the first command it matches, then behaves normally. */
+  rejectOnce?: (command: ActiveWorkoutCommand) => boolean;
 
   async deliver(
     command: ActiveWorkoutCommand,
   ): Promise<ActiveWorkoutCommandResult> {
     this.commands.push(command);
+    if (this.rejectOnce?.(command) === true) {
+      this.rejectOnce = undefined;
+      return {
+        kind: "rejected",
+        code: "validation",
+        message: "That change is not valid for this workout.",
+      };
+    }
     return {
       kind: "acknowledged",
       acknowledgement: {
@@ -219,9 +229,11 @@ const library: readonly Exercise[] = [
   },
 ];
 
-function renderExperience(workout = makeWorkout()) {
+function renderExperience(
+  workout = makeWorkout(),
+  transport = new FakeTransport(),
+) {
   const outbox = new FakeOutbox();
-  const transport = new FakeTransport();
   render(
     <ActiveWorkoutExperience
       initial={workout}
@@ -401,6 +413,36 @@ describe("Active-workout mobile experience", () => {
         loadKg: 80,
       });
     });
+  });
+
+  it("undoes a permanently rejected change and keeps the workout usable", async () => {
+    const user = userEvent.setup();
+    const workout = makeWorkout();
+    actions.getCurrent.mockResolvedValue({ ok: true, value: workout });
+    const transport = new FakeTransport();
+    transport.rejectOnce = (command) => command.operation === "update_set";
+    const { outbox } = renderExperience(workout, transport);
+    const squat = screen.getByRole("region", { name: "Squat" });
+
+    await user.type(within(squat).getAllByLabelText("kg")[1]!, "90");
+    await user.tab();
+
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent(
+      "One change could not be saved and was undone: set 2 of Squat.",
+    );
+    // The refused command left the outbox instead of blocking what follows.
+    await waitFor(async () => {
+      expect(await outbox.list()).toHaveLength(0);
+    });
+
+    await user.type(within(squat).getAllByLabelText("Reps")[2]!, "6");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({ reps: 6 });
+    });
+    expect(screen.queryByRole("button", { name: "Retry" })).toBeNull();
   });
 
   it("gates populated removals behind confirmation and removes empty rows directly", async () => {

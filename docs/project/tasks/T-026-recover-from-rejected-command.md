@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:29:41+02:00`
+- **Updated:** `2026-09-05T21:35:07+02:00`
 - **Started:** `2026-09-05T21:29:41+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the terminal-rejection recovery as one reviewable commit.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -62,17 +62,17 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 ## Execution checklist
 
-- [ ] Record the accepted recovery rule in canonical documentation.
-- [ ] Make a rejection terminal in the delivery controller and drop the command from the outbox.
-- [ ] Refresh and replay the remaining commands, reusing the existing conflict recovery path.
-- [ ] Surface the lost change in the active-workout cue.
-- [ ] Extend the delivery-controller and active-workout tests without running them.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record the accepted recovery rule in canonical documentation — the durability result table, the controller contract, the recovery section, and the workout auto-save description.
+- [x] Make a rejection terminal in the delivery controller and drop the command from the outbox — it leaves the outbox before the status is reported, so the reported pending count already excludes it.
+- [x] Refresh and replay the remaining commands, reusing the existing conflict recovery path — the new `discard_and_replay` status drives the same `recoverFromConflict` the conflict path uses, so the remaining commands are rebased onto the refreshed revision.
+- [x] Surface the lost change in the active-workout cue — recovery runs without a gesture, so the loss is reported in a dismissible notice that outlives the transient cue and names the target through the new `describeCommandTarget`; no Retry is offered for a refused command, on either screen.
+- [x] Extend the delivery-controller and active-workout tests — two controller scenarios cover the terminal drop with the queue retained and the delivery of that queue with exactly one attempt at the refused command; a component scenario refuses a set update, asserts the named notice and the emptied outbox, and then saves a later change.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T21:35:07+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and internal links; `git diff --check` was clean. This Task changes no schema, migration, or generated type, so the database checks do not apply. No feature test ran.
 
 ## Test plan and results
 
@@ -86,7 +86,7 @@ Rule confirmed by the Owner on `2026-09-05`, unchanged from the proposal:
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-026: recover from a permanently rejected active-workout command`
-- **Committed scope:** Not created
+- **Committed scope:** the delivery controller and its test, the new `describe-command-target` domain helper, the active-workout experience and its component test, the finish review, `active-workout-durability.md`, `workouts.md`, and this Task
 
 ## Review
 

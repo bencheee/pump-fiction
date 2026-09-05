@@ -72,6 +72,69 @@ describe("ActiveWorkoutDeliveryController", () => {
     });
   });
 
+  it("drops a rejected command and leaves the queue behind it pending", async () => {
+    const events: string[] = [];
+    const outbox = new MemoryOutbox(events);
+    await outbox.enqueue(firstCommand);
+    await outbox.enqueue(secondCommand);
+    const transport = createTransport(async () => ({
+      kind: "rejected",
+      code: "validation",
+      message: "That change is not valid for this workout.",
+    }));
+    const controller = new ActiveWorkoutDeliveryController(outbox, transport);
+
+    const result = await controller.flush();
+
+    expect(result.kind).toBe("stopped");
+    expect(transport.deliver).toHaveBeenCalledTimes(1);
+    expect(
+      (await outbox.list()).map(({ command }) => command.commandId),
+    ).toEqual([secondCommand.commandId]);
+    expect(events).toContain(`remove:${firstCommand.commandId}`);
+    expect(controller.getStatus()).toMatchObject({
+      state: "save_failed",
+      pendingCount: 1,
+      message: "That change is not valid for this workout.",
+      recovery: {
+        kind: "discard_and_replay",
+        discarded: { commandId: firstCommand.commandId },
+      },
+    });
+  });
+
+  it("delivers the queue behind a rejection and never retries it", async () => {
+    const outbox = new MemoryOutbox();
+    await outbox.enqueue(firstCommand);
+    await outbox.enqueue(secondCommand);
+    const transport = createTransport(async (command) =>
+      command.commandId === firstCommand.commandId
+        ? {
+            kind: "rejected",
+            code: "validation",
+            message: "That change is not valid for this workout.",
+          }
+        : acknowledgement(command),
+    );
+    const controller = new ActiveWorkoutDeliveryController(outbox, transport);
+
+    await controller.flush();
+    const drained = await controller.flush();
+
+    expect(drained.kind).toBe("drained");
+    expect(await outbox.list()).toEqual([]);
+    expect(transport.deliver).toHaveBeenCalledTimes(2);
+    expect(transport.deliver).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ commandId: firstCommand.commandId }),
+    );
+    expect(transport.deliver).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({ commandId: secondCommand.commandId }),
+    );
+    expect(controller.getStatus()).toEqual({ state: "saved", pendingCount: 0 });
+  });
+
   it("restores authoritative state before replaying pending commands", async () => {
     const events: string[] = [];
     const outbox = new MemoryOutbox(events);
