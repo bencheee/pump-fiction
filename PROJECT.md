@@ -9,9 +9,9 @@
 
 ## Current focus
 
-[`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Build Exercise History mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T00:46:12+02:00. pgTAP 124/124, repository 6/6, and the type comparison passed; two arithmetic expectations in the new unit suite were wrong about the trailing week boundary. It renders `S15` and `S16` on the `T-033` derivation.
+[`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T00:46:12+02:00. It renders `S15` and `S16` on the `T-033` derivation, with the first chart in the application.
 
-History already has its data, its first screens, and its exercise statistics. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) delivered the month-grouped reads, the saved-workout detail, and ten transactional corrections, verified through approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) delivered the subsection shell, `S13`, `S14`, and the correction screen, verified through approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`.
+History already has its data, its first screens, and its exercise statistics. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) delivered the month-grouped reads, the saved-workout detail, and ten transactional corrections. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) delivered the subsection shell, `S13`, `S14`, and the correction screen. [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) delivered the identity-grouped reads and every derivation rule behind them.
 
 ## Immediate next action
 
