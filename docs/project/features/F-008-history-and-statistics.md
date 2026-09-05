@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T22:41:38+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is In Review`
+- **Updated:** `2026-09-05T22:44:18+02:00`
+- **Progress:** `0/6 required Tasks Done; T-031 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -120,3 +120,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T22:35:56+02:00` | User / Approver | Approved the `T-031` replacement | Authorized the complete recorded plan from the beginning against the exact replacement |
 | `2026-09-05T22:39:55+02:00` | Claude Code primary agent / Tester | Returned `T-031` to `In Progress` | pgTAP, unit, and type checks passed; the parallel repository script collided on the shared database |
 | `2026-09-05T22:41:38+02:00` | Claude Code primary agent / Executor | Delivered the `T-031` second replacement | Exact replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` serializes the repository script and awaits fresh approval |
+| `2026-09-05T22:44:18+02:00` | User / Approver | Approved the `T-031` second replacement | Authorized the complete recorded plan from the beginning |
