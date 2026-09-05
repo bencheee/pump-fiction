@@ -1,7 +1,7 @@
 # T-020 — Derive per-set load from the exercise definition
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:36:27+02:00`
+- **Updated:** `2026-09-05T12:36:44+02:00`
 - **Started:** `2026-09-05T12:33:15+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T12:36:44+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit and decides on approval; component verification stays blocked until then.
 
 ## Scope
 
@@ -88,7 +88,7 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `c48cbdcaf0bc348888ef2e1eff7193269a6f049c`
 - **Subject:** `T-020: derive per-set load from the exercise definition`
 - **Committed scope:** The active-workout set row without its load-mode sheet, rendering the snapshot's implied mode and one apply/remove control for the single permitted addition; the now-unreachable null-mode branches removed; component fixtures and scenarios rewritten for both directions of the control on a bodyweight and a weights exercise; and revised `MVP-WRK-003` with the workout, screen-decision, and UI-foundation documentation.
 
@@ -139,3 +139,4 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 7 recorded on 2026-09-05 |
 | `2026-09-05T12:33:15+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the per-set control placement on 2026-09-05 and directed execution after `T-019` |
 | `2026-09-05T12:33:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout set-entry change |
+| `2026-09-05T12:36:44+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` with static checks passed and no feature test run |
