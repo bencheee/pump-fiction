@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T22:29:27+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is In Progress`
+- **Updated:** `2026-09-05T22:33:33+02:00`
+- **Progress:** `0/6 required Tasks Done; T-031 is In Review`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -116,3 +116,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T22:22:36+02:00` | Claude Code primary agent / Executor | Delivered `T-031` for review | Exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` awaits the Owner's approval before any feature test runs |
 | `2026-09-05T22:25:34+02:00` | User / Approver | Approved `T-031` | Authorized only the recorded verification against the exact delivery |
 | `2026-09-05T22:29:27+02:00` | Claude Code primary agent / Tester | Returned `T-031` to `In Progress` | Two prepared pgTAP suites failed on test-source defects; a replacement needs fresh approval |
+| `2026-09-05T22:33:33+02:00` | Claude Code primary agent / Executor | Delivered the `T-031` replacement | Exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence, and awaits fresh approval |

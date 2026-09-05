@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,11 +9,11 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:33:00+02:00`
+- **Updated:** `2026-09-05T22:33:33+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
-- **Review started:** `2026-09-05T22:22:36+02:00`
+- **Review started:** `2026-09-05T22:33:33+02:00` for the replacement
 - **Approval requested:** `2026-09-05T22:25:34+02:00`
-- **Approved:** `2026-09-05T22:25:34+02:00`
+- **Approved:** `2026-09-05T22:25:34+02:00` for the superseded first delivery; the replacement is not approved
 - **Testing started:** `2026-09-05T22:25:34+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
@@ -102,23 +102,24 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`, superseded by the replacement recorded in the evidence commit that follows it
-- **Subject:** `T-031: build workout History operations`
+- **Delivery commit SHA:** `b5e4cda609d478453eccd562087d1f18bfec7f54` (test-and-documentation-only replacement; supersedes `95de9212848755c956cb0dc5d50b5cfc8796dc27`)
+- **Subject:** `T-031: correct the prepared History test fixtures`
+- **Replacement scope:** the two prepared pgTAP suites plus one sentence of the server-boundary document and its matching doc comment; the schema, migration, generated types, and runtime code are unchanged from the first delivery
 - **Committed scope:** the `0003_workout_history.sql` declarative schema and the identity snapshot columns in `0001_core.sql` and `0002_workout_operations.sql`; the generated migration with its backfill; regenerated database types; the `src/features/history` domain, validation, repository contract, and operations; the Supabase repository, server composition, and Server Actions; the prepared `0006_workout_history` pgTAP suite, unit suite, and repository integration test with its `test:repository` registration; the ADR-0024 identity amendment; and the domain-model, server-boundary, History product, and local-database-workflow documents
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T22:25:34+02:00`
-- **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T22:25:34+02:00` for the superseded first delivery; the replacement awaits review
+- **Outcome:** The first delivery was approved and its verification then failed; the replacement is not yet reviewed
+- **Findings:** The authorized verification found two prepared-test defects, recorded above
 
 ## Approval
 
-- **Approved commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
-- **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T22:25:34+02:00`
-- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, which approves it and authorizes only the recorded verification plan.
+- **Approved commit:** None; the approval of `95de9212848755c956cb0dc5d50b5cfc8796dc27` was invalidated by its failed verification
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** The Owner replied `potvrda` on `2026-09-05`, approving `95de9212848755c956cb0dc5d50b5cfc8796dc27`. That approval no longer stands: its verification failed, so replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` needs a fresh decision before any test runs again.
 
 ## Definition of Ready
 
@@ -159,3 +160,5 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:25:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` with `potvrda` |
 | `2026-09-05T22:25:34+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded verification against the exact approved delivery |
 | `2026-09-05T22:29:27+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Reset and seed succeeded and four pgTAP suites passed, before `0001_core_constraints` hit the new not-null identity column and `0006_workout_history` refused its own rotation-invalid fixture; remaining steps stopped and the approval is invalidated |
+| `2026-09-05T22:33:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected both prepared suites and the inaccurate return-value sentence; all permitted static checks passed without running a feature test |
+| `2026-09-05T22:33:33+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact replacement `b5e4cda609d478453eccd562087d1f18bfec7f54`; it awaits fresh approval before the complete recorded plan restarts |
