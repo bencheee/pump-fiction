@@ -1,7 +1,7 @@
 # T-023 — Correct active-workout screen details
 
 - **Feature:** `F-011`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T11:41:11+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T13:11:36+02:00`
+- **Started:** `2026-09-05T13:11:36+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms `Ready`; this Task has no dependency and may be reordered earlier.
+- **Next action:** Deliver the three screen corrections as one reviewable commit, then request review.
 
 ## Scope
 
@@ -111,7 +111,7 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -130,3 +130,5 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner corrections 5, 6, and 8 recorded on 2026-09-05 |
+| `2026-09-05T13:11:36+02:00` | User / Owner | `Backlog` | `Ready` | Directed execution after `T-021` |
+| `2026-09-05T13:11:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout screen corrections |
