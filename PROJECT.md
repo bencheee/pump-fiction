@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T10:22:42+02:00
+- **Last updated:** 2026-09-05T10:26:58+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
+- **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` at `4/4 Tasks Done` pending Owner feature-result confirmation
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `Testing` at exact approved second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`.
+All four [`F-007`](docs/project/features/F-007-today-and-active-workout.md) Tasks are `Done`; the feature's completion checklist waits only on the Owner's confirmation of the feature result.
 
 ## Immediate next action
 
-Complete the full unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against exact approved T-016 second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`.
+Owner confirms the `F-007` feature result; then `F-008` History and Statistics becomes the next Feature to plan.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Testing` — Executor: Claude Code primary agent — updated `2026-09-05T10:22:42+02:00` — exact second replacement approved; complete verification restarted.
+- [`F-007`](docs/project/features/F-007-today-and-active-workout.md) — `4/4 Tasks Done` — awaiting the Owner's feature-result confirmation.
 
 ## Next
 
@@ -40,11 +40,11 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — completed `2026-09-05T10:26:58+02:00` — approved second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` — unit 9/9, component 11/11, pgTAP 53/53, and serialized Chromium/WebKit scenarios 2/2 passed with structural captures.
 - [`T-015`](docs/project/tasks/T-015-build-today-and-workout-start-mobile-experience.md) — completed `2026-09-04T15:00:50+02:00` — approved second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` — component 3/3 and serialized Chromium/WebKit scenarios 2/2 passed with structural captures.
 - [`T-017`](docs/project/tasks/T-017-correct-one-time-workout-starter-sets.md) — completed `2026-09-04T12:46:55+02:00` — approved delivery `8d5779258505bb94383368e13eff97a4346320ca` — clean reset, pgTAP 18/18, and Workout repository integration 1/1 passed.
 - [`T-014`](docs/project/tasks/T-014-build-today-and-workout-operations.md) — completed `2026-09-04T08:58:15+02:00` — approved delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` — unit 8/8, clean reset, pgTAP 16/16, repository integration 2/2, and generated types passed.
 - [`T-013`](docs/project/tasks/T-013-build-programs-mobile-experience.md) — completed `2026-09-03T11:35:06+02:00` — approved replacement `000a62a70fbf03bb14f32fe7513ce0fb93f528fe` — component 4/4 and isolated Chromium/WebKit browser scenarios 4/4 passed with two structural captures.
-- [`T-012`](docs/project/tasks/T-012-build-program-and-split-operations.md) — completed `2026-09-03T10:27:22+02:00` — approved replacement `5b781802d2bddfc77b55745f12108ae678bd2b76` — unit 4/4, clean reset, pgTAP 26/26, repository integration 1/1, and generated-type comparison passed.
 
 ## Active work items
 

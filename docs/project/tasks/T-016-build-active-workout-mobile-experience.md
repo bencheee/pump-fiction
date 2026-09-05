@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-05T10:22:42+02:00`
+- **Updated:** `2026-09-05T10:26:58+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-05T10:14:35+02:00` for second replacement
 - **Approval requested:** `2026-09-05T10:22:42+02:00` for second replacement
 - **Approved:** `2026-09-05T10:22:42+02:00` for second replacement
 - **Testing started:** `2026-09-05T10:22:42+02:00` for second replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T10:26:58+02:00`
 - **Canceled:** Not reached
-- **Next action:** Restart the complete recorded unit/component, clean-reset pgTAP, and serialized Chromium/WebKit verification against exact approved second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` in a fresh isolated worktree.
+- **Next action:** None; `T-016` is complete and `F-007` awaits the Owner's confirmation of the feature result.
 
 ## Scope
 
@@ -31,12 +31,12 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Acceptance criteria
 
-- [ ] S10 restores canonical state with accurate duration, revision, pending replay, and non-color save/conflict cues.
-- [ ] Cards show required snapshots, Last time, notes, prescription, editable rows, and valid per-set mode inputs.
-- [ ] Exercise/set add/remove/reorder stays workout-local, auto-saved, accessible, and confirmation-gated for populated data.
-- [ ] Pause and resume exclude paused wall-clock time.
-- [ ] S12 handles complete, incomplete, continue, and confirmed discard with required review data.
-- [ ] S10–S12 match accepted structure, dense phone reflow, focused navigation, overlay history, touch, motion, and accessibility behavior.
+- [x] S10 restores canonical state with accurate duration, revision, pending replay, and non-color save/conflict cues.
+- [x] Cards show required snapshots, Last time, notes, prescription, editable rows, and valid per-set mode inputs.
+- [x] Exercise/set add/remove/reorder stays workout-local, auto-saved, accessible, and confirmation-gated for populated data.
+- [x] Pause and resume exclude paused wall-clock time.
+- [x] S12 handles complete, incomplete, continue, and confirmed discard with required review data.
+- [x] S10–S12 match accepted structure, dense phone reflow, focused navigation, overlay history, touch, motion, and accessibility behavior.
 
 ## Traceability
 
@@ -73,7 +73,7 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes), the clean-reset pgTAP suites including the new position-renumbering regression, and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
 - **Authorized commit:** `441a87046409d2970de72e5c3f9c1448c4423a4d`
-- **Results:** Against the formerly approved first replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` on 2026-09-05 in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`: `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` applied all migrations including the renumbering correction, the reducer/set-entry unit suite passed 9/9, the S10/S12 component suite passed 11/11, and the complete clean-reset pgTAP run passed 53/53 across five files including the new position-renumbering regression 9/9. The serialized mobile-Chromium scenario completed the entire S10 flow — set entry, validation, populated and empty removals, add set, add exercise, reorder, note, pause/resume, and reload restore — and stopped only on a test-only strict-mode defect at the S12 assertions: the singular query for the `Confirmed sets` metric also matches the intentional "Confirmed sets count toward exercise personal records and charts." completion bullet. WebKit did not run. These partial results are discarded for completion; the corrected second replacement requires fresh approval and a complete restart. The earlier run against superseded original delivery `63126a1635421cf042186446216e7921025e6105` passed unit 9/9 and component 11/11 before exposing the since-corrected T-014 renumbering defect.
+- **Results:** Against exact approved second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` on 2026-09-05 with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and Playwright `1.62.1` in a fresh isolated worktree: `npm ci` installed 653 packages with no vulnerabilities; `supabase db reset` applied all migrations including the renumbering correction; the reducer/set-entry unit suite passed 9/9; the S10/S12 component suite passed 11/11; the complete clean-reset pgTAP run passed 53/53 across five files including the position-renumbering regression 9/9; and the serialized one-worker browser scenario passed 1/1 on mobile Chromium in 30.9 seconds and 1/1 on mobile WebKit in 21.9 seconds, together covering set entry and confirmation validation, populated and empty removals, add set, add exercise, explicit reordering, workout notes, pause/resume, reload restore, split finish review with rotation advance, and the one-time review omission with confirmed discard, plus reflow checks and the active-workout and finish-review structural captures per platform. Fixture workouts were deleted and fixture exercises archived after the runs. Two earlier verification attempts are recorded above: the first exposed the since-corrected T-014 renumbering defect and the second a since-corrected test-only substring query; their partial results were discarded.
 
 ## Delivery commit
 
@@ -111,15 +111,15 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -146,3 +146,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-05T10:22:42+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` with no additional findings and recommended approval |
 | `2026-09-05T10:22:42+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact second replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-05T10:22:42+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved second replacement |
+| `2026-09-05T10:26:58+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete plan passed: unit 9/9, component 11/11, pgTAP 53/53, and serialized Chromium 1/1 plus WebKit 1/1 with structural captures; fixtures cleaned; `F-007` awaits the Owner's feature-result confirmation |
