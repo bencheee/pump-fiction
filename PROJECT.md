@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T19:17:58+02:00
-- **Current phase:** Local MVP implementation — `F-011` complete, awaiting the Owner's confirmation before `F-008`
+- **Last updated:** 2026-09-05T19:26:04+02:00
+- **Current phase:** Local MVP implementation — `F-011` confirmed; planning the Owner's next model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` complete; all seven `F-011` Tasks are `Done`; `F-008` intentionally not started
+- **Implementation:** `F-004` through `F-007` and `F-011` complete; `F-012` and `F-013` recorded in `Next`; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) MVP Experience Corrections records the nine corrections the Owner raised on `2026-09-05` after using the delivered application. All nine recorded corrections plus the blocking active-workout defect the Owner reported afterwards are delivered, approved, and verified. The Feature now needs only the Owner's confirmation of the aggregate result; `F-008` waits for that.
+[`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) is `Done` with the Owner's confirmed result on `2026-09-05`, covering the nine recorded corrections and the blocking active-workout defect found afterwards. The Owner then raised two further model corrections, for exercise categories and for implicit set confirmation, which are being turned into work items.
 
 ## Immediate next action
 
-Owner confirms the aggregate `F-011` result and the order of `F-012`, `F-013`, and `F-008`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Record the Owner's two new model corrections as work items once their open decisions are answered. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`7/7 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
+- No active work item; the Owner's two new model corrections are being planned.
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
@@ -51,7 +51,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/13 Features Done`)
-- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`7/7 Tasks Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/13 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

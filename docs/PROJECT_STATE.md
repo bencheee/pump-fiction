@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, `F-006` Programs and Splits, and `F-007` Today and Active Workout are complete, the last with the Owner's confirmed feature result covering Today, workout start, the active workout, and the finish review.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, `F-006` Programs and Splits, `F-007` Today and Active Workout, and `F-011` MVP Experience Corrections are complete, the last with the Owner's confirmed feature result covering Today, workout start, the active workout, and the finish review.
 
 ## Conceptually completed
 
@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Obtain the Owner's confirmation of the aggregate `F-011` result. All seven Tasks are `Done`, the last being `T-025` on approved replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`, which corrected the set-shape constraint that had blocked a live workout. The local database was reset with the Owner's explicit consent during that verification, so it holds no programs, exercises, or history. Two follow-up Features are recorded in `Next` at the Owner's request: `F-012` removes the stuck-command failure class, and `F-013` stops verification from destroying local data. The Owner confirms their order against `F-008` History and Statistics.
+Turn the Owner's two new model corrections into work items: exercise categories reduced to weights and bodyweight with assistance moved into bodyweight, and implicit set confirmation that records a set as soon as its values are entered. `F-011` is `Done` with the Owner's confirmation on 2026-09-05, and the local database holds no data after the authorized verification reset.
 
 ## Implementation status
 
