@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:29:27+02:00`
+- **Updated:** `2026-09-05T22:33:00+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:22:36+02:00`
 - **Approval requested:** `2026-09-05T22:25:34+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T22:25:34+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the two test-source defects the verification exposed, deliver a replacement, and request fresh approval. No further test runs until that replacement is approved.
+- **Next action:** The Owner reviews the replacement delivery. Approving it restarts the complete recorded verification from the beginning.
 
 ## Scope
 
@@ -90,7 +90,7 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Passed on `2026-09-05T22:21:33+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. `npm run check` passed Prettier, ESLint boundaries, strict TypeScript, the Next.js `16.3.3` production build across 18 routes, 8 font and 38 icon checksums with their licenses, Markdown lint across 115 files, and all 949 internal links. The declarative sync produced one migration under `--strict-coverage`; the complete migration chain then applied cleanly to a throwaway database created and dropped for the check, producing all 13 History functions and the identity column. Regenerated types matched the committed file on a second run, `supabase db lint --level error` reported no schema errors, and `git diff --check` was clean. No feature test ran: the pgTAP, unit, and repository suites are prepared and unexecuted.
+- Results: Passed on `2026-09-05T22:21:33+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. `npm run check` passed Prettier, ESLint boundaries, strict TypeScript, the Next.js `16.3.3` production build across 18 routes, 8 font and 38 icon checksums with their licenses, Markdown lint across 115 files, and all 949 internal links. The declarative sync produced one migration under `--strict-coverage`; the complete migration chain then applied cleanly to a throwaway database created and dropped for the check, producing all 13 History functions and the identity column. Regenerated types matched the committed file on a second run, `supabase db lint --level error` reported no schema errors, and `git diff --check` was clean. No feature test ran: the pgTAP, unit, and repository suites are prepared and unexecuted. Re-run for the replacement on `2026-09-05T22:33:00+02:00`: `npm run check` passed every step again, and `git diff --check` was clean. The replacement changes no schema, migration, or generated type, so the declarative sync and database checks did not need to run again. No feature test ran after the corrections.
 
 ## Test plan and results
 
@@ -102,7 +102,7 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
+- **Delivery commit SHA:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`, superseded by the replacement recorded in the evidence commit that follows it
 - **Subject:** `T-031: build workout History operations`
 - **Committed scope:** the `0003_workout_history.sql` declarative schema and the identity snapshot columns in `0001_core.sql` and `0002_workout_operations.sql`; the generated migration with its backfill; regenerated database types; the `src/features/history` domain, validation, repository contract, and operations; the Supabase repository, server composition, and Server Actions; the prepared `0006_workout_history` pgTAP suite, unit suite, and repository integration test with its `test:repository` registration; the ADR-0024 identity amendment; and the domain-model, server-boundary, History product, and local-database-workflow documents
 

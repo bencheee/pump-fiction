@@ -37,8 +37,10 @@ export async function getHistoryWorkout(
 }
 
 /**
- * Applies one correction and returns the workout as it stands afterwards, so
- * the caller sees every recalculated value. A deletion returns null.
+ * Applies one correction. A correction that names its workout returns that
+ * workout as it stands afterwards, so the caller sees the recalculated values
+ * without a second call. A deletion, and a correction addressed to a set or an
+ * occurrence, returns null; the caller reloads the workout it is showing.
  */
 export async function correctHistoryWorkout(
   repository: WorkoutHistoryRepository,

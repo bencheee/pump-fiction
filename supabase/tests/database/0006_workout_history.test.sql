@@ -43,8 +43,10 @@ select public.apply_active_workout_command(
   '2026-08-10T11:00:00Z'
 );
 
--- An incomplete September workout with nothing recorded.
-select public.start_workout('alternate_split', (select id from public.splits where name = 'T-031 Pull'), '', array[]::uuid[], '2026-09-02T10:00:00Z');
+-- An incomplete September workout with nothing recorded. Completing the first
+-- workout advanced rotation onto T-031 Pull, so this one starts it as the
+-- proposed split; saving it incomplete leaves the pointer where it is.
+select public.start_workout('proposed_split', (select id from public.splits where name = 'T-031 Pull'), '', array[]::uuid[], '2026-09-02T10:00:00Z');
 select public.apply_active_workout_command(
   '31000000-0000-4000-8000-000000000103',
   (select id from public.workouts where status = 'active'), 0, 'finish_workout',
@@ -178,14 +180,12 @@ select throws_ok(
 
 -- Deleting a definition never costs History its identity
 select public.delete_exercise((select id from public.exercises where name = 'T-031 Ghost'));
-select is(
-  (select occurrence.exercise_id from public.workout_exercises as occurrence where occurrence.exercise_name_snapshot = 'T-031 Ghost'),
-  NULL,
+select ok(
+  (select occurrence.exercise_id is null from public.workout_exercises as occurrence where occurrence.exercise_name_snapshot = 'T-031 Ghost'),
   'deleting the definition clears the live reference'
 );
-select isnt(
-  (select occurrence.exercise_identity_id from public.workout_exercises as occurrence where occurrence.exercise_name_snapshot = 'T-031 Ghost'),
-  NULL,
+select ok(
+  (select occurrence.exercise_identity_id is not null from public.workout_exercises as occurrence where occurrence.exercise_name_snapshot = 'T-031 Ghost'),
   'the persistent identity survives the deletion'
 );
 select is(jsonb_array_length(public.list_workout_history()), 2, 'History keeps every workout after a definition is deleted');
@@ -246,6 +246,9 @@ select throws_ok(
 );
 
 -- Deletion
+create temporary table t031_deleted_workout as
+select id from public.workouts where split_name_snapshot = 'T-031 Push' and status = 'completed';
+
 select lives_ok(
   $$ select public.delete_history_workout((select id from public.workouts where split_name_snapshot = 'T-031 Push' and status = 'completed')) $$,
   'a saved workout can be deleted'
@@ -256,7 +259,7 @@ select is(
   'the deleted workout leaves History'
 );
 select is(
-  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id where occurrence.exercise_name_snapshot = 'T-031 Press' and occurrence.workout_id not in (select id from public.workouts where status in ('active', 'paused'))),
+  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id where occurrence.workout_id in (select id from t031_deleted_workout)),
   0,
   'its occurrences and sets are deleted with it'
 );

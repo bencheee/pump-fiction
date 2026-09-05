@@ -167,6 +167,7 @@ insert into public.workout_exercises (
   id,
   workout_id,
   exercise_id,
+  exercise_identity_id,
   position,
   exercise_name_snapshot,
   exercise_base_type_snapshot
@@ -174,6 +175,7 @@ insert into public.workout_exercises (
 values (
   '40000000-0000-0000-0000-000000000001',
   '30000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000001',
   '00000000-0000-0000-0000-000000000001',
   1,
   'Bench press',
@@ -224,6 +226,7 @@ insert into public.workout_exercises (
   id,
   workout_id,
   exercise_id,
+  exercise_identity_id,
   position,
   exercise_name_snapshot,
   exercise_base_type_snapshot
@@ -231,6 +234,7 @@ insert into public.workout_exercises (
 values (
   '40000000-0000-0000-0000-000000000002',
   '30000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000009',
   '00000000-0000-0000-0000-000000000009',
   2,
   'Assisted pull-up',
