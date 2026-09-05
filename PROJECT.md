@@ -1,26 +1,33 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T10:43:18+02:00
-- **Current phase:** Local MVP implementation — awaiting Owner direction for the next Feature
+- **Last updated:** 2026-09-05T11:54:40+02:00
+- **Current phase:** Local MVP implementation — correcting delivered behavior under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` complete; `F-008` is next and intentionally not started
+- **Implementation:** `F-004` through `F-007` complete; `F-011` corrections planned and awaiting Owner readiness; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 
 ## Current focus
 
-[`F-007`](docs/project/features/F-007-today-and-active-workout.md) Today and Active Workout is `Done` with the Owner's confirmed feature result. No work item is in progress; the Owner directed that `F-008` must not start yet.
+[`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) MVP Experience Corrections records the nine corrections the Owner raised on `2026-09-05` after using the delivered application. The Owner confirmed readiness on `2026-09-05` and directed execution, so `T-018` is `In Progress` and the remaining six Tasks stay in `Backlog` until their turn. `F-008` waits until these corrections are complete.
 
 ## Immediate next action
 
-Wait for explicit Owner direction to plan and start `F-008` History and Statistics.
+Deliver [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) as one reviewable commit and request review. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- No active work item.
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`0/7 Tasks Done`) — Owner confirmed readiness
+  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `In Progress` — Claude Code primary agent — `2026-09-05T11:54:40+02:00` — deliver one reviewable commit (corrections 1 and 4)
+  - [`T-019`](docs/project/tasks/T-019-simplify-exercise-load-mode-model.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 2)
+  - [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 7)
+  - [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` and the current-program mechanism (correction 3)
+  - [`T-022`](docs/project/tasks/T-022-replace-archiving-in-mobile-experience.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 3)
+  - [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (corrections 5, 6, 8)
+  - [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 9)
 
 ## Next
 
-- [`F-008`](docs/project/features/F-008-history-and-statistics.md) is the next Feature, awaiting Owner direction.
+- [`F-008`](docs/project/features/F-008-history-and-statistics.md) is the next Feature; it starts after `F-011` is complete.
 
 ## Later
 
@@ -48,6 +55,7 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/10 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/11 Features Done`)
+- [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`0/7 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

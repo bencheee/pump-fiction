@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-05T10:43:18+02:00`
-- **Progress:** `7/10 required Features Done`
+- **Updated:** `2026-09-05T11:41:11+02:00`
+- **Progress:** `7/11 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -36,13 +36,14 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-005`](../features/F-005-exercise-library.md) — Exercise Library (`Done`)
 - [`F-006`](../features/F-006-programs-and-splits.md) — Programs and Splits (`Done`)
 - [`F-007`](../features/F-007-today-and-active-workout.md) — Today and Active Workout (`Done`)
+- [`F-011`](../features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`Now / 1`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 1`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 2`)
 - [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
 
 ### Primary MVP-criteria ownership
 
-Each of the 57 locked criteria has exactly one primary implementation owner. Supporting dependencies do not create duplicate ownership.
+Each of the 57 locked criteria has exactly one primary implementation owner. Supporting dependencies do not create duplicate ownership. `F-011` owns no primary criteria; it revises the text of criteria owned by `F-005`, `F-006`, `F-007`, and `F-009` under the Owner corrections recorded on `2026-09-05`, keeping the total at 57.
 
 | Feature | Primary criteria | Count |
 | --- | --- | ---: |
@@ -58,7 +59,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-008` planning awaits explicit Owner direction
+- Blockers: None; `F-008` planning is deferred until `F-011` corrections are complete, per the Owner's direction on `2026-09-05`
 
 ## Related decisions and documents
 
@@ -175,3 +176,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-05T10:22:42+02:00` | User / Reviewer and Approver; Claude Code primary agent / Tester | Approved the T-016 second replacement and restarted verification | Running the complete unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against the exact second replacement |
 | `2026-09-05T10:26:58+02:00` | Claude Code primary agent / Tester | Completed T-016 within F-007 | Exact approved second replacement passed unit 9/9, component 11/11, pgTAP 53/53, and serialized Chromium/WebKit 2/2 with structural captures; all four F-007 Tasks are Done pending the Owner's feature-result confirmation |
 | `2026-09-05T10:43:18+02:00` | User / Owner | Completed `F-007`; Milestone remains incomplete | Confirmed the aggregate Today and Active Workout result; `M-001` advances to 7/10 required Features Done and `F-008` waits for explicit Owner direction |
+| `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | Added `F-011` as the current `Now` Feature and corrected the stale registry rollup | Record the nine Owner corrections to delivered behavior before `F-008` starts |
