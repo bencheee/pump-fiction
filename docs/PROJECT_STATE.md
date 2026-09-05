@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Obtain fresh approval for `T-025` test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60` before the clean reset and pgTAP restart. The corrected constraints are already applied locally; the failed run aborted on a fixture that split a definition insert into two statements.
+Obtain the Owner's confirmation of the aggregate `F-011` result. All seven Tasks are `Done`, the last being `T-025` on approved replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`, which corrected the set-shape constraint that had blocked a live workout. The local database was reset with the Owner's explicit consent during that verification, so it holds no programs, exercises, or history. `F-008` History and Statistics starts only after the confirmation.
 
 ## Implementation status
 

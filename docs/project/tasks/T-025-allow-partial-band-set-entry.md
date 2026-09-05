@@ -1,7 +1,7 @@
 # T-025 — Allow partial band set entry
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 8
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:13:37+02:00`
+- **Updated:** `2026-09-05T19:15:14+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
 - **Review started:** `2026-09-05T19:12:45+02:00`
 - **Approval requested:** `2026-09-05T19:13:37+02:00`
 - **Approved:** `2026-09-05T19:13:37+02:00`
 - **Testing started:** `2026-09-05T19:13:37+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T19:15:14+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
+- **Next action:** None; Task complete. `F-011` awaits the Owner's confirmation of the aggregate result.
 
 ## Scope
 
@@ -38,10 +38,10 @@ The set-entry model already treats an unconfirmed set as incomplete and validate
 
 ## Acceptance criteria
 
-- [ ] Entering reps on a band set before choosing a strength saves, and the set stays unconfirmed.
-- [ ] Confirming a band set without a strength is rejected by the database, not only by the UI.
-- [ ] Every other set shape keeps its accepted rules: a band mode still carries its direction, band-only modes still reject kilograms, and non-band modes still reject a strength.
-- [ ] The Owner's stuck command applies once the constraint is corrected, so the pending queue drains without discarding the workout.
+- [x] Entering reps on a band set before choosing a strength saves, and the set stays unconfirmed.
+- [x] Confirming a band set without a strength is rejected by the database, not only by the UI.
+- [x] Every other set shape keeps its accepted rules: a band mode still carries its direction, band-only modes still reject kilograms, and non-band modes still reject a strength.
+- [x] The Owner's stuck command applies once the constraint is corrected, so the pending queue drains without discarding the workout.
 
 ## Traceability
 
@@ -82,7 +82,7 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 - **No-test reason:** Not applicable
 - **Planned tests:** pgTAP assertions for a partial band set and for a confirmed band set without a strength, plus the existing clean-reset suites; must not run before Owner approval of the exact commit
 - **Authorized commit:** `e0fe573dedfe8803032b89be8a50a11805d09e60`
-- **Results:** Failed on `2026-09-05T19:12:24+02:00` against exact approved commit `75fd3d78d71c599cfcd54026080e51c79fade3af` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0`. The authorized clean `supabase db reset` applied the complete migration history, and four of the five pgTAP files passed, but `0001_core_constraints` aborted at the new fixture with `Exercise requires at least one load mode`. The cause is test-only: the file runs with `set constraints all immediate`, so the deferred definition trigger fires at the end of each statement, and the new fixture inserted the exercise and its load mode as two statements instead of the single statement the file's existing fixtures use. The corrected constraints themselves were not reached by the failing file; the other 43 assertions across the remaining files passed.
+- **Results:** Passed against exact approved replacement `e0fe573dedfe8803032b89be8a50a11805d09e60` on `2026-09-05T19:15:14+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, local PostgreSQL `17`, and Vitest `4.1.11`, restarted from the beginning: the authorized clean `supabase db reset` applied the complete migration history; pgTAP passed 59/59 across five files, including the two new assertions that an unconfirmed band set may hold no strength and that confirming it is still rejected; unit and component suites passed 67/67; shared UI suites passed 4/4; repository integration passed 4/4; and regenerated types matched the committed file. One earlier verification attempt is recorded above: it aborted on a test-only fixture, and its partial results were discarded even though the reset and the other four files had passed.
 
 ## Delivery commit
 
@@ -120,15 +120,15 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -144,3 +144,4 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 | `2026-09-05T19:12:45+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`; static checks passed and no feature test ran |
 | `2026-09-05T19:13:37+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
 | `2026-09-05T19:13:37+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the clean reset and pgTAP against `e0fe573dedfe8803032b89be8a50a11805d09e60` |
+| `2026-09-05T19:15:14+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: clean reset, pgTAP 59/59, unit and component 67/67, shared UI 4/4, repository 4/4, and unchanged generated types |

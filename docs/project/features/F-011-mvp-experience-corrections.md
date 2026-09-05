@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T19:03:35+02:00`
-- **Progress:** `6/7 required Tasks Done`
+- **Updated:** `2026-09-05T19:15:14+02:00`
+- **Progress:** `7/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -58,7 +58,7 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 - `T-022` — Replace archiving in the mobile experience (`Canceled`; absorbed into `T-021`)
 - `T-023` — Correct active-workout screen details (`Done`)
 - `T-024` — Keep primary navigation during an active workout (`Done`)
-- `T-025` — Allow partial band set entry
+- `T-025` — Allow partial band set entry (`Done`)
 
 ## Dependencies and blockers
 
@@ -82,10 +82,10 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
+- [x] All required Tasks are `Done`
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] No required follow-up scope is hidden
 - [ ] User confirms the feature result
 
 ## History
@@ -102,3 +102,4 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 | `2026-09-05T13:15:59+02:00` | Claude Code primary agent / Executor | Completed `T-023`; `F-011` advances to `5/6` | Owner corrections 5, 6, and 8 are delivered, approved, and verified |
 | `2026-09-05T13:21:29+02:00` | Claude Code primary agent / Executor | Completed `T-024`; `F-011` reaches `6/6` and awaits the Owner's confirmation | Owner correction 9 is delivered, approved, and verified, and `ADR-0025` is accepted |
 | `2026-09-05T19:03:35+02:00` | User / Owner | Reopened `F-011` with `T-025` | A live workout could not save a band set or finish; the reproduced cause is a set-shape constraint that forbids a partial band entry |
+| `2026-09-05T19:15:14+02:00` | Claude Code primary agent / Executor | Completed `T-025`; `F-011` reaches `7/7` and awaits the Owner's confirmation | The reported blocking defect is fixed, approved, and verified |
