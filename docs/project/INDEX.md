@@ -62,7 +62,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-022`](tasks/T-022-replace-archiving-in-mobile-experience.md) | `F-011` | Replace archiving in the mobile experience | `Now / 5` | `Canceled` | Claude Code primary agent | `2026-09-05T12:41:51+02:00` | [`tasks/T-022-replace-archiving-in-mobile-experience.md`](tasks/T-022-replace-archiving-in-mobile-experience.md) |
 | [`T-023`](tasks/T-023-correct-active-workout-screen-details.md) | `F-011` | Correct active-workout screen details | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-05T13:15:59+02:00` | [`tasks/T-023-correct-active-workout-screen-details.md`](tasks/T-023-correct-active-workout-screen-details.md) |
 | [`T-024`](tasks/T-024-keep-primary-navigation-during-workout.md) | `F-011` | Keep primary navigation during an active workout | `Now / 7` | `Done` | Claude Code primary agent | `2026-09-05T13:21:29+02:00` | [`tasks/T-024-keep-primary-navigation-during-workout.md`](tasks/T-024-keep-primary-navigation-during-workout.md) |
-| [`T-025`](tasks/T-025-allow-partial-band-set-entry.md) | `F-011` | Allow partial band set entry | `Now / 8` | `Testing` | Claude Code primary agent | `2026-09-05T19:07:51+02:00` | [`tasks/T-025-allow-partial-band-set-entry.md`](tasks/T-025-allow-partial-band-set-entry.md) |
+| [`T-025`](tasks/T-025-allow-partial-band-set-entry.md) | `F-011` | Allow partial band set entry | `Now / 8` | `In Progress` | Claude Code primary agent | `2026-09-05T19:07:51+02:00` | [`tasks/T-025-allow-partial-band-set-entry.md`](tasks/T-025-allow-partial-band-set-entry.md) |
 
 ## Templates
 
