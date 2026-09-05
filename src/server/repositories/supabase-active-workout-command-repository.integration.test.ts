@@ -129,6 +129,7 @@ describe("SupabaseActiveWorkoutCommandRepository", () => {
       expect(recordedCommands.count).toBe(3);
     } finally {
       await client.from("workouts").delete().eq("id", workoutId);
+      await client.from("exercises").delete().eq("id", exerciseId);
     }
   });
 });

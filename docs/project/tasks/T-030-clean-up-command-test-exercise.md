@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:09:42+02:00`
+- **Updated:** `2026-09-05T20:11:38+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the test cleanup as one reviewable commit.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the repository run stays unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -55,13 +55,13 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 ## Execution checklist
 
-- [ ] Delete the created exercise in the test's `finally` block.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Delete the created exercise in the test's `finally` block — after the workout deletion, so the cascading `workout_exercises` rows are gone before the `on delete set null` reference is removed.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: `npm run check` passed on `2026-09-05T20:11:38+02:00`, covering formatting, ESLint, strict TypeScript, the production build, the UI asset manifest, Markdown lint, and internal links; `git diff --check` reported no whitespace errors. No feature test ran.
 
 ## Test plan and results
 
@@ -75,7 +75,7 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-030: delete the exercise the command repository test creates`
-- **Committed scope:** Not created
+- **Committed scope:** `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts` and this Task
 
 ## Review
 
