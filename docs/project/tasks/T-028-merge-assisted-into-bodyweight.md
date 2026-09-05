@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:03:18+02:00`
+- **Updated:** `2026-09-05T21:05:10+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** `2026-09-05T21:01:46+02:00`
 - **Approval requested:** `2026-09-05T21:03:18+02:00`
 - **Approved:** `2026-09-05T21:03:18+02:00`
 - **Testing started:** `2026-09-05T21:03:18+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T21:05:10+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized cycle for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`: clean reset, pgTAP, generated types, unit, component, and repository suites.
+- **Next action:** None; `T-028` is `Done`. `T-029` needs the Owner's confirmation of readiness.
 
 ## Scope
 
@@ -40,11 +40,11 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 ## Acceptance criteria
 
-- [ ] The library offers exactly two types, and no screen mentions an assisted type.
-- [ ] A bodyweight exercise offers the four options and can save at most one of them.
-- [ ] An assistance option produces the same set fields it produces today: assistance kilograms and reps, or assistance-band strength and reps.
-- [ ] The database rejects the retired type and any second option, independently of the UI.
-- [ ] `MVP-EXE-001`, `MVP-EXE-003`, and `MVP-EXE-004` describe the two-type model, and `exercises.md` matches it.
+- [x] The library offers exactly two types, and no screen mentions an assisted type — the form renders only `Weights` and `Bodyweight`, and a component test asserts that no `Assisted` button exists.
+- [x] A bodyweight exercise offers the four options and can save at most one of them — a component test counts four additions and saves `bodyweight` plus `assistance_weight`; selecting a second replaces the first.
+- [x] An assistance option produces the same set fields it produces today — set entry is keyed by load mode, not base type, so `assistance_weight` and `assistance_band` are untouched; the seeded `Assisted dip` reads back as `bodyweight` with `assistance_weight`.
+- [x] The database rejects the retired type and any second option, independently of the UI — pgTAP rejects `'assisted'` with `22P02` and two assistance modes with `23505`, and accepts a bodyweight definition carrying assistance.
+- [x] `MVP-EXE-001`, `MVP-EXE-003`, and `MVP-EXE-004` describe the two-type model, and `exercises.md` matches it.
 
 ## Traceability
 
@@ -97,6 +97,7 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 - **Delivery commit SHA:** `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` — replacement; it supersedes the first delivery `481ef7dc410733ad1b0502a8cea0a02ac53259bc`, whose changes it carries unchanged
 - **Subject:** `T-028: merge assisted exercises into bodyweight options`
+- **Results:** Passed on `2026-09-05T21:05:10+02:00` for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`. The clean reset landed on the seed, where `Assisted dip` reads back as `bodyweight` holding `bodyweight` and `assistance_weight` and the enum exposes only `weights` and `bodyweight`. pgTAP passed 62/62, regenerated types matched the committed file, the unit suite passed 69/69 and the component suite 4/4, and the repository suite passed 4/4. Afterwards the library still held exactly the 10 seeded exercises with no orphan, one program, no workout, and the current-program pointer on `Baseline program`. The Owner released the local database contents as disposable, so the seed baseline was left in place instead of restoring a snapshot.
 - **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the exercise-form component tests; the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, the exercise-form component suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
@@ -129,15 +130,15 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -153,3 +154,4 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` with the corrected exercise-form component tests; static checks passed |
 | `2026-09-05T21:03:18+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact replacement and the clean reset, and released the local database contents as disposable |
 | `2026-09-05T21:03:18+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the authorized cycle against `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` |
+| `2026-09-05T21:05:10+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Complete verification passed: seeded reset, pgTAP 62/62, unchanged types, unit 69/69, component 4/4, repository 4/4, and an unchanged 10-exercise library |
