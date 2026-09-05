@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-05T10:14:35+02:00`
+- **Updated:** `2026-09-05T10:22:42+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-05T10:14:35+02:00` for second replacement
-- **Approval requested:** `2026-09-04T16:23:50+02:00` for replacement
-- **Approved:** `2026-09-04T16:23:50+02:00` for replacement
-- **Testing started:** `2026-09-05T10:07:03+02:00` for replacement
+- **Approval requested:** `2026-09-05T10:22:42+02:00` for second replacement
+- **Approved:** `2026-09-05T10:22:42+02:00` for second replacement
+- **Testing started:** `2026-09-05T10:22:42+02:00` for second replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews exact second test-only replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`; do not restart any feature test before fresh explicit approval.
+- **Next action:** Restart the complete recorded unit/component, clean-reset pgTAP, and serialized Chromium/WebKit verification against exact approved second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` in a fresh isolated worktree.
 
 ## Scope
 
@@ -72,7 +72,7 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes), the clean-reset pgTAP suites including the new position-renumbering regression, and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
-- **Authorized commit:** None; approval of `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` was invalidated by a failed prepared browser assertion.
+- **Authorized commit:** `441a87046409d2970de72e5c3f9c1448c4423a4d`
 - **Results:** Against the formerly approved first replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` on 2026-09-05 in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`: `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` applied all migrations including the renumbering correction, the reducer/set-entry unit suite passed 9/9, the S10/S12 component suite passed 11/11, and the complete clean-reset pgTAP run passed 53/53 across five files including the new position-renumbering regression 9/9. The serialized mobile-Chromium scenario completed the entire S10 flow — set entry, validation, populated and empty removals, add set, add exercise, reorder, note, pause/resume, and reload restore — and stopped only on a test-only strict-mode defect at the S12 assertions: the singular query for the `Confirmed sets` metric also matches the intentional "Confirmed sets count toward exercise personal records and charts." completion bullet. WebKit did not run. These partial results are discarded for completion; the corrected second replacement requires fresh approval and a complete restart. The earlier run against superseded original delivery `63126a1635421cf042186446216e7921025e6105` passed unit 9/9 and component 11/11 before exposing the since-corrected T-014 renumbering defect.
 
 ## Delivery commit
@@ -84,16 +84,16 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending
-- **Outcome:** Pending
-- **Findings:** Pending
+- **Reviewed at:** `2026-09-05T10:22:42+02:00` for second replacement
+- **Outcome:** Second replacement recommended for approval
+- **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Pending second replacement
-- **Approved by:** Pending
-- **Approved at:** Pending
-- **Approval note:** The first-replacement approval (`odobreno` for `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`) was invalidated when its prepared browser assertion failed; no corrected test may run before the second replacement is explicitly approved.
+- **Approved commit:** `441a87046409d2970de72e5c3f9c1448c4423a4d`
+- **Approved by:** User
+- **Approved at:** `2026-09-05T10:22:42+02:00`
+- **Approval note:** User explicitly said `potvrdujem` for the requested exact second test-only replacement; fresh approval is bound to it and authorizes the complete recorded plan from the beginning.
 
 ## Definition of Ready
 
@@ -143,3 +143,6 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-05T10:11:16+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before a test-only substring query on the `Confirmed sets` metric hit the intentional completion bullet; browser tests stopped and the first-replacement approval is invalidated |
 | `2026-09-05T10:13:09+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the prepared S12 metric queries to exact-text matching so the intentional completion bullet no longer collides; all static checks passed without rerunning feature tests |
 | `2026-09-05T10:14:35+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created second test-only replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |
+| `2026-09-05T10:22:42+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d` with no additional findings and recommended approval |
+| `2026-09-05T10:22:42+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact second replacement and authorized the complete recorded test plan from the beginning |
+| `2026-09-05T10:22:42+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved second replacement |
