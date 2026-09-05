@@ -1,23 +1,23 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T23:07:42+02:00
+- **Last updated:** 2026-09-05T23:10:34+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus after the Owner released the hold
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is `Done` and `T-032` is `Testing`, as the first of the six `F-008` Tasks
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is `Done` and `T-032` is back in `In Progress` after a failed verification, as the first of the six `F-008` Tasks
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience — `Testing`, Executor Claude Code primary agent, last change 2026-09-05T23:07:42+02:00. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) is `Done`: its approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` passed pgTAP 112/112, repository 5/5, unit 86/86, matching generated types, and a faithful restore. pgTAP 112/112, unit 86/86, and the type comparison passed; second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` serializes the repository script, which then passed 5/5 when verified from the command line. The authorized verification failed on two prepared pgTAP suites, so the first delivery's approval is invalidated and replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
+[`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-05T23:10:34+02:00. Unit and component tests passed 98/98; the browser scenario then found that an empty historical set showed no load field, because the form read the set's mode column instead of deriving it from the exercise definition. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) is `Done`: its approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` passed pgTAP 112/112, repository 5/5, unit 86/86, matching generated types, and a faithful restore. pgTAP 112/112, unit 86/86, and the type comparison passed; second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf` serializes the repository script, which then passed 5/5 when verified from the command line. The authorized verification failed on two prepared pgTAP suites, so the first delivery's approval is invalidated and replacement `b5e4cda609d478453eccd562087d1f18bfec7f54` corrects only test source and one sentence. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
 
 ## Immediate next action
 
-Run only the recorded `T-032` verification against approved delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`, then record the result.
+Deliver the `T-032` replacement that derives a set's mode from the exercise definition, then request fresh approval.
 
 ## Now
 
-- [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience — `Testing` — Claude Code primary agent — 2026-09-05T23:07:42+02:00 — next: record the verification result.
+- [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience — `In Progress` — Claude Code primary agent — 2026-09-05T23:10:34+02:00 — next: deliver the replacement for fresh approval.
 
 ## Next
 
@@ -41,7 +41,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience — approved delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` — Claude Code primary agent — 2026-09-05T23:07:42+02:00 — next required action: the recorded component and browser verification.
+None. The `T-032` approval was invalidated by its failed verification.
 
 ## Recently completed Tasks
 
