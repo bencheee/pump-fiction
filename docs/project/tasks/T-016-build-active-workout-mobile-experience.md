@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-05T10:07:03+02:00`
+- **Updated:** `2026-09-05T10:11:16+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
 - **Review started:** `2026-09-04T16:11:24+02:00` for replacement
 - **Approval requested:** `2026-09-04T16:23:50+02:00` for replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T10:07:03+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Restart the complete recorded unit/component, clean-reset pgTAP, and serialized Chromium/WebKit verification against exact approved replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` in a fresh isolated worktree.
+- **Next action:** Correct the singular review-metric browser query, run static checks without feature tests, create a second test-only replacement delivery, and request fresh approval.
 
 ## Scope
 
@@ -72,28 +72,28 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval, run the scoped active-workout unit/component suites (reducer, set-entry mode matrix, S10 validation/mode-change/removal/timer/restore replay, S12 metrics and outcomes), the clean-reset pgTAP suites including the new position-renumbering regression, and the serialized Chromium/WebKit phone-browser scenario covering set entry, local edits, timer pause/resume, reload restore, finish outcomes, rotation, reflow, and structural captures.
-- **Authorized commit:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`
-- **Results:** Against the formerly approved delivery `63126a1635421cf042186446216e7921025e6105` in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`, `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` completed cleanly, the reducer/set-entry unit suite passed 9/9, and the S10/S12 component suite passed 11/11. The serialized mobile-Chromium scenario then stopped when the first `remove_set` command was rejected: the approved T-014 persistence function renumbers positions through a temporary `position = -position` update, which violates the `workout_sets_position_check`/`workout_exercises_position_check` constraints whenever sibling rows remain; the defect was reproduced directly against `public.apply_active_workout_command` and equally affects `remove_exercise` and `reorder_exercises`. T-014 verification never exposed it because those tests removed rows without remaining siblings and never reordered workout exercises. WebKit did not run; partial results are discarded and the corrected replacement requires fresh approval and a complete restart.
+- **Authorized commit:** None; approval of `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` was invalidated by a failed prepared browser assertion.
+- **Results:** Against the formerly approved first replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` on 2026-09-05 in a fresh isolated worktree with Node.js `24.20.0` and npm `11.19.0`: `npm ci` installed 653 packages with no vulnerabilities, `supabase db reset` applied all migrations including the renumbering correction, the reducer/set-entry unit suite passed 9/9, the S10/S12 component suite passed 11/11, and the complete clean-reset pgTAP run passed 53/53 across five files including the new position-renumbering regression 9/9. The serialized mobile-Chromium scenario completed the entire S10 flow — set entry, validation, populated and empty removals, add set, add exercise, reorder, note, pause/resume, and reload restore — and stopped only on a test-only strict-mode defect at the S12 assertions: the singular query for the `Confirmed sets` metric also matches the intentional "Confirmed sets count toward exercise personal records and charts." completion bullet. WebKit did not run. These partial results are discarded for completion; the corrected second replacement requires fresh approval and a complete restart. The earlier run against superseded original delivery `63126a1635421cf042186446216e7921025e6105` passed unit 9/9 and component 11/11 before exposing the since-corrected T-014 renumbering defect.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` (replacement; supersedes original delivery `63126a1635421cf042186446216e7921025e6105`)
+- **Delivery commit SHA:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` (first replacement; second test-only replacement required)
 - **Subject:** `T-016: correct workout position renumbering`
 - **Committed scope:** Preserve the original S10–S12 delivery — phone-only active/paused/restored workout with live timer, per-mode set rows, mirrored confirmation validation, mode chooser, populated-removal confirmation, explicit reordering, auto-saved notes, S11 multi-select add-exercise sheet, S12 source-aware finish review, and the local command reducer with conflict rebase — while correcting the inherited T-014 persistence renumbering: the declarative schema and a reviewed migration replace the negative-position updates with the accepted offset-above-maximum technique for `remove_set`, `remove_exercise`, and `reorder_exercises`, with a new prepared pgTAP regression; lifecycle documentation is synchronized.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-04T16:23:50+02:00` for replacement
-- **Outcome:** Replacement recommended for approval
-- **Findings:** None recorded
+- **Reviewed at:** Pending for second replacement
+- **Outcome:** First-replacement approval invalidated; second test-only replacement pending
+- **Findings:** The prepared S12 browser assertion used a singular substring query for the `Confirmed sets` metric that also matches the intentional completion-explanation bullet.
 
 ## Approval
 
-- **Approved commit:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`
-- **Approved by:** User
-- **Approved at:** `2026-09-04T16:23:50+02:00`
-- **Approval note:** User explicitly said `odobreno` for the requested exact replacement; fresh approval is bound to it and authorizes the complete recorded plan from the beginning.
+- **Approved commit:** Pending second replacement
+- **Approved by:** Pending
+- **Approved at:** Pending
+- **Approval note:** The first-replacement approval (`odobreno` for `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`) was invalidated when its prepared browser assertion failed; no corrected test may run before the second replacement is explicitly approved.
 
 ## Definition of Ready
 
@@ -140,3 +140,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-04T16:23:50+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed exact replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` with no additional findings and recommended approval |
 | `2026-09-04T16:23:50+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved the exact replacement and authorized the complete recorded test plan from the beginning |
 | `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
+| `2026-09-05T10:11:16+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before a test-only substring query on the `Confirmed sets` metric hit the intentional completion bullet; browser tests stopped and the first-replacement approval is invalidated |

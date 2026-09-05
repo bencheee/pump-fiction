@@ -70,8 +70,8 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Complete the full unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against exact approved T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
+Correct the singular `Confirmed sets` browser query, run static checks, deliver the second T-016 test-only replacement, and request fresh User approval before the complete test plan restarts.
 
 ## Implementation status
 
-`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `3/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` passed its complete verification, and exact T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` — carrying the corrective renumbering migration for the latent T-014 defect that browser verification exposed — is approved and `Testing`. Deployment configuration does not exist yet.
+`F-004`, `F-005`, and `F-006`, including `T-005` through `T-013`, are `Done`. Exact T-014 delivery `4f924d51af2e55681f2e5a517a8963bc58048d81` and exact T-017 correction `8d5779258505bb94383368e13eff97a4346320ca` passed their complete verification. `F-007` is `3/4 Tasks Done`; exact T-015 second replacement `f52c0447db67007fba7cce8d0c790164e8447fe9` passed its complete verification, and T-016 returned to `In Progress` after unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, with one remaining test-only S12 substring query invalidating the first-replacement approval. Deployment configuration does not exist yet.

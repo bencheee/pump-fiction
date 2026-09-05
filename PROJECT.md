@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T10:07:03+02:00
+- **Last updated:** 2026-09-05T10:11:16+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `Testing` at exact approved replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before one test-only S12 substring query invalidated the first-replacement approval.
 
 ## Immediate next action
 
-Complete the full unit/component, clean-reset pgTAP, and serialized Chromium/WebKit plan from the beginning against exact approved T-016 replacement `c751e90fbd17f810c8a5890a7e15883e4dfe69ff`.
+Correct the singular `Confirmed sets` browser query, run static checks, deliver the second T-016 test-only replacement, and request fresh User approval.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `Testing` — Executor: Claude Code primary agent — updated `2026-09-05T10:07:03+02:00` — exact replacement approved; complete verification restarted.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-05T10:11:16+02:00` — first-replacement approval invalidated; second test-only replacement in preparation.
 
 ## Next
 
