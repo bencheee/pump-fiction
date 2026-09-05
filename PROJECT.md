@@ -1,27 +1,31 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:58:22+02:00
-- **Current phase:** Local MVP implementation — every started Feature is confirmed; `F-008` is held at the Owner's direction and now has its Task breakdown
+- **Last updated:** 2026-09-05T22:02:36+02:00
+- **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus after the Owner released the hold
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; no active work item; `F-008` is planned (`T-031` through `T-036` in `Backlog`) but not started at the Owner's direction
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is `In Progress` as the first of the six `F-008` Tasks
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` was next in that order but the Owner held it on the same day
+- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-No active work item. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) is `Done` with the Owner's confirmed result on `2026-09-05`, which closes the last of the three Features the Owner ordered that day. [`F-008`](docs/project/features/F-008-history-and-statistics.md) History and Statistics is next in that order and held. On `2026-09-05` the Owner asked for its Task breakdown without starting implementation: `T-031` through `T-036` are recorded in `Backlog`, operations before screens, and the Feature file carries the proposed boundary against [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) and six readiness questions with recommended answers.
+[`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-05T22:02:36+02:00. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
 
 ## Immediate next action
 
-Await the Owner's answers to the six `F-008` readiness questions and the go-ahead. With both, move [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) to `Ready` and start it; without them nothing starts. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Deliver `T-031` for the Owner's review, then wait: its recorded verification cannot run until the Owner approves that exact delivery commit, and `T-032` cannot start until `T-031` is `Done`.
 
 ## Now
 
-- No active work item; `F-008` is held at the Owner's direction.
+- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress` — Claude Code primary agent — 2026-09-05T22:02:36+02:00 — next: deliver for review.
 
 ## Next
 
-1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics; held; six Tasks in `Backlog` (Executor Claude Code primary agent, recorded `2026-09-05T21:58:22+02:00`) awaiting the readiness answers before `T-031` can become `Ready`.
+1. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) — History shell and workout History screens; `Backlog`, blocked until `T-031` is `Done`.
+2. [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) — Exercise statistics operations; `Backlog`.
+3. [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Exercise History screens; `Backlog`.
+4. [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Split statistics operations; `Backlog`.
+5. [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Split History screens; `Backlog`.
 
 ## Later
 

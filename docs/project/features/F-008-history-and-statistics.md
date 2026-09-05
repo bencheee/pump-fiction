@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T21:58:22+02:00`
-- **Progress:** `0/6 required Tasks Done; none is Ready`
+- **Updated:** `2026-09-05T22:02:36+02:00`
+- **Progress:** `0/6 required Tasks Done; T-031 is `In Progress``
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -43,17 +43,17 @@ All six are in `Backlog`. `T-033` and `T-035` depend on `T-031` only for the ide
 
 ## Boundary against F-009
 
-Proposed for the Owner's confirmation as readiness question 6:
+Accepted on `2026-09-05` with the Owner's go-ahead for the whole Feature:
 
 - `F-008` builds the History destination shell: the subsection navigation with all five entries, on top of the `/history` redirect that already exists. `T-032` delivers it together with `S13`.
 - The Weight and Body entries lead to title-only placeholder routes, exactly as `/history/workouts` is a placeholder today. `F-009` replaces them with `S19`–`S24` and owns every weight and body calculation.
 - Today's weight prompt (`MVP-TOD-004`) stays with `F-009`.
 
-## Readiness questions
+## Readiness answers
 
-`F-008` cannot become ready, and no Task can become `Ready`, until the Owner answers these. Each carries a recommended answer; none is decided.
+The Owner gave the go-ahead for the whole Feature on `2026-09-05` and amended no recommendation, which accepts every recommended answer below. They are decided. The Task named in the last column records each one in canonical documentation as part of its delivery.
 
-| # | Question | Recommended answer | Affects |
+| # | Question | Accepted answer | Recorded by |
 | --- | --- | --- | --- |
 | 1 | `MVP-HIS-005` combines performances by persistent exercise identity, but [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md) nulls `workout_exercises.exercise_id` when the definition is deleted, so the identity is lost exactly when it is needed. Keep a never-nulled identity snapshot, or group deleted exercises by snapshotted name and type? | Add an `exercise_identity_id` column copied at snapshot time and never nulled, and a matching `source_split_identity_id` on `workouts`; record both as an amendment to ADR-0024 in `T-031`. | `T-031`, `T-033`, `T-035` |
 | 2 | Should splits whose template was deleted still appear in Split History under their snapshotted program and split names? | Yes, using the identity snapshot from question 1; `MVP-HIS-011` rests on persistent split identity and History never loses records. | `T-035`, `T-036` |
@@ -62,9 +62,9 @@ Proposed for the Owner's confirmation as readiness question 6:
 | 5 | Historical corrections run as ordinary transactional server actions with the generic retry contract, not through the active-workout command outbox. Confirm? | Confirm, and record it as a local decision in `server-data-boundaries.md` without a new ADR. | `T-031` |
 | 6 | The History shell boundary above. | Confirm as proposed. | `T-032`, `F-009` |
 
-## Proposed local decisions
+## Accepted local decisions
 
-The Executor records these in the canonical documents during the Task that touches them, unless the Owner objects:
+Accepted with the same go-ahead. The Executor records each in the canonical documents during the Task that touches it:
 
 - the performed exercise count on `S13` counts exercise occurrences with at least one recorded set;
 - month grouping and latest-performance dates use `workout_date`, which is already stored in the configured local time zone;
@@ -77,7 +77,7 @@ The Executor records these in the canonical documents during the Task that touch
 ## Dependencies and blockers
 
 - Dependencies: `F-003` through `F-007`, `F-011`, and `F-014` are `Done`; the recorded-set rule of [ADR-0027](../../decisions/0027-a-set-is-recorded-by-its-values.md) and the deletion model of [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md) are the model History reads
-- Blockers: held at the Owner's direction on `2026-09-05`; the readiness questions above are unanswered
+- Blockers: None; the Owner released the hold and gave the go-ahead for the whole Feature on `2026-09-05`
 
 ## Related decisions and documents
 
@@ -89,10 +89,10 @@ The Executor records these in the canonical documents during the Task that touch
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [x] Required Tasks are identified (`T-031` through `T-036`); none is `Ready`
+- [x] Required Tasks are identified (`T-031` through `T-036`); `T-031` is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner answers the readiness questions and confirms readiness
+- [x] Owner answered the readiness questions and confirmed readiness on `2026-09-05` by giving the go-ahead for the whole Feature
 
 ## Completion
 
@@ -111,3 +111,5 @@ The Executor records these in the canonical documents during the Task that touch
 | `2026-09-05T20:24:07+02:00` | User / Owner | Moved `Next / 3` to `Next / 2` | `F-014` became the current focus once `F-013` was confirmed |
 | `2026-09-05T21:27:54+02:00` | User / Owner | Moved to `Next / 1` | `F-014` was confirmed, so `F-012` becomes the current focus |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Recorded the six-Task breakdown `T-031`–`T-036` in `Backlog`, the `F-009` boundary proposal, six readiness questions, and the proposed local decisions | The Owner asked for the Tasks without starting implementation; `F-008` stays held |
+| `2026-09-05T22:02:36+02:00` | User / Owner | Released the hold, accepted every recommended readiness answer and local decision, and confirmed Feature readiness | Gave the go-ahead to implement the whole `F-008` without amending any recommendation |
+| `2026-09-05T22:02:36+02:00` | Claude Code primary agent / Executor | Moved `T-031` to `Ready` and started it | Operations precede the screens that depend on them; one Task is `In Progress` at a time |

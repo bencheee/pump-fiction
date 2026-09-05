@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T21:58:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T22:02:36+02:00`
+- **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the Owner's answers to `F-008` readiness questions 1, 3, 4, and 5 and for the go-ahead; only then may the Owner move this Task to `Ready`. Nothing is implemented before that.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and create the delivery commit for the Owner's review. No feature test runs before the Owner approves that exact commit.
 
 ## Scope
 
@@ -37,14 +37,14 @@ Corrections, each atomic and each leaving every template row and every rotation 
 - marking an `incomplete` workout `completed` without touching rotation (readiness question 4);
 - deleting a workout, cascading to its occurrences and sets.
 
-If the Owner accepts readiness question 1, this Task also adds the never-nulled identity snapshot columns on `workout_exercises` and `workouts`, backfills them from the live references, and amends ADR-0024, because every later statistics query reads them.
+The Owner accepted readiness question 1, so this Task also adds the never-nulled identity snapshot columns on `workout_exercises` and `workouts`, backfills them from the live references, and amends ADR-0024, because every later statistics query reads them.
 
 ## Out of scope
 
 - `S13` and `S14`, owned by `T-032`
 - Exercise and split statistics derivation and their queries, owned by `T-033` and `T-035`
 - Any change to `apply_active_workout_command`, the IndexedDB outbox, or the active-workout screens
-- Marking a completed workout incomplete, unless the Owner answers readiness question 4 differently
+- Marking a completed workout incomplete, which readiness answer 4 excludes
 - Weight and body data, owned by `F-009`
 - Feature tests before exact-commit approval
 
@@ -68,7 +68,7 @@ If the Owner accepts readiness question 1, this Task also adds the never-nulled 
 ## Dependencies and blockers
 
 - Dependencies: `F-007` and `F-014` Done; the snapshot and recorded-set model this Task reads is theirs
-- Blockers: `F-008` is held at the Owner's direction; readiness questions 1, 3, 4, and 5 are unanswered
+- Blockers: None; the Owner answered readiness questions 1, 3, 4, and 5 and gave the go-ahead on `2026-09-05`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -127,12 +127,12 @@ If the Owner accepts readiness question 1, this Task also adds the never-nulled 
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — readiness questions 1, 3, 4, and 5 are open
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -151,3 +151,5 @@ If the Owner accepts readiness question 1, this Task also adds the never-nulled 
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the first `F-008` delivery at the Owner's request; the Owner directed that implementation must not start |
+| `2026-09-05T22:02:36+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for the whole `F-008` and accepted every recommended readiness answer |
+| `2026-09-05T22:02:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the workout History operations, the first delivery of `F-008` |

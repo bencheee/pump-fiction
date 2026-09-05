@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `11/14 Features Done` | User | `2026-09-05T21:58:22+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `11/14 Features Done` | User | `2026-09-05T22:02:36+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -33,7 +33,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-012`](features/F-012-active-workout-command-recovery.md) | `M-001` | Active-Workout Command Recovery | `Now / 1` | `1/1 Done` | User | `2026-09-05T21:40:51+02:00` | [`features/F-012-active-workout-command-recovery.md`](features/F-012-active-workout-command-recovery.md) |
 | [`F-013`](features/F-013-local-verification-data.md) | `M-001` | Local Verification Data | `Now / 1` | `2/2 Done` | User | `2026-09-05T20:24:07+02:00` | [`features/F-013-local-verification-data.md`](features/F-013-local-verification-data.md) |
 | [`F-014`](features/F-014-exercise-and-set-entry-model.md) | `M-001` | Exercise and Set-Entry Model Corrections | `Now / 1` | `2/2 Done` | User | `2026-09-05T21:27:54+02:00` | [`features/F-014-exercise-and-set-entry-model.md`](features/F-014-exercise-and-set-entry-model.md) |
-| [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 1` | `0/6 Done; held` | User | `2026-09-05T21:58:22+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
+| [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Now / 1` | `0/6 Done; T-031 In Progress` | User | `2026-09-05T22:02:36+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 2` | `0/0; breakdown pending` | User | `2026-09-05T21:27:54+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 3` | `0/0; breakdown pending` | User | `2026-09-05T21:27:54+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
 
@@ -71,7 +71,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-030`](tasks/T-030-clean-up-command-test-exercise.md) | `F-013` | Delete the exercise the command repository test creates | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T20:21:55+02:00` | [`tasks/T-030-clean-up-command-test-exercise.md`](tasks/T-030-clean-up-command-test-exercise.md) |
 | [`T-028`](tasks/T-028-merge-assisted-into-bodyweight.md) | `F-014` | Merge assisted exercises into bodyweight options | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T21:05:10+02:00` | [`tasks/T-028-merge-assisted-into-bodyweight.md`](tasks/T-028-merge-assisted-into-bodyweight.md) |
 | [`T-029`](tasks/T-029-record-a-set-by-its-values.md) | `F-014` | Record a set by its entered values | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T21:26:21+02:00` | [`tasks/T-029-record-a-set-by-its-values.md`](tasks/T-029-record-a-set-by-its-values.md) |
-| [`T-031`](tasks/T-031-build-workout-history-operations.md) | `F-008` | Build workout History operations | `Next / 1` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-031-build-workout-history-operations.md`](tasks/T-031-build-workout-history-operations.md) |
+| [`T-031`](tasks/T-031-build-workout-history-operations.md) | `F-008` | Build workout History operations | `Now / 1` | `In Progress` | Claude Code primary agent | `2026-09-05T22:02:36+02:00` | [`tasks/T-031-build-workout-history-operations.md`](tasks/T-031-build-workout-history-operations.md) |
 | [`T-032`](tasks/T-032-build-workout-history-mobile-experience.md) | `F-008` | Build the History shell and workout History mobile experience | `Next / 2` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-032-build-workout-history-mobile-experience.md`](tasks/T-032-build-workout-history-mobile-experience.md) |
 | [`T-033`](tasks/T-033-build-exercise-statistics-operations.md) | `F-008` | Build exercise statistics operations | `Next / 3` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-033-build-exercise-statistics-operations.md`](tasks/T-033-build-exercise-statistics-operations.md) |
 | [`T-034`](tasks/T-034-build-exercise-history-mobile-experience.md) | `F-008` | Build Exercise History mobile experience | `Next / 4` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-034-build-exercise-history-mobile-experience.md`](tasks/T-034-build-exercise-history-mobile-experience.md) |
