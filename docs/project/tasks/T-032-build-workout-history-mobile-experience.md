@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:19:16+02:00`
+- **Updated:** `2026-09-05T23:21:02+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
-- **Review started:** `2026-09-05T23:13:58+02:00` for the replacement
+- **Review started:** `2026-09-05T23:21:02+02:00` for the second replacement
 - **Approval requested:** `2026-09-05T23:17:13+02:00` for the replacement
-- **Approved:** `2026-09-05T23:17:13+02:00` for the replacement
+- **Approved:** `2026-09-05T23:17:13+02:00` for the superseded first replacement; the second is not approved
 - **Testing started:** `2026-09-05T23:17:13+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Correct the ambiguous Today assertion, deliver a second replacement, and request fresh approval.
+- **Next action:** The Owner reviews the second replacement. Approving it restarts the complete recorded plan from the beginning.
 
 ## Scope
 
@@ -88,7 +88,7 @@ Shell:
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Passed for both the delivery and the replacement, on `2026-09-05T23:05:00+02:00` and `2026-09-05T23:13:58+02:00`, with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency-boundary rules, strict TypeScript, the Next.js `16.3.3` production build across 23 routes with the five new History routes, the font and icon checksums, Markdown lint across 116 files, and every internal link; `git diff --check` was clean both times. This Task changes no schema, migration, or generated type. No feature test ran outside the authorized verification recorded below.
+- Results: Passed for both the delivery and the replacement, on `2026-09-05T23:05:00+02:00` and `2026-09-05T23:13:58+02:00`, with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency-boundary rules, strict TypeScript, the Next.js `16.3.3` production build across 23 routes with the five new History routes, the font and icon checksums, Markdown lint across 116 files, and every internal link; `git diff --check` was clean both times. This Task changes no schema, migration, or generated type. No feature test ran outside the authorized verification recorded below. Re-run for the second replacement on `2026-09-05T23:21:02+02:00`: `npm run check` passed every step again and `git diff --check` was clean.
 
 ## Test plan and results
 
@@ -106,24 +106,25 @@ Shell:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` (replacement; supersedes `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`)
-- **Subject:** `T-032: derive a corrected set's mode from its exercise`
-- **Replacement scope:** the correction form's mode derivation, the addition toggle, the mode sent with a saved correction, and one component scenario covering the defect; nothing else changed
+- **Delivery commit SHA:** `35790c78201f76c0c2cec3c76bddaa8415c9727a` (second replacement; supersedes `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` and `578cd501bf6c2ee405ca33fd9678eb9835a1fd94`)
+- **Subject:** `T-032: disambiguate the History browser assertions`
+- **Second replacement scope:** five assertions in the prepared browser scenario; test source only, with no application code, schema, migration, or generated type changed
+- **First replacement scope:** the correction form's mode derivation, the addition toggle, the mode sent with a saved correction, and one component scenario covering the defect
 - **Committed scope:** the History layout and subsection navigation; the four placeholder subsection routes; `S13` with its loading state; `S14` detail, its loading state, and the correction form; the History presentation helpers; the promoted `workout-presentation` module with its two updated importers; the prepared component suite and browser scenario; the eslint ignore for generated Playwright artifacts; the mobile UI foundation and wireframe decisions; the discovered follow-up `T-037`; and this Task
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-05T23:17:13+02:00` for the replacement
-- **Outcome:** Replacement recommended for approval
+- **Reviewed at:** `2026-09-05T23:21:02+02:00` for the second replacement
+- **Outcome:** Second replacement recommended for approval
 - **Findings:** The authorized verification found the empty-set load field defect, recorded above
 
 ## Approval
 
-- **Approved commit:** `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf`
-- **Approved by:** User / Approver
-- **Approved at:** `2026-09-05T23:17:13+02:00`
-- **Approval note:** The Owner replied `potvrda` again on `2026-09-05`, binding fresh approval to exact replacement `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` and authorizing the complete recorded plan from the beginning. The approval of `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` does not carry over.
+- **Approved commit:** None; the approval of `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` was invalidated by its failed verification
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** The Owner approved `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` and then `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` on `2026-09-05`, each with `potvrda`. Neither stands: both verifications failed. Second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` needs a fresh decision.
 
 ## Definition of Ready
 
@@ -168,3 +169,5 @@ Shell:
 | `2026-09-05T23:17:13+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact replacement with no further findings |
 | `2026-09-05T23:17:13+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact replacement `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` with `potvrda` |
 | `2026-09-05T23:17:13+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
+| `2026-09-05T23:21:02+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Scoped every assertion whose name repeats on the page; all permitted static checks passed |
+| `2026-09-05T23:21:02+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`; it awaits fresh approval before the complete recorded plan restarts |
