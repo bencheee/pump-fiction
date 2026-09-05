@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:19:46+02:00`
+- **Updated:** `2026-09-05T21:21:57+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** `2026-09-05T21:18:30+02:00`
 - **Approval requested:** `2026-09-05T21:19:46+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T21:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized cycle for `a64adcc3a1b547ac2af2ec9121c958653323d2f2`: clean reset, pgTAP, generated types, unit, component, and repository suites.
+- **Next action:** Deliver a replacement that corrects the two stale component expectations, then request fresh approval for it and for the reset its run needs.
 
 ## Scope
 
@@ -70,7 +70,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - [x] Remove `isConfirmed` from the command contract, its validation, and the optimistic application.
 - [x] Remove both confirmation controls and derive the recorded state in the set row and the finish review — `isSetRecorded` mirrors the database rule, and the exercise card reads `N of M recorded`.
 - [x] Update the finish-review counts and their copy — `Recorded sets` and `Sets left without values`, which the review names instead of blocking the finish.
-- [x] Extend pgTAP, unit, and component assertions — pgTAP `0001` grows from 16 to 19 assertions, replacing the two confirmation-constraint cases with stored-as-entered plus derived-rule checks, and `0004` asserts the rule through the applied command and the one-time starter set.
+- [ ] Extend pgTAP, unit, and component assertions — pgTAP `0001` grows from 16 to 19 assertions, replacing the two confirmation-constraint cases with stored-as-entered plus derived-rule checks, and `0004` asserts the rule through the applied command and the one-time starter set.
 - [x] Synchronize canonical documentation and project-management projections.
 - [x] Run only permitted static checks and deliver one reviewable commit.
 
@@ -84,8 +84,13 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** command and reducer unit tests without the flag, active-workout and finish-review component scenarios for a complete and an incomplete set, repository integration tests, and pgTAP tests for the changed set table; must not run before Owner approval of the exact commit
-- **Authorized commit:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
-- **Results:** Not run
+- **Authorized commit:** Not authorized
+- **Results:** Failed on `2026-09-05T21:21:57+02:00` for `a64adcc3a1b547ac2af2ec9121c958653323d2f2`, on test expectations rather than on delivered behavior. The clean reset succeeded, pgTAP passed 65/65 — up from 62 by the three added assertions — regenerated types matched the committed file, and the component suite passed 4/4. The unit suite failed 2 of 69, both in `active-workout-mobile.test.tsx`:
+
+  1. it still expected `2 planned × 6–10 reps · 0 of 2 recorded` for Pull-Up. Under the removed flag neither set was confirmed, but set 1 holds added weight and reps, so the derived rule now correctly records it and the card reads `1 of 2 recorded`. The delivery renamed the copy mechanically without re-deriving the count.
+  2. it still expected the finish-review label `Empty planned sets`, which the delivery renamed to `Sets left without values`, and it still expected `Pull-Up set 1` in the list of planned sets left without values; that set is now recorded, so `Pull-Up set 2` belongs there instead.
+
+  The repository suite was not reached.
 
 ## Delivery commit
 
@@ -102,10 +107,10 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Approval
 
-- **Approved commit:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
+- **Approved commit:** Approval cleared by the failed run
 - **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T21:19:46+02:00`
-- **Approval note:** Approved the exact delivery commit and the clean reset its run requires; the Owner's local database contents remain disposable, so no snapshot is taken
+- **Approval note:** Approval of `a64adcc3a1b547ac2af2ec9121c958653323d2f2` was cleared when its authorized run failed on two component expectations the delivery had not updated
 
 ## Definition of Ready
 
@@ -143,3 +148,4 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2`; static checks passed and no feature test ran |
 | `2026-09-05T21:19:46+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
 | `2026-09-05T21:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Started the authorized cycle against `a64adcc3a1b547ac2af2ec9121c958653323d2f2` |
+| `2026-09-05T21:21:57+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 69 unit tests on stale component expectations, including a set the derived rule now correctly records; approval and test authorization cleared |
