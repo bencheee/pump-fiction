@@ -1,19 +1,19 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:43:03+02:00
-- **Current phase:** Local MVP implementation — every started Feature is confirmed; `F-008` is held at the Owner's direction
+- **Last updated:** 2026-09-05T21:58:22+02:00
+- **Current phase:** Local MVP implementation — every started Feature is confirmed; `F-008` is held at the Owner's direction and now has its Task breakdown
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; no active work item; `F-008` not started at the Owner's direction
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; no active work item; `F-008` is planned (`T-031` through `T-036` in `Backlog`) but not started at the Owner's direction
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` was next in that order but the Owner held it on the same day
 
 ## Current focus
 
-No active work item. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) is `Done` with the Owner's confirmed result on `2026-09-05`, which closes the last of the three Features the Owner ordered that day. [`F-008`](docs/project/features/F-008-history-and-statistics.md) History and Statistics is next in that order, but the Owner directed on `2026-09-05` that it is not to be started; it also still has no Task breakdown.
+No active work item. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) is `Done` with the Owner's confirmed result on `2026-09-05`, which closes the last of the three Features the Owner ordered that day. [`F-008`](docs/project/features/F-008-history-and-statistics.md) History and Statistics is next in that order and held. On `2026-09-05` the Owner asked for its Task breakdown without starting implementation: `T-031` through `T-036` are recorded in `Backlog`, operations before screens, and the Feature file carries the proposed boundary against [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) and six readiness questions with recommended answers.
 
 ## Immediate next action
 
-Await the Owner's direction. `F-008` needs both the Owner's go-ahead and a Task breakdown before any implementation starts; its scope boundary against [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) is part of that planning. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Await the Owner's answers to the six `F-008` readiness questions and the go-ahead. With both, move [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) to `Ready` and start it; without them nothing starts. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
@@ -21,7 +21,7 @@ Await the Owner's direction. `F-008` needs both the Owner's go-ahead and a Task 
 
 ## Next
 
-1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics; held, and needs a Task breakdown.
+1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics; held; six Tasks in `Backlog` (Executor Claude Code primary agent, recorded `2026-09-05T21:58:22+02:00`) awaiting the readiness answers before `T-031` can become `Ready`.
 
 ## Later
 
@@ -54,6 +54,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/14 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`11/14 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

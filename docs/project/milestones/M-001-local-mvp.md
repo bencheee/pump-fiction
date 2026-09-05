@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-05T21:40:51+02:00`
+- **Updated:** `2026-09-05T21:58:22+02:00`
 - **Progress:** `11/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -62,7 +62,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-008` planning is deferred until `F-011` corrections are complete, per the Owner's direction on `2026-09-05`
+- Blockers: None; `F-008` is held at the Owner's direction on `2026-09-05`, and its six-Task breakdown waits for the Owner's readiness answers
 
 ## Related decisions and documents
 
@@ -188,3 +188,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-05T21:27:54+02:00` | User / Owner | Completed `F-014`; Milestone remains incomplete | Confirmed the aggregate Exercise and Set-Entry Model Corrections result; `M-001` advances to 10/14 required Features Done |
 | `2026-09-05T21:40:51+02:00` | User / Owner | Completed `F-012`; Milestone remains incomplete | Confirmed the aggregate Active-Workout Command Recovery result; `M-001` advances to 11/14 required Features Done |
 | `2026-09-05T21:40:51+02:00` | User / Owner | Held `F-008` | Confirmed `F-012` and directed that History and Statistics is not to be started yet |
+| `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Recorded the `F-008` breakdown `T-031`–`T-036` in `Backlog` | The Owner asked for the Tasks without starting implementation; the boundary against `F-009` and six readiness questions await the Owner |

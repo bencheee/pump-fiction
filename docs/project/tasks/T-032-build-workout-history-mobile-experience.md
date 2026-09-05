@@ -1,0 +1,151 @@
+# T-032 — Build the History shell and workout History mobile experience
+
+- **Feature:** `F-008`
+- **Status:** `Backlog`
+- **Horizon:** `Next`
+- **Order:** 2
+- **Target date:** None
+- **Executor:** Claude Code primary agent
+- **Reviewer:** User
+- **Approver:** User
+- **Created:** `2026-09-05T21:58:22+02:00`
+- **Updated:** `2026-09-05T21:58:22+02:00`
+- **Started:** Not reached
+- **Review started:** Not reached
+- **Approval requested:** Not reached
+- **Approved:** Not reached
+- **Testing started:** Not reached
+- **Completed:** Not reached
+- **Canceled:** Not reached
+- **Next action:** Wait for `T-031` to be `Done` and for the Owner's answers to `F-008` readiness questions 3, 4, and 6; only then may the Owner move this Task to `Ready`.
+
+## Scope
+
+Implement the phone-only History destination shell and the Workouts subsection on the `T-031` operations.
+
+Shell:
+
+- a History route layout under `src/app/(main)/history/` with the subsection navigation for Workouts, Exercises, Splits, Weight, and Body, inside the main shell's bottom navigation; the existing `/history` redirect to `/history/workouts` stays;
+- title-only placeholder routes for `/history/exercises`, `/history/splits`, `/history/weight`, and `/history/body`, which `T-034`, `T-036`, and `F-009` replace (readiness question 6).
+
+`S13` Workout History at `/history/workouts`:
+
+- month groups newest first, each row with date, split or one-time name, active duration, performed exercise count, and the `O06` incomplete badge with its excluded-from-statistics explanation;
+- empty and loading states; a row opens `S14`.
+
+`S14` Workout detail and edit at `/history/workouts/[id]` and `/history/workouts/[id]/edit`:
+
+- the saved snapshot: timing, source identity and names, ordered exercises with prescription and note snapshots, every set with its mode and values, and the workout-specific notes;
+- an edit mode for the documented fields: date, start and finish, exercise order, add and remove exercise, set values and per-set addition, add and remove set, and workout-specific notes, with populated-data confirmation on removals; the set inputs reuse the active-workout set-entry mode matrix by promoting it to a shared module rather than duplicating it;
+- the ordinary save lifecycle: save returns to the detail with a success toast, a failure keeps the form open with a toast, and the status reports `Unsaved changes` only when the form changed;
+- mark an incomplete workout completed, with the recalculation feedback the manifest requires;
+- delete through the `O01` destructive confirmation, returning to `S13` with a toast;
+- malformed, unknown, and current-workout ids resolve through the shared not-found boundary via `requireUuidRouteParam`.
+
+## Out of scope
+
+- Exercise and split subsection content (`T-034`, `T-036`) and Weight and Body content (`F-009`)
+- Any operation not delivered by `T-031`
+- Rest timer, warm-up sets, RIR/RPE, estimated 1RM, desktop layouts
+- Feature tests before exact-commit approval
+
+## Acceptance criteria
+
+- [ ] The subsection navigation shows all five entries in the accepted order, marks the current one with a non-color cue, and keeps the bottom navigation visible.
+- [ ] `S13` groups workouts by month newest first with every required field, marks incomplete workouts with the `O06` badge and explanation, and renders the empty and loading states.
+- [ ] `S14` renders the full saved snapshot and links back to `S13`.
+- [ ] Editing every documented field saves through the `T-031` operations, shows the recalculation feedback, and leaves the visible split templates and Today's proposed split unchanged.
+- [ ] Removing a populated set or exercise asks for confirmation; removing an empty row does not.
+- [ ] Mark-completed changes the badge and eligibility explanation; delete requires `O01` confirmation and returns to `S13`.
+- [ ] `S13` and `S14` match the accepted `v0.3` structure, reflow from 320 to 430 px, respect overlay history, touch, motion, and accessibility behavior, and use no horizontal table scrolling.
+
+## Traceability
+
+- MVP criteria: `MVP-HIS-001`, `MVP-HIS-002`, `MVP-HIS-003`, `MVP-HIS-004`; supporting `MVP-HIS-006`, `MVP-WRK-012`, `MVP-REL-002`, `MVP-REL-004`, `MVP-UX-001`–`003`
+- ADRs: [ADR-0001](../../decisions/0001-private-mobile-only-app.md), [ADR-0003](../../decisions/0003-history-information-architecture.md), [ADR-0020](../../decisions/0020-mobile-ui-charting-and-quality-tooling.md), [ADR-0022](../../decisions/0022-versioned-external-design-handoff.md), [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md)
+- Canonical documents: [`../../product/history-and-statistics.md`](../../product/history-and-statistics.md), [`../../product/workouts.md`](../../product/workouts.md), [`../../ux/mobile-information-architecture.md`](../../ux/mobile-information-architecture.md), [`../../ux/wireframe-decisions.md`](../../ux/wireframe-decisions.md), [`../../architecture/mobile-ui-foundation.md`](../../architecture/mobile-ui-foundation.md), [`../../design/T-004-v0.4-frozen/README.md`](../../design/T-004-v0.4-frozen/README.md)
+
+## Dependencies and blockers
+
+- Dependencies: `T-031` Done
+- Blockers: `F-008` is held at the Owner's direction; readiness questions 3, 4, and 6 are unanswered
+- Blocked from status: Not blocked
+
+## Documentation impact
+
+- Documents to create or update: the mobile UI foundation (History routes, subsection navigation, the promoted set-entry module), the screen decisions for History Workouts, this Task, `F-008`, registry, dashboard, and project state
+- Documentation that should remain unchanged: product behavior, the active-workout screens, weight and body, desktop and post-MVP scope
+
+## Execution checklist
+
+- [ ] Add the History layout with subsection navigation and the four title-only placeholder routes.
+- [ ] Implement `S13` with month grouping, the incomplete badge and explanation, and empty and loading states.
+- [ ] Implement `S14` detail and edit mode on the `T-031` Server Actions, promoting the set-entry mode matrix to a shared module.
+- [ ] Wire mark-completed, `O01` deletion, save and failure toasts, unsaved-changes status, and the not-found boundary.
+- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 7 (historical correction with Last time updated and rotation unchanged) with structural captures; do not run them.
+- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+
+## Static-check plan and results
+
+- Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, and `git diff --check`
+- Results: Not run
+
+## Test plan and results
+
+- **Test required:** `yes`
+- **No-test reason:** Not applicable
+- **Planned tests:** After approval of the exact delivery commit: the scoped component suite (`S13` grouping and badges, `S14` edit validation, removal confirmation, mark-completed, deletion) and the serialized one-worker Chromium and WebKit phone scenario covering `S13` to `S14` edit to saved, the updated Last time on the active workout, unchanged Today proposal, `O01` deletion, overlay Back, reflow, and structural captures. Must not run before Owner approval of the exact commit.
+- **Authorized commit:** Not authorized
+- **Results:** Not run
+
+## Delivery commit
+
+- **Delivery commit SHA:** Not created
+- **Subject:** `T-032: build the History shell and workout History screens`
+- **Committed scope:** Not created
+
+## Review
+
+- **Reviewer:** User
+- **Reviewed at:** Not reviewed
+- **Outcome:** Not reviewed
+- **Findings:** None recorded
+
+## Approval
+
+- **Approved commit:** Not approved
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** Not approved
+
+## Definition of Ready
+
+- [x] ID, parent Feature, horizon, and order are set
+- [x] Scope and out-of-scope are clear
+- [x] Acceptance criteria are observable
+- [x] MVP criteria, ADRs, and canonical documents are linked
+- [x] Executor and Reviewer are named
+- [ ] Dependencies are known and blocking issues resolved — `T-031` is not `Done`; readiness questions 3, 4, and 6 are open
+- [x] Documentation impact and execution checklist are defined
+- [x] Static-check plan is defined
+- [x] `test_required` and an unexecuted plan are recorded
+- [x] Scope fits one independently reviewable delivery commit
+- [ ] Owner confirms transition to `Ready`
+
+## Definition of Done
+
+- [ ] Reviewer recommends approval
+- [ ] User approved the exact commit SHA
+- [ ] Scope and acceptance criteria are satisfied
+- [ ] Canonical documentation and required ADRs are current
+- [ ] Authorized feature tests passed, or approved no-test reason is recorded
+- [ ] Static checks and all evidence are recorded
+- [ ] Dashboard, registry, and parent progress are current
+- [ ] Follow-up scope has separate Tasks
+- [ ] Audit history is complete
+
+## Transition history
+
+| Timestamp | Actor/role | From | To | Reason or outcome |
+| --- | --- | --- | --- | --- |
+| `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the History shell and Workouts subsection delivery within `F-008`; the Owner directed that implementation must not start |
