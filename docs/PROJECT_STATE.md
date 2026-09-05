@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Review `T-025` delivery commit `75fd3d78d71c599cfcd54026080e51c79fade3af`, which lets a band set hold a mode before its strength is chosen and moves that requirement into the confirmation check. Its pgTAP verification stays forbidden until the User approves that exact commit, and the `F-011` confirmation waits for the result.
+Obtain fresh approval for `T-025` test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60` before the clean reset and pgTAP restart. The corrected constraints are already applied locally; the failed run aborted on a fixture that split a definition insert into two statements.
 
 ## Implementation status
 

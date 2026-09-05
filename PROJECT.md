@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T19:12:24+02:00
+- **Last updated:** 2026-09-05T19:12:45+02:00
 - **Current phase:** Local MVP implementation — correcting a blocking active-workout defect under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; six `F-011` Tasks are `Done` and `T-025` corrects a reported defect; `F-008` intentionally not started
@@ -12,13 +12,13 @@
 
 ## Immediate next action
 
-Deliver the `T-025` test-only replacement and request fresh approval; the prior approval was cleared by a failed pgTAP run. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+User reviews the `T-025` test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60` and decides on fresh approval; the clean reset and pgTAP then restart from the beginning. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`6/7 Tasks Done`) — `T-025` corrects a reported blocking defect
-  - [`T-025`](docs/project/tasks/T-025-allow-partial-band-set-entry.md) — `In Progress` — Claude Code primary agent — `2026-09-05T19:03:35+02:00` — deliver one reviewable commit
-  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `In Progress` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
+  - [`T-025`](docs/project/tasks/T-025-allow-partial-band-set-entry.md) — `In Review` — Claude Code primary agent — `2026-09-05T19:03:35+02:00` — deliver one reviewable commit
+  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `In Review` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
 

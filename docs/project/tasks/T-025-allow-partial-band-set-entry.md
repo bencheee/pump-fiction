@@ -1,7 +1,7 @@
 # T-025 — Allow partial band set entry
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 8
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:12:24+02:00`
+- **Updated:** `2026-09-05T19:12:45+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
-- **Review started:** `2026-09-05T19:07:51+02:00`
+- **Review started:** `2026-09-05T19:12:45+02:00`
 - **Approval requested:** `2026-09-05T19:10:30+02:00`
 - **Approved:** `2026-09-05T19:10:30+02:00`
 - **Testing started:** `2026-09-05T19:10:30+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a test-only replacement that inserts the new fixture in one statement, then request fresh approval; the previous approval and its test authorization are void.
+- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the clean reset and pgTAP then restart from the beginning.
 
 ## Scope
 
@@ -72,7 +72,7 @@ The set-entry model already treats an unconfirmed set as incomplete and validate
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Passed on `2026-09-05T19:07:32+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 758 internal links. The migration applied to the local database with `migration up`, deliberately without a reset, so the Owner's blocked workout survived; a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database; `supabase db lint` reported no schema errors; generated types were unchanged because only check constraints moved; and `git diff --check` passed.
+- Results: Re-run for the test-only replacement on `2026-09-05T19:12:45+02:00` and passed again; originally passed on `2026-09-05T19:07:32+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 758 internal links. The migration applied to the local database with `migration up`, deliberately without a reset, so the Owner's blocked workout survived; a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database; `supabase db lint` reported no schema errors; generated types were unchanged because only check constraints moved; and `git diff --check` passed.
 
 Diagnosis evidence, all inside transactions that were rolled back: the Owner's exact rejected command replayed against the pre-fix constraint failed with `new row for relation "workout_sets" violates check constraint "workout_sets_check"` on a row holding `assistance_band` with a null strength; after the fix the same command reports `applied`, while the same command with `isConfirmed: true` is still rejected by `workout_sets_check1`. No feature test ran.
 
@@ -86,15 +86,15 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `75fd3d78d71c599cfcd54026080e51c79fade3af`
+- **Delivery commit SHA:** `e0fe573dedfe8803032b89be8a50a11805d09e60` (test-only replacement; supersedes `75fd3d78d71c599cfcd54026080e51c79fade3af`)
 - **Subject:** `T-025: allow partial band set entry`
-- **Committed scope:** The `workout_sets` shape check without the band-strength requirement, the confirmation check with it, the generated migration, extended pgTAP coverage for the accepted partial band set and the rejected incomplete confirmation, and the workout, domain-model, and database-workflow documentation.
+- **Committed scope:** The replacement changes only the new fixture in `0001_core_constraints.test.sql`, inserting the assisted definition in one statement. The superseded delivery contained: the `workout_sets` shape check without the band-strength requirement, the confirmation check with it, the generated migration, extended pgTAP coverage for the accepted partial band set and the rejected incomplete confirmation, and the workout, domain-model, and database-workflow documentation.
 
 ## Review
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T19:10:30+02:00`
-- **Outcome:** Recommended for approval
+- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
 - **Findings:** None recorded; the User reviewed the reproduced cause and the corrected constraints.
 
 ## Approval
@@ -141,3 +141,4 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 | `2026-09-05T19:10:30+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and the destructive clean reset the pgTAP gate requires |
 | `2026-09-05T19:10:30+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the clean reset and pgTAP against `75fd3d78d71c599cfcd54026080e51c79fade3af` |
 | `2026-09-05T19:12:24+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | pgTAP aborted on a test-only fixture that split a definition insert into two statements; approval and test authorization cleared |
+| `2026-09-05T19:12:45+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`; static checks passed and no feature test ran |
