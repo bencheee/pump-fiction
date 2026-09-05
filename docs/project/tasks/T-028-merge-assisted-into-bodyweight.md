@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:35:08+02:00`
+- **Updated:** `2026-09-05T20:36:12+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T20:36:12+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset, pgTAP, and suites stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Reviewer checks `481ef7dc410733ad1b0502a8cea0a02ac53259bc`; the reset, pgTAP, and the suites stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -93,7 +93,7 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
 - **Subject:** `T-028: merge assisted exercises into bodyweight options`
 - **Committed scope:** the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
@@ -144,3 +144,4 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T19:28:05+02:00` | User / Owner | None | `Backlog` | Requested two exercise types with assistance offered under bodyweight |
 | `2026-09-05T20:24:07+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed readiness after `F-013` was delivered and confirmed |
 | `2026-09-05T20:24:07+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the exercise-type merge |
+| `2026-09-05T20:36:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `481ef7dc410733ad1b0502a8cea0a02ac53259bc`; static checks passed and no feature test ran |
