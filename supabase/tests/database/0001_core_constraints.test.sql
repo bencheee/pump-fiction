@@ -203,11 +203,14 @@ select throws_ok(
   'a confirmed weight set requires a positive kilogram value'
 );
 
-insert into public.exercises (id, name, base_type)
-values ('00000000-0000-0000-0000-000000000009', 'Assisted pull-up', 'assisted');
-
+with created_exercise as (
+  insert into public.exercises (id, name, base_type)
+  values ('00000000-0000-0000-0000-000000000009', 'Assisted pull-up', 'assisted')
+  returning id, base_type
+)
 insert into public.exercise_load_modes (exercise_id, exercise_base_type, load_mode)
-values ('00000000-0000-0000-0000-000000000009', 'assisted', 'assistance_band');
+select id, base_type, 'assistance_band'::public.load_mode
+from created_exercise;
 
 insert into public.workout_exercises (
   id,
