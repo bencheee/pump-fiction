@@ -28,7 +28,7 @@ import {
   TopBar,
 } from "@/shared/ui";
 
-import { formatWorkoutClock } from "../workout-format";
+import { formatWorkoutClock } from "@/features/active-workout/ui/workout-presentation";
 
 type FinishOutcome = "completed" | "incomplete" | "discarded";
 

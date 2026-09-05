@@ -54,7 +54,10 @@ import {
   TextField,
 } from "@/shared/ui";
 
-import { formatLastPerformance, formatWorkoutClock } from "./workout-format";
+import {
+  formatLastPerformance,
+  formatWorkoutClock,
+} from "@/features/active-workout/ui/workout-presentation";
 
 const optionalModeNoun: Readonly<Record<ExerciseLoadMode, string>> = {
   weight: "weight",

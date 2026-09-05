@@ -46,5 +46,13 @@ export default defineConfig([
   ...nextVitals,
   ...nextTypeScript,
   architectureBoundaries,
-  globalIgnores([".next/**", "node_modules/**", "temp_handoff/**"]),
+  globalIgnores([
+    ".next/**",
+    "node_modules/**",
+    "temp_handoff/**",
+    // Playwright writes these on every browser run; they are generated
+    // artifacts, not source, and linting them breaks `npm run check`.
+    "playwright-report/**",
+    "test-results/**",
+  ]),
 ]);

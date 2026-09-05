@@ -42,7 +42,9 @@ One shell owns every route: `(main)` provides one scroll container, the shell-ow
 
 The root route redirects to `/today`; `/history` redirects to `/history/workouts`. URLs use no trailing slash. Persisted-entity routes must validate parameters with `requireUuidRouteParam` from `src/shared/routing/uuid-route-param.ts` before querying. A malformed, missing, deleted, or otherwise unavailable identifier resolves through the shared App Router `not-found.tsx` boundary. The boundary deliberately uses neutral copy and returns to Today; feature-specific missing-record screens must not replace it.
 
-The initial Today, History, Programs, Exercises, active-workout, and finish route files expose only shell and title structure. Their domain content remains owned by later Feature Tasks.
+`T-032` adds a History layout under `/history` that owns the subsection navigation for Workouts, Exercises, Splits, Weight, and Body. It sits inside the main shell, so the bottom navigation stays visible, and it marks the current subsection with `aria-current`, a weight change, and an underline rather than color alone. `/history/exercises`, `/history/splits`, `/history/weight`, and `/history/body` are title-only placeholders until `T-034`, `T-036`, and `F-009` replace them.
+
+The remaining initial route files expose only shell and title structure. Their domain content remains owned by later Feature Tasks.
 
 ## Shared UI boundary
 
@@ -56,6 +58,8 @@ Reusable implementation lives under `src/shared/ui` and is exported through its 
 The sheet and destructive dialog are application-owned wrappers around Radix. They provide modal semantics, focus containment, Escape dismissal, trigger focus restoration, and cancel-safe initial focus for destructive confirmation. Feature modules must import these wrappers, not Radix directly.
 
 Feature-specific set rows, workout exercise cards, reorder behavior, restored-workout cards, and chart rendering are intentionally absent from `src/shared/ui`. Later Tasks implement them within a Feature first and promote only reuse that is demonstrated across Features. Business calculations never move into shared presentation components.
+
+Reuse demonstrated across Features moves into the owning feature's `ui` module rather than into `src/shared/ui`. `T-032` promoted the workout clock, set summary, and last-performance formatters from the active-workout route folder to `src/features/active-workout/ui/workout-presentation.ts`, because History reads the same saved sets. History keeps its own date, month, and duration formatting in its route folder, since no other Feature needs it yet.
 
 ## Definition-form save contract
 

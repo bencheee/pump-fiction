@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-015` |
-| Task | `T-037` |
+| Task | `T-038` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -77,6 +77,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-034`](tasks/T-034-build-exercise-history-mobile-experience.md) | `F-008` | Build Exercise History mobile experience | `Next / 4` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-034-build-exercise-history-mobile-experience.md`](tasks/T-034-build-exercise-history-mobile-experience.md) |
 | [`T-035`](tasks/T-035-build-split-statistics-operations.md) | `F-008` | Build split statistics operations | `Next / 5` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-035-build-split-statistics-operations.md`](tasks/T-035-build-split-statistics-operations.md) |
 | [`T-036`](tasks/T-036-build-split-history-mobile-experience.md) | `F-008` | Build Split History mobile experience | `Next / 6` | `Backlog` | Claude Code primary agent | `2026-09-05T21:58:22+02:00` | [`tasks/T-036-build-split-history-mobile-experience.md`](tasks/T-036-build-split-history-mobile-experience.md) |
+| [`T-037`](tasks/T-037-repair-stale-browser-specs.md) | `F-008` | Repair the browser specs left stale by the archiving removal | `Next / 7` | `Backlog` | Claude Code primary agent | `2026-09-05T22:52:00+02:00` | [`tasks/T-037-repair-stale-browser-specs.md`](tasks/T-037-repair-stale-browser-specs.md) |
 
 ## Templates
 

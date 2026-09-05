@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:46:10+02:00`
+- **Updated:** `2026-09-05T23:05:00+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -78,12 +78,12 @@ Shell:
 
 ## Execution checklist
 
-- [ ] Add the History layout with subsection navigation and the four title-only placeholder routes.
-- [ ] Implement `S13` with month grouping, the incomplete badge and explanation, and empty and loading states.
-- [ ] Implement `S14` detail and edit mode on the `T-031` Server Actions, promoting the set-entry mode matrix to a shared module.
-- [ ] Wire mark-completed, `O01` deletion, save and failure toasts, unsaved-changes status, and the not-found boundary.
-- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 7 (historical correction with Last time updated and rotation unchanged) with structural captures; do not run them.
-- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Add the History layout with subsection navigation and the four title-only placeholder routes.
+- [x] Implement `S13` with month grouping, the incomplete badge and explanation, and empty and loading states.
+- [x] Implement `S14` detail and edit mode on the `T-031` Server Actions. The set-entry mode matrix is imported from the active-workout domain rather than moved, because feature-to-feature domain imports are already how this repository shares that model and `T-031` uses the same route. The workout clock, set summary, and last-performance formatters did move out of the active-workout route folder into `src/features/active-workout/ui/workout-presentation.ts`, because History reads the same saved sets.
+- [x] Wire mark-completed, `O01` deletion, save and failure toasts, unsaved-changes status, and the not-found boundary.
+- [x] Prepare component tests and a browser scenario for critical flow 7 with structural captures; do not run them. Adding, removing, and reordering apply immediately and reload the workout, so they are disabled while the form holds unsaved edits and the form says why.
+- [x] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
@@ -94,15 +94,17 @@ Shell:
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval of the exact delivery commit: the scoped component suite (`S13` grouping and badges, `S14` edit validation, removal confirmation, mark-completed, deletion) and the serialized one-worker Chromium and WebKit phone scenario covering `S13` to `S14` edit to saved, the updated Last time on the active workout, unchanged Today proposal, `O01` deletion, overlay Back, reflow, and structural captures. Must not run before Owner approval of the exact commit.
+- **Planned tests:** After approval of the exact delivery commit: the unit command, which now carries the new component suite covering the `S14` snapshot with a deleted definition, mark-completed, confirmed deletion, the failure path, unsaved-changes reporting, the corrections a save actually sends, both removal confirmations, the structural lock, and the presentation helpers; then the serialized Chromium and WebKit run of the new History browser scenario covering the subsection shell, `S13` to `S14`, an applied correction, the unchanged Today proposal, confirmed deletion, 320 px reflow, and two structural captures per platform. Only that one spec runs: the whole browser command cannot run until [`T-037`](T-037-repair-stale-browser-specs.md) repairs two older specs that still call the archiving artifacts `T-021` removed. Must not run before Owner approval of the exact commit.
 - **Authorized commit:** Not authorized
-- **Results:** Not run
+- **Results:** Not run.
+
+  Recorded incident on `2026-09-05T23:05:00+02:00`: while writing this Task file, an unquoted shell heredoc expanded the backticked command names inside its own prose, so the shell executed the unit and browser test commands against the uncommitted working tree. No commit was approved and no commit existed, so **these runs are not verification of anything and their results are not recorded as evidence**. What they left behind was cleaned up: two fixture exercises the browser specs create were deleted, restoring the seeded ten, and the generated report directory was removed. The runs did surface two ambiguous queries in the new component suite, which are corrected here; that correction is ordinary implementation work, not an authorized test result. The recorded plan above still runs in full, from the beginning, after this exact delivery is approved. Every heredoc in this Task now quotes its delimiter.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-032: build the History shell and workout History screens`
-- **Committed scope:** Not created
+- **Committed scope:** the History layout and subsection navigation; the four placeholder subsection routes; `S13` with its loading state; `S14` detail, its loading state, and the correction form; the History presentation helpers; the promoted `workout-presentation` module with its two updated importers; the prepared component suite and browser scenario; the eslint ignore for generated Playwright artifacts; the mobile UI foundation and wireframe decisions; the discovered follow-up `T-037`; and this Task
 
 ## Review
 

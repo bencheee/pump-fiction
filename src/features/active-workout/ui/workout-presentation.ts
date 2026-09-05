@@ -1,8 +1,5 @@
-import type {
-  LastPerformance,
-  WorkoutSet,
-} from "@/features/active-workout/domain/workout";
-import { setModeFields } from "@/features/active-workout/domain/set-entry";
+import { setModeFields } from "../domain/set-entry";
+import type { LastPerformance, WorkoutSet } from "../domain/workout";
 
 export function formatWorkoutClock(seconds: number): string {
   const whole = Math.max(0, Math.floor(seconds));

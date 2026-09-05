@@ -61,7 +61,15 @@ The workout keeps the bottom navigation and uses the finish flow defined in [`wo
 
 ## History
 
-History provides Workouts, Exercises, Splits, Weight, and Body subsections.
+History provides Workouts, Exercises, Splits, Weight, and Body subsections. A subsection bar sits above the content and marks the current subsection without relying on color.
+
+### Workouts
+
+The list groups saved workouts by calendar month, newest first. Each row shows the saved split or one-time name, the date, the active duration, the performed exercise count, and an incomplete badge where it applies.
+
+A workout detail renders the saved snapshot with its timing, source names, ordered exercises, prescriptions, note snapshots, and sets. An incomplete workout also carries the explanation of what it is excluded from and the action that marks it completed. Deleting asks for confirmation and returns to the list.
+
+Editing is a separate screen. It corrects the date, start, finish, set values, and workout notes behind one **Save corrections** action that returns to the detail, following the same save contract as the definition forms. Adding, removing, and reordering sets and exercises apply immediately, each with the confirmation that populated data requires, and are unavailable while the form holds unsaved edits, because applying one reloads the workout.
 
 ### Exercises
 
