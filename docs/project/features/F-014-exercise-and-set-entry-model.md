@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:36:12+02:00`
+- **Updated:** `2026-09-05T21:01:46+02:00`
 - **Progress:** `0/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -80,3 +80,4 @@ Recorded on `2026-09-05`:
 | `2026-09-05T20:09:42+02:00` | User / Owner | Moved `Next / 2` to `Next / 1` | Reconfirmed the order `F-013`, `F-014`, `F-012`, `F-008` after `F-013` became the current focus |
 | `2026-09-05T20:24:07+02:00` | User / Owner | Moved `F-014` to `Now / 1` and started it | Confirmed the `F-013` result and asked for the model corrections next |
 | `2026-09-05T20:36:12+02:00` | Claude Code primary agent / Executor | `T-028` delivered `481ef7dc410733ad1b0502a8cea0a02ac53259bc` and entered review | The two-type model with assistance under bodyweight is ready for the Owner's review |
+| `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `T-028` returned to `In Progress` and delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The authorized run failed on exercise-form component tests the first delivery had not updated |

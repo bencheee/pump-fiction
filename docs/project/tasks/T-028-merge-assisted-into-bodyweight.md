@@ -1,7 +1,7 @@
 # T-028 — Merge assisted exercises into bodyweight options
 
 - **Feature:** `F-014`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:01:15+02:00`
+- **Updated:** `2026-09-05T21:01:46+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
-- **Review started:** `2026-09-05T20:36:12+02:00`
+- **Review started:** `2026-09-05T21:01:46+02:00`
 - **Approval requested:** `2026-09-05T20:57:19+02:00`
 - **Approved:** `2026-09-05T20:57:19+02:00`
 - **Testing started:** `2026-09-05T20:57:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
+- **Next action:** Reviewer checks `14fdd0ac8785127e2407584afd9a201aeaeb2cb2`; its run needs the Owner's approval of that SHA and of the clean reset.
 
 ## Scope
 
@@ -95,7 +95,7 @@ No local row used the retired type when this Task was delivered, so the migratio
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
+- **Delivery commit SHA:** `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` — replacement; it supersedes the first delivery `481ef7dc410733ad1b0502a8cea0a02ac53259bc`, whose changes it carries unchanged
 - **Subject:** `T-028: merge assisted exercises into bodyweight options`
 - **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the exercise-form component tests; the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, the exercise-form component suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
@@ -150,3 +150,4 @@ No local row used the retired type when this Task was delivered, so the migratio
 | `2026-09-05T20:57:19+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
 | `2026-09-05T20:57:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted the Owner's data, then started the authorized cycle against `481ef7dc410733ad1b0502a8cea0a02ac53259bc` |
 | `2026-09-05T20:59:40+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 68 unit tests: the exercise-form component tests still drove the retired assisted type; approval and test authorization cleared |
+| `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` with the corrected exercise-form component tests; static checks passed |
