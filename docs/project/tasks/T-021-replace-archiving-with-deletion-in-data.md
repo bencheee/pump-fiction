@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:59:56+02:00`
+- **Updated:** `2026-09-05T13:00:15+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T13:00:15+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit and decides on approval; the clean reset, pgTAP, component, and integration verification stays blocked until then.
 
 ## Scope
 
@@ -100,7 +100,7 @@ Screen changes absorbed from `T-022`:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `dfd6d7a9587740717af43ef23f33e3d545a20c4c`
 - **Subject:** `T-021: replace archiving with deletion in data and operations`
 - **Committed scope:** `ADR-0024` and its index row; the declarative schema without `entity_status`, `program_status`, and every `status` column, with unconditional name uniqueness, `app_settings.current_program_id`, the current-program and split-deletion triggers, `set_current_program`, `delete_program`, `delete_split`, `delete_exercise`, and the cascading and null-setting references that keep History intact; the reviewed migration and regenerated types; exercise and program domain types, repositories, operations, failures, server composition, and Server Actions rebuilt around deletion; the Exercises, Programs, and Splits screens with delete confirmations and the current-program control; updated unit, component, integration, and pgTAP assertions; and the revised `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, History wording, release boundary, and every affected product, architecture, and screen document.
 
@@ -152,3 +152,4 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T12:41:51+02:00` | User / Owner | `Backlog` | `Backlog` | Absorbed the canceled `T-022` screen scope into this Task |
 | `2026-09-05T12:42:09+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the `app_settings.current_program_id` mechanism and the absorbed screen scope |
 | `2026-09-05T12:42:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, operations, and screen changes |
+| `2026-09-05T13:00:15+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with static checks passed and no feature test run |
