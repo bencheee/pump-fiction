@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:26:21+02:00`
+- **Updated:** `2026-09-05T21:27:54+02:00`
 - **Progress:** `2/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -70,7 +70,7 @@ Recorded on `2026-09-05`:
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -85,3 +85,4 @@ Recorded on `2026-09-05`:
 | `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `T-029` delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2` and entered review | Explicit set confirmation is removed and the recorded state is derived from the entered values |
 | `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `T-029` returned to `In Progress` and delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` | The authorized run exposed two component expectations the first delivery renamed without re-deriving what the new rule counts |
 | `2026-09-05T21:26:21+02:00` | Claude Code primary agent / Tester | `T-029` verified and `Done` for `9374b8c23f55882f4c813a3e9a761f26b291e2b5` | Both corrections are delivered and verified; the Feature result awaits the Owner's confirmation |
+| `2026-09-05T21:27:54+02:00` | User / Owner | Confirmed the `F-014` result; the Feature is `Done` | Two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control |

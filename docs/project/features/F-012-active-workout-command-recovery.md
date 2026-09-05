@@ -2,11 +2,11 @@
 
 - **Milestone:** `M-001`
 - **Owner:** User
-- **Horizon:** `Next`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T20:24:07+02:00`
+- **Updated:** `2026-09-05T21:27:54+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -69,3 +69,4 @@ The durability model accepted in [ADR-0019](../../decisions/0019-application-bou
 | `2026-09-05T19:17:58+02:00` | User / Owner | Created `F-012` in `Next / 1` | Asked for the stuck-queue defect to be fixed after the 2026-09-05 blocked workout |
 | `2026-09-05T20:09:42+02:00` | User / Owner | Moved `Next / 3` to `Next / 2` | Reconfirmed the order `F-013`, `F-014`, `F-012`, `F-008` after `F-013` became the current focus |
 | `2026-09-05T20:24:07+02:00` | User / Owner | Moved `Next / 2` to `Next / 1` | `F-014` became the current focus once `F-013` was confirmed |
+| `2026-09-05T21:27:54+02:00` | User / Owner | Moved to `Now / 1` | `F-014` was confirmed, so `F-012` becomes the current focus |

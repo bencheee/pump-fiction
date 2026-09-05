@@ -1,31 +1,31 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:26:21+02:00
-- **Current phase:** Local MVP implementation — both `F-014` corrections verified and awaiting the Owner's confirmation before `F-012`
+- **Last updated:** 2026-09-05T21:27:54+02:00
+- **Current phase:** Local MVP implementation — `F-014` confirmed; planning the active-workout command recovery
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007`, `F-011`, and `F-013` complete; both `F-014` Tasks verified; `F-012` queued in `Next`; `F-008` intentionally not started
+- **Implementation:** `F-004` through `F-007`, `F-011`, `F-013`, and `F-014` complete; `F-012` is the current focus; `F-008` intentionally not started
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013` (seed and snapshot, `Done`) → `F-014` (`T-028`, then `T-029`) → `F-012` (command recovery) → `F-008`; reconfirmed by the Owner on `2026-09-05`
+- **Working order:** `F-013` (`Done`) → `F-014` (`Done`) → `F-012` (command recovery) → `F-008`; set by the Owner on `2026-09-05`
 
 ## Current focus
 
-[`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) Exercise and Set-Entry Model Corrections carries the Owner's two model corrections. [`T-028`](docs/project/tasks/T-028-merge-assisted-into-bodyweight.md) is `Done`: the verification of `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` seeded the reset, passed pgTAP 62/62 and every application suite, and left the library at exactly its 10 seeded exercises. [`T-029`](docs/project/tasks/T-029-record-a-set-by-its-values.md) is `Done` too: the verification of `9374b8c23f55882f4c813a3e9a761f26b291e2b5` confirmed that no confirmation control remains, that `workout_sets` no longer carries the flag, and that a set counts on its values alone. The Feature awaits the Owner's confirmation.
+[`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) Active-Workout Command Recovery closes the gap the `T-025` defect exposed: the outbox delivers commands in order, so one permanently rejected command blocks every later one and strands the workout, including its finish. Its single Task [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) is still `Backlog`, because the recovery rule itself needs the Owner's decision.
 
-[`F-013`](docs/project/features/F-013-local-verification-data.md) is `Done` with the Owner's confirmed result on `2026-09-05`: a reset now lands on the committed seed baseline, `npm run db:snapshot` and `npm run db:restore` carry the Owner's own data across a verification, and the repository suite no longer pollutes the exercise library.
+[`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) is `Done` with the Owner's confirmed result on `2026-09-05`: exercises have two types with assistance as a bodyweight option, and a set is recorded by its entered values with no confirmation control anywhere.
 
 ## Immediate next action
 
-Owner confirms the `F-014` result; `F-012` then starts with [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md). The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Owner confirms the recovery rule proposed in [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md), or changes it, so the Task can become `Ready`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`2/2 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
+- [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`0/1 Tasks Done`) — a permanently rejected command must not strand a workout
+  - [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) — `Backlog` — Claude Code primary agent — `2026-09-05T19:17:58+02:00` — Owner confirms the recovery rule and the transition to `Ready`
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
 
-1. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout (`T-026`).
-2. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
+1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
 
 ## Later
 
@@ -58,6 +58,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/14 Features Done`)
-- [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`2/2 Tasks Done`)
+- [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`0/1 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
