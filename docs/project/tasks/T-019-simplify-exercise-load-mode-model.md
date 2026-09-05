@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T11:41:11+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T12:09:18+02:00`
+- **Started:** `2026-09-05T12:09:18+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Blocked on `T-018` delivery order; Owner confirms `Ready` when `T-018` is approved.
+- **Next action:** Deliver the simplified load-mode model as one reviewable commit, then request review.
 
 ## Scope
 
@@ -124,7 +124,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -143,3 +143,5 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 2 recorded on 2026-09-05 |
+| `2026-09-05T12:09:18+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the accepted load-mode model and directed execution after approving `T-018` |
+| `2026-09-05T12:09:18+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the schema, domain, and Exercise Library changes |
