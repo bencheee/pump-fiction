@@ -1,7 +1,7 @@
 # T-024 — Keep primary navigation during an active workout
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:19:31+02:00`
+- **Updated:** `2026-09-05T13:20:44+02:00`
 - **Started:** `2026-09-05T13:16:19+02:00`
 - **Review started:** `2026-09-05T13:19:31+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T13:20:44+02:00`
+- **Approved:** `2026-09-05T13:20:44+02:00`
+- **Testing started:** `2026-09-05T13:20:44+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit and decides on approval.
+- **Next action:** Run the authorized component verification and record its results.
 
 ## Scope
 
@@ -79,7 +79,7 @@ Make the active workout part of the normally navigable application instead of a 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** component scenarios for navigation presence during a workout and for Today's resume action, plus a browser scenario that leaves and returns to a running workout and checks the duration kept accumulating; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `09a2477e18686ac7aa776b6b52c6c45d35adaad2`
 - **Results:** Not run
 
 ## Delivery commit
@@ -91,16 +91,16 @@ Make the active workout part of the normally navigable application instead of a 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T13:20:44+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the shell move, the removed focused shell, and `ADR-0025`.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `09a2477e18686ac7aa776b6b52c6c45d35adaad2`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T13:20:44+02:00`
+- **Approval note:** The User answered `odobreno` to the request to approve this exact commit, authorizing the component verification for its scope.
 
 ## Definition of Ready
 
@@ -136,3 +136,5 @@ Make the active workout part of the normally navigable application instead of a 
 | `2026-09-05T13:16:19+02:00` | User / Owner | `Backlog` | `Ready` | Directed execution of the final `F-011` correction |
 | `2026-09-05T13:16:19+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the shell and Today resume changes |
 | `2026-09-05T13:19:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `09a2477e18686ac7aa776b6b52c6c45d35adaad2` with static checks passed and no feature test run |
+| `2026-09-05T13:20:44+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit |
+| `2026-09-05T13:20:44+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `09a2477e18686ac7aa776b6b52c6c45d35adaad2` |
