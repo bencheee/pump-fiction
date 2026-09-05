@@ -1,7 +1,7 @@
 # T-019 — Simplify the exercise load-mode model
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:27:32+02:00`
+- **Updated:** `2026-09-05T12:30:15+02:00`
 - **Started:** `2026-09-05T12:09:18+02:00`
 - **Review started:** `2026-09-05T12:27:32+02:00`
-- **Approval requested:** `2026-09-05T12:24:17+02:00`
-- **Approved:** `2026-09-05T12:24:17+02:00`
-- **Testing started:** `2026-09-05T12:24:17+02:00`
+- **Approval requested:** `2026-09-05T12:30:15+02:00`
+- **Approved:** `2026-09-05T12:30:15+02:00`
+- **Testing started:** `2026-09-05T12:30:15+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the complete verification then restarts from the beginning.
+- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
 
 ## Scope
 
@@ -89,7 +89,7 @@ The Owner accepted a clean local database reset, so the migration removes the re
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** exercise validation unit tests, exercise-form component tests, exercise repository integration tests, and pgTAP constraint tests for every retired and permitted combination; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized; the failed verification cleared it
+- **Authorized commit:** `e265c48f4e376ccbdcc657eef7930830a0573013`
 - **Results:** Failed on `2026-09-05T12:26:11+02:00` against exact approved commit `db5a42026270393d17a11ecded5578e756f6d1e4` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history including the new migration, pgTAP passed 56/56 across five files, the shared UI component suites passed 4/4, and 62 of 63 unit and component tests passed. One test-only assertion failed: `offers only the optional additions of the selected type` queried buttons with `/^Weight/` across the whole screen, which also matches the `Weights` exercise-type button, so it failed even though the form correctly offers no selectable row for the implied `weight` mode. No implementation defect was found. The remaining repository integration run was not started because the failure already invalidates this attempt.
 
 ## Delivery commit
@@ -102,15 +102,15 @@ The Owner accepted a clean local database reset, so the migration removes the re
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T12:24:17+02:00`
-- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
-- **Findings:** None recorded; the User reviewed the delivered model, the reviewed migration correction, and the revised criteria.
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the delivered model, the reviewed migration correction, the revised criteria, and the test-only replacement.
 
 ## Approval
 
-- **Approved commit:** Void; approval of `db5a42026270393d17a11ecded5578e756f6d1e4` was cleared by the failed verification below
-- **Approved by:** Cleared
+- **Approved commit:** `e265c48f4e376ccbdcc657eef7930830a0573013` (test-only replacement)
+- **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T12:24:17+02:00`
-- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, which authorizes the clean local reset accepted for this model change.
+- **Approval note:** The User answered `odobravam` to the request to approve replacement `e265c48f4e376ccbdcc657eef7930830a0573013` after the failed verification of the superseded delivery. Authorization covers the complete verification restarted from the beginning, including the accepted clean local reset.
 
 ## Definition of Ready
 
@@ -150,3 +150,5 @@ The Owner accepted a clean local database reset, so the migration removes the re
 | `2026-09-05T12:24:17+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized database and application verification against `db5a42026270393d17a11ecded5578e756f6d1e4` |
 | `2026-09-05T12:26:11+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on a test-only query that also matched the exercise-type button; approval and test authorization cleared |
 | `2026-09-05T12:27:32+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `e265c48f4e376ccbdcc657eef7930830a0573013`; static checks passed and no feature test ran |
+| `2026-09-05T12:30:15+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
+| `2026-09-05T12:30:15+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the complete verification from the beginning against `e265c48f4e376ccbdcc657eef7930830a0573013` |
