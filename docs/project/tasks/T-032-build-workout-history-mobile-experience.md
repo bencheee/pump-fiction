@@ -1,7 +1,7 @@
 # T-032 — Build the History shell and workout History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T23:21:02+02:00`
+- **Updated:** `2026-09-05T23:23:20+02:00`
 - **Started:** `2026-09-05T22:46:10+02:00`
 - **Review started:** `2026-09-05T23:21:02+02:00` for the second replacement
-- **Approval requested:** `2026-09-05T23:17:13+02:00` for the replacement
-- **Approved:** `2026-09-05T23:17:13+02:00` for the superseded first replacement; the second is not approved
-- **Testing started:** `2026-09-05T23:17:13+02:00` for the replacement
+- **Approval requested:** `2026-09-05T23:23:20+02:00` for the second replacement
+- **Approved:** `2026-09-05T23:23:20+02:00` for the second replacement
+- **Testing started:** `2026-09-05T23:23:20+02:00` for the second replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the second replacement. Approving it restarts the complete recorded plan from the beginning.
+- **Next action:** Run the complete recorded plan from the beginning against exact approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`.
 
 ## Scope
 
@@ -95,7 +95,7 @@ Shell:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which now carries the new component suite covering the `S14` snapshot with a deleted definition, mark-completed, confirmed deletion, the failure path, unsaved-changes reporting, the corrections a save actually sends, both removal confirmations, the structural lock, and the presentation helpers; then the serialized Chromium and WebKit run of the new History browser scenario covering the subsection shell, `S13` to `S14`, an applied correction, the unchanged Today proposal, confirmed deletion, 320 px reflow, and two structural captures per platform. Only that one spec runs: the whole browser command cannot run until [`T-037`](T-037-repair-stale-browser-specs.md) repairs two older specs that still call the archiving artifacts `T-021` removed. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** none currently; the approvals of `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` and `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` were both invalidated by the failed verifications below
+- **Authorized commit:** `35790c78201f76c0c2cec3c76bddaa8415c9727a`; the approvals of `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` and `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` were invalidated by the failed verifications below
 - **Results:** Failed on `2026-09-05T23:10:34+02:00` against exact approved delivery `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`. `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **98/98 across 15 files**, up from 86 by the twelve new component scenarios. The serialized History browser scenario then failed on both mobile Chromium and mobile WebKit, at the same place: the second set of the seeded workout has no kilograms field to fill.
 
   That is a defect in delivered behavior, not in the test. A set that was never given values has `loadMode` null, and the correction form rendered its inputs from that column, so an empty historical set showed only reps and could never be completed. The active workout does not read the column: it derives the mode from the exercise definition, as [ADR-0023](../../decisions/0023-simplified-exercise-load-mode-model.md) requires, and the History form has to do the same and send that derived mode with the correction. The approval is invalidated.
@@ -121,10 +121,10 @@ Shell:
 
 ## Approval
 
-- **Approved commit:** None; the approval of `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` was invalidated by its failed verification
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** The Owner approved `578cd501bf6c2ee405ca33fd9678eb9835a1fd94` and then `c2b6fa124ed3cb327f756fc7a6fd74bd3080bdcf` on `2026-09-05`, each with `potvrda`. Neither stands: both verifications failed. Second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` needs a fresh decision.
+- **Approved commit:** `35790c78201f76c0c2cec3c76bddaa8415c9727a`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T23:23:20+02:00`
+- **Approval note:** The Owner replied `potvrda` a third time on `2026-09-05`, binding fresh approval to exact second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` and authorizing the complete recorded plan from the beginning. The approvals of the two superseded commits do not carry over.
 
 ## Definition of Ready
 
@@ -171,3 +171,6 @@ Shell:
 | `2026-09-05T23:17:13+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
 | `2026-09-05T23:21:02+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Scoped every assertion whose name repeats on the page; all permitted static checks passed |
 | `2026-09-05T23:21:02+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`; it awaits fresh approval before the complete recorded plan restarts |
+| `2026-09-05T23:23:20+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact second replacement with no further findings |
+| `2026-09-05T23:23:20+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a` with `potvrda` |
+| `2026-09-05T23:23:20+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved second replacement |
