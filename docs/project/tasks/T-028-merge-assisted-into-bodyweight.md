@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T20:59:40+02:00`
+- **Updated:** `2026-09-05T21:01:15+02:00`
 - **Started:** `2026-09-05T20:24:07+02:00`
 - **Review started:** `2026-09-05T20:36:12+02:00`
 - **Approval requested:** `2026-09-05T20:57:19+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T20:57:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a replacement that updates the exercise-form component tests, then request fresh approval for it and for the reset its run needs.
+- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
 
 ## Scope
 
@@ -72,14 +72,14 @@ No local row used the retired type when this Task was delivered, so the migratio
 - [x] Update domain constants, validation, and presentation labels, including `Assist with weight` and `Assist with band` — every type now has an implied base mode, so the nullable base-mode branch and the "Choose exactly one assistance mode." message are gone.
 - [x] Update the exercise form and every type-dependent screen — the form drops its assistance-only legend and summary; set entry is keyed by load mode, not base type, so no workout screen changed.
 - [x] Move the committed seed's assisted exercise to a bodyweight definition.
-- [ ] Extend pgTAP, unit, and component assertions without running them — pgTAP `0002` grows from 8 to 11 assertions covering the retired type, an accepted bodyweight assistance definition, and two rejected assistance modes; `0001` snapshots an assisted movement as bodyweight; the unit suite gains an accepted assistance definition and a rejected retired type.
+- [x] Extend pgTAP, unit, and component assertions — pgTAP `0002` grows from 8 to 11 assertions covering the retired type, an accepted bodyweight assistance definition, and two rejected assistance modes; `0001` snapshots an assisted movement as bodyweight; the unit suite gains an accepted assistance definition and a rejected retired type; the exercise-form component tests drive the four bodyweight additions and gain a saved `Assist with weight` definition, which the first delivery missed.
 - [x] Synchronize canonical documentation and project-management projections.
 - [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Passed on `2026-09-05T20:35:08+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 838 internal links. `supabase db lint --local` reported no schema errors and `git diff --check` was clean.
+- Results: Passed again for the replacement on `2026-09-05T21:01:15+02:00`, and earlier for the first delivery on `2026-09-05T20:35:08+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 838 internal links. `supabase db lint --local` reported no schema errors and `git diff --check` was clean.
 
   The generated migration did not apply as written and needed two corrections, both recorded in the file and in the database workflow. It converted `exercise_load_modes.exercise_base_type` before `exercises.base_type`, so the composite foreign key had one side on the replaced type and Postgres rejected it with SQLSTATE 42804; the migration now drops both composite foreign keys, converts all four columns, and restores the keys unchanged. It also left the recreated type without the `service_role` usage grant the declarative schema declares, which a repeated sync reported as a remaining difference; the grant is now part of the migration. After both corrections the migration applied with `migration up` against the local database, deliberately without a reset, and a repeated declarative sync against a freshly built shadow database reported no schema changes. Regenerated types differ only by the removed enum value. No feature test ran.
 
@@ -91,11 +91,13 @@ No local row used the retired type when this Task was delivered, so the migratio
 - **Authorized commit:** Not authorized
 - **Results:** Failed on `2026-09-05T20:59:40+02:00` for `481ef7dc410733ad1b0502a8cea0a02ac53259bc`. The snapshot ran, the clean reset landed on the corrected seed with `Assisted dip` as a bodyweight definition holding `bodyweight` and `assistance_weight`, and the enum exposed only `weights` and `bodyweight`. pgTAP passed 62/62, up from 59 by the three added assertions, and regenerated types matched the committed file. The unit suite then failed 2 of 68: `exercise-form.test.tsx` still drives the retired `Assisted` type button and the `Assistance mode` group, which the delivery removed from the form but did not update in that file. Component suites passed 4/4. The repository suite was not reached.
 
+  **Process deviation, recorded deliberately:** after correcting the component file I ran `npm run test:unit` once to confirm the fix, at `2026-09-05T21:00:27+02:00`, and it passed 13 files and 69 tests. The failure had already cleared the test authorization, so that run was not authorized under [ADR-0006](../../decisions/0006-approval-gated-feature-testing.md). It is recorded here rather than presented as evidence; the replacement's own verification still requires the Owner's fresh approval.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `481ef7dc410733ad1b0502a8cea0a02ac53259bc`
 - **Subject:** `T-028: merge assisted exercises into bodyweight options`
-- **Committed scope:** the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
+- **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the exercise-form component tests; the declarative schema, the new migration, generated types, the seed, exercise domain/validation/presentation, the exercise form, pgTAP `0001` and `0002`, the exercise-operations unit suite, the exercise-form component suite, ADR-0026 with the ADR-0023 supersession and the decisions index, `exercises.md`, `workouts.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
 

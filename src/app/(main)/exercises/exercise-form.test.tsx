@@ -53,25 +53,30 @@ describe("ExerciseForm", () => {
     await user.click(
       within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
         "button",
-        { name: "Assisted" },
+        { name: "Bodyweight" },
       ),
     );
 
-    const assistance = within(
-      screen.getByRole("group", { name: "Assistance mode" }),
+    const bodyweightAdditions = within(
+      screen.getByRole("group", { name: "Optional per-set additions" }),
     );
+    expect(screen.getByText("Every set stores reps.")).toBeVisible();
+    expect(bodyweightAdditions.getAllByRole("button")).toHaveLength(4);
     expect(
-      assistance.getByRole("button", { name: /Assistance weight/ }),
+      bodyweightAdditions.getByRole("button", { name: /Add weight/ }),
     ).toBeVisible();
     expect(
-      assistance.getByRole("button", { name: /Assistance band/ }),
+      bodyweightAdditions.getByRole("button", { name: /Assist with weight/ }),
     ).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: /Add resistance band/ }),
+      bodyweightAdditions.getByRole("button", { name: /Assist with band/ }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Assisted" }),
     ).not.toBeInTheDocument();
   });
 
-  it("keeps at most one addition and exactly one assistance mode", async () => {
+  it("keeps at most one addition", async () => {
     const user = userEvent.setup();
     actions.create.mockResolvedValue({ ok: true, value: { id: "created" } });
     renderForm(<ExerciseForm />);
@@ -157,27 +162,56 @@ describe("ExerciseForm", () => {
     await user.click(
       within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
         "button",
-        { name: "Assisted" },
+        { name: "Bodyweight" },
       ),
     );
 
-    const assistanceWeight = screen.getByRole("button", {
-      name: /Assistance weight/,
+    const assistWithWeight = screen.getByRole("button", {
+      name: /Assist with weight/,
     });
-    const assistanceBand = screen.getByRole("button", {
-      name: /Assistance band/,
+    const assistWithBand = screen.getByRole("button", {
+      name: /Assist with band/,
     });
-    expect(assistanceWeight).toHaveAttribute("aria-pressed", "true");
+    expect(assistWithWeight).toHaveAttribute("aria-pressed", "false");
 
-    await user.click(assistanceBand);
+    await user.click(assistWithWeight);
 
-    expect(assistanceWeight).toHaveAttribute("aria-pressed", "false");
-    expect(assistanceBand).toHaveAttribute("aria-pressed", "true");
+    expect(assistWithWeight).toHaveAttribute("aria-pressed", "true");
+
+    await user.click(assistWithBand);
+
+    expect(assistWithWeight).toHaveAttribute("aria-pressed", "false");
+    expect(assistWithBand).toHaveAttribute("aria-pressed", "true");
 
     await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
     expect(screen.getByText("Enter a name for this exercise.")).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
+  });
+
+  it("saves a bodyweight exercise that assists with weight", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({ ok: true, value: { id: "created" } });
+    renderForm(<ExerciseForm />);
+
+    await user.type(screen.getByLabelText("Name"), "Assisted dip");
+    await user.click(
+      within(screen.getByRole("group", { name: "Exercise type" })).getByRole(
+        "button",
+        { name: "Bodyweight" },
+      ),
+    );
+    await user.click(
+      screen.getByRole("button", { name: /Assist with weight/ }),
+    );
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
+
+    expect(actions.create).toHaveBeenCalledWith({
+      name: "Assisted dip",
+      baseType: "bodyweight",
+      allowedLoadModes: ["bodyweight", "assistance_weight"],
+      persistentNote: "",
+    });
   });
 
   it("names the affected splits before deleting an exercise", async () => {
