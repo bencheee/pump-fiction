@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T20:01:16+02:00`
+- **Updated:** `2026-09-05T20:12:12+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -78,3 +78,4 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 | `2026-09-05T19:42:31+02:00` | User / Owner | Confirmed the approach and started `F-013` | Chose the seed and the snapshot/restore pair together, with the seed as the fallback |
 | `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `T-027` delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` and entered review | The seed, the snapshot/restore pair, and their documentation are ready for the Owner's review |
 | `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Tester | `T-027` verified and `Done` for `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; added `T-030` | The seeded reset and the snapshot round trip both passed, and the run exposed an orphan exercise the command repository test leaves behind |
+| `2026-09-05T20:12:12+02:00` | Claude Code primary agent / Executor | `T-030` delivered `cfb8ee5fa42e8655553809a159bc422502737069` and entered review | The command repository test now deletes the exercise it creates |

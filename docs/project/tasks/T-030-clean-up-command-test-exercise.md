@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:11:38+02:00`
+- **Updated:** `2026-09-05T20:12:12+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T20:12:12+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the repository run stays unauthorized until the Owner approves that exact SHA.
+- **Next action:** Reviewer checks `cfb8ee5fa42e8655553809a159bc422502737069`; the repository run stays unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `cfb8ee5fa42e8655553809a159bc422502737069`
 - **Subject:** `T-030: delete the exercise the command repository test creates`
 - **Committed scope:** `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts` and this Task
 
@@ -124,3 +124,4 @@ Delete the created exercise in the same `finally` block, in the order the foreig
 | `2026-09-05T20:01:16+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Found during the authorized `T-027` verification: the command repository test leaves its exercise behind |
 | `2026-09-05T20:09:42+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the fix before `F-014`, keeping `F-013` first in the working order |
 | `2026-09-05T20:09:42+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the test cleanup |
+| `2026-09-05T20:12:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `cfb8ee5fa42e8655553809a159bc422502737069`; static checks passed and no feature test ran |
