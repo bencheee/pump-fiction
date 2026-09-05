@@ -1,7 +1,7 @@
 # T-021 — Replace archiving with deletion in data and operations
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:04:55+02:00`
+- **Updated:** `2026-09-05T13:09:38+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** `2026-09-05T13:04:55+02:00`
-- **Approval requested:** `2026-09-05T13:02:05+02:00`
-- **Approved:** `2026-09-05T13:02:05+02:00`
-- **Testing started:** `2026-09-05T13:02:05+02:00`
+- **Approval requested:** `2026-09-05T13:09:38+02:00`
+- **Approved:** `2026-09-05T13:09:38+02:00`
+- **Testing started:** `2026-09-05T13:09:38+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact replacement commit and decides on fresh approval; the complete verification then restarts from the beginning.
+- **Next action:** Run the complete authorized verification from the beginning against the approved replacement and record its results.
 
 ## Scope
 
@@ -95,7 +95,7 @@ Screen changes absorbed from `T-022`:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** unit tests for delete operations and failures, repository integration tests for exercise, split, and program deletion with surviving History, and pgTAP tests for the nullable snapshot references and the last-split rule; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized; the failed verification cleared it
+- **Authorized commit:** `a049287a74a7dccf5ba2146bea09671913dca9d7`
 - **Results:** Failed on `2026-09-05T13:03:51+02:00` against exact approved commit `dfd6d7a9587740717af43ef23f33e3d545a20c4c` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and Vitest `4.1.11`. The clean `supabase db reset` applied the full migration history, pgTAP passed 57/57 across five files including the new current-program and split-deletion assertions, the shared UI component suites passed 4/4, and 64 of 66 unit and component tests passed. Two test-only assertions failed: both program scenarios still clicked `Save as Draft`, although the delivered form renames that action to `Save Program` now that programs have no draft status. No implementation defect was found. The repository integration run was not started because the failure already invalidates this attempt.
 
 ## Delivery commit
@@ -108,15 +108,15 @@ Screen changes absorbed from `T-022`:
 
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-05T13:02:05+02:00`
-- **Outcome:** Recommended for approval for the superseded delivery; the replacement awaits review
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded; the User reviewed the deletion model, the current-program mechanism, the absorbed screen scope, and the revised criteria.
 
 ## Approval
 
-- **Approved commit:** Void; approval of `dfd6d7a9587740717af43ef23f33e3d545a20c4c` was cleared by the failed verification below
-- **Approved by:** Cleared
+- **Approved commit:** `a049287a74a7dccf5ba2146bea09671913dca9d7` (test-only replacement)
+- **Approved by:** User / Approver
 - **Approved at:** `2026-09-05T13:02:05+02:00`
-- **Approval note:** The User answered `odobravam` to the request to approve this exact commit, authorizing the clean reset, pgTAP, application, and repository verification for its scope.
+- **Approval note:** The User answered `odobreno` to the request to approve replacement `a049287a74a7dccf5ba2146bea09671913dca9d7` after the failed verification of the superseded delivery. Authorization covers the complete verification restarted from the beginning.
 
 ## Definition of Ready
 
@@ -157,3 +157,5 @@ Screen changes absorbed from `T-022`:
 | `2026-09-05T13:02:05+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the complete authorized verification against `dfd6d7a9587740717af43ef23f33e3d545a20c4c` |
 | `2026-09-05T13:03:51+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Verification failed on two test-only queries for the renamed program save action; approval and test authorization cleared |
 | `2026-09-05T13:04:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered test-only replacement `a049287a74a7dccf5ba2146bea09671913dca9d7`; static checks passed and no feature test ran |
+| `2026-09-05T13:09:38+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact test-only replacement |
+| `2026-09-05T13:09:38+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarting the complete verification from the beginning against `a049287a74a7dccf5ba2146bea09671913dca9d7` |
