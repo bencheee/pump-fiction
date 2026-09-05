@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:25:34+02:00`
+- **Updated:** `2026-09-05T22:29:27+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
 - **Review started:** `2026-09-05T22:22:36+02:00`
 - **Approval requested:** `2026-09-05T22:25:34+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T22:25:34+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded verification against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`.
+- **Next action:** Correct the two test-source defects the verification exposed, deliver a replacement, and request fresh approval. No further test runs until that replacement is approved.
 
 ## Scope
 
@@ -97,8 +97,8 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new history suite (list order and grouping, detail snapshot, every correction family, the rejection cases, template and rotation invariance, completion marking, cascade deletion, identity columns if added); `npm run test:repository` including the new history repository test; `npm run test:unit` for grouping and validation; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
-- **Results:** Not run
+- **Authorized commit:** `95de9212848755c956cb0dc5d50b5cfc8796dc27` — approval invalidated by the failed verification below
+- **Results:** Failed on `2026-09-05T22:29:27+02:00` against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0`. `npm ci` installed 653 packages with no vulnerabilities, `npm run db:snapshot` saved the local data, and `supabase db reset` applied all 20 migrations and the seed. `npm run test:db` then failed two suites and passed the other four. `0001_core_constraints` ran 10 of its 19 assertions before its two direct `workout_exercises` inserts hit the new `exercise_identity_id not null` column, which this delivery added without updating that suite. `0006_workout_history` ran 0 of 47: its second fixture workout starts `T-031 Pull` as an `alternate_split`, but completing the first workout advanced rotation onto that split, so `start_workout` correctly refused the mismatch. Both defects are in test source; no delivered behavior is implicated. Testing stopped there, so the unit, repository, and generated-type steps did not run.
 
 ## Delivery commit
 
@@ -158,3 +158,4 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T22:25:34+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-05T22:25:34+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` with `potvrda` |
 | `2026-09-05T22:25:34+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded verification against the exact approved delivery |
+| `2026-09-05T22:29:27+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Reset and seed succeeded and four pgTAP suites passed, before `0001_core_constraints` hit the new not-null identity column and `0006_workout_history` refused its own rotation-invalid fixture; remaining steps stopped and the approval is invalidated |

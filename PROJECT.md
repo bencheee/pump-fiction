@@ -1,23 +1,23 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T22:25:34+02:00
+- **Last updated:** 2026-09-05T22:29:27+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus after the Owner released the hold
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is `Testing` as the first of the six `F-008` Tasks
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` is back in `In Progress` after a failed verification, as the first of the six `F-008` Tasks
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `Testing`, Executor Claude Code primary agent, last change 2026-09-05T22:25:34+02:00. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
+[`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-05T22:29:27+02:00. The authorized verification failed on two prepared pgTAP suites, so the approval of the first delivery is invalidated. It is the first of the six [`F-008`](docs/project/features/F-008-history-and-statistics.md) Tasks. On `2026-09-05` the Owner released the hold, gave the go-ahead for the whole Feature, and accepted every recommended readiness answer, including the never-nulled identity snapshot that keeps exercise and split identity after a definition is deleted.
 
 ## Immediate next action
 
-Run only the recorded `T-031` verification against exact approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`, then record the result.
+Deliver the `T-031` replacement that corrects the two prepared pgTAP suites, then request fresh approval. No test runs until that exact replacement is approved.
 
 ## Now
 
-- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `Testing` — Claude Code primary agent — 2026-09-05T22:25:34+02:00 — next: record the verification result.
+- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — `In Progress` — Claude Code primary agent — 2026-09-05T22:29:27+02:00 — next: deliver the test-only replacement for fresh approval.
 
 ## Next
 
@@ -41,7 +41,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) — Build workout History operations — approved delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` — Claude Code primary agent — 2026-09-05T22:25:34+02:00 — next required action: the recorded pgTAP, unit, and repository verification.
+None. The `T-031` approval was invalidated by its failed verification.
 
 ## Recently completed Tasks
 
