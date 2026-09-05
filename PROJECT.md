@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T13:11:36+02:00
+- **Last updated:** 2026-09-05T13:14:24+02:00
 - **Current phase:** Local MVP implementation — correcting delivered behavior under `F-011` before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; `F-011` corrections planned and awaiting Owner readiness; `F-008` intentionally not started
@@ -12,13 +12,13 @@
 
 ## Immediate next action
 
-Deliver [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) as one reviewable commit covering the three active-workout screen corrections. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+User reviews delivery commit `f72e7dde3bcc9cb8f80d98935e42e7411603403f` for [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) and decides on approval. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`4/6 Tasks Done`) — Owner confirmed readiness
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
-  - [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) — `In Progress` — Claude Code primary agent — `2026-09-05T13:11:36+02:00` — deliver one reviewable commit (corrections 5, 6, 8)
+  - [`T-023`](docs/project/tasks/T-023-correct-active-workout-screen-details.md) — `In Review` — Claude Code primary agent — `2026-09-05T13:11:36+02:00` — deliver one reviewable commit (corrections 5, 6, 8)
   - [`T-024`](docs/project/tasks/T-024-keep-primary-navigation-during-workout.md) — `Backlog` — Claude Code primary agent — `2026-09-05T11:41:11+02:00` — Owner confirms `Ready` (correction 9)
 
 ## Next

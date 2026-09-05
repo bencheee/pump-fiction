@@ -1,7 +1,7 @@
 # T-023 — Correct active-workout screen details
 
 - **Feature:** `F-011`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:14:07+02:00`
+- **Updated:** `2026-09-05T13:14:24+02:00`
 - **Started:** `2026-09-05T13:11:36+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T13:14:24+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
+- **Next action:** User reviews the exact delivery commit and decides on approval.
 
 ## Scope
 
@@ -81,7 +81,7 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `f72e7dde3bcc9cb8f80d98935e42e7411603403f`
 - **Subject:** `T-023: correct active-workout screen details`
 - **Committed scope:** The active workout without its restored-session banner, state, and session-scoped marker; the shortened `Exercise note` heading; the finish review with its discard control inside a labelled sticky action group; `StickyActionBar` forwarding container attributes so that group can be named; updated component assertions; and the screen, workout, and UI-foundation documentation.
 
@@ -132,3 +132,4 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner corrections 5, 6, and 8 recorded on 2026-09-05 |
 | `2026-09-05T13:11:36+02:00` | User / Owner | `Backlog` | `Ready` | Directed execution after `T-021` |
 | `2026-09-05T13:11:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout screen corrections |
+| `2026-09-05T13:14:24+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `f72e7dde3bcc9cb8f80d98935e42e7411603403f` with static checks passed and no feature test run |
