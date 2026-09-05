@@ -1,30 +1,28 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:37:13+02:00
-- **Current phase:** Local MVP implementation — the command recovery is verified and awaiting the Owner's confirmation before `F-008`
+- **Last updated:** 2026-09-05T21:40:51+02:00
+- **Current phase:** Local MVP implementation — every started Feature is confirmed; `F-008` is held at the Owner's direction
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007`, `F-011`, `F-013`, and `F-014` complete; `F-012` is the current focus; `F-008` intentionally not started
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; no active work item; `F-008` not started at the Owner's direction
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013` (`Done`) → `F-014` (`Done`) → `F-012` (command recovery) → `F-008`; set by the Owner on `2026-09-05`
+- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` was next in that order but the Owner held it on the same day
 
 ## Current focus
 
-[`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) Active-Workout Command Recovery closes the gap the `T-025` defect exposed: the outbox delivers commands in order, so one permanently rejected command blocks every later one and strands the workout, including its finish. [`T-026`](docs/project/tasks/T-026-recover-from-rejected-command.md) is `Done`: the verification of `90875783eda308cdb95b33ad43a336bbd6060ccd` confirmed that a refused command is delivered once, leaves the outbox, and never blocks the queue behind it, and that the screen names the change it undid. The Feature awaits the Owner's confirmation.
-
-[`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) is `Done` with the Owner's confirmed result on `2026-09-05`: exercises have two types with assistance as a bodyweight option, and a set is recorded by its entered values with no confirmation control anywhere.
+No active work item. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) is `Done` with the Owner's confirmed result on `2026-09-05`, which closes the last of the three Features the Owner ordered that day. [`F-008`](docs/project/features/F-008-history-and-statistics.md) History and Statistics is next in that order, but the Owner directed on `2026-09-05` that it is not to be started; it also still has no Task breakdown.
 
 ## Immediate next action
 
-Owner confirms the `F-012` result; `F-008` History and Statistics then needs its Task breakdown before any implementation starts. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Await the Owner's direction. `F-008` needs both the Owner's go-ahead and a Task breakdown before any implementation starts; its scope boundary against [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) is part of that planning. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
-- [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`1/1 Tasks Done`) — awaiting the Owner's confirmation of the result
+- No active work item; `F-008` is held at the Owner's direction.
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
 
-1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
+1. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics; held, and needs a Task breakdown.
 
 ## Later
 
@@ -58,6 +56,5 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/14 Features Done`)
-- [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`1/1 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T21:37:13+02:00`
+- **Updated:** `2026-09-05T21:40:51+02:00`
 - **Progress:** `1/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -60,7 +60,7 @@ The durability model accepted in [ADR-0019](../../decisions/0019-application-bou
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -73,3 +73,4 @@ The durability model accepted in [ADR-0019](../../decisions/0019-application-bou
 | `2026-09-05T21:29:41+02:00` | User / Owner | Confirmed the proposed recovery rule and started `F-012` | A rejection becomes terminal, the client refreshes and replays the rest, and the screen names the lost change |
 | `2026-09-05T21:35:40+02:00` | Claude Code primary agent / Executor | `T-026` delivered `90875783eda308cdb95b33ad43a336bbd6060ccd` and entered review | A refused command is now terminal and the workout recovers without a gesture |
 | `2026-09-05T21:37:13+02:00` | Claude Code primary agent / Tester | `T-026` verified and `Done` for `90875783eda308cdb95b33ad43a336bbd6060ccd` | A refused command no longer strands a workout; the Feature result awaits the Owner's confirmation |
+| `2026-09-05T21:40:51+02:00` | User / Owner | Confirmed the `F-012` result; the Feature is `Done` | A permanently refused command no longer strands a workout, and the screen names the change it undid |
