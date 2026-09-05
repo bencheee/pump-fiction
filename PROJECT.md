@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T21:40:51+02:00
+- **Last updated:** 2026-09-05T21:43:03+02:00
 - **Current phase:** Local MVP implementation — every started Feature is confirmed; `F-008` is held at the Owner's direction
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; no active work item; `F-008` not started at the Owner's direction
@@ -18,7 +18,6 @@ Await the Owner's direction. `F-008` needs both the Owner's go-ahead and a Task 
 ## Now
 
 - No active work item; `F-008` is held at the Owner's direction.
-  - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
 
