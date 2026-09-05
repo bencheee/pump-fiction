@@ -5,7 +5,11 @@ import { useMemo, useState, useTransition } from "react";
 
 import { correctHistoryWorkoutAction } from "@/app/actions/workout-history";
 import { setModeFields } from "@/features/active-workout/domain/set-entry";
-import type { Exercise } from "@/features/exercises/domain/exercise";
+import {
+  baseLoadModeByBaseType,
+  type Exercise,
+  type ExerciseLoadMode,
+} from "@/features/exercises/domain/exercise";
 import type {
   HistoryCorrection,
   HistoryWorkout,
@@ -36,10 +40,38 @@ import {
 } from "../../../history-presentation";
 
 type SetDraft = Readonly<{
+  /**
+   * The mode this set is entered in. A set that was never given values has no
+   * mode of its own, so it starts from the one the exercise definition implies;
+   * the stored column is never the source, exactly as in the active workout.
+   */
+  loadMode: ExerciseLoadMode;
   loadKg: string;
   bandStrength: string;
   reps: string;
 }>;
+
+const loadModeNouns: Readonly<Record<ExerciseLoadMode, string>> = {
+  weight: "Weight",
+  weight_resistance_band: "Resistance band",
+  bodyweight: "Bodyweight",
+  bodyweight_added_weight: "Added weight",
+  bodyweight_resistance_band: "Resistance band",
+  assistance_weight: "Assistance weight",
+  assistance_band: "Assistance band",
+};
+
+function baseModeOf(exercise: HistoryWorkoutExercise): ExerciseLoadMode {
+  const implied = baseLoadModeByBaseType[exercise.exerciseBaseType];
+  return implied ?? exercise.allowedLoadModes[0] ?? "weight";
+}
+
+function optionalModeOf(
+  exercise: HistoryWorkoutExercise,
+): ExerciseLoadMode | null {
+  const base = baseModeOf(exercise);
+  return exercise.allowedLoadModes.find((allowed) => allowed !== base) ?? null;
+}
 
 type Draft = Readonly<{
   workoutDate: string;
@@ -62,6 +94,7 @@ function draftOf(workout: HistoryWorkout): Draft {
         exercise.sets.map((set) => [
           set.id,
           {
+            loadMode: set.loadMode ?? baseModeOf(exercise),
             loadKg: set.loadKg === null ? "" : String(set.loadKg),
             bandStrength: set.bandStrength ?? "",
             reps: set.reps === null ? "" : String(set.reps),
@@ -153,13 +186,23 @@ export function WorkoutCorrectionForm({
       for (const set of exercise.sets) {
         const entry = draft.sets[set.id];
         if (!entry) continue;
-        const loadKg = entry.loadKg === "" ? null : Number(entry.loadKg);
-        const reps = entry.reps === "" ? null : Number(entry.reps);
+        const fields = setModeFields[entry.loadMode];
+        // Values the chosen mode cannot hold are cleared, because the stored
+        // shape rejects them.
+        const loadKg =
+          fields.load === null || entry.loadKg === ""
+            ? null
+            : Number(entry.loadKg);
         const bandStrength =
-          entry.bandStrength === ""
+          fields.band === null || entry.bandStrength === ""
             ? null
             : (entry.bandStrength as "light" | "medium" | "strong");
+        const reps = entry.reps === "" ? null : Number(entry.reps);
+        const empty = loadKg === null && bandStrength === null && reps === null;
+        // An untouched empty set keeps no mode of its own.
+        const loadMode = empty && set.loadMode === null ? null : entry.loadMode;
         if (
+          loadMode === set.loadMode &&
           loadKg === set.loadKg &&
           reps === set.reps &&
           bandStrength === set.bandStrength
@@ -168,9 +211,9 @@ export function WorkoutCorrectionForm({
         corrections.push({
           kind: "update_set",
           workoutSetId: set.id,
-          loadMode: set.loadMode,
+          loadMode,
           loadKg,
-          bandDirection: set.bandDirection,
+          bandDirection: loadMode === null ? null : fields.band,
           bandStrength,
           reps,
         });
@@ -369,6 +412,8 @@ function ExerciseCard({
     (set) =>
       set.loadKg !== null || set.bandStrength !== null || set.reps !== null,
   );
+  const baseMode = baseModeOf(exercise);
+  const optionalMode = optionalModeOf(exercise);
 
   return (
     <section
@@ -396,12 +441,12 @@ function ExerciseCard({
       <ol className="mt-3 flex flex-col gap-3">
         {exercise.sets.map((set) => {
           const entry = draft.sets[set.id] ?? {
+            loadMode: baseMode,
             loadKg: "",
             bandStrength: "",
             reps: "",
           };
-          const fields =
-            set.loadMode === null ? null : setModeFields[set.loadMode];
+          const fields = setModeFields[entry.loadMode];
           const setPopulated =
             set.loadKg !== null ||
             set.bandStrength !== null ||
@@ -421,7 +466,45 @@ function ExerciseCard({
                   onStructural={onStructural}
                 />
               </div>
-              {fields?.load ? (
+              {optionalMode !== null ? (
+                <div className="flex flex-col gap-1.5">
+                  <span
+                    id={`set-${set.id}-mode-label`}
+                    className="text-[11px] font-semibold tracking-[0.1em] uppercase"
+                  >
+                    Entered as
+                  </span>
+                  <div
+                    role="group"
+                    aria-labelledby={`set-${set.id}-mode-label`}
+                    className="flex flex-wrap gap-2"
+                  >
+                    {[baseMode, optionalMode].map((option) => (
+                      <Chip
+                        key={option}
+                        selected={entry.loadMode === option}
+                        onClick={() =>
+                          onSet(set.id, {
+                            loadMode: option,
+                            loadKg:
+                              setModeFields[option].load === null
+                                ? ""
+                                : entry.loadKg,
+                            bandStrength:
+                              setModeFields[option].band === null
+                                ? ""
+                                : entry.bandStrength,
+                            reps: entry.reps,
+                          })
+                        }
+                      >
+                        {loadModeNouns[option]}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {fields.load ? (
                 <NumericField
                   id={`set-${set.id}-load`}
                   label={
@@ -437,7 +520,7 @@ function ExerciseCard({
                   }
                 />
               ) : null}
-              {fields?.band ? (
+              {fields.band ? (
                 <div className="flex flex-col gap-1.5">
                   <span
                     id={`set-${set.id}-band-label`}

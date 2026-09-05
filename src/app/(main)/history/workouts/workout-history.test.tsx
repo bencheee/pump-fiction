@@ -289,6 +289,33 @@ describe("workout History correction form", () => {
     });
   });
 
+  it("offers a load field for a set that was never given values", async () => {
+    const user = userEvent.setup();
+    render(<WorkoutCorrectionForm workout={completed} library={[]} />);
+
+    // The second set has no stored mode. Its fields come from the exercise
+    // definition, so it can still be completed afterwards.
+    const kilogramFields = screen.getAllByLabelText("Kilograms");
+    expect(kilogramFields).toHaveLength(2);
+    const emptyLoad = kilogramFields[1];
+    const emptyReps = screen.getAllByLabelText("Reps")[1];
+    if (!emptyLoad || !emptyReps) throw new Error("Expected a second set");
+
+    await user.type(emptyLoad, "65");
+    await user.type(emptyReps, "6");
+    await user.click(screen.getByRole("button", { name: "Save corrections" }));
+
+    expect(actions.correct).toHaveBeenCalledWith(
+      expect.objectContaining({
+        kind: "update_set",
+        workoutSetId: secondSetId,
+        loadMode: "weight",
+        loadKg: 65,
+        reps: 6,
+      }),
+    );
+  });
+
   it("blocks structural changes while the form holds unsaved edits", async () => {
     const user = userEvent.setup();
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
