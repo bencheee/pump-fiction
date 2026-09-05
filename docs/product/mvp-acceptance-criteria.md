@@ -135,7 +135,7 @@ Each snapshotted split exercise initially receives exactly its planned number of
 
 ### MVP-WRK-003 — Per-set mode and validation
 
-Each set independently selects one permitted load mode and displays only its applicable inputs. Decimal load/assistance values are allowed where applicable, reps must be positive integers, and an invalid or incomplete set cannot be confirmed as eligible data.
+Each set displays only the inputs of its snapshot's implied mode, and where the definition permits an addition each set can independently apply or remove exactly that addition. No set offers a menu of modes. Decimal load/assistance values are allowed where applicable, reps must be positive integers, and an invalid or incomplete set cannot be confirmed as eligible data.
 
 ### MVP-WRK-004 — Immediate persistence
 

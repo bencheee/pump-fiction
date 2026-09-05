@@ -20,7 +20,7 @@ If a removed set or exercise already contains data, the UI requires confirmation
 
 ## Set entry
 
-Load mode and values are selected per set. The exercise definition controls which modes are allowed; the complete type rules are in [`exercises.md`](exercises.md#load-modes).
+A set's fields come from the exercise definition rather than from a per-set menu. Every set starts in the mode its type implies, and when the definition permits an addition each set can apply or remove exactly that addition. The complete type rules are in [`exercises.md`](exercises.md#load-modes).
 
 Examples of resulting fields:
 
@@ -52,7 +52,7 @@ During a workout the user may:
 - add an active exercise from the library;
 - remove an exercise;
 - add or remove a set;
-- change a set's permitted load mode and values;
+- apply or remove the definition's single permitted addition on a set, and change its values;
 - add a workout-specific note.
 
 None of these actions changes the originating split.

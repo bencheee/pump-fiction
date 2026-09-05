@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:33:15+02:00`
+- **Updated:** `2026-09-05T12:36:27+02:00`
 - **Started:** `2026-09-05T12:33:15+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver definition-derived set entry as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -67,16 +67,16 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 
 ## Execution checklist
 
-- [ ] Replace the set-row mode sheet with base-mode fields plus the optional modifier control.
-- [ ] Keep the existing `update_set` command contract; only the control that selects the mode changes.
-- [ ] Update active-workout component tests without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Replace the set-row mode sheet with base-mode fields plus the optional modifier control.
+- [x] Keep the existing `update_set` command contract; only the control that selects the mode changes.
+- [x] Update active-workout component tests without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T12:36:27+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint across 96 files, and all 731 internal links. `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 
@@ -88,9 +88,9 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-020: derive per-set load from the exercise definition`
-- **Committed scope:** Not created
+- **Committed scope:** The active-workout set row without its load-mode sheet, rendering the snapshot's implied mode and one apply/remove control for the single permitted addition; the now-unreachable null-mode branches removed; component fixtures and scenarios rewritten for both directions of the control on a bodyweight and a weights exercise; and revised `MVP-WRK-003` with the workout, screen-decision, and UI-foundation documentation.
 
 ## Review
 

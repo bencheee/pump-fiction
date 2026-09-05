@@ -33,13 +33,13 @@ import type { ActiveWorkoutOutbox } from "@/features/active-workout/client/activ
 import { IndexedDbActiveWorkoutOutbox } from "@/features/active-workout/client/active-workout-outbox";
 import type { ActiveWorkoutCommandTransport } from "@/features/active-workout/client/active-workout-command-transport";
 import { FetchActiveWorkoutCommandTransport } from "@/features/active-workout/client/active-workout-command-transport";
-import type {
-  Exercise,
-  ExerciseLoadMode,
+import {
+  baseLoadModeByBaseType,
+  type Exercise,
+  type ExerciseLoadMode,
 } from "@/features/exercises/domain/exercise";
 import {
-  exerciseModeDetails,
-  exerciseModeLabels,
+  exerciseOptionalModeLabels,
   exerciseTypeLabels,
 } from "@/features/exercises/ui/exercise-presentation";
 import {
@@ -57,6 +57,21 @@ import {
 import { formatLastPerformance, formatWorkoutClock } from "./workout-format";
 
 const reopenMarkerPrefix = "pf-active-workout-entered-";
+
+const optionalModeNoun: Readonly<Record<ExerciseLoadMode, string>> = {
+  weight: "weight",
+  weight_resistance_band: "resistance band",
+  bodyweight: "bodyweight",
+  bodyweight_added_weight: "added weight",
+  bodyweight_resistance_band: "resistance band",
+  assistance_weight: "assistance weight",
+  assistance_band: "assistance band",
+};
+
+function setBaseMode(exercise: WorkoutExercise): ExerciseLoadMode {
+  const implied = baseLoadModeByBaseType[exercise.exerciseBaseType];
+  return implied ?? exercise.allowedLoadModes[0]!;
+}
 
 type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
 
@@ -732,7 +747,10 @@ function SetRow({
   onConfirmError: (setId: string, message: string) => void;
   onClearFeedback: (setId: string) => void;
 }) {
-  const mode = set.loadMode ?? exercise.allowedLoadModes[0] ?? null;
+  const baseMode = setBaseMode(exercise);
+  const optionalMode =
+    exercise.allowedLoadModes.find((allowed) => allowed !== baseMode) ?? null;
+  const mode = set.loadMode ?? baseMode;
   const committedKey = `${set.loadMode ?? ""}|${set.loadKg ?? ""}|${set.reps ?? ""}`;
   const [draftState, setDraftState] = useState(() => ({
     key: committedKey,
@@ -752,23 +770,19 @@ function SetRow({
   const setRepsDraft = (value: string) =>
     setDraftState((current) => ({ ...current, reps: value }));
 
-  if (mode === null) return null;
   const fields = setModeFields[mode];
   const loadLabel =
     fields.load !== null ? setLoadFieldLabels[fields.load] : null;
 
   function commitLoad() {
-    if (mode === null) return;
     const parsed = parsePositiveDecimal(loadDraft);
     if (parsed !== set.loadKg) onUpdate(set, mode, { loadKg: parsed });
   }
   function commitReps() {
-    if (mode === null) return;
     const parsed = parsePositiveInteger(repsDraft);
     if (parsed !== set.reps) onUpdate(set, mode, { reps: parsed });
   }
   function confirm() {
-    if (mode === null) return;
     if (set.isConfirmed) {
       onUpdate(set, mode, { isConfirmed: false });
       return;
@@ -801,48 +815,6 @@ function SetRow({
           <Icon name="check" size={13} />
         </span>
         <span className="font-semibold">Set {set.position}</span>
-        <Sheet
-          title="Load Mode"
-          description="Only modes enabled on the exercise definition appear. Changing mode keeps your reps, clears fields that do not carry over, and returns the set to unconfirmed."
-          trigger={
-            <button
-              type="button"
-              aria-label={`Change load mode for set ${set.position} of ${exercise.exerciseName}`}
-              className="flex min-h-11 items-center gap-1.5 rounded-[var(--pf-r-pill)] border border-[var(--pf-border-control)] px-3 text-[13px] font-medium"
-            >
-              {exerciseModeLabels[mode]}
-              <Icon name="chevron-down" size={14} />
-            </button>
-          }
-        >
-          {(close) => (
-            <div className="space-y-2">
-              {exercise.allowedLoadModes.map((allowed) => (
-                <button
-                  key={allowed}
-                  type="button"
-                  aria-pressed={allowed === mode}
-                  onClick={() => {
-                    if (allowed !== mode) onChangeMode(set, allowed);
-                    close();
-                  }}
-                  className={`flex min-h-14 w-full flex-col justify-center rounded-[var(--pf-r2)] border px-3 py-2 text-left ${
-                    allowed === mode
-                      ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)]"
-                      : "border-[var(--pf-border-control)]"
-                  }`}
-                >
-                  <span className="font-semibold">
-                    {exerciseModeLabels[allowed]}
-                  </span>
-                  <span className="mt-0.5 text-[12.5px] text-[var(--pf-text-2)]">
-                    {exerciseModeDetails[allowed]}
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
-        </Sheet>
         {set.isConfirmed ? (
           <span className="ml-auto text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-ok)] uppercase">
             Confirmed
@@ -886,8 +858,7 @@ function SetRow({
                   key={strength}
                   selected={set.bandStrength === strength}
                   onClick={() => {
-                    if (mode !== null)
-                      onUpdate(set, mode, { bandStrength: strength });
+                    onUpdate(set, mode, { bandStrength: strength });
                     if (feedback?.kind === "error") onClearFeedback(set.id);
                   }}
                 >
@@ -929,6 +900,21 @@ function SetRow({
           <Icon name="check" size={18} />
         </button>
       </div>
+
+      {optionalMode !== null ? (
+        <button
+          type="button"
+          onClick={() =>
+            onChangeMode(set, mode === optionalMode ? baseMode : optionalMode)
+          }
+          className="mt-3 flex min-h-11 items-center gap-1.5 rounded-[var(--pf-r-pill)] border border-dashed border-[var(--pf-border-control)] px-3 text-[13px] font-medium text-[var(--pf-accent-strong)]"
+        >
+          <Icon name={mode === optionalMode ? "x" : "plus"} size={14} />
+          {mode === optionalMode
+            ? `Remove ${optionalModeNoun[optionalMode]}`
+            : exerciseOptionalModeLabels[optionalMode]}
+        </button>
+      ) : null}
 
       {feedback?.kind === "error" ? (
         <p

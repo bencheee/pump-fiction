@@ -181,7 +181,7 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
         position: 2,
         exerciseName: "Pull-Up",
         exerciseBaseType: "bodyweight",
-        allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
+        allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
         persistentNote: "",
         plannedSets: 2,
         minReps: 6,
@@ -198,7 +198,7 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
           makeSet({
             id: "00000000-0000-4000-8000-0000000000e2",
             position: 2,
-            loadMode: "bodyweight_resistance_band",
+            loadMode: "bodyweight",
           }),
         ],
         lastPerformance: null,
@@ -269,11 +269,14 @@ describe("Active-workout mobile experience", () => {
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
     expect(within(pullUp).getByLabelText("added kg")).toBeVisible();
     expect(
-      within(pullUp).getByRole("group", { name: "Resistance band" }),
+      within(pullUp).getAllByRole("button", { name: /Add weight/ }),
+    ).toHaveLength(1);
+    expect(
+      within(pullUp).getByRole("button", { name: "Remove added weight" }),
     ).toBeVisible();
     expect(
-      within(pullUp).getByRole("button", { name: "Medium" }),
-    ).toBeVisible();
+      within(squat).queryByRole("group", { name: "Resistance band" }),
+    ).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
     expect(await screen.findByText("All changes saved")).toBeVisible();
   });
@@ -309,18 +312,18 @@ describe("Active-workout mobile experience", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("changes load mode by clearing incompatible fields and keeping reps", async () => {
+  it("removes the definition's addition from a set and keeps its reps", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
 
+    expect(
+      within(pullUp).queryByRole("button", { name: /Change load mode/ }),
+    ).not.toBeInTheDocument();
+
     await user.click(
-      within(pullUp).getByRole("button", {
-        name: "Change load mode for set 1 of Pull-Up",
-      }),
+      within(pullUp).getByRole("button", { name: "Remove added weight" }),
     );
-    const chooser = await screen.findByRole("dialog", { name: "Load Mode" });
-    await user.click(within(chooser).getByText("Reps only"));
 
     expect(
       await screen.findByText("Cleared added kg. Set returned to unconfirmed."),
@@ -333,6 +336,34 @@ describe("Active-workout mobile experience", () => {
         isConfirmed: false,
       });
     });
+  });
+
+  it("applies the definition's single addition to one set only", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+    const squat = screen.getByRole("region", { name: "Squat" });
+
+    expect(
+      within(squat).queryByRole("group", { name: "Resistance band" }),
+    ).not.toBeInTheDocument();
+
+    await user.click(
+      within(squat).getAllByRole("button", {
+        name: "Add resistance band",
+      })[1]!,
+    );
+
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        workoutSetId: "00000000-0000-4000-8000-0000000000d2",
+        loadMode: "weight_resistance_band",
+        isConfirmed: false,
+      });
+    });
+    expect(
+      within(squat).getByRole("group", { name: "Resistance band" }),
+    ).toBeVisible();
+    expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
   });
 
   it("returns a confirmed set to unconfirmed when a value changes", async () => {

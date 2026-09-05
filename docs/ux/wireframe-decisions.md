@@ -51,7 +51,7 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 Each exercise card shows name, type, targeted sets and rep range, persistent exercise note, last-time result, the exact initial set count from the split, per-set load and reps inputs, set confirmation, **Remove set**, **Add set**, and **Today's note**.
 
-For a pull-up or other configurable bodyweight exercise, changing a set's mode changes that set's fields among reps only, added kg plus reps, or band strength plus reps. Direction is retained for band modes.
+A set shows the fields of its exercise's implied mode. When the definition permits an addition, each set carries one control that applies it or removes it again, named for the addition the definition actually allows, such as **Add resistance band** or **Add weight**. An assisted exercise has a single defined mode and therefore no control. Direction is retained for band modes.
 
 The workout uses the focused shell and finish flow defined in [`workouts.md`](../product/workouts.md).
 
