@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:18:30+02:00`
+- **Updated:** `2026-09-05T21:23:55+02:00`
 - **Progress:** `1/2 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -83,3 +83,4 @@ Recorded on `2026-09-05`:
 | `2026-09-05T21:01:46+02:00` | Claude Code primary agent / Executor | `T-028` returned to `In Progress` and delivered replacement `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The authorized run failed on exercise-form component tests the first delivery had not updated |
 | `2026-09-05T21:05:10+02:00` | Claude Code primary agent / Tester | `T-028` verified and `Done` for `14fdd0ac8785127e2407584afd9a201aeaeb2cb2` | The two-type model is delivered and verified; `T-029` needs the Owner's confirmation of readiness |
 | `2026-09-05T21:18:30+02:00` | Claude Code primary agent / Executor | `T-029` delivered `a64adcc3a1b547ac2af2ec9121c958653323d2f2` and entered review | Explicit set confirmation is removed and the recorded state is derived from the entered values |
+| `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `T-029` returned to `In Progress` and delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` | The authorized run exposed two component expectations the first delivery renamed without re-deriving what the new rule counts |

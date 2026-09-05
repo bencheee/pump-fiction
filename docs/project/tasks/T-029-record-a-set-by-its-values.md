@@ -1,7 +1,7 @@
 # T-029 — Record a set by its entered values
 
 - **Feature:** `F-014`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:23:26+02:00`
+- **Updated:** `2026-09-05T21:23:55+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
-- **Review started:** `2026-09-05T21:18:30+02:00`
+- **Review started:** `2026-09-05T21:23:55+02:00`
 - **Approval requested:** `2026-09-05T21:19:46+02:00`
 - **Approved:** `2026-09-05T21:19:46+02:00`
 - **Testing started:** `2026-09-05T21:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
+- **Next action:** Reviewer checks `9374b8c23f55882f4c813a3e9a761f26b291e2b5`; its run needs the Owner's approval of that SHA and of the clean reset.
 
 ## Scope
 
@@ -94,7 +94,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
+- **Delivery commit SHA:** `9374b8c23f55882f4c813a3e9a761f26b291e2b5` — replacement; it supersedes the first delivery `a64adcc3a1b547ac2af2ec9121c958653323d2f2`, whose changes it carries unchanged
 - **Subject:** `T-029: record a set by its entered values`
 - **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the two corrected component expectations; the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
@@ -149,3 +149,4 @@ The finish review keeps its counts but renames them for the new model: recorded 
 | `2026-09-05T21:19:46+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit and the clean reset it requires |
 | `2026-09-05T21:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Started the authorized cycle against `a64adcc3a1b547ac2af2ec9121c958653323d2f2` |
 | `2026-09-05T21:21:57+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed 2 of 69 unit tests on stale component expectations, including a set the derived rule now correctly records; approval and test authorization cleared |
+| `2026-09-05T21:23:55+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered replacement `9374b8c23f55882f4c813a3e9a761f26b291e2b5` with the re-derived component expectations; static checks passed and no feature test ran |

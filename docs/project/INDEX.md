@@ -70,7 +70,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-027`](tasks/T-027-restore-local-data-after-reset.md) | `F-013` | Restore usable local data after a verification reset | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T20:01:16+02:00` | [`tasks/T-027-restore-local-data-after-reset.md`](tasks/T-027-restore-local-data-after-reset.md) |
 | [`T-030`](tasks/T-030-clean-up-command-test-exercise.md) | `F-013` | Delete the exercise the command repository test creates | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T20:21:55+02:00` | [`tasks/T-030-clean-up-command-test-exercise.md`](tasks/T-030-clean-up-command-test-exercise.md) |
 | [`T-028`](tasks/T-028-merge-assisted-into-bodyweight.md) | `F-014` | Merge assisted exercises into bodyweight options | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-05T21:05:10+02:00` | [`tasks/T-028-merge-assisted-into-bodyweight.md`](tasks/T-028-merge-assisted-into-bodyweight.md) |
-| [`T-029`](tasks/T-029-record-a-set-by-its-values.md) | `F-014` | Record a set by its entered values | `Now / 1` | `In Progress` | Claude Code primary agent | `2026-09-05T21:21:57+02:00` | [`tasks/T-029-record-a-set-by-its-values.md`](tasks/T-029-record-a-set-by-its-values.md) |
+| [`T-029`](tasks/T-029-record-a-set-by-its-values.md) | `F-014` | Record a set by its entered values | `Now / 1` | `In Review` | Claude Code primary agent | `2026-09-05T21:23:55+02:00` | [`tasks/T-029-record-a-set-by-its-values.md`](tasks/T-029-record-a-set-by-its-values.md) |
 
 ## Templates
 
