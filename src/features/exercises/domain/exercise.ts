@@ -13,7 +13,6 @@ export const exerciseLoadModes = [
 ] as const;
 
 export type ExerciseLoadMode = (typeof exerciseLoadModes)[number];
-export type ExerciseStatus = "active" | "archived";
 
 export type Exercise = Readonly<{
   id: string;
@@ -21,7 +20,6 @@ export type Exercise = Readonly<{
   baseType: ExerciseBaseType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
-  status: ExerciseStatus;
   splitUsageCount: number;
 }>;
 

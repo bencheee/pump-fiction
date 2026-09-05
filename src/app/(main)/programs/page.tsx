@@ -1,23 +1,10 @@
 import Link from "next/link";
 
-import type {
-  Program,
-  ProgramStatus,
-} from "@/features/programs/domain/program";
+import type { Program } from "@/features/programs/domain/program";
 import { listPrograms } from "@/server/application/programs";
 import { Badge, EmptyState, Icon, PageFrame } from "@/shared/ui";
 
 export const dynamic = "force-dynamic";
-
-const groups: ReadonlyArray<{
-  status: ProgramStatus;
-  label: string;
-  empty: string;
-}> = [
-  { status: "active", label: "Active", empty: "No active program" },
-  { status: "draft", label: "Drafts", empty: "No draft programs" },
-  { status: "archived", label: "Archived", empty: "No archived programs" },
-];
 
 export default async function ProgramsPage() {
   const result = await listPrograms();
@@ -48,7 +35,7 @@ export default async function ProgramsPage() {
       ) : result.value.length === 0 ? (
         <EmptyState
           title="No programs yet"
-          body="Create a program, add its split rotation, then choose the first split when you activate it."
+          body="Create a program, add its split rotation, then choose the split it starts from."
           action={
             <Link
               href="/programs/new"
@@ -59,36 +46,10 @@ export default async function ProgramsPage() {
           }
         />
       ) : (
-        <div className="space-y-7">
-          {groups.map((group) => {
-            const programs = result.value.filter(
-              (program) => program.status === group.status,
-            );
-            return (
-              <section
-                key={group.status}
-                aria-labelledby={`${group.status}-programs`}
-              >
-                <h2
-                  id={`${group.status}-programs`}
-                  className="mb-2 text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase"
-                >
-                  {group.label}
-                </h2>
-                {programs.length === 0 ? (
-                  <p className="rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border)] px-3 py-4 text-[13px] text-[var(--pf-text-3-deep)]">
-                    {group.empty}
-                  </p>
-                ) : (
-                  <div className="space-y-2">
-                    {programs.map((program) => (
-                      <ProgramCard key={program.id} program={program} />
-                    ))}
-                  </div>
-                )}
-              </section>
-            );
-          })}
+        <div className="space-y-2">
+          {result.value.map((program) => (
+            <ProgramCard key={program.id} program={program} />
+          ))}
         </div>
       )}
     </PageFrame>
@@ -96,18 +57,13 @@ export default async function ProgramsPage() {
 }
 
 function ProgramCard({ program }: { program: Program }) {
-  const activeSplits = program.splits.filter(
-    (split) => split.status === "active",
-  );
   const next = program.splits.find((split) => split.id === program.nextSplitId);
 
   return (
     <Link
       href={`/programs/${program.id}/edit`}
       className={`flex min-h-20 items-center gap-3 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4 ${
-        program.status === "active"
-          ? "border-l-[3px] border-l-[var(--pf-accent)]"
-          : ""
+        program.isCurrent ? "border-l-[3px] border-l-[var(--pf-accent)]" : ""
       }`}
     >
       <span className="min-w-0 flex-1">
@@ -115,12 +71,11 @@ function ProgramCard({ program }: { program: Program }) {
           <span className="text-[16.5px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
             {program.name}
           </span>
-          <Badge tone={program.status === "active" ? "accent" : "neutral"}>
-            {program.status}
-          </Badge>
+          {program.isCurrent ? <Badge tone="accent">Current</Badge> : null}
         </span>
         <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
-          {activeSplits.length} {activeSplits.length === 1 ? "split" : "splits"}
+          {program.splits.length}{" "}
+          {program.splits.length === 1 ? "split" : "splits"}
           {next ? ` · Next: ${next.name}` : ""}
         </span>
       </span>

@@ -35,7 +35,7 @@ Any historical edit recalculates all affected derived statistics. It does not up
 
 ## Exercise history
 
-The exercise list contains exercises with at least one historical performance, including archived exercises. An exercise detail shows:
+The exercise list contains every exercise with at least one historical performance, including exercises whose definition was later deleted; the workout snapshot keeps their name and type. An exercise detail shows:
 
 - latest eligible performance;
 - personal records;

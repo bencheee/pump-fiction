@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:42:09+02:00`
+- **Updated:** `2026-09-05T12:59:56+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver deletion with preserved History as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -76,19 +76,19 @@ Screen changes absorbed from `T-022`:
 
 ## Execution checklist
 
-- [ ] Record `ADR-0024` including the History-preservation mechanism and the current-program selection.
-- [ ] Update the declarative schema and generate the migration and database types.
-- [ ] Replace archive and reactivate operations with delete operations and their failures.
-- [ ] Add the current-program selection to app settings and program operations.
-- [ ] Replace archive and reactivate controls with delete controls and confirmations, and program status UI with the current-program selection.
-- [ ] Extend pgTAP, component, and repository integration assertions, including History survival after each deletion, without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Record `ADR-0024` including the History-preservation mechanism and the current-program selection.
+- [x] Update the declarative schema and generate the migration and database types.
+- [x] Replace archive and reactivate operations with delete operations and their failures.
+- [x] Add the current-program selection to app settings and program operations.
+- [x] Replace archive and reactivate controls with delete controls and confirmations, and program status UI with the current-program selection.
+- [x] Extend pgTAP, component, and repository integration assertions, including History survival after each deletion, without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T12:59:56+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint, and all 742 internal links. The generated migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types match the committed file, and `git diff --check` passed. Applying the migration first required deleting one leftover archived integration-test fixture whose name duplicated an active row; that is local scratch data, not committed content. No feature test ran.
 
 ## Test plan and results
 
@@ -100,9 +100,9 @@ Screen changes absorbed from `T-022`:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-021: replace archiving with deletion in data and operations`
-- **Committed scope:** Not created
+- **Committed scope:** `ADR-0024` and its index row; the declarative schema without `entity_status`, `program_status`, and every `status` column, with unconditional name uniqueness, `app_settings.current_program_id`, the current-program and split-deletion triggers, `set_current_program`, `delete_program`, `delete_split`, `delete_exercise`, and the cascading and null-setting references that keep History intact; the reviewed migration and regenerated types; exercise and program domain types, repositories, operations, failures, server composition, and Server Actions rebuilt around deletion; the Exercises, Programs, and Splits screens with delete confirmations and the current-program control; updated unit, component, integration, and pgTAP assertions; and the revised `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, History wording, release boundary, and every affected product, architecture, and screen document.
 
 ## Review
 

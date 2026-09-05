@@ -2,9 +2,8 @@
 
 import type { ExerciseDefinitionInput } from "@/features/exercises/domain/exercise-validation";
 import {
-  archiveExercise,
   createExercise,
-  reactivateExercise,
+  deleteExercise,
   updateExercise,
 } from "@/server/application/exercises";
 
@@ -19,10 +18,6 @@ export async function updateExerciseAction(
   return updateExercise(id, input);
 }
 
-export async function archiveExerciseAction(id: unknown) {
-  return archiveExercise(id);
-}
-
-export async function reactivateExerciseAction(id: unknown) {
-  return reactivateExercise(id);
+export async function deleteExerciseAction(id: unknown) {
+  return deleteExercise(id);
 }

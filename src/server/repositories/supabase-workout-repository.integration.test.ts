@@ -53,7 +53,7 @@ describe("SupabaseWorkoutRepository", () => {
           { exerciseId: exercise.id, plannedSets: 2, minReps: 5, maxReps: 8 },
         ],
       });
-      await programs.activateProgram(program.id, push.id);
+      await programs.setCurrentProgram(program.id, push.id);
       const startedAt = new Date();
       const current = await workouts.start({
         sourceKind: "proposed_split",
@@ -189,10 +189,9 @@ describe("SupabaseWorkoutRepository", () => {
       }
       if (programId) {
         await client
-          .from("programs")
-          .update({ status: "archived", next_split_id: null })
-          .eq("id", programId);
-        await client.from("splits").delete().eq("program_id", programId);
+          .from("app_settings")
+          .update({ current_program_id: null })
+          .eq("id", 1);
         await client.from("programs").delete().eq("id", programId);
       }
       if (exerciseId)

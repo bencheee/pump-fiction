@@ -60,7 +60,7 @@ describe("SupabaseProgramRepository", () => {
         ],
       });
 
-      await programs.activateProgram(first.id, push.id);
+      await programs.setCurrentProgram(first.id, push.id);
       const reordered = await programs.reorderSplits(first.id, [
         mixed.id,
         push.id,
@@ -74,7 +74,7 @@ describe("SupabaseProgramRepository", () => {
       ]);
 
       await programs.setNextSplit(first.id, pull.id);
-      await programs.archiveSplit(pull.id);
+      await programs.deleteSplit(pull.id);
       expect((await programs.getProgram(first.id))?.nextSplitId).toBe(mixed.id);
 
       const advanced = await programs.advanceAfterProposedCompletion(
@@ -88,22 +88,20 @@ describe("SupabaseProgramRepository", () => {
       expect(advanced).toBe(push.id);
       expect(duplicateAdvance).toBe(push.id);
 
-      await exercises.setStatus(press.id, "archived");
       const retained = await programs.updateSplit(push.id, {
         name: "Push retained",
         exercises: [prescription(press.id, 5, 5, 8)],
       });
       expect(retained.exercises[0]).toMatchObject({
         exerciseId: press.id,
-        exerciseStatus: "archived",
         plannedSets: 5,
       });
       await expect(
-        programs.updateSplit(pull.id, {
-          name: "Pull",
-          exercises: [prescription(press.id, 3, 8, 8)],
+        programs.updateSplit(push.id, {
+          name: "Push retained",
+          exercises: [prescription(randomUUID(), 3, 8, 8)],
         }),
-      ).rejects.toMatchObject({ code: "inactive_exercise" });
+      ).rejects.toMatchObject({ code: "unknown_exercise" });
 
       const second = await programs.createProgram({ name: `Plan B ${suffix}` });
       createdProgramIds.push(second.id);
@@ -111,20 +109,28 @@ describe("SupabaseProgramRepository", () => {
         name: "Only",
         exercises: [prescription(row.id, 3, 8, 12)],
       });
-      await programs.activateProgram(second.id, only.id);
-      expect((await programs.getProgram(first.id))?.status).toBe("archived");
-      await programs.activateProgram(first.id, push.id);
-      expect((await programs.getProgram(second.id))?.status).toBe("archived");
+      await programs.setCurrentProgram(second.id, only.id);
+      expect((await programs.getProgram(first.id))?.isCurrent).toBe(false);
+      expect((await programs.getProgram(second.id))?.isCurrent).toBe(true);
 
-      await expect(programs.archiveSplit(only.id)).rejects.toMatchObject({
-        code: "last_active_split",
+      await expect(programs.deleteSplit(only.id)).rejects.toMatchObject({
+        code: "last_split",
       });
+
+      await programs.setCurrentProgram(first.id, push.id);
+      expect((await programs.getProgram(second.id))?.isCurrent).toBe(false);
+
+      await programs.deleteProgram(second.id);
+      expect(await programs.getProgram(second.id)).toBeNull();
+
+      await exercises.delete(press.id);
+      const withoutDeleted = await programs.getSplit(push.id);
+      expect(withoutDeleted?.exercises).toEqual([]);
     } finally {
       await client
-        .from("programs")
-        .update({ status: "archived", next_split_id: null })
-        .in("id", createdProgramIds);
-      await client.from("splits").delete().in("program_id", createdProgramIds);
+        .from("app_settings")
+        .update({ current_program_id: null })
+        .eq("id", 1);
       await client.from("programs").delete().in("id", createdProgramIds);
       await client.from("exercises").delete().in("id", createdExerciseIds);
     }

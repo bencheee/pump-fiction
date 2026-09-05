@@ -1,6 +1,5 @@
 create extension if not exists pgcrypto with schema extensions;
 
-create type public.entity_status as enum ('active', 'archived');
 create type public.exercise_base_type as enum ('weights', 'bodyweight', 'assisted');
 create type public.load_mode as enum (
   'weight',
@@ -13,7 +12,6 @@ create type public.load_mode as enum (
 );
 create type public.band_direction as enum ('resistance', 'assistance');
 create type public.band_strength as enum ('light', 'medium', 'strong');
-create type public.program_status as enum ('draft', 'active', 'archived');
 create type public.workout_status as enum ('active', 'paused', 'completed', 'incomplete');
 create type public.workout_source_kind as enum ('proposed_split', 'alternate_split', 'one_time');
 create type public.active_workout_command_operation as enum (
@@ -32,6 +30,7 @@ create type public.active_workout_command_operation as enum (
 create table public.app_settings (
   id smallint primary key default 1 check (id = 1),
   time_zone text not null,
+  current_program_id uuid,
   weight_unit text not null default 'kg' check (weight_unit = 'kg'),
   measurement_unit text not null default 'cm' check (measurement_unit = 'cm'),
   created_at timestamptz not null default now(),
@@ -44,16 +43,14 @@ create table public.exercises (
   name text not null,
   base_type public.exercise_base_type not null,
   persistent_note text not null default '',
-  status public.entity_status not null default 'active',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (id, base_type),
   check (btrim(name) <> '')
 );
 
-create unique index exercises_active_name_unique
-  on public.exercises (lower(btrim(name)))
-  where status = 'active';
+create unique index exercises_name_unique
+  on public.exercises (lower(btrim(name)));
 
 create table public.exercise_load_modes (
   exercise_id uuid not null,
@@ -63,7 +60,7 @@ create table public.exercise_load_modes (
   foreign key (exercise_id, exercise_base_type)
     references public.exercises (id, base_type)
     on update cascade
-    on delete restrict,
+    on delete cascade,
   check (
     (exercise_base_type = 'weights' and load_mode in ('weight', 'weight_resistance_band'))
     or (
@@ -94,24 +91,17 @@ create unique index exercise_load_modes_single_modifier
 create table public.programs (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  status public.program_status not null default 'draft',
   next_split_id uuid,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  check (btrim(name) <> ''),
-  check ((status = 'active') = (next_split_id is not null))
+  check (btrim(name) <> '')
 );
-
-create unique index programs_active_singleton
-  on public.programs ((true))
-  where status = 'active';
 
 create table public.splits (
   id uuid primary key default gen_random_uuid(),
-  program_id uuid not null references public.programs (id) on delete restrict,
+  program_id uuid not null references public.programs (id) on delete cascade,
   name text not null,
   position integer not null check (position > 0),
-  status public.entity_status not null default 'active',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (program_id, id),
@@ -119,20 +109,25 @@ create table public.splits (
   check (btrim(name) <> '')
 );
 
-create unique index splits_active_name_per_program_unique
-  on public.splits (program_id, lower(btrim(name)))
-  where status = 'active';
+create unique index splits_name_per_program_unique
+  on public.splits (program_id, lower(btrim(name)));
 
 alter table public.programs
   add constraint programs_next_split_same_program_fk
   foreign key (id, next_split_id)
   references public.splits (program_id, id)
-  on delete restrict;
+  on delete set null (next_split_id);
+
+alter table public.app_settings
+  add constraint app_settings_current_program_fk
+  foreign key (current_program_id)
+  references public.programs (id)
+  on delete set null;
 
 create table public.split_exercises (
   id uuid primary key default gen_random_uuid(),
   split_id uuid not null references public.splits (id) on delete cascade,
-  exercise_id uuid not null references public.exercises (id) on delete restrict,
+  exercise_id uuid not null references public.exercises (id) on delete cascade,
   position integer not null check (position > 0),
   planned_sets integer not null check (planned_sets > 0),
   min_reps integer not null check (min_reps > 0),
@@ -148,8 +143,8 @@ create table public.workouts (
   id uuid primary key default gen_random_uuid(),
   status public.workout_status not null,
   source_kind public.workout_source_kind not null,
-  source_program_id uuid references public.programs (id) on delete restrict,
-  source_split_id uuid references public.splits (id) on delete restrict,
+  source_program_id uuid references public.programs (id) on delete set null,
+  source_split_id uuid references public.splits (id) on delete set null,
   program_name_snapshot text,
   split_name_snapshot text,
   one_time_name text,
@@ -160,7 +155,7 @@ create table public.workouts (
   active_segment_started_at timestamptz,
   revision bigint not null default 0 check (revision >= 0),
   rotation_advanced_at timestamptz,
-  rotation_advanced_to_split_id uuid references public.splits (id) on delete restrict,
+  rotation_advanced_to_split_id uuid references public.splits (id) on delete set null,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   check (
@@ -175,8 +170,6 @@ create table public.workouts (
     )
     or (
       source_kind in ('proposed_split', 'alternate_split')
-      and source_program_id is not null
-      and source_split_id is not null
       and program_name_snapshot is not null
       and split_name_snapshot is not null
       and btrim(program_name_snapshot) <> ''
@@ -191,14 +184,10 @@ create table public.workouts (
   ),
   check (finished_at is null or finished_at >= started_at),
   check (
-    (rotation_advanced_at is null and rotation_advanced_to_split_id is null)
-    or (
-      rotation_advanced_at is not null
-      and rotation_advanced_to_split_id is not null
-      and source_kind = 'proposed_split'
-      and status = 'completed'
-    )
-  )
+    rotation_advanced_at is null
+    or (source_kind = 'proposed_split' and status = 'completed')
+  ),
+  check (rotation_advanced_to_split_id is null or rotation_advanced_at is not null)
 );
 
 create unique index workouts_single_resumable
@@ -216,7 +205,7 @@ create index workouts_source_split_history
 create table public.workout_exercises (
   id uuid primary key default gen_random_uuid(),
   workout_id uuid not null references public.workouts (id) on delete cascade,
-  exercise_id uuid not null references public.exercises (id) on delete restrict,
+  exercise_id uuid references public.exercises (id) on delete set null,
   position integer not null check (position > 0),
   exercise_name_snapshot text not null,
   exercise_base_type_snapshot public.exercise_base_type not null,
@@ -245,13 +234,13 @@ alter table public.workouts
   add constraint workouts_source_split_same_program_fk
   foreign key (source_program_id, source_split_id)
   references public.splits (program_id, id)
-  on delete restrict;
+  on delete set null (source_split_id);
 
 alter table public.workouts
   add constraint workouts_rotation_target_same_program_fk
   foreign key (source_program_id, rotation_advanced_to_split_id)
   references public.splits (program_id, id)
-  on delete restrict;
+  on delete set null (rotation_advanced_to_split_id);
 
 create index workout_exercises_exercise_history
   on public.workout_exercises (exercise_id, workout_id);
@@ -366,15 +355,13 @@ create table public.measurement_types (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   unit text not null default 'cm' check (unit = 'cm'),
-  status public.entity_status not null default 'active',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   check (btrim(name) <> '')
 );
 
-create unique index measurement_types_active_name_unique
-  on public.measurement_types (lower(btrim(name)))
-  where status = 'active';
+create unique index measurement_types_name_unique
+  on public.measurement_types (lower(btrim(name)));
 
 create table public.measurement_entries (
   id uuid primary key default gen_random_uuid(),
@@ -443,58 +430,51 @@ begin
 end;
 $$;
 
-create or replace function public.validate_active_program_next_split()
+create or replace function public.validate_current_program()
 returns trigger
 language plpgsql
 set search_path = ''
 as $$
 declare
-  selected_split_status public.entity_status;
+  pointer_split_id uuid;
 begin
-  if new.status = 'active' then
-    select status
-    into selected_split_status
-    from public.splits
-    where id = new.next_split_id
-      and program_id = new.id;
+  if new.current_program_id is null then
+    return new;
+  end if;
 
-    if selected_split_status is distinct from 'active'::public.entity_status then
-      raise exception 'An active program must point to one of its active splits';
-    end if;
+  select next_split_id
+  into pointer_split_id
+  from public.programs
+  where id = new.current_program_id;
+
+  if not found or pointer_split_id is null then
+    raise exception 'The current program must point to one of its splits';
   end if;
 
   return new;
 end;
 $$;
 
-create or replace function public.validate_split_archival()
+create or replace function public.validate_split_deletion()
 returns trigger
 language plpgsql
 set search_path = ''
 as $$
 begin
-  if old.status = 'active' and new.status = 'archived' then
-    if not exists (
-      select 1
-      from public.splits
-      where program_id = new.program_id
-        and id <> new.id
-        and status = 'active'
-    ) then
-      raise exception 'The last active split in a program cannot be archived';
-    end if;
-
-    if exists (
-      select 1
-      from public.programs
-      where status = 'active'
-        and next_split_id = new.id
-    ) then
-      raise exception 'Move the program next-split pointer before archiving its current next split';
-    end if;
+  if exists (
+    select 1
+    from public.app_settings as settings
+    join public.programs as program on program.id = settings.current_program_id
+    where program.id = old.program_id
+  ) and not exists (
+    select 1
+    from public.splits
+    where program_id = old.program_id
+  ) then
+    raise exception 'The last split of the current program cannot be deleted';
   end if;
 
-  return new;
+  return null;
 end;
 $$;
 
@@ -682,7 +662,7 @@ begin
 end;
 $$;
 
-create or replace function public.activate_program(
+create or replace function public.set_current_program(
   p_program_id uuid,
   p_next_split_id uuid
 )
@@ -705,32 +685,29 @@ begin
     from public.splits
     where id = p_next_split_id
       and program_id = p_program_id
-      and status = 'active'
   ) then
     raise exception using errcode = 'PF102', message = 'Invalid next split';
   end if;
 
   update public.programs
-  set status = 'archived', next_split_id = null
-  where status = 'active'
-    and id <> p_program_id;
-
-  update public.programs
-  set status = 'active', next_split_id = p_next_split_id
+  set next_split_id = p_next_split_id
   where id = p_program_id;
+
+  update public.app_settings
+  set current_program_id = p_program_id
+  where id = 1;
 
   return p_program_id;
 end;
 $$;
 
-create or replace function public.archive_program(p_program_id uuid)
+create or replace function public.delete_program(p_program_id uuid)
 returns uuid
 language plpgsql
 set search_path = ''
 as $$
 begin
-  update public.programs
-  set status = 'archived', next_split_id = null
+  delete from public.programs
   where id = p_program_id;
 
   if not found then
@@ -738,6 +715,23 @@ begin
   end if;
 
   return p_program_id;
+end;
+$$;
+
+create or replace function public.delete_exercise(p_exercise_id uuid)
+returns uuid
+language plpgsql
+set search_path = ''
+as $$
+begin
+  delete from public.exercises
+  where id = p_exercise_id;
+
+  if not found then
+    raise exception using errcode = 'PF107', message = 'Exercise not found';
+  end if;
+
+  return p_exercise_id;
 end;
 $$;
 
@@ -776,9 +770,9 @@ begin
     select 1
     from unnest(p_exercise_ids) as requested(exercise_id)
     left join public.exercises as exercise on exercise.id = requested.exercise_id
-    where exercise.status is distinct from 'active'::public.entity_status
+    where exercise.id is null
   ) then
-    raise exception using errcode = 'PF103', message = 'Inactive exercise cannot be added';
+    raise exception using errcode = 'PF103', message = 'Unknown exercise cannot be added';
   end if;
 
   select coalesce(max(position), 0) + 1
@@ -849,15 +843,9 @@ begin
     select 1
     from unnest(p_exercise_ids) as requested(exercise_id)
     left join public.exercises as exercise on exercise.id = requested.exercise_id
-    where exercise.status is distinct from 'active'::public.entity_status
-      and not exists (
-        select 1
-        from public.split_exercises as existing
-        where existing.split_id = p_split_id
-          and existing.exercise_id = requested.exercise_id
-      )
+    where exercise.id is null
   ) then
-    raise exception using errcode = 'PF103', message = 'Inactive exercise cannot be added';
+    raise exception using errcode = 'PF103', message = 'Unknown exercise cannot be added';
   end if;
 
   update public.splits
@@ -1013,13 +1001,11 @@ begin
   update public.programs
   set next_split_id = p_split_id
   where id = p_program_id
-    and status = 'active'
     and exists (
       select 1
       from public.splits
       where id = p_split_id
         and program_id = p_program_id
-        and status = 'active'
     );
 
   if not found then
@@ -1033,7 +1019,7 @@ begin
 end;
 $$;
 
-create or replace function public.archive_split(p_split_id uuid)
+create or replace function public.delete_split(p_split_id uuid)
 returns uuid
 language plpgsql
 set search_path = ''
@@ -1041,6 +1027,7 @@ as $$
 declare
   target_split public.splits%rowtype;
   successor_id uuid;
+  is_current_program boolean;
 begin
   select split.*
   into target_split
@@ -1052,33 +1039,33 @@ begin
     raise exception using errcode = 'PF101', message = 'Split not found';
   end if;
 
-  if target_split.status = 'archived' then
-    return p_split_id;
-  end if;
+  select exists (
+    select 1
+    from public.app_settings as settings
+    where settings.current_program_id = target_split.program_id
+  )
+  into is_current_program;
 
   select split.id
   into successor_id
   from public.splits as split
   where split.program_id = target_split.program_id
     and split.id <> p_split_id
-    and split.status = 'active'
   order by
     case when split.position > target_split.position then 0 else 1 end,
     split.position
   limit 1;
 
-  if successor_id is null then
-    raise exception using errcode = 'PF104', message = 'Last active split cannot be archived';
+  if successor_id is null and is_current_program then
+    raise exception using errcode = 'PF104', message = 'Last split of the current program cannot be deleted';
   end if;
 
   update public.programs
   set next_split_id = successor_id
   where id = target_split.program_id
-    and status = 'active'
     and next_split_id = p_split_id;
 
-  update public.splits
-  set status = 'archived'
+  delete from public.splits
   where id = p_split_id;
 
   return p_split_id;
@@ -1101,9 +1088,9 @@ begin
   select program.next_split_id
   into current_next_split_id
   from public.programs as program
+  join public.app_settings as settings on settings.current_program_id = program.id
   where program.id = p_program_id
-    and program.status = 'active'
-  for update;
+  for update of program;
 
   if not found or current_next_split_id <> p_completed_split_id then
     return current_next_split_id;
@@ -1113,8 +1100,7 @@ begin
   into completed_position
   from public.splits
   where id = p_completed_split_id
-    and program_id = p_program_id
-    and status = 'active';
+    and program_id = p_program_id;
 
   if not found then
     return current_next_split_id;
@@ -1124,7 +1110,6 @@ begin
   into next_active_split_id
   from public.splits as split
   where split.program_id = p_program_id
-    and split.status = 'active'
   order by
     case when split.position > completed_position then 0 else 1 end,
     split.position
@@ -1346,19 +1331,19 @@ create trigger programs_set_updated_at
 before update on public.programs
 for each row execute function public.set_updated_at();
 
-create constraint trigger programs_validate_active_next_split
-after insert or update of status, next_split_id on public.programs
+create constraint trigger app_settings_validate_current_program
+after insert or update of current_program_id on public.app_settings
 deferrable initially deferred
-for each row execute function public.validate_active_program_next_split();
+for each row execute function public.validate_current_program();
 
 create trigger splits_set_updated_at
 before update on public.splits
 for each row execute function public.set_updated_at();
 
-create constraint trigger splits_validate_archival
-after update of status on public.splits
+create constraint trigger splits_validate_deletion
+after delete on public.splits
 deferrable initially deferred
-for each row execute function public.validate_split_archival();
+for each row execute function public.validate_split_deletion();
 
 create trigger split_exercises_set_updated_at
 before update on public.split_exercises
@@ -1432,10 +1417,11 @@ to service_role;
 
 revoke execute on function public.reject_future_local_entry_date() from public, anon, authenticated;
 revoke execute on function public.apply_active_workout_command(uuid, uuid, bigint, public.active_workout_command_operation, jsonb, timestamptz) from public, anon, authenticated;
-revoke execute on function public.activate_program(uuid, uuid) from public, anon, authenticated;
+revoke execute on function public.set_current_program(uuid, uuid) from public, anon, authenticated;
 revoke execute on function public.advance_program_after_proposed_completion(uuid, uuid) from public, anon, authenticated;
-revoke execute on function public.archive_program(uuid) from public, anon, authenticated;
-revoke execute on function public.archive_split(uuid) from public, anon, authenticated;
+revoke execute on function public.delete_exercise(uuid) from public, anon, authenticated;
+revoke execute on function public.delete_program(uuid) from public, anon, authenticated;
+revoke execute on function public.delete_split(uuid) from public, anon, authenticated;
 revoke execute on function public.create_program(text) from public, anon, authenticated;
 revoke execute on function public.create_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) from public, anon, authenticated;
 revoke execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
@@ -1447,16 +1433,17 @@ revoke execute on function public.update_program_name(uuid, text) from public, a
 revoke execute on function public.update_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) from public, anon, authenticated;
 revoke execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
 revoke execute on function public.validate_app_time_zone() from public, anon, authenticated;
-revoke execute on function public.validate_active_program_next_split() from public, anon, authenticated;
+revoke execute on function public.validate_current_program() from public, anon, authenticated;
 revoke execute on function public.validate_exercise_load_modes() from public, anon, authenticated;
-revoke execute on function public.validate_split_archival() from public, anon, authenticated;
+revoke execute on function public.validate_split_deletion() from public, anon, authenticated;
 
 grant execute on function public.reject_future_local_entry_date() to service_role;
 grant execute on function public.apply_active_workout_command(uuid, uuid, bigint, public.active_workout_command_operation, jsonb, timestamptz) to service_role;
-grant execute on function public.activate_program(uuid, uuid) to service_role;
+grant execute on function public.set_current_program(uuid, uuid) to service_role;
 grant execute on function public.advance_program_after_proposed_completion(uuid, uuid) to service_role;
-grant execute on function public.archive_program(uuid) to service_role;
-grant execute on function public.archive_split(uuid) to service_role;
+grant execute on function public.delete_exercise(uuid) to service_role;
+grant execute on function public.delete_program(uuid) to service_role;
+grant execute on function public.delete_split(uuid) to service_role;
 grant execute on function public.create_program(text) to service_role;
 grant execute on function public.create_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) to service_role;
 grant execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) to service_role;
@@ -1468,18 +1455,16 @@ grant execute on function public.update_program_name(uuid, text) to service_role
 grant execute on function public.update_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) to service_role;
 grant execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) to service_role;
 grant execute on function public.validate_app_time_zone() to service_role;
-grant execute on function public.validate_active_program_next_split() to service_role;
+grant execute on function public.validate_current_program() to service_role;
 grant execute on function public.validate_exercise_load_modes() to service_role;
-grant execute on function public.validate_split_archival() to service_role;
+grant execute on function public.validate_split_deletion() to service_role;
 
 grant usage on type
   public.active_workout_command_operation,
   public.band_direction,
   public.band_strength,
-  public.entity_status,
   public.exercise_base_type,
   public.load_mode,
-  public.program_status,
   public.workout_source_kind,
   public.workout_status
 to service_role;

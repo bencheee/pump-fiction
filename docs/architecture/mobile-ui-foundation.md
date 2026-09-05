@@ -43,7 +43,7 @@ Route groups own two shells:
 - `(main)` provides one scroll container and the four-destination bottom navigation;
 - `(focused)/workout/current` provides the active-workout and finish routes without bottom navigation.
 
-The root route redirects to `/today`; `/history` redirects to `/history/workouts`. URLs use no trailing slash. Persisted-entity routes must validate parameters with `requireUuidRouteParam` from `src/shared/routing/uuid-route-param.ts` before querying. A malformed, missing, archived-unavailable, or otherwise unavailable identifier resolves through the shared App Router `not-found.tsx` boundary. The boundary deliberately uses neutral copy and returns to Today; feature-specific missing-record screens must not replace it.
+The root route redirects to `/today`; `/history` redirects to `/history/workouts`. URLs use no trailing slash. Persisted-entity routes must validate parameters with `requireUuidRouteParam` from `src/shared/routing/uuid-route-param.ts` before querying. A malformed, missing, deleted, or otherwise unavailable identifier resolves through the shared App Router `not-found.tsx` boundary. The boundary deliberately uses neutral copy and returns to Today; feature-specific missing-record screens must not replace it.
 
 The initial Today, History, Programs, Exercises, active-workout, and finish route files expose only shell and title structure. Their domain content remains owned by later Feature Tasks.
 

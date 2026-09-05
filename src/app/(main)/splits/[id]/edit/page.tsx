@@ -21,7 +21,7 @@ export default async function EditSplitPage({
     return <LoadFailure message={splitResult.error.message} />;
   const [programResult, exerciseResult] = await Promise.all([
     getProgram(splitResult.value.programId),
-    listExercises(false),
+    listExercises(),
   ]);
   if (!programResult.ok && programResult.error.code === "not_found") notFound();
   if (!programResult.ok || !exerciseResult.ok) {
@@ -41,9 +41,7 @@ export default async function EditSplitPage({
     <SplitForm
       program={programResult.value}
       split={splitResult.value}
-      exerciseLibrary={exerciseResult.value.filter(
-        (exercise) => exercise.status === "active",
-      )}
+      exerciseLibrary={exerciseResult.value}
     />
   );
 }

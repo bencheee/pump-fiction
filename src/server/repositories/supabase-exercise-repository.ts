@@ -12,31 +12,27 @@ import {
   type Exercise,
   type ExerciseDefinition,
   type ExerciseLoadMode,
-  type ExerciseStatus,
 } from "@/features/exercises/domain/exercise";
 import type { ServerDatabaseClient } from "@/server/database/client";
 import type { Tables } from "@/server/database/database.types";
 
 type ExerciseRow = Pick<
   Tables<"exercises">,
-  "id" | "name" | "base_type" | "persistent_note" | "status"
+  "id" | "name" | "base_type" | "persistent_note"
 >;
 
-const exerciseColumns = "id, name, base_type, persistent_note, status" as const;
+const exerciseColumns = "id, name, base_type, persistent_note" as const;
 
 export class SupabaseExerciseRepository implements ExerciseRepository {
   constructor(private readonly client: ServerDatabaseClient) {}
 
-  async list(includeArchived: boolean): Promise<readonly Exercise[]> {
+  async list(): Promise<readonly Exercise[]> {
     try {
-      let query = this.client
+      const { data, error } = await this.client
         .from("exercises")
         .select(exerciseColumns)
         .order("name", { ascending: true });
 
-      if (!includeArchived) query = query.eq("status", "active");
-
-      const { data, error } = await query;
       if (error) throw mapPostgrestError(error);
 
       return await this.hydrate(data);
@@ -101,19 +97,13 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
     }
   }
 
-  async setStatus(id: string, status: ExerciseStatus): Promise<Exercise> {
+  async delete(id: string): Promise<void> {
     try {
-      const { data, error } = await this.client
-        .from("exercises")
-        .update({ status })
-        .eq("id", id)
-        .select("id")
-        .maybeSingle();
+      const { error } = await this.client.rpc("delete_exercise", {
+        p_exercise_id: id,
+      });
 
       if (error) throw mapPostgrestError(error);
-      if (data === null) throw new ExerciseRepositoryError("not_found");
-
-      return await this.requireById(data.id);
     } catch (error) {
       throw normalizeRepositoryError(error);
     }
@@ -167,7 +157,6 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
           exerciseLoadModes.indexOf(left) - exerciseLoadModes.indexOf(right),
       ),
       persistentNote: row.persistent_note,
-      status: row.status,
       splitUsageCount: usageByExercise.get(row.id) ?? 0,
     }));
   }
@@ -181,7 +170,8 @@ function mapPostgrestError(error: PostgrestError): ExerciseRepositoryError {
 
 function mapPostgrestCode(code: string): ExerciseRepositoryErrorCode {
   if (code === "23505") return "duplicate_name";
-  if (code === "PF004" || code === "PGRST116") return "not_found";
+  if (code === "PF004" || code === "PF107" || code === "PGRST116")
+    return "not_found";
   if (code === "PF003" || code.startsWith("22") || code.startsWith("23")) {
     return "constraint";
   }

@@ -17,7 +17,7 @@ export default async function NewSplitPage({
   const id = requireUuidRouteParam((await params).id);
   const [programResult, exerciseResult] = await Promise.all([
     getProgram(id),
-    listExercises(false),
+    listExercises(),
   ]);
   if (!programResult.ok && programResult.error.code === "not_found") notFound();
   if (!programResult.ok || !exerciseResult.ok) {
@@ -34,21 +34,10 @@ export default async function NewSplitPage({
       />
     );
   }
-  if (programResult.value.status === "archived") {
-    return (
-      <LoadFailure
-        title="New Split"
-        backHref={`/programs/${id}/edit`}
-        message="Reactivate this program before adding a split."
-      />
-    );
-  }
   return (
     <SplitForm
       program={programResult.value}
-      exerciseLibrary={exerciseResult.value.filter(
-        (exercise) => exercise.status === "active",
-      )}
+      exerciseLibrary={exerciseResult.value}
     />
   );
 }

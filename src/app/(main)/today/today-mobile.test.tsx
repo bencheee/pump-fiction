@@ -67,7 +67,6 @@ const exercises: Exercise[] = [
     baseType: "bodyweight",
     allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
     persistentNote: "",
-    status: "active",
     splitUsageCount: 0,
   },
   {
@@ -76,7 +75,6 @@ const exercises: Exercise[] = [
     baseType: "bodyweight",
     allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
     persistentNote: "",
-    status: "active",
     splitUsageCount: 0,
   },
 ];

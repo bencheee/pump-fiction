@@ -62,19 +62,15 @@ describe("SupabaseExerciseRepository", () => {
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
       });
-      const archived = await repository.setStatus(created.id, "archived");
-      const replacement = await repository.create({
-        name: editedName,
-        baseType: "bodyweight",
-        allowedLoadModes: ["bodyweight"],
-        persistentNote: "",
-      });
 
       await expect(
-        repository.setStatus(created.id, "active"),
-      ).rejects.toMatchObject({
-        code: "duplicate_name",
-      });
+        repository.create({
+          name: editedName,
+          baseType: "bodyweight",
+          allowedLoadModes: ["bodyweight"],
+          persistentNote: "",
+        }),
+      ).rejects.toMatchObject({ code: "duplicate_name" });
 
       expect(used).toMatchObject({
         id: created.id,
@@ -86,21 +82,20 @@ describe("SupabaseExerciseRepository", () => {
         baseType: "bodyweight",
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
-        status: "active",
         splitUsageCount: 1,
       });
-      expect(archived).toMatchObject({
-        id: created.id,
-        status: "archived",
-        splitUsageCount: 1,
-      });
-      expect(replacement.id).not.toBe(created.id);
-      expect(await repository.list(false)).not.toContainEqual(
+
+      await repository.delete(created.id);
+
+      expect(await repository.getById(created.id)).toBeNull();
+      expect(await repository.list()).not.toContainEqual(
         expect.objectContaining({ id: created.id }),
       );
-      expect(await repository.list(true)).toContainEqual(
-        expect.objectContaining({ id: created.id, status: "archived" }),
-      );
+      const remainingPrescriptions = await client
+        .from("split_exercises")
+        .select("exercise_id")
+        .eq("split_id", splitId);
+      expect(remainingPrescriptions.data).toEqual([]);
     } finally {
       await client.from("splits").delete().eq("id", splitId);
       await client.from("programs").delete().eq("id", programId);

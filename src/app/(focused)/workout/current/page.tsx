@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export default async function CurrentWorkoutPage() {
   const [workout, exercises] = await Promise.all([
     getCurrentWorkout(),
-    listExercises(false),
+    listExercises(),
   ]);
 
   if (!workout.ok || !exercises.ok) {

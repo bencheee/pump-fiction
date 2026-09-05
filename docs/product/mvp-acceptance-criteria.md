@@ -31,7 +31,7 @@ Reloading or reopening the application preserves exercise definitions, programs,
 
 ### MVP-REL-004 — No silent data reinterpretation
 
-Editing or archiving a definition never retroactively changes a saved workout snapshot. Editing historical data recalculates affected derived statistics without mutating templates or rotation.
+Editing or deleting a definition never retroactively changes a saved workout snapshot. Editing historical data recalculates affected derived statistics without mutating templates or rotation.
 
 ## Today
 
@@ -85,9 +85,9 @@ The exercise note is editable in the library, appears read-only when that defini
 
 When editing an exercise used by one or more splits, the UI shows how many splits use it and states that changes apply only to future workouts.
 
-### MVP-EXE-008 — Archive and reactivate
+### MVP-EXE-008 — Delete
 
-Archiving removes an exercise from new split/workout selection while retaining it in existing templates, snapshots, History, and statistics. Reactivation makes it selectable again without changing its identity.
+Deleting an exercise removes it and its split prescriptions permanently, after a confirmation naming how many splits lose it. Every workout snapshot, History record, and statistic that already contains it is unchanged.
 
 ## Programs and splits
 
@@ -95,7 +95,7 @@ Canonical behavior: [`programs-and-splits.md`](programs-and-splits.md).
 
 ### MVP-PRG-001 — Program lifecycle
 
-The user can save a named program as `draft`, activate it by selecting its first next active split, archive it, and reactivate it by selecting a next active split again. Activating a program archives the previously active program, so at most one program is active.
+The user can save a named program, make it the current program by selecting the split its rotation starts from, and delete it. Making a program current replaces any previously current program, so at most one program is current, and deleting the current program leaves no current program.
 
 ### MVP-PRG-002 — Split validation
 
@@ -119,7 +119,7 @@ Completing a Today-only alternate split or a one-time workout never advances rot
 
 ### MVP-PRG-007 — Archive a split
 
-An archived split is unavailable for new workouts and omitted from rotation but remains linked to History. If it was next and another active split exists, the first active split after it in the prior order—wrapping if needed—becomes next. The app rejects an attempt to archive the last active split in a program and explains that another split must remain active.
+Deleting a split removes it and its prescriptions permanently while every workout it produced keeps its name snapshot in History. If it was next, the first split after it in the prior order—wrapping if needed—becomes next. The app rejects an attempt to delete the last split of the current program and explains that the current program must keep at least one split.
 
 ## Active workout
 
@@ -195,7 +195,7 @@ Deleting a workout requires confirmation, removes it from History, and recalcula
 
 ### MVP-HIS-005 — Exercise history identity
 
-Exercises with historical performances appear in Exercise History even when archived. Their detail combines performances across splits/programs/one-time workouts by persistent exercise identity and links each performance to its workout.
+Exercises with historical performances appear in Exercise History even after their definition is deleted. Their detail combines performances across splits/programs/one-time workouts by persistent exercise identity and links each performance to its workout.
 
 ### MVP-HIS-006 — Statistics eligibility
 
@@ -247,7 +247,7 @@ Canonical behavior: [`weight-and-body.md`](weight-and-body.md#body-tracker).
 
 ### MVP-BOD-001 — Measurement-type lifecycle
 
-The user can create an arbitrary named measurement type measured in `cm`, archive it without losing entries, and reactivate it with the same identity and history.
+The user can create an arbitrary named measurement type measured in `cm` and delete a type that has no entries. A type that still has entries cannot be deleted, because those entries are the only record of that measurement.
 
 ### MVP-BOD-002 — Measurement entry validation
 
@@ -291,7 +291,7 @@ UI language and the application name may change copy but do not alter these beha
 
 ## Confirmed release boundary
 
-- Archiving the last active split in a program is blocked.
+- Deleting the last split of the current program is blocked.
 - Export/backup and PWA installation are accepted post-MVP capabilities.
 - Explicit protection against accidentally closing an active workout is post-MVP. Immediate auto-save and reliable restore remain required by this MVP.
 - Production-access protection is not part of the local MVP and must be decided before production deployment.

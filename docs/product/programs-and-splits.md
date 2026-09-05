@@ -2,9 +2,9 @@
 
 ## Programs
 
-A program has a name, status (`draft`, `active`, or `archived`), an ordered list of splits, and a pointer to the next split. Only one program can be active.
+A program has a name, an ordered list of splits, and a pointer to the next split. Programs have no lifecycle status; exactly one program can be the **current program**, and Today proposes workouts from it. See [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
 
-Activating a program requires choosing its first next split. The previously active program becomes archived. Reactivating an archived program again requires the user to choose the next split.
+Making a program current requires choosing the split its rotation starts from, and replaces any previously current program. Deleting the current program simply leaves no current program.
 
 ## Splits
 
@@ -12,8 +12,7 @@ A split belongs to one program and has:
 
 - a name unique within that program;
 - a position in the rotation;
-- an ordered list of exercises;
-- `active` or `archived` status.
+- an ordered list of exercises.
 
 Each split exercise defines planned sets, minimum reps, and maximum reps. All three values are positive integers and `min reps <= max reps`.
 
@@ -27,7 +26,7 @@ Reordering never changes historical or already-started workouts. When splits are
 
 ## Rotation
 
-After a user successfully completes the split currently proposed by the active rotation, the next-split pointer advances to the next active split, wrapping from the last to the first. Starting a workout does not advance it.
+After a user successfully completes the split currently proposed by the rotation, the next-split pointer advances to the next split, wrapping from the last to the first. Starting a workout does not advance it.
 
 | Workout source | Included in split statistics | Advances rotation |
 | --- | ---: | ---: |
@@ -41,10 +40,12 @@ Program editing includes **Set as Next**, which persistently changes the rotatio
 
 An incomplete workout never advances rotation. Marking it completed later from History still does not change the current rotation. Deleting or editing historical workouts also never rewinds or changes rotation. Completion semantics are canonical in [`workouts.md`](workouts.md#finishing-a-workout).
 
-## Archiving splits
+## Deleting programs and splits
 
-An archived split is removed from rotation and cannot start new workouts, but remains linked to historical workouts.
+Deletion is permanent and immediate; nothing is archived. Workouts already recorded keep their program and split name snapshots, so History is unchanged by any deletion.
 
-If the next split is archived, the new next split is the first active split that followed it in the pre-archive order, wrapping as needed.
+Deleting a program deletes its split templates with it.
 
-The last active split in a program cannot be archived. The action is rejected with an explanation that at least one split must remain active.
+If the deleted split was next, the new next split is the first split that followed it in the pre-deletion order, wrapping as needed.
+
+The last split of the current program cannot be deleted. The action is rejected with an explanation that the current program must keep at least one split.

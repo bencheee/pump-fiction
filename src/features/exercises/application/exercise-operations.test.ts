@@ -1,9 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
-  archiveExercise,
   createExercise,
-  reactivateExercise,
+  deleteExercise,
   updateExercise,
 } from "./exercise-operations";
 import {
@@ -18,7 +17,6 @@ const exercise = {
   baseType: "bodyweight" as const,
   allowedLoadModes: ["bodyweight", "bodyweight_added_weight"] as const,
   persistentNote: "Keep the ribs down.",
-  status: "active" as const,
   splitUsageCount: 2,
 };
 
@@ -129,34 +127,25 @@ describe("exercise operations", () => {
         message: "Check the submitted values and try again.",
         retryable: false,
         fieldErrors: {
-          name: ["An active exercise already uses this name."],
+          name: ["Another exercise already uses this name."],
         },
       },
     });
   });
 
-  it("preserves identity while archiving and reactivating", async () => {
+  it("deletes an exercise by its identity", async () => {
     const repository = createRepository();
 
-    await archiveExercise(repository, exerciseId);
-    await reactivateExercise(repository, exerciseId);
+    const result = await deleteExercise(repository, exerciseId);
 
-    expect(repository.setStatus).toHaveBeenNthCalledWith(
-      1,
-      exerciseId,
-      "archived",
-    );
-    expect(repository.setStatus).toHaveBeenNthCalledWith(
-      2,
-      exerciseId,
-      "active",
-    );
+    expect(repository.delete).toHaveBeenCalledWith(exerciseId);
+    expect(result).toEqual({ ok: true, value: null });
   });
 
   it("rejects malformed identities before persistence", async () => {
     const repository = createRepository();
 
-    const result = await archiveExercise(repository, "not-a-uuid");
+    const result = await deleteExercise(repository, "not-a-uuid");
 
     expect(result).toEqual({
       ok: false,
@@ -166,7 +155,7 @@ describe("exercise operations", () => {
         retryable: false,
       },
     });
-    expect(repository.setStatus).not.toHaveBeenCalled();
+    expect(repository.delete).not.toHaveBeenCalled();
   });
 });
 
@@ -176,6 +165,6 @@ function createRepository(): ExerciseRepository {
     getById: vi.fn().mockResolvedValue(exercise),
     create: vi.fn().mockResolvedValue(exercise),
     update: vi.fn().mockResolvedValue(exercise),
-    setStatus: vi.fn().mockResolvedValue(exercise),
+    delete: vi.fn().mockResolvedValue(undefined),
   };
 }

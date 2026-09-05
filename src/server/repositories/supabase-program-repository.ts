@@ -17,18 +17,15 @@ import type {
 import type { ServerDatabaseClient } from "@/server/database/client";
 import type { Database, Tables } from "@/server/database/database.types";
 
-type ProgramRow = Pick<
-  Tables<"programs">,
-  "id" | "name" | "status" | "next_split_id"
->;
+type ProgramRow = Pick<Tables<"programs">, "id" | "name" | "next_split_id">;
 type SplitRow = Pick<
   Tables<"splits">,
-  "id" | "program_id" | "name" | "position" | "status"
+  "id" | "program_id" | "name" | "position"
 >;
-type ExerciseRow = Pick<Tables<"exercises">, "id" | "name" | "status">;
+type ExerciseRow = Pick<Tables<"exercises">, "id" | "name">;
 
-const programColumns = "id, name, status, next_split_id" as const;
-const splitColumns = "id, program_id, name, position, status" as const;
+const programColumns = "id, name, next_split_id" as const;
+const splitColumns = "id, program_id, name, position" as const;
 const prescriptionColumns =
   "exercise_id, position, planned_sets, min_reps, max_reps" as const;
 
@@ -92,15 +89,22 @@ export class SupabaseProgramRepository implements ProgramRepository {
     });
   }
 
-  async activateProgram(id: string, nextSplitId: string): Promise<Program> {
-    return this.runProgramRpc("activate_program", {
+  async setCurrentProgram(id: string, nextSplitId: string): Promise<Program> {
+    return this.runProgramRpc("set_current_program", {
       p_program_id: id,
       p_next_split_id: nextSplitId,
     });
   }
 
-  async archiveProgram(id: string): Promise<Program> {
-    return this.runProgramRpc("archive_program", { p_program_id: id });
+  async deleteProgram(id: string): Promise<void> {
+    try {
+      const { error } = await this.client.rpc("delete_program", {
+        p_program_id: id,
+      });
+      if (error) throw mapPostgrestError(error);
+    } catch (error) {
+      throw normalizeRepositoryError(error);
+    }
   }
 
   async createSplit(
@@ -149,8 +153,15 @@ export class SupabaseProgramRepository implements ProgramRepository {
     });
   }
 
-  async archiveSplit(id: string): Promise<Split> {
-    return this.runSplitRpc("archive_split", { p_split_id: id });
+  async deleteSplit(id: string): Promise<void> {
+    try {
+      const { error } = await this.client.rpc("delete_split", {
+        p_split_id: id,
+      });
+      if (error) throw mapPostgrestError(error);
+    } catch (error) {
+      throw normalizeRepositoryError(error);
+    }
   }
 
   async advanceAfterProposedCompletion(
@@ -215,12 +226,22 @@ export class SupabaseProgramRepository implements ProgramRepository {
   ): Promise<Program[]> {
     if (rows.length === 0) return [];
     const programIds = rows.map((row) => row.id);
-    const { data, error } = await this.client
-      .from("splits")
-      .select(splitColumns)
-      .in("program_id", programIds)
-      .order("position", { ascending: true });
-    if (error) throw mapPostgrestError(error);
+    const [splitsResult, settingsResult] = await Promise.all([
+      this.client
+        .from("splits")
+        .select(splitColumns)
+        .in("program_id", programIds)
+        .order("position", { ascending: true }),
+      this.client
+        .from("app_settings")
+        .select("current_program_id")
+        .eq("id", 1)
+        .maybeSingle(),
+    ]);
+    if (splitsResult.error) throw mapPostgrestError(splitsResult.error);
+    if (settingsResult.error) throw mapPostgrestError(settingsResult.error);
+    const data = splitsResult.data;
+    const currentProgramId = settingsResult.data?.current_program_id ?? null;
 
     const splitsByProgram = new Map<string, ProgramSplit[]>();
     for (const split of data) {
@@ -232,7 +253,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
     return rows.map((row) => ({
       id: row.id,
       name: row.name,
-      status: row.status,
+      isCurrent: row.id === currentProgramId,
       nextSplitId: row.next_split_id,
       splits: splitsByProgram.get(row.id) ?? [],
     }));
@@ -251,7 +272,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
     if (exerciseIds.length > 0) {
       const result = await this.client
         .from("exercises")
-        .select("id, name, status")
+        .select("id, name")
         .in("id", exerciseIds);
       if (result.error) throw mapPostgrestError(result.error);
       exercises = result.data;
@@ -268,7 +289,6 @@ export class SupabaseProgramRepository implements ProgramRepository {
         return {
           exerciseId: exercise.id,
           exerciseName: exercise.name,
-          exerciseStatus: exercise.status,
           position: prescription.position,
           plannedSets: prescription.planned_sets,
           minReps: prescription.min_reps,
@@ -284,8 +304,7 @@ type ProgramRpcName = Extract<
   DatabaseFunctions,
   | "create_program"
   | "update_program_name"
-  | "activate_program"
-  | "archive_program"
+  | "set_current_program"
   | "reorder_program_splits"
   | "set_program_next_split"
 >;
@@ -294,7 +313,6 @@ type SplitRpcName = Extract<
   | "create_split_definition"
   | "update_split_definition"
   | "reorder_split_exercises"
-  | "archive_split"
 >;
 type ProgramRpcArgs<Name extends ProgramRpcName> =
   Database["public"]["Functions"][Name]["Args"];
@@ -316,7 +334,6 @@ function toProgramSplit(row: SplitRow): ProgramSplit {
     programId: row.program_id,
     name: row.name,
     position: row.position,
-    status: row.status,
   };
 }
 
@@ -331,15 +348,15 @@ function mapPostgrestCode(error: PostgrestError): ProgramRepositoryErrorCode {
   if (
     code === "23505" &&
     `${error.message} ${error.details}`.includes(
-      "splits_active_name_per_program_unique",
+      "splits_name_per_program_unique",
     )
   ) {
     return "duplicate_name";
   }
   if (code === "PF101" || code === "PGRST116") return "not_found";
   if (code === "PF102") return "invalid_next_split";
-  if (code === "PF103") return "inactive_exercise";
-  if (code === "PF104") return "last_active_split";
+  if (code === "PF103") return "unknown_exercise";
+  if (code === "PF104") return "last_split";
   if (code === "PF105") return "invalid_order";
   if (code === "PF106" || code.startsWith("22") || code.startsWith("23")) {
     return "constraint";

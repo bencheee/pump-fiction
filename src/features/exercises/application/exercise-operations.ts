@@ -14,10 +14,9 @@ import type { ExerciseRepository } from "./exercise-repository";
 
 export async function listExercises(
   repository: ExerciseRepository,
-  includeArchived = false,
 ): Promise<OperationResult<readonly Exercise[]>> {
   try {
-    return operationSuccess(await repository.list(includeArchived));
+    return operationSuccess(await repository.list());
   } catch (error) {
     return exerciseRepositoryFailure<readonly Exercise[]>(error, "load");
   }
@@ -72,32 +71,24 @@ export async function updateExercise(
   }
 }
 
-export async function archiveExercise(
+export async function deleteExercise(
   repository: ExerciseRepository,
   id: unknown,
-): Promise<OperationResult<Exercise>> {
-  return setExerciseStatus(repository, id, "archived");
-}
-
-export async function reactivateExercise(
-  repository: ExerciseRepository,
-  id: unknown,
-): Promise<OperationResult<Exercise>> {
-  return setExerciseStatus(repository, id, "active");
-}
-
-async function setExerciseStatus(
-  repository: ExerciseRepository,
-  id: unknown,
-  status: "active" | "archived",
-): Promise<OperationResult<Exercise>> {
+): Promise<OperationResult<null>> {
   const exerciseId = parseExerciseId(id);
-  if (exerciseId === null) return missingExercise();
+  if (exerciseId === null) {
+    return operationFailure({
+      code: "not_found",
+      message: "The requested exercise is no longer available.",
+      retryable: false,
+    });
+  }
 
   try {
-    return operationSuccess(await repository.setStatus(exerciseId, status));
+    await repository.delete(exerciseId);
+    return operationSuccess(null);
   } catch (error) {
-    return exerciseRepositoryFailure(error, "save");
+    return exerciseRepositoryFailure<null>(error, "delete");
   }
 }
 

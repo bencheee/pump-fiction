@@ -45,6 +45,7 @@ export type Database = {
       app_settings: {
         Row: {
           created_at: string
+          current_program_id: string | null
           id: number
           measurement_unit: string
           time_zone: string
@@ -53,6 +54,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          current_program_id?: string | null
           id?: number
           measurement_unit?: string
           time_zone: string
@@ -61,13 +63,22 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          current_program_id?: string | null
           id?: number
           measurement_unit?: string
           time_zone?: string
           updated_at?: string
           weight_unit?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "app_settings_current_program_fk"
+            columns: ["current_program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       exercise_load_modes: {
         Row: {
@@ -102,7 +113,6 @@ export type Database = {
           id: string
           name: string
           persistent_note: string
-          status: Database["public"]["Enums"]["entity_status"]
           updated_at: string
         }
         Insert: {
@@ -111,7 +121,6 @@ export type Database = {
           id?: string
           name: string
           persistent_note?: string
-          status?: Database["public"]["Enums"]["entity_status"]
           updated_at?: string
         }
         Update: {
@@ -120,7 +129,6 @@ export type Database = {
           id?: string
           name?: string
           persistent_note?: string
-          status?: Database["public"]["Enums"]["entity_status"]
           updated_at?: string
         }
         Relationships: []
@@ -165,7 +173,6 @@ export type Database = {
           created_at: string
           id: string
           name: string
-          status: Database["public"]["Enums"]["entity_status"]
           unit: string
           updated_at: string
         }
@@ -173,7 +180,6 @@ export type Database = {
           created_at?: string
           id?: string
           name: string
-          status?: Database["public"]["Enums"]["entity_status"]
           unit?: string
           updated_at?: string
         }
@@ -181,7 +187,6 @@ export type Database = {
           created_at?: string
           id?: string
           name?: string
-          status?: Database["public"]["Enums"]["entity_status"]
           unit?: string
           updated_at?: string
         }
@@ -193,7 +198,6 @@ export type Database = {
           id: string
           name: string
           next_split_id: string | null
-          status: Database["public"]["Enums"]["program_status"]
           updated_at: string
         }
         Insert: {
@@ -201,7 +205,6 @@ export type Database = {
           id?: string
           name: string
           next_split_id?: string | null
-          status?: Database["public"]["Enums"]["program_status"]
           updated_at?: string
         }
         Update: {
@@ -209,7 +212,6 @@ export type Database = {
           id?: string
           name?: string
           next_split_id?: string | null
-          status?: Database["public"]["Enums"]["program_status"]
           updated_at?: string
         }
         Relationships: [
@@ -280,7 +282,6 @@ export type Database = {
           name: string
           position: number
           program_id: string
-          status: Database["public"]["Enums"]["entity_status"]
           updated_at: string
         }
         Insert: {
@@ -289,7 +290,6 @@ export type Database = {
           name: string
           position: number
           program_id: string
-          status?: Database["public"]["Enums"]["entity_status"]
           updated_at?: string
         }
         Update: {
@@ -298,7 +298,6 @@ export type Database = {
           name?: string
           position?: number
           program_id?: string
-          status?: Database["public"]["Enums"]["entity_status"]
           updated_at?: string
         }
         Relationships: [
@@ -365,7 +364,7 @@ export type Database = {
         Row: {
           created_at: string
           exercise_base_type_snapshot: Database["public"]["Enums"]["exercise_base_type"]
-          exercise_id: string
+          exercise_id: string | null
           exercise_name_snapshot: string
           id: string
           max_reps_snapshot: number | null
@@ -380,7 +379,7 @@ export type Database = {
         Insert: {
           created_at?: string
           exercise_base_type_snapshot: Database["public"]["Enums"]["exercise_base_type"]
-          exercise_id: string
+          exercise_id?: string | null
           exercise_name_snapshot: string
           id?: string
           max_reps_snapshot?: number | null
@@ -395,7 +394,7 @@ export type Database = {
         Update: {
           created_at?: string
           exercise_base_type_snapshot?: Database["public"]["Enums"]["exercise_base_type"]
-          exercise_id?: string
+          exercise_id?: string | null
           exercise_name_snapshot?: string
           id?: string
           max_reps_snapshot?: number | null
@@ -585,10 +584,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      activate_program: {
-        Args: { p_next_split_id: string; p_program_id: string }
-        Returns: string
-      }
       advance_program_after_proposed_completion: {
         Args: { p_completed_split_id: string; p_program_id: string }
         Returns: string
@@ -610,8 +605,6 @@ export type Database = {
           resulting_revision: number
         }[]
       }
-      archive_program: { Args: { p_program_id: string }; Returns: string }
-      archive_split: { Args: { p_split_id: string }; Returns: string }
       create_exercise_definition: {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -633,6 +626,9 @@ export type Database = {
         }
         Returns: string
       }
+      delete_exercise: { Args: { p_exercise_id: string }; Returns: string }
+      delete_program: { Args: { p_program_id: string }; Returns: string }
+      delete_split: { Args: { p_split_id: string }; Returns: string }
       get_current_workout: { Args: never; Returns: Json }
       get_today_view: { Args: never; Returns: Json }
       reorder_program_splits: {
@@ -641,6 +637,10 @@ export type Database = {
       }
       reorder_split_exercises: {
         Args: { p_exercise_ids: string[]; p_split_id: string }
+        Returns: string
+      }
+      set_current_program: {
+        Args: { p_next_split_id: string; p_program_id: string }
         Returns: string
       }
       set_program_next_split: {
@@ -697,7 +697,6 @@ export type Database = {
         | "finish_workout"
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
-      entity_status: "active" | "archived"
       exercise_base_type: "weights" | "bodyweight" | "assisted"
       load_mode:
         | "weight"
@@ -707,7 +706,6 @@ export type Database = {
         | "bodyweight_resistance_band"
         | "assistance_weight"
         | "assistance_band"
-      program_status: "draft" | "active" | "archived"
       workout_source_kind: "proposed_split" | "alternate_split" | "one_time"
       workout_status: "active" | "paused" | "completed" | "incomplete"
     }
@@ -851,7 +849,6 @@ export const Constants = {
       ],
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],
-      entity_status: ["active", "archived"],
       exercise_base_type: ["weights", "bodyweight", "assisted"],
       load_mode: [
         "weight",
@@ -862,7 +859,6 @@ export const Constants = {
         "assistance_weight",
         "assistance_band",
       ],
-      program_status: ["draft", "active", "archived"],
       workout_source_kind: ["proposed_split", "alternate_split", "one_time"],
       workout_status: ["active", "paused", "completed", "incomplete"],
     },

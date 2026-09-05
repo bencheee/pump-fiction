@@ -21,7 +21,7 @@ select public.create_split_definition(
   array[8, 5],
   array[12, 8]
 );
-select public.activate_program(
+select public.set_current_program(
   (select id from public.programs where name = 'T-016 Plan'),
   (select id from public.splits where name = 'Full')
 );

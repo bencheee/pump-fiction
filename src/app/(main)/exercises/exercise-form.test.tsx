@@ -12,16 +12,14 @@ import { ToastProvider } from "@/shared/ui";
 import { ExerciseForm } from "./exercise-form";
 
 const actions = vi.hoisted(() => ({
-  archive: vi.fn(),
   create: vi.fn(),
-  reactivate: vi.fn(),
+  delete: vi.fn(),
   update: vi.fn(),
 }));
 
 vi.mock("@/app/actions/exercises", () => ({
-  archiveExerciseAction: actions.archive,
   createExerciseAction: actions.create,
-  reactivateExerciseAction: actions.reactivate,
+  deleteExerciseAction: actions.delete,
   updateExerciseAction: actions.update,
 }));
 
@@ -180,5 +178,42 @@ describe("ExerciseForm", () => {
 
     expect(screen.getByText("Enter a name for this exercise.")).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
+  });
+
+  it("names the affected splits before deleting an exercise", async () => {
+    const user = userEvent.setup();
+    actions.delete.mockResolvedValue({ ok: true, value: null });
+    renderForm(
+      <ExerciseForm
+        exercise={{
+          id: "11111111-1111-4111-8111-111111111111",
+          name: "Pull-up",
+          baseType: "bodyweight",
+          allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
+          persistentNote: "",
+          splitUsageCount: 2,
+        }}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Delete Exercise" }));
+    const dialog = await screen.findByRole("alertdialog", {
+      name: "Delete exercise?",
+    });
+    expect(
+      within(dialog).getByText(
+        "It is removed from 2 splits. Workouts already recorded keep this exercise in History.",
+      ),
+    ).toBeVisible();
+
+    await user.click(
+      within(dialog).getByRole("button", { name: "Delete Exercise" }),
+    );
+
+    expect(actions.delete).toHaveBeenCalledWith(
+      "11111111-1111-4111-8111-111111111111",
+    );
+    expect(router.replace).toHaveBeenCalledWith("/exercises");
+    expect(screen.getByText("Exercise deleted.")).toBeVisible();
   });
 });

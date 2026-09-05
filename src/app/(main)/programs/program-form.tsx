@@ -5,18 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import {
-  activateProgramAction,
-  archiveProgramAction,
   createProgramAction,
+  deleteProgramAction,
   reorderSplitsAction,
+  setCurrentProgramAction,
   setNextSplitAction,
   updateProgramAction,
 } from "@/app/actions/programs";
-import type {
-  Program,
-  ProgramSplit,
-  ProgramStatus,
-} from "@/features/programs/domain/program";
+import type { Program, ProgramSplit } from "@/features/programs/domain/program";
 import { validateProgramDefinition } from "@/features/programs/domain/program-validation";
 import {
   Action,
@@ -38,9 +34,7 @@ import {
 export function ProgramForm({ program }: { program?: Program }) {
   const router = useRouter();
   const [name, setName] = useState(program?.name ?? "");
-  const [status, setStatus] = useState<ProgramStatus>(
-    program?.status ?? "draft",
-  );
+  const [isCurrent, setIsCurrent] = useState(program?.isCurrent ?? false);
   const [splits, setSplits] = useState<readonly ProgramSplit[]>(
     program?.splits ?? [],
   );
@@ -60,7 +54,6 @@ export function ProgramForm({ program }: { program?: Program }) {
         ? "clean"
         : "unsaved"
       : phase;
-  const activeSplits = splits.filter((split) => split.status === "active");
 
   function changed() {
     setNameError(undefined);
@@ -98,22 +91,22 @@ export function ProgramForm({ program }: { program?: Program }) {
     if (!program) return;
     setPhase("saving");
     setError(undefined);
-    const wasActive = status === "active";
-    const result = wasActive
+    const wasCurrent = isCurrent;
+    const result = wasCurrent
       ? await setNextSplitAction(program.id, splitId)
-      : await activateProgramAction(program.id, splitId);
+      : await setCurrentProgramAction(program.id, splitId);
     if (!result.ok) {
       setError(result.error.message);
       setPhase("failure");
       reportFailure(result.error.message);
       return;
     }
-    setStatus(result.value.status);
+    setIsCurrent(result.value.isCurrent);
     setNextSplitId(result.value.nextSplitId);
     setSplits(result.value.splits);
     setPhase("editing");
     close();
-    showToast(wasActive ? "Next split updated." : "Program activated.");
+    showToast(wasCurrent ? "Next split updated." : "Program is now current.");
     router.refresh();
   }
 
@@ -145,38 +138,30 @@ export function ProgramForm({ program }: { program?: Program }) {
     showToast("Order saved.");
   }
 
-  async function archive() {
+  async function remove() {
     if (!program) return;
     setPhase("saving");
-    const result = await archiveProgramAction(program.id);
+    const result = await deleteProgramAction(program.id);
     if (!result.ok) {
       setError(result.error.message);
       setPhase("failure");
       reportFailure(result.error.message);
       return;
     }
-    setStatus("archived");
-    setPhase("editing");
-    router.refresh();
+    returnToParent("Program deleted.");
   }
 
   return (
     <div className="flex min-h-full flex-col">
       <TopBar
-        title={status.toUpperCase()}
+        title={program ? "Edit Program" : "New Program"}
         backHref="/programs"
         backLabel="Programs"
       />
       <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        {status === "archived" ? (
-          <section className="mb-5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-            <div className="flex items-center gap-2 font-semibold">
-              <Icon name="archive" size={16} /> Archived program
-            </div>
-            <p className="mt-2 text-[13px] text-[var(--pf-text-2)]">
-              History is preserved. Reactivating requires choosing the first
-              next split.
-            </p>
+        {isCurrent ? (
+          <section className="mb-5 flex items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4 font-semibold">
+            <Icon name="calendar-check" size={16} /> Current program
           </section>
         ) : null}
 
@@ -187,7 +172,7 @@ export function ProgramForm({ program }: { program?: Program }) {
             value={name}
             className="min-h-[var(--pf-size-input-prominent)]"
             error={nameError}
-            disabled={busy || status === "archived"}
+            disabled={busy}
             autoComplete="off"
             onChange={(event) => {
               setName(event.target.value);
@@ -215,7 +200,7 @@ export function ProgramForm({ program }: { program?: Program }) {
                 title="No splits yet"
                 body="Add the first split before activating this program."
                 action={
-                  status !== "archived" ? (
+                  program ? (
                     <Link
                       href={`/programs/${program.id}/splits/new`}
                       className="min-h-11 rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 py-3 font-semibold text-[var(--pf-on-accent)]"
@@ -248,9 +233,6 @@ export function ProgramForm({ program }: { program?: Program }) {
                         {split.id === nextSplitId ? (
                           <Badge tone="accent">Next</Badge>
                         ) : null}
-                        {split.status === "archived" ? (
-                          <Badge>Archived</Badge>
-                        ) : null}
                       </span>
                       <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
                         Position {index + 1}
@@ -260,7 +242,7 @@ export function ProgramForm({ program }: { program?: Program }) {
                       <button
                         type="button"
                         aria-label={`Move ${split.name} up`}
-                        disabled={busy || status === "archived" || index === 0}
+                        disabled={busy || index === 0}
                         onClick={() => void moveSplit(index, -1)}
                         className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
@@ -269,11 +251,7 @@ export function ProgramForm({ program }: { program?: Program }) {
                       <button
                         type="button"
                         aria-label={`Move ${split.name} down`}
-                        disabled={
-                          busy ||
-                          status === "archived" ||
-                          index === splits.length - 1
-                        }
+                        disabled={busy || index === splits.length - 1}
                         onClick={() => void moveSplit(index, 1)}
                         className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
@@ -284,7 +262,7 @@ export function ProgramForm({ program }: { program?: Program }) {
                 ))}
               </div>
             )}
-            {program && status !== "archived" && splits.length > 0 ? (
+            {program && splits.length > 0 ? (
               <Link
                 href={`/programs/${program.id}/splits/new`}
                 className="mt-3 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)]"
@@ -301,36 +279,26 @@ export function ProgramForm({ program }: { program?: Program }) {
             validationMessage={error}
             onRetry={() => void save()}
           />
-          {status !== "archived" ? (
-            <Action disabled={busy} onClick={() => void save()}>
-              {program ? "Save Changes" : "Save as Draft"}
-            </Action>
-          ) : null}
-          {program && activeSplits.length > 0 ? (
+          <Action disabled={busy} onClick={() => void save()}>
+            {program ? "Save Changes" : "Save Program"}
+          </Action>
+          {program && splits.length > 0 ? (
             <Sheet
-              title={
-                status === "active"
-                  ? "Set next split"
-                  : "Choose first next split"
-              }
+              title={isCurrent ? "Set next split" : "Choose the first split"}
               description={
-                status === "active"
+                isCurrent
                   ? "This changes the persistent rotation pointer."
-                  : "Activation archives any other active program."
+                  : "Making this program current replaces any other current program."
               }
               trigger={
                 <Action variant="secondary" disabled={busy}>
-                  {status === "active"
-                    ? "Set Next Split"
-                    : status === "archived"
-                      ? "Reactivate Program"
-                      : "Activate Program"}
+                  {isCurrent ? "Set Next Split" : "Make Current Program"}
                 </Action>
               }
             >
               {(close) => (
                 <div className="space-y-2">
-                  {activeSplits.map((split) => (
+                  {splits.map((split) => (
                     <Action
                       key={split.id}
                       variant="secondary"
@@ -340,7 +308,7 @@ export function ProgramForm({ program }: { program?: Program }) {
                     >
                       {split.name}
                       {split.id === nextSplitId ? (
-                        <Badge tone="accent">Current</Badge>
+                        <Badge tone="accent">Next</Badge>
                       ) : null}
                     </Action>
                   ))}
@@ -348,15 +316,15 @@ export function ProgramForm({ program }: { program?: Program }) {
               )}
             </Sheet>
           ) : null}
-          {program && status !== "archived" ? (
+          {program ? (
             <DestructiveDialog
-              title="Archive program?"
-              description="Its split templates and History identity are preserved, but it will no longer be active."
-              confirmLabel="Archive Program"
-              onConfirm={() => void archive()}
+              title="Delete program?"
+              description="Its splits are deleted with it. Workouts already recorded keep this program in History."
+              confirmLabel="Delete Program"
+              onConfirm={() => void remove()}
               trigger={
                 <Action variant="danger" disabled={busy}>
-                  Archive Program
+                  Delete Program
                 </Action>
               }
             />

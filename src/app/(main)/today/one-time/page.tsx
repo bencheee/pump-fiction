@@ -8,7 +8,7 @@ import { OneTimeWorkoutForm } from "./one-time-workout-form";
 export const dynamic = "force-dynamic";
 
 export default async function OneTimeWorkoutPage() {
-  const result = await listExercises(false);
+  const result = await listExercises();
   if (!result.ok) {
     return (
       <div className="min-h-full">

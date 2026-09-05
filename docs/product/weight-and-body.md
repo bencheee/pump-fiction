@@ -30,7 +30,7 @@ The chart supports week, month, quarter, and year and displays daily values toge
 
 ## Body tracker
 
-The user defines arbitrary measurement types. A type has a name, unit fixed to `cm`, and `active` or `archived` status. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
+The user defines arbitrary measurement types. A type has a name and a unit fixed to `cm`; there is no archived state. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
 
 Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 

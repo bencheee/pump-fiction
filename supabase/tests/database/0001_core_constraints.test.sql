@@ -2,7 +2,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(13);
+select plan(14);
 
 set constraints all immediate;
 
@@ -43,7 +43,7 @@ select throws_ok(
   $$,
   '23505'::character(5),
   null,
-  'active exercise names are unique after trimming and case folding'
+  'exercise names are unique after trimming and case folding'
 );
 
 insert into public.programs (id, name)
@@ -52,53 +52,55 @@ values
   ('10000000-0000-0000-0000-000000000002', 'Secondary program'),
   ('10000000-0000-0000-0000-000000000003', 'Invalid pointer program');
 
-insert into public.splits (id, program_id, name, position, status)
+insert into public.splits (id, program_id, name, position)
 values
-  ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'Upper', 1, 'active'),
-  ('20000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000001', 'Lower', 2, 'active'),
-  ('20000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000002', 'Only split', 1, 'active'),
-  ('20000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000003', 'Available', 1, 'active'),
-  ('20000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000003', 'Archived', 2, 'archived');
+  ('20000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 'Upper', 1),
+  ('20000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000001', 'Lower', 2),
+  ('20000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000002', 'Only split', 1),
+  ('20000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000003', 'Available', 1),
+  ('20000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000003', 'Second', 2);
 
 update public.programs
-set status = 'active', next_split_id = '20000000-0000-0000-0000-000000000001'
+set next_split_id = '20000000-0000-0000-0000-000000000001'
 where id = '10000000-0000-0000-0000-000000000001';
+
+update public.app_settings
+set current_program_id = '10000000-0000-0000-0000-000000000001'
+where id = 1;
 
 select throws_ok(
   $$
-    update public.programs
-    set status = 'active', next_split_id = '20000000-0000-0000-0000-000000000003'
-    where id = '10000000-0000-0000-0000-000000000002'
+    update public.app_settings
+    set current_program_id = '10000000-0000-0000-0000-000000000002'
+    where id = 1
   $$,
-  '23505'::character(5),
-  null,
-  'at most one program can be active'
+  'P0001'::character(5),
+  'The current program must point to one of its splits',
+  'the current program must keep a next-split pointer'
 );
 
 select throws_ok(
   $$
-    update public.splits
-    set status = 'archived'
-    where id = '20000000-0000-0000-0000-000000000003'
+    delete from public.splits
+    where program_id = '10000000-0000-0000-0000-000000000001'
   $$,
   'P0001'::character(5),
-  'The last active split in a program cannot be archived',
-  'the last active split in a program cannot be archived'
+  'The last split of the current program cannot be deleted',
+  'the current program cannot lose its last split'
 );
 
-update public.programs
-set status = 'draft', next_split_id = null
-where id = '10000000-0000-0000-0000-000000000001';
-
-select throws_ok(
+select lives_ok(
   $$
-    update public.programs
-    set status = 'active', next_split_id = '20000000-0000-0000-0000-000000000005'
-    where id = '10000000-0000-0000-0000-000000000003'
+    delete from public.splits
+    where id = '20000000-0000-0000-0000-000000000005'
   $$,
-  'P0001'::character(5),
-  'An active program must point to one of its active splits',
-  'an active program cannot point to an archived split'
+  'a split of another program can be deleted'
+);
+
+select is(
+  (select next_split_id from public.programs where id = '10000000-0000-0000-0000-000000000001'),
+  '20000000-0000-0000-0000-000000000001'::uuid,
+  'deleting an unrelated split leaves the rotation pointer intact'
 );
 
 select throws_ok(

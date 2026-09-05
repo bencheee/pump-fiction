@@ -10,8 +10,7 @@ Each exercise has:
 - a unique active name;
 - one base type;
 - explicitly allowed load or assistance modes;
-- a persistent exercise note;
-- `active` or `archived` status.
+- a persistent exercise note.
 
 Supported base types are `weights`, `bodyweight`, and `assisted`.
 
@@ -62,14 +61,14 @@ The exercise note belongs to the exercise definition. It contains persistent tec
 
 A workout-specific note is a different concept; see [`workouts.md`](workouts.md#two-kinds-of-notes).
 
-## Editing and archiving
+## Editing and deleting
 
 Changes to an exercise's name, type, permitted load modes, or note affect future workouts only. Workout snapshots preserve historical meaning; see [`domain-model.md`](../architecture/domain-model.md#workout-snapshots).
 
-The edit UI warns when an exercise is used by existing splits. Exercises are archived instead of deleted:
+The edit UI states how many splits use the exercise. Deleting it is permanent and immediate, and nothing is archived; see [ADR-0024](../decisions/0024-deletion-with-preserved-history.md):
 
-- archived exercises remain available in history and statistics;
-- they cannot be added to new splits or workouts;
-- they can be reactivated.
+- the exercise is removed from every split that used it, after a confirmation naming that count;
+- every recorded workout keeps its performances, because the workout stores its own snapshot;
+- a deleted exercise cannot be restored.
 
-Changing an exercise definition does not rewrite existing splits' historical workouts or an already-started workout.
+Changing or deleting an exercise definition does not rewrite existing splits' historical workouts or an already-started workout.

@@ -7,7 +7,7 @@ import { ExerciseRepositoryError } from "./exercise-repository";
 
 export function exerciseRepositoryFailure<T>(
   error: unknown,
-  operation: "load" | "save",
+  operation: "load" | "save" | "delete",
 ): OperationResult<T> {
   if (error instanceof ExerciseRepositoryError) {
     if (error.code === "not_found") {
@@ -24,7 +24,7 @@ export function exerciseRepositoryFailure<T>(
         message: "Check the submitted values and try again.",
         retryable: false,
         fieldErrors: {
-          name: ["An active exercise already uses this name."],
+          name: ["Another exercise already uses this name."],
         },
       });
     }
@@ -43,7 +43,9 @@ export function exerciseRepositoryFailure<T>(
     message:
       operation === "load"
         ? "We couldn't load the exercises. Try again."
-        : "We couldn't save the exercise. Try again.",
+        : operation === "delete"
+          ? "We couldn't delete the exercise. Try again."
+          : "We couldn't save the exercise. Try again.",
     retryable: true,
   });
 }

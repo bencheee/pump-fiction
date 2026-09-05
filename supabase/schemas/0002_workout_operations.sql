@@ -104,7 +104,10 @@ as $$
   with settings as (
     select time_zone from public.app_settings where id = 1
   ), active_program as (
-    select program.* from public.programs as program where program.status = 'active' limit 1
+    select program.*
+    from public.programs as program
+    join public.app_settings as settings on settings.current_program_id = program.id
+    limit 1
   ), choices as (
     select
       program.id as program_id,
@@ -116,7 +119,7 @@ as $$
       count(workout.id)::integer as completed_count,
       round(avg(workout.accumulated_active_seconds))::integer as average_seconds
     from active_program as program
-    join public.splits as split on split.program_id = program.id and split.status = 'active'
+    join public.splits as split on split.program_id = program.id
     left join public.workouts as workout on workout.source_split_id = split.id and workout.status = 'completed'
     group by program.id, program.name, program.next_split_id, split.id, split.name, split.position
   )
@@ -166,9 +169,9 @@ begin
   if p_started_at is null then raise exception using errcode = 'PF206', message = 'A start timestamp is required'; end if;
 
   if p_source_kind in ('proposed_split', 'alternate_split') then
-    select program.* into selected_program from public.programs as program where program.status = 'active' for update;
-    if not found then raise exception using errcode = 'PF201', message = 'No active program exists'; end if;
-    select split.* into selected_split from public.splits as split where split.id = p_split_id and split.program_id = selected_program.id and split.status = 'active';
+    select program.* into selected_program from public.programs as program join public.app_settings as settings on settings.current_program_id = program.id for update of program;
+    if not found then raise exception using errcode = 'PF201', message = 'No current program exists'; end if;
+    select split.* into selected_split from public.splits as split where split.id = p_split_id and split.program_id = selected_program.id;
     if not found then raise exception using errcode = 'PF201', message = 'Split is unavailable'; end if;
     if (p_source_kind = 'proposed_split') <> (selected_program.next_split_id = selected_split.id) then raise exception using errcode = 'PF206', message = 'Split does not match requested source kind'; end if;
 
@@ -191,7 +194,7 @@ begin
     end loop;
   elsif p_source_kind = 'one_time' then
     if btrim(coalesce(p_one_time_name, '')) = '' or coalesce(pg_catalog.array_length(p_exercise_ids, 1), 0) = 0 or (select count(distinct id) from pg_catalog.unnest(p_exercise_ids) as id) <> pg_catalog.array_length(p_exercise_ids, 1) then raise exception using errcode = 'PF206', message = 'One-time workout details are invalid'; end if;
-    if exists (select 1 from pg_catalog.unnest(p_exercise_ids) as selected(id) left join public.exercises as exercise on exercise.id = selected.id and exercise.status = 'active' where exercise.id is null) then raise exception using errcode = 'PF203', message = 'Exercise is unavailable'; end if;
+    if exists (select 1 from pg_catalog.unnest(p_exercise_ids) as selected(id) left join public.exercises as exercise on exercise.id = selected.id where exercise.id is null) then raise exception using errcode = 'PF203', message = 'Exercise is unavailable'; end if;
     insert into public.workouts(status, source_kind, one_time_name, workout_date, started_at, active_segment_started_at)
     values ('active', 'one_time', btrim(p_one_time_name), (p_started_at at time zone configured_time_zone)::date, p_started_at, p_started_at)
     returning id into created_workout_id;
@@ -295,7 +298,7 @@ begin
     update public.workout_sets as workout_set set position = ordered.new_position from ordered where workout_set.id = ordered.id;
   elsif p_operation = 'add_exercise' then
     target_id = (p_payload ->> 'exerciseId')::uuid;
-    select exercise.* into source_exercise from public.exercises as exercise where exercise.id = target_id and exercise.status = 'active';
+    select exercise.* into source_exercise from public.exercises as exercise where exercise.id = target_id;
     if not found then raise exception using errcode = 'PF203', message = 'Exercise is unavailable'; end if;
     select coalesce(max(position), 0) + 1 into next_position from public.workout_exercises where workout_id = p_workout_id;
     insert into public.workout_exercises(workout_id, exercise_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)

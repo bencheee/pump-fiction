@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import type { ProgramDefinition } from "../domain/program";
 import { ProgramRepositoryError } from "./program-repository";
 import {
-  archiveSplit,
   createProgram,
   createSplit,
+  deleteSplit,
   reorderSplits,
 } from "./program-operations";
 import type { ProgramRepository } from "./program-repository";
@@ -22,7 +22,7 @@ describe("program operations", () => {
         return {
           id: programId,
           name: definition.name,
-          status: "draft",
+          isCurrent: false,
           nextSplitId: null,
           splits: [],
         };
@@ -82,20 +82,20 @@ describe("program operations", () => {
     });
   });
 
-  it("translates the last-active-split invariant to a stable failure", async () => {
+  it("translates the last-split invariant to a stable failure", async () => {
     const repository = {
-      archiveSplit: async () => {
-        throw new ProgramRepositoryError("last_active_split");
+      deleteSplit: async () => {
+        throw new ProgramRepositoryError("last_split");
       },
     } as unknown as ProgramRepository;
 
-    const result = await archiveSplit(repository, programId);
+    const result = await deleteSplit(repository, programId);
 
     expect(result).toEqual({
       ok: false,
       error: {
         code: "validation",
-        message: "At least one active split must remain in the program.",
+        message: "The current program must keep at least one split.",
         retryable: false,
       },
     });

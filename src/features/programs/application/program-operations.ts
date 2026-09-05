@@ -77,7 +77,7 @@ export async function updateProgram(
   return save(() => repository.updateProgram(programId, validation.value));
 }
 
-export async function activateProgram(
+export async function setCurrentProgram(
   repository: ProgramRepository,
   id: unknown,
   nextSplitId: unknown,
@@ -85,16 +85,19 @@ export async function activateProgram(
   const programId = parseUuid(id);
   const splitId = parseUuid(nextSplitId);
   if (programId === null || splitId === null) return missing<Program>();
-  return save(() => repository.activateProgram(programId, splitId));
+  return save(() => repository.setCurrentProgram(programId, splitId));
 }
 
-export async function archiveProgram(
+export async function deleteProgram(
   repository: ProgramRepository,
   id: unknown,
-): Promise<OperationResult<Program>> {
+): Promise<OperationResult<null>> {
   const programId = parseUuid(id);
-  if (programId === null) return missing<Program>();
-  return save(() => repository.archiveProgram(programId));
+  if (programId === null) return missing<null>();
+  return save(async () => {
+    await repository.deleteProgram(programId);
+    return null;
+  });
 }
 
 export async function createSplit(
@@ -156,13 +159,16 @@ export async function setNextSplit(
   return save(() => repository.setNextSplit(parentId, nextId));
 }
 
-export async function archiveSplit(
+export async function deleteSplit(
   repository: ProgramRepository,
   id: unknown,
-): Promise<OperationResult<Split>> {
+): Promise<OperationResult<null>> {
   const splitId = parseUuid(id);
-  if (splitId === null) return missing<Split>();
-  return save(() => repository.archiveSplit(splitId));
+  if (splitId === null) return missing<null>();
+  return save(async () => {
+    await repository.deleteSplit(splitId);
+    return null;
+  });
 }
 
 export async function advanceAfterProposedCompletion(

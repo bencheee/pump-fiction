@@ -15,9 +15,9 @@ import { ProgramForm } from "./program-form";
 import { SplitForm } from "./split-form";
 
 const actions = vi.hoisted(() => ({
-  activateProgram: vi.fn(),
-  archiveProgram: vi.fn(),
-  archiveSplit: vi.fn(),
+  setCurrentProgram: vi.fn(),
+  deleteProgram: vi.fn(),
+  deleteSplit: vi.fn(),
   createProgram: vi.fn(),
   createSplit: vi.fn(),
   reorderExercises: vi.fn(),
@@ -28,9 +28,9 @@ const actions = vi.hoisted(() => ({
 }));
 
 vi.mock("@/app/actions/programs", () => ({
-  activateProgramAction: actions.activateProgram,
-  archiveProgramAction: actions.archiveProgram,
-  archiveSplitAction: actions.archiveSplit,
+  setCurrentProgramAction: actions.setCurrentProgram,
+  deleteProgramAction: actions.deleteProgram,
+  deleteSplitAction: actions.deleteSplit,
   createProgramAction: actions.createProgram,
   createSplitAction: actions.createSplit,
   reorderSplitExercisesAction: actions.reorderExercises,
@@ -57,11 +57,11 @@ const exerciseBId = "55555555-5555-4555-8555-555555555555";
 const program: Program = {
   id: programId,
   name: "Strength",
-  status: "active",
+  isCurrent: true,
   nextSplitId: splitAId,
   splits: [
-    { id: splitAId, programId, name: "Upper", position: 0, status: "active" },
-    { id: splitBId, programId, name: "Lower", position: 1, status: "active" },
+    { id: splitAId, programId, name: "Upper", position: 0 },
+    { id: splitBId, programId, name: "Lower", position: 1 },
   ],
 };
 
@@ -71,7 +71,6 @@ const split: Split = {
     {
       exerciseId: exerciseAId,
       exerciseName: "Press",
-      exerciseStatus: "active",
       position: 0,
       plannedSets: 3,
       minReps: 8,
@@ -80,7 +79,6 @@ const split: Split = {
     {
       exerciseId: exerciseBId,
       exerciseName: "Row",
-      exerciseStatus: "active",
       position: 1,
       plannedSets: 3,
       minReps: 8,
@@ -152,7 +150,7 @@ describe("Programs mobile forms", () => {
     expect(actions.updateSplit).not.toHaveBeenCalled();
   });
 
-  it("reorders prescriptions and rejects archiving the last active split in the UI", async () => {
+  it("reorders prescriptions and blocks deleting the last split", async () => {
     const user = userEvent.setup();
     actions.reorderExercises.mockResolvedValue({ ok: true, value: split });
     renderForm(
@@ -170,12 +168,30 @@ describe("Programs mobile forms", () => {
       exerciseAId,
     ]);
     expect(screen.getByText("Order saved.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Delete Split" })).toBeDisabled();
     expect(
-      screen.getByRole("button", { name: "Archive Split" }),
-    ).toBeDisabled();
-    expect(
-      screen.getByText("At least one active split must remain in the program."),
+      screen.getByText("The current program must keep at least one split."),
     ).toBeVisible();
+  });
+
+  it("deletes a split of a program that keeps another one", async () => {
+    const user = userEvent.setup();
+    actions.deleteSplit.mockResolvedValue({ ok: true, value: null });
+    renderForm(
+      <SplitForm program={program} split={split} exerciseLibrary={exercises} />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Delete Split" }));
+    const dialog = await screen.findByRole("alertdialog", {
+      name: "Delete split?",
+    });
+    await user.click(
+      within(dialog).getByRole("button", { name: "Delete Split" }),
+    );
+
+    expect(actions.deleteSplit).toHaveBeenCalledWith(splitAId);
+    expect(router.replace).toHaveBeenCalledWith(`/programs/${programId}/edit`);
+    expect(screen.getByText("Split deleted.")).toBeVisible();
   });
 
   it("returns to the program list with a toast after saving a program", async () => {

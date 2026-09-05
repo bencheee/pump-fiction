@@ -1,11 +1,10 @@
 import "server-only";
 
 import {
-  archiveExercise as runArchiveExercise,
   createExercise as runCreateExercise,
+  deleteExercise as runDeleteExercise,
   getExercise as runGetExercise,
   listExercises as runListExercises,
-  reactivateExercise as runReactivateExercise,
   updateExercise as runUpdateExercise,
 } from "@/features/exercises/application/exercise-operations";
 import type { ExerciseDefinitionInput } from "@/features/exercises/domain/exercise-validation";
@@ -13,8 +12,8 @@ import type { ExerciseDefinitionInput } from "@/features/exercises/domain/exerci
 import { createServerDatabaseClient } from "../database/client";
 import { SupabaseExerciseRepository } from "../repositories/supabase-exercise-repository";
 
-export async function listExercises(includeArchived = false) {
-  return runListExercises(createRepository(), includeArchived);
+export async function listExercises() {
+  return runListExercises(createRepository());
 }
 
 export async function getExercise(id: unknown) {
@@ -32,12 +31,8 @@ export async function updateExercise(
   return runUpdateExercise(createRepository(), id, input);
 }
 
-export async function archiveExercise(id: unknown) {
-  return runArchiveExercise(createRepository(), id);
-}
-
-export async function reactivateExercise(id: unknown) {
-  return runReactivateExercise(createRepository(), id);
+export async function deleteExercise(id: unknown) {
+  return runDeleteExercise(createRepository(), id);
 }
 
 function createRepository(): SupabaseExerciseRepository {

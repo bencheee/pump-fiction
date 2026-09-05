@@ -11,7 +11,7 @@ values ('14000000-0000-4000-8000-000000000001', 'weights', 'weight');
 select public.create_program('T-014 Plan');
 select public.create_split_definition((select id from public.programs where name = 'T-014 Plan'), 'Push', array['14000000-0000-4000-8000-000000000001'::uuid], array[3], array[8], array[12]);
 select public.create_split_definition((select id from public.programs where name = 'T-014 Plan'), 'Next', array['14000000-0000-4000-8000-000000000001'::uuid], array[2], array[5], array[8]);
-select public.activate_program((select id from public.programs where name = 'T-014 Plan'), (select id from public.splits where name = 'Push'));
+select public.set_current_program((select id from public.programs where name = 'T-014 Plan'), (select id from public.splits where name = 'Push'));
 
 select lives_ok(
   $$ select public.start_workout('proposed_split', (select id from public.splits where name = 'Push'), '', array[]::uuid[], '2026-09-03T10:00:00Z') $$,
@@ -48,7 +48,7 @@ select is((select kind from public.apply_active_workout_command(
 
 select lives_ok(
   $$ select public.start_workout('one_time', '00000000-0000-0000-0000-000000000000', 'Hotel', array['14000000-0000-4000-8000-000000000001'::uuid], '2026-09-03T11:00:00Z') $$,
-  'a named one-time workout starts with active exercises'
+  'a named one-time workout starts with library exercises'
 );
 select is((select source_kind::text from public.workouts where status = 'active'), 'one_time', 'one-time source is retained');
 select is((select count(*)::integer from public.workout_sets), 4, 'the one-time exercise adds exactly one starter set alongside retained History sets');

@@ -215,7 +215,6 @@ const library: readonly Exercise[] = [
     baseType: "bodyweight",
     allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
     persistentNote: "",
-    status: "active",
     splitUsageCount: 0,
   },
 ];

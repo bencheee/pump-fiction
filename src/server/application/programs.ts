@@ -1,17 +1,17 @@
 import "server-only";
 
 import {
-  activateProgram as runActivateProgram,
   advanceAfterProposedCompletion as runAdvanceAfterProposedCompletion,
-  archiveProgram as runArchiveProgram,
-  archiveSplit as runArchiveSplit,
   createProgram as runCreateProgram,
+  deleteProgram as runDeleteProgram,
+  deleteSplit as runDeleteSplit,
   createSplit as runCreateSplit,
   getProgram as runGetProgram,
   getSplit as runGetSplit,
   listPrograms as runListPrograms,
   reorderSplitExercises as runReorderSplitExercises,
   reorderSplits as runReorderSplits,
+  setCurrentProgram as runSetCurrentProgram,
   setNextSplit as runSetNextSplit,
   updateProgram as runUpdateProgram,
   updateSplit as runUpdateSplit,
@@ -42,11 +42,11 @@ export async function updateProgram(
 ) {
   return runUpdateProgram(createRepository(), id, input);
 }
-export async function activateProgram(id: unknown, nextSplitId: unknown) {
-  return runActivateProgram(createRepository(), id, nextSplitId);
+export async function setCurrentProgram(id: unknown, nextSplitId: unknown) {
+  return runSetCurrentProgram(createRepository(), id, nextSplitId);
 }
-export async function archiveProgram(id: unknown) {
-  return runArchiveProgram(createRepository(), id);
+export async function deleteProgram(id: unknown) {
+  return runDeleteProgram(createRepository(), id);
 }
 export async function createSplit(
   programId: unknown,
@@ -69,8 +69,8 @@ export async function reorderSplitExercises(
 export async function setNextSplit(programId: unknown, splitId: unknown) {
   return runSetNextSplit(createRepository(), programId, splitId);
 }
-export async function archiveSplit(id: unknown) {
-  return runArchiveSplit(createRepository(), id);
+export async function deleteSplit(id: unknown) {
+  return runDeleteSplit(createRepository(), id);
 }
 export async function advanceAfterProposedCompletion(
   programId: unknown,

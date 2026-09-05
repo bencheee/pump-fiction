@@ -2,13 +2,11 @@
 
 /* eslint-disable jsx-a11y/role-supports-aria-props -- Each focusable mode control carries the accepted group validation state. */
 
-import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 import {
-  archiveExerciseAction,
   createExerciseAction,
-  reactivateExerciseAction,
+  deleteExerciseAction,
   updateExerciseAction,
 } from "@/app/actions/exercises";
 import {
@@ -46,7 +44,6 @@ type FieldErrors = Readonly<Record<string, readonly string[]>>;
 const validationMessage = "Check the highlighted fields.";
 
 export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
-  const router = useRouter();
   const [name, setName] = useState(exercise?.name ?? "");
   const [baseType, setBaseType] = useState<ExerciseBaseType>(
     exercise?.baseType ?? "weights",
@@ -59,7 +56,6 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   const [phase, setPhase] = useState<SavePhase>("editing");
   const [saveMessage, setSaveMessage] = useState<string>();
   const [modeNotice, setModeNotice] = useState<string>();
-  const [status, setStatus] = useState(exercise?.status ?? "active");
   const modeGroupRef = useRef<HTMLButtonElement>(null);
 
   const definition = {
@@ -70,7 +66,6 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   };
   const { returnToParent, reportFailure } = useSaveOutcome("/exercises");
   const { savedSnapshot } = useSavedSnapshot(snapshotOf(definition));
-  const archived = status === "archived";
   const isSaving = phase === "saving";
   const saveState =
     phase === "editing"
@@ -152,23 +147,18 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     returnToParent("Exercise saved.");
   }
 
-  async function changeStatus(nextStatus: "active" | "archived") {
+  async function remove() {
     if (!exercise) return;
     setPhase("saving");
     setSaveMessage(undefined);
-    const result =
-      nextStatus === "archived"
-        ? await archiveExerciseAction(exercise.id)
-        : await reactivateExerciseAction(exercise.id);
+    const result = await deleteExerciseAction(exercise.id);
     if (!result.ok) {
       setPhase("failure");
       setSaveMessage(result.error.retryable ? undefined : result.error.message);
       reportFailure(result.error.message);
       return;
     }
-    setStatus(result.value.status);
-    setPhase("editing");
-    router.refresh();
+    returnToParent("Exercise deleted.");
   }
 
   return (
@@ -179,18 +169,6 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
         backLabel="Exercises"
       />
       <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        {archived ? (
-          <section className="mb-5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-            <div className="flex items-center gap-2 font-semibold">
-              <Icon name="archive" size={16} /> Archived exercise
-            </div>
-            <p className="mt-2 text-[13px] leading-[1.45] text-[var(--pf-text-2)]">
-              History is preserved. This exercise cannot be selected for new
-              splits or workouts until it is reactivated.
-            </p>
-          </section>
-        ) : null}
-
         <div className="space-y-6">
           <TextField
             id="exercise-name"
@@ -337,27 +315,18 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
           <Action disabled={isSaving} onClick={() => void save()}>
             Save Exercise
           </Action>
-          {exercise && !archived ? (
+          {exercise ? (
             <DestructiveDialog
-              title="Archive exercise?"
-              description="History is preserved, but this exercise will no longer be available for new splits or workouts."
-              confirmLabel="Archive Exercise"
-              onConfirm={() => void changeStatus("archived")}
+              title="Delete exercise?"
+              description={deleteDescription(exercise.splitUsageCount)}
+              confirmLabel="Delete Exercise"
+              onConfirm={() => void remove()}
               trigger={
                 <Action variant="danger" disabled={isSaving}>
-                  Archive Exercise
+                  Delete Exercise
                 </Action>
               }
             />
-          ) : null}
-          {exercise && archived ? (
-            <Action
-              variant="secondary"
-              disabled={isSaving}
-              onClick={() => void changeStatus("active")}
-            >
-              <Icon name="archive-restore" size={16} /> Reactivate Exercise
-            </Action>
           ) : null}
         </StickyActionBar>
       </main>
@@ -377,6 +346,14 @@ function snapshotOf(definition: {
     [...definition.allowedLoadModes].sort(),
     definition.persistentNote,
   ]);
+}
+
+function deleteDescription(splitUsageCount: number): string {
+  const usage =
+    splitUsageCount === 0
+      ? "No split uses it."
+      : `It is removed from ${splitUsageCount} ${splitUsageCount === 1 ? "split" : "splits"}.`;
+  return `${usage} Workouts already recorded keep this exercise in History.`;
 }
 
 const baseModeSummary: Readonly<Record<ExerciseBaseType, string>> = {

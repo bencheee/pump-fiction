@@ -49,19 +49,19 @@ select throws_ok(
 
 select lives_ok(
   $$
-    select public.activate_program(
+    select public.set_current_program(
       (select id from public.programs where name = 'T-012 Plan'),
       (select id from public.splits where name = 'Push')
     )
   $$,
-  'activation selects an active split'
+  'the current program selects one of its splits'
 );
 
 select throws_ok(
-  $$ select public.archive_split((select id from public.splits where name = 'Push')) $$,
+  $$ select public.delete_split((select id from public.splits where name = 'Push')) $$,
   'PF104'::character(5),
-  'Last active split cannot be archived',
-  'the last active split cannot be archived'
+  'Last split of the current program cannot be deleted',
+  'the last split of the current program cannot be deleted'
 );
 
 select is(
@@ -70,7 +70,7 @@ select is(
     (select id from public.splits where name = 'Push')
   ),
   (select id from public.splits where name = 'Push'),
-  'a single-active-split rotation wraps to itself'
+  'a single-split rotation wraps to itself'
 );
 
 select is(
@@ -84,20 +84,20 @@ select is(
 
 select function_privs_are(
   'public',
-  'activate_program',
+  'set_current_program',
   array['uuid', 'uuid'],
   'service_role',
   array['EXECUTE'],
-  'only the server service role can execute program activation'
+  'only the server service role can select the current program'
 );
 
 select function_privs_are(
   'public',
-  'archive_split',
+  'delete_split',
   array['uuid'],
   'service_role',
   array['EXECUTE'],
-  'only the server service role can execute split archival'
+  'only the server service role can execute split deletion'
 );
 
 select * from finish();

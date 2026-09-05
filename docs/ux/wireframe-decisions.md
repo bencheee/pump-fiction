@@ -29,15 +29,15 @@ Saving an exercise, program, or split closes the screen: the app returns to the 
 
 **Add Exercise** contains name, exercise type, the optional per-set addition its type offers, exercise note, and **Save Exercise**. The mode a type implies is stated as a sentence rather than offered as a selectable row.
 
-**Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Archive Exercise**.
+**Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Delete Exercise**, whose confirmation names the splits that lose it.
 
 See [`exercises.md`](../product/exercises.md).
 
 ## Programs
 
-**Add Program** contains program name, a split list, **Add Split**, and **Save as Draft**.
+**Add Program** contains program name, a split list, **Add Split**, and **Save Program**.
 
-**Edit Program** contains status, name, ordered split rotation, a next-split marker, **Set Next Split**, **Add Split**, **Edit Split**, and **Archive Program**.
+**Edit Program** contains name, a current-program marker, ordered split rotation, a next-split marker, **Make Current Program** or **Set Next Split**, **Add Split**, **Edit Split**, and **Delete Program**.
 
 See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
@@ -45,7 +45,7 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 **Add Split** contains its program, split name, exercise list, **Add Exercise**, and **Save Split**.
 
-**Edit Split** contains name, drag-handle ordering, planned sets/minimum reps/maximum reps for every exercise, **Remove**, **Add Exercise**, and **Archive Split**.
+**Edit Split** contains name, drag-handle ordering, planned sets/minimum reps/maximum reps for every exercise, **Remove**, **Add Exercise**, and **Delete Split**, which is disabled with an explanation for the last split of the current program.
 
 ## Active workout
 

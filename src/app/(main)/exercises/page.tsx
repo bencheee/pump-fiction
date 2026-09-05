@@ -6,10 +6,7 @@ import { EmptyState, Icon, ListRow, PageFrame } from "@/shared/ui";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = Promise<{
-  q?: string | string[];
-  status?: string | string[];
-}>;
+type SearchParams = Promise<{ q?: string | string[] }>;
 
 export default async function ExercisesPage({
   searchParams,
@@ -17,14 +14,10 @@ export default async function ExercisesPage({
   searchParams: SearchParams;
 }) {
   const query = first((await searchParams).q).trim();
-  const status =
-    first((await searchParams).status) === "archived" ? "archived" : "active";
-  const result = await listExercises(status === "archived");
+  const result = await listExercises();
   const exercises = result.ok
-    ? result.value.filter(
-        (exercise) =>
-          exercise.status === status &&
-          exercise.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
+    ? result.value.filter((exercise) =>
+        exercise.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
       )
     : [];
 
@@ -55,25 +48,7 @@ export default async function ExercisesPage({
           placeholder="Search exercises"
           className="min-h-[var(--pf-size-input)] w-full rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] pr-3 pl-10"
         />
-        {status === "archived" ? (
-          <input type="hidden" name="status" value="archived" />
-        ) : null}
       </form>
-
-      <nav aria-label="Exercise status" className="flex gap-2">
-        <FilterLink
-          href={queryHref("active", query)}
-          selected={status === "active"}
-        >
-          Active
-        </FilterLink>
-        <FilterLink
-          href={queryHref("archived", query)}
-          selected={status === "archived"}
-        >
-          Archived
-        </FilterLink>
-      </nav>
 
       <p className="text-[12.5px] leading-[1.45] text-[var(--pf-text-2)]">
         Definitions only. Personal records and charts live in History.
@@ -85,7 +60,7 @@ export default async function ExercisesPage({
           body={result.error.message}
           action={
             <Link
-              href={queryHref(status, query)}
+              href={queryHref(query)}
               className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
             >
               Retry
@@ -94,16 +69,14 @@ export default async function ExercisesPage({
         />
       ) : exercises.length === 0 ? (
         <EmptyState
-          title={query ? "No matching exercises" : `No ${status} exercises`}
+          title={query ? "No matching exercises" : "No exercises yet"}
           body={
             query
-              ? "Try another search or switch the status filter."
-              : status === "active"
-                ? "Add your first reusable exercise definition."
-                : "Archived exercises will appear here."
+              ? "Try another search."
+              : "Add your first reusable exercise definition."
           }
           action={
-            status === "active" && !query ? (
+            !query ? (
               <Link
                 href="/exercises/new"
                 className="min-h-11 rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 py-3 font-semibold text-[var(--pf-on-accent)]"
@@ -129,36 +102,8 @@ export default async function ExercisesPage({
   );
 }
 
-function FilterLink({
-  href,
-  selected,
-  children,
-}: {
-  href: string;
-  selected: boolean;
-  children: string;
-}) {
-  return (
-    <Link
-      href={href}
-      aria-current={selected ? "page" : undefined}
-      className={`min-h-11 rounded-[var(--pf-r-pill)] border px-4 py-3 text-sm font-semibold ${
-        selected
-          ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent-strong)]"
-          : "border-[var(--pf-border-control)] text-[var(--pf-text-2)]"
-      }`}
-    >
-      {children}
-    </Link>
-  );
-}
-
-function queryHref(status: "active" | "archived", query: string): string {
-  const params = new URLSearchParams();
-  if (status === "archived") params.set("status", status);
-  if (query) params.set("q", query);
-  const suffix = params.toString();
-  return suffix ? `/exercises?${suffix}` : "/exercises";
+function queryHref(query: string): string {
+  return query ? `/exercises?q=${encodeURIComponent(query)}` : "/exercises";
 }
 
 function first(value: string | string[] | undefined): string {

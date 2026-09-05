@@ -1,18 +1,14 @@
-export type ProgramStatus = "draft" | "active" | "archived";
-export type SplitStatus = "active" | "archived";
-
 export type ProgramSplit = Readonly<{
   id: string;
   programId: string;
   name: string;
   position: number;
-  status: SplitStatus;
 }>;
 
 export type Program = Readonly<{
   id: string;
   name: string;
-  status: ProgramStatus;
+  isCurrent: boolean;
   nextSplitId: string | null;
   splits: readonly ProgramSplit[];
 }>;
@@ -20,7 +16,6 @@ export type Program = Readonly<{
 export type SplitExercisePrescription = Readonly<{
   exerciseId: string;
   exerciseName: string;
-  exerciseStatus: "active" | "archived";
   position: number;
   plannedSets: number;
   minReps: number;

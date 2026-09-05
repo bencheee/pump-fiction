@@ -6,7 +6,7 @@ This is a logical model, not the SQL schema. Local persistence is accepted as Su
 
 ### `exercises`
 
-Persistent exercise definitions: identity, unique active name, base type, persistent note, and active/archived status.
+Persistent exercise definitions: identity, unique name, base type, and persistent note. There is no status; removal is deletion, per [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
 
 ### `exercise_load_modes`
 
@@ -18,11 +18,11 @@ Validation and behavior are canonical in [`exercises.md`](../product/exercises.m
 
 ### `programs`
 
-Name, `draft`/`active`/`archived` status, and the identity of the next split. Exactly one program may be active.
+Name and the identity of the next split. Programs have no status; `app_settings.current_program_id` names the single current program.
 
 ### `splits`
 
-Persistent identity, parent program, name unique within that program, rotation position, and active/archived status.
+Persistent identity, parent program, name unique within that program, and rotation position.
 
 ### `split_exercises`
 
@@ -68,7 +68,7 @@ Program and split fields are absent where they do not apply to a one-time workou
 
 Each exercise selected when starting a one-time workout receives one empty workout-local starter set row without prescription semantics. Split-sourced workouts instead receive exactly the snapshotted planned set count.
 
-Snapshots make old workouts faithful to what was performed even if a source definition is later renamed, edited, reordered, or archived. Retained references allow identity-based statistics across those changes. This separation is accepted in [ADR-0002](../decisions/0002-template-snapshot-history-model.md).
+Snapshots make old workouts faithful to what was performed even if a source definition is later renamed, edited, reordered, or deleted. Retained references allow identity-based statistics across those changes, and become null when the definition is deleted. This separation is accepted in [ADR-0002](../decisions/0002-template-snapshot-history-model.md).
 
 ## Progress
 
@@ -78,7 +78,7 @@ One decimal-kilogram value per local calendar date.
 
 ### `measurement_types`
 
-User-defined name, `cm` unit, and active/archived status.
+User-defined name and `cm` unit.
 
 ### `measurement_entries`
 

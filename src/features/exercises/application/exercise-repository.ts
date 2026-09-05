@@ -1,15 +1,11 @@
-import type {
-  Exercise,
-  ExerciseDefinition,
-  ExerciseStatus,
-} from "../domain/exercise";
+import type { Exercise, ExerciseDefinition } from "../domain/exercise";
 
 export interface ExerciseRepository {
-  list(includeArchived: boolean): Promise<readonly Exercise[]>;
+  list(): Promise<readonly Exercise[]>;
   getById(id: string): Promise<Exercise | null>;
   create(definition: ExerciseDefinition): Promise<Exercise>;
   update(id: string, definition: ExerciseDefinition): Promise<Exercise>;
-  setStatus(id: string, status: ExerciseStatus): Promise<Exercise>;
+  delete(id: string): Promise<void>;
 }
 
 export type ExerciseRepositoryErrorCode =

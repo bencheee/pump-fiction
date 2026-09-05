@@ -14,7 +14,7 @@ Edits to templates affect future workouts only. Workout-local changes never muta
 
 ## Consequences
 
-- History remains faithful after template renames, reordering, edits, or archiving.
+- History remains faithful after template renames, reordering, edits, or deletion; the removal mechanism is deletion, not archiving, as decided in [ADR-0024](0024-deletion-with-preserved-history.md).
 - Identity-based exercise and split statistics remain possible.
 - Some values intentionally exist both in mutable definitions and historical snapshots.
 - Snapshot creation and workout-local additions must be atomic enough to avoid partial historical records.

@@ -27,6 +27,7 @@ ADRs preserve important cross-cutting product, technical, and delivery-governanc
 | [0021](0021-delivery-and-evidence-commit-model.md) | Accepted | One Task delivery commit plus narrow repository-native evidence commits |
 | [0022](0022-versioned-external-design-handoff.md) | Accepted | Versioned external design brief, structured handoff, and fixed-reference fidelity |
 | [0023](0023-simplified-exercise-load-mode-model.md) | Accepted | Implied base load mode plus at most one optional addition; no standalone band type |
+| [0024](0024-deletion-with-preserved-history.md) | Accepted | Deletion replaces archiving; snapshots and optional references keep History intact |
 
 ## Lifecycle
 

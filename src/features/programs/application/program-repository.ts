@@ -11,8 +11,8 @@ export interface ProgramRepository {
   getSplit(id: string): Promise<Split | null>;
   createProgram(definition: ProgramDefinition): Promise<Program>;
   updateProgram(id: string, definition: ProgramDefinition): Promise<Program>;
-  activateProgram(id: string, nextSplitId: string): Promise<Program>;
-  archiveProgram(id: string): Promise<Program>;
+  setCurrentProgram(id: string, nextSplitId: string): Promise<Program>;
+  deleteProgram(id: string): Promise<void>;
   createSplit(programId: string, definition: SplitDefinition): Promise<Split>;
   updateSplit(id: string, definition: SplitDefinition): Promise<Split>;
   reorderSplits(
@@ -24,7 +24,7 @@ export interface ProgramRepository {
     exerciseIds: readonly string[],
   ): Promise<Split>;
   setNextSplit(programId: string, splitId: string): Promise<Program>;
-  archiveSplit(id: string): Promise<Split>;
+  deleteSplit(id: string): Promise<void>;
   advanceAfterProposedCompletion(
     programId: string,
     completedSplitId: string,
@@ -34,8 +34,8 @@ export interface ProgramRepository {
 export type ProgramRepositoryErrorCode =
   | "duplicate_name"
   | "not_found"
-  | "inactive_exercise"
-  | "last_active_split"
+  | "unknown_exercise"
+  | "last_split"
   | "invalid_next_split"
   | "invalid_order"
   | "constraint"
