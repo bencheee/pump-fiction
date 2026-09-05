@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:28:05+02:00`
-- **Updated:** `2026-09-05T21:21:57+02:00`
+- **Updated:** `2026-09-05T21:23:26+02:00`
 - **Started:** `2026-09-05T21:07:30+02:00`
 - **Review started:** `2026-09-05T21:18:30+02:00`
 - **Approval requested:** `2026-09-05T21:19:46+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T21:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a replacement that corrects the two stale component expectations, then request fresh approval for it and for the reset its run needs.
+- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
 
 ## Scope
 
@@ -70,14 +70,14 @@ The finish review keeps its counts but renames them for the new model: recorded 
 - [x] Remove `isConfirmed` from the command contract, its validation, and the optimistic application.
 - [x] Remove both confirmation controls and derive the recorded state in the set row and the finish review — `isSetRecorded` mirrors the database rule, and the exercise card reads `N of M recorded`.
 - [x] Update the finish-review counts and their copy — `Recorded sets` and `Sets left without values`, which the review names instead of blocking the finish.
-- [ ] Extend pgTAP, unit, and component assertions — pgTAP `0001` grows from 16 to 19 assertions, replacing the two confirmation-constraint cases with stored-as-entered plus derived-rule checks, and `0004` asserts the rule through the applied command and the one-time starter set.
+- [x] Extend pgTAP, unit, and component assertions — pgTAP `0001` grows from 16 to 19 assertions, replacing the two confirmation-constraint cases with stored-as-entered plus derived-rule checks, and `0004` asserts the rule through the applied command and the one-time starter set. The replacement corrected two component expectations the first delivery had renamed without re-deriving: the Pull-Up card now reads `1 of 2 recorded`, and the finish review names `Pull-Up set 2` while asserting that the recorded `Pull-Up set 1` is absent.
 - [x] Synchronize canonical documentation and project-management projections.
 - [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Passed on `2026-09-05T21:17:55+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 852 internal links. The generated migration applied with `migration up` against the local database and needed no correction; a repeated declarative sync against a freshly built shadow database reported no schema changes; `supabase db lint --local` reported no schema errors; regenerated types drop `is_confirmed` and add the new function; and `git diff --check` was clean. No feature test ran.
+- Results: Passed again for the replacement on `2026-09-05T21:23:26+02:00`, and earlier for the first delivery on `2026-09-05T21:17:55+02:00`. `npm run check` passed formatting, ESLint, strict TypeScript, the production build, UI asset checksums, Markdown lint, and all 852 internal links. The generated migration applied with `migration up` against the local database and needed no correction; a repeated declarative sync against a freshly built shadow database reported no schema changes; `supabase db lint --local` reported no schema errors; regenerated types drop `is_confirmed` and add the new function; and `git diff --check` was clean. No feature test ran.
 
 ## Test plan and results
 
@@ -96,7 +96,7 @@ The finish review keeps its counts but renames them for the new model: recorded 
 
 - **Delivery commit SHA:** `a64adcc3a1b547ac2af2ec9121c958653323d2f2`
 - **Subject:** `T-029: record a set by its entered values`
-- **Committed scope:** the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
+- **Committed scope:** replacement of the superseded first delivery, carrying all of its changes plus the two corrected component expectations; the declarative schema and its new derived-state function, the new migration, generated types, the active-workout command contract and reducer, `set-entry`, `workout`, the active-workout experience and finish review, pgTAP `0001` and `0004`, the domain, application, component and repository suites, ADR-0027 and the decisions index, `workouts.md`, `history-and-statistics.md`, `mvp-acceptance-criteria.md`, `domain-model.md`, `active-workout-durability.md`, `mobile-ui-foundation.md`, `wireframe-decisions.md`, `local-database-workflow.md`, and this Task
 
 ## Review
 

@@ -256,7 +256,7 @@ describe("Active-workout mobile experience", () => {
       screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
     ).toBeVisible();
     expect(
-      screen.getByText("2 planned × 6–10 reps · 0 of 2 recorded"),
+      screen.getByText("2 planned × 6–10 reps · 1 of 2 recorded"),
     ).toBeVisible();
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
     expect(screen.getByText("22 Aug · 85 kg × 6")).toBeVisible();
@@ -498,7 +498,7 @@ describe("Active-workout mobile experience", () => {
 });
 
 describe("Finish review", () => {
-  it("shows split review metrics with the empty planned sets detail", async () => {
+  it("shows split review metrics and names the sets left without values", async () => {
     const outbox = new FakeOutbox();
     const transport = new FakeTransport();
     render(
@@ -512,7 +512,7 @@ describe("Finish review", () => {
     expect(screen.getByText("Proposed split · active rotation")).toBeVisible();
     expect(screen.getByText("Exercises")).toBeVisible();
     expect(screen.getByText("Recorded sets")).toBeVisible();
-    expect(screen.getByText("Empty planned sets")).toBeVisible();
+    expect(screen.getByText("Sets left without values")).toBeVisible();
     expect(
       screen.getByText(
         "Planned but left without values. These are not saved as performances:",
@@ -520,7 +520,9 @@ describe("Finish review", () => {
     ).toBeVisible();
     expect(screen.getByText("Squat set 2")).toBeVisible();
     expect(screen.getByText("Squat set 3")).toBeVisible();
-    expect(screen.getByText("Pull-Up set 1")).toBeVisible();
+    expect(screen.getByText("Pull-Up set 2")).toBeVisible();
+    // Pull-Up set 1 holds its added weight and reps, so it is recorded.
+    expect(screen.queryByText("Pull-Up set 1")).not.toBeInTheDocument();
     expect(
       screen.getByText(
         "Rotation advances to the next split, because this was the proposed split.",
@@ -572,7 +574,9 @@ describe("Finish review", () => {
     );
 
     expect(screen.getByText("One-time workout · no split")).toBeVisible();
-    expect(screen.queryByText("Empty planned sets")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Sets left without values"),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByText(
         "No planned-set metric: this workout has no prescription, so its set rows are workout-local rather than planned.",
