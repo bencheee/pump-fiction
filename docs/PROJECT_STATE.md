@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Obtain the Owner's confirmation of the aggregate `F-011` result. All seven Tasks are `Done`, the last being `T-025` on approved replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`, which corrected the set-shape constraint that had blocked a live workout. The local database was reset with the Owner's explicit consent during that verification, so it holds no programs, exercises, or history. `F-008` History and Statistics starts only after the confirmation.
+Obtain the Owner's confirmation of the aggregate `F-011` result. All seven Tasks are `Done`, the last being `T-025` on approved replacement `e0fe573dedfe8803032b89be8a50a11805d09e60`, which corrected the set-shape constraint that had blocked a live workout. The local database was reset with the Owner's explicit consent during that verification, so it holds no programs, exercises, or history. Two follow-up Features are recorded in `Next` at the Owner's request: `F-012` removes the stuck-command failure class, and `F-013` stops verification from destroying local data. The Owner confirms their order against `F-008` History and Statistics.
 
 ## Implementation status
 

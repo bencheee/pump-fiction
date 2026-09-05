@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T19:15:14+02:00
+- **Last updated:** 2026-09-05T19:17:58+02:00
 - **Current phase:** Local MVP implementation — `F-011` complete, awaiting the Owner's confirmation before `F-008`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` complete; all seven `F-011` Tasks are `Done`; `F-008` intentionally not started
@@ -12,7 +12,7 @@
 
 ## Immediate next action
 
-Owner confirms the aggregate `F-011` result; `F-008` planning starts only after that confirmation. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Owner confirms the aggregate `F-011` result and the order of `F-012`, `F-013`, and `F-008`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
@@ -21,7 +21,9 @@ Owner confirms the aggregate `F-011` result; `F-008` planning starts only after 
 
 ## Next
 
-- [`F-008`](docs/project/features/F-008-history-and-statistics.md) is the next Feature; it starts after `F-011` is complete.
+1. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout; `T-026` needs the Owner's recovery rule and readiness.
+2. [`F-013`](docs/project/features/F-013-local-verification-data.md) — verification must stop destroying local data; `T-027` needs the Owner's chosen approach and readiness.
+3. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics, after the two corrections above unless the Owner reorders them.
 
 ## Later
 
@@ -49,7 +51,7 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/11 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`7/13 Features Done`)
 - [`F-011`](docs/project/features/F-011-mvp-experience-corrections.md) — MVP Experience Corrections (`7/7 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

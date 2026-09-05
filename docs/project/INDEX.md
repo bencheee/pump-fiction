@@ -7,8 +7,8 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | Type | Next ID |
 | --- | --- |
 | Milestone | `M-002` |
-| Feature | `F-012` |
-| Task | `T-026` |
+| Feature | `F-014` |
+| Task | `T-028` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `7/11 Features Done` | User | `2026-09-05T11:41:11+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `7/13 Features Done` | User | `2026-09-05T19:17:58+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -30,9 +30,11 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-006`](features/F-006-programs-and-splits.md) | `M-001` | Programs and Splits | `Now / 1` | `2/2 Done` | User | `2026-09-03T12:00:56+02:00` | [`features/F-006-programs-and-splits.md`](features/F-006-programs-and-splits.md) |
 | [`F-007`](features/F-007-today-and-active-workout.md) | `M-001` | Today and Active Workout | `Now / 1` | `4/4 Done` | User | `2026-09-05T10:43:18+02:00` | [`features/F-007-today-and-active-workout.md`](features/F-007-today-and-active-workout.md) |
 | [`F-011`](features/F-011-mvp-experience-corrections.md) | `M-001` | MVP Experience Corrections | `Now / 1` | `7/7 Done` | User | `2026-09-05T12:07:13+02:00` | [`features/F-011-mvp-experience-corrections.md`](features/F-011-mvp-experience-corrections.md) |
-| [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 1` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
-| [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 2` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
-| [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
+| [`F-012`](features/F-012-active-workout-command-recovery.md) | `M-001` | Active-Workout Command Recovery | `Next / 1` | `0/1 Done` | User | `2026-09-05T19:17:58+02:00` | [`features/F-012-active-workout-command-recovery.md`](features/F-012-active-workout-command-recovery.md) |
+| [`F-013`](features/F-013-local-verification-data.md) | `M-001` | Local Verification Data | `Next / 2` | `0/1 Done` | User | `2026-09-05T19:17:58+02:00` | [`features/F-013-local-verification-data.md`](features/F-013-local-verification-data.md) |
+| [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Next / 3` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
+| [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Next / 4` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
+| [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 5` | `0/0; breakdown pending` | User | `2026-08-25T16:35:55+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
 
 ## Tasks
 
@@ -63,6 +65,8 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-023`](tasks/T-023-correct-active-workout-screen-details.md) | `F-011` | Correct active-workout screen details | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-05T13:15:59+02:00` | [`tasks/T-023-correct-active-workout-screen-details.md`](tasks/T-023-correct-active-workout-screen-details.md) |
 | [`T-024`](tasks/T-024-keep-primary-navigation-during-workout.md) | `F-011` | Keep primary navigation during an active workout | `Now / 7` | `Done` | Claude Code primary agent | `2026-09-05T13:21:29+02:00` | [`tasks/T-024-keep-primary-navigation-during-workout.md`](tasks/T-024-keep-primary-navigation-during-workout.md) |
 | [`T-025`](tasks/T-025-allow-partial-band-set-entry.md) | `F-011` | Allow partial band set entry | `Now / 8` | `Done` | Claude Code primary agent | `2026-09-05T19:15:14+02:00` | [`tasks/T-025-allow-partial-band-set-entry.md`](tasks/T-025-allow-partial-band-set-entry.md) |
+| [`T-026`](tasks/T-026-recover-from-rejected-command.md) | `F-012` | Recover from a permanently rejected active-workout command | `Next / 1` | `Backlog` | Claude Code primary agent | `2026-09-05T19:17:58+02:00` | [`tasks/T-026-recover-from-rejected-command.md`](tasks/T-026-recover-from-rejected-command.md) |
+| [`T-027`](tasks/T-027-restore-local-data-after-reset.md) | `F-013` | Restore usable local data after a verification reset | `Next / 1` | `Backlog` | Claude Code primary agent | `2026-09-05T19:17:58+02:00` | [`tasks/T-027-restore-local-data-after-reset.md`](tasks/T-027-restore-local-data-after-reset.md) |
 
 ## Templates
 
