@@ -56,8 +56,6 @@ import {
 
 import { formatLastPerformance, formatWorkoutClock } from "./workout-format";
 
-const reopenMarkerPrefix = "pf-active-workout-entered-";
-
 const optionalModeNoun: Readonly<Record<ExerciseLoadMode, string>> = {
   weight: "weight",
   weight_resistance_band: "resistance band",
@@ -102,7 +100,6 @@ export function ActiveWorkoutExperience({
   const [status, setStatus] = useState<ActiveWorkoutSaveStatus>(
     delivery.controller.getStatus(),
   );
-  const [restored, setRestored] = useState(false);
   const [placeholderIds, setPlaceholderIds] = useState<ReadonlySet<string>>(
     new Set(),
   );
@@ -198,15 +195,6 @@ export function ActiveWorkoutExperience({
       () => Promise.resolve(initial),
       applyCommandToWorkout,
     ).then(({ optimistic, pendingCommands }) => {
-      let reopened = false;
-      const marker = `${reopenMarkerPrefix}${initial.id}`;
-      try {
-        reopened = window.sessionStorage.getItem(marker) !== null;
-        if (!reopened) window.sessionStorage.setItem(marker, "1");
-      } catch {
-        // Session storage is a convenience marker only.
-      }
-      if (reopened || pendingCommands.length > 0) setRestored(true);
       if (pendingCommands.length > 0) {
         adoptWorkout(optimistic);
         setPlaceholderIds(
@@ -373,23 +361,6 @@ export function ActiveWorkoutExperience({
       ) : null}
 
       <main className="flex flex-1 flex-col gap-4 px-[var(--pf-gutter)] pt-4">
-        {restored ? (
-          <section
-            aria-label="Restored workout"
-            className="rounded-[var(--pf-r3)] border-l-[3px] border-[var(--pf-accent)] bg-[var(--pf-accent-dim)] p-4"
-          >
-            <p className="flex items-start gap-2 text-[13px] leading-[1.45]">
-              <Icon
-                name="rotate-ccw"
-                size={16}
-                className="mt-0.5 shrink-0 text-[var(--pf-accent-strong)]"
-              />
-              Restored from your last session. Sets, notes, order and
-              accumulated duration were kept.
-            </p>
-          </section>
-        ) : null}
-
         {workout.exercises.map((exercise, index) =>
           placeholderIds.has(exercise.id) ? (
             <PlaceholderExerciseCard
@@ -648,7 +619,7 @@ function ExerciseCard({
       {exercise.persistentNote ? (
         <div className="mt-4 border-l-2 border-[var(--pf-border-strong)] pl-3">
           <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Exercise note · read-only snapshot
+            Exercise note
           </p>
           <p className="mt-1 text-[13px] leading-[1.5] [overflow-wrap:anywhere] text-[var(--pf-text-2)]">
             {exercise.persistentNote}

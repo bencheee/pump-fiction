@@ -53,6 +53,10 @@ Each exercise card shows name, type, targeted sets and rep range, persistent exe
 
 A set shows the fields of its exercise's implied mode. When the definition permits an addition, each set carries one control that applies it or removes it again, named for the addition the definition actually allows, such as **Add resistance band** or **Add weight**. An assisted exercise has a single defined mode and therefore no control. Direction is retained for band modes.
 
+Restoring a workout shows no banner: the restored workout itself is the evidence. The exercise-note heading reads only **Exercise note**, and the note stays read-only.
+
+The finish review keeps **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and the separately confirmed **Discard Workout** together in one sticky action group, so discard stays reachable without scrolling.
+
 The workout uses the focused shell and finish flow defined in [`workouts.md`](../product/workouts.md).
 
 ## History

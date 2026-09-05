@@ -70,7 +70,7 @@ The exact timestamps retained for completed History are described in [`domain-mo
 
 ## Finishing a workout
 
-The finish review shows active duration, exercise count, confirmed-set count, and any empty planned sets. It offers:
+The finish review shows active duration, exercise count, confirmed-set count, and any empty planned sets. Its actions stay together in one sticky group:
 
 - **Complete Workout**;
 - **Save as Incomplete**;

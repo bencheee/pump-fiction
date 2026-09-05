@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:11:36+02:00`
+- **Updated:** `2026-09-05T13:14:07+02:00`
 - **Started:** `2026-09-05T13:11:36+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the three screen corrections as one reviewable commit, then request review.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review.
 
 ## Scope
 
@@ -59,17 +59,17 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 
 ## Execution checklist
 
-- [ ] Remove the restored banner and its now-unused state.
-- [ ] Correct the exercise-note heading.
-- [ ] Move the discard control into the finish sticky action bar.
-- [ ] Update active-workout component tests without running them.
-- [ ] Synchronize canonical documentation and project-management projections.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Remove the restored banner and its now-unused state.
+- [x] Correct the exercise-note heading.
+- [x] Move the discard control into the finish sticky action bar.
+- [x] Update active-workout component tests without running them.
+- [x] Synchronize canonical documentation and project-management projections.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-05T13:14:07+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint, and all 741 internal links. `git diff --check` passed. No feature test ran.
 
 ## Test plan and results
 
@@ -81,9 +81,9 @@ Apply three recorded Owner corrections to the active workout and its finish revi
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-023: correct active-workout screen details`
-- **Committed scope:** Not created
+- **Committed scope:** The active workout without its restored-session banner, state, and session-scoped marker; the shortened `Exercise note` heading; the finish review with its discard control inside a labelled sticky action group; `StickyActionBar` forwarding container attributes so that group can be named; updated component assertions; and the screen, workout, and UI-foundation documentation.
 
 ## Review
 

@@ -470,12 +470,8 @@ describe("Active-workout mobile experience", () => {
       />,
     );
 
-    expect(
-      await screen.findByText(
-        "Restored from your last session. Sets, notes, order and accumulated duration were kept.",
-      ),
-    ).toBeVisible();
-    expect(screen.getByDisplayValue("Pending note")).toBeVisible();
+    expect(await screen.findByDisplayValue("Pending note")).toBeVisible();
+    expect(screen.queryByLabelText("Restored workout")).not.toBeInTheDocument();
     await waitFor(() => {
       expect(transport.last("set_workout_exercise_note").payload).toMatchObject(
         { note: "Pending note" },
@@ -566,7 +562,19 @@ describe("Finish review", () => {
       ),
     ).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Discard Workout" }));
+    const finishActions = within(
+      screen.getByRole("group", { name: "Finish actions" }),
+    );
+    expect(
+      finishActions.getByRole("button", { name: "Complete Workout" }),
+    ).toBeVisible();
+    expect(
+      finishActions.getByRole("button", { name: "Discard Workout" }),
+    ).toBeVisible();
+
+    await user.click(
+      finishActions.getByRole("button", { name: "Discard Workout" }),
+    );
     const dialog = await screen.findByRole("alertdialog", {
       name: "Discard this workout?",
     });

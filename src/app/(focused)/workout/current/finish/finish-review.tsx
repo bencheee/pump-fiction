@@ -257,21 +257,13 @@ export function FinishReview({
             ) : null}
           </ul>
         </section>
-
-        <DestructiveDialog
-          trigger={
-            <Action variant="danger" className="w-full" disabled={submitting}>
-              Discard Workout
-            </Action>
-          }
-          title="Discard this workout?"
-          description="Its entered sets and notes are lost, no History record is created, and rotation is unchanged."
-          confirmLabel="Discard Workout"
-          onConfirm={() => finish("discarded")}
-        />
       </main>
 
-      <StickyActionBar className="z-10">
+      <StickyActionBar
+        role="group"
+        aria-label="Finish actions"
+        className="z-10"
+      >
         <div
           role="status"
           aria-live="polite"
@@ -348,6 +340,17 @@ export function FinishReview({
         >
           Continue Workout
         </Link>
+        <DestructiveDialog
+          trigger={
+            <Action variant="danger" className="w-full" disabled={submitting}>
+              Discard Workout
+            </Action>
+          }
+          title="Discard this workout?"
+          description="Its entered sets and notes are lost, no History record is created, and rotation is unchanged."
+          confirmLabel="Discard Workout"
+          onConfirm={() => finish("discarded")}
+        />
       </StickyActionBar>
     </div>
   );

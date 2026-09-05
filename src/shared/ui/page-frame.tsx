@@ -57,9 +57,11 @@ export function TopBar({
 export function StickyActionBar({
   children,
   className,
+  ...rest
 }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
+      {...rest}
       className={classNames(
         "pf-sticky-action sticky bottom-0 mt-auto flex flex-col gap-2 bg-[linear-gradient(to_bottom,transparent_0,var(--pf-bg-canvas)_18px)] px-[var(--pf-gutter)] pt-7 pb-[calc(var(--pf-s3)+var(--pf-bottom-buffer)+env(safe-area-inset-bottom))]",
         className,
