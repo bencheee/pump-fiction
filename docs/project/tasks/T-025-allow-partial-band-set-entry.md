@@ -1,7 +1,7 @@
 # T-025 — Allow partial band set entry
 
 - **Feature:** `F-011`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 8
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:03:35+02:00`
-- **Updated:** `2026-09-05T19:07:51+02:00`
+- **Updated:** `2026-09-05T19:10:30+02:00`
 - **Started:** `2026-09-05T19:03:35+02:00`
 - **Review started:** `2026-09-05T19:07:51+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-05T19:10:30+02:00`
+- **Approved:** `2026-09-05T19:10:30+02:00`
+- **Testing started:** `2026-09-05T19:10:30+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** User reviews the exact delivery commit and decides on approval; pgTAP verification stays blocked until then.
+- **Next action:** Run the authorized clean reset and pgTAP verification and record its results.
 
 ## Scope
 
@@ -81,7 +81,7 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** pgTAP assertions for a partial band set and for a confirmed band set without a strength, plus the existing clean-reset suites; must not run before Owner approval of the exact commit
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `75fd3d78d71c599cfcd54026080e51c79fade3af`
 - **Results:** Not run
 
 ## Delivery commit
@@ -93,16 +93,16 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-05T19:10:30+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** None recorded; the User reviewed the reproduced cause and the corrected constraints.
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `75fd3d78d71c599cfcd54026080e51c79fade3af`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-05T19:10:30+02:00`
+- **Approval note:** The User answered `odobreno` to the request to approve this exact commit and then chose `Resetiraj odmah` when told that the pgTAP gate requires a clean reset that destroys the live workout and every other local row.
 
 ## Definition of Ready
 
@@ -138,3 +138,5 @@ Diagnosis evidence, all inside transactions that were rolled back: the Owner's e
 | `2026-09-05T19:03:35+02:00` | User / Owner | `Backlog` | `Ready` | Reported the blocking defect and asked what was happening |
 | `2026-09-05T19:03:35+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the constraint correction |
 | `2026-09-05T19:07:51+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `75fd3d78d71c599cfcd54026080e51c79fade3af` with static checks passed and no feature test run |
+| `2026-09-05T19:10:30+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit and the destructive clean reset the pgTAP gate requires |
+| `2026-09-05T19:10:30+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the clean reset and pgTAP against `75fd3d78d71c599cfcd54026080e51c79fade3af` |
