@@ -1,7 +1,7 @@
 # T-016 — Build active-workout mobile experience
 
 - **Feature:** `F-007`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-03T12:03:59+02:00`
-- **Updated:** `2026-09-05T10:13:09+02:00`
+- **Updated:** `2026-09-05T10:14:35+02:00`
 - **Started:** `2026-09-04T15:02:00+02:00`
-- **Review started:** `2026-09-04T16:11:24+02:00` for replacement
+- **Review started:** `2026-09-05T10:14:35+02:00` for second replacement
 - **Approval requested:** `2026-09-04T16:23:50+02:00` for replacement
 - **Approved:** `2026-09-04T16:23:50+02:00` for replacement
 - **Testing started:** `2026-09-05T10:07:03+02:00` for replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the second test-only replacement delivery, record its exact SHA, and request fresh User approval before restarting the complete test plan.
+- **Next action:** User reviews exact second test-only replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`; do not restart any feature test before fresh explicit approval.
 
 ## Scope
 
@@ -77,16 +77,16 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `c751e90fbd17f810c8a5890a7e15883e4dfe69ff` (first replacement; second test-only replacement required)
-- **Subject:** `T-016: correct workout position renumbering`
-- **Committed scope:** Preserve the original S10–S12 delivery — phone-only active/paused/restored workout with live timer, per-mode set rows, mirrored confirmation validation, mode chooser, populated-removal confirmation, explicit reordering, auto-saved notes, S11 multi-select add-exercise sheet, S12 source-aware finish review, and the local command reducer with conflict rebase — while correcting the inherited T-014 persistence renumbering: the declarative schema and a reviewed migration replace the negative-position updates with the accepted offset-above-maximum technique for `remove_set`, `remove_exercise`, and `reorder_exercises`, with a new prepared pgTAP regression; lifecycle documentation is synchronized.
+- **Delivery commit SHA:** `441a87046409d2970de72e5c3f9c1448c4423a4d` (second test-only replacement; supersedes both prior deliveries)
+- **Subject:** `T-016: correct singular review-metric queries`
+- **Committed scope:** Preserve the complete S10–S12 implementation and the first replacement's corrective renumbering migration while correcting only the prepared S12 browser assertions — the `Confirmed sets` and `Empty planned sets` metric queries now use exact-text matching so the intentional completion-explanation bullet no longer collides; lifecycle documentation is synchronized.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Pending for second replacement
-- **Outcome:** First-replacement approval invalidated; second test-only replacement pending
-- **Findings:** The prepared S12 browser assertion used a singular substring query for the `Confirmed sets` metric that also matches the intentional completion-explanation bullet.
+- **Reviewed at:** Pending
+- **Outcome:** Pending
+- **Findings:** Pending
 
 ## Approval
 
@@ -142,3 +142,4 @@ Implement phone-only S10 active/paused/restored workout, S11 add-exercise sheet,
 | `2026-09-05T10:07:03+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete verification in a fresh isolated worktree at the exact approved replacement |
 | `2026-09-05T10:11:16+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | Unit 9/9, component 11/11, and pgTAP 53/53 passed and the corrected renumbering carried the full Chromium S10 flow, before a test-only substring query on the `Confirmed sets` metric hit the intentional completion bullet; browser tests stopped and the first-replacement approval is invalidated |
 | `2026-09-05T10:13:09+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Corrected only the prepared S12 metric queries to exact-text matching so the intentional completion bullet no longer collides; all static checks passed without rerunning feature tests |
+| `2026-09-05T10:14:35+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created second test-only replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`; static checks passed and the complete feature-test plan remains unexecuted for the replacement |

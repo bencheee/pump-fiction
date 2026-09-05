@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T10:13:09+02:00
+- **Last updated:** 2026-09-05T10:14:35+02:00
 - **Current phase:** Local MVP Today and Active Workout implementation
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004`, `F-005`, and `F-006` complete; `F-007` active (`3/4 Tasks Done`)
@@ -8,15 +8,15 @@
 
 ## Current focus
 
-[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Progress`: the S12 metric queries are corrected to exact-text matching and the second test-only replacement delivery is being created.
+[`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) is `In Review` at exact second test-only replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`.
 
 ## Immediate next action
 
-Create the second T-016 test-only replacement delivery, record its exact SHA, and request fresh User approval before the complete test plan restarts.
+User reviews and explicitly approves exact T-016 second replacement `441a87046409d2970de72e5c3f9c1448c4423a4d`; only then does the complete unit/component, pgTAP, and serialized Chromium/WebKit plan restart from the beginning.
 
 ## Now
 
-- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Progress` — Executor: Claude Code primary agent — updated `2026-09-05T10:13:09+02:00` — metric queries corrected; second test-only replacement delivery pending.
+- [`T-016`](docs/project/tasks/T-016-build-active-workout-mobile-experience.md) — `In Review` — Executor: Claude Code primary agent — updated `2026-09-05T10:14:35+02:00` — second test-only replacement delivered; awaits fresh User review and approval.
 
 ## Next
 
