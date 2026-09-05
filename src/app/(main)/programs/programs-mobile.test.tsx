@@ -101,11 +101,11 @@ describe("Programs mobile forms", () => {
   beforeEach(() => vi.clearAllMocks());
   afterEach(cleanup);
 
-  it("validates a draft name before creating it", async () => {
+  it("validates a program name before creating it", async () => {
     const user = userEvent.setup();
     renderForm(<ProgramForm />);
 
-    await user.click(screen.getByRole("button", { name: "Save as Draft" }));
+    await user.click(screen.getByRole("button", { name: "Save Program" }));
 
     expect(screen.getByText("Enter a name for this program.")).toBeVisible();
     expect(actions.createProgram).not.toHaveBeenCalled();
@@ -203,7 +203,7 @@ describe("Programs mobile forms", () => {
     renderForm(<ProgramForm />);
 
     await user.type(screen.getByLabelText("Program name"), "Hypertrophy");
-    await user.click(screen.getByRole("button", { name: "Save as Draft" }));
+    await user.click(screen.getByRole("button", { name: "Save Program" }));
 
     expect(router.replace).toHaveBeenCalledWith("/programs");
     expect(screen.getByText("Program saved.")).toBeVisible();

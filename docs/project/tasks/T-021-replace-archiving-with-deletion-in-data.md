@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T13:03:51+02:00`
+- **Updated:** `2026-09-05T13:04:35+02:00`
 - **Started:** `2026-09-05T12:42:09+02:00`
 - **Review started:** `2026-09-05T13:00:15+02:00`
 - **Approval requested:** `2026-09-05T13:02:05+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T13:02:05+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a test-only replacement commit that queries the renamed program save action, then request fresh approval; the previous approval and its test authorization are void.
+- **Next action:** Record the replacement commit SHA through an evidence commit and request fresh approval before the complete verification restarts.
 
 ## Scope
 
@@ -88,7 +88,7 @@ Screen changes absorbed from `T-022`:
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, generated-type consistency, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Passed on `2026-09-05T12:59:56+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint, and all 742 internal links. The generated migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types match the committed file, and `git diff --check` passed. Applying the migration first required deleting one leftover archived integration-test fixture whose name duplicated an active row; that is local scratch data, not committed content. No feature test ran.
+- Results: Re-run for the test-only replacement on `2026-09-05T13:04:35+02:00` and passed again; originally passed on `2026-09-05T12:59:56+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Supabase CLI `2.116.0` against local PostgreSQL `17`. `npm run check` passed Prettier, ESLint, strict TypeScript, the 19-route production build, UI asset checksums, Markdown lint, and all 742 internal links. The generated migration applied to the local database, a repeated declarative sync reported no schema changes against a freshly rebuilt shadow database, `supabase db lint` reported no schema errors, regenerated types match the committed file, and `git diff --check` passed. Applying the migration first required deleting one leftover archived integration-test fixture whose name duplicated an active row; that is local scratch data, not committed content. No feature test ran.
 
 ## Test plan and results
 
