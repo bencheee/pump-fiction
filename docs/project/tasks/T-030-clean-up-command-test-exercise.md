@@ -1,7 +1,7 @@
 # T-030 — Delete the exercise the command repository test creates
 
 - **Feature:** `F-013`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:17:59+02:00`
+- **Updated:** `2026-09-05T20:18:41+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
 - **Approval requested:** `2026-09-05T20:15:12+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T20:15:12+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
+- **Next action:** Reviewer checks `ae1870380a0657d71846b0c7eb9566c2b979edf7`; its run needs the Owner's approval of that SHA and of the clean reset the precondition requires.
 
 ## Scope
 
@@ -77,7 +77,7 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `cfb8ee5fa42e8655553809a159bc422502737069`
+- **Delivery commit SHA:** `ae1870380a0657d71846b0c7eb9566c2b979edf7` — replacement; it supersedes the first delivery `cfb8ee5fa42e8655553809a159bc422502737069`, whose test cleanup it carries unchanged
 - **Subject:** `T-030: delete the exercise the command repository test creates`
 - **Committed scope:** `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts`, `docs/architecture/local-database-workflow.md`, `README.md`, and this Task
 

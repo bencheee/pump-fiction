@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T20:16:37+02:00
+- **Last updated:** 2026-09-05T20:18:41+02:00
 - **Current phase:** Local MVP implementation — `T-027` verified; awaiting the Owner's `F-013` confirmation before `F-014`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` and `F-011` complete; `T-027` verified under `F-013` with `T-030` recorded; `F-012` and `F-014` queued in `Next`; `F-008` intentionally not started
@@ -13,12 +13,12 @@
 
 ## Immediate next action
 
-Deliver the `T-030` replacement that records the repository-suite precondition, then get fresh approval for it and for the reset its run needs. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Owner approves replacement `ae1870380a0657d71846b0c7eb9566c2b979edf7` and the clean reset its run needs; that closes `T-030` and `F-013`, and `F-014` starts with `T-028`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
 - [`F-013`](docs/project/features/F-013-local-verification-data.md) — Local Verification Data (`1/2 Tasks Done`) — awaiting the Owner's confirmation of the aggregate result
-  - [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) — `In Progress` — Claude Code primary agent — `2026-09-05T20:16:37+02:00` — the authorized run failed on the resumable-workout precondition; deliver a replacement that records it
+  - [`T-030`](docs/project/tasks/T-030-clean-up-command-test-exercise.md) — `In Review` — Claude Code primary agent — `2026-09-05T20:18:41+02:00` — review replacement `ae1870380a0657d71846b0c7eb9566c2b979edf7`; its run needs approval of that SHA and of a clean reset
   - [`T-018`](docs/project/tasks/T-018-return-to-parent-screen-after-saving.md) — `Testing` — Claude Code primary agent — `2026-09-05T12:06:25+02:00` — run authorized tests for `613dae3da605c329e22e07a82a7b9d1439c0320b` (corrections 1 and 4)
 
 ## Next
