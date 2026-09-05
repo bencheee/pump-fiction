@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:31:50+02:00`
-- **Progress:** `2/7 required Tasks Done`
+- **Updated:** `2026-09-05T12:39:28+02:00`
+- **Progress:** `3/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -53,7 +53,7 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 
 - `T-018` — Return to the parent screen after saving (`Done`)
 - `T-019` — Simplify the exercise load-mode model (`Done`)
-- `T-020` — Derive per-set load from the exercise definition
+- `T-020` — Derive per-set load from the exercise definition (`Done`)
 - `T-021` — Replace archiving with deletion in data and operations
 - `T-022` — Replace archiving in the mobile experience
 - `T-023` — Correct active-workout screen details
@@ -95,3 +95,4 @@ Recorded on `2026-09-05` in answer to the readiness questions for this Feature:
 | `2026-09-05T11:54:40+02:00` | User / Owner | Confirmed `F-011` readiness and started `T-018` | Directed execution of the recorded corrections before `F-008` |
 | `2026-09-05T12:07:13+02:00` | Claude Code primary agent / Executor | Completed `T-018`; `F-011` advances to `1/7` | Owner corrections 1 and 4 are delivered, approved, and verified |
 | `2026-09-05T12:31:50+02:00` | Claude Code primary agent / Executor | Completed `T-019`; `F-011` advances to `2/7` | Owner correction 2 is delivered, approved, and verified, and `ADR-0023` is accepted |
+| `2026-09-05T12:39:28+02:00` | Claude Code primary agent / Executor | Completed `T-020`; `F-011` advances to `3/7` | Owner correction 7 is delivered, approved, and verified |

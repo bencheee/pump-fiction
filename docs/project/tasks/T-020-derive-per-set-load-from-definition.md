@@ -1,7 +1,7 @@
 # T-020 — Derive per-set load from the exercise definition
 
 - **Feature:** `F-011`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T12:39:15+02:00`
+- **Updated:** `2026-09-05T12:39:28+02:00`
 - **Started:** `2026-09-05T12:33:15+02:00`
 - **Review started:** `2026-09-05T12:36:44+02:00`
 - **Approval requested:** `2026-09-05T12:39:15+02:00`
 - **Approved:** `2026-09-05T12:39:15+02:00`
 - **Testing started:** `2026-09-05T12:39:15+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-05T12:39:28+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized component verification against the approved commit and record its results.
+- **Next action:** None; Task complete. Continue `F-011` with `T-021`.
 
 ## Scope
 
@@ -41,12 +41,12 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 
 ## Acceptance criteria
 
-- [ ] No set row renders a load-mode dropdown or mode sheet.
-- [ ] A weights set shows kg and reps, plus the resistance-band control only when the snapshot permits it.
-- [ ] A bodyweight set shows reps, plus a single control that applies exactly the modifier its snapshot permits.
-- [ ] An assisted set shows only the fields of its single defined mode.
-- [ ] Applying and removing a modifier updates only that set, keeps reps, clears fields that do not carry over, and returns the set to unconfirmed.
-- [ ] `MVP-WRK-003` and `workouts.md` describe set entry as definition-derived.
+- [x] No set row renders a load-mode dropdown or mode sheet.
+- [x] A weights set shows kg and reps, plus the resistance-band control only when the snapshot permits it.
+- [x] A bodyweight set shows reps, plus a single control that applies exactly the modifier its snapshot permits.
+- [x] An assisted set shows only the fields of its single defined mode.
+- [x] Applying and removing a modifier updates only that set, keeps reps, clears fields that do not carry over, and returns the set to unconfirmed.
+- [x] `MVP-WRK-003` and `workouts.md` describe set entry as definition-derived.
 
 ## Traceability
 
@@ -84,7 +84,7 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 - **No-test reason:** Not applicable
 - **Planned tests:** active-workout component scenarios for each base type, including applying and undoing a modifier; must not run before Owner approval of the exact commit
 - **Authorized commit:** `c48cbdcaf0bc348888ef2e1eff7193269a6f049c`
-- **Results:** Not run
+- **Results:** Passed against exact approved commit `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` on `2026-09-05T12:39:28+02:00` with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. The unit and component suites passed 64/64 across 13 files and the shared UI suites passed 4/4. The active-workout scenarios cover the absent mode control, removing the addition from a bodyweight set while keeping its reps and naming the cleared field, applying the addition to one weights set only with its band chip group appearing and the other two sets unchanged, and the unchanged confirmation, removal, reorder, note, timer, and restore behavior.
 
 ## Delivery commit
 
@@ -122,15 +122,15 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -142,3 +142,4 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 | `2026-09-05T12:36:44+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` with static checks passed and no feature test run |
 | `2026-09-05T12:39:15+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact commit |
 | `2026-09-05T12:39:15+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Running the authorized component scenarios against `c48cbdcaf0bc348888ef2e1eff7193269a6f049c` |
+| `2026-09-05T12:39:28+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Authorized unit and component suites passed 64/64 and shared UI 4/4 against the approved commit |
