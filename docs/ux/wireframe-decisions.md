@@ -75,6 +75,10 @@ Editing is a separate screen. It corrects the date, start, finish, set values, a
 
 Provide a searchable list with latest-performance summaries. Detail provides PR summary, metric selector, time-range selector, chart, performance list, workout-specific notes, and workout links.
 
+Search filters the loaded list in the browser rather than per keystroke on the server. An exercise whose definition was deleted stays in the list under a marker rather than disappearing.
+
+The detail groups personal records by comparison category, one panel per category, and never merges a band strength or direction with another. A record whose progress runs downwards, such as assistance, says so in words beside its value and reverses its chart axis, so the direction never rests on color or on the reader's assumption. Every chart is accompanied by a sentence summarising the series and an expandable list of its values. Performances from incomplete workouts appear in the list under the same explanation the workout detail gives.
+
 ### Splits
 
 Provide a program filter and split list with workout count and average duration. Detail provides average/shortest/longest duration, duration chart, and workout list.

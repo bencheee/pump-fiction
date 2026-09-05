@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T00:46:12+02:00`
+- **Updated:** `2026-09-06T00:56:00+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -74,31 +74,31 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 
 ## Execution checklist
 
-- [ ] Implement `S15` with client-side search, the deleted-definition marker, and empty and no-results states.
-- [ ] Implement `S16` PR card groups, latest performance, and the performance list with workout links and exclusion markers.
-- [ ] Implement the metric and range selectors and the route-local Recharts component with textual summary and accessible data list, keeping calculations out of presentation.
-- [ ] Wire the not-found boundary and the subsection navigation state.
-- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 8 (`S15` to `S16` with chart and list) with structural captures; do not run them.
-- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Implement `S15` with client-side search, the deleted-definition marker, and empty and no-results states.
+- [x] Implement `S16` PR card groups, latest performance, and the performance list with workout links and exclusion markers.
+- [x] Implement the metric and range selectors and the route-local Recharts component with textual summary and accessible data list, keeping calculations out of presentation. The component receives a finished series and derives nothing; changing a selector asks the server for the next series.
+- [x] Wire the not-found boundary and the subsection navigation state. The page resolves the configured time zone before reading, because every trailing range ends on that local date.
+- [x] Prepare component tests and a browser scenario for critical flow 8 with structural captures; do not run them. The component suite stubs the chart, because Recharts needs a laid-out container that jsdom does not provide and the browser scenario is where the chart itself is exercised.
+- [x] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its route, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T00:56:00+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency rules, strict TypeScript, the Next.js `16.3.3` production build with `/history/exercises` and `/history/exercises/[id]` as dynamic routes, the asset checksums, Markdown lint, and every internal link; `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval of the exact delivery commit: the scoped component suite (`S15` search and markers; `S16` PR groups, selectors, summary and list synchronization, exclusion markers) and the serialized one-worker Chromium and WebKit phone scenario covering `S15` to `S16`, metric and range changes, workout links, reflow, and structural captures. Must not run before Owner approval of the exact commit.
+- **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-034: build Exercise History screens`
-- **Committed scope:** Not created
+- **Committed scope:** `S15` with its loading state and client-side search; `S16` with its loading state, category record panels, metric and range selectors, series summary, accessible value list, and performance list; the route-local Recharts progress chart; the prepared component suite and browser scenario; and the mobile UI foundation and wireframe decisions
 
 ## Review
 
