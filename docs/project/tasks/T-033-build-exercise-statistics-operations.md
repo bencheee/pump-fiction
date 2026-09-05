@@ -1,7 +1,7 @@
 # T-033 — Build exercise statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T00:41:52+02:00`
+- **Updated:** `2026-09-06T00:46:12+02:00`
 - **Started:** `2026-09-05T23:24:46+02:00`
 - **Review started:** `2026-09-05T23:43:49+02:00` for the replacement
 - **Approval requested:** `2026-09-06T00:41:52+02:00` for the replacement
 - **Approved:** `2026-09-06T00:41:52+02:00` for the replacement
 - **Testing started:** `2026-09-06T00:41:52+02:00` for the replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T00:46:12+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11`.
+- **Next action:** None; `T-033` is `Done`. `F-008` continues with `T-034`.
 
 ## Scope
 
@@ -47,12 +47,12 @@ Queries:
 
 ## Acceptance criteria
 
-- [ ] A set from an incomplete workout, or a set that is not recorded, never reaches a PR, chart point, or latest performance; a set from a completed one-time workout does.
-- [ ] Every PR listed in the product document is derived per category with the correct tie handling, and no derivation compares across band direction or strength or converts a band to kilograms.
-- [ ] Lower assistance kilograms ranks as progress, and the series carries that direction so presentation never guesses.
-- [ ] Chart series contain only neutral serializable points and metadata, are correct at each range boundary in the configured time zone, and expose the metric set meaningful to the exercise's snapshot type.
-- [ ] The exercise list contains an exercise whose definition was deleted, marked as no longer in the library, and its detail still combines every performance by identity with a link to each workout.
-- [ ] Unit tests cover the PR matrix per mode family, the eligibility filter, band separation, range boundaries, and deleted-identity retention; pgTAP and repository tests cover the read functions; none is executed.
+- [x] A set from an incomplete workout, or a set that is not recorded, never reaches a PR, chart point, or latest performance; a set from a completed one-time workout does.
+- [x] Every PR listed in the product document is derived per category with the correct tie handling, and no derivation compares across band direction or strength or converts a band to kilograms.
+- [x] Lower assistance kilograms ranks as progress, and the series carries that direction so presentation never guesses.
+- [x] Chart series contain only neutral serializable points and metadata, are correct at each range boundary in the configured time zone, and expose the metric set meaningful to the exercise's snapshot type.
+- [x] The exercise list contains an exercise whose definition was deleted, marked as no longer in the library, and its detail still combines every performance by identity with a link to each workout.
+- [x] The unit tests covering the PR matrix per mode family, the eligibility filter, band separation, range boundaries, and deleted-identity retention passed, as did the pgTAP and repository tests over the read functions.
 
 ## Traceability
 
@@ -96,6 +96,10 @@ Queries:
 
   `npm run test:unit` passed 115 of 117 and failed two assertions in the new domain suite, both mine and both arithmetic. The trailing week window ends on the local date and reaches back six days, so its first day is `2026-08-30`, and the fixture workout dated exactly `2026-08-30` falls inside it: the suite expected one point and the rule correctly produced two. The volume assertion then read the first point of that same window, which is the earlier workout rather than the one it described. The derivation is right and the expectations are wrong. The approval is invalidated and `npm run db:restore` did not run; the local database is on the seed baseline.
 
+  A first attempt at the replacement on `2026-09-06T00:43:00+02:00` reached no step: Docker had stopped, so the local stack was down and every database-backed command failed to connect. Nothing about the delivery was exercised and the approval stood, so the plan simply restarted after Docker and the stack were started again. The failed `db:types` truncated the generated types inside that disposable worktree only; the repository copy was untouched.
+
+  Second verification, against the same exact approved replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11` on `2026-09-06T00:46:12+02:00` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`: **the complete plan passed**. `npm ci` installed 653 packages with no vulnerabilities; `npm run test:unit` passed **118/118 across 16 files**, up from 99 by the statistics suite; `npm run db:snapshot` saved the local data; `supabase db reset` applied all 21 migrations and the seed; `npm run test:db` passed **124/124 across seven suites**, including the new `0007_exercise_statistics` 12/12 covering the identity-grouped list, the deleted-definition marker, the latest performance skipping an incomplete workout, and the performances of a deleted identity; `npm run test:repository` passed **6/6**; regenerated types matched the committed file; and `npm run db:restore` reloaded the snapshot faithfully.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `d1f15d90151d3a7f43786da52dd3c8affc633a11` (test-only replacement; supersedes `bf787976b69602ed4358eb79f053d48486c3d30e`)
@@ -133,15 +137,15 @@ Queries:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -160,3 +164,4 @@ Queries:
 | `2026-09-06T00:41:52+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact replacement with no further findings |
 | `2026-09-06T00:41:52+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11` with `potvrda` |
 | `2026-09-06T00:41:52+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
+| `2026-09-06T00:46:12+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed: unit 118/118, pgTAP 124/124, repository 6/6, matching generated types, and a faithful restore |
