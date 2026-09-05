@@ -26,6 +26,15 @@ describe("SupabaseProgramRepository", () => {
     const suffix = randomUUID();
     const createdProgramIds: string[] = [];
     const createdExerciseIds: string[] = [];
+    // The seeded baseline points at its own program; a verification run must
+    // not leave the local application without a current program.
+    const seededCurrentProgramId = (
+      await client
+        .from("app_settings")
+        .select("current_program_id")
+        .eq("id", 1)
+        .maybeSingle()
+    ).data?.current_program_id;
 
     try {
       const press = await exercises.create({
@@ -133,6 +142,12 @@ describe("SupabaseProgramRepository", () => {
         .eq("id", 1);
       await client.from("programs").delete().in("id", createdProgramIds);
       await client.from("exercises").delete().in("id", createdExerciseIds);
+      if (seededCurrentProgramId) {
+        await client
+          .from("app_settings")
+          .update({ current_program_id: seededCurrentProgramId })
+          .eq("id", 1);
+      }
     }
   });
 });

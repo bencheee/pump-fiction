@@ -28,6 +28,15 @@ describe("SupabaseWorkoutRepository", () => {
     let programId: string | null = null;
     let exerciseId: string | null = null;
     const workoutIds: string[] = [];
+    // The seeded baseline points at its own program; a verification run must
+    // not leave the local application without a current program.
+    const seededCurrentProgramId = (
+      await client
+        .from("app_settings")
+        .select("current_program_id")
+        .eq("id", 1)
+        .maybeSingle()
+    ).data?.current_program_id;
 
     try {
       const exercise = await exercises.create({
@@ -196,6 +205,12 @@ describe("SupabaseWorkoutRepository", () => {
       }
       if (exerciseId)
         await client.from("exercises").delete().eq("id", exerciseId);
+      if (seededCurrentProgramId) {
+        await client
+          .from("app_settings")
+          .update({ current_program_id: seededCurrentProgramId })
+          .eq("id", 1);
+      }
     }
   });
 });

@@ -12,6 +12,9 @@ playwright-report/
 test-results/
 *.tsbuildinfo
 
+# Local database snapshots taken around an approval-gated verification reset
+supabase/snapshots/
+
 # Local editor and operating-system files
 .DS_Store
 *.code-workspace

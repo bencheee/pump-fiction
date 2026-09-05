@@ -54,7 +54,11 @@ The local Supabase stack requires Docker. Schema and migration work follows [`do
 npm run db:start
 npm run db:types
 npm run db:stop
+npm run db:snapshot
+npm run db:restore
 ```
+
+A reset applies the committed `supabase/seed.sql` baseline, so the local application stays usable without manual re-entry. `npm run db:snapshot` and `npm run db:restore` carry your own local data across a reset; snapshots are written to the Git-ignored `supabase/snapshots/`.
 
 Database reset and `npm run test:db` are approval-gated verification commands and are intentionally excluded from `npm run check`.
 

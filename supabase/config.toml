@@ -64,7 +64,9 @@ schema_paths = ["./schemas/*.sql"]
 
 [db.seed]
 # If enabled, seeds the database after migrations during a db reset.
-enabled = false
+# T-027: the approval-gated reset must land on a usable baseline, not an empty
+# database. The seed creates no workout, so pgTAP is unaffected.
+enabled = true
 # Specifies an ordered list of seed files to load during db reset.
 # Supports glob patterns relative to supabase directory: "./seeds/*.sql"
 sql_paths = ["./seed.sql"]

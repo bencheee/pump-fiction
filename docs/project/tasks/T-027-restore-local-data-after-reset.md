@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:42:31+02:00`
+- **Updated:** `2026-09-05T19:50:03+02:00`
 - **Started:** `2026-09-05T19:42:31+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the seed, the snapshot/restore pair, and their documentation in one reviewable commit.
+- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset, pgTAP, and snapshot round trip stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -28,6 +28,8 @@ Approach confirmed by the Owner on `2026-09-05`, choosing both mechanisms with t
 - a committed `supabase/seed.sql` that the CLI applies on every reset, giving a small baseline of exercises, one program with its splits, and no workout history, so the application is immediately usable;
 - an `npm run db:snapshot` and `npm run db:restore` pair that dumps and reloads the Owner's own `public` data around a verification, with the dump ignored by git;
 - the seed as the fallback whenever no snapshot exists.
+
+Delivery added one narrow item the recorded approach implies: the two repository integration tests moved `app_settings.current_program_id` and left it null, which emptied Today after every authorized verification even when the seed or a snapshot had supplied a program. They now put the pointer back.
 
 The verification gate itself does not change: a clean reset stays required before pgTAP, and testing still needs the Owner's approval of the exact commit.
 
@@ -60,19 +62,20 @@ The verification gate itself does not change: a clean reset stays required befor
 ## Documentation impact
 
 - Documents to update: the local database workflow with the seed and snapshot commands, the README prerequisites if commands change, this Task, `F-013`, registry, dashboard, and project state
+- Updated in delivery: [`../../architecture/local-database-workflow.md`](../../architecture/local-database-workflow.md) gained a baseline-seed section, a snapshot-and-restore section, and a note that the verification gate now ends on the seed and that repository tests restore the current-program pointer; [`../../../README.md`](../../../README.md) lists the two new commands; this Task carries the delivery record
 - Documentation that should remain unchanged: the verification gate, migration workflow, and schema guidance
 
 ## Execution checklist
 
-- [ ] Add the baseline seed and confirm the CLI applies it on reset.
-- [ ] Add the snapshot and restore scripts and ignore their output.
-- [ ] Document both in the database workflow.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Add the baseline seed and confirm the CLI applies it on reset — `supabase/seed.sql` with `[db.seed] enabled = true` in `supabase/config.toml`; the CLI applying it is verified only by the authorized reset.
+- [x] Add the snapshot and restore scripts and ignore their output — `scripts/db-snapshot.mjs`, `scripts/db-restore.mjs`, and `scripts/local-database.mjs` behind `npm run db:snapshot` and `npm run db:restore`, with `supabase/snapshots/` ignored.
+- [x] Document both in the database workflow — new seed and snapshot sections plus the README command list.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, database lint, declarative-schema convergence, documentation links, and `git diff --check`
-- Results: Not run
+- Results: `npm run check` passed, covering formatting, ESLint, strict TypeScript, the production build, the UI asset manifest, Markdown lint, and 816 internal links; `supabase db lint --local` reported no schema errors; `git diff --check` reported no whitespace errors. Declarative-schema convergence does not apply because this Task changes no schema, migration, or generated type. The seed was parsed once inside a rolled-back transaction, which compiled the whole block and left the local data untouched; its guard skipped the body, so no seed statement was executed and the baseline itself is unverified until the authorized reset.
 
 ## Test plan and results
 
@@ -86,7 +89,7 @@ The verification gate itself does not change: a clean reset stays required befor
 
 - **Delivery commit SHA:** Not created
 - **Subject:** `T-027: restore usable local data after a verification reset`
-- **Committed scope:** Not created
+- **Committed scope:** `supabase/seed.sql`, `supabase/config.toml`, `scripts/db-snapshot.mjs`, `scripts/db-restore.mjs`, `scripts/local-database.mjs`, `package.json`, `.gitignore`, the two repository integration tests, `docs/architecture/local-database-workflow.md`, `README.md`, and this Task
 
 ## Review
 

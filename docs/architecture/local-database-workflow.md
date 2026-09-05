@@ -68,6 +68,33 @@ npm run db:stop
 
 Supabase CLI `2.116.0` no longer uses `[db.migrations].schema_paths` as the baseline for the legacy `db diff` command. Use `db schema declarative sync`; `schema_paths` still declares the ordered schema tree in `supabase/config.toml`.
 
+## Local baseline seed
+
+`supabase/seed.sql` is a committed baseline that the CLI applies at the end of every `supabase db reset`, enabled through `[db.seed]` in `supabase/config.toml`. Without it the approval-gated reset leaves an empty database, and the application cannot be used until every exercise, program, and split is entered again by hand.
+
+The seed writes through `create_exercise_definition`, `create_program`, `create_split_definition`, and `set_current_program`, so the deferred definition and current-program constraints are satisfied exactly as an application write satisfies them. It creates ten exercises, one program with three splits, and a current-program pointer. It creates no workout and no history, so Today, History, statistics, and rotation start empty.
+
+Two rules keep the seed compatible with verification. It never reuses a name that a pgTAP suite looks up by name, because those suites resolve fixtures such as the `Push`, `Next`, and `Full` splits with unfiltered name queries that a duplicate would make ambiguous. It also creates no workout row, because the suites assert exact `workout_exercises` and `workout_sets` counts and the schema allows only one resumable workout. Extending the seed keeps both rules.
+
+The seed skips itself when the database already holds exercises or programs, so applying it twice changes nothing.
+
+## Snapshot and restore
+
+The seed restores a usable baseline, not the Owner's own data. These commands carry that data across a verification cycle:
+
+```sh
+npm run db:snapshot
+npm run db:restore
+```
+
+`db:snapshot` writes a data-only dump of the `public` schema to `supabase/snapshots/local-<timestamp>.sql` and copies it to `supabase/snapshots/latest.sql`. That directory is ignored by Git; snapshots are local data and are never committed.
+
+`db:restore` reloads `latest.sql`, or an explicit file passed as the first argument, into the running local database container. It truncates the `public` tables and loads the dump inside one transaction with `session_replication_role = replica`, which suppresses every trigger: the `programs`/`splits` foreign-key cycle then imposes no row order, the deferred definition constraints do not re-run, and `updated_at` keeps its snapshotted value. A failed restore rolls back and leaves the local data unchanged.
+
+When no snapshot exists, `db:restore` reports that and changes nothing, because the seed baseline the reset already applied is the fallback.
+
+The usual cycle around the verification gate is `npm run db:snapshot`, then the gate below, then `npm run db:restore`.
+
 ## Verification gate
 
 The following are database-backed feature verification and must not run before the user approves the exact Task delivery commit:
@@ -77,4 +104,6 @@ npm exec supabase db reset
 npm run test:db
 ```
 
-After approval, reset applies the exact migration history to a clean local database, pgTAP exercises the prepared constraints, and regenerated types are compared with the committed file. Neither command is called by install hooks, lifecycle hooks, or `npm run check`.
+After approval, reset applies the exact migration history to a clean local database and then the baseline seed, pgTAP exercises the prepared constraints, and regenerated types are compared with the committed file. Neither command is called by install hooks, lifecycle hooks, or `npm run check`.
+
+Approved repository integration tests write to the same local database. They create suffixed fixtures, delete them afterwards, and restore the current-program pointer they moved, so an authorized verification leaves the seeded or restored data usable.
