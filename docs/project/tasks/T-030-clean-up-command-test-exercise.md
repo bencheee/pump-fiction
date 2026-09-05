@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T20:01:16+02:00`
-- **Updated:** `2026-09-05T20:16:37+02:00`
+- **Updated:** `2026-09-05T20:17:59+02:00`
 - **Started:** `2026-09-05T20:09:42+02:00`
 - **Review started:** `2026-09-05T20:12:12+02:00`
 - **Approval requested:** `2026-09-05T20:15:12+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-05T20:15:12+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver a replacement that also documents the no-resumable-workout precondition, then request fresh approval for the commit and for the reset the run needs.
+- **Next action:** Record the replacement SHA through an evidence commit and request fresh approval for it and for the reset its run needs.
 
 ## Scope
 
@@ -37,7 +37,7 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 
 - [ ] After an authorized `npm run test:repository` run the exercise library holds exactly the rows it held before.
 - [ ] The suite still passes unchanged.
-- [ ] The database workflow records that the repository suite needs a database without a resumable workout.
+- [x] The database workflow records that the repository suite needs a database without a resumable workout.
 
 ## Traceability
 
@@ -59,19 +59,19 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 ## Execution checklist
 
 - [x] Delete the created exercise in the test's `finally` block — after the workout deletion, so the cascading `workout_exercises` rows are gone before the `on delete set null` reference is removed.
-- [ ] Document the no-resumable-workout precondition for the repository suite.
-- [ ] Run only permitted static checks and deliver one reviewable replacement commit.
+- [x] Document the no-resumable-workout precondition for the repository suite — in the verification-gate section of the database workflow and in the README's approval-gated test section.
+- [x] Run only permitted static checks and deliver one reviewable replacement commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, documentation links, and `git diff --check`
-- Results: `npm run check` passed on `2026-09-05T20:11:38+02:00`, covering formatting, ESLint, strict TypeScript, the production build, the UI asset manifest, Markdown lint, and internal links; `git diff --check` reported no whitespace errors. No feature test ran.
+- Results: `npm run check` passed again for the replacement on `2026-09-05T20:17:59+02:00`, and earlier for the first delivery on `2026-09-05T20:11:38+02:00`, covering formatting, ESLint, strict TypeScript, the production build, the UI asset manifest, Markdown lint, and internal links; `git diff --check` reported no whitespace errors. No feature test ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** an authorized `npm run test:repository` run with the exercise-library row count compared before and after; must not run before Owner approval of the exact commit
+- **Planned tests:** a snapshot, a clean reset so no resumable workout exists, an authorized `npm run test:repository` run with the exercise-library row count compared before and after, then a restore; must not run before Owner approval of the exact commit and of the reset
 - **Authorized commit:** Not authorized
 - **Results:** Failed on `2026-09-05T20:16:37+02:00` for a precondition, not for the delivered change. `npm run db:snapshot` ran first, then `npm run test:repository` against the Owner's restored data reported 2 failed and 2 passed: both suites that start their own workout hit `duplicate key value violates unique constraint "workouts_single_resumable"`, because the Owner's restored workout is still active and the schema allows one resumable workout. The repository suite therefore shares the pgTAP precondition of a database without a resumable workout, which no document recorded. The delivered change still behaved correctly under the failure: every table held exactly its pre-run count afterwards, including one exercise, so the failing run left no new orphan where the old code would have left one.
 
@@ -79,7 +79,7 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 
 - **Delivery commit SHA:** `cfb8ee5fa42e8655553809a159bc422502737069`
 - **Subject:** `T-030: delete the exercise the command repository test creates`
-- **Committed scope:** `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts` and this Task
+- **Committed scope:** `src/server/repositories/supabase-active-workout-command-repository.integration.test.ts`, `docs/architecture/local-database-workflow.md`, `README.md`, and this Task
 
 ## Review
 
@@ -132,3 +132,4 @@ The failed run on `2026-09-05` added one item: the repository suite needs a data
 | `2026-09-05T20:15:12+02:00` | User / Reviewer and Approver | `In Review` | `Approved` | Approved the exact delivery commit |
 | `2026-09-05T20:15:12+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Snapshotted first, then started the authorized repository run against `cfb8ee5fa42e8655553809a159bc422502737069` |
 | `2026-09-05T20:16:37+02:00` | Claude Code primary agent / Tester | `Testing` | `In Progress` | The authorized run failed on the singleton resumable-workout constraint because the Owner's workout is active; approval and test authorization cleared |
+| `2026-09-05T20:17:59+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered a replacement that keeps the test cleanup and records the repository suite's no-resumable-workout precondition; static checks passed and no feature test ran |

@@ -72,4 +72,4 @@ npm run test:repository
 npm run test:browser
 ```
 
-Do not run them until the exact Task delivery commit is approved under [`docs/process/development-governance.md`](docs/process/development-governance.md). Browser verification additionally requires the locked Playwright package's Chromium and WebKit binaries; install them only when the approved browser-test scope is ready to run.
+Do not run them until the exact Task delivery commit is approved under [`docs/process/development-governance.md`](docs/process/development-governance.md). `npm run test:repository` needs a database without a resumable workout, so run it on a freshly reset database and restore a snapshot only afterwards. Browser verification additionally requires the locked Playwright package's Chromium and WebKit binaries; install them only when the approved browser-test scope is ready to run.
