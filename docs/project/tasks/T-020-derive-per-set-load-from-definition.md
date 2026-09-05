@@ -1,7 +1,7 @@
 # T-020 — Derive per-set load from the exercise definition
 
 - **Feature:** `F-011`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T11:41:11+02:00`
-- **Updated:** `2026-09-05T11:41:11+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-05T12:33:15+02:00`
+- **Started:** `2026-09-05T12:33:15+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner confirms `Ready` after `T-019` is approved.
+- **Next action:** Deliver definition-derived set entry as one reviewable commit, then request review.
 
 ## Scope
 
@@ -118,7 +118,7 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -137,3 +137,5 @@ Applying a modifier switches only that set to the permitted mode and can be undo
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T11:41:11+02:00` | Claude Code primary agent / Executor | None | `Backlog` | Created from Owner correction 7 recorded on 2026-09-05 |
+| `2026-09-05T12:33:15+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the per-set control placement on 2026-09-05 and directed execution after `T-019` |
+| `2026-09-05T12:33:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the active-workout set-entry change |
