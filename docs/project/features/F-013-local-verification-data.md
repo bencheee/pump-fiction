@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:42:31+02:00`
+- **Updated:** `2026-09-05T19:51:11+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -75,3 +75,4 @@ The Owner chose all three parts on `2026-09-05`, closing the open choices:
 | `2026-09-05T19:17:58+02:00` | User / Owner | Created `F-013` in `Next / 2` | Asked for verification to stop destroying local data after the 2026-09-05 reset |
 | `2026-09-05T19:28:05+02:00` | User / Owner | Confirmed readiness and moved `F-013` to `Next / 1` | Chose to protect local data before the next model corrections |
 | `2026-09-05T19:42:31+02:00` | User / Owner | Confirmed the approach and started `F-013` | Chose the seed and the snapshot/restore pair together, with the seed as the fallback |
+| `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `T-027` delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` and entered review | The seed, the snapshot/restore pair, and their documentation are ready for the Owner's review |

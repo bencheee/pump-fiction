@@ -1,7 +1,7 @@
 # T-027 — Restore usable local data after a verification reset
 
 - **Feature:** `F-013`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:50:03+02:00`
+- **Updated:** `2026-09-05T19:51:11+02:00`
 - **Started:** `2026-09-05T19:42:31+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T19:51:11+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Record the delivery commit SHA through an evidence commit and request review; the reset, pgTAP, and snapshot round trip stay unauthorized until the Owner approves that exact SHA.
+- **Next action:** Reviewer checks `9b8247f73bf9347cdd44f23e5172c16b9b99cfae` against the scope and acceptance criteria; the reset, pgTAP, and snapshot round trip stay unauthorized until the Owner approves that exact SHA.
 
 ## Scope
 
@@ -87,7 +87,7 @@ The verification gate itself does not change: a clean reset stays required befor
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`
 - **Subject:** `T-027: restore usable local data after a verification reset`
 - **Committed scope:** `supabase/seed.sql`, `supabase/config.toml`, `scripts/db-snapshot.mjs`, `scripts/db-restore.mjs`, `scripts/local-database.mjs`, `package.json`, `.gitignore`, the two repository integration tests, `docs/architecture/local-database-workflow.md`, `README.md`, and this Task
 
@@ -138,3 +138,4 @@ The verification gate itself does not change: a clean reset stays required befor
 | `2026-09-05T19:17:58+02:00` | User / Owner | None | `Backlog` | Requested after the 2026-09-05 verification reset destroyed the local programs, exercises, and workout |
 | `2026-09-05T19:42:31+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed both mechanisms with the seed as the fallback, completing the Definition of Ready |
 | `2026-09-05T19:42:31+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Started the seed and the snapshot/restore pair |
+| `2026-09-05T19:51:11+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Delivered `9b8247f73bf9347cdd44f23e5172c16b9b99cfae`; static checks passed and no feature test ran |
