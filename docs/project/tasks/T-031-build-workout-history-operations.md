@@ -1,7 +1,7 @@
 # T-031 — Build workout History operations
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T22:21:33+02:00`
+- **Updated:** `2026-09-05T22:22:36+02:00`
 - **Started:** `2026-09-05T22:02:36+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-05T22:22:36+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and create the delivery commit for the Owner's review. No feature test runs before the Owner approves that exact commit.
+- **Next action:** The Owner reviews exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`. Approving it authorizes the recorded verification; nothing runs before that.
 
 ## Scope
 
@@ -102,7 +102,7 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `95de9212848755c956cb0dc5d50b5cfc8796dc27`
 - **Subject:** `T-031: build workout History operations`
 - **Committed scope:** the `0003_workout_history.sql` declarative schema and the identity snapshot columns in `0001_core.sql` and `0002_workout_operations.sql`; the generated migration with its backfill; regenerated database types; the `src/features/history` domain, validation, repository contract, and operations; the Supabase repository, server composition, and Server Actions; the prepared `0006_workout_history` pgTAP suite, unit suite, and repository integration test with its `test:repository` registration; the ADR-0024 identity amendment; and the domain-model, server-boundary, History product, and local-database-workflow documents
 
@@ -153,3 +153,5 @@ The Owner accepted readiness question 1, so this Task also adds the never-nulled
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the first `F-008` delivery at the Owner's request; the Owner directed that implementation must not start |
 | `2026-09-05T22:02:36+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for the whole `F-008` and accepted every recommended readiness answer |
 | `2026-09-05T22:02:36+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the workout History operations, the first delivery of `F-008` |
+| `2026-09-05T22:21:33+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed the reads, the ten corrections, the identity snapshots, and the prepared suites; all permitted static checks passed |
+| `2026-09-05T22:22:36+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27`; static checks passed and every prepared feature test remains unexecuted |

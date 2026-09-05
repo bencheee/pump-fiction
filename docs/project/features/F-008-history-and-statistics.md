@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-05T22:02:36+02:00`
-- **Progress:** `0/6 required Tasks Done; T-031 is In Progress`
+- **Updated:** `2026-09-05T22:22:36+02:00`
+- **Progress:** `0/6 required Tasks Done; T-031 is In Review`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -113,3 +113,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Recorded the six-Task breakdown `T-031`–`T-036` in `Backlog`, the `F-009` boundary proposal, six readiness questions, and the proposed local decisions | The Owner asked for the Tasks without starting implementation; `F-008` stays held |
 | `2026-09-05T22:02:36+02:00` | User / Owner | Released the hold, accepted every recommended readiness answer and local decision, and confirmed Feature readiness | Gave the go-ahead to implement the whole `F-008` without amending any recommendation |
 | `2026-09-05T22:02:36+02:00` | Claude Code primary agent / Executor | Moved `T-031` to `Ready` and started it | Operations precede the screens that depend on them; one Task is `In Progress` at a time |
+| `2026-09-05T22:22:36+02:00` | Claude Code primary agent / Executor | Delivered `T-031` for review | Exact delivery `95de9212848755c956cb0dc5d50b5cfc8796dc27` awaits the Owner's approval before any feature test runs |
