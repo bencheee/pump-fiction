@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-05T19:26:04+02:00
+- **Last updated:** 2026-09-05T19:28:05+02:00
 - **Current phase:** Local MVP implementation — `F-011` confirmed; planning the Owner's next model corrections
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` and `F-011` complete; `F-012` and `F-013` recorded in `Next`; `F-008` intentionally not started
@@ -12,7 +12,7 @@
 
 ## Immediate next action
 
-Record the Owner's two new model corrections as work items once their open decisions are answered. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
+Start [`T-027`](docs/project/tasks/T-027-restore-local-data-after-reset.md) so verification stops destroying local data, then continue with `F-014`. The proposed current-program mechanism in [`T-021`](docs/project/tasks/T-021-replace-archiving-with-deletion-in-data.md) and the per-set control placement in [`T-020`](docs/project/tasks/T-020-derive-per-set-load-from-definition.md) still need Owner confirmation before those Tasks become `Ready`.
 
 ## Now
 
@@ -21,9 +21,10 @@ Record the Owner's two new model corrections as work items once their open decis
 
 ## Next
 
-1. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout; `T-026` needs the Owner's recovery rule and readiness.
-2. [`F-013`](docs/project/features/F-013-local-verification-data.md) — verification must stop destroying local data; `T-027` needs the Owner's chosen approach and readiness.
-3. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics, after the two corrections above unless the Owner reorders them.
+1. [`F-013`](docs/project/features/F-013-local-verification-data.md) — seed and snapshot so verification stops destroying local data (`T-027`).
+2. [`F-014`](docs/project/features/F-014-exercise-and-set-entry-model.md) — two exercise types with assistance under bodyweight (`T-028`), then values instead of confirmation (`T-029`).
+3. [`F-012`](docs/project/features/F-012-active-workout-command-recovery.md) — a permanently rejected command must not strand a workout (`T-026`).
+4. [`F-008`](docs/project/features/F-008-history-and-statistics.md) — History and Statistics.
 
 ## Later
 
@@ -51,6 +52,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/13 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`8/14 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

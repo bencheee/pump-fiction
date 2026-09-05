@@ -3,10 +3,10 @@
 - **Milestone:** `M-001`
 - **Owner:** User
 - **Horizon:** `Next`
-- **Order:** 2
+- **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-05T19:17:58+02:00`
-- **Updated:** `2026-09-05T19:17:58+02:00`
+- **Updated:** `2026-09-05T19:28:05+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -58,7 +58,7 @@ The Owner settles these when `T-027` becomes `Ready`:
 - [ ] The approach among the open choices is decided
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner confirms readiness and the recorded approach
 
 ## Completion
 
@@ -73,3 +73,4 @@ The Owner settles these when `T-027` becomes `Ready`:
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-05T19:17:58+02:00` | User / Owner | Created `F-013` in `Next / 2` | Asked for verification to stop destroying local data after the 2026-09-05 reset |
+| `2026-09-05T19:28:05+02:00` | User / Owner | Confirmed readiness and moved `F-013` to `Next / 1` | Chose to protect local data before the next model corrections |

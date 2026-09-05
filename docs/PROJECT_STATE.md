@@ -70,7 +70,7 @@ These are not decisions and must not be inferred during implementation:
 
 ## Next planned step
 
-Turn the Owner's two new model corrections into work items: exercise categories reduced to weights and bodyweight with assistance moved into bodyweight, and implicit set confirmation that records a set as soon as its values are entered. `F-011` is `Done` with the Owner's confirmation on 2026-09-05, and the local database holds no data after the authorized verification reset.
+Deliver `T-027` so a clean reset lands on a usable seeded baseline and the Owner's own data can be snapshotted around a verification. `F-014` then delivers the Owner's two new model corrections: two exercise types with assistance under bodyweight, and a set recorded by its entered values with no confirmation control. The Owner set the order `F-013`, `F-014`, `F-012`, `F-008` on 2026-09-05.
 
 ## Implementation status
 
