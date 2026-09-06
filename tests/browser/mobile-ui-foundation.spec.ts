@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
 test.describe("mobile UI foundation", () => {
@@ -43,12 +44,26 @@ test.describe("mobile UI foundation", () => {
     }
   });
 
-  test("focused workout shell removes primary navigation", async ({ page }) => {
-    await page.goto("/workout/current");
-    await expect(page.locator('[data-shell="focused"]')).toBeVisible();
-    await expect(
-      page.getByRole("navigation", { name: "Primary" }),
-    ).not.toBeAttached();
+  // ADR-0025 moved the active workout into the main shell: the primary
+  // navigation stays available during a workout. A current workout is seeded
+  // because the route redirects to Today without one.
+  test("active workout keeps primary navigation", async ({
+    page,
+  }, testInfo) => {
+    const fixture = await seedCurrentWorkout(
+      `${testInfo.project.name} ${Date.now()}`,
+    );
+    try {
+      await page.goto("/workout/current");
+      await expect(page).toHaveURL(/\/workout\/current$/);
+      await expect(page.locator('[data-shell="main"]')).toBeVisible();
+      await expect(
+        page.getByRole("navigation", { name: "Primary" }),
+      ).toBeVisible();
+      await expect(page.locator('[data-shell="focused"]')).toHaveCount(0);
+    } finally {
+      await cleanUpWorkout(fixture);
+    }
   });
 
   test("Back dismisses the topmost sheet before its parent document", async ({
@@ -81,3 +96,93 @@ test.describe("mobile UI foundation", () => {
     await expect(trigger).toBeFocused();
   });
 });
+
+type WorkoutFixture = Readonly<{
+  exerciseId: string;
+  programId: string;
+  seededProgramId: string | null;
+}>;
+
+function adminClient() {
+  const url = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  if (!url || !key) throw new Error("Local Supabase environment is required.");
+  return createClient(url, key, { auth: { persistSession: false } });
+}
+
+async function rpc<T = unknown>(
+  client: ReturnType<typeof adminClient>,
+  name: string,
+  args: Record<string, unknown>,
+): Promise<T> {
+  const { data, error } = await client.rpc(name, args);
+  if (error) throw error;
+  return data as T;
+}
+
+async function seedCurrentWorkout(stamp: string): Promise<WorkoutFixture> {
+  const client = adminClient();
+  await client.from("workouts").delete().in("status", ["active", "paused"]);
+  const { data: settings } = await client
+    .from("app_settings")
+    .select("current_program_id")
+    .eq("id", 1)
+    .maybeSingle();
+  const exerciseId = await rpc<string>(client, "create_exercise_definition", {
+    p_name: `Shell ${stamp}`,
+    p_base_type: "weights",
+    p_persistent_note: "",
+    p_load_modes: ["weight"],
+  });
+  const programId = await rpc<string>(client, "create_program", {
+    p_name: `Shell plan ${stamp}`,
+  });
+  const splitId = await rpc<string>(client, "create_split_definition", {
+    p_program_id: programId,
+    p_name: `Shell split ${stamp}`,
+    p_exercise_ids: [exerciseId],
+    p_planned_sets: [1],
+    p_min_reps: [5],
+    p_max_reps: [8],
+  });
+  await rpc(client, "set_current_program", {
+    p_program_id: programId,
+    p_next_split_id: splitId,
+  });
+  await rpc(client, "start_workout", {
+    p_source_kind: "proposed_split",
+    p_split_id: splitId,
+    p_one_time_name: "",
+    p_exercise_ids: [],
+    p_started_at: new Date().toISOString(),
+  });
+  return {
+    exerciseId,
+    programId,
+    seededProgramId: (settings?.current_program_id as string | null) ?? null,
+  };
+}
+
+async function cleanUpWorkout(fixture: WorkoutFixture) {
+  const client = adminClient();
+  const { data } = await client
+    .from("workouts")
+    .select("id")
+    .in("status", ["active", "paused"]);
+  const ids = (data ?? []).map((row) => row.id as string);
+  if (ids.length > 0) {
+    await client.from("active_workout_commands").delete().in("workout_id", ids);
+    await client.from("workouts").delete().in("id", ids);
+  }
+  await client
+    .from("app_settings")
+    .update({ current_program_id: null })
+    .eq("id", 1);
+  await client.from("programs").delete().eq("id", fixture.programId);
+  await client.from("exercises").delete().eq("id", fixture.exerciseId);
+  if (fixture.seededProgramId)
+    await client
+      .from("app_settings")
+      .update({ current_program_id: fixture.seededProgramId })
+      .eq("id", 1);
+}
