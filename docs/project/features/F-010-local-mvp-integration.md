@@ -6,7 +6,7 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T18:52:00+02:00`
+- **Updated:** `2026-09-06T19:22:00+02:00`
 - **Progress:** `7/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -103,7 +103,7 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 - [x] Feature acceptance criteria are satisfied: every locked criterion passed authorized verification against an approved delivery, the release run of 489 checks contradicted none of them, and the Owner confirmed the visual comparison against the accepted references on `2026-09-06`
 - [x] Canonical documentation is current: three findings — `R1`, `R2`, and `R3` — were raised, decided by the Owner, and closed by `T-049` and `T-050`, and `T-048` swept the remaining drift
 - [x] No required follow-up scope is hidden; one reported item, the `apply_active_workout_command` test name, awaits the Owner's word and is recorded in `T-044`
-- [ ] User confirms the feature result
+- [x] User confirms the feature result on `2026-09-06T19:22:00+02:00`
 
 ## History
 
@@ -138,3 +138,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T18:30:00+02:00` | User / Approver | Approved `T-048` | Authorized the complete suite against exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` |
 | `2026-09-06T18:44:00+02:00` | Claude Code primary agent / Tester | Recorded the release run | 489 checks across five suites passed against one approved tree on the first attempt, with matching generated types and a database identical to its baseline; only the Owner's visual comparison remains |
 | `2026-09-06T18:52:00+02:00` | Claude Code primary agent / Tester | Completed `T-048`; every `F-010` gate but the Owner's confirmation is met | The release run passed 489/489 against one approved tree, the Owner confirmed the visual comparison, and the documentation agrees with the implementation |
+| `2026-09-06T19:22:00+02:00` | User / Owner | Completed `F-010` | Confirmed the Local MVP Integration result (`ok`), in answer to the proposal to close `M-001` before `F-015` starts |

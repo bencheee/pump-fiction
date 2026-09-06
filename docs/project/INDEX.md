@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `13/14 Features Done` | User | `2026-09-06T18:52:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `14/14 Features Done` | User | `2026-09-06T19:22:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 

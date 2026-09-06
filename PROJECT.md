@@ -1,7 +1,7 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T18:52:00+02:00
-- **Current phase:** Local MVP complete but for the Owner's confirmation — every Task of every Feature is `Done`, all 57 criteria are verified, and the release run passed 489/489
+- **Last updated:** 2026-09-06T19:22:00+02:00
+- **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
@@ -10,13 +10,13 @@
 
 ## Current focus
 
-None. [`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration is `7/7` and every completion gate of the Feature and of [`M-001`](docs/project/milestones/M-001-local-mvp.md) is met except the one only the Owner can give.
+None. [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`: the Owner confirmed the Local MVP result on 2026-09-06.
 
 The release run passed 489 checks across five suites against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`: unit 237/237, components 4/4, pgTAP 187/187, repository 9/9, and the browser suite 52/52 on both phones. The Owner confirmed the visual comparison against the accepted references on 2026-09-06 and reported no deviation. Three documentation findings — `R1`, `R2`, and `R3` — were raised by the release reading, decided by the Owner, and closed by `T-049` and `T-050`.
 
 ## Immediate next action
 
-Confirm the `F-010` and Local MVP results. Every other gate of both is met and recorded; this confirmation is the Owner's alone and closes the Milestone.
+Give the go-ahead for `F-015`, or amend it. Its breakdown is written and held uncommitted; nothing starts before that word.
 
 ## Now
 
@@ -57,7 +57,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
-- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`7/7 Tasks Done`, awaiting the Owner's confirmation)
+None; `M-001` is `Done` and `M-002` has not started.
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
