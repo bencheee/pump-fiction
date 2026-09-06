@@ -1,7 +1,7 @@
 # T-044 — Close the two discovered release corrections
 
 - **Feature:** `F-010`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:40:00+02:00`
+- **Updated:** `2026-09-06T15:52:00+02:00`
 - **Started:** `2026-09-06T15:40:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T15:52:00+02:00`
+- **Approval requested:** `2026-09-06T15:52:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Reword the finish review, unify the test-support rule, write `ADR-0029`, and deliver one reviewable commit.
+- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the prepared verification.
 
 ## Scope
 
@@ -62,38 +62,44 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
 ## Execution checklist
 
-- [ ] Reword the finish-review line and check no other surface still says `confirmed` of a set.
-- [ ] Add the opt-in guard to both test-support routes behind one shared helper.
-- [ ] Set the flag for the browser suite's production server, drop the development server and the two durability projects, and repoint the durability spec.
-- [ ] Write `ADR-0029` and state the rule in the two architecture documents.
-- [ ] Prepare the finish-review component assertion; do not run it.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Reword the finish-review line and check no other surface still says `confirmed` of a set.
+- [x] Add the opt-in guard to both test-support routes behind one shared helper.
+- [x] Set the flag for the browser suite's production server, drop the development server and the two durability projects, and repoint the durability spec.
+- [x] Write `ADR-0029` and state the rule in the two architecture documents.
+- [x] Prepare the finish-review component assertion; do not run it.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`; confirm the production build still lists both test-support routes without exposing them
-- Results: Not run
+- Results: Passed on `2026-09-06T15:52:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 131 files, and all 1389 internal links. `git diff --check` was clean. The build lists both `/test-support/active-workout-durability` and `/test-support/mobile-ui-foundation` as dynamic (`f`), which is what lets one build serve the suite with the flag and an ordinary run without it. No feature test ran: the unit and component assertions are prepared and unexecuted.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After the Task's one approval: the finish-review component assertion on the corrected copy, and the whole browser suite on one server across mobile Chromium and mobile WebKit, because the harness rule changes how every spec is served; plus one negative check that both test-support routes are not found in a production build without the flag. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
+- **Planned tests:** After the Task's one approval: the unit suite, which now includes the four `isTestSupportEnabled` cases; the finish-review component assertion on the corrected copy; and the whole browser suite on one server across mobile Chromium and mobile WebKit, because the harness rule changes how every spec is served. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
+
+  The plan promised one more check than the arrangement can perform. A browser negative check that both routes are not found *without* the flag would need a second server started without it — the two-server arrangement this Task removes. The rule is covered instead where it actually lives: the four unit cases pin the helper, including that `true`, `0`, `yes`, and an empty string all keep the routes hidden, and both pages call that helper as their first statement.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-044: close the two discovered release corrections`
-- **Committed scope:** Not created
+- **Committed scope:** the finish-review explanation bullet; `src/shared/routing/test-support-route.ts` with its unit suite; the opt-in guard and `force-dynamic` on both test-support pages; `playwright.config.ts` back to one server, one `baseURL`, and two projects; `ADR-0029` and its registry row; the harness rule in the durability and mobile-UI-foundation documents; one prepared component assertion; this Task.
+
+## Discovered, not delivered
+
+`apply-active-workout-command.test.ts:131` names a case `rejects incomplete confirmed sets and unconfirmed populated removal payloads only when malformed`, while the case actually rejects a malformed `update_set` payload — negative kilograms and zero reps — and has nothing to do with confirmation. It is the same ADR-0027 leftover as the finish-review sentence, but it is a unit-test name rather than the finish-review copy this Task's confirmed scope names, so it is reported rather than swept in. One line, no behavior. The Owner decides whether it joins a later Task.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T15:52:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The guard is one shared helper called first in both pages, so a third harness cannot acquire a third rule by omission, which is the failure ADR-0029 closes. Both routes are `force-dynamic`, so the flag is a runtime switch rather than a build-time bake. The `mobile-ui-foundation` harness was undocumented until now, which is part of why the two rules diverged.
 
 ## Approval
 
@@ -135,3 +141,4 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Accepted readiness answers 5 and 6: the finish review is reworded and both test-support routes take one opt-in visibility rule recorded as `ADR-0029` |
 | `2026-09-06T15:40:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-049` is `Done`, so the documentation agrees with the application again and the two delivered corrections can follow |
+| `2026-09-06T15:52:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered both corrections and `ADR-0029`; static checks passed, the assertions are prepared and unexecuted, and one further ADR-0027 leftover is reported rather than swept in |

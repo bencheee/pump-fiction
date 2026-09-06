@@ -32,6 +32,7 @@ ADRs preserve important cross-cutting product, technical, and delivery-governanc
 | [0026](0026-two-exercise-types-with-assistance-under-bodyweight.md) | Accepted | Two exercise types; assistance becomes a bodyweight option and supersedes the ADR-0023 type table |
 | [0027](0027-a-set-is-recorded-by-its-values.md) | Accepted | Explicit set confirmation is removed; a set counts once its values are complete |
 | [0028](0028-replacements-inherit-task-approval.md) | Accepted | A replacement within a Task's scope inherits the approval of its first delivery and is re-verified without a new decision |
+| [0029](0029-one-visibility-rule-for-test-support-routes.md) | Accepted | Both test-support routes are hidden unless `PF_ENABLE_TEST_SUPPORT` is set, so one production server runs the whole browser suite |
 
 ## Lifecycle
 

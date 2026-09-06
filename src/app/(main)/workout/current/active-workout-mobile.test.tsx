@@ -570,6 +570,12 @@ describe("Finish review", () => {
         "Rotation advances to the next split, because this was the proposed split.",
       ),
     ).toBeVisible();
+    // ADR-0027 removed set confirmation, so the explanation says recorded.
+    expect(
+      screen.getByText(
+        "Recorded sets count toward exercise personal records and charts.",
+      ),
+    ).toBeVisible();
   });
 
   it("completes the workout and returns to Today", async () => {

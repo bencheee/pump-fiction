@@ -235,7 +235,7 @@ export function FinishReview({
           </h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-[1.5] text-[var(--pf-text-2)]">
             <li>
-              Confirmed sets count toward exercise personal records and charts.
+              Recorded sets count toward exercise personal records and charts.
             </li>
             {isOneTime ? (
               <li>

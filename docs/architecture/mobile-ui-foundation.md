@@ -107,6 +107,8 @@ Overlay state must not be encoded as a deep-linkable route or query parameter in
 
 `T-009` adds React Testing Library, `user-event`, DOM matchers, and jsdom for component accessibility and interaction source. It also prepares Playwright checks for the accepted 390 by 844 and 360 by 800 phone references at an explicit 3x device scale, shell geometry, horizontal overflow, overlay Back behavior, cancel-safe focus, Escape, and focus restoration. Playwright builds and starts the production application, polls the production `/today` route for readiness, never reuses an unknown local server, and writes both line and HTML reports so reference captures remain available for structural review without the Next.js development indicator. v0.4 colors and other frozen-package exclusions are not compared against the stale v0.3 pixels. An authorized browser verification runs against a checkout of the exact approved commit. A `git worktree` reaches `node_modules` only through a real directory: Turbopack refuses a symlink that leaves the project root, and the production build fails before any test runs. A hard-link copy, `cp -Rl node_modules <worktree>/node_modules`, takes about half a minute and works. `T-039` found this.
 
+The foundation spec drives its assertions through `/test-support/mobile-ui-foundation`, a route that exists only for that spec. It is hidden unless the server is started with `PF_ENABLE_TEST_SUPPORT=1`, the single rule [ADR-0029](../decisions/0029-one-visibility-rule-for-test-support-routes.md) gives both test-support harnesses, and `npm run test:browser` sets that flag on its own production server. A default production start exposes neither harness.
+
 These commands remain separate from `npm run check`:
 
 ```sh
