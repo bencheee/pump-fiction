@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { TodayView } from "@/features/active-workout/domain/workout";
 import type { Exercise } from "@/features/exercises/domain/exercise";
+import { ToastProvider } from "@/shared/ui";
 
 import { OneTimeWorkoutForm } from "./one-time/one-time-workout-form";
 import { TodayExperience } from "./today-experience";
@@ -93,6 +94,11 @@ const exercises: Exercise[] = [
   },
 ];
 
+/** `MainShell` owns the one toast in the application; the tests stand in for it. */
+function renderToday(ui: Parameters<typeof render>[0]) {
+  return render(<ToastProvider>{ui}</ToastProvider>);
+}
+
 describe("Today and workout-start mobile experience", () => {
   beforeEach(() => vi.clearAllMocks());
   afterEach(cleanup);
@@ -100,7 +106,7 @@ describe("Today and workout-start mobile experience", () => {
   it("starts the proposal and can place an alternate on Today without moving rotation", async () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
-    render(<TodayExperience today={today} weight={noWeighIn} />);
+    renderToday(<TodayExperience today={today} weight={noWeighIn} />);
 
     expect(screen.getByText("Wed 26 Aug")).toBeVisible();
     expect(screen.getByText("Avg 1h 08m · 7 workouts")).toBeVisible();
@@ -129,7 +135,7 @@ describe("Today and workout-start mobile experience", () => {
   it("offers today's weight only while the day has none", async () => {
     const user = userEvent.setup();
     actions.createWeight.mockResolvedValue({ ok: true, value: recorded.entry });
-    render(<TodayExperience today={today} weight={noWeighIn} />);
+    renderToday(<TodayExperience today={today} weight={noWeighIn} />);
 
     const card = within(screen.getByRole("region", { name: "Today's weight" }));
     await user.click(card.getByRole("button", { name: "Add today's weight" }));
@@ -147,7 +153,7 @@ describe("Today and workout-start mobile experience", () => {
   });
 
   it("shows the recorded weight instead of a second-entry prompt", () => {
-    render(<TodayExperience today={today} weight={recorded} />);
+    renderToday(<TodayExperience today={today} weight={recorded} />);
 
     const card = within(screen.getByRole("region", { name: "Today's weight" }));
     expect(card.getByText("82.4 kg")).toBeVisible();
@@ -171,7 +177,7 @@ describe("Today and workout-start mobile experience", () => {
         fieldErrors: { entryDate: ["That date already has a weigh-in."] },
       },
     });
-    render(<TodayExperience today={today} weight={noWeighIn} />);
+    renderToday(<TodayExperience today={today} weight={noWeighIn} />);
 
     await user.click(
       screen.getByRole("button", { name: "Add today's weight" }),
@@ -188,7 +194,7 @@ describe("Today and workout-start mobile experience", () => {
   });
 
   it("keeps the weight card beside a restored workout and with no program", () => {
-    render(
+    renderToday(
       <TodayExperience
         today={{ ...today, proposedSplit: null, alternateSplits: [] }}
         weight={noWeighIn}
@@ -199,7 +205,7 @@ describe("Today and workout-start mobile experience", () => {
     ).toBeVisible();
     cleanup();
 
-    render(
+    renderToday(
       <TodayExperience
         today={{
           ...today,
@@ -220,7 +226,7 @@ describe("Today and workout-start mobile experience", () => {
   });
 
   it("replaces all second-start actions with an accurate restore card", () => {
-    render(
+    renderToday(
       <TodayExperience
         today={{
           ...today,
