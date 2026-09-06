@@ -1,7 +1,7 @@
 # T-042 — Build Body mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:22:36+02:00`
+- **Updated:** `2026-09-06T14:24:05+02:00`
 - **Started:** `2026-09-06T14:14:28+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T14:24:05+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
+- **Next action:** The Owner reviews and approves exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`. No feature test runs before that approval.
 
 ## Scope
 
@@ -116,7 +116,7 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `ae55dd3ef85ce31a692577620736b64a9abf7e54`
 - **Subject:** `T-042: build Body screens`
 - **Committed scope:** `S21` at `/history/body` replacing the last placeholder route; `S22` at `/history/body/types/new` and `/history/body/types/[id]/edit` with the read-only unit, the rename, and the conditional deletion; `S23` at `/history/body/[typeId]` with its three stat cards, range selector, chart, textual summary, accessible value list, and entry list; `S24` at `/history/body/[typeId]/new` and `/history/body/[typeId]/[date]/edit`; `body-presentation.ts` in the History `ui` module; the prepared component suite and the prepared `body` browser scenario; and the mobile-UI-foundation and screen-decision documents
 
@@ -168,3 +168,4 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
 | `2026-09-06T14:14:28+02:00` | User / Owner | `Backlog` | `Ready` | `T-041` is `Done` and the Owner's go-ahead for the whole Feature authorizes the Body screens |
 | `2026-09-06T14:14:28+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Body subsection, the last Task of `F-009` |
+| `2026-09-06T14:24:05+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`; static checks passed and both prepared suites remain unexecuted |
