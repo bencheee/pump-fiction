@@ -1,7 +1,7 @@
 # T-036 — Build Split History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:58:49+02:00`
+- **Updated:** `2026-09-06T11:01:09+02:00`
 - **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** `2026-09-06T10:54:05+02:00`
 - **Approval requested:** `2026-09-06T10:56:19+02:00`
 - **Approved:** `2026-09-06T10:56:19+02:00`
 - **Testing started:** `2026-09-06T10:56:19+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T11:01:09+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`, which inherits the Task approval under ADR-0028.
+- **Next action:** None; `T-036` is `Done`. `F-008` continues with `T-037`, its last Task.
 
 ## Scope
 
@@ -47,11 +47,11 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 
 ## Acceptance criteria
 
-- [ ] `S17` lists every split identity `T-035` returns, filters by program, keeps same-named splits from different programs as separate rows, and renders the empty and no-results states.
-- [ ] `S18` shows all six aggregates and the exclusion explanation, and each workout entry links to its `S14` workout.
-- [ ] Changing the range updates the chart, the textual summary, and the accessible list together.
-- [ ] The chart is never the sole representation of the data, respects reduced motion, and needs no hover.
-- [ ] `S17` and `S18` match the accepted `v0.3` structure and chart geometry, reflow from 320 to 430 px, and meet the accepted touch and accessibility behavior.
+- [x] `S17` lists every split identity `T-035` returns, filters by program, keeps same-named splits from different programs as separate rows, and renders the empty and no-results states.
+- [x] `S18` shows all six aggregates and the exclusion explanation, and each workout entry links to its `S14` workout.
+- [x] Changing the range updates the chart, the textual summary, and the accessible list together.
+- [x] The chart is never the sole representation of the data, respects reduced motion, and needs no hover.
+- [x] `S17` and `S18` match the accepted `v0.3` structure and chart geometry, reflow from 320 to 430 px, and meet the accepted touch and accessibility behavior.
 
 ## Traceability
 
@@ -92,6 +92,8 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 - **Authorized commit:** `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`, under the Task approval inherited per ADR-0028
 - **Results:** First verification on `2026-09-06T10:58:20+02:00` against exact approved delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: the serialized Split History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 25.2 seconds together**, and `npm run test:unit` passed **142 of 143 across 19 files**. The one failure is a test-only ambiguity: the longest duration reads `1 h 10 min` in its stat card, in the chart-values list, and in the workout list, and the assertion did not say which. The screens behave correctly. The correction inherits the Task approval under ADR-0028.
 
+  Second verification, against replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` on `2026-09-06T11:01:09+02:00` under the inherited approval: **the complete plan passed**. `npm run test:unit` passed **143/143 across 19 files**, and the serialized Split History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 23.6 seconds together**, covering the split row with its aggregates, the six statistics and the exclusion rule, the series summary and named value list, the empty week range and the return to all, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Fixtures were deleted afterwards.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` (replacement, test source only; supersedes `e5f9bf82970ca37c213fb84fef554a4d37593a78`)
@@ -129,15 +131,15 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA of the first delivery; the replacement inherited it under ADR-0028
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -151,3 +153,4 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 | `2026-09-06T10:56:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` with `potvrda` |
 | `2026-09-06T10:56:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the recorded component and browser verification against the exact approved delivery |
 | `2026-09-06T10:58:49+02:00` | Claude Code primary agent / Executor | `Testing` | `Testing` | Delivered replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` for the ambiguous card assertion; it inherits the Task approval and the complete plan restarts against it |
+| `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed: unit and component 143/143 and the serialized Chromium and WebKit scenario 2/2 with four structural captures |

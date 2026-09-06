@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T10:56:19+02:00`
-- **Progress:** `5/7 required Tasks Done; T-036 is Testing`
+- **Updated:** `2026-09-06T11:01:09+02:00`
+- **Progress:** `6/7 required Tasks Done; T-037 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -37,10 +37,10 @@ Recorded on `2026-09-05` at the Owner's request, without starting implementation
 | 3 | [`T-033`](../tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations (`Done`; approved replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11`) | Eligibility, PR derivation, chart series, exercise history queries | `T-031` |
 | 4 | [`T-034`](../tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience (`Done`; first delivery `b5772adb87d244bfc2404481e90f58a4046a7767`, verified through inherited third replacement `aed262314e9c332198067bfbdd1211c221ece256`) | `S15`, `S16` with chart | `T-032`, `T-033` |
 | 5 | [`T-035`](../tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations (`Done`; approved delivery `92b6d10b3472a13282c41712e3e75f939216f647`) | Split identity, duration statistics, chart series, split history queries | `T-031` |
-| 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience | `S17`, `S18` with chart | `T-032`, `T-035` |
+| 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience (`Done`; first delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`, verified through inherited replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`) | `S17`, `S18` with chart | `T-032`, `T-035` |
 | 7 | [`T-037`](../tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal | A runnable `npm run test:browser` | None |
 
-`T-031` through `T-035` are `Done` and `T-036` is `Testing`; `T-037` is in `Backlog`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
+`T-031` through `T-036` are `Done` and `T-037` is `In Progress`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
 
 ## Boundary against F-009
 
@@ -132,3 +132,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T10:45:28+02:00` | Claude Code primary agent / Executor | Delivered `T-035` for review | Exact delivery `92b6d10b3472a13282c41712e3e75f939216f647` awaits the one approval the Task needs |
 | `2026-09-06T10:50:32+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-035` and started `T-036` | The complete plan passed on the first run; the go-ahead authorizes the last screens |
 | `2026-09-06T10:54:05+02:00` | Claude Code primary agent / Executor | Delivered `T-036` for review | Exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` awaits the one approval the Task needs |
+| `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-036` and started `T-037` | The complete plan passed under the inherited approval; every History screen is delivered and the last Task restores the whole browser suite |

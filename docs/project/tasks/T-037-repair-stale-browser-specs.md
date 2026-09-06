@@ -1,23 +1,23 @@
 # T-037 — Repair the browser specs left stale by the archiving removal
 
 - **Feature:** `F-008`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T22:52:00+02:00`
-- **Updated:** `2026-09-05T22:52:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T11:01:09+02:00`
+- **Started:** `2026-09-06T11:01:09+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await the Owner's confirmation that this belongs to `F-008` and may become `Ready`.
+- **Next action:** Repair both specs, run only the permitted static checks, and deliver one reviewable commit for the Owner's one approval under ADR-0028.
 
 ## Scope
 
@@ -51,7 +51,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 ## Dependencies and blockers
 
 - Dependencies: None
-- Blockers: The Owner has not yet confirmed the parent Feature or readiness
+- Blockers: None. The Owner saw this Task under `F-008` in three reports without objection and directed on `2026-09-06` that the work stop waiting on repeated confirmations; it is the one Task that keeps `F-008` from `Done`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -110,7 +110,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms the parent Feature and the transition to `Ready`
+- [x] Owner confirms the parent Feature and the transition to `Ready`, through the go-ahead for the whole `F-008` and the direction of `2026-09-06`
 
 ## Definition of Done
 
@@ -129,3 +129,5 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T22:52:00+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Discovered while preparing the `T-032` browser scenario: two specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole |
+| `2026-09-06T11:01:09+02:00` | User / Owner | `Backlog` | `Ready` | The go-ahead for the whole `F-008` covers its last Task; the Owner raised no objection to its placement in three reports |
+| `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began repairing the two browser specs left stale by `T-021` |
