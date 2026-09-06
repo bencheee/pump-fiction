@@ -1,7 +1,7 @@
 # T-038 — Build weight operations
 
 - **Feature:** `F-009`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:12:40+02:00`
+- **Updated:** `2026-09-06T13:15:07+02:00`
 - **Started:** `2026-09-06T12:39:15+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T13:15:07+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
+- **Next action:** The Owner reviews and approves exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`. No feature test runs before that approval.
 
 ## Scope
 
@@ -111,7 +111,7 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `94196f3be1f8f7b47b204637a16cc30d0520e916`
 - **Subject:** `T-038: build weight operations`
 - **Committed scope:** the `0006_weight_operations.sql` declarative schema with its function-only migration and regenerated types; the History chart contract extracted to `domain/chart.ts` and generalized with an optional workout, a span, and a companion series, its consumers repointed and their series unchanged; the `weight` domain with the calendar weeks, the weekly average and change, the provisional rule, the individual change, and the two-series chart, beside `weight-validation`; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the two prepared unit suites, the `0009_weight_operations` pgTAP suite, and the repository integration test with its `test:repository` registration; and the weight-and-body product, domain-model, server-boundary, and local-database-workflow documents
 
@@ -163,3 +163,4 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
 | `2026-09-06T12:39:15+02:00` | User / Owner | `Backlog` | `Ready` | The Owner accepted every `F-009` readiness answer and gave the go-ahead for the whole Feature |
 | `2026-09-06T12:39:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the weight data and derivation, the first Task of `F-009` |
+| `2026-09-06T13:15:07+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`; static checks passed and every prepared feature test remains unexecuted |

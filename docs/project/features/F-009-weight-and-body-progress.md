@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T12:39:15+02:00`
-- **Progress:** `0/5 required Tasks Done; T-038 is In Progress`
+- **Updated:** `2026-09-06T13:15:07+02:00`
+- **Progress:** `0/5 required Tasks Done; T-038 is In Review`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -117,3 +117,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | Locked the breakdown after `F-008` completed: aligned the five Tasks with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; recorded the registry, dashboard, milestone, and project state | The Owner asked to fold in any `F-008` outcome that affects the plan and then lock, commit, and push it; the readiness questions stay open for the go-ahead |
 | `2026-09-06T12:39:15+02:00` | User / Owner | Accepted every recommended readiness answer and local decision, confirmed Feature readiness, and gave the go-ahead | Replied `potvrda` without amending any recommendation, which decides the archiving sentence, the measurement-type rename, and the Today weight card |
 | `2026-09-06T12:39:15+02:00` | Claude Code primary agent / Executor | Moved `T-038` to `Ready` and started it | Operations precede the screens that depend on them; one Task is `In Progress` at a time |
+| `2026-09-06T13:15:07+02:00` | Claude Code primary agent / Executor | Delivered `T-038` for review | Exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916` awaits the Owner's approval before any feature test runs |
