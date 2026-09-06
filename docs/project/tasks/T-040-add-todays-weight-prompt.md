@@ -1,7 +1,7 @@
 # T-040 — Add today's weight prompt to Today
 
 - **Feature:** `F-009`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:48:05+02:00`
+- **Updated:** `2026-09-06T13:49:31+02:00`
 - **Started:** `2026-09-06T13:41:30+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T13:49:31+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
+- **Next action:** The Owner reviews and approves exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`. No feature test runs before that approval.
 
 ## Scope
 
@@ -100,7 +100,7 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `4992e617d3d367091332eb178525b2c61e35f0a5`
 - **Subject:** `T-040: add today's weight prompt`
 - **Committed scope:** the `S01` weight card and its `S04` sheet in `today-weight.tsx`; the Today page reading the weigh-in beside its aggregate and the experience rendering the card; `weight-presentation.ts` promoted to the History `ui` module with its `S19` import repointed; four prepared Today component scenarios and a prepared Today browser scenario for the prompt, the sheet, the saved state, and Weight; and the product-overview, mobile-UI-foundation, and screen-decision documents, the last also carrying the `T-039` browser-harness note
 
@@ -152,3 +152,4 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
 | `2026-09-06T13:41:30+02:00` | User / Owner | `Backlog` | `Ready` | `T-039` is `Done` and the Owner's go-ahead for the whole Feature authorizes the Today surface |
 | `2026-09-06T13:41:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the `MVP-TOD-004` prompt on the `T-038` operations |
+| `2026-09-06T13:49:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`; static checks passed and both prepared suites remain unexecuted |

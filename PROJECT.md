@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:41:30+02:00
+- **Last updated:** 2026-09-06T13:49:31+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T13:41:30+02:00. It puts the `MVP-TOD-004` prompt and its `S04` sheet on Today, the one weight surface outside History.
+[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T13:49:31+02:00. Exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` puts the `MVP-TOD-004` prompt and its `S04` sheet on Today and awaits the Owner's approval.
 
 Weight is otherwise finished: [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) derives it and [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) renders `S19` and `S20`.
 
 ## Immediate next action
 
-Deliver `T-040` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner reviews and approves exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`. Only then does the recorded plan run: the extended Today component suite and the extended Today browser scenario. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Progress` — Claude Code primary agent — 2026-09-06T13:41:30+02:00 — next: deliver one reviewable commit.
+- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Review` — Claude Code primary agent — 2026-09-06T13:49:31+02:00 — next: the Owner's approval of `4992e617d3d367091332eb178525b2c61e35f0a5`.
 
 ## Next
 
@@ -37,7 +37,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` — Claude Code primary agent — 2026-09-06T13:49:31+02:00 — requested action: review and approve that commit, which authorizes the recorded verification.
 
 ## Approved — ready for testing
 
