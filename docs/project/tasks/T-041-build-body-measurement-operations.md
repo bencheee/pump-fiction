@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:57:17+02:00`
+- **Updated:** `2026-09-06T14:04:12+02:00`
 - **Started:** `2026-09-06T13:57:17+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
 
 ## Scope
 
@@ -82,18 +82,18 @@ Queries:
 
 ## Execution checklist
 
-- [ ] Define the body domain shapes: measurement type, type summary, entry, detail summary, chart range and series, validation inputs, and the repository contract.
-- [ ] Implement type and entry validation, latest, previous, and first, both changes with their unavailable states, the per-entry change, and the range and series builders as pure functions.
-- [ ] Add the declarative schema file with the list, detail, and by-date read functions and the type create, rename, and delete and entry create, update, and delete functions; map the unique-name, restricted-delete, unique-date, and future-date failures in the Supabase repository.
-- [ ] Add application operations returning `OperationResult` values through server composition and thin Server Actions, with the caller supplying the configured local date.
-- [ ] Generate and review the migration; regenerate and review the database types.
-- [ ] Prepare the unit suite, the pgTAP suite, and a repository integration test that removes what it creates; add the integration file to `test:repository`; do not run them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Define the body domain shapes: measurement type, type summary, entry, detail summary, chart range and series, validation inputs, and the repository contract.
+- [x] Implement type and entry validation, latest, previous, and first, both changes with their unavailable states, the per-entry change, and the range and series builders as pure functions.
+- [x] Add the declarative schema file with the list, detail, and by-date read functions and the type create, rename, and delete and entry create, update, and delete functions; map the unique-name, restricted-delete, unique-date, and future-date failures in the Supabase repository.
+- [x] Add application operations returning `OperationResult` values through server composition and thin Server Actions, with the caller supplying the configured local date.
+- [x] Generate and review the migration; regenerate and review the database types.
+- [x] Prepare the unit suite, the pgTAP suite, and a repository integration test that removes what it creates; add the integration file to `test:repository`; do not run them.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T14:04:12+02:00` with Node.js `22.21.0`, npm `10.9.4`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, ten functions and no structural statement, which compiled inside an immediately rolled-back transaction before being applied locally for introspection. **All ten carry the `service_role` grant, the two internal helpers included**, and a direct call to `list_body_measurements` as the application role returned its JSON, which is the check `T-038` did not make. `npm run db:types` added the ten signatures and produced no further change on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the two unit suites, the pgTAP suite, and the repository integration test are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -103,11 +103,21 @@ Queries:
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
+## Recorded decisions
+
+- readiness answer 1 is written into the product document: the stale archiving sentence is gone, and deletion is the only lifecycle action beside renaming;
+- readiness answer 2 likewise: a type may be renamed, it keeps its identity so every entry stays attached, and names are unique regardless of case and surrounding spaces;
+- one read returns every type with its entries, so `S21` and `S23` come from the same call and the domain derives both, as `T-035` does for splits;
+- a type that still holds entries fails as a **conflict**, not a field error, because no field can be corrected to make that deletion legal;
+- both changes are unavailable rather than zero until a second measurement exists, and the preceding measurement is the one before it by date;
+- the chart opens on `all`, because a measurement is taken every few weeks at most;
+- every internal helper carries the `service_role` grant, and the delivery was smoke-checked through the application role, which is the check `T-038` did not make.
+
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-041: build body measurement operations`
-- **Committed scope:** Not created
+- **Committed scope:** the `0007_body_measurements.sql` declarative schema with its function-only migration and regenerated types; the `body` domain with its list, detail, and series rules beside `body-validation`; the chart contract extended with centimetres and a `measurement` metric; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the two prepared unit suites, the `0010_body_measurements` pgTAP suite, and the repository integration test with its `test:repository` registration; and the weight-and-body product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
 

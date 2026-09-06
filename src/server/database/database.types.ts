@@ -619,6 +619,10 @@ export type Database = {
           resulting_revision: number
         }[]
       }
+      assert_measurement_entry_values: {
+        Args: { p_entry_date: string; p_value_cm: number }
+        Returns: undefined
+      }
       assert_weight_entry_values: {
         Args: { p_entry_date: string; p_weight_kg: number }
         Returns: undefined
@@ -632,6 +636,15 @@ export type Database = {
         }
         Returns: string
       }
+      create_measurement_entry: {
+        Args: {
+          p_entry_date: string
+          p_measurement_type_id: string
+          p_value_cm: number
+        }
+        Returns: Json
+      }
+      create_measurement_type: { Args: { p_name: string }; Returns: Json }
       create_program: { Args: { p_name: string }; Returns: string }
       create_split_definition: {
         Args: {
@@ -653,6 +666,8 @@ export type Database = {
         Args: { p_workout_id: string }
         Returns: undefined
       }
+      delete_measurement_entry: { Args: { p_id: string }; Returns: undefined }
+      delete_measurement_type: { Args: { p_id: string }; Returns: undefined }
       delete_program: { Args: { p_program_id: string }; Returns: string }
       delete_split: { Args: { p_split_id: string }; Returns: string }
       delete_weight_entry: { Args: { p_id: string }; Returns: undefined }
@@ -662,15 +677,26 @@ export type Database = {
         Returns: Json
       }
       get_history_workout: { Args: { p_workout_id: string }; Returns: Json }
+      get_measurement_entry: {
+        Args: { p_entry_date: string; p_measurement_type_id: string }
+        Returns: Json
+      }
       get_today_view: { Args: never; Returns: Json }
       get_weight_entry: { Args: { p_entry_date: string }; Returns: Json }
       get_weight_overview: { Args: never; Returns: Json }
+      list_body_measurements: { Args: never; Returns: Json }
       list_exercise_history: { Args: never; Returns: Json }
       list_split_workouts: { Args: never; Returns: Json }
       list_workout_history: { Args: never; Returns: Json }
       mark_history_workout_completed: {
         Args: { p_workout_id: string }
         Returns: undefined
+      }
+      measurement_entry_json: {
+        Args: {
+          entry: Database["public"]["Tables"]["measurement_entries"]["Row"]
+        }
+        Returns: Json
       }
       remove_history_set: {
         Args: {
@@ -685,6 +711,10 @@ export type Database = {
           p_workout_exercise_id: string
         }
         Returns: undefined
+      }
+      rename_measurement_type: {
+        Args: { p_id: string; p_name: string }
+        Returns: Json
       }
       reorder_history_workout_exercises: {
         Args: { p_workout_exercise_ids: string[]; p_workout_id: string }
@@ -773,6 +803,10 @@ export type Database = {
           p_workout_id: string
         }
         Returns: undefined
+      }
+      update_measurement_entry: {
+        Args: { p_entry_date: string; p_id: string; p_value_cm: number }
+        Returns: Json
       }
       update_program_name: {
         Args: { p_name: string; p_program_id: string }

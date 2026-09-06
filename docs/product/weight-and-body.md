@@ -46,7 +46,9 @@ The user defines arbitrary measurement types. A type has a name and a unit fixed
 
 Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 
-Archiving a measurement type preserves all history and permits later reactivation.
+A measurement type may be renamed. The name is all that changes: the type keeps its identity, so every entry stays attached, and the unit stays `cm`. Names are unique regardless of case and surrounding spaces.
+
+Deletion is the only other lifecycle action. There is no archived state and no reactivation; [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed both.
 
 ### Measurement detail
 
@@ -56,6 +58,8 @@ Show latest value and date, change from the preceding measurement, total change 
 
 `total change = latest value − first value`
 
+Both are unavailable rather than zero until a second measurement exists, and the preceding measurement is the one before it *by date*. Values are shown as entered, to two decimals, and changes to one decimal for display only.
+
 The app does not label increase or decrease as inherently positive, because that depends on the measurement and user's goal.
 
-The chart supports month, quarter, year, and all.
+The chart supports month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every History chart's are.

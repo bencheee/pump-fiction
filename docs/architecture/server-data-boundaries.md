@@ -57,6 +57,10 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-038` adds the weight reads and writes under the same boundary. `get_weight_overview` returns every weigh-in with the configured local date, so each derivation is a pure function of one read rather than of the server's clock, and `get_weight_entry` reads one date for `S20` and the Today prompt. The three writes are ordinary transactional operations with the generic retry contract, one Server Action and one PostgreSQL function each. Each write checks the product rules first and raises a named error, so a duplicate date, a future date, and a rejected value reach the screen as field errors rather than as retryable failures; the `weight_entries` unique index and the `reject_future_local_entry_date` trigger from `T-006` stay behind them as the last line of defense and map to the same field errors.
 
+`T-041` adds the body measurements under the same boundary. `list_body_measurements` returns every type with its entries and the configured local date, so both `S21` and `S23` come from one read and every derivation is pure; `get_measurement_entry` reads one type and date for `S24`. The six writes are ordinary transactional operations with the generic retry contract. Each checks the product rules first and raises a named error, so a duplicate name, a duplicate date, a future date, and a rejected value reach the screen as field errors; a type that still holds entries is a conflict instead, because no field can be corrected to make that deletion legal. The unique indexes, the `on delete restrict` reference, and the `reject_future_local_entry_date` trigger from `T-006` stay behind them.
+
+Every internal helper these files add is `security invoker` and is granted to `service_role` alongside the functions that call it. `T-038` shipped two helpers without that grant and every weight call was refused with `42501` until its verification caught it.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

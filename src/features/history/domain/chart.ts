@@ -11,7 +11,7 @@
  * requires.
  */
 
-export type MeasureUnit = "kg" | "reps" | "volume" | "seconds";
+export type MeasureUnit = "kg" | "reps" | "volume" | "seconds" | "cm";
 
 export type ChartMetric =
   | "top_load"
@@ -23,7 +23,9 @@ export type ChartMetric =
   | "duration"
   /** Weight only: one weigh-in, and the Monday–Sunday average beside it. */
   | "weight"
-  | "weekly_average";
+  | "weekly_average"
+  /** Body only: one measurement of one user-defined type. */
+  | "measurement";
 
 export type ChartRange = "week" | "month" | "quarter" | "year" | "all";
 
@@ -76,6 +78,7 @@ export const metricLabels: Readonly<Record<ChartMetric, string>> = {
   duration: "Active duration",
   weight: "Weight",
   weekly_average: "Weekly average",
+  measurement: "Measurement",
 };
 
 export const metricUnits: Readonly<Record<ChartMetric, MeasureUnit>> = {
@@ -87,6 +90,7 @@ export const metricUnits: Readonly<Record<ChartMetric, MeasureUnit>> = {
   duration: "seconds",
   weight: "kg",
   weekly_average: "kg",
+  measurement: "cm",
 };
 
 /** The first local date inside a trailing range, or null for `all`. */
