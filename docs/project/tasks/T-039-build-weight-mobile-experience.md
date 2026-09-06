@@ -1,7 +1,7 @@
 # T-039 — Build Weight mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:34:18+02:00`
+- **Updated:** `2026-09-06T13:36:02+02:00`
 - **Started:** `2026-09-06T13:19:35+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T13:36:02+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
+- **Next action:** The Owner reviews and approves exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`. No feature test runs before that approval.
 
 ## Scope
 
@@ -106,7 +106,7 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`
 - **Subject:** `T-039: build Weight screens`
 - **Committed scope:** `S19` at `/history/weight` with its two stat cards, range selector, chart with legend, textual summary, accessible value lists, and weigh-in list; `S20` at `/history/weight/new` and `/history/weight/[date]/edit` with the date default, decimal field, inline validation, sticky cue row, save contract, and `O01` deletion; the shared `ProgressChart` extended with a companion series and a data-framed axis; `requireLocalDateRouteParam`; the prepared component suite and the prepared `weight` browser scenario; and the mobile-UI-foundation and screen-decision documents
 
@@ -158,3 +158,4 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
 | `2026-09-06T13:19:35+02:00` | User / Owner | `Backlog` | `Ready` | `T-038` is `Done` and the Owner's go-ahead for the whole Feature authorizes the screens that render it |
 | `2026-09-06T13:19:35+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Weight subsection on the `T-038` operations |
+| `2026-09-06T13:36:02+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`; static checks passed and both prepared suites remain unexecuted |
