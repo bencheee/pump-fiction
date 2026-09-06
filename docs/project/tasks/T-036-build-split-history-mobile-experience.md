@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:58:20+02:00`
+- **Updated:** `2026-09-06T10:58:49+02:00`
 - **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** `2026-09-06T10:54:05+02:00`
 - **Approval requested:** `2026-09-06T10:56:19+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T10:56:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against exact approved delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`; any replacement inherits this approval under ADR-0028.
+- **Next action:** Run the complete recorded plan from the beginning against replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`, which inherits the Task approval under ADR-0028.
 
 ## Scope
 
@@ -89,13 +89,14 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the unit command, which carries the new component suite covering the `S17` program filter with same-named splits kept apart, the deleted-split marker, the empty state, and the `S18` six statistics, exclusion rule, series summary and named value list, range round trip, and workout links; then the serialized Chromium and WebKit run of `tests/browser/split-history.spec.ts` covering `S17` to `S18`, the statistics, the chart summary and values, the empty week range and the return to all, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78`
+- **Authorized commit:** `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`, under the Task approval inherited per ADR-0028
 - **Results:** First verification on `2026-09-06T10:58:20+02:00` against exact approved delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: the serialized Split History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 25.2 seconds together**, and `npm run test:unit` passed **142 of 143 across 19 files**. The one failure is a test-only ambiguity: the longest duration reads `1 h 10 min` in its stat card, in the chart-values list, and in the workout list, and the assertion did not say which. The screens behave correctly. The correction inherits the Task approval under ADR-0028.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `e5f9bf82970ca37c213fb84fef554a4d37593a78`
-- **Subject:** `T-036: build Split History screens`
+- **Delivery commit SHA:** `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` (replacement, test source only; supersedes `e5f9bf82970ca37c213fb84fef554a4d37593a78`)
+- **Subject:** `T-036: read each duration statistic from its own card`
+- **Replacement scope:** one component assertion, now read per card; nothing else changed
 - **Committed scope:** `S17` with its loading state and program filter; `S18` with its loading state, six stat cards, range selector, series summary, named value list, exclusion rule, and workout links; the chart component promoted to `src/features/history/ui` with its formatter and its two updated importers; the prepared component suite and browser scenario; and the mobile UI foundation and wireframe decisions
 
 ## Review
@@ -107,7 +108,7 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 
 ## Approval
 
-- **Approved commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78` as the Task's first delivery
+- **Approved commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78` as the Task's first delivery; inherited by `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`
 - **Approved by:** User / Approver
 - **Approved at:** `2026-09-06T10:56:19+02:00`
 - **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
@@ -149,3 +150,4 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 | `2026-09-06T10:56:19+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T10:56:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` with `potvrda` |
 | `2026-09-06T10:56:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the recorded component and browser verification against the exact approved delivery |
+| `2026-09-06T10:58:49+02:00` | Claude Code primary agent / Executor | `Testing` | `Testing` | Delivered replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` for the ambiguous card assertion; it inherits the Task approval and the complete plan restarts against it |
