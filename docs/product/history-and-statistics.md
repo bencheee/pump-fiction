@@ -95,7 +95,7 @@ A band category that carries no kilograms tracks highest reps in a set and highe
 
 Depending on the exercise and selected metric, charts may show highest weight per workout, highest reps, total volume or reps, amount of assistance, or a meaningful band category.
 
-Available ranges are week, month, quarter, year, and all where the corresponding wireframe/product flow supports it. Assisted-weight charts visually treat a lower kilogram value as improvement. Exact chart technology remains undecided.
+The chart opens on the metric that tells the most about the exercise: the load it moves, whether lifted or assisted, and otherwise reps. Available ranges are week, month, quarter, year, and all where the corresponding wireframe/product flow supports it. Assisted-weight charts visually treat a lower kilogram value as improvement. Exact chart technology remains undecided.
 
 ## Split history
 

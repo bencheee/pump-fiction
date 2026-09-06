@@ -387,6 +387,29 @@ describe("chart series", () => {
 });
 
 describe("available metrics", () => {
+  it("offers the load first for an exercise that moves one", () => {
+    expect(
+      availableMetrics([
+        performance({
+          sets: [set({ loadMode: "weight", loadKg: 60, reps: 8 })],
+        }),
+      ])[0],
+    ).toBe("top_load");
+    expect(
+      availableMetrics([
+        performance({
+          sets: [set({ loadMode: "assistance_weight", loadKg: 15, reps: 8 })],
+        }),
+      ])[0],
+    ).toBe("least_load");
+    // Nothing to weigh, so reps lead.
+    expect(
+      availableMetrics([
+        performance({ sets: [set({ loadMode: "bodyweight", reps: 8 })] }),
+      ])[0],
+    ).toBe("top_reps");
+  });
+
   it("offers load and volume for weights and reps totals for bodyweight", () => {
     expect(
       availableMetrics([

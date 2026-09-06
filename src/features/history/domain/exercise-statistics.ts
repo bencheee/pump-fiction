@@ -388,6 +388,19 @@ const metricUnits: Readonly<Record<ChartMetric, RecordUnit>> = {
   total_reps: "reps",
 };
 
+/**
+ * The order the metric selector offers, most telling first. An exercise that
+ * moves a load opens on that load, because it is what the lifter compares;
+ * one that only moves the body opens on reps.
+ */
+const metricOrder: readonly ChartMetric[] = [
+  "top_load",
+  "least_load",
+  "top_reps",
+  "total_volume",
+  "total_reps",
+];
+
 /** The metrics that mean something for the categories this exercise actually has. */
 export function availableMetrics(
   performances: readonly ExercisePerformance[],
@@ -401,7 +414,7 @@ export function availableMetrics(
       metrics.add("total_volume");
     } else metrics.add("total_reps");
   }
-  return [...metrics];
+  return metricOrder.filter((metric) => metrics.has(metric));
 }
 
 /**
