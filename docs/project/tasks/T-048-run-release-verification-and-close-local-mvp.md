@@ -1,7 +1,7 @@
 # T-048 — Run the release verification and close the Local MVP
 
 - **Feature:** `F-010`
-- **Status:** `Backlog`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T14:52:00+02:00`
-- **Started:** Not reached
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Updated:** `2026-09-06T18:22:00+02:00`
+- **Started:** `2026-09-06T18:14:00+02:00`
+- **Review started:** `2026-09-06T18:22:00+02:00`
+- **Approval requested:** `2026-09-06T18:22:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await `T-043` through `T-046` and the Owner's own visual-comparison result.
+- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the release run.
 
 ## Scope
 
@@ -54,8 +54,8 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 ## Dependencies and blockers
 
-- Dependencies: `T-043` through `T-046` `Done`; the Owner's own visual-comparison result
-- Blockers: the `F-010` go-ahead; a functional defect found by `T-045` or `T-046` and not yet closed
+- Dependencies: `T-043` through `T-046` and `T-049` and `T-050` `Done`; the Owner's own visual-comparison result, which reaches the repository through an evidence commit when they report it
+- Blockers: None; `T-045` and `T-046` found no functional defect, and all 57 criteria carry verification
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -68,14 +68,14 @@ The last Task of the Milestone. Run the whole verification once against one appr
 - [ ] Snapshot the Owner's data, reset, and run the complete suite against the approved tree.
 - [ ] Record every command, count, and outcome, and restore the Owner's data.
 - [ ] Fill the matrix with the release-run evidence and record the Owner's visual-comparison result as they report it.
-- [ ] Sweep the documentation and annotate every superseded statement.
+- [x] Sweep the documentation and annotate every superseded statement.
 - [ ] Record the `F-010` and `M-001` completion gates and synchronize the three projections.
 - [ ] Hand the Owner exactly one next action: their confirmation of the Local MVP result.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T18:22:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 132 files, and all 1421 internal links. `git diff --check` was clean. This delivery changes documentation only. No feature test ran; the release run follows its approval.
 
 ## Test plan and results
 
@@ -87,16 +87,30 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
-- **Subject:** `T-048: run the release verification and close the Local MVP`
-- **Committed scope:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Subject:** `T-048: sweep the documentation for the release`
+- **Committed scope:** the `T-003-v1` package status and its supersession table; the two router rows that called the design packages current; the archived state, the drag-handle mention, and the unapproved-package sentence in the design-collaboration process; the mobile UI foundation's status line; this Task. No application source, schema, migration, generated type, or test source changed.
+
+## Why this Task delivers before it runs
+
+`T-048` carries both a documentation change and the release run, and [ADR-0021](../../decisions/0021-delivery-and-evidence-commit-model.md) puts them in that order: the delivery commit holds the scoped change, approval follows, and the run happens against the approved tree with its results recorded by evidence commits. So the documentation sweep is the delivery, and the release run, the Owner's visual comparison, and the `F-010` and `M-001` completion records are the evidence that follows it.
+
+## The documentation sweep
+
+The release reading found seven statements that accepted decisions had moved past, all in documents no implementation Task had reason to open:
+
+- the `T-003-v1` package still called itself `Draft for Task review`, though `T-003` delivered and the Owner approved it on 2026-08-26;
+- that package predates ADR-0023 through ADR-0027 and the reorder decision, so archiving, confirmed sets, the focused shell, four exercise types with a per-set mode chooser, and drag handles all still appear throughout it. It is **not** rewritten — a brief records what was sent, and editing it would falsify what the design agent was asked for — so its README now carries one table naming each supersession and its decision;
+- [`../../INDEX.md`](../../INDEX.md) called that package `Current` and the frozen return package a `candidate`, though one is historical and the other has been accepted since 2026-08-31;
+- the design-collaboration process required an `archived` state in every future brief, named drag handles among the interaction rules a brief must carry, and still said the `T-003-v1` package remained unapproved;
+- the mobile UI foundation still called itself `Implemented through T-016`, four Features and eleven Tasks ago.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T18:22:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** Nothing in the sweep changes behavior or a criterion. The design packages keep every word they were sent with; only their README says what has since been decided against them. What remains for the evidence commits is the release run, the Owner's own visual comparison, and the two completion records.
 
 ## Approval
 
@@ -117,7 +131,7 @@ The last Task of the Milestone. Run the whole verification once against one appr
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -137,3 +151,6 @@ The last Task of the Milestone. Run the whole verification once against one appr
 | --- | --- | --- | --- | --- |
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T14:52:00+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | `T-047` was canceled, so this Task records the Owner's own visual comparison instead of citing a repository run |
+| `2026-09-06T18:14:00+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the close once `T-046` completed and all 57 criteria carried verification |
+| `2026-09-06T18:14:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The documentation sweep is delivered first; the release run follows its approval, and the Owner's visual comparison is recorded as evidence when they report it |
+| `2026-09-06T18:22:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the documentation sweep; approval authorizes the release run against this exact tree |

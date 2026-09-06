@@ -23,8 +23,8 @@ Use this file as a router. Read only the documents needed for the current task a
 | Documentation obligations, commit approval, testing gate | [`process/development-governance.md`](process/development-governance.md) |
 | Accepted project-management workflow and evidence model | [`process/project-management.md`](process/project-management.md) |
 | External UI/UX design brief, handoff, and fidelity process | [`process/design-collaboration.md`](process/design-collaboration.md) |
-| Current versioned outbound mobile-design brief package | [`design/T-003-v1/README.md`](design/T-003-v1/README.md) |
-| Audited external mobile-design handoff candidate | [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md) |
+| Outbound mobile-design brief as sent on 2026-08-26, with its supersessions | [`design/T-003-v1/README.md`](design/T-003-v1/README.md) |
+| Accepted external mobile-design handoff and its fidelity limits | [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md) |
 | Current operational focus and next work | [`../PROJECT.md`](../PROJECT.md) |
 | Complete work-item registry and next IDs | [`project/INDEX.md`](project/INDEX.md) |
 | Per-criterion release verification evidence and remaining gaps | [`project/mvp-release-verification.md`](project/mvp-release-verification.md) |

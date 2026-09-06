@@ -23,9 +23,9 @@ The brief Task must produce a self-contained prompt that gives the design agent 
 - navigation model and complete screen/route inventory;
 - prioritized end-to-end flows and a criteria-to-screen map;
 - annotated low-fidelity wireframes for every required screen;
-- all required states: initial, populated, empty, loading, validation error, save in progress, saved, save failure, destructive confirmation, archived, incomplete, and restored active workout where applicable;
+- all required states: initial, populated, empty, loading, validation error, save in progress, saved, save failure, destructive confirmation, incomplete, and restored active workout where applicable. [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed the archived state this list once carried;
 - realistic sample data for every exercise/load mode, charts, long labels, and edge cases;
-- interaction rules for keyboard behavior, scrolling, sticky elements, bottom sheets/dialogs, drag handles, focus, touch targets, safe areas, and active-workout persistence feedback;
+- interaction rules for keyboard behavior, scrolling, sticky elements, bottom sheets/dialogs, reorder controls, focus, touch targets, safe areas, and active-workout persistence feedback;
 - expected component families, variants, and design-token categories;
 - the required handoff contract below, so the designer knows the eventual return format before beginning;
 - agreed reference viewport matrix, theme, UI language, product-name treatment, accessibility target, asset constraints, and browser/platform references;
@@ -34,7 +34,7 @@ The brief Task must produce a self-contained prompt that gives the design agent 
 
 The exact outbound prompt is a versioned repository artifact created during the design-brief Task, not an informal chat-only instruction.
 
-The first draft package is [`../design/T-003-v1/README.md`](../design/T-003-v1/README.md). It remains unapproved until its Task delivery commit completes review and receives Owner approval.
+The outbound package sent to the design agent is [`../design/T-003-v1/README.md`](../design/T-003-v1/README.md), approved in the `T-003` delivery on 2026-08-26. It is kept as sent and never rewritten; its README lists the accepted decisions that have since moved past it.
 
 ## Required handoff package
 

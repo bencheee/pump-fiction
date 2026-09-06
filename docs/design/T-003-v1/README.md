@@ -1,12 +1,26 @@
 # T-003 mobile design brief package v1
 
-- **Package status:** Draft for Task review
+- **Package status:** Delivered and superseded — this is the historical record of what was sent to the external design agent on 2026-08-26, kept as sent
 - **Prepared:** 2026-08-26
 - **Owner:** User
 - **Executor:** Codex primary agent
 - **Task:** [`T-003`](../../project/tasks/T-003-prepare-mobile-design-agent-brief.md)
 
-This versioned package is the complete outbound input for the external mobile UI/UX design phase. Repository product documents remain canonical for behavior. This package translates them into design inputs and must not be used to invent or change product rules.
+This versioned package was the complete outbound input for the external mobile UI/UX design phase. Repository product documents remain canonical for behavior. This package translates them into design inputs and must not be used to invent or change product rules.
+
+## Superseded by later accepted decisions
+
+`T-003` delivered this package on 2026-08-26 and the Owner approved it. Accepted decisions have since moved past parts of it. It is **not** rewritten: a brief is a record of what was sent, and editing it would falsify what the design agent was actually asked for. Read it as of its date, and read the following as no longer true anywhere in it:
+
+| No longer true | Accepted instead | Decision |
+| --- | --- | --- |
+| Archiving and reactivation of exercises, programs, splits, and measurement types, and every archived state, badge, filter, and `O05` overlay built on them | Deletion is permanent and immediate; History keeps its snapshots | [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md) |
+| A set is confirmed, and only confirmed sets count | A set is recorded once it holds everything its mode requires; nothing confirms it | [ADR-0027](../../decisions/0027-a-set-is-recorded-by-its-values.md) |
+| The active workout uses a focused shell with no bottom navigation | One shell owns every route and the four destinations stay reachable throughout a workout | [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) |
+| Four exercise types, with assistance as its own type, and a per-set mode chooser (`O02`) | Two types, `weights` and `bodyweight`, with assistance as a bodyweight addition; a set's mode is derived from the definition and no set offers a menu | [ADR-0023](../../decisions/0023-simplified-exercise-load-mode-model.md), [ADR-0026](../../decisions/0026-two-exercise-types-with-assistance-under-bodyweight.md) |
+| Reordering through a drag handle | A named move-up and move-down control on every row | Owner decision of 2026-09-06, recorded by [`T-050`](../../project/tasks/T-050-correct-the-reorder-and-current-set-language.md) |
+
+The audited return package, [`T-004-v0.4-frozen`](../T-004-v0.4-frozen/README.md), carries the same historical status and the same supersessions; its reference images still depict 19 frames of removed states, which its own manifest and this table together explain.
 
 ## Artifact inventory
 

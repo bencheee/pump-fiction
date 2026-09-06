@@ -1,6 +1,6 @@
 # Mobile UI foundation
 
-- **Status:** Implemented through `T-016`
+- **Status:** Implemented through `T-046`; every route of the Local MVP exists and no placeholder remains
 - **Design source:** [`../design/T-004-v0.4-frozen/README.md`](../design/T-004-v0.4-frozen/README.md)
 
 This document defines how later Feature Tasks consume the application-owned mobile shell, assets, tokens, routes, and shared UI. It does not add feature-screen behavior.
