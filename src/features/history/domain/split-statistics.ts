@@ -1,10 +1,12 @@
 import type { WorkoutSourceKind } from "@/features/active-workout/domain/workout";
 import {
+  metricLabels,
+  metricUnits,
   rangeStart,
   type ChartPoint,
   type ChartRange,
   type ChartSeries,
-} from "./exercise-statistics";
+} from "./chart";
 import type { HistoryWorkoutStatus } from "./workout-history";
 
 /**
@@ -166,8 +168,8 @@ export function durationSeries(
 
   return {
     metric: "duration",
-    label: "Active duration",
-    unit: "seconds",
+    label: metricLabels.duration,
+    unit: metricUnits.duration,
     lowerIsBetter: false,
     points,
   };

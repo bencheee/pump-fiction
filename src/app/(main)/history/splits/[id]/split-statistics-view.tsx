@@ -9,7 +9,7 @@ import {
   chartRanges,
   type ChartRange,
   type ChartSeries,
-} from "@/features/history/domain/exercise-statistics";
+} from "@/features/history/domain/chart";
 import { ProgressChart } from "@/features/history/ui/progress-chart";
 import { Badge, Chip, PageFrame, StatCard, TopBar } from "@/shared/ui";
 

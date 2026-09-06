@@ -3,7 +3,7 @@ import {
   operationSuccess,
   type OperationResult,
 } from "@/shared/application/operation-result";
-import type { ChartRange, ChartSeries } from "../domain/exercise-statistics";
+import type { ChartRange, ChartSeries } from "../domain/chart";
 import {
   durationSeries,
   programOptions,

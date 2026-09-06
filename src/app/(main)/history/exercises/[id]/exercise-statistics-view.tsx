@@ -8,11 +8,14 @@ import { formatSetSummary } from "@/features/active-workout/ui/workout-presentat
 import type { ExerciseStatistics } from "@/features/history/application/exercise-statistics-operations";
 import {
   chartRanges,
+  metricLabels,
   type ChartMetric,
   type ChartRange,
   type ChartSeries,
-  type ExercisePerformance,
-  type PersonalRecord,
+} from "@/features/history/domain/chart";
+import type {
+  ExercisePerformance,
+  PersonalRecord,
 } from "@/features/history/domain/exercise-statistics";
 import { Badge, Chip, EmptyState, PageFrame, TopBar } from "@/shared/ui";
 
@@ -21,15 +24,6 @@ import {
   incompleteExplanation,
 } from "../../history-presentation";
 import { ProgressChart } from "@/features/history/ui/progress-chart";
-
-const metricLabels: Readonly<Record<ChartMetric, string>> = {
-  top_load: "Highest load",
-  least_load: "Least assistance",
-  top_reps: "Highest reps",
-  total_volume: "Workout volume",
-  total_reps: "Workout reps",
-  duration: "Active duration",
-};
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",

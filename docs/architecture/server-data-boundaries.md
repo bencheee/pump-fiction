@@ -55,6 +55,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-035` adds `list_split_workouts`, the one read behind Split History. It returns saved split-sourced workouts with their identity snapshots and both name forms, and derives nothing; `src/features/history/domain/split-statistics.ts` groups by `source_split_identity_id`, applies the eligibility rule, and produces the summaries, the program filter, and the duration series.
 
+`T-038` adds the weight reads and writes under the same boundary. `get_weight_overview` returns every weigh-in with the configured local date, so each derivation is a pure function of one read rather than of the server's clock, and `get_weight_entry` reads one date for `S20` and the Today prompt. The three writes are ordinary transactional operations with the generic retry contract, one Server Action and one PostgreSQL function each. Each write checks the product rules first and raises a named error, so a duplicate date, a future date, and a rejected value reach the screen as field errors rather than as retryable failures; the `weight_entries` unique index and the `reject_future_local_entry_date` trigger from `T-006` stay behind them as the last line of defense and map to the same field errors.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

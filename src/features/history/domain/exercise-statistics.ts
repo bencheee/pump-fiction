@@ -11,6 +11,16 @@ import type {
   ExerciseBaseType,
   ExerciseLoadMode,
 } from "@/features/exercises/domain/exercise";
+import {
+  metricLabels,
+  metricUnits,
+  rangeStart,
+  type ChartMetric,
+  type ChartPoint,
+  type ChartRange,
+  type ChartSeries,
+  type MeasureUnit,
+} from "./chart";
 import type { HistoryWorkoutStatus } from "./workout-history";
 
 /** One occurrence of an exercise in a saved workout. */
@@ -112,7 +122,8 @@ export function categoryOf(set: WorkoutSet): ComparisonCategory | null {
   };
 }
 
-export type RecordUnit = "kg" | "reps" | "volume" | "seconds";
+/** A personal record is measured in the same units a chart series is. */
+export type RecordUnit = MeasureUnit;
 
 export type PersonalRecord = Readonly<{
   key: string;
@@ -345,57 +356,6 @@ export function latestEligiblePerformance(
   );
 }
 
-export type ChartMetric =
-  | "top_load"
-  | "least_load"
-  | "top_reps"
-  | "total_volume"
-  | "total_reps"
-  /** Split History only: active duration per completed workout. */
-  | "duration";
-
-export type ChartRange = "week" | "month" | "quarter" | "year" | "all";
-
-export const chartRanges: readonly ChartRange[] = [
-  "week",
-  "month",
-  "quarter",
-  "year",
-  "all",
-];
-
-export type ChartPoint = Readonly<{
-  workoutId: string;
-  date: string;
-  value: number;
-}>;
-
-export type ChartSeries = Readonly<{
-  metric: ChartMetric;
-  label: string;
-  unit: RecordUnit;
-  lowerIsBetter: boolean;
-  points: readonly ChartPoint[];
-}>;
-
-const metricLabels: Readonly<Record<ChartMetric, string>> = {
-  top_load: "Highest load",
-  least_load: "Least assistance",
-  top_reps: "Highest reps",
-  total_volume: "Workout volume",
-  total_reps: "Workout reps",
-  duration: "Active duration",
-};
-
-const metricUnits: Readonly<Record<ChartMetric, RecordUnit>> = {
-  top_load: "kg",
-  least_load: "kg",
-  top_reps: "reps",
-  total_volume: "volume",
-  total_reps: "reps",
-  duration: "seconds",
-};
-
 /**
  * The order the metric selector offers, most telling first. An exercise that
  * moves a load opens on that load, because it is what the lifter compares;
@@ -487,20 +447,4 @@ export function chartSeries(
       left.date.localeCompare(right.date),
     ),
   };
-}
-
-/** The first local date inside a trailing range, or null for `all`. */
-export function rangeStart(
-  range: ChartRange,
-  localDate: string,
-): string | null {
-  if (range === "all") return null;
-  const end = new Date(`${localDate}T00:00:00Z`);
-  if (!Number.isFinite(end.getTime())) return null;
-  const start = new Date(end);
-  if (range === "week") start.setUTCDate(start.getUTCDate() - 6);
-  if (range === "month") start.setUTCMonth(start.getUTCMonth() - 1);
-  if (range === "quarter") start.setUTCMonth(start.getUTCMonth() - 3);
-  if (range === "year") start.setUTCFullYear(start.getUTCFullYear() - 1);
-  return start.toISOString().slice(0, 10);
 }

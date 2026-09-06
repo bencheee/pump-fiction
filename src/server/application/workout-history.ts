@@ -16,11 +16,8 @@ import {
   getHistoryWorkout as runGetHistoryWorkout,
   listWorkoutHistory as runListWorkoutHistory,
 } from "@/features/history/application/workout-history-operations";
-import type {
-  ChartMetric,
-  ChartRange,
-  ExerciseHistoryEntry,
-} from "@/features/history/domain/exercise-statistics";
+import type { ChartMetric, ChartRange } from "@/features/history/domain/chart";
+import type { ExerciseHistoryEntry } from "@/features/history/domain/exercise-statistics";
 import type {
   HistoryMonthGroup,
   HistoryWorkout,

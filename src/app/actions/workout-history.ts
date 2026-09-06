@@ -1,9 +1,6 @@
 "use server";
 
-import type {
-  ChartMetric,
-  ChartRange,
-} from "@/features/history/domain/exercise-statistics";
+import type { ChartMetric, ChartRange } from "@/features/history/domain/chart";
 import {
   correctHistoryWorkout,
   getExerciseStatistics,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { WorkoutSet } from "@/features/active-workout/domain/workout";
+import { rangeStart } from "./chart";
 import {
   availableMetrics,
   categoryOf,
@@ -8,7 +9,6 @@ import {
   isRecordedSet,
   latestEligiblePerformance,
   personalRecords,
-  rangeStart,
   type ExercisePerformance,
 } from "./exercise-statistics";
 

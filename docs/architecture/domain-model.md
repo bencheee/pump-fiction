@@ -88,6 +88,8 @@ One decimal-centimeter value per measurement type and local calendar date.
 
 Calculation and date rules are canonical in [`weight-and-body.md`](../product/weight-and-body.md).
 
+`T-038` derives every weight value at read time in the History domain, beside the exercise and split statistics: Weight is a History subsection under [ADR-0003](../decisions/0003-history-information-architecture.md), and the chart contract and trailing-range helper it reuses already live there. `src/features/history/domain/weight.ts` holds the calendar-week grouping, the weekly average and change, the provisional rule, the individual change, and the chart series as pure functions of the stored entries and the configured local date; `weight-validation.ts` holds the entry rules. No table caches a weekly average, so correcting a historical weigh-in is immediately right everywhere.
+
 ## Settings
 
 One singleton application-settings record (`id = 1`) holds the configured IANA time zone and measurement units. The initial local value is `Europe/Zagreb`, matching the accepted local environment, and can later be updated without changing dated records. Display/storage units are constrained to kilograms and centimeters.

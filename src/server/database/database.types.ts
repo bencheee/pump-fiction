@@ -619,6 +619,10 @@ export type Database = {
           resulting_revision: number
         }[]
       }
+      assert_weight_entry_values: {
+        Args: { p_entry_date: string; p_weight_kg: number }
+        Returns: undefined
+      }
       create_exercise_definition: {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -640,6 +644,10 @@ export type Database = {
         }
         Returns: string
       }
+      create_weight_entry: {
+        Args: { p_entry_date: string; p_weight_kg: number }
+        Returns: Json
+      }
       delete_exercise: { Args: { p_exercise_id: string }; Returns: string }
       delete_history_workout: {
         Args: { p_workout_id: string }
@@ -647,6 +655,7 @@ export type Database = {
       }
       delete_program: { Args: { p_program_id: string }; Returns: string }
       delete_split: { Args: { p_split_id: string }; Returns: string }
+      delete_weight_entry: { Args: { p_id: string }; Returns: undefined }
       get_current_workout: { Args: never; Returns: Json }
       get_exercise_performances: {
         Args: { p_exercise_identity_id: string }
@@ -654,6 +663,8 @@ export type Database = {
       }
       get_history_workout: { Args: { p_workout_id: string }; Returns: Json }
       get_today_view: { Args: never; Returns: Json }
+      get_weight_entry: { Args: { p_entry_date: string }; Returns: Json }
+      get_weight_overview: { Args: never; Returns: Json }
       list_exercise_history: { Args: never; Returns: Json }
       list_split_workouts: { Args: never; Returns: Json }
       list_workout_history: { Args: never; Returns: Json }
@@ -777,6 +788,14 @@ export type Database = {
           p_split_id: string
         }
         Returns: string
+      }
+      update_weight_entry: {
+        Args: { p_entry_date: string; p_id: string; p_weight_kg: number }
+        Returns: Json
+      }
+      weight_entry_json: {
+        Args: { entry: Database["public"]["Tables"]["weight_entries"]["Row"] }
+        Returns: Json
       }
       workout_set_is_recorded: {
         Args: {

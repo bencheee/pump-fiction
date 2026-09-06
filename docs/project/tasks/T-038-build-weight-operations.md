@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T12:39:15+02:00`
+- **Updated:** `2026-09-06T13:12:40+02:00`
 - **Started:** `2026-09-06T12:39:15+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
 
 ## Scope
 
@@ -77,18 +77,29 @@ Queries:
 
 ## Execution checklist
 
-- [ ] Define the weight domain shapes: entry, weekly summary, latest summary, chart range and series, validation input, and the repository contract.
-- [ ] Implement the calendar-week grouping, weekly average and change, the provisional rule, the latest and individual change, entry validation, and the range and series builders as pure functions over the entries and the local date; reuse `rangeStart` and generalize the chart contract so a point needs no workout id and a series can carry the companion weekly-average series, keeping the History callers unchanged.
-- [ ] Add the declarative schema file with the overview and by-date read functions and the create, update, and delete functions, each returning the affected entry; map the uniqueness and future-date failures to field errors in the Supabase repository.
-- [ ] Add application operations that reduce the entries to the `S19` view, validate and route the writes, and return `OperationResult` values through server composition and thin Server Actions; the caller passes the configured local date, so derivation stays pure.
-- [ ] Generate and review the migration; regenerate and review the database types.
-- [ ] Prepare the unit suite, the pgTAP suite, and a repository integration test that removes what it creates; add the integration file to `test:repository`; do not run them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Define the weight domain shapes: entry, weekly summary, latest summary, chart range and series, validation input, and the repository contract.
+- [x] Implement the calendar-week grouping, weekly average and change, the provisional rule, the latest and individual change, entry validation, and the range and series builders as pure functions over the entries and the local date; reuse `rangeStart` and generalize the chart contract so a point needs no workout id and a series can carry the companion weekly-average series, keeping the History callers unchanged.
+- [x] Add the declarative schema file with the overview and by-date read functions and the create, update, and delete functions, each returning the affected entry; map the uniqueness and future-date failures to field errors in the Supabase repository.
+- [x] Add application operations that reduce the entries to the `S19` view, validate and route the writes, and return `OperationResult` values through server composition and thin Server Actions; the caller passes the configured local date, so derivation stays pure.
+- [x] Generate and review the migration; regenerate and review the database types.
+- [x] Prepare the unit suite, the pgTAP suite, and a repository integration test that removes what it creates; add the integration file to `test:repository`; do not run them.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+
+## Recorded decisions
+
+The `F-009` local decisions this Task settles, now written into [`weight-and-body.md`](../../product/weight-and-body.md) and [`domain-model.md`](../../architecture/domain-model.md):
+
+- weight lives in the History domain beside the exercise and split statistics, not in a separate Progress feature, because Weight is a History subsection under ADR-0003 and the chart contract it reuses already lives there;
+- the chart contract moves to `src/features/history/domain/chart.ts`, where a point needs no workout and may carry a span, and a series may carry a companion; the exercise and split series are byte-for-byte what they were;
+- the trailing chart window and the Monday-to-Sunday week are deliberately different things, and a weekly point sits on the last day its week reaches, so a provisional week is drawn at today;
+- the previous weigh-in is the previous one by date;
+- values are stored and shown to two decimals, and averages and changes are rounded to one decimal for display only;
+- the chart opens on the month.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T13:12:40+02:00` with Node.js `22.21.0`, npm `10.9.4`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, seven functions and no structural statement, which compiled inside an immediately rolled-back transaction before being applied locally for introspection; `npm run db:types` then added exactly the seven new function signatures and produced no further change on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the two unit suites, the pgTAP suite, and the repository integration test are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -100,9 +111,9 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-038: build weight operations`
-- **Committed scope:** Not created
+- **Committed scope:** the `0006_weight_operations.sql` declarative schema with its function-only migration and regenerated types; the History chart contract extracted to `domain/chart.ts` and generalized with an optional workout, a span, and a companion series, its consumers repointed and their series unchanged; the `weight` domain with the calendar weeks, the weekly average and change, the provisional rule, the individual change, and the two-series chart, beside `weight-validation`; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the two prepared unit suites, the `0009_weight_operations` pgTAP suite, and the repository integration test with its `test:repository` registration; and the weight-and-body product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
 

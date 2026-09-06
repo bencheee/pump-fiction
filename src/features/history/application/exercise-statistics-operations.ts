@@ -3,15 +3,13 @@ import {
   operationSuccess,
   type OperationResult,
 } from "@/shared/application/operation-result";
+import type { ChartMetric, ChartRange, ChartSeries } from "../domain/chart";
 import {
   availableMetrics,
   chartSeries,
   latestEligiblePerformance,
   personalRecords,
   type CategoryRecords,
-  type ChartMetric,
-  type ChartRange,
-  type ChartSeries,
   type ExerciseHistoryEntry,
   type ExercisePerformance,
 } from "../domain/exercise-statistics";

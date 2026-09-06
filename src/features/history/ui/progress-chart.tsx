@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 
-import type { ChartSeries } from "../domain/exercise-statistics";
+import type { ChartSeries } from "../domain/chart";
 
 /**
  * The chart is never the only representation of the data: the caller renders a
