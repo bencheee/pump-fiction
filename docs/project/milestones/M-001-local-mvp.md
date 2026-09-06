@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-06T14:27:19+02:00`
+- **Updated:** `2026-09-06T14:58:00+02:00`
 - **Progress:** `13/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -42,7 +42,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-012`](../features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`Done`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Done`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Done`)
-- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
+- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`; `0/5 Tasks Done`)
 
 ### Primary MVP-criteria ownership
 
@@ -62,7 +62,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-009` is `Done` and only `F-010` Local MVP Integration remains, which still needs a Task breakdown
+- Blockers: None; `F-009` is `Done` and only `F-010` Local MVP Integration remains, whose breakdown `T-043`–`T-048` the Owner confirmed on `2026-09-06`
 
 ## Related decisions and documents
 
@@ -195,3 +195,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | Recorded and locked the `F-009` breakdown `T-038`–`T-042` in `Backlog` | The Owner asked for the Tasks without implementation and then to lock, commit, and push them once `F-008` completed; three readiness questions await the Owner |
 | `2026-09-06T12:39:15+02:00` | User / Owner | Released `F-009` and started `T-038` | Accepted every recommended readiness answer and gave the go-ahead to implement the whole Feature |
 | `2026-09-06T14:27:19+02:00` | User / Owner | Completed `F-009`; Milestone remains incomplete | Confirmed the aggregate Weight and Body Progress result; `M-001` advances to 13/14 required Features Done |
+| `2026-09-06T14:58:00+02:00` | Claude Code primary agent / Planner | Recorded and locked the `F-010` breakdown `T-043`–`T-048` in `Backlog`, with `T-047` `Canceled` | The Owner asked for the last Feature's Tasks, took the visual comparison on themselves, and confirmed the rest; five required Tasks remain before the Milestone can close |

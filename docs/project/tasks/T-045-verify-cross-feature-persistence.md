@@ -1,0 +1,143 @@
+# T-045 — Verify cross-feature persistence and non-reinterpretation
+
+- **Feature:** `F-010`
+- **Status:** `Backlog`
+- **Horizon:** `Next`
+- **Order:** 3
+- **Target date:** None
+- **Executor:** Claude Code primary agent
+- **Reviewer:** User
+- **Approver:** User
+- **Created:** `2026-09-06T14:36:00+02:00`
+- **Updated:** `2026-09-06T14:52:00+02:00`
+- **Started:** Not reached
+- **Review started:** Not reached
+- **Approval requested:** Not reached
+- **Approved:** Not reached
+- **Testing started:** Not reached
+- **Completed:** Not reached
+- **Canceled:** Not reached
+- **Next action:** Await `T-043` and `T-044` and the `F-010` go-ahead. The scope and its local decisions are accepted.
+
+## Scope
+
+Deliver the release evidence for the two criteria `F-010` owns at the data level, which no single Feature could prove because each one crosses all of them: `MVP-REL-003` persistent canonical history and `MVP-REL-004` no silent data reinterpretation.
+
+One prepared browser scenario, `tests/browser/release-persistence.spec.ts`, that:
+
+- seeds one dataset touching every persisted category in `MVP-REL-003` — exercise definitions of both types with each addition, a program with several splits, a rotation pointer that is not on the first split, a current active workout with entered sets, a workout-specific note and accumulated timer, at least one completed and one incomplete workout, weight entries across two calendar weeks, and two measurement types with entries;
+- reloads the page and reopens the application in a fresh browser context, and asserts each of those categories comes back with its values, its order, and its rotation pointer intact, and that the active workout restores its entered sets, note, and accumulated duration rather than restarting;
+- then edits one exercise definition's name, note, and addition and deletes another, and asserts that every saved workout snapshot, History row, exercise-history entry, and statistic that already contained them reads exactly as before, including the deleted exercise still appearing in Exercise History by its identity snapshot;
+- deletes a split and asserts the workouts it produced keep their name snapshot and that only the rotation successor rule moves;
+- corrects one historical workout and deletes another, and asserts the affected personal records, charts, split durations, and **Last time** recalculate while no template and no rotation pointer moves;
+- removes every row it creates and leaves the Owner's own data untouched.
+
+The delivery is test source and documentation. No application change is expected; a defect the run finds is corrected as an in-scope replacement under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md), or becomes its own Task when it changes scope.
+
+## Out of scope
+
+- The phone-interaction sweep, owned by `T-046`, and the visual comparison, owned by `T-047`
+- The release run of every suite, owned by `T-048`
+- New product behavior, new derived statistics, and any change to the locked criteria
+- Re-proving a criterion an owning Feature already verified against its approved delivery; this Task proves only what crossing the Features can break
+
+## Acceptance criteria
+
+- [ ] The scenario asserts every category `MVP-REL-003` names, and it fails if any one of them is lost by a reload or a reopen.
+- [ ] The scenario asserts a definition edit and a definition deletion leave every existing snapshot, History row, and statistic unchanged, which is what `MVP-REL-004` forbids reinterpreting.
+- [ ] The scenario asserts a historical correction and a historical deletion recalculate the derived output while the templates and the rotation pointer stand.
+- [ ] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures attached.
+- [ ] It leaves no row behind: the database after the run matches the state before it.
+- [ ] The matrix rows for `MVP-REL-003` and `MVP-REL-004` cite this run and its approved SHA.
+
+## Traceability
+
+- MVP criteria: `MVP-REL-003`, `MVP-REL-004`; supporting `MVP-WRK-001`, `MVP-WRK-005`, `MVP-EXE-006`, `MVP-EXE-008`, `MVP-PRG-005`, `MVP-PRG-007`, `MVP-HIS-003`, `MVP-HIS-004`, `MVP-HIS-005`, `MVP-WGT-004`, `MVP-BOD-004`
+- ADRs: [ADR-0002](../../decisions/0002-template-snapshot-history-model.md), [ADR-0006](../../decisions/0006-approval-gated-feature-testing.md), [ADR-0019](../../decisions/0019-application-boundaries-and-active-workout-durability.md), [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md), [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
+- Canonical documents: [`../../architecture/domain-model.md`](../../architecture/domain-model.md), [`../../architecture/active-workout-durability.md`](../../architecture/active-workout-durability.md), [`../../architecture/server-data-boundaries.md`](../../architecture/server-data-boundaries.md), [`../../product/history-and-statistics.md`](../../product/history-and-statistics.md), [`../../product/programs-and-splits.md`](../../product/programs-and-splits.md)
+
+## Dependencies and blockers
+
+- Dependencies: `T-043` for the named gap and the release rule; `T-044` for the settled harness rule the scenario runs on; `F-004` through `F-009` `Done`
+- Blockers: the `F-010` go-ahead
+- Blocked from status: Not blocked
+
+## Documentation impact
+
+- Documents to create or update: `docs/project/mvp-release-verification.md` rows for the two criteria, this Task, `F-010`, registry, dashboard, project state
+- Documentation that should remain unchanged: the locked criteria text, the domain model and durability documents unless the run proves them wrong, every completed Task record
+
+## Execution checklist
+
+- [ ] Write the seeding and teardown helpers so the scenario owns every row it creates.
+- [ ] Write the persistence half: reload, reopen, and assert each category and the restored active workout.
+- [ ] Write the non-reinterpretation half: definition edit, definition deletion, split deletion, historical correction, historical deletion.
+- [ ] Attach structural captures at both reference viewports.
+- [ ] Prepare the scenario; do not run it.
+- [ ] Run only permitted static checks and deliver one reviewable commit.
+
+## Static-check plan and results
+
+- Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
+- Results: Not run
+
+## Test plan and results
+
+- **Test required:** `yes`
+- **No-test reason:** Not applicable
+- **Planned tests:** After the Task's one approval: `npm run test:browser` for this scenario alone on one worker across mobile Chromium and mobile WebKit, after a clean reset and with the Owner's data snapshotted and restored around it; then the unit suite to confirm nothing else moved. Must not run before that approval; replacements inherit it under ADR-0028.
+- **Authorized commit:** Not authorized
+- **Results:** Not run
+
+## Delivery commit
+
+- **Delivery commit SHA:** Not created
+- **Subject:** `T-045: verify cross-feature persistence and non-reinterpretation`
+- **Committed scope:** Not created
+
+## Review
+
+- **Reviewer:** User
+- **Reviewed at:** Not reviewed
+- **Outcome:** Not reviewed
+- **Findings:** None recorded
+
+## Approval
+
+- **Approved commit:** Not approved
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** Not approved
+
+## Definition of Ready
+
+- [x] ID, parent Feature, horizon, and order are set
+- [x] Scope and out-of-scope are clear
+- [x] Acceptance criteria are observable
+- [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
+- [x] Executor and Reviewer are named
+- [x] Dependencies are known; the scope is accepted and only the go-ahead and the two preceding Tasks remain
+- [x] Documentation impact and execution checklist are defined
+- [x] Static-check plan is defined
+- [x] `test_required` and an unexecuted plan or no-test reason are recorded
+- [x] Scope fits one independently reviewable delivery commit
+- [ ] Owner confirms transition to `Ready`
+
+## Definition of Done
+
+- [ ] Reviewer recommends approval
+- [ ] User approved the exact commit SHA
+- [ ] Scope and acceptance criteria are satisfied
+- [ ] Canonical documentation and required ADRs are current
+- [ ] Authorized feature tests passed, or approved no-test reason is recorded
+- [ ] Static checks and all evidence are recorded
+- [ ] Dashboard, registry, and parent progress are current
+- [ ] Follow-up scope has separate Tasks
+- [ ] Audit history is complete
+
+## Transition history
+
+| Timestamp | Actor/role | From | To | Reason or outcome |
+| --- | --- | --- | --- | --- |
+| `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
+| `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and the proposed local decisions (`ostalo potvrđujem da je ok`); only the go-ahead remains |

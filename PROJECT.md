@@ -1,30 +1,33 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:27:19+02:00
-- **Current phase:** Local MVP implementation — `F-009` Weight and Body Progress is `Done` with the Owner's confirmation on `2026-09-06`; only `F-010` remains
+- **Last updated:** 2026-09-06T14:58:00+02:00
+- **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` Local MVP Integration is the last Feature and has no Task breakdown
+- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-048`, of which five are required and `T-047` is `Canceled`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-No active work item. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) is `Done`: the Owner confirmed the Weight and Body Progress result on 2026-09-06T14:27:19+02:00. Weight is derived, rendered as `S19` and `S20`, and offered on Today; Body has its data and `S21` through `S24`; no placeholder route remains in the application.
+[`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration, the last Feature of the Milestone. Its breakdown `T-043` through `T-048` is recorded and the Owner confirmed it on 2026-09-06: the record precedes the verification and the verification precedes the close. `T-047` is `Canceled`, because the Owner makes the accepted-reference visual comparison themselves and `T-048` records what they report.
 
-[`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration is the last Feature of the Milestone. It has no Task breakdown.
+Both items that had no Task now have one: the finish review's `Confirmed sets` copy and the one visibility rule for the two test-support harnesses are `T-044`.
 
 ## Immediate next action
 
-The Owner's direction on `F-010`: whether to record its Task breakdown, and whether to start it. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Start [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — record the release verification matrix, so the remaining release scope is observable before anything is verified.
 
 ## Now
 
-None; every `F-009` Task is `Done`.
+1. [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — `Backlog`, Claude Code primary agent, `2026-09-06T14:52:00+02:00`; next action: move to `Ready` and write the matrix.
 
 ## Next
 
-1. [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration; the last Feature, with no Task breakdown yet.
+1. [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — the finish-review copy and one test-support visibility rule, recorded as `ADR-0029`.
+2. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — release evidence for `MVP-REL-003` and `MVP-REL-004`.
+3. [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — release evidence for `MVP-UX-001` through `MVP-UX-003`.
+4. [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — the release run, the filled matrix, and the `F-010` and `M-001` close.
 
 ## Later
 
@@ -58,5 +61,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
+- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`0/5 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
