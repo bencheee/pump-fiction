@@ -1,7 +1,7 @@
 # T-046 — Verify phone interaction, affordances, and destructive confirmation
 
 - **Feature:** `F-010`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T14:52:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T17:14:00+02:00`
+- **Started:** `2026-09-06T17:14:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await `T-043` and `T-044` and the `F-010` go-ahead. The scope and its local decisions are accepted.
+- **Next action:** The Owner's decision on finding `R3`, the reorder affordance; the rest of the sweep is being written.
 
 ## Scope
 
@@ -61,7 +61,7 @@ The delivery is test source and documentation. A defect the run finds is correct
 ## Dependencies and blockers
 
 - Dependencies: `T-043` for the named gap; `T-044` for the settled harness rule; `F-004` through `F-009` `Done`, so every route exists and no placeholder remains
-- Blockers: the `F-010` go-ahead
+- Blockers: finding `R3` below blocks one acceptance criterion; the rest is unblocked
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -124,7 +124,7 @@ The delivery is test source and documentation. A defect the run finds is correct
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -144,3 +144,5 @@ The delivery is test source and documentation. A defect the run finds is correct
 | --- | --- | --- | --- | --- |
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and the proposed local decisions (`ostalo potvrđujem da je ok`); only the go-ahead remains |
+| `2026-09-06T17:14:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead (`kreni`) once `T-045` completed |
+| `2026-09-06T17:14:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The last three open criteria; reading the application for its affordances surfaced finding `R3` before a line of the sweep was written |
