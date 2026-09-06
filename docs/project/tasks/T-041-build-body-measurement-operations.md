@@ -1,7 +1,7 @@
 # T-041 — Build body measurement operations
 
 - **Feature:** `F-009`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:05:38+02:00`
+- **Updated:** `2026-09-06T14:08:25+02:00`
 - **Started:** `2026-09-06T13:57:17+02:00`
 - **Review started:** `2026-09-06T14:05:38+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T14:08:25+02:00`
+- **Approved:** `2026-09-06T14:08:25+02:00`
+- **Testing started:** `2026-09-06T14:08:25+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews and approves exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`. No feature test runs before that approval.
+- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
 
 ## Scope
 
@@ -100,7 +100,7 @@ Queries:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit` for the change arithmetic, the edge counts, recalculation, and the range windows; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new body measurement suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `cde56f00dbc7d98c28cca1c7843dd37000250bab`
 - **Results:** Not run
 
 ## Recorded decisions
@@ -122,16 +122,16 @@ Queries:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T14:08:25+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `cde56f00dbc7d98c28cca1c7843dd37000250bab`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T14:08:25+02:00`
+- **Approval note:** The Owner replied `kreni` to the request to review this exact delivery, which had ended by saying the recorded plan runs on their approval. Nothing else was startable: `T-042` depends on this Task being `Done`. Recorded as the Task's one approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md); in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -168,3 +168,6 @@ Queries:
 | `2026-09-06T13:57:17+02:00` | User / Owner | `Backlog` | `Ready` | Weight is finished and the Owner's go-ahead for the whole Feature authorizes Body |
 | `2026-09-06T13:57:17+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the body measurement data and derivation |
 | `2026-09-06T14:05:38+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-06T14:08:25+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T14:08:25+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Replied `kreni` to the review request for exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` |
+| `2026-09-06T14:08:25+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |

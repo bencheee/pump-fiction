@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T14:05:38+02:00`
-- **Progress:** `3/5 required Tasks Done; T-041 is In Review`
+- **Updated:** `2026-09-06T14:08:25+02:00`
+- **Progress:** `3/5 required Tasks Done; T-041 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -133,3 +133,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T13:54:26+02:00` | Claude Code primary agent / Tester | Completed `T-040` | The complete plan passed: unit and component 192/192 and the Chromium and WebKit Today scenario 4/4; weight is finished and Body remains |
 | `2026-09-06T13:57:17+02:00` | Claude Code primary agent / Executor | Started `T-041` | Weight is finished, so Body begins with its data, as operations precede screens |
 | `2026-09-06T14:05:38+02:00` | Claude Code primary agent / Executor | Delivered `T-041` for review | Exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` awaits the Owner's approval before any feature test runs |
+| `2026-09-06T14:08:25+02:00` | User / Approver | Approved `T-041` | Authorized the recorded verification against exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` |
