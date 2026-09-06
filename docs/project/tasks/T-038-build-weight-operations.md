@@ -1,7 +1,7 @@
 # T-038 — Build weight operations
 
 - **Feature:** `F-009`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:12:11+02:00`
+- **Updated:** `2026-09-06T13:17:52+02:00`
 - **Started:** `2026-09-06T12:39:15+02:00`
 - **Review started:** `2026-09-06T13:15:07+02:00`
 - **Approval requested:** `2026-09-06T13:05:56+02:00`
 - **Approved:** `2026-09-06T13:05:56+02:00`
 - **Testing started:** `2026-09-06T13:05:56+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T13:17:52+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7`, then record the result.
+- **Next action:** None; `T-038` is `Done`. `F-009` continues with `T-039`.
 
 ## Scope
 
@@ -51,12 +51,12 @@ Queries:
 
 ## Acceptance criteria
 
-- [ ] A week with entries on three of its seven days averages those three values and reports `3/7`; a week whose preceding week is empty reports its weekly change as unavailable, never as zero.
-- [ ] The current week is provisional on every day before its Sunday and final on Sunday, computed in the configured time zone, including across a month boundary, a year boundary, and the local daylight-saving change.
-- [ ] Editing or deleting one entry changes every affected weekly average, weekly change, latest value, individual change, and chart point, and nothing else (`MVP-WGT-004`).
-- [ ] A duplicate date and a future local date are each rejected with a field error on the date, and a non-positive or over-precise value with a field error on the value; the stored entries are unchanged.
-- [ ] Chart series contain only neutral serializable points and metadata, are correct at each range boundary in the configured time zone, and the weekly-average series marks the current week provisional.
-- [ ] Unit tests cover the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation after an edit and a deletion; pgTAP and repository tests cover the read and write functions; none is executed.
+- [x] A week with entries on three of its seven days averages those three values and reports `3/7`; a week whose preceding week is empty reports its weekly change as unavailable, never as zero.
+- [x] The current week is provisional on every day before its Sunday and final on Sunday, computed in the configured time zone, including across a month boundary, a year boundary, and the local daylight-saving change.
+- [x] Editing or deleting one entry changes every affected weekly average, weekly change, latest value, individual change, and chart point, and nothing else (`MVP-WGT-004`).
+- [x] A duplicate date and a future local date are each rejected with a field error on the date, and a non-positive or over-precise value with a field error on the value; the stored entries are unchanged.
+- [x] Chart series contain only neutral serializable points and metadata, are correct at each range boundary in the configured time zone, and the weekly-average series marks the current week provisional.
+- [x] The unit tests covering the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation passed, as did the pgTAP and repository tests over the reads and the writes.
 
 ## Traceability
 
@@ -115,6 +115,8 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 
   Replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` adds the two grants to the declarative schema and to this Task's own migration, so one Task keeps one migration and a reset replays the corrected privileges. `supabase db reset` followed by the strict-coverage declarative sync then reported **no schema changes**, confirming the schema and the database agree, and the read that failed returned its JSON. The complete plan restarts from the beginning against the replacement.
 
+  Second verification, against exact replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` on `2026-09-06T13:17:52+02:00` in a fresh isolated worktree: **the complete plan passed**. `npm run test:unit` passed **174/174 across 21 files**; `supabase db reset` applied all 22 migrations and the seed; `npm run test:db` passed **157/157 across nine suites**, including `0009_weight_operations` **22/22**; `npm run test:repository` passed **8/8**, the weight file included; the regenerated types matched the committed file exactly; and `npm run db:restore` returned the Owner's data faithfully, ten exercises, one program, and three splits, with no weight row left behind by either suite.
+
 ## Delivery commit
 
 - **Delivery commit SHA:** `f9edf3a4c3492faf672e12b2dc452d61898a21d7` (grant-only replacement; supersedes first delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`)
@@ -153,15 +155,15 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA of the first delivery; the replacement inherited it under ADR-0028
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks: `T-039` renders what this derives
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -176,3 +178,4 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 | `2026-09-06T13:05:56+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916` with `potvrda` |
 | `2026-09-06T13:05:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |
 | `2026-09-06T13:12:11+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | The repository suite refused every call with `42501`, because the two `security invoker` helpers were never granted to `service_role`; replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` corrects the grants, inherits the Task approval under ADR-0028, and the complete plan restarts against it |
+| `2026-09-06T13:17:52+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against exact replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7`: unit 174/174, pgTAP 157/157, repository 8/8, matching types, and a faithful restore |

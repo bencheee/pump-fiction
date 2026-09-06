@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:12:11+02:00
+- **Last updated:** 2026-09-06T13:17:52+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is approved and under its authorized verification
+- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` started the same day
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-[`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — Build weight operations — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T13:05:56+02:00. The first verification found a missing grant on two `security invoker` helpers, which replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` corrects under the inherited approval of ADR-0028. It derives and persists everything `S19`, `S20`, and the Today weight prompt need: the Monday–Sunday weekly average and change, the provisional rule, the individual change, the chart series, and the create, update, and delete writes.
+No active work item. [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) is `Done`: weight has its entries, its weekly rules, and its writes. The complete plan passed against approved replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` after the first verification found a missing grant on two `security invoker` helpers, which the repository suite caught and the replacement corrected under the inherited approval of ADR-0028.
 
-The Owner released `F-009` on `2026-09-06` with `potvrda`, accepting all three recommended readiness answers: the stale archiving sentence in the weight and body document goes, a measurement type may be renamed, and Today shows the day's recorded weight with a link to Weight once it exists. `F-008` is `Done` and gave this Feature the History shell, the Weight and Body placeholder routes, the shared `ProgressChart`, and the range helper.
+[`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) renders it as `S19` and `S20` and is next in the Feature order.
 
 ## Immediate next action
 
-Run the complete recorded `T-038` plan and record the result. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Start [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — Build weight operations — `Testing` — Claude Code primary agent — 2026-09-06T13:12:11+02:00 — next: the complete plan restarted against `f9edf3a4c3492faf672e12b2dc452d61898a21d7`.
+None; `T-038` is `Done`.
 
 ## Next
 
@@ -43,10 +43,11 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — Build weight operations — inherited approval, exact replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` — Claude Code primary agent — 2026-09-06T13:12:11+02:00 — next required action: the complete recorded plan, restarted from the beginning.
+None.
 
 ## Recently completed Tasks
 
+- [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — completed `2026-09-06T13:17:52+02:00` — first delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`, verified through inherited replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` — unit 174/174, seeded reset, pgTAP 157/157, repository 8/8, unchanged types, and a faithful restore.
 - [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — completed `2026-09-06T11:39:47+02:00` — first delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`, verified through inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724` — the whole browser suite 32/32: 26 on the production server across mobile Chromium and WebKit and 6 durability tests on the development server.
 - [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — completed `2026-09-06T11:01:09+02:00` — first delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`, verified through inherited replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` — unit and component 143/143 and the serialized Chromium and WebKit Split History scenario 2/2 with four structural captures.
 - [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — completed `2026-09-06T10:50:32+02:00` — approved delivery `92b6d10b3472a13282c41712e3e75f939216f647` — unit 137/137, seeded reset, pgTAP 135/135, repository 7/7, unchanged types, and a faithful restore, on the first run.
