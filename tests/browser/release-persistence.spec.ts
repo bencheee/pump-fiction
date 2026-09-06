@@ -137,8 +137,13 @@ test.describe("Local MVP integration", () => {
       // snapshot and moves only the rotation successor.
       await rpc(client, "delete_split", { p_split_id: fixture.pushSplitId });
 
+      // The saved workout prints its split name in the top bar, the page
+      // heading, and the summary list, so the snapshot is read from the
+      // summary entry rather than from all three at once.
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}`);
-      await expect(page.getByText(fixture.pushSplit)).toBeVisible();
+      await expect(
+        page.getByRole("definition").filter({ hasText: fixture.pushSplit }),
+      ).toBeVisible();
       await page.goto("/history/splits");
       await expect(
         page.getByRole("link", { name: new RegExp(fixture.pushSplit) }).first(),
@@ -157,7 +162,12 @@ test.describe("Local MVP integration", () => {
         .getByRole("link", { name: new RegExp(fixture.pressName) })
         .first()
         .click();
-      await expect(page.getByText("95 kg × 8")).toBeVisible();
+      await expect(
+        page
+          .getByRole("region", { name: "Weight" })
+          .getByText("95 kg × 8")
+          .first(),
+      ).toBeVisible();
       await testInfo.attach(
         `release-reinterpretation-${testInfo.project.name}.png`,
         {
