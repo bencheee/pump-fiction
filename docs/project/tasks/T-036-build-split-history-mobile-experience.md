@@ -1,7 +1,7 @@
 # T-036 — Build Split History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:54:05+02:00`
+- **Updated:** `2026-09-06T10:56:19+02:00`
 - **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** `2026-09-06T10:54:05+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T10:56:19+02:00`
+- **Approved:** `2026-09-06T10:56:19+02:00`
+- **Testing started:** `2026-09-06T10:56:19+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`. Under ADR-0028 this is the one approval the Task needs; replacements inherit it.
+- **Next action:** Run the complete recorded plan against exact approved delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`; any replacement inherits this approval under ADR-0028.
 
 ## Scope
 
@@ -89,7 +89,7 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the unit command, which carries the new component suite covering the `S17` program filter with same-named splits kept apart, the deleted-split marker, the empty state, and the `S18` six statistics, exclusion rule, series summary and named value list, range round trip, and workout links; then the serialized Chromium and WebKit run of `tests/browser/split-history.spec.ts` covering `S17` to `S18`, the statistics, the chart summary and values, the empty week range and the return to all, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78`
 - **Results:** Not run
 
 ## Delivery commit
@@ -101,16 +101,16 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T10:56:19+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78` as the Task's first delivery
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T10:56:19+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -146,3 +146,6 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 | `2026-09-06T10:50:32+02:00` | User / Owner | `Backlog` | `Ready` | Every dependency is `Done` and the go-ahead for the whole `F-008` authorizes the last screens |
 | `2026-09-06T10:50:32+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Split History screens on the `T-035` derivation |
 | `2026-09-06T10:54:05+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-06T10:56:19+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T10:56:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` with `potvrda` |
+| `2026-09-06T10:56:19+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the recorded component and browser verification against the exact approved delivery |
