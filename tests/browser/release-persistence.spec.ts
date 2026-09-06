@@ -2,6 +2,8 @@ import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
+import { fillHydrated } from "./support/hydration";
+
 // F-010 owns MVP-REL-003 and MVP-REL-004, the two criteria no single Feature
 // could prove: each one is about what happens *between* the Features. Every
 // earlier scenario checked its own screens against its own data, so nothing
@@ -151,8 +153,11 @@ test.describe("Local MVP integration", () => {
 
       // A historical correction recalculates the derived output and moves no
       // template: the split still prescribes what it always did.
+      // The first entry after a full navigation waits for hydration: WebKit
+      // otherwise types into a controlled field before React attaches to it,
+      // which is the race T-037 recorded.
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}/edit`);
-      await page.getByLabel("Kilograms").first().fill("95");
+      await fillHydrated(page.getByLabel("Kilograms").first(), "95");
       await page.getByRole("button", { name: "Save corrections" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
       await expect(page.getByText("95 kg × 8")).toBeVisible();
