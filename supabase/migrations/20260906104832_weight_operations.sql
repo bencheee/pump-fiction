@@ -149,7 +149,7 @@ $function$;
 
 REVOKE ALL ON FUNCTION "public"."assert_weight_entry_values"(date, numeric) FROM PUBLIC;
 
-GRANT EXECUTE ON FUNCTION "public"."assert_weight_entry_values"(date, numeric) TO "postgres";
+GRANT EXECUTE ON FUNCTION "public"."assert_weight_entry_values"(date, numeric) TO "postgres", "service_role";
 
 REVOKE ALL ON FUNCTION "public"."create_weight_entry"(date, numeric) FROM PUBLIC;
 
@@ -173,4 +173,4 @@ GRANT EXECUTE ON FUNCTION "public"."update_weight_entry"(uuid, date, numeric) TO
 
 REVOKE ALL ON FUNCTION "public"."weight_entry_json"(public.weight_entries) FROM PUBLIC;
 
-GRANT EXECUTE ON FUNCTION "public"."weight_entry_json"(public.weight_entries) TO "postgres";
+GRANT EXECUTE ON FUNCTION "public"."weight_entry_json"(public.weight_entries) TO "postgres", "service_role";

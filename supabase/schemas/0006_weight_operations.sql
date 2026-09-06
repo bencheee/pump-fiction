@@ -172,6 +172,11 @@ revoke execute on function public.create_weight_entry(date, numeric) from public
 revoke execute on function public.update_weight_entry(uuid, date, numeric) from public, anon, authenticated;
 revoke execute on function public.delete_weight_entry(uuid) from public, anon, authenticated;
 
+-- Both helpers are `security invoker`, so the caller runs them: the five
+-- functions above are useless to `service_role` unless it may execute these
+-- two as well. Every internal helper in `0001_core.sql` is granted the same way.
+grant execute on function public.weight_entry_json(public.weight_entries) to service_role;
+grant execute on function public.assert_weight_entry_values(date, numeric) to service_role;
 grant execute on function public.get_weight_overview() to service_role;
 grant execute on function public.get_weight_entry(date) to service_role;
 grant execute on function public.create_weight_entry(date, numeric) to service_role;
