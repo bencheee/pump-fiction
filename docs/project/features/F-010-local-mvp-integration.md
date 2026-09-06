@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T17:32:00+02:00`
-- **Progress:** `4/7 required Tasks Done`
+- **Updated:** `2026-09-06T17:40:00+02:00`
+- **Progress:** `5/7 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -38,7 +38,7 @@ Recorded on `2026-09-06` at the Owner's request and confirmed by them the same d
 | 4 | [`T-045`](../tasks/T-045-verify-cross-feature-persistence.md) — Verify cross-feature persistence and non-reinterpretation (`Done`; approved delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`, verified through inherited replacement `a65a504b64482384c022175230176e983af66ce8`) | The release evidence for `MVP-REL-003` and `MVP-REL-004` as one browser scenario | `T-043`, `T-044` |
 | 5 | [`T-046`](../tasks/T-046-verify-phone-interaction-and-affordances.md) — Verify phone interaction, affordances, and destructive confirmation | The release evidence for `MVP-UX-001`–`003` as one sweep over every route at four widths | `T-043`, `T-044` |
 | — | [`T-047`](../tasks/T-047-compare-against-accepted-visual-references.md) — Compare against the accepted visual references (`Canceled` on `2026-09-06`) | Nothing; the Owner makes the comparison themselves and `T-048` records what they report | Not applicable |
-| 6 | [`T-050`](../tasks/T-050-correct-the-reorder-and-current-set-language.md) — Correct the reorder affordance and the current-set sentence | The drag-handle requirement in five sentences across four documents, and the current-set sentence ADR-0027 left behind | `T-046`'s finding `R3`; lands before `T-046` delivers |
+| 6 | [`T-050`](../tasks/T-050-correct-the-reorder-and-current-set-language.md) — Correct the reorder affordance and the current-set sentence (`Done`; approved delivery `17b12f4233282af479501fc9d0af50052d9ca39a`) | The drag-handle requirement in five sentences across four documents, and the current-set sentence ADR-0027 left behind | `T-046`'s finding `R3`; lands before `T-046` delivers |
 | 7 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`, `T-050`; the Owner's comparison result |
 
 `T-043` came first because it was the only Task that made the remaining scope observable: until each criterion's existing evidence and gap was written down, `T-045` and `T-046` would have been verifying by assumption. It earned its place immediately by finding three sentences that contradicted accepted decisions, which `T-049` now corrects — before `T-046` verifies the navigation rule, so the sweep reads a criterion that matches the application. `T-044` comes before the two verification Tasks because both run on the browser harness whose rule it settles, and because the release sweep should not read a screen that still contradicts an accepted decision.
@@ -130,3 +130,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T17:04:00+02:00` | Claude Code primary agent / Tester | Completed `T-045` | The complete plan passed against inherited replacement `a65a504b64482384c022175230176e983af66ce8`; `MVP-REL-003` and `MVP-REL-004` now carry release evidence and the whole browser suite passed 42/42 |
 | `2026-09-06T17:32:00+02:00` | User / Owner | Decided finding `R3` and opened `T-050` | The named arrow controls are the correct reorder affordance, so five sentences move to them; the current-set sentence is an ADR-0027 leftover and goes |
 | `2026-09-06T17:32:00+02:00` | Claude Code primary agent / Executor | Delivered `T-050` for review | Exact delivery `17b12f4233282af479501fc9d0af50052d9ca39a`; `T-046` delivers against the corrected criteria once it is approved |
+| `2026-09-06T17:40:00+02:00` | User / Approver | Approved `T-050`; completed it | `test_required` was `no`; the criteria now describe the delivered affordance, so `T-046` can assert it |

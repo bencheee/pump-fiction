@@ -1,7 +1,7 @@
 # T-050 — Correct the reorder affordance and the current-set sentence
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T17:26:00+02:00`
-- **Updated:** `2026-09-06T17:32:00+02:00`
+- **Updated:** `2026-09-06T17:40:00+02:00`
 - **Started:** `2026-09-06T17:30:00+02:00`
 - **Review started:** `2026-09-06T17:30:00+02:00`
 - **Approval requested:** `2026-09-06T17:30:00+02:00`
-- **Approved:** Not reached
+- **Approved:** `2026-09-06T17:40:00+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T17:40:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit; `T-046` delivers against the corrected criteria after it.
+- **Next action:** None; `T-050` is `Done`. `T-046` delivers against the corrected criteria.
 
 ## Scope
 
@@ -82,7 +82,7 @@ Amend ADR-0027 to name `MVP-UX-002` among the criteria it affects, the same omis
 - **No-test reason:** The delivery changes documentation only, to describe behavior the Owner accepted and earlier Tasks already delivered and verified: `T-013` and `T-016` built the reorder controls and `T-029` removed set confirmation under ADR-0027. `T-046` verifies the corrected affordance at release level within its own scope. Owner approval is still required before `Done`.
 - **Planned tests:** None
 - **Authorized commit:** Not applicable; `test_required` is `no`
-- **Results:** Not run
+- **Results:** Not applicable; `test_required` is `no` and the Owner approved that reason with the delivery.
 
 ## Delivery commit
 
@@ -99,10 +99,10 @@ Amend ADR-0027 to name `MVP-UX-002` among the criteria it affects, the same omis
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `17b12f4233282af479501fc9d0af50052d9ca39a`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T17:40:00+02:00`
+- **Approval note:** Approved (`odobreno`). No feature test follows, because `test_required` is `no`; `T-046` verifies the corrected affordance at release level.
 
 ## Definition of Ready
 
@@ -120,15 +120,15 @@ Amend ADR-0027 to name `MVP-UX-002` among the criteria it affects, the same omis
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -138,3 +138,5 @@ Amend ADR-0027 to name `MVP-UX-002` among the criteria it affects, the same omis
 | `2026-09-06T17:26:00+02:00` | User / Owner | `Backlog` | `Ready` | Decided both parts of `R3`: the named arrow controls are correct, and the current-set sentence is a leftover that goes |
 | `2026-09-06T17:30:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The Owner's decisions are recorded, so the documents move to the application |
 | `2026-09-06T17:30:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the five corrections and the ADR amendment; static checks passed and no feature test ran |
+| `2026-09-06T17:40:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `17b12f4233282af479501fc9d0af50052d9ca39a` (`odobreno`) |
+| `2026-09-06T17:40:00+02:00` | Claude Code primary agent / Executor | `Approved` | `Done` | `test_required` is `no`; the criteria now describe the affordance `T-046` asserts |
