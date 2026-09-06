@@ -1,7 +1,7 @@
 # T-038 — Build weight operations
 
 - **Feature:** `F-009`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:15:07+02:00`
+- **Updated:** `2026-09-06T13:05:56+02:00`
 - **Started:** `2026-09-06T12:39:15+02:00`
 - **Review started:** `2026-09-06T13:15:07+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T13:05:56+02:00`
+- **Approved:** `2026-09-06T13:05:56+02:00`
+- **Testing started:** `2026-09-06T13:05:56+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews and approves exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`. No feature test runs before that approval.
+- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
 
 ## Scope
 
@@ -106,7 +106,7 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit` for the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new weight suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `94196f3be1f8f7b47b204637a16cc30d0520e916`
 - **Results:** Not run
 
 ## Delivery commit
@@ -118,16 +118,16 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T13:05:56+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `94196f3be1f8f7b47b204637a16cc30d0520e916`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T13:05:56+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -164,3 +164,6 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 | `2026-09-06T12:39:15+02:00` | User / Owner | `Backlog` | `Ready` | The Owner accepted every `F-009` readiness answer and gave the go-ahead for the whole Feature |
 | `2026-09-06T12:39:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the weight data and derivation, the first Task of `F-009` |
 | `2026-09-06T13:15:07+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-06T13:05:56+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T13:05:56+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916` with `potvrda` |
+| `2026-09-06T13:05:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |
