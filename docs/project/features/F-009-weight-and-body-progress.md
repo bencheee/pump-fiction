@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T13:49:31+02:00`
-- **Progress:** `2/5 required Tasks Done; T-040 is In Review`
+- **Updated:** `2026-09-06T13:48:55+02:00`
+- **Progress:** `2/5 required Tasks Done; T-040 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -128,3 +128,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T13:39:20+02:00` | Claude Code primary agent / Tester | Completed `T-039` | The complete plan passed: unit and component 188/188 and the serialized Chromium and WebKit Weight scenario 2/2 with eight structural captures |
 | `2026-09-06T13:41:30+02:00` | Claude Code primary agent / Executor | Started `T-040` | Weight has its data and its screens, so the Today prompt can render them |
 | `2026-09-06T13:49:31+02:00` | Claude Code primary agent / Executor | Delivered `T-040` for review | Exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` awaits the Owner's approval before any feature test runs |
+| `2026-09-06T13:48:55+02:00` | User / Approver | Approved `T-040` | Authorized the recorded verification against exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` |

@@ -1,7 +1,7 @@
 # T-040 — Add today's weight prompt to Today
 
 - **Feature:** `F-009`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:49:31+02:00`
+- **Updated:** `2026-09-06T13:48:55+02:00`
 - **Started:** `2026-09-06T13:41:30+02:00`
 - **Review started:** `2026-09-06T13:49:31+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T13:48:55+02:00`
+- **Approved:** `2026-09-06T13:48:55+02:00`
+- **Testing started:** `2026-09-06T13:48:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews and approves exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`. No feature test runs before that approval.
+- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
 
 ## Scope
 
@@ -86,7 +86,7 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped Today component suite (prompt visibility per state, sheet lifecycle, conflict resolution) and the serialized one-worker Chromium and WebKit Today scenario on the `T-037` harness, extended with the prompt, the save, and its reflection on `S19`; the scenario removes the entry it creates. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `4992e617d3d367091332eb178525b2c61e35f0a5`
 - **Results:** Not run
 
 ## Recorded decisions
@@ -107,16 +107,16 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T13:48:55+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `4992e617d3d367091332eb178525b2c61e35f0a5`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T13:48:55+02:00`
+- **Approval note:** The Owner replied `odobreno` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -153,3 +153,6 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 | `2026-09-06T13:41:30+02:00` | User / Owner | `Backlog` | `Ready` | `T-039` is `Done` and the Owner's go-ahead for the whole Feature authorizes the Today surface |
 | `2026-09-06T13:41:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the `MVP-TOD-004` prompt on the `T-038` operations |
 | `2026-09-06T13:49:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`; static checks passed and both prepared suites remain unexecuted |
+| `2026-09-06T13:48:55+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T13:48:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` with `odobreno` |
+| `2026-09-06T13:48:55+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
