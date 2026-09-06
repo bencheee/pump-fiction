@@ -1,7 +1,7 @@
 # T-051 — Accept the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:34:00+02:00`
+- **Updated:** `2026-09-06T19:48:00+02:00`
 - **Started:** `2026-09-06T19:34:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T19:48:00+02:00`
+- **Approval requested:** `2026-09-06T19:48:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Write `ADR-0030`, revise the criteria and documents, and deliver one reviewable commit.
+- **Next action:** The Owner's approval of the exact delivery commit; `T-052` builds against it.
 
 ## Scope
 
@@ -37,11 +37,11 @@ Decide the change before anything implements it, so no Task builds against a doc
 
 ## Acceptance criteria
 
-- [ ] `ADR-0030` records the decision and names every criterion it affects, which is the omission that produced `R1` and `R3` in `F-010`.
-- [ ] No canonical document still says the bottom navigation has exactly four destinations, or that History contains Weight and Body.
-- [ ] Every revised criterion reads as the Owner decided, and the untouched ones are byte-identical.
-- [ ] The criteria count and their IDs stay stable; a new criterion takes the next free ID rather than reusing one.
-- [ ] The matrix records the revision without discarding the `M-001` evidence, which remains true of the behavior it verified.
+- [x] `ADR-0030` records the decision and names every criterion it affects, which is the omission that produced `R1` and `R3` in `F-010`.
+- [x] No canonical document still says the bottom navigation has exactly four destinations, or that History contains Weight and Body.
+- [x] Every revised criterion reads as the Owner decided, and the untouched ones are byte-identical.
+- [x] The criteria count and their IDs stay stable; a new criterion takes the next free ID rather than reusing one.
+- [x] The matrix records the revision without discarding the `M-001` evidence, which remains true of the behavior it verified.
 
 ## Traceability
 
@@ -62,12 +62,12 @@ Decide the change before anything implements it, so no Task builds against a doc
 
 ## Execution checklist
 
-- [ ] Write `ADR-0030`, naming every criterion it affects.
-- [ ] Revise the five criteria and add the Today measurement criterion.
-- [ ] Correct the product, UX, and architecture documents.
-- [ ] Add the supersession rows and the matrix note.
-- [ ] Confirm by search that no document still states the old rules.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Write `ADR-0030`, naming every criterion it affects.
+- [x] Revise the five criteria and add the Today measurement criterion.
+- [x] Correct the product, UX, and architecture documents.
+- [x] Add the supersession rows and the matrix note.
+- [x] Confirm by search that no document still states the old rules.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Test plan and results
 
@@ -80,20 +80,26 @@ Decide the change before anything implements it, so no Task builds against a doc
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T19:48:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 138 files, and all 1507 internal links. `git diff --check` was clean. A search for `four destinations`, `exactly four`, and `focused experience` across the product, UX, architecture, and process documents now returns nothing. This Task changes no application source, schema, migration, or test source.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-051: accept the Body destination`
-- **Committed scope:** Not created
+- **Committed scope:** `ADR-0030` and its register row; five revised criteria and the new `MVP-TOD-005`; the destination list and Body paragraph in the mobile IA document; the entry and unit rules in the weight-and-body document; the destination list, Today cards, and entry paragraph in the overview; the revision table in the release verification matrix; one supersession row in each design package; this Task.
+
+## One more surviving contradiction, found and fixed here
+
+[`overview.md`](../../product/overview.md) still said `An active workout is a separate focused experience without the standard bottom navigation.` [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) superseded that on `2026-09-05`, and `T-049` corrected the same claim in three other places on `2026-09-06` — but its search looked for `focused shell`, `focused screen`, and `without that bottom navigation`, and this sentence says `focused experience` and `the standard bottom navigation`. A fourth wording of a rule that had already been decided twice.
+
+It is corrected here because this Task was rewriting the destination list two lines above it, and leaving a known contradiction in a paragraph under edit would be a choice. The lesson is about the search, not the sentence: a phrase-based sweep finds the phrasings it thinks of.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T19:48:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The criteria now describe behavior the application does not yet have, which is what acceptance criteria are for and what the matrix says plainly: the `M-001` evidence is kept and marked as covering the superseded text, and re-verification is named per criterion. Nothing about derivation, weekly rules, or charts moved. The one thing worth reading twice is `MVP-WGT-001`: retrospective creation is gone, so a missed day stays unrecorded.
 
 ## Approval
 
@@ -135,3 +141,4 @@ Decide the change before anything implements it, so no Task builds against a doc
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T19:34:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for `F-015` (`nastavi`) |
 | `2026-09-06T19:34:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The decision precedes the build, so no Task implements against a document that contradicts it |
+| `2026-09-06T19:48:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered `ADR-0030`, six criteria, and the documents that stated the old rules; static checks passed and no feature test ran |

@@ -6,20 +6,23 @@ The product is designed only for phones. No desktop layout or desktop-specific n
 
 ## App shell
 
-The default app shell has four bottom-navigation destinations:
+The app shell has five bottom-navigation destinations:
 
 | Destination | Responsibility |
 | --- | --- |
 | Today | Next workout, workout entry points, today's weight prompt |
-| History | Workouts, exercise and split statistics, Weight, Body |
+| History | Workouts, exercise and split statistics |
 | Programs | Programs, splits, rotation, templates |
 | Exercises | Exercise definition library |
+| Body | Weigh-in history and body measurements |
 
-History owns its five subsections—Workouts, Exercises, Splits, Weight, and Body—as established by [ADR-0003](../decisions/0003-history-information-architecture.md).
+History owns three subsections—Workouts, Exercises, and Splits—under [ADR-0003](../decisions/0003-history-information-architecture.md). Body owns two of its own, Weight and Measurements, and is a destination rather than a subsection: [ADR-0030](../decisions/0030-body-is-its-own-destination.md) separated it from History, because weight and measurements are read on their own rhythm and answer a different question than workout history.
+
+Body reads and corrects but never creates. Today owns entry for the local date — the weigh-in it already offered, and now the measurements beside it — so a value is recorded on the day it belongs to. The accepted cost is that a day missed is a day not recorded: nothing fills one in afterwards.
 
 ## Active-workout shell
 
-An active workout opens its own screen but keeps the bottom navigation, so the user can browse Today, History, Programs, and Exercises during a workout and come back; see [ADR-0025](../decisions/0025-active-workout-in-the-main-shell.md). Leaving the screen keeps the workout running, and only **Continue Later** pauses it. The user can finish, pause, or enter the discard flow. Because only one workout can be active, reopening the application returns the user to that persisted session, and Today offers **Resume Workout**.
+An active workout opens its own screen but keeps the bottom navigation, so the user can browse every destination during a workout and come back; see [ADR-0025](../decisions/0025-active-workout-in-the-main-shell.md). Leaving the screen keeps the workout running, and only **Continue Later** pauses it. The user can finish, pause, or enter the discard flow. Because only one workout can be active, reopening the application returns the user to that persisted session, and Today offers **Resume Workout**.
 
 ## Mobile interaction rules
 

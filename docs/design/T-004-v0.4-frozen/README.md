@@ -51,6 +51,10 @@ Use the v0.4 prototype, tokens, and specifications for:
 
 Those v0.4-only areas and the known loading-frame ghost are excluded from pixel-diff against the v0.3 PNGs. WebKit raster verification moves to the later approved implementation-validation scope. Outside those exceptions, unexplained differences remain findings.
 
+## Superseded by later accepted decisions
+
+This package was audited and accepted on 2026-08-31 and is kept as returned. Accepted decisions have since moved past parts of it, and [`../T-003-v1/README.md`](../T-003-v1/README.md) carries the full table; it applies here unchanged. In frame terms, 19 of the 202 frames depict states the application no longer has — 16 archiving and reactivation frames under [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md) and the three `O02` per-set mode-chooser frames — and [ADR-0030](../../decisions/0030-body-is-its-own-destination.md) has since moved `S19` through `S24` out of History into a destination of their own, with their create actions removed.
+
 ## Assets and licensing
 
 - Vectors: 38 frozen Lucide SVG files from `lucide-static@1.34.0`, ISC license.

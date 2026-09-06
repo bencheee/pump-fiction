@@ -5,7 +5,7 @@
 
 ## How to use this document
 
-These criteria define observable acceptance, not implementation design. Stable IDs should be referenced from implementation plans and tests. The linked product documents remain canonical for full behavior; if a criterion and its canonical document disagree, report and resolve the mismatch before implementation.
+These criteria define observable acceptance, not implementation design. There are 58: the 57 locked on 2026-08-25 plus `MVP-TOD-005`, added on 2026-09-06 with [ADR-0030](../decisions/0030-body-is-its-own-destination.md). Stable IDs should be referenced from implementation plans and tests. The linked product documents remain canonical for full behavior; if a criterion and its canonical document disagree, report and resolve the mismatch before implementation.
 
 Unless a criterion explicitly says otherwise:
 
@@ -23,7 +23,7 @@ The accepted product is usable by one person on a phone without creating an acco
 
 ### MVP-REL-002 — Navigation boundary
 
-Outside an active workout, the bottom navigation exposes exactly Today, History, Programs, and Exercises. It stays visible and usable during an active workout too, so the user can look something up elsewhere and come back; because the workout is not one of the four destinations, none of them is marked current while its screen is open.
+The bottom navigation exposes exactly Today, History, Programs, Exercises, and Body. It stays visible and usable during an active workout too, so the user can look something up elsewhere and come back; because the workout is not one of the five destinations, none of them is marked current while its screen is open.
 
 ### MVP-REL-003 — Persistent canonical history
 
@@ -52,6 +52,10 @@ The user can give a one-time workout an arbitrary name and add active library ex
 ### MVP-TOD-004 — Today's weight prompt
 
 Today offers a weight input when the local date has no weight entry. After today's entry exists, the new-entry prompt is no longer shown as though another entry can be created.
+
+### MVP-TOD-005 — Today's measurement prompt
+
+Today offers one measurement input covering every defined measurement type that has no value for the local date, and names which are missing. Saving records them together. Once no measurement is missing, Today shows the day's recorded values without offering to create another; when no measurement type is defined, Today offers nothing.
 
 ## Exercise library
 
@@ -179,7 +183,7 @@ Canonical behavior: [`history-and-statistics.md`](history-and-statistics.md).
 
 ### MVP-HIS-001 — History structure
 
-History contains Workouts, Exercises, Splits, Weight, and Body. Exercise performance statistics do not appear as ownership of the Exercise Library, and split statistics do not belong to the Programs template area.
+History contains Workouts, Exercises, and Splits. Exercise performance statistics do not appear as ownership of the Exercise Library, and split statistics do not belong to the Programs template area. Weight and body measurements are not History: they are the Body destination, which [ADR-0030](../decisions/0030-body-is-its-own-destination.md) separated from it.
 
 ### MVP-HIS-002 — Workout list and snapshot detail
 
@@ -227,7 +231,7 @@ Canonical behavior: [`weight-and-body.md`](weight-and-body.md#weight-tracker).
 
 ### MVP-WGT-001 — Daily entry validation
 
-The user can create or edit one decimal-kilogram entry per local date, defaulting to today, and can delete it. Retrospective dates are accepted; future dates and a duplicate date are rejected.
+At most one decimal-kilogram entry exists per local date. Today creates the entry for the local date while that date has none; Body edits and deletes any existing entry but creates none, so a date that was not recorded on the day stays unrecorded. A duplicate date is rejected, and no screen offers a future one.
 
 ### MVP-WGT-002 — Weekly calculations
 
@@ -247,11 +251,11 @@ Canonical behavior: [`weight-and-body.md`](weight-and-body.md#body-tracker).
 
 ### MVP-BOD-001 — Measurement-type lifecycle
 
-The user can create an arbitrary named measurement type measured in `cm` and delete a type that has no entries. A type that still has entries cannot be deleted, because those entries are the only record of that measurement.
+In Body, the user can create an arbitrary named measurement type and delete a type that has no entries. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Every measurement is in centimetres, which is shown in the label beneath each measurement's name rather than as a field or a section of its own.
 
 ### MVP-BOD-002 — Measurement entry validation
 
-For each type, the user can create or edit one decimal-centimeter value per local date and can delete it. Retrospective dates are accepted; future and duplicate type/date entries are rejected.
+For each type, at most one decimal-centimeter value exists per local date. Today creates the values for the local date while that date is missing them; Body edits and deletes any existing value but creates none. A duplicate type and date is rejected, and no screen offers a future date.
 
 ### MVP-BOD-003 — Measurement detail
 

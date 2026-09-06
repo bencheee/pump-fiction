@@ -19,6 +19,7 @@ This versioned package was the complete outbound input for the external mobile U
 | The active workout uses a focused shell with no bottom navigation | One shell owns every route and the four destinations stay reachable throughout a workout | [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) |
 | Four exercise types, with assistance as its own type, and a per-set mode chooser (`O02`) | Two types, `weights` and `bodyweight`, with assistance as a bodyweight addition; a set's mode is derived from the definition and no set offers a menu | [ADR-0023](../../decisions/0023-simplified-exercise-load-mode-model.md), [ADR-0026](../../decisions/0026-two-exercise-types-with-assistance-under-bodyweight.md) |
 | Reordering through a drag handle | A named move-up and move-down control on every row | Owner decision of 2026-09-06, recorded by [`T-050`](../../project/tasks/T-050-correct-the-reorder-and-current-set-language.md) |
+| Weight and Body as History subsections, with entry on their own screens | A Body destination that reads and corrects; today's values are entered on Today | [ADR-0030](../../decisions/0030-body-is-its-own-destination.md) |
 
 The audited return package, [`T-004-v0.4-frozen`](../T-004-v0.4-frozen/README.md), carries the same historical status and the same supersessions; its reference images still depict 19 frames of removed states, which its own manifest and this table together explain.
 

@@ -2,13 +2,13 @@
 
 ## Shared date rules
 
-Weight and measurement entries use the user's configured local time zone. Retrospective entry and editing are allowed; future dates are not. Historical changes immediately affect derived values and charts.
+Weight and measurement entries use the user's configured local time zone. A value is created on the day it belongs to, on Today; an existing value can be edited or deleted afterwards in Body, and future dates are never offered. A day that was not recorded on the day stays unrecorded, which [ADR-0030](../decisions/0030-body-is-its-own-destination.md) accepted as the cost of moving entry to Today. Historical changes immediately affect derived values and charts.
 
 ## Weight tracker
 
-There is at most one weight entry per local calendar date. An entry contains date and decimal kilograms. Today is the default date; entries can be edited or deleted.
+There is at most one weight entry per local calendar date. An entry contains date and decimal kilograms. Today creates the day's entry; an existing entry can be edited or deleted in Body.
 
-The Today destination offers today's entry only when none exists. The full Weight experience lives under History.
+The Today destination offers the day's entry only while none exists, and shows the recorded value with a link to Body once it does. The full Weight experience is the Body destination's Weight tab.
 
 ### Weekly calculation
 
@@ -38,15 +38,15 @@ Values are stored and shown as entered, to two decimals. Averages and changes ar
 
 The chart supports week, month, quarter, and year and displays daily values together with weekly averages. It opens on the month.
 
-Its range is a trailing window that ends on the local date, as every History chart's is, while weekly averages stay Monday-to-Sunday calendar weeks. The two do not line up, and that is deliberate: `week` shows the last seven days, and the weekly average beside them is still the week's. A weekly point is drawn on the last day its week actually reaches, so the current provisional week appears at today rather than in the future, and it carries the week it covers, its recorded-days count, and whether it is still provisional. A week that began before the window keeps its whole average, because a week is a week.
+Its range is a trailing window that ends on the local date, as every chart's is, while weekly averages stay Monday-to-Sunday calendar weeks. The two do not line up, and that is deliberate: `week` shows the last seven days, and the weekly average beside them is still the week's. A weekly point is drawn on the last day its week actually reaches, so the current provisional week appears at today rather than in the future, and it carries the week it covers, its recorded-days count, and whether it is still provisional. A week that began before the window keeps its whole average, because a week is a week.
 
 ## Body tracker
 
-The user defines arbitrary measurement types. A type has a name and a unit fixed to `cm`; there is no archived state. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
+The user defines arbitrary measurement types in Body. A type has a name; every measurement is in centimetres, which is shown in the label beneath the name rather than as a field of its own, and there is no archived state. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
 
 Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 
-A measurement type may be renamed. The name is all that changes: the type keeps its identity, so every entry stays attached, and the unit stays `cm`. Names are unique regardless of case and surrounding spaces.
+A measurement type may be renamed. The name is all that changes: the type keeps its identity, so every entry stays attached, and the measurement stays in centimetres. Names are unique regardless of case and surrounding spaces.
 
 Deletion is the only other lifecycle action. There is no archived state and no reactivation; [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed both.
 
@@ -62,4 +62,4 @@ Both are unavailable rather than zero until a second measurement exists, and the
 
 The app does not label increase or decrease as inherently positive, because that depends on the measurement and user's goal.
 
-The chart supports month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every History chart's are.
+The chart supports month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every chart's are.

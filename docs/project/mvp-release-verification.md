@@ -1,6 +1,6 @@
 # MVP release verification
 
-- **Status:** Living record, opened by [`T-043`](tasks/T-043-record-release-verification-matrix.md) on `2026-09-06` and completed by [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md).
+- **Status:** Living record, opened by [`T-043`](tasks/T-043-record-release-verification-matrix.md) on `2026-09-06` and completed for `M-001` by [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md). `M-002` revises some of these criteria; the section below says which.
 - **Purpose:** show, for each of the 57 locked criteria in [`../product/mvp-acceptance-criteria.md`](../product/mvp-acceptance-criteria.md), which approved delivery already verified it and what release-level work remains.
 
 This is a verification record, not product specification. The locked criteria document remains canonical for what each criterion means, and the Task files remain canonical for what their verification found. This document adds no behavior and restates no result.
@@ -31,6 +31,21 @@ Reading all 57 criteria against the delivered application surfaced two disagreem
 - **R2 — `MVP-PRG-007` keeps an archiving heading.** The heading still reads `Archive a split` while its body correctly describes deletion under [ADR-0024](../decisions/0024-deletion-with-preserved-history.md), which [`T-021`](tasks/T-021-replace-archiving-with-deletion-in-data.md) delivered. Cosmetic, and it misdescribed nothing in the body. **Resolved** by `T-049`: the Owner decided `nema arhiviranja`, so the heading reads `Delete a split` and the body is unchanged.
 
 All three are closed, so `T-048` inherits no known disagreement from this reading; its own documentation sweep still has to confirm that nothing new appeared.
+
+## Criteria revised after M-001
+
+`M-001` closed on `2026-09-06` with all 57 criteria verified. [ADR-0030](../decisions/0030-body-is-its-own-destination.md) then revised five of them and added a sixth, delivered by [`T-051`](tasks/T-051-accept-the-body-destination.md).
+
+The evidence in the table below is **not discarded**: it remains true of the behavior it verified, which is what `M-001` delivered and what the application still does until `F-015` changes it. What the table no longer claims is that this evidence covers the revised text. Re-verification against the new text belongs to [`T-052`](tasks/T-052-build-the-body-destination.md) and [`T-053`](tasks/T-053-add-todays-measurement-entry.md).
+
+| Criterion | Revised to | Re-verified by |
+| --- | --- | --- |
+| `MVP-REL-002` | Five destinations, Body among them | `T-052` |
+| `MVP-HIS-001` | History contains Workouts, Exercises, and Splits | `T-052` |
+| `MVP-WGT-001` | Today creates; Body edits and deletes; no retrospective creation | `T-052`, `T-053` |
+| `MVP-BOD-001` | The unit is a label, not a field | `T-052` |
+| `MVP-BOD-002` | The same move as `MVP-WGT-001` | `T-052`, `T-053` |
+| `MVP-TOD-005` | New: Today's measurement prompt | `T-053` |
 
 ## Criteria
 
