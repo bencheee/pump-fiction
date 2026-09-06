@@ -1,7 +1,7 @@
 # T-049 — Correct two locked MVP criteria and the stale shell sentence
 
 - **Feature:** `F-010`
-- **Status:** `Ready`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T15:24:00+02:00`
-- **Updated:** `2026-09-06T15:24:00+02:00`
-- **Started:** Not reached
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Updated:** `2026-09-06T15:32:00+02:00`
+- **Started:** `2026-09-06T15:32:00+02:00`
+- **Review started:** `2026-09-06T15:32:00+02:00`
+- **Approval requested:** `2026-09-06T15:32:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Start the Task and correct the three sentences.
+- **Next action:** The Owner's approval of the exact delivery commit.
 
 ## Scope
 
@@ -38,12 +38,12 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Acceptance criteria
 
-- [ ] `MVP-REL-002` states that the bottom navigation stays visible during an active workout, and no canonical document still says a workout hides it.
-- [ ] `MVP-PRG-007` is headed `Delete a split` and its body is byte-identical to before.
-- [ ] The architecture document describes one shell, and `grep` finds no `focused shell` claim outside the frozen design packages, the ADR's own context paragraph, and completed Task records.
-- [ ] ADR-0025 names `MVP-REL-002` among the criteria it affects.
-- [ ] The matrix records findings `R1` and `R2` as resolved by this Task, with the Owner's decision and its date.
-- [ ] The criteria count stays 57 and no criterion's meaning changes beyond the two the Owner decided.
+- [x] `MVP-REL-002` states that the bottom navigation stays visible during an active workout, and no canonical document still says a workout hides it.
+- [x] `MVP-PRG-007` is headed `Delete a split` and its body is byte-identical to before.
+- [x] The architecture document describes one shell, and `grep` finds no `focused shell` claim outside the frozen design packages, the ADR's own context paragraph, and completed Task records.
+- [x] ADR-0025 names `MVP-REL-002` among the criteria it affects.
+- [x] The matrix records findings `R1` and `R2` as resolved by this Task, with the Owner's decision and its date.
+- [x] The criteria count stays 57 and no criterion's meaning changes beyond the two the Owner decided.
 
 ## Traceability
 
@@ -64,17 +64,17 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Execution checklist
 
-- [ ] Rewrite the `MVP-REL-002` second sentence and the `MVP-PRG-007` heading.
-- [ ] Correct the shell sentence in the architecture document.
-- [ ] Amend ADR-0025 to name `MVP-REL-002`.
-- [ ] Mark `R1` and `R2` resolved in the matrix with the Owner's decision and date.
-- [ ] Confirm by search that no canonical document still claims a focused shell or split archiving.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Rewrite the `MVP-REL-002` second sentence and the `MVP-PRG-007` heading.
+- [x] Correct the shell sentence in the architecture document.
+- [x] Amend ADR-0025 to name `MVP-REL-002`.
+- [x] Mark `R1` and `R2` resolved in the matrix with the Owner's decision and date.
+- [x] Confirm by search that no canonical document still claims a focused shell or split archiving.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T15:32:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 130 files, and all 1383 internal links across 184 unique targets. `git diff --check` was clean. A search for `focused shell` and `focused screen` across the product, UX, architecture, and process documents now returns nothing; the term survives only in the frozen design packages, ADR-0025's own context paragraph, and completed Task records, where it correctly describes what was superseded. This Task changes no application source, schema, migration, generated type, or test source.
 
 ## Test plan and results
 
@@ -86,16 +86,16 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-049: correct two locked MVP criteria and the stale shell sentence`
-- **Committed scope:** Not created
+- **Committed scope:** the `MVP-REL-002` second sentence and the `MVP-PRG-007` heading in the locked criteria document; one sentence in the local technical architecture; one consequence line in ADR-0025; the two findings marked resolved in the release verification matrix with their two criterion rows; this Task. No application source, schema, migration, generated type, or test source changed, and no other criterion moved.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T15:32:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** Three sentences change and each states what the Owner decided and what earlier Tasks already delivered. The `MVP-PRG-007` body is untouched, the criteria count is unchanged at 57, and no behavior moves.
 
 ## Approval
 
@@ -136,3 +136,5 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 | --- | --- | --- | --- | --- |
 | `2026-09-06T15:24:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | `T-043` found three stale sentences and the criteria document is locked, so the corrections need their own Task rather than an evidence commit |
 | `2026-09-06T15:24:00+02:00` | User / Owner | `Backlog` | `Ready` | Decided both findings: the bottom navigation must always be visible, and there is no archiving |
+| `2026-09-06T15:32:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The Owner's decisions are recorded, so the documents move to match the application |
+| `2026-09-06T15:32:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the three corrections and the ADR amendment; static checks passed and no feature test ran |

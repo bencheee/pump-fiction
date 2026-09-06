@@ -23,7 +23,7 @@ The accepted product is usable by one person on a phone without creating an acco
 
 ### MVP-REL-002 — Navigation boundary
 
-Outside an active workout, the bottom navigation exposes exactly Today, History, Programs, and Exercises. An active workout uses a focused screen without that bottom navigation.
+Outside an active workout, the bottom navigation exposes exactly Today, History, Programs, and Exercises. It stays visible and usable during an active workout too, so the user can look something up elsewhere and come back; because the workout is not one of the four destinations, none of them is marked current while its screen is open.
 
 ### MVP-REL-003 — Persistent canonical history
 
@@ -117,7 +117,7 @@ Starting the proposed split does not move rotation. Completing it advances to th
 
 Completing a Today-only alternate split or a one-time workout never advances rotation. Marking an incomplete historical workout completed later also never changes the then-current rotation.
 
-### MVP-PRG-007 — Archive a split
+### MVP-PRG-007 — Delete a split
 
 Deleting a split removes it and its prescriptions permanently while every workout it produced keeps its name snapshot in History. If it was next, the first split after it in the prior order—wrapping if needed—becomes next. The app rejects an attempt to delete the last split of the current program and explains that the current program must keep at least one split.
 

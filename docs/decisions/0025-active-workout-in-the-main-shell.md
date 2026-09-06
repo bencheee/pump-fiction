@@ -21,6 +21,7 @@ This supersedes the focused-shell rule in [`mobile-information-architecture.md`]
 - One shell owns every screen, which removes a whole layout branch and its keyboard/safe-area duplication.
 - Navigating away during a workout is ordinary navigation; the app offers no protection against leaving, which the release boundary already classifies as post-MVP.
 - The bottom navigation highlights no destination while the workout screen is open, because the workout is not one of the four destinations.
+- `MVP-REL-002` states the navigation boundary, so its second sentence changes with this decision: the bottom navigation stays visible during an active workout. That correction was missed here and delivered later by [`T-049`](../project/tasks/T-049-correct-two-locked-mvp-criteria.md), after [`T-043`](../project/tasks/T-043-record-release-verification-matrix.md) found the criterion still stating the superseded rule.
 - `MVP-WRK-005`, `MVP-WRK-010`, `MVP-TOD-001`, and `MVP-UX-001` keep their accepted text; only the shell placement changes.
 
 ## Related documents
