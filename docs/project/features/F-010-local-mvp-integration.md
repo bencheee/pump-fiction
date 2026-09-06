@@ -6,8 +6,8 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T16:52:00+02:00`
-- **Progress:** `3/6 required Tasks Done`
+- **Updated:** `2026-09-06T17:04:00+02:00`
+- **Progress:** `4/6 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -35,7 +35,7 @@ Recorded on `2026-09-06` at the Owner's request and confirmed by them the same d
 | 1 | [`T-043`](../tasks/T-043-record-release-verification-matrix.md) — Record the release verification matrix (`Done`; approved delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`) | One row per locked criterion: owning Feature, approved SHA, recorded evidence, and the remaining gap with the Task that closes it | `F-004`–`F-009`, `F-011`–`F-014` `Done` |
 | 2 | [`T-049`](../tasks/T-049-correct-two-locked-mvp-criteria.md) — Correct two locked MVP criteria and the stale shell sentence (`Done`; approved delivery `6cffc618d03198b576374b71db47a6156a2a296d`) | The `MVP-REL-002` navigation sentence, the `MVP-PRG-007` heading, the architecture document's focused-shell claim, and the ADR-0025 omission that let the contradiction survive | `T-043`; the Owner's decisions of `2026-09-06` |
 | 3 | [`T-044`](../tasks/T-044-close-discovered-release-corrections.md) — Close the two discovered release corrections (`Done`; approved delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42`, verified through inherited replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331`) | The finish review's stale `Confirmed sets` copy, and one production-visibility rule for both test-support routes so the browser suite runs one server | `T-037` `Done`; readiness answers 5 and 6 accepted |
-| 4 | [`T-045`](../tasks/T-045-verify-cross-feature-persistence.md) — Verify cross-feature persistence and non-reinterpretation | The release evidence for `MVP-REL-003` and `MVP-REL-004` as one browser scenario | `T-043`, `T-044` |
+| 4 | [`T-045`](../tasks/T-045-verify-cross-feature-persistence.md) — Verify cross-feature persistence and non-reinterpretation (`Done`; approved delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`, verified through inherited replacement `a65a504b64482384c022175230176e983af66ce8`) | The release evidence for `MVP-REL-003` and `MVP-REL-004` as one browser scenario | `T-043`, `T-044` |
 | 5 | [`T-046`](../tasks/T-046-verify-phone-interaction-and-affordances.md) — Verify phone interaction, affordances, and destructive confirmation | The release evidence for `MVP-UX-001`–`003` as one sweep over every route at four widths | `T-043`, `T-044` |
 | — | [`T-047`](../tasks/T-047-compare-against-accepted-visual-references.md) — Compare against the accepted visual references (`Canceled` on `2026-09-06`) | Nothing; the Owner makes the comparison themselves and `T-048` records what they report | Not applicable |
 | 6 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`; the Owner's comparison result |
@@ -126,3 +126,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T16:20:00+02:00` | Claude Code primary agent / Executor | Started `T-045` | The record and the corrections are done, so the two release criteria no single Feature could prove come next |
 | `2026-09-06T16:46:00+02:00` | Claude Code primary agent / Executor | Delivered `T-045` for review | Exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` prepares the two release scenarios for `MVP-REL-003` and `MVP-REL-004`; it awaits the Owner's approval before either runs |
 | `2026-09-06T16:52:00+02:00` | User / Approver | Approved `T-045` | Authorized both release scenarios against exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` |
+| `2026-09-06T17:04:00+02:00` | Claude Code primary agent / Tester | Completed `T-045` | The complete plan passed against inherited replacement `a65a504b64482384c022175230176e983af66ce8`; `MVP-REL-003` and `MVP-REL-004` now carry release evidence and the whole browser suite passed 42/42 |

@@ -37,8 +37,8 @@ Both are closed, so `T-048` inherits no known disagreement from this reading; it
 | --- | --- | --- | --- | --- |
 | `MVP-REL-001` | `F-004` | [`T-006`](tasks/T-006-establish-local-database-schema.md), [`T-009`](tasks/T-009-build-mobile-shell-and-ui-foundation.md) | `a5cf25925aab` | covered; `T-046` re-checks the phone-only boundary across every route |
 | `MVP-REL-002` | `F-004` | [`T-009`](tasks/T-009-build-mobile-shell-and-ui-foundation.md), revised by [`T-024`](tasks/T-024-keep-primary-navigation-during-workout.md) under ADR-0025, text corrected by [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `ded6f9f73e59` | covered; finding `R1` resolved, and `T-046` re-checks the corrected navigation rule |
-| `MVP-REL-003` | `F-010` | persistence foundation [`T-008`](tasks/T-008-build-active-workout-durability.md); every domain Feature writes into it | — | **gap** → [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) |
-| `MVP-REL-004` | `F-010` | snapshot model [`T-014`](tasks/T-014-build-today-and-workout-operations.md), corrections [`T-031`](tasks/T-031-build-workout-history-operations.md) | — | **gap** → [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) |
+| `MVP-REL-003` | `F-010` | persistence foundation [`T-008`](tasks/T-008-build-active-workout-durability.md); release evidence by [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` | covered; one dataset touching every category read back after a reload and from a freshly opened context |
+| `MVP-REL-004` | `F-010` | snapshot model [`T-014`](tasks/T-014-build-today-and-workout-operations.md); release evidence by [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` | covered; definition edit, definition deletion, split deletion, and a historical correction all leave the saved snapshots standing |
 | `MVP-TOD-001` | `F-007` | [`T-014`](tasks/T-014-build-today-and-workout-operations.md), [`T-015`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) | `f52c0447db67` | covered |
 | `MVP-TOD-002` | `F-007` | [`T-014`](tasks/T-014-build-today-and-workout-operations.md), [`T-015`](tasks/T-015-build-today-and-workout-start-mobile-experience.md) | `f52c0447db67` | covered |
 | `MVP-TOD-003` | `F-007` | [`T-015`](tasks/T-015-build-today-and-workout-start-mobile-experience.md), corrected by [`T-017`](tasks/T-017-correct-one-time-workout-starter-sets.md) | `8d5779258505` | covered |
@@ -93,7 +93,7 @@ Both are closed, so `T-048` inherits no known disagreement from this reading; it
 | `MVP-UX-002` | `F-010` | [`T-013`](tasks/T-013-build-programs-mobile-experience.md), [`T-016`](tasks/T-016-build-active-workout-mobile-experience.md) | — | **gap** → [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 | `MVP-UX-003` | `F-010` | [`T-016`](tasks/T-016-build-active-workout-mobile-experience.md), [`T-021`](tasks/T-021-replace-archiving-with-deletion-in-data.md), [`T-032`](tasks/T-032-build-workout-history-mobile-experience.md), [`T-039`](tasks/T-039-build-weight-mobile-experience.md), [`T-042`](tasks/T-042-build-body-mobile-experience.md) | — | **gap** → [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 
-57 criteria: 52 covered by an approved delivery's authorized verification, 5 open — the five `F-010` owns, which no single Feature could prove because each of them crosses all the Features.
+57 criteria: 54 covered by an approved delivery's authorized verification, 3 open — the three mobile-interaction criteria `T-046` closes. `MVP-REL-003` and `MVP-REL-004` were closed by `T-045` on `2026-09-06`; where a Task's verification ran against an inherited replacement, its own record names it.
 
 ## Release run record
 

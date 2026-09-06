@@ -1,7 +1,7 @@
 # T-045 — Verify cross-feature persistence and non-reinterpretation
 
 - **Feature:** `F-010`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T16:52:00+02:00`
+- **Updated:** `2026-09-06T17:04:00+02:00`
 - **Started:** `2026-09-06T16:20:00+02:00`
 - **Review started:** `2026-09-06T16:44:00+02:00`
 - **Approval requested:** `2026-09-06T16:44:00+02:00`
 - **Approved:** `2026-09-06T16:52:00+02:00`
 - **Testing started:** `2026-09-06T16:52:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T17:04:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized scenarios against the exact approved delivery and record the result.
+- **Next action:** None; `T-045` is `Done`. `T-046` follows.
 
 ## Scope
 
@@ -43,12 +43,12 @@ The delivery is test source and documentation. No application change is expected
 
 ## Acceptance criteria
 
-- [ ] The scenario asserts every category `MVP-REL-003` names, and it fails if any one of them is lost by a reload or a reopen.
-- [ ] The scenario asserts a definition edit and a definition deletion leave every existing snapshot, History row, and statistic unchanged, which is what `MVP-REL-004` forbids reinterpreting.
-- [ ] The scenario asserts a historical correction and a historical deletion recalculate the derived output while the templates and the rotation pointer stand.
-- [ ] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures attached.
-- [ ] It leaves no row behind: the database after the run matches the state before it.
-- [ ] The matrix rows for `MVP-REL-003` and `MVP-REL-004` cite this run and its approved SHA.
+- [x] The scenario asserts every category `MVP-REL-003` names, and it fails if any one of them is lost by a reload or a reopen.
+- [x] The scenario asserts a definition edit and a definition deletion leave every existing snapshot, History row, and statistic unchanged, which is what `MVP-REL-004` forbids reinterpreting.
+- [x] The scenario asserts a historical correction and a historical deletion recalculate the derived output while the templates and the rotation pointer stand.
+- [x] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures attached.
+- [x] It leaves no row behind: the database after the run matches the state before it.
+- [x] The matrix rows for `MVP-REL-003` and `MVP-REL-004` cite this run and its approved SHA.
 
 ## Traceability
 
@@ -87,7 +87,17 @@ The delivery is test source and documentation. No application change is expected
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:browser` for this scenario alone on one worker across mobile Chromium and mobile WebKit, after a clean reset and with the Owner's data snapshotted and restored around it; then the unit suite to confirm nothing else moved. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`
-- **Results:** Not run
+- **Results:** Four verifications against exact approved delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` and its inherited replacements, each in a fresh isolated worktree after a clean `supabase db reset`, with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, and Playwright `1.62.1`. Every failure was in the scenario, none in the application.
+
+  **First run, 0 of 4.** All four failed in the seed on the load-mode foreign key: the starter set was picked by a flat index into a query that ordered an embedded resource, and PostgREST orders the embedding rather than the rows, so index 2 landed on the press's second set instead of the chin-up's only set. Replacement `bda3d589` addresses a set by its exercise and its own position, and `setFor` throws by name when no such set exists.
+
+  **Second run, 2 of 4.** `MVP-REL-003` passed on both phones. `MVP-REL-004` hit strict mode: the saved workout prints its split name three times, in the top bar, the page heading, and the summary list. Replacement `d4be61ae` reads the snapshot from the summary entry and the personal record from inside the Weight region, as `T-034` does.
+
+  **Third run, 3 of 4.** Only WebKit's `MVP-REL-004` failed, at the one field entry after a full navigation: it typed into the correction form before React attached to it, so the value never reached React. This is exactly the race `T-037` recorded, and replacement `9be5aecc` uses its `fillHydrated` helper.
+
+  **Fourth run, 4 of 4** — but the database afterwards held 8 measurement types and 8 entries. The teardown deleted types before their entries, which `on delete restrict` refuses because `MVP-BOD-001` says a type with entries cannot be deleted, and it discarded the error, so it failed silently. Replacement `a65a504b64482384c022175230176e983af66ce8` deletes entries first and checks every teardown step.
+
+  **The complete plan passed against that replacement** on `2026-09-06T17:04:00+02:00`. The two scenarios passed **4/4**, two on mobile Chromium and two on mobile WebKit, with four structural captures. `npm run test:unit` passed **237/237 across 26 files** and `npm run test:components` **4/4**. The database before the run and after it were identical — 10 exercises, 1 program, 3 splits, 0 workouts, and no weight, measurement-type, or measurement-entry rows — so the scenarios removed everything they created. The whole browser suite then passed **42/42 in 2.1 minutes**, 21 on each phone, confirming the new spec disturbs none of the others. The local data is disposable by the Owner's direction of `2026-09-05`, so the seed baseline was left in place rather than snapshotted and restored.
 
 ## Delivery commit
 
@@ -109,6 +119,17 @@ Every locator and every enum value in the scenario was read out of the applicati
 One more would have failed every assertion in the reopened context: a context built from the raw `browser` fixture inherits nothing from the project, so `baseURL` and the phone profile are passed in explicitly. Without that, every relative `goto` would have thrown.
 
 The rotation pointer is read from the programs list row, whose markup states it as `Next: <split>` beside the split count and the `Current` badge — one row that proves the program, its splits, the current-program flag, and the pointer together.
+
+## Replacements
+
+Four, all test source, all inheriting the Task approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md):
+
+| SHA | Corrects |
+| --- | --- |
+| `bda3d5891e60835dc7cb9c43d5b77c4a79c9c1ef` | Addresses starter sets by exercise and position; an embedded-resource order never ordered the rows |
+| `d4be61ae049719955f58c4009b2e068f75bfb791` | Scopes the split-name and personal-record assertions out of strict-mode ambiguity |
+| `9be5aecc43ffd109b54f21f8bd5c75e28b0ad074` | Waits for hydration before the correction entry, the `T-037` WebKit race |
+| `a65a504b64482384c022175230176e983af66ce8` | Deletes measurement entries before their types and checks every teardown step |
 
 ## Review
 
@@ -140,15 +161,15 @@ The rotation pointer is read from the programs list row, whose markup states it 
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -161,3 +182,4 @@ The rotation pointer is read from the programs list row, whose markup states it 
 | `2026-09-06T16:44:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the two prepared scenarios; static checks passed and no feature test ran |
 | `2026-09-06T16:52:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` (`potvrda`) |
 | `2026-09-06T16:52:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The two release scenarios run on one worker across both phones, with the unit suite after them |
+| `2026-09-06T17:04:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against inherited replacement `a65a504b64482384c022175230176e983af66ce8`: the two scenarios 4/4, unit 237/237, components 4/4, the whole browser suite 42/42, and a database identical to its baseline |
