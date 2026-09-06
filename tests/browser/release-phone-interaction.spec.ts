@@ -373,9 +373,12 @@ async function seed(stamp: string) {
     p_min_reps: [6],
     p_max_reps: [10],
   });
+  // The pointer sits on the second split, so the first can be recorded as an
+  // alternate: a split that is already the proposed one cannot be started as
+  // an alternate, which the database refuses with PF206.
   await rpc(client, "set_current_program", {
     p_program_id: programId,
-    p_next_split_id: splitAId,
+    p_next_split_id: splitBId,
   });
 
   // One completed workout for History, then one current workout that stays
@@ -383,7 +386,7 @@ async function seed(stamp: string) {
   const workoutId = await recordCompleted(client, splitAId, exerciseId);
   await rpc(client, "start_workout", {
     p_source_kind: "proposed_split",
-    p_split_id: splitAId,
+    p_split_id: splitBId,
     p_one_time_name: "",
     p_exercise_ids: [],
     p_started_at: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
