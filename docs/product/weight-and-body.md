@@ -48,6 +48,8 @@ Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 
 A measurement type may be renamed. The name is all that changes: the type keeps its identity, so every entry stays attached, and the measurement stays in centimetres. Names are unique regardless of case and surrounding spaces.
 
+Today records the day's measurements. While any defined measurement has no value for the local date, Today offers one card naming which are missing and one sheet that takes them all; saving writes them in a single transaction, so the day is recorded or none of it is. Once nothing is missing the card shows the day's values with a link to Body. No card appears while no measurement type is defined.
+
 Deletion is the only other lifecycle action. There is no archived state and no reactivation; [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed both.
 
 ### Measurement detail

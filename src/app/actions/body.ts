@@ -3,6 +3,7 @@
 import type { ChartRange } from "@/features/history/domain/chart";
 import {
   createMeasurementEntry,
+  createTodayMeasurementEntries,
   createMeasurementType,
   deleteMeasurementEntry,
   deleteMeasurementType,
@@ -41,6 +42,10 @@ export async function renameMeasurementTypeAction(input: unknown) {
 
 export async function deleteMeasurementTypeAction(input: unknown) {
   return deleteMeasurementType(input);
+}
+
+export async function createTodayMeasurementEntriesAction(input: unknown) {
+  return createTodayMeasurementEntries(input);
 }
 
 export async function createMeasurementEntryAction(input: unknown) {

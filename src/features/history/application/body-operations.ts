@@ -7,11 +7,14 @@ import {
   measurementDetail,
   measurementSeries,
   measurementSummaries,
+  todayMeasurements,
   type MeasurementDetail,
   type MeasurementEntry,
   type MeasurementSummary,
   type MeasurementType,
+  type TodayMeasurements,
 } from "../domain/body";
+import type { MeasurementEntryDraft } from "../domain/body-validation";
 import {
   validateMeasurementEntry,
   validateMeasurementEntryEdit,
@@ -149,6 +152,76 @@ export async function createMeasurementEntry(
   if (!validation.ok) return validationFailure(validation);
   try {
     return operationSuccess(await repository.createEntry(validation.value));
+  } catch (error) {
+    return writeFailure(error);
+  }
+}
+
+/**
+ * `MVP-TOD-005`. Today's card sends one value per measurement the day is
+ * missing, and they are written in one transaction. A refusal names the
+ * measurement it belongs to, so the user is not left to work out which value
+ * of several the database objected to.
+ */
+export async function getTodayMeasurements(
+  repository: BodyRepository,
+): Promise<OperationResult<TodayMeasurements>> {
+  try {
+    const stored = await repository.list();
+    return operationSuccess(
+      todayMeasurements(stored.localDate, measurementSummaries(stored.types)),
+    );
+  } catch {
+    return persistence("We couldn't load your measurements. Try again.");
+  }
+}
+
+export async function createTodayMeasurementEntries(
+  repository: BodyRepository,
+  input: unknown,
+): Promise<OperationResult<readonly MeasurementEntry[]>> {
+  const localDate = await readLocalDate(repository);
+  if (localDate === null)
+    return persistence("We couldn't save the measurements. Try again.");
+
+  const entries = Array.isArray(input) ? input : null;
+  if (entries === null || entries.length === 0)
+    return operationFailure({
+      code: "validation",
+      message: "Enter at least one measurement.",
+      retryable: false,
+    });
+
+  const drafts: MeasurementEntryDraft[] = [];
+  const fieldErrors: Record<string, string[]> = {};
+  for (const entry of entries) {
+    const candidate = entry as { measurementTypeId?: unknown };
+    const result = validateMeasurementEntry(
+      { ...(entry as object), entryDate: localDate },
+      localDate,
+    );
+    if (result.ok) {
+      drafts.push(result.value);
+      continue;
+    }
+    // The card keeps one field per measurement, so a refusal is reported
+    // against the measurement it came from rather than against the form.
+    const id = String(candidate.measurementTypeId ?? "");
+    const messages = Object.values(result.fieldErrors).flat();
+    fieldErrors[id] =
+      messages.length > 0 ? messages : ["Check this measurement."];
+  }
+
+  if (Object.keys(fieldErrors).length > 0)
+    return operationFailure({
+      code: "validation",
+      message: "Check the measurements and try again.",
+      retryable: false,
+      fieldErrors,
+    });
+
+  try {
+    return operationSuccess(await repository.createEntries(drafts));
   } catch (error) {
     return writeFailure(error);
   }

@@ -31,6 +31,13 @@ export interface BodyRepository {
   renameType(rename: MeasurementTypeRename): Promise<MeasurementType>;
   removeType(id: string): Promise<void>;
   createEntry(draft: MeasurementEntryDraft): Promise<MeasurementEntry>;
+  /**
+   * Today records every measurement the day is missing in one action, so the
+   * writes share one transaction: either the day is recorded or none of it is.
+   */
+  createEntries(
+    drafts: readonly MeasurementEntryDraft[],
+  ): Promise<readonly MeasurementEntry[]>;
   updateEntry(edit: MeasurementEntryEdit): Promise<MeasurementEntry>;
   removeEntry(id: string): Promise<void>;
 }

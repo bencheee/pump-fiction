@@ -91,6 +91,25 @@ export class SupabaseBodyRepository implements BodyRepository {
     });
   }
 
+  async createEntries(
+    drafts: readonly MeasurementEntryDraft[],
+  ): Promise<readonly MeasurementEntry[]> {
+    return this.run(async () => {
+      const { data, error } = await this.client.rpc(
+        "create_measurement_entries",
+        {
+          p_measurement_type_ids: drafts.map(
+            (draft) => draft.measurementTypeId,
+          ),
+          p_entry_date: drafts[0]?.entryDate ?? "",
+          p_values_cm: drafts.map((draft) => draft.valueCm),
+        },
+      );
+      if (error) throw mapPostgrestError(error);
+      return data as unknown as readonly MeasurementEntry[];
+    });
+  }
+
   async updateEntry(edit: MeasurementEntryEdit): Promise<MeasurementEntry> {
     return this.run(async () => {
       const { data, error } = await this.client.rpc(

@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(30);
+select plan(34);
 
 -- T-041 fixtures, prefixed so the seed and the other suites stay unambiguous.
 -- Weekly and total changes are product rules and live in the History domain,
@@ -183,6 +183,49 @@ select throws_ok(
   'PF408'::character(5),
   'Measurement entry does not exist',
   'deleting a measurement that does not exist is refused'
+);
+
+-- T-053. Today records every measurement the day is missing in one action.
+select is(
+  jsonb_array_length(
+    public.create_measurement_entries(
+      array[
+        (public.create_measurement_type('T053 A') ->> 'id')::uuid,
+        (public.create_measurement_type('T053 B') ->> 'id')::uuid
+      ],
+      '2026-04-02'::date,
+      array[84, 38]::numeric[]
+    )
+  ),
+  2,
+  'create_measurement_entries writes every value it is given'
+);
+
+select is(
+  (select count(*)::integer from public.measurement_entries where entry_date = '2026-04-02'),
+  2,
+  'both values are recorded for that date'
+);
+
+-- One refusal takes the whole action with it: the day is recorded or it is not.
+select throws_ok(
+  $$select public.create_measurement_entries(
+      array[
+        (select id from public.measurement_types where name = 'T053 A'),
+        (select id from public.measurement_types where name = 'T053 B')
+      ],
+      '2026-04-03'::date,
+      array[85, -1]::numeric[]
+    )$$,
+  'PF406',
+  NULL,
+  'a refused value refuses the whole action'
+);
+
+select is(
+  (select count(*)::integer from public.measurement_entries where entry_date = '2026-04-03'),
+  0,
+  'nothing from the refused action is written'
 );
 
 select * from finish();

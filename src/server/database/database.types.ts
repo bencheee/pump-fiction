@@ -636,6 +636,14 @@ export type Database = {
         }
         Returns: string
       }
+      create_measurement_entries: {
+        Args: {
+          p_entry_date: string
+          p_measurement_type_ids: string[]
+          p_values_cm: number[]
+        }
+        Returns: Json
+      }
       create_measurement_entry: {
         Args: {
           p_entry_date: string

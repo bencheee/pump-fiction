@@ -147,3 +147,47 @@ export function measurementSeries(
     points,
   };
 }
+
+/** What Today needs to know about the day's measurements, and nothing more. */
+export type TodayMeasurement = Readonly<{
+  id: string;
+  name: string;
+  /** The value recorded for the local date, or null while the day lacks it. */
+  valueCm: number | null;
+}>;
+
+export type TodayMeasurements = Readonly<{
+  localDate: string;
+  measurements: readonly TodayMeasurement[];
+}>;
+
+/**
+ * `MVP-TOD-005`. A measurement is missing for the day when its latest entry is
+ * not the day's; future dates are refused, so the latest is never later than
+ * today and this comparison is the whole rule. Order follows the list, which
+ * is alphabetical, so Today reads in the same order as Body.
+ */
+export function todayMeasurements(
+  localDate: string,
+  summaries: readonly MeasurementSummary[],
+): TodayMeasurements {
+  return {
+    localDate,
+    measurements: summaries.map((summary) => ({
+      id: summary.id,
+      name: summary.name,
+      valueCm:
+        summary.latest !== null && summary.latest.entryDate === localDate
+          ? summary.latest.valueCm
+          : null,
+    })),
+  };
+}
+
+export function missingToday(
+  today: TodayMeasurements,
+): readonly TodayMeasurement[] {
+  return today.measurements.filter(
+    (measurement) => measurement.valueCm === null,
+  );
+}

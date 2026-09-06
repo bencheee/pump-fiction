@@ -2,6 +2,8 @@ import "server-only";
 
 import {
   createMeasurementEntry as runCreateMeasurementEntry,
+  createTodayMeasurementEntries as runCreateTodayMeasurementEntries,
+  getTodayMeasurements as runGetTodayMeasurements,
   createMeasurementType as runCreateMeasurementType,
   deleteMeasurementEntry as runDeleteMeasurementEntry,
   deleteMeasurementType as runDeleteMeasurementType,
@@ -15,6 +17,7 @@ import {
 } from "@/features/history/application/body-operations";
 import type {
   MeasurementEntry,
+  TodayMeasurements,
   MeasurementType,
 } from "@/features/history/domain/body";
 import type { ChartRange } from "@/features/history/domain/chart";
@@ -63,6 +66,18 @@ export async function deleteMeasurementType(
   input: unknown,
 ): Promise<OperationResult<null>> {
   return runDeleteMeasurementType(repository(), input);
+}
+
+export async function getTodayMeasurements(): Promise<
+  OperationResult<TodayMeasurements>
+> {
+  return runGetTodayMeasurements(repository());
+}
+
+export async function createTodayMeasurementEntries(
+  input: unknown,
+): Promise<OperationResult<readonly MeasurementEntry[]>> {
+  return runCreateTodayMeasurementEntries(repository(), input);
 }
 
 export async function createMeasurementEntry(

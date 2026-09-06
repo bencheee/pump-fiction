@@ -13,15 +13,20 @@ import type {
 } from "@/features/active-workout/domain/workout";
 import { Action, Badge, Icon, PageFrame, Sheet } from "@/shared/ui";
 
+import type { TodayMeasurements } from "@/features/history/domain/body";
+
+import { TodayMeasurementsCard } from "./today-measurements";
 import { TodayWeightCard, type TodayWeight } from "./today-weight";
 
 export function TodayExperience({
   today,
   weight,
+  measurements,
 }: {
   today: TodayView;
   /** Null only when the weigh-in could not be read; Today still works. */
   weight: TodayWeight | null;
+  measurements: TodayMeasurements | null;
 }) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
@@ -143,6 +148,9 @@ export function TodayExperience({
       ) : null}
 
       {weight ? <TodayWeightCard weight={weight} /> : null}
+      {measurements ? (
+        <TodayMeasurementsCard measurements={measurements} />
+      ) : null}
 
       {error ? (
         <div

@@ -59,6 +59,8 @@ The finish review keeps **Complete Workout**, **Save as Incomplete**, **Continue
 
 Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Body once it does; it never offers a second entry, and it never edits or deletes. Since [ADR-0030](../decisions/0030-body-is-its-own-destination.md) it is one of two entry cards, and the only place a weigh-in is created.
 
+The measurements card sits beside it and behaves the same way, for every defined measurement at once: it names which the day is missing, opens one sheet holding one field per missing measurement, and saves them together. A refusal shows against the measurement it belongs to rather than against the form. Once none is missing the card lists the day's values with a link to Body, and when no measurement type is defined the card is absent entirely.
+
 The workout keeps the bottom navigation and uses the finish flow defined in [`workouts.md`](../product/workouts.md).
 
 ## History
