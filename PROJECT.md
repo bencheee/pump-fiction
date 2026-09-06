@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T15:54:00+02:00
+- **Last updated:** 2026-09-06T15:58:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Approve or reject exact `T-044` delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42`, which authorizes its prepared unit, component, and whole-browser-suite verification.
+Run and record the authorized `T-044` verification against exact approved delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42`.
 
 ## Now
 
-1. [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — `Awaiting Approval`, Claude Code primary agent, `2026-09-06T15:54:00+02:00`; next action: the Owner's decision on delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42`.
+1. [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — `Testing`, Claude Code primary agent, `2026-09-06T15:58:00+02:00`; next action: run the authorized suite and record the result.
 
 ## Next
 
@@ -38,11 +38,11 @@ None.
 
 ## Awaiting approval
 
-- [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` — the finish-review copy, one test-support visibility rule, and `ADR-0029`, `test_required: yes`. Requested action: approve the exact commit, which authorizes the unit, component, and whole-browser-suite verification.
+None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — approved delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` — authorized for the unit, component, and whole browser suite.
 
 ## Recently completed Tasks
 

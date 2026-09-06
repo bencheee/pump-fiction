@@ -1,7 +1,7 @@
 # T-044 — Close the two discovered release corrections
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:54:00+02:00`
+- **Updated:** `2026-09-06T15:58:00+02:00`
 - **Started:** `2026-09-06T15:40:00+02:00`
 - **Review started:** `2026-09-06T15:52:00+02:00`
 - **Approval requested:** `2026-09-06T15:52:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T15:58:00+02:00`
+- **Testing started:** `2026-09-06T15:58:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the prepared verification.
+- **Next action:** Run the authorized verification against the exact approved delivery and record its result.
 
 ## Scope
 
@@ -81,7 +81,7 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 - **Planned tests:** After the Task's one approval: the unit suite, which now includes the four `isTestSupportEnabled` cases; the finish-review component assertion on the corrected copy; and the whole browser suite on one server across mobile Chromium and mobile WebKit, because the harness rule changes how every spec is served. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
   The plan promised one more check than the arrangement can perform. A browser negative check that both routes are not found *without* the flag would need a second server started without it — the two-server arrangement this Task removes. The rule is covered instead where it actually lives: the four unit cases pin the helper, including that `true`, `0`, `yes`, and an empty string all keep the routes hidden, and both pages call that helper as their first statement.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `f2a46162b80e747c369e42e4c4e49854ae72cc42`
 - **Results:** Not run
 
 ## Delivery commit
@@ -103,10 +103,10 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `f2a46162b80e747c369e42e4c4e49854ae72cc42`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T15:58:00+02:00`
+- **Approval note:** Approved (`odobreno`), which authorizes the unit, component, and whole-browser-suite verification against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -142,3 +142,5 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Accepted readiness answers 5 and 6: the finish review is reworded and both test-support routes take one opt-in visibility rule recorded as `ADR-0029` |
 | `2026-09-06T15:40:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-049` is `Done`, so the documentation agrees with the application again and the two delivered corrections can follow |
 | `2026-09-06T15:52:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered both corrections and `ADR-0029`; static checks passed, the assertions are prepared and unexecuted, and one further ADR-0027 leftover is reported rather than swept in |
+| `2026-09-06T15:58:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` (`odobreno`) |
+| `2026-09-06T15:58:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The harness rule changes how every spec is served, so the whole browser suite runs beside the unit and component suites |

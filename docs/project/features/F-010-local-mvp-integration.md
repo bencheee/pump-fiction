@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T15:54:00+02:00`
+- **Updated:** `2026-09-06T15:58:00+02:00`
 - **Progress:** `2/6 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -121,3 +121,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T15:34:00+02:00` | Claude Code primary agent / Executor | Delivered `T-049` for review | Exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` carries both Owner decisions into the locked criteria document, corrects the architecture document's surviving focused-shell claim, and closes the ADR-0025 omission |
 | `2026-09-06T15:40:00+02:00` | User / Approver | Approved `T-049`; completed it | Approved exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` (`odobreno`); `test_required` was `no`, so the criteria corrections are closed and `T-044` starts |
 | `2026-09-06T15:54:00+02:00` | Claude Code primary agent / Executor | Delivered `T-044` for review | Exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` rewords the finish review and gives both test-support routes one rule as `ADR-0029`; it awaits the Owner's approval before any feature test runs |
+| `2026-09-06T15:58:00+02:00` | User / Approver | Approved `T-044` | Authorized the unit, component, and whole-browser-suite verification against exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` |
