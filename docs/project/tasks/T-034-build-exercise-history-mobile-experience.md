@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T00:53:12+02:00`
+- **Updated:** `2026-09-06T10:06:46+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** `2026-09-06T00:53:12+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T10:06:46+02:00`
+- **Approved:** `2026-09-06T10:06:46+02:00`
+- **Testing started:** `2026-09-06T10:06:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767`. Approving it authorizes the recorded verification.
+- **Next action:** Run only the recorded verification against exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767`.
 
 ## Scope
 
@@ -91,7 +91,7 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `b5772adb87d244bfc2404481e90f58a4046a7767`
 - **Results:** Not run
 
 ## Delivery commit
@@ -103,16 +103,16 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T10:06:46+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `b5772adb87d244bfc2404481e90f58a4046a7767`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T10:06:46+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery, which approves it and authorizes only the recorded verification plan.
 
 ## Definition of Ready
 
@@ -149,3 +149,6 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 | `2026-09-06T00:46:12+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Exercise History screens on the `T-033` derivation |
 | `2026-09-06T00:56:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Completed `S15`, `S16`, the route-local chart, and the prepared suites; all permitted static checks passed |
 | `2026-09-06T00:53:12+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-06T10:06:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T10:06:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767` with `potvrda` |
+| `2026-09-06T10:06:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
