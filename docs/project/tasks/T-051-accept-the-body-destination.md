@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:48:00+02:00`
+- **Updated:** `2026-09-06T19:50:00+02:00`
 - **Started:** `2026-09-06T19:34:00+02:00`
 - **Review started:** `2026-09-06T19:48:00+02:00`
 - **Approval requested:** `2026-09-06T19:48:00+02:00`
@@ -84,7 +84,7 @@ Decide the change before anything implements it, so no Task builds against a doc
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `4108680d6e411544190d7c3a8e4cb2752c694c42`
 - **Subject:** `T-051: accept the Body destination`
 - **Committed scope:** `ADR-0030` and its register row; five revised criteria and the new `MVP-TOD-005`; the destination list and Body paragraph in the mobile IA document; the entry and unit rules in the weight-and-body document; the destination list, Today cards, and entry paragraph in the overview; the revision table in the release verification matrix; one supersession row in each design package; this Task.
 
