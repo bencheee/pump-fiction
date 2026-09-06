@@ -1,7 +1,7 @@
 # T-041 — Build body measurement operations
 
 - **Feature:** `F-009`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:04:12+02:00`
+- **Updated:** `2026-09-06T14:05:38+02:00`
 - **Started:** `2026-09-06T13:57:17+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T14:05:38+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
+- **Next action:** The Owner reviews and approves exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`. No feature test runs before that approval.
 
 ## Scope
 
@@ -115,7 +115,7 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `cde56f00dbc7d98c28cca1c7843dd37000250bab`
 - **Subject:** `T-041: build body measurement operations`
 - **Committed scope:** the `0007_body_measurements.sql` declarative schema with its function-only migration and regenerated types; the `body` domain with its list, detail, and series rules beside `body-validation`; the chart contract extended with centimetres and a `measurement` metric; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the two prepared unit suites, the `0010_body_measurements` pgTAP suite, and the repository integration test with its `test:repository` registration; and the weight-and-body product, domain-model, server-boundary, and local-database-workflow documents
 
@@ -167,3 +167,4 @@ Queries:
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
 | `2026-09-06T13:57:17+02:00` | User / Owner | `Backlog` | `Ready` | Weight is finished and the Owner's go-ahead for the whole Feature authorizes Body |
 | `2026-09-06T13:57:17+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the body measurement data and derivation |
+| `2026-09-06T14:05:38+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`; static checks passed and every prepared feature test remains unexecuted |

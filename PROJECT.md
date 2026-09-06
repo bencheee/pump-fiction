@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:57:17+02:00
+- **Last updated:** 2026-09-06T14:05:38+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T13:57:17+02:00. It derives and persists everything `S21` through `S24` need: the measurement-type lifecycle, the entries, the two changes, and the chart series.
+[`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T14:05:38+02:00. Exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` derives and persists everything `S21` through `S24` need and awaits the Owner's approval.
 
 Weight is finished across its data, its screens, and Today.
 
 ## Immediate next action
 
-Deliver `T-041` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner reviews and approves exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`. Only then does the recorded plan run: the unit suites, a seeded reset, pgTAP, the repository suite, and the type comparison. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Progress` — Claude Code primary agent — 2026-09-06T13:57:17+02:00 — next: deliver one reviewable commit.
+- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Review` — Claude Code primary agent — 2026-09-06T14:05:38+02:00 — next: the Owner's approval of `cde56f00dbc7d98c28cca1c7843dd37000250bab`.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — Claude Code primary agent — 2026-09-06T14:05:38+02:00 — requested action: review and approve that commit, which authorizes the recorded verification.
 
 ## Approved — ready for testing
 
