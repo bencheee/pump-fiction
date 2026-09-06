@@ -92,7 +92,24 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
 - **Authorized commit:** `b5772adb87d244bfc2404481e90f58a4046a7767`
-- **Results:** Not run
+- **Results:** Not started. A scope breach in the approved commit was found first and needs the Owner's decision; see below.
+
+## Recorded scope breach in the approved delivery
+
+Found on `2026-09-06T10:10:00+02:00`, before any test ran.
+
+Exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767` contains one file that is not `T-034` scope: `docs/project/tasks/T-038-build-weight-operations.md`, a 151-line `F-009` Task file created by concurrent work in this repository at `2026-09-06T00:52`, minutes before this delivery was committed. It was swept in because the delivery was staged with `git add -A`.
+
+That other work deliberately holds its `F-009` planning uncommitted: `docs/project/features/F-009-weight-and-body-progress.md` carries the `skip-worktree` flag and `T-039` through `T-042` are listed in `.git/info/exclude` under a note that the Owner directed the breakdown be held on `2026-09-06`. `T-038` carried no such protection, so nothing stopped it.
+
+Nothing about the delivered behavior is affected: the file is documentation and every source file in the commit is `T-034` work. The recorded verification would exercise exactly the same code either way. What is affected is the record. [ADR-0021](../../decisions/0021-delivery-and-evidence-commit-model.md) requires a delivery commit to contain its own outcome and the documentation that outcome needs, and the Owner approved this commit on a description that did not mention `T-038`.
+
+The Owner decides between:
+
+- accepting the commit as approved and recording `T-038` as having entered history through it, since the file itself is wanted and the alternative rewrites nothing useful; or
+- a replacement delivery that removes `T-038` from the `T-034` scope, which requires the concurrent work to commit it separately so the file is not lost.
+
+Until that decision, this Task stays in `Testing` with nothing executed. Every future staging in this Task names its paths explicitly rather than using `git add -A`, because concurrent work shares this working tree.
 
 ## Delivery commit
 
