@@ -1,5 +1,6 @@
 .next
 node_modules
+supabase/.temp
 temp_handoff
 package-lock.json
 public/assets/**/*.json
