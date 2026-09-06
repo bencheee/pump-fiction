@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T15:04:00+02:00
+- **Last updated:** 2026-09-06T15:16:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-048`, of which five are required and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Deliver [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — the release verification matrix is being written; it needs review and the Owner's approval before `T-044` starts.
+Approve or reject exact `T-043` delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`, and decide the two findings it records: `R1`, where `MVP-REL-002` contradicts ADR-0025, and `R2`, the stale `MVP-PRG-007` heading.
 
 ## Now
 
-1. [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — `In Progress`, Claude Code primary agent, `2026-09-06T15:04:00+02:00`; next action: write the matrix and deliver one reviewable commit.
+1. [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — `Awaiting Approval`, Claude Code primary agent, `2026-09-06T15:16:00+02:00`; next action: the Owner's decision on delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`.
 
 ## Next
 
@@ -39,7 +39,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — exact delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601` — the release verification matrix, `test_required: no`. Requested action: approve the exact commit, and decide findings `R1` and `R2`.
 
 ## Approved — ready for testing
 

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:14:00+02:00`
+- **Updated:** `2026-09-06T15:16:00+02:00`
 - **Started:** `2026-09-06T15:04:00+02:00`
 - **Review started:** `2026-09-06T15:14:00+02:00`
 - **Approval requested:** `2026-09-06T15:14:00+02:00`
@@ -81,12 +81,12 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 - **Test required:** `no`
 - **No-test reason:** The delivery changes no application behavior, no database artifact, and no test source. Every claim it makes is a citation of a verification already executed and recorded against an approved delivery SHA; review and the internal-link check are the appropriate verification. The release run itself is `T-048`. Owner approval is still required before `Done`.
 - **Planned tests:** None
-- **Authorized commit:** Not authorized
+- **Authorized commit:** Not applicable; `test_required` is `no`
 - **Results:** Not run
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`
 - **Subject:** `T-043: record the release verification matrix`
 - **Committed scope:** `docs/project/mvp-release-verification.md` with the 57 criterion rows, the release-run rule, the fidelity-comparison record, and the two findings; the [`../../INDEX.md`](../../INDEX.md) router row; this Task. No application source, schema, migration, generated type, or test source changed.
 
