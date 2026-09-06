@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T18:22:00+02:00`
+- **Updated:** `2026-09-06T18:24:00+02:00`
 - **Started:** `2026-09-06T18:14:00+02:00`
 - **Review started:** `2026-09-06T18:22:00+02:00`
 - **Approval requested:** `2026-09-06T18:22:00+02:00`
@@ -87,7 +87,7 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`
 - **Subject:** `T-048: sweep the documentation for the release`
 - **Committed scope:** the `T-003-v1` package status and its supersession table; the two router rows that called the design packages current; the archived state, the drag-handle mention, and the unapproved-package sentence in the design-collaboration process; the mobile UI foundation's status line; this Task. No application source, schema, migration, generated type, or test source changed.
 
