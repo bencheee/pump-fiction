@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T10:25:31+02:00`
-- **Progress:** `3/7 required Tasks Done; T-034 is In Review`
+- **Updated:** `2026-09-06T10:38:42+02:00`
+- **Progress:** `4/7 required Tasks Done; T-035 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -35,12 +35,12 @@ Recorded on `2026-09-05` at the Owner's request, without starting implementation
 | 1 | [`T-031`](../tasks/T-031-build-workout-history-operations.md) — Build workout History operations (`Done`; approved second replacement `c00c6e92072c98aec5e0e449797bb154bf314ccf`) | Workout list and detail queries, correction and deletion transactions, completion-status change | `F-007` and `F-014` Done |
 | 2 | [`T-032`](../tasks/T-032-build-workout-history-mobile-experience.md) — Build the History shell and workout History mobile experience (`Done`; approved second replacement `35790c78201f76c0c2cec3c76bddaa8415c9727a`) | Subsection navigation, `S13`, `S14`, `O01`, `O06` | `T-031` |
 | 3 | [`T-033`](../tasks/T-033-build-exercise-statistics-operations.md) — Build exercise statistics operations (`Done`; approved replacement `d1f15d90151d3a7f43786da52dd3c8affc633a11`) | Eligibility, PR derivation, chart series, exercise history queries | `T-031` |
-| 4 | [`T-034`](../tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience | `S15`, `S16` with chart | `T-032`, `T-033` |
+| 4 | [`T-034`](../tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience (`Done`; first delivery `b5772adb87d244bfc2404481e90f58a4046a7767`, verified through inherited third replacement `aed262314e9c332198067bfbdd1211c221ece256`) | `S15`, `S16` with chart | `T-032`, `T-033` |
 | 5 | [`T-035`](../tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations | Split identity, duration statistics, chart series, split history queries | `T-031` |
 | 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience | `S17`, `S18` with chart | `T-032`, `T-035` |
 | 7 | [`T-037`](../tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal | A runnable `npm run test:browser` | None |
 
-`T-031`, `T-032`, and `T-033` are `Done` and `T-034` is `In Review`; the remaining three are in `Backlog`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
+`T-031` through `T-034` are `Done` and `T-035` is `In Progress`; the remaining two are in `Backlog`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
 
 ## Boundary against F-009
 
@@ -128,3 +128,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-05T23:35:01+02:00` | Claude Code primary agent / Executor | Delivered `T-033` for review | Exact delivery `bf787976b69602ed4358eb79f053d48486c3d30e` awaits approval before any feature test runs |
 | `2026-09-06T00:46:12+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-033` and started `T-034` | The complete plan passed; the Owner's go-ahead for the whole Feature authorizes the Exercise History screens |
 | `2026-09-06T00:53:12+02:00` | Claude Code primary agent / Executor | Delivered `T-034` for review | Exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767` awaits approval before any feature test runs |
+| `2026-09-06T10:38:42+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-034` and started `T-035` | The complete plan passed under the inherited approval of ADR-0028; the Owner's go-ahead authorizes the split statistics |

@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:35:47+02:00``2026-09-06T10:31:52+02:00`
+- **Updated:** `2026-09-06T10:38:42+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** `2026-09-06T10:25:31+02:00` for the second replacement
 - **Approval requested:** `2026-09-06T10:21:23+02:00` for the replacement
 - **Approved:** `2026-09-06T10:21:23+02:00` for the superseded first replacement; the second is not approved
 - **Testing started:** `2026-09-06T10:21:23+02:00` for the replacement
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T10:38:42+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against third replacement `aed262314e9c332198067bfbdd1211c221ece256`, which inherits the Task's approval under ADR-0028.
+- **Next action:** None; `T-034` is `Done`. `F-008` continues with `T-035`.
 
 ## Scope
 
@@ -47,13 +47,13 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 
 ## Acceptance criteria
 
-- [ ] `S15` lists every identity `T-033` returns, filters as the user types, marks deleted definitions, and renders the empty and no-results states.
-- [ ] `S16` shows the latest eligible performance and one PR card group per category present in the data, with band direction and strength in the label.
-- [ ] The metric selector offers only type-meaningful metrics; the range selector offers week, month, quarter, year, and all; changing either updates the chart, the textual summary, and the accessible list together.
-- [ ] Assistance metrics present a lower value as improvement through orientation or labelling plus a non-color cue.
-- [ ] Every performance entry links to its workout, and entries from incomplete workouts carry the excluded-from-statistics marker.
-- [ ] The chart is never the sole representation of the data, respects reduced motion, and needs no hover.
-- [ ] `S15` and `S16` match the accepted `v0.3` structure and chart geometry, reflow from 320 to 430 px, and meet the accepted touch and accessibility behavior.
+- [x] `S15` lists every identity `T-033` returns, filters as the user types, marks deleted definitions, and renders the empty and no-results states.
+- [x] `S16` shows the latest eligible performance and one PR card group per category present in the data, with band direction and strength in the label.
+- [x] The metric selector offers only type-meaningful metrics; the range selector offers week, month, quarter, year, and all; changing either updates the chart, the textual summary, and the accessible list together.
+- [x] Assistance metrics present a lower value as improvement through orientation or labelling plus a non-color cue.
+- [x] Every performance entry links to its workout, and entries from incomplete workouts carry the excluded-from-statistics marker.
+- [x] The chart is never the sole representation of the data, respects reduced motion, and needs no hover.
+- [x] `S15` and `S16` match the accepted `v0.3` structure and chart geometry, reflow from 320 to 430 px, and meet the accepted touch and accessibility behavior.
 
 ## Traceability
 
@@ -101,6 +101,8 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
   The cause is a default nobody chose. `availableMetrics` built its list in the order it happened to add entries, which put highest reps first for every exercise, so the detail of a weights exercise opened on reps rather than on load. That is a poor default for a lifter and it is what the scenario, reasonably, did not expect. The list now has a deliberate order. That approval was invalidated; the correction then inherited the Task approval under ADR-0028.
 
   Third verification, against second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` on `2026-09-06T10:35:17+02:00` under the inherited approval: `npm run test:unit` passed **127/127 across 17 files**, and the browser scenario passed on mobile Chromium and failed on mobile WebKit at the search step. The search box held the typed text but the list had not filtered. A diagnostic run of the same scenario with real keystrokes instead of Playwright's `fill()` passed on WebKit, which places the cause in the test's interaction with a `type="search"` field rather than in the screen: a person typing is exactly what the passing variant does. The spec now types into the search field.
+
+  Fourth verification, against third replacement `aed262314e9c332198067bfbdd1211c221ece256` on `2026-09-06T10:38:42+02:00` under the inherited approval, in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: **the complete plan passed**. `npm run test:unit` passed **127/127 across 17 files**, and the serialized Exercise History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 26.4 seconds together**, covering the filtered and empty search states, the category record panels with their values, the series summary and named value list, the metric change to workout volume, the empty week range and the return to all, the link from a performance to its workout, reflow to 320 px, and two structural captures per platform. Fixtures were deleted afterwards.
 
 ## Recorded scope breach in the approved delivery
 
@@ -158,15 +160,15 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA of the first delivery; the three replacements inherited it under ADR-0028
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -189,3 +191,4 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 | `2026-09-06T10:25:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`; it awaits fresh approval before the complete recorded plan restarts |
 | `2026-09-06T10:31:52+02:00` | User / Owner | `In Review` | `Testing` | Directed that replacements stop requiring re-approval; ADR-0028 records the rule and second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` inherits the Task approval, so the complete plan restarts against it |
 | `2026-09-06T10:35:47+02:00` | Claude Code primary agent / Executor | `Testing` | `Testing` | Delivered third replacement `aed262314e9c332198067bfbdd1211c221ece256` after the WebKit search step; it inherits the Task approval and the complete plan restarts against it |
+| `2026-09-06T10:38:42+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed: unit and component 127/127 and the serialized Chromium and WebKit scenario 2/2 with four structural captures |
