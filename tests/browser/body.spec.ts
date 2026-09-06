@@ -26,7 +26,8 @@ test.describe("Body experience", () => {
       const list = page.getByRole("list", { name: "Measurements" });
       const row = list.getByRole("link", { name: new RegExp(waist) });
       await expect(row).toBeVisible();
-      await expect(row).toContainText("84.5 cm");
+      // The third seeded entry is the latest now: Body cannot add one.
+      await expect(row).toContainText("84 cm");
       await expect(row).toContainText("−0.5 cm");
       await expect(page.getByText(/neither good nor bad/)).toBeVisible();
       await expect(page.getByText(/Archived/i)).toHaveCount(0);
