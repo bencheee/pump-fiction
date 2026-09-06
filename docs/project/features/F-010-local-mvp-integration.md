@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T17:50:00+02:00`
+- **Updated:** `2026-09-06T17:56:00+02:00`
 - **Progress:** `5/7 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -132,3 +132,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T17:32:00+02:00` | Claude Code primary agent / Executor | Delivered `T-050` for review | Exact delivery `17b12f4233282af479501fc9d0af50052d9ca39a`; `T-046` delivers against the corrected criteria once it is approved |
 | `2026-09-06T17:40:00+02:00` | User / Approver | Approved `T-050`; completed it | `test_required` was `no`; the criteria now describe the delivered affordance, so `T-046` can assert it |
 | `2026-09-06T17:50:00+02:00` | Claude Code primary agent / Executor | Delivered `T-046` for review | Exact delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` sweeps all 29 routes for the last three open criteria; it awaits the Owner's approval before it runs |
+| `2026-09-06T17:56:00+02:00` | User / Approver | Approved `T-046` | Authorized the sweep against exact delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` |

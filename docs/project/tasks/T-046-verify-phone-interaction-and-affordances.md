@@ -1,7 +1,7 @@
 # T-046 — Verify phone interaction, affordances, and destructive confirmation
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T17:50:00+02:00`
+- **Updated:** `2026-09-06T17:56:00+02:00`
 - **Started:** `2026-09-06T17:14:00+02:00`
 - **Review started:** `2026-09-06T17:48:00+02:00`
 - **Approval requested:** `2026-09-06T17:48:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T17:56:00+02:00`
+- **Testing started:** `2026-09-06T17:56:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the sweep.
+- **Next action:** Run the authorized sweep against the exact approved delivery and record the result.
 
 ## Scope
 
@@ -98,7 +98,7 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:browser` for this sweep alone on one worker across mobile Chromium and mobile WebKit, after a clean reset and with the Owner's data snapshotted and restored around it. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `300db8bed59d9ce62057064a0dea51ed3ae054e0`
 - **Results:** Not run
 
 ## Delivery commit
@@ -116,10 +116,10 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `300db8bed59d9ce62057064a0dea51ed3ae054e0`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T17:56:00+02:00`
+- **Approval note:** Approved (`odobravam`), which authorizes the sweep against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -156,3 +156,5 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 | `2026-09-06T17:14:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead (`kreni`) once `T-045` completed |
 | `2026-09-06T17:14:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The last three open criteria; reading the application for its affordances surfaced finding `R3` before a line of the sweep was written |
 | `2026-09-06T17:48:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the sweep once `T-050` corrected the criterion it asserts; static checks passed and no feature test ran |
+| `2026-09-06T17:56:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` (`odobravam`) |
+| `2026-09-06T17:56:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The sweep runs on one worker across both phones |
