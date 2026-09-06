@@ -1,9 +1,9 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T17:56:00+02:00
+- **Last updated:** 2026-09-06T18:06:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which seven are required, five are `Done`, and `T-047` is `Canceled`
+- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which six of seven are `Done` and `T-047` is `Canceled`. **All 57 locked criteria now carry verification against an approved delivery**
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
@@ -16,7 +16,7 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Run and record the authorized `T-046` sweep against exact approved delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`.
+Start [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — the release run against one approved tree, the filled matrix, and the `F-010` and `M-001` close. It also needs the Owner's own visual-comparison result.
 
 ## Now
 
@@ -24,7 +24,7 @@ Run and record the authorized `T-046` sweep against exact approved delivery `300
 
 ## Next
 
-1. [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — the release run, the filled matrix, and the `F-010` and `M-001` close.
+None; `T-048` is the last Task of the Milestone and is in `Now`.
 
 ## Later
 
@@ -40,10 +40,11 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — approved delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` — authorized for the phone-interaction sweep.
+None.
 
 ## Recently completed Tasks
 
+- [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — completed `2026-09-06T18:06:00+02:00` — first delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`, verified through inherited replacement `5c07096fb34801166ddb798345e3fd1b9eb3e117` — the sweep 10/10 with no application defect: 29 routes reflowing at four widths, numeric keyboards, named reorder controls, and six confirmed destructive actions; the whole suite 52/52.
 - [`T-050`](docs/project/tasks/T-050-correct-the-reorder-and-current-set-language.md) — completed `2026-09-06T17:40:00+02:00` — approved delivery `17b12f4233282af479501fc9d0af50052d9ca39a` — five sentences requiring a drag handle the application never had, and the current-set sentence ADR-0027 left behind; `test_required: no`.
 - [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — completed `2026-09-06T17:04:00+02:00` — first delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`, verified through four inherited replacements ending at `a65a504b64482384c022175230176e983af66ce8` — the two release scenarios 4/4, unit 237/237, components 4/4, the whole browser suite 42/42, and a database identical to its baseline.
 - [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — completed `2026-09-06T16:12:00+02:00` — first delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42`, verified through inherited replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331` — unit 237/237, components 4/4, and the whole browser suite 38/38 on one production server, the durability spec running against a production build for the first time.
@@ -53,11 +54,10 @@ None.
 - [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — completed `2026-09-06T14:12:40+02:00` — approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — unit 218/218, seeded reset, pgTAP 187/187, repository 9/9, unchanged types, and a faithful restore, on the first run.
 - [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — completed `2026-09-06T13:54:26+02:00` — first delivery `4992e617d3d367091332eb178525b2c61e35f0a5`, verified through inherited replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` — unit and component 192/192 and the Chromium and WebKit Today scenario 4/4 with eight structural captures.
 - [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — completed `2026-09-06T13:39:20+02:00` — first delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`, verified through inherited replacement `d164327f20e2437d2662d8e0b73d38b519b76613` — unit and component 188/188 and the serialized Chromium and WebKit Weight scenario 2/2 with eight structural captures.
-- [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — completed `2026-09-06T13:17:52+02:00` — first delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`, verified through inherited replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` — unit 174/174, seeded reset, pgTAP 157/157, repository 8/8, unchanged types, and a faithful restore.
 
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
-- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`5/7 Tasks Done`)
+- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`6/7 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

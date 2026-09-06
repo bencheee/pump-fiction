@@ -1,7 +1,7 @@
 # T-046 — Verify phone interaction, affordances, and destructive confirmation
 
 - **Feature:** `F-010`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T17:56:00+02:00`
+- **Updated:** `2026-09-06T18:06:00+02:00`
 - **Started:** `2026-09-06T17:14:00+02:00`
 - **Review started:** `2026-09-06T17:48:00+02:00`
 - **Approval requested:** `2026-09-06T17:48:00+02:00`
 - **Approved:** `2026-09-06T17:56:00+02:00`
 - **Testing started:** `2026-09-06T17:56:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T18:06:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized sweep against the exact approved delivery and record the result.
+- **Next action:** None; `T-046` is `Done`. Only `T-048` remains in `F-010`.
 
 ## Scope
 
@@ -44,13 +44,13 @@ The delivery is test source and documentation. A defect the run finds is correct
 ## Acceptance criteria
 
 - [x] The sweep covers every delivered route, and adding a route without covering it fails the sweep rather than passing silently.
-- [ ] No route scrolls horizontally at 320, 360, 390, or 430 CSS pixels, and no element inside one does.
-- [ ] Every numeric input exposes the expected `inputmode`, and the sweep names the field when one does not.
-- [ ] Every reorderable list has named move-up and move-down controls, unavailable at the ends of the list, and a completed reorder persists across a reload with no save control.
+- [x] No route scrolls horizontally at 320, 360, 390, or 430 CSS pixels, and no element inside one does.
+- [x] Every numeric input exposes the expected `inputmode`, and the sweep names the field when one does not.
+- [x] Every reorderable list has named move-up and move-down controls, unavailable at the ends of the list, and a completed reorder persists across a reload with no save control.
 - [x] Withdrawn with finding `R3`: `T-050` removed the current-set sentence from `MVP-UX-002`, because nothing designates a current set once ADR-0027 removed set confirmation.
-- [ ] Every destructive action listed in the scope is refused until the `O01` confirmation is accepted.
-- [ ] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures at both reference viewports.
-- [ ] The matrix rows for `MVP-UX-001` through `MVP-UX-003` cite this run and its approved SHA.
+- [x] Every destructive action listed in the scope is refused until the `O01` confirmation is accepted.
+- [x] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures at both reference viewports.
+- [x] The matrix rows for `MVP-UX-001` through `MVP-UX-003` cite this run and its approved SHA.
 
 ## Traceability
 
@@ -99,13 +99,25 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:browser` for this sweep alone on one worker across mobile Chromium and mobile WebKit, after a clean reset and with the Owner's data snapshotted and restored around it. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `300db8bed59d9ce62057064a0dea51ed3ae054e0`
-- **Results:** Not run
+- **Results:** Two verifications against exact approved delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`, in a fresh isolated worktree after a clean `supabase db reset`, with Node.js `22.21.0`, npm `10.9.4`, and Playwright `1.62.1`.
+
+  **First run, 2 of 10.** The route-coverage test passed on both phones — it needs no fixture — and the other eight failed in the seed with `PF206`, `Split does not match requested source kind`: the fixture made the first split the proposed one and then tried to record a workout on it as an alternate. The database was right to refuse. Replacement `5c07096fb34801166ddb798345e3fd1b9eb3e117` parks the pointer on the second split.
+
+  **Second run, 10 of 10** on `5c07096fb34801166ddb798345e3fd1b9eb3e117`, in 41 seconds. **No application defect was found anywhere in the sweep**, which is the substantive result: all 29 delivered routes reflow at 320, 360, 390, and 430 CSS pixels with no horizontal overflow on either phone; every field the application styles as numeric requests a decimal or numeric keyboard; all four reorderable lists carry named move-up and move-down controls that are unavailable at the ends of the list and measure at least 44 by 44, and a completed reorder survives a reload with no save control anywhere; and each of the six destructive actions opens the `O01` confirmation, with Cancel leaving the screen exactly where it was.
+
+  The database after the run was identical to a fresh seed — 10 exercises, 1 program, 3 splits, 0 workouts, and no weight or measurement rows — so the sweep removed everything it created. The whole browser suite then passed **52/52 in 2.6 minutes**, 26 on each phone, confirming the sweep disturbs none of the others. The local data is disposable by the Owner's direction of `2026-09-05`, so the seed baseline was left in place.
 
 ## Delivery commit
 
 - **Delivery commit SHA:** `300db8bed59d9ce62057064a0dea51ed3ae054e0`
 - **Subject:** `T-046: verify phone interaction, affordances, and destructive confirmation`
 - **Committed scope:** `tests/browser/release-phone-interaction.spec.ts` alone — five prepared tests, the filesystem-derived route inventory with its fixture map, and the seeding and teardown. Test source only.
+
+## Replacement
+
+- **Replacement SHA:** `5c07096fb34801166ddb798345e3fd1b9eb3e117`
+- **Subject:** `T-046: park the fixture pointer on the second split`
+- **Scope:** the seed's rotation pointer alone. Test source only; it inherits the Task approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
 ## Review
 
@@ -137,15 +149,15 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -158,3 +170,5 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 | `2026-09-06T17:48:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the sweep once `T-050` corrected the criterion it asserts; static checks passed and no feature test ran |
 | `2026-09-06T17:56:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` (`odobravam`) |
 | `2026-09-06T17:56:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The sweep runs on one worker across both phones |
+| `2026-09-06T18:00:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The seed started the proposed split as an alternate and the database refused it; the replacement corrects the fixture under the inherited approval |
+| `2026-09-06T18:06:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The sweep passed 10/10 with no application defect, the whole suite 52/52, and the database identical to its baseline |
