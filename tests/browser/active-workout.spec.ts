@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
+import { fillHydrated } from "./support/hydration";
+
 test.describe("Active workout experience", () => {
   test("covers set entry, local edits, timer, restore, finish outcomes, and rotation", async ({
     page,
@@ -16,14 +18,14 @@ test.describe("Active workout experience", () => {
     try {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
-        await page.getByLabel("Name").fill(exercise);
+        await fillHydrated(page.getByLabel("Name"), exercise);
         await page.getByRole("button", { name: "Save Exercise" }).click();
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
 
       await page.goto("/programs/new");
-      await page.getByLabel("Program name").fill(program);
+      await fillHydrated(page.getByLabel("Program name"), program);
       await page.getByRole("button", { name: "Save Program" }).click();
       await expect(page).toHaveURL(/\/programs$/);
       await page.getByRole("link", { name: new RegExp(program) }).click();
@@ -174,7 +176,7 @@ test.describe("Active workout experience", () => {
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
 
       await page.goto("/today/one-time");
-      await page.getByLabel("Workout name").fill(`Hotel ${stamp}`);
+      await fillHydrated(page.getByLabel("Workout name"), `Hotel ${stamp}`);
       await page.getByRole("button", { name: "Add Exercise" }).click();
       await page
         .getByRole("dialog")

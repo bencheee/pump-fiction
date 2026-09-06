@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 
+import { fillHydrated } from "./support/hydration";
+
 test.describe("exercise library", () => {
   test("creates, searches, validates, edits, and deletes a definition", async ({
     page,
@@ -13,7 +15,7 @@ test.describe("exercise library", () => {
     await page.getByRole("link", { name: "Add exercise" }).click();
 
     // Two types, at most one optional addition on top of the implied mode.
-    await page.getByLabel("Name").fill(name);
+    await fillHydrated(page.getByLabel("Name"), name);
     await page
       .getByRole("group", { name: "Exercise type" })
       .getByRole("button", { name: "Bodyweight" })
@@ -38,7 +40,7 @@ test.describe("exercise library", () => {
 
     // A duplicate name is rejected and the form stays open.
     await page.goto("/exercises/new");
-    await page.getByLabel("Name").fill(name);
+    await fillHydrated(page.getByLabel("Name"), name);
     await page.getByRole("button", { name: "Save Exercise" }).click();
     await expect(
       page.getByText("Another exercise already uses this name."),

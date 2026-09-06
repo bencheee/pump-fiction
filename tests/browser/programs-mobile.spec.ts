@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
+import { fillHydrated } from "./support/hydration";
+
 test.describe("programs mobile experience", () => {
   test("creates, validates, makes current, reorders, advances on deletion, and deletes", async ({
     page,
@@ -16,7 +18,7 @@ test.describe("programs mobile experience", () => {
     try {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
-        await page.getByLabel("Name").fill(exercise);
+        await fillHydrated(page.getByLabel("Name"), exercise);
         await page.getByRole("button", { name: "Save Exercise" }).click();
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
@@ -27,7 +29,7 @@ test.describe("programs mobile experience", () => {
       await page
         .getByRole("link", { name: "Add program", exact: true })
         .click();
-      await page.getByLabel("Program name").fill(program);
+      await fillHydrated(page.getByLabel("Program name"), program);
       await page.getByRole("button", { name: "Save Program" }).click();
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program saved.")).toBeVisible();

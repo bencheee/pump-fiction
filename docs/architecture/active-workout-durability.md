@@ -99,4 +99,4 @@ npm exec playwright install chromium webkit
 npm run test:browser
 ```
 
-The repository integration scenario covers transactional apply, duplicate delivery, stale revision conflict, and timer transitions. Playwright runs the persisted IndexedDB reload/retry/FIFO/conflict scenarios in phone-sized Chromium and WebKit. The production build resolves the test-support route through the not-found boundary; it is available only to the development server used by the approved browser tests.
+The repository integration scenario covers transactional apply, duplicate delivery, stale revision conflict, and timer transitions. Playwright runs the persisted IndexedDB reload/retry/FIFO/conflict scenarios in phone-sized Chromium and WebKit. The production build resolves the test-support route through the not-found boundary, so `npm run test:browser` starts a development server on port `3101` beside the production server on `3100` and runs this spec alone against it, in the `durability-chromium` and `durability-webkit` projects; every other spec runs against the production server.

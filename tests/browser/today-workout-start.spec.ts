@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
+import { awaitHydration, fillHydrated } from "./support/hydration";
+
 test.describe("Today workout-start experience", () => {
   test("covers no-program, proposed, alternate, one-time, restore, and phone reflow", async ({
     page,
@@ -23,14 +25,14 @@ test.describe("Today workout-start experience", () => {
       // Definitions save and return to their parent screen with a toast.
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
-        await page.getByLabel("Name").fill(exercise);
+        await fillHydrated(page.getByLabel("Name"), exercise);
         await page.getByRole("button", { name: "Save Exercise" }).click();
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
 
       await page.goto("/programs/new");
-      await page.getByLabel("Program name").fill(program);
+      await fillHydrated(page.getByLabel("Program name"), program);
       await page.getByRole("button", { name: "Save Program" }).click();
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program saved.")).toBeVisible();
@@ -86,7 +88,9 @@ test.describe("Today workout-start experience", () => {
       await clearCurrentWorkout();
 
       await page.goto("/today/one-time");
-      await page.getByRole("button", { name: "Start Workout" }).click();
+      const startButton = page.getByRole("button", { name: "Start Workout" });
+      await awaitHydration(startButton);
+      await startButton.click();
       await expect(
         page.getByText("Enter a name for this workout.").first(),
       ).toBeVisible();
