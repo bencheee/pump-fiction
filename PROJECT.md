@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T19:30:00+02:00
+- **Last updated:** 2026-09-06T19:34:00+02:00
 - **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them

@@ -1,7 +1,7 @@
 # T-051 — Accept the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:10:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T19:34:00+02:00`
+- **Started:** `2026-09-06T19:34:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await the Owner's go-ahead for `F-015`.
+- **Next action:** Write `ADR-0030`, revise the criteria and documents, and deliver one reviewable commit.
 
 ## Scope
 
@@ -52,7 +52,7 @@ Decide the change before anything implements it, so no Task builds against a doc
 ## Dependencies and blockers
 
 - Dependencies: `M-001` complete
-- Blockers: the Owner's go-ahead for `F-015`
+- Blockers: None; the Owner gave the go-ahead on `2026-09-06` (`nastavi`)
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -109,12 +109,12 @@ Decide the change before anything implements it, so no Task builds against a doc
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -133,3 +133,5 @@ Decide the change before anything implements it, so no Task builds against a doc
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
+| `2026-09-06T19:34:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for `F-015` (`nastavi`) |
+| `2026-09-06T19:34:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The decision precedes the build, so no Task implements against a document that contradicts it |

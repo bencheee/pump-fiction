@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:10:00+02:00`
-- **Progress:** `0/3 required Tasks Done; breakdown recorded, awaiting the go-ahead`
+- **Updated:** `2026-09-06T19:34:00+02:00`
+- **Progress:** `0/3 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -90,7 +90,7 @@ Not decided. The Executor records each in canonical documentation during the Tas
 ## Dependencies and blockers
 
 - Dependencies: `M-001` complete, so what is being revised is known to work; `F-008` and `F-009` `Done`, which built every screen this Feature moves
-- Blockers: the Owner's go-ahead, and their confirmation of the `M-001` result before this starts
+- Blockers: None; the Owner confirmed `M-001` and gave the go-ahead on `2026-09-06`
 
 ## Related decisions and documents
 
@@ -101,10 +101,10 @@ Not decided. The Executor records each in canonical documentation during the Tas
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [x] Required Tasks are identified (`T-051` through `T-053`); none is `Ready` until the Owner gives the go-ahead
+- [x] Required Tasks are identified (`T-051` through `T-053`); `T-051` is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness and gives the go-ahead
+- [x] Owner confirmed readiness and gave the go-ahead on `2026-09-06`
 
 ## Completion
 
@@ -119,3 +119,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | Created in `Next` with the three-Task breakdown and the Owner's three answers | The Owner asked for a Body destination, entry moved to Today, and Weight and Body removed from History; nothing is committed or started before their go-ahead |
+| `2026-09-06T19:34:00+02:00` | User / Owner | Released `F-015` and started `T-051` | Gave the go-ahead (`nastavi`) after confirming the `M-001` result; the criteria move before anything builds against them |
