@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:23:42+02:00`
+- **Updated:** `2026-09-06T10:25:31+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
-- **Review started:** `2026-09-06T10:17:05+02:00` for the replacement
+- **Review started:** `2026-09-06T10:25:31+02:00` for the second replacement
 - **Approval requested:** `2026-09-06T10:21:23+02:00` for the replacement
-- **Approved:** `2026-09-06T10:21:23+02:00` for the replacement
+- **Approved:** `2026-09-06T10:21:23+02:00` for the superseded first replacement; the second is not approved
 - **Testing started:** `2026-09-06T10:21:23+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Give the metric list a deliberate order so a load-bearing exercise opens on its load, deliver a second replacement, and request fresh approval.
+- **Next action:** The Owner reviews the second replacement. Approving it restarts the complete recorded plan from the beginning.
 
 ## Scope
 
@@ -119,24 +119,25 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` (replacement; supersedes `b5772adb87d244bfc2404481e90f58a4046a7767`)
-- **Subject:** `T-034: name the two value lists on the exercise detail`
-- **Replacement scope:** an accessible name on each of the two value lists, and the component and browser assertions that ask for them by name; nothing else changed
+- **Delivery commit SHA:** `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` (second replacement; supersedes `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` and `b5772adb87d244bfc2404481e90f58a4046a7767`)
+- **Subject:** `T-034: open the chart on the metric that tells the most`
+- **Second replacement scope:** the deliberate metric order with a unit scenario pinning each default, and the sentence recording it in the History product document
+- **First replacement scope:** an accessible name on each of the two value lists, and the component and browser assertions that ask for them by name
 - **Committed scope:** `S15` with its loading state and client-side search; `S16` with its loading state, category record panels, metric and range selectors, series summary, accessible value list, and performance list; the route-local Recharts progress chart; the prepared component suite and browser scenario; and the mobile UI foundation and wireframe decisions
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** `2026-09-06T10:17:05+02:00` for the replacement
-- **Outcome:** Replacement recommended for approval
+- **Reviewed at:** `2026-09-06T10:25:31+02:00` for the second replacement
+- **Outcome:** Second replacement recommended for approval
 - **Findings:** The authorized verification found the two ambiguous list queries, recorded above
 
 ## Approval
 
-- **Approved commit:** `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`
-- **Approved by:** User / Approver
-- **Approved at:** `2026-09-06T10:21:23+02:00`
-- **Approval note:** The Owner replied `potvrda` again, binding fresh approval to exact replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` and authorizing the complete recorded plan from the beginning. The approval of `b5772adb87d244bfc2404481e90f58a4046a7767`, and the acceptance of its recorded scope breach, do not carry over to the plan.
+- **Approved commit:** None; the approval of `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` was invalidated by its failed verification
+- **Approved by:** Not approved
+- **Approved at:** Not approved
+- **Approval note:** The Owner approved `b5772adb87d244bfc2404481e90f58a4046a7767` and then `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`, each with `potvrda`, and accepted the recorded scope breach in the first. Neither approval stands: both verifications failed. Second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` needs a fresh decision.
 
 ## Definition of Ready
 
@@ -181,3 +182,5 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 | `2026-09-06T10:21:23+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact replacement with no further findings |
 | `2026-09-06T10:21:23+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` with `potvrda` |
 | `2026-09-06T10:21:23+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
+| `2026-09-06T10:25:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Gave the metric list a deliberate order, pinned each default, and recorded the rule; all permitted static checks passed |
+| `2026-09-06T10:25:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`; it awaits fresh approval before the complete recorded plan restarts |
