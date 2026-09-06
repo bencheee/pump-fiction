@@ -96,7 +96,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-050`](tasks/T-050-correct-the-reorder-and-current-set-language.md) | `F-010` | Correct the reorder affordance and the current-set sentence | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-06T17:40:00+02:00` | [`tasks/T-050-correct-the-reorder-and-current-set-language.md`](tasks/T-050-correct-the-reorder-and-current-set-language.md) |
 | [`T-051`](tasks/T-051-accept-the-body-destination.md) | `F-015` | Accept the Body destination | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-06T19:30:00+02:00` | [`tasks/T-051-accept-the-body-destination.md`](tasks/T-051-accept-the-body-destination.md) |
 | [`T-052`](tasks/T-052-build-the-body-destination.md) | `F-015` | Build the Body destination | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T21:04:00+02:00` | [`tasks/T-052-build-the-body-destination.md`](tasks/T-052-build-the-body-destination.md) |
-| [`T-053`](tasks/T-053-add-todays-measurement-entry.md) | `F-015` | Add today's measurement entry | `Now / 3` | `In Progress` | Claude Code primary agent | `2026-09-06T21:04:00+02:00` | [`tasks/T-053-add-todays-measurement-entry.md`](tasks/T-053-add-todays-measurement-entry.md) |
+| [`T-053`](tasks/T-053-add-todays-measurement-entry.md) | `F-015` | Add today's measurement entry | `Now / 3` | `Awaiting Approval` | Claude Code primary agent | `2026-09-06T22:12:00+02:00` | [`tasks/T-053-add-todays-measurement-entry.md`](tasks/T-053-add-todays-measurement-entry.md) |
 
 ## Templates
 

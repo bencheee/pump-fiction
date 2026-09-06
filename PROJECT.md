@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T21:04:00+02:00
+- **Last updated:** 2026-09-06T22:12:00+02:00
 - **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -18,7 +18,7 @@ The release run passed 489 checks across five suites against exact approved deli
 
 ## Immediate next action
 
-Deliver [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — the `Body measurements` card and sheet on Today. Until it lands, nothing in the application records a weigh-in or a measurement.
+Approve or reject exact `T-053` delivery `c5417723e42e2d04e172fc6f754284fd11ed23df`, which authorizes its verification and closes the gap where nothing records a value.
 
 ## Now
 
@@ -38,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` — the Today measurement card, its sheet, and the transactional write, `test_required: yes`. Requested action: approve the exact commit, which authorizes the unit, database, repository, and browser suites.
 
 ## Approved — ready for testing
 

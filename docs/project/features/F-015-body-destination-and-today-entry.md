@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T21:04:00+02:00`
+- **Updated:** `2026-09-06T22:12:00+02:00`
 - **Progress:** `2/3 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `0`
+- **Awaiting approval Tasks:** `1`
 
 ## Outcome
 
@@ -124,3 +124,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | `2026-09-06T19:56:00+02:00` | User / Approver | Approved `T-051`; completed it and started `T-052` | `test_required` was `no`; the criteria describe the destination, so it can now be built |
 | `2026-09-06T20:36:00+02:00` | Claude Code primary agent / Executor | Delivered `T-052` for review | Exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` moves the screens into a destination of their own and strips their create paths; until `T-053` the application records no weigh-in at all |
 | `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Tester | Completed `T-052` and started `T-053` | The whole browser suite passed 52/52; each of the three replacements was a scenario still describing the screens as they were before the move |
+| `2026-09-06T22:12:00+02:00` | Claude Code primary agent / Executor | Delivered `T-053` for review | Exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` restores entry on Today and adds the transactional write `MVP-TOD-005` requires; the Task also discloses a test-gate breach during `T-052` and `T-053` |

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T22:10:00+02:00`
+- **Updated:** `2026-09-06T22:12:00+02:00`
 - **Started:** `2026-09-06T21:04:00+02:00`
 - **Review started:** `2026-09-06T22:10:00+02:00`
 - **Approval requested:** `2026-09-06T22:10:00+02:00`
@@ -99,7 +99,7 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `c5417723e42e2d04e172fc6f754284fd11ed23df`
 - **Subject:** `T-053: add today's measurement entry`
 - **Committed scope:** `create_measurement_entries` in the declarative schema and its migration, with its revoke and grant; four pgTAP assertions for it; `todayMeasurements` and `missingToday` in the History domain; `getTodayMeasurements` and `createTodayMeasurementEntries` in the application layer; `createEntries` on the body repository contract and its Supabase implementation; the regenerated database types; the server functions and the action; `today-measurements.tsx` with its card and sheet; the Today page's third read and the experience's third card; four component tests; the weight-and-body, mobile UI foundation, and wireframe documentation; this Task.
 
