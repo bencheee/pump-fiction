@@ -1,7 +1,7 @@
 # T-049 — Correct two locked MVP criteria and the stale shell sentence
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T15:24:00+02:00`
-- **Updated:** `2026-09-06T15:34:00+02:00`
+- **Updated:** `2026-09-06T15:40:00+02:00`
 - **Started:** `2026-09-06T15:32:00+02:00`
 - **Review started:** `2026-09-06T15:32:00+02:00`
 - **Approval requested:** `2026-09-06T15:32:00+02:00`
-- **Approved:** Not reached
+- **Approved:** `2026-09-06T15:40:00+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T15:40:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit.
+- **Next action:** None; `T-049` is `Done`.
 
 ## Scope
 
@@ -82,7 +82,7 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 - **No-test reason:** The delivery changes documentation only. All three sentences are corrected to describe behavior the Owner accepted and earlier Tasks already delivered and verified — `T-024` for the shell under ADR-0025 and `T-021` for deletion under ADR-0024 — so there is no new behavior to test. `T-046` verifies the corrected navigation rule at release level as part of its own scope. Owner approval is still required before `Done`.
 - **Planned tests:** None
 - **Authorized commit:** Not applicable; `test_required` is `no`
-- **Results:** Not run
+- **Results:** Not applicable; `test_required` is `no` and the Owner approved that reason with the delivery.
 
 ## Delivery commit
 
@@ -99,10 +99,10 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `6cffc618d03198b576374b71db47a6156a2a296d`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T15:40:00+02:00`
+- **Approval note:** Approved (`odobreno`). No feature test follows, because `test_required` is `no`; `T-046` verifies the corrected navigation rule at release level within its own scope.
 
 ## Definition of Ready
 
@@ -120,15 +120,15 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -138,3 +138,5 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 | `2026-09-06T15:24:00+02:00` | User / Owner | `Backlog` | `Ready` | Decided both findings: the bottom navigation must always be visible, and there is no archiving |
 | `2026-09-06T15:32:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The Owner's decisions are recorded, so the documents move to match the application |
 | `2026-09-06T15:32:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the three corrections and the ADR amendment; static checks passed and no feature test ran |
+| `2026-09-06T15:40:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` (`odobreno`) |
+| `2026-09-06T15:40:00+02:00` | Claude Code primary agent / Executor | `Approved` | `Done` | `test_required` is `no` and the Owner approved that reason; both findings are closed and no follow-up scope remains |

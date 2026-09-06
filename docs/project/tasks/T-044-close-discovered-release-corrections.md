@@ -1,7 +1,7 @@
 # T-044 — Close the two discovered release corrections
 
 - **Feature:** `F-010`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T14:52:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T15:40:00+02:00`
+- **Started:** `2026-09-06T15:40:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await the `F-010` go-ahead. Readiness answers 5 and 6 are accepted, so both corrections are decided.
+- **Next action:** Reword the finish review, unify the test-support rule, write `ADR-0029`, and deliver one reviewable commit.
 
 ## Scope
 
@@ -114,7 +114,7 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -134,3 +134,4 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 | --- | --- | --- | --- | --- |
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Accepted readiness answers 5 and 6: the finish review is reworded and both test-support routes take one opt-in visibility rule recorded as `ADR-0029` |
+| `2026-09-06T15:40:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-049` is `Done`, so the documentation agrees with the application again and the two delivered corrections can follow |

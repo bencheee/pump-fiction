@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T15:34:00+02:00
+- **Last updated:** 2026-09-06T15:40:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
@@ -16,18 +16,17 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Approve or reject exact `T-049` delivery `6cffc618d03198b576374b71db47a6156a2a296d`; it is the only Task that has ever changed the locked criteria document.
+Deliver [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — the finish-review copy and one production-visibility rule for both test-support routes, recorded as `ADR-0029`.
 
 ## Now
 
-1. [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — `Awaiting Approval`, Claude Code primary agent, `2026-09-06T15:34:00+02:00`; next action: the Owner's decision on delivery `6cffc618d03198b576374b71db47a6156a2a296d`.
+1. [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — `In Progress`, Claude Code primary agent, `2026-09-06T15:40:00+02:00`; next action: deliver the two corrections and `ADR-0029`.
 
 ## Next
 
-1. [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md) — the finish-review copy and one test-support visibility rule, recorded as `ADR-0029`.
-2. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — release evidence for `MVP-REL-003` and `MVP-REL-004`.
-3. [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — release evidence for `MVP-UX-001` through `MVP-UX-003`.
-4. [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — the release run, the filled matrix, and the `F-010` and `M-001` close.
+1. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — release evidence for `MVP-REL-003` and `MVP-REL-004`.
+2. [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — release evidence for `MVP-UX-001` through `MVP-UX-003`.
+3. [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — the release run, the filled matrix, and the `F-010` and `M-001` close.
 
 ## Later
 
@@ -39,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-- [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` — the two locked-criteria corrections, the architecture sentence, and the ADR-0025 amendment, `test_required: no`. Requested action: approve the exact commit.
+None.
 
 ## Approved — ready for testing
 
@@ -47,6 +46,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — completed `2026-09-06T15:40:00+02:00` — approved delivery `6cffc618d03198b576374b71db47a6156a2a296d` — the `MVP-REL-002` navigation sentence, the `MVP-PRG-007` heading, the architecture document's focused-shell claim, and the ADR-0025 omission; `test_required: no`.
 - [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — completed `2026-09-06T15:24:00+02:00` — approved delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601` — the matrix covers 52 of 57 criteria from approved deliveries, names the 5 `F-010` owns as gaps, and found three stale sentences the Owner decided; `test_required: no`.
 - [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — completed `2026-09-06T14:26:11+02:00` — approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` — unit and component 235/235 and the Chromium and WebKit Body scenario 2/2 with eight structural captures, on the first run.
 - [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — completed `2026-09-06T14:12:40+02:00` — approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — unit 218/218, seeded reset, pgTAP 187/187, repository 9/9, unchanged types, and a faithful restore, on the first run.
@@ -56,11 +56,10 @@ None.
 - [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — completed `2026-09-06T11:39:47+02:00` — first delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`, verified through inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724` — the whole browser suite 32/32: 26 on the production server across mobile Chromium and WebKit and 6 durability tests on the development server.
 - [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — completed `2026-09-06T11:01:09+02:00` — first delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`, verified through inherited replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6` — unit and component 143/143 and the serialized Chromium and WebKit Split History scenario 2/2 with four structural captures.
 - [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — completed `2026-09-06T10:50:32+02:00` — approved delivery `92b6d10b3472a13282c41712e3e75f939216f647` — unit 137/137, seeded reset, pgTAP 135/135, repository 7/7, unchanged types, and a faithful restore, on the first run.
-- [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — completed `2026-09-06T10:38:42+02:00` — first delivery `b5772adb87d244bfc2404481e90f58a4046a7767`, verified through inherited third replacement `aed262314e9c332198067bfbdd1211c221ece256` — unit and component 127/127 and the serialized Chromium and WebKit Exercise History scenario 2/2 with four structural captures.
 
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
-- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`1/6 Tasks Done`)
+- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`2/6 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
