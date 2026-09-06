@@ -1,23 +1,23 @@
 # T-036 — Build Split History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 6
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-05T21:58:22+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T10:50:32+02:00`
+- **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-032` and `T-035` to be `Done`; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's one approval under ADR-0028.
 
 ## Scope
 
@@ -61,8 +61,8 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 
 ## Dependencies and blockers
 
-- Dependencies: `T-032` Done (shell and placeholder route), `T-035` Done (data); `T-034` Done if its chart contract is to be reused rather than introduced here
-- Blockers: `F-008` is held at the Owner's direction
+- Dependencies: `T-032`, `T-034`, and `T-035` Done; the chart contract `T-034` introduced is reused
+- Blockers: None
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -119,12 +119,12 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — `T-032` and `T-035` are not `Done`
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -143,3 +143,5 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the Splits subsection delivery within `F-008`; the Owner directed that implementation must not start |
+| `2026-09-06T10:50:32+02:00` | User / Owner | `Backlog` | `Ready` | Every dependency is `Done` and the go-ahead for the whole `F-008` authorizes the last screens |
+| `2026-09-06T10:50:32+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Split History screens on the `T-035` derivation |

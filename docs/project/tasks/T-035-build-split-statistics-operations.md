@@ -1,7 +1,7 @@
 # T-035 — Build split statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:47:39+02:00`
+- **Updated:** `2026-09-06T10:50:32+02:00`
 - **Started:** `2026-09-06T10:38:42+02:00`
 - **Review started:** `2026-09-06T10:45:28+02:00`
 - **Approval requested:** `2026-09-06T10:47:39+02:00`
 - **Approved:** `2026-09-06T10:47:39+02:00`
 - **Testing started:** `2026-09-06T10:47:39+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T10:50:32+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against exact approved delivery `92b6d10b3472a13282c41712e3e75f939216f647`; any replacement inherits this approval under ADR-0028.
+- **Next action:** None; `T-035` is `Done`. `F-008` continues with `T-036`.
 
 ## Scope
 
@@ -48,12 +48,12 @@ Queries:
 
 ## Acceptance criteria
 
-- [ ] Two splits with the same name in different programs produce two entries, and a renamed split produces one.
-- [ ] One-time and incomplete workouts never change any count or duration, while a completed alternate-split workout does.
-- [ ] Count, total, average, shortest, longest, and latest duration and the latest date are correct for the fixture data, including a split with a single workout.
-- [ ] Duration series contain only neutral serializable points and are correct at each range boundary in the configured time zone.
-- [ ] With the identity snapshot, a split whose template was deleted still appears under its snapshotted names; without it, the Task records that such splits are absent and why.
-- [ ] Unit tests cover grouping, exclusions, aggregates, and range boundaries; pgTAP and repository tests cover the read functions; none is executed.
+- [x] Two splits with the same name in different programs produce two entries, and a renamed split produces one.
+- [x] One-time and incomplete workouts never change any count or duration, while a completed alternate-split workout does.
+- [x] Count, total, average, shortest, longest, and latest duration and the latest date are correct for the fixture data, including a split with a single workout.
+- [x] Duration series contain only neutral serializable points and are correct at each range boundary in the configured time zone.
+- [x] With the identity snapshot, a split whose template was deleted still appears under its snapshotted names.
+- [x] The unit tests covering grouping, exclusions, aggregates, and range boundaries passed, as did the pgTAP and repository tests over the read.
 
 ## Traceability
 
@@ -93,7 +93,7 @@ Queries:
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for grouping, exclusions, aggregates, and range boundaries; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new split-history suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
 - **Authorized commit:** `92b6d10b3472a13282c41712e3e75f939216f647`
-- **Results:** Not run
+- **Results:** Passed on `2026-09-06T10:50:32+02:00` against exact approved delivery `92b6d10b3472a13282c41712e3e75f939216f647` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17`, on the first run. `npm ci` installed 653 packages with no vulnerabilities; `npm run test:unit` passed **137/137 across 18 files**, up from 127 by the split statistics suite; `npm run db:snapshot` saved the local data; `supabase db reset` applied all 22 migrations and the seed; `npm run test:db` passed **135/135 across eight suites**, including the new `0008_split_statistics` 11/11 covering the one-time exclusion, the incomplete and alternate rows, identity separation of same-named splits, the live and snapshot names, and identity retention through rename and deletion; `npm run test:repository` passed **7/7**; regenerated types matched the committed file; and `npm run db:restore` reloaded the snapshot faithfully.
 
 ## Delivery commit
 
@@ -131,15 +131,15 @@ Queries:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -152,3 +152,4 @@ Queries:
 | `2026-09-06T10:47:39+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T10:47:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `92b6d10b3472a13282c41712e3e75f939216f647` with `potvrda` |
 | `2026-09-06T10:47:39+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the recorded unit, pgTAP, and repository verification against the exact approved delivery |
+| `2026-09-06T10:50:32+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed on the first run: unit 137/137, pgTAP 135/135, repository 7/7, matching generated types, and a faithful restore |
