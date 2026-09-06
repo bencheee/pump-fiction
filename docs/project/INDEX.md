@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `13/14 Features Done` | User | `2026-09-06T14:27:19+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `13/14 Features Done` | User | `2026-09-06T18:52:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -89,7 +89,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `F-010` | Verify cross-feature persistence and non-reinterpretation | `Now / 4` | `Done` | Claude Code primary agent | `2026-09-06T17:04:00+02:00` | [`tasks/T-045-verify-cross-feature-persistence.md`](tasks/T-045-verify-cross-feature-persistence.md) |
 | [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) | `F-010` | Verify phone interaction, affordances, and destructive confirmation | `Now / 5` | `Done` | Claude Code primary agent | `2026-09-06T18:06:00+02:00` | [`tasks/T-046-verify-phone-interaction-and-affordances.md`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 | [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) | `F-010` | Compare against the accepted visual references | `Next / —` | `Canceled` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-047-compare-against-accepted-visual-references.md`](tasks/T-047-compare-against-accepted-visual-references.md) |
-| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Now / 7` | `Testing` | Claude Code primary agent | `2026-09-06T18:30:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
+| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Now / 7` | `Done` | Claude Code primary agent | `2026-09-06T18:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
 | [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T15:40:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
 | [`T-050`](tasks/T-050-correct-the-reorder-and-current-set-language.md) | `F-010` | Correct the reorder affordance and the current-set sentence | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-06T17:40:00+02:00` | [`tasks/T-050-correct-the-reorder-and-current-set-language.md`](tasks/T-050-correct-the-reorder-and-current-set-language.md) |
 

@@ -112,4 +112,10 @@ The release run passed in full on `2026-09-06`, on the first attempt, against ex
 
 ## Visual comparison record
 
-Awaiting the Owner's own comparison. This section stays empty until they report it, because the repository records only comparisons that were actually made — the constraints that comparison works under are in [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md), and [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) records why no Task owns it.
+- **Performed by:** the Owner, themselves, outside the managed Task flow. [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) records why no Task owns it.
+- **Reported on:** `2026-09-06`
+- **Coverage:** the application as a whole against the accepted references, reviewed by eye. The Owner did not report a per-frame record, and this document does not imply one: it is their judgment of the delivered application, which is exactly what they took on when they cancelled `T-047`.
+- **Outcome:** confirmed. `vizualno sve izgleda ok. potvrdi cijeli vizualni test.`
+- **Accepted deviations:** none reported. The Owner stated that anything they notice later they will correct themselves, so a later visual change is their own work and not hidden residual scope of this Milestone.
+
+The constraints that comparison works under — the `OD-015` limitation, the 19 frames whose states accepted decisions removed, and the engine match — are in [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) and were recorded before it was made.

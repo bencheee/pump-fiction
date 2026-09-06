@@ -6,8 +6,8 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T18:44:00+02:00`
-- **Progress:** `6/7 required Tasks Done`
+- **Updated:** `2026-09-06T18:52:00+02:00`
+- **Progress:** `7/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -39,7 +39,7 @@ Recorded on `2026-09-06` at the Owner's request and confirmed by them the same d
 | 5 | [`T-046`](../tasks/T-046-verify-phone-interaction-and-affordances.md) — Verify phone interaction, affordances, and destructive confirmation (`Done`; approved delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`, verified through inherited replacement `5c07096fb34801166ddb798345e3fd1b9eb3e117`) | The release evidence for `MVP-UX-001`–`003` as one sweep over every route at four widths | `T-043`, `T-044` |
 | — | [`T-047`](../tasks/T-047-compare-against-accepted-visual-references.md) — Compare against the accepted visual references (`Canceled` on `2026-09-06`) | Nothing; the Owner makes the comparison themselves and `T-048` records what they report | Not applicable |
 | 6 | [`T-050`](../tasks/T-050-correct-the-reorder-and-current-set-language.md) — Correct the reorder affordance and the current-set sentence (`Done`; approved delivery `17b12f4233282af479501fc9d0af50052d9ca39a`) | The drag-handle requirement in five sentences across four documents, and the current-set sentence ADR-0027 left behind | `T-046`'s finding `R3`; lands before `T-046` delivers |
-| 7 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`, `T-050`; the Owner's comparison result |
+| 7 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP (`Done`; approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`) | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`, `T-050`; the Owner's comparison result |
 
 `T-043` came first because it was the only Task that made the remaining scope observable: until each criterion's existing evidence and gap was written down, `T-045` and `T-046` would have been verifying by assumption. It earned its place immediately by finding three sentences that contradicted accepted decisions, which `T-049` now corrects — before `T-046` verifies the navigation rule, so the sweep reads a criterion that matches the application. `T-044` comes before the two verification Tasks because both run on the browser harness whose rule it settles, and because the release sweep should not read a screen that still contradicts an accepted decision.
 
@@ -99,10 +99,10 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] All required Tasks are `Done` (`T-043`–`T-046`, `T-048`–`T-050`; `T-047` is `Canceled`)
+- [x] Feature acceptance criteria are satisfied: every locked criterion passed authorized verification against an approved delivery, the release run of 489 checks contradicted none of them, and the Owner confirmed the visual comparison against the accepted references on `2026-09-06`
+- [x] Canonical documentation is current: three findings — `R1`, `R2`, and `R3` — were raised, decided by the Owner, and closed by `T-049` and `T-050`, and `T-048` swept the remaining drift
+- [x] No required follow-up scope is hidden; one reported item, the `apply_active_workout_command` test name, awaits the Owner's word and is recorded in `T-044`
 - [ ] User confirms the feature result
 
 ## History
@@ -137,3 +137,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T18:24:00+02:00` | Claude Code primary agent / Executor | Started and delivered `T-048` for review | Exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` sweeps the documentation; its approval authorizes the release run, and the Owner's visual comparison and the two completion records follow as evidence |
 | `2026-09-06T18:30:00+02:00` | User / Approver | Approved `T-048` | Authorized the complete suite against exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` |
 | `2026-09-06T18:44:00+02:00` | Claude Code primary agent / Tester | Recorded the release run | 489 checks across five suites passed against one approved tree on the first attempt, with matching generated types and a database identical to its baseline; only the Owner's visual comparison remains |
+| `2026-09-06T18:52:00+02:00` | Claude Code primary agent / Tester | Completed `T-048`; every `F-010` gate but the Owner's confirmation is met | The release run passed 489/489 against one approved tree, the Owner confirmed the visual comparison, and the documentation agrees with the implementation |

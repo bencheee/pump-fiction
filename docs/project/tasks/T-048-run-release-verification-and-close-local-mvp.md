@@ -1,7 +1,7 @@
 # T-048 — Run the release verification and close the Local MVP
 
 - **Feature:** `F-010`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T18:44:00+02:00`
+- **Updated:** `2026-09-06T18:52:00+02:00`
 - **Started:** `2026-09-06T18:14:00+02:00`
 - **Review started:** `2026-09-06T18:22:00+02:00`
 - **Approval requested:** `2026-09-06T18:22:00+02:00`
 - **Approved:** `2026-09-06T18:30:00+02:00`
 - **Testing started:** `2026-09-06T18:30:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T18:52:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** The Owner's visual-comparison result, which is the last evidence `F-010` and `M-001` need.
+- **Next action:** None; `T-048` is `Done`. `F-010` and `M-001` have every other gate met and await the Owner's confirmation of the aggregate result, which is theirs alone to give.
 
 ## Scope
 
@@ -40,11 +40,11 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 - [x] The complete suite ran against one exact approved delivery after a clean reset, and every result is recorded with its command, counts, and timestamp.
 - [x] All 57 criteria carry a verification against an approved commit, and the release run contradicts none.
-- [ ] The Owner's own visual comparison is recorded with its date, coverage, and outcome, and every difference they report has a Task or an accepted-deviation record.
+- [x] The Owner's own visual comparison is recorded with its date, coverage, and outcome; they reported no difference and stated that anything they notice later they will correct themselves.
 - [x] No scenario row remains: the database after the run matched a fresh seed exactly.
 - [x] The documentation sweep leaves no known disagreement between code and canonical documentation, and every superseded design-brief statement is annotated rather than silently rewritten.
-- [ ] `F-010` and `M-001` record their completion gates, and the registry, dashboard, and project state match.
-- [ ] No required follow-up is hidden: every discovered item has a Task or an Owner decision.
+- [x] `F-010` and `M-001` record their completion gates, and the registry, dashboard, and project state match. The one gate neither can record for itself is the Owner's confirmation of the aggregate result.
+- [x] No required follow-up is hidden: `R1`, `R2`, and `R3` became `T-049` and `T-050`; the `apply_active_workout_command` test name `T-044` found is reported and awaits the Owner; every other discovered item is closed.
 
 ## Traceability
 
@@ -67,10 +67,10 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 - [x] Reset and run the complete suite against the approved tree; the Owner released the snapshot ceremony on `2026-09-05`.
 - [x] Record every command, count, and outcome.
-- [ ] Fill the matrix with the release-run evidence and record the Owner's visual-comparison result as they report it.
+- [x] Fill the matrix with the release-run evidence and record the Owner's visual-comparison result as they report it.
 - [x] Sweep the documentation and annotate every superseded statement.
-- [ ] Record the `F-010` and `M-001` completion gates and synchronize the three projections.
-- [ ] Hand the Owner exactly one next action: their confirmation of the Local MVP result.
+- [x] Record the `F-010` and `M-001` completion gates and synchronize the three projections.
+- [x] Hand the Owner exactly one next action: their confirmation of the Local MVP result.
 
 ## Static-check plan and results
 
@@ -147,15 +147,15 @@ The release reading found seven statements that accepted decisions had moved pas
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -169,3 +169,5 @@ The release reading found seven statements that accepted decisions had moved pas
 | `2026-09-06T18:30:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` (`potvrda`) |
 | `2026-09-06T18:30:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The release run is one complete suite against one approved tree |
 | `2026-09-06T18:44:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The release run passed in full on the first attempt: 489 checks across five suites against one approved tree, matching generated types, and a database identical to its baseline |
+| `2026-09-06T18:52:00+02:00` | User / Owner | `Testing` | `Testing` | Reported the visual comparison and confirmed it whole (`vizualno sve izgleda ok`), with no deviation and a stated intent to correct anything noticed later themselves |
+| `2026-09-06T18:52:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | Every gate this Task can record is met: the release run, the matrix, the documentation sweep, and the two completion records |

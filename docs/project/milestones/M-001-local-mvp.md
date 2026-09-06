@@ -6,7 +6,7 @@
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
 - **Updated:** `2026-09-06T15:04:00+02:00`
-- **Progress:** `13/14 required Features Done`
+- **Progress:** `13/14 required Features Done`; `F-010` awaits only the Owner's confirmation
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -21,10 +21,10 @@ A complete local, single-user, phone-only application that satisfies all locked 
 
 ## Completion criteria
 
-- [ ] All 57 locked MVP acceptance criteria are satisfied
-- [ ] All required Features are `Done`
-- [ ] Canonical product, architecture, process, and project documentation is current
-- [ ] No required implementation or verification work remains hidden
+- [x] All 57 locked MVP acceptance criteria are satisfied, each verified against an approved delivery; [`../mvp-release-verification.md`](../mvp-release-verification.md) records which delivery and which evidence for every one
+- [ ] All required Features are `Done`; `F-010` awaits only the Owner's confirmation of its result
+- [x] Canonical product, architecture, process, and project documentation is current
+- [x] No required implementation or verification work remains hidden
 - [ ] User confirms the local-MVP result
 
 ## Features
@@ -42,7 +42,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-012`](../features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`Done`)
 - [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Done`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Done`)
-- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`; `0/5 Tasks Done`)
+- [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Now / 1`; `7/7 Tasks Done`, awaiting the Owner's confirmation)
 
 ### Primary MVP-criteria ownership
 
@@ -62,7 +62,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; `F-009` is `Done` and only `F-010` Local MVP Integration remains, whose breakdown `T-043`–`T-048` the Owner confirmed on `2026-09-06`
+- Blockers: None; every required Task of every Feature is `Done` and only the Owner's confirmation of the `F-010` and Milestone results remains
 
 ## Related decisions and documents
 
@@ -197,3 +197,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-06T14:27:19+02:00` | User / Owner | Completed `F-009`; Milestone remains incomplete | Confirmed the aggregate Weight and Body Progress result; `M-001` advances to 13/14 required Features Done |
 | `2026-09-06T14:58:00+02:00` | Claude Code primary agent / Planner | Recorded and locked the `F-010` breakdown `T-043`–`T-048` in `Backlog`, with `T-047` `Canceled` | The Owner asked for the last Feature's Tasks, took the visual comparison on themselves, and confirmed the rest; five required Tasks remain before the Milestone can close |
 | `2026-09-06T15:04:00+02:00` | User / Owner | Released `F-010` and started `T-043` | Gave the go-ahead for the last Feature; the release verification matrix is the first delivery |
+| `2026-09-06T18:52:00+02:00` | Claude Code primary agent / Tester | Recorded the Milestone completion gates | The release run passed 489 checks across five suites against one approved tree, all 57 criteria carry verification, and the Owner confirmed the visual comparison; only their confirmation of the aggregate result remains |
