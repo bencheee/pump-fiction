@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:26:11+02:00
-- **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
+- **Last updated:** 2026-09-06T14:27:19+02:00
+- **Current phase:** Local MVP implementation — `F-009` Weight and Body Progress is `Done` with the Owner's confirmation on `2026-09-06`; only `F-010` remains
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
+- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` Local MVP Integration is the last Feature and has no Task breakdown
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` started the same day
+- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-No active work item. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) is `Done`, which makes all five Tasks of [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) `Done`. The complete plan passed on the first run against approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`.
+No active work item. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) is `Done`: the Owner confirmed the Weight and Body Progress result on 2026-09-06T14:27:19+02:00. Weight is derived, rendered as `S19` and `S20`, and offered on Today; Body has its data and `S21` through `S24`; no placeholder route remains in the application.
 
-Weight is derived, rendered as `S19` and `S20`, and offered on Today. Body has its data and `S21` through `S24`. No placeholder route remains in the application.
+[`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration is the last Feature of the Milestone. It has no Task breakdown.
 
 ## Immediate next action
 
-The Owner's confirmation of the `F-009` result. With it, `M-001` reaches 13 of 14 Features and only [`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration remains, which still needs a Task breakdown. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner's direction on `F-010`: whether to record its Task breakdown, and whether to start it. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
@@ -24,7 +24,7 @@ None; every `F-009` Task is `Done`.
 
 ## Next
 
-None; `T-042` is the last Task of `F-009`.
+1. [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration; the last Feature, with no Task breakdown yet.
 
 ## Later
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-- [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) — Weight and Body Progress — all five Tasks `Done` — User — 2026-09-06T14:26:11+02:00 — requested action: confirm the aggregate Feature result.
+None.
 
 ## Approved — ready for testing
 
@@ -57,6 +57,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`12/14 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

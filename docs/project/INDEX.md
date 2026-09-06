@@ -16,7 +16,7 @@ Allocated identifiers are never reused, including after cancellation.
 
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
-| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `12/14 Features Done` | User | `2026-09-06T12:22:31+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `13/14 Features Done` | User | `2026-09-06T14:27:19+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 
 ## Features
 
@@ -34,7 +34,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-013`](features/F-013-local-verification-data.md) | `M-001` | Local Verification Data | `Now / 1` | `2/2 Done` | User | `2026-09-05T20:24:07+02:00` | [`features/F-013-local-verification-data.md`](features/F-013-local-verification-data.md) |
 | [`F-014`](features/F-014-exercise-and-set-entry-model.md) | `M-001` | Exercise and Set-Entry Model Corrections | `Now / 1` | `2/2 Done` | User | `2026-09-05T21:27:54+02:00` | [`features/F-014-exercise-and-set-entry-model.md`](features/F-014-exercise-and-set-entry-model.md) |
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Now / 1` | `7/7 Done` | User | `2026-09-06T11:50:42+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
-| [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Now / 2` | `5/5 Done; awaiting confirmation` | User | `2026-09-06T14:26:11+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
+| [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Now / 2` | `5/5 Done` | User | `2026-09-06T14:27:19+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Next / 3` | `0/0; breakdown pending` | User | `2026-09-05T21:27:54+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
 
 ## Tasks

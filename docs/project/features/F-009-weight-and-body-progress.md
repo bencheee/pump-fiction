@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T14:26:11+02:00`
-- **Progress:** `5/5 required Tasks Done; awaiting the Owner's confirmation`
+- **Updated:** `2026-09-06T14:27:19+02:00`
+- **Progress:** `5/5 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -102,7 +102,7 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden; no Task discovered any
-- [ ] User confirms the feature result
+- [x] User confirms the feature result on `2026-09-06T14:27:19+02:00`
 
 ## History
 
@@ -139,3 +139,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T14:24:05+02:00` | Claude Code primary agent / Executor | Delivered `T-042` for review | Exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` awaits the Owner's approval before any feature test runs |
 | `2026-09-06T14:22:46+02:00` | User / Approver | Approved `T-042` | Authorized the recorded verification against exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` |
 | `2026-09-06T14:26:11+02:00` | Claude Code primary agent / Tester | Completed `T-042`; all five Tasks are `Done` | The complete plan passed on the first run; only the Owner's confirmation of the Feature result remains |
+| `2026-09-06T14:27:19+02:00` | User / Owner | Completed `F-009` | Confirmed the aggregate Weight and Body Progress result (`potvrda`) |
