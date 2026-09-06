@@ -98,4 +98,18 @@ All three are closed, so `T-048` inherits no known disagreement from this readin
 
 ## Release run record
 
-Filled by `T-048` after the Owner approves its delivery. Until then this section is empty by design: no suite has run against a release tree, and this document never records a verification that has not happened.
+The release run passed in full on `2026-09-06`, on the first attempt, against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` in a fresh isolated worktree after a clean `supabase db reset`.
+
+| Suite | Command | Result |
+| --- | --- | --- |
+| Unit | `npm run test:unit` | 237/237 across 26 files |
+| Component | `npm run test:components` | 4/4 across 2 files |
+| Database | `npm run test:db` | 187/187 across 10 pgTAP files |
+| Repository | `npm run test:repository` | 9/9 across 9 files |
+| Browser | `npm run test:browser -- --workers=1` | 52/52, 26 on mobile Chromium and 26 on mobile WebKit |
+
+489 checks, all against the same tree. The generated database types matched the migrated schema exactly, and the database afterwards was identical to a fresh seed, so every scenario removed what it created. The run contradicts no criterion: each row above stands beside the per-criterion evidence this document already cites, and none of it disagrees.
+
+## Visual comparison record
+
+Awaiting the Owner's own comparison. This section stays empty until they report it, because the repository records only comparisons that were actually made — the constraints that comparison works under are in [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md), and [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) records why no Task owns it.

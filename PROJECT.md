@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T18:30:00+02:00
+- **Last updated:** 2026-09-06T18:44:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which six of seven are `Done` and `T-047` is `Canceled`. **All 57 locked criteria now carry verification against an approved delivery**
@@ -16,7 +16,7 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Run and record the authorized release verification against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`.
+Report the visual comparison against the accepted references. It is the last evidence `F-010` and `M-001` need: the release run passed 489/489 and every other completion gate is met.
 
 ## Now
 
@@ -40,7 +40,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` — authorized for the complete suite.
+None.
 
 ## Recently completed Tasks
 

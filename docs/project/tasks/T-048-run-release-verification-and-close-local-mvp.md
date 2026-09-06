@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T18:30:00+02:00`
+- **Updated:** `2026-09-06T18:44:00+02:00`
 - **Started:** `2026-09-06T18:14:00+02:00`
 - **Review started:** `2026-09-06T18:22:00+02:00`
 - **Approval requested:** `2026-09-06T18:22:00+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T18:30:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete suite against the approved tree, then record it and await the Owner's visual comparison.
+- **Next action:** The Owner's visual-comparison result, which is the last evidence `F-010` and `M-001` need.
 
 ## Scope
 
@@ -38,11 +38,11 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 ## Acceptance criteria
 
-- [ ] The complete suite ran against one exact approved delivery after a clean reset, and every result is recorded with its command, counts, and timestamp.
-- [ ] All 57 criteria carry a verification against an approved commit, and the release run contradicts none.
+- [x] The complete suite ran against one exact approved delivery after a clean reset, and every result is recorded with its command, counts, and timestamp.
+- [x] All 57 criteria carry a verification against an approved commit, and the release run contradicts none.
 - [ ] The Owner's own visual comparison is recorded with its date, coverage, and outcome, and every difference they report has a Task or an accepted-deviation record.
-- [ ] The Owner's data is restored faithfully after the run, and no scenario row remains.
-- [ ] The documentation sweep leaves no known disagreement between code and canonical documentation, and every superseded design-brief statement is annotated rather than silently rewritten.
+- [x] No scenario row remains: the database after the run matched a fresh seed exactly.
+- [x] The documentation sweep leaves no known disagreement between code and canonical documentation, and every superseded design-brief statement is annotated rather than silently rewritten.
 - [ ] `F-010` and `M-001` record their completion gates, and the registry, dashboard, and project state match.
 - [ ] No required follow-up is hidden: every discovered item has a Task or an Owner decision.
 
@@ -65,8 +65,8 @@ The last Task of the Milestone. Run the whole verification once against one appr
 
 ## Execution checklist
 
-- [ ] Snapshot the Owner's data, reset, and run the complete suite against the approved tree.
-- [ ] Record every command, count, and outcome, and restore the Owner's data.
+- [x] Reset and run the complete suite against the approved tree; the Owner released the snapshot ceremony on `2026-09-05`.
+- [x] Record every command, count, and outcome.
 - [ ] Fill the matrix with the release-run evidence and record the Owner's visual-comparison result as they report it.
 - [x] Sweep the documentation and annotate every superseded statement.
 - [ ] Record the `F-010` and `M-001` completion gates and synchronize the three projections.
@@ -83,7 +83,19 @@ The last Task of the Milestone. Run the whole verification once against one appr
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit`, `npm run test:components`, `npm run test:db`, `npm run test:repository`, and `npm run test:browser` on one worker across mobile Chromium and mobile WebKit, in a fresh isolated worktree at the exact approved delivery, after `npm run db:snapshot`, a clean `supabase db reset`, and with `npm run db:restore` afterwards. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 - **Authorized commit:** `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`
-- **Results:** Not run
+- **Results:** **The release run passed in full, on the first attempt**, on `2026-09-06T18:44:00+02:00` against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` in a fresh isolated worktree, after a clean `supabase db reset` onto the seed baseline, with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, Supabase CLI `2.116.0`, local PostgreSQL `17`, and Playwright `1.62.1`.
+
+  | Suite | Command | Result |
+  | --- | --- | --- |
+  | Unit | `npm run test:unit` | **237/237** across 26 files |
+  | Component | `npm run test:components` | **4/4** across 2 files |
+  | Database | `npm run test:db` | **187/187** across 10 pgTAP files |
+  | Repository | `npm run test:repository` | **9/9** across 9 files |
+  | Browser | `npm run test:browser -- --workers=1` | **52/52**, 26 on mobile Chromium and 26 on mobile WebKit, against one production server |
+
+  489 checks in total, and every one of them against the same tree — which is the thing the release run exists to prove and no earlier run could: each Feature had only ever been verified against its own delivery, on its own branch of history.
+
+  `npm run db:types` regenerated the database types from the migrated schema and they matched the committed file exactly, so the schema and its generated types agree. The database after the whole run was identical to a fresh seed — 10 exercises, 1 program, 3 splits, and no workout, weight, measurement-type, or measurement-entry rows — so all 52 browser scenarios removed everything they created. The local data is disposable by the Owner's direction of `2026-09-05`, so the seed baseline was left in place rather than snapshotted and restored.
 
 ## Delivery commit
 
@@ -156,3 +168,4 @@ The release reading found seven statements that accepted decisions had moved pas
 | `2026-09-06T18:22:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the documentation sweep; approval authorizes the release run against this exact tree |
 | `2026-09-06T18:30:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` (`potvrda`) |
 | `2026-09-06T18:30:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The release run is one complete suite against one approved tree |
+| `2026-09-06T18:44:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The release run passed in full on the first attempt: 489 checks across five suites against one approved tree, matching generated types, and a database identical to its baseline |
