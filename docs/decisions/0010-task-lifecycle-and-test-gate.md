@@ -40,3 +40,5 @@ Use this normal Task flow:
 ## Subsequent refinement
 
 [ADR-0021](0021-delivery-and-evidence-commit-model.md) defines how a post-delivery evidence commit records the delivery SHA and lifecycle events without requiring the delivery commit to contain its own SHA. Approval and testing remain bound to the exact delivery commit.
+
+[ADR-0028](0028-replacements-inherit-task-approval.md) refines the clearing rule: a replacement that stays within the Task's scope inherits the Task's approval and is re-verified without a new decision; approval clears only when a change leaves the scope or the Owner rejects the delivery.

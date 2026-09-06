@@ -129,7 +129,7 @@ The normal flow is:
 - Reviewer acceptance moves `In Review` to `Awaiting Approval`; review findings return it to `In Progress`.
 - Only the user as Approver can move `Awaiting Approval` to `Approved`.
 - `Approved` may move to `Testing`, or directly to `Done` when the Task explicitly requires no tests.
-- Any change to an approved commit or scope returns the Task to `In Progress` and clears approval and test permission.
+- Any change to an approved commit returns the Task to `In Progress`. A replacement within the Task's scope inherits the approval and moves straight back to `Testing` once delivered and recorded, per [ADR-0028](../decisions/0028-replacements-inherit-task-approval.md); a change of scope clears approval and test permission and becomes a new Task.
 - Passing authorized tests moves `Testing` to `Done`. A failure or required change returns it to `In Progress` and invalidates prior approval.
 - `Blocked` may interrupt an active non-terminal status and resumes only to its recorded prior status after the blocker is resolved.
 - Any non-terminal Task may become `Canceled` with a recorded reason.
@@ -207,7 +207,7 @@ When the user approves the exact commit, the Task records:
 - `approved_at` timestamp;
 - concise `approval_note` preserving the decision made in chat or another interaction.
 
-This repository record, written by an evidence commit, is the durable approval evidence. A changed delivery SHA or changed scope clears these approval fields and all test authorization before returning the Task to `In Progress`. Evidence-only commits do not change or replace the approved delivery SHA.
+This repository record, written by an evidence commit, is the durable approval evidence. A replacement within scope keeps these fields and adds a note naming the replacement SHA it now covers; a change of scope or an Owner rejection clears them and all test authorization before returning the Task to `In Progress`. Evidence-only commits do not change or replace the approved delivery SHA.
 
 ## Verification boundary and records
 

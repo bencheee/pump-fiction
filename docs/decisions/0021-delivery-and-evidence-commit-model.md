@@ -86,3 +86,7 @@ This exception applies only to the first `T-001` delivery commit. It introduces 
 - [`../process/development-governance.md`](../process/development-governance.md)
 - [`../project/templates/task.md`](../project/templates/task.md)
 - [`../project/tasks/T-001-define-local-technical-architecture.md`](../project/tasks/T-001-define-local-technical-architecture.md)
+
+## Subsequent refinement
+
+[ADR-0028](0028-replacements-inherit-task-approval.md) keeps the exact-SHA binding for each verification run and the evidence record, but lets a replacement within the Task's scope run under the approval the Owner gave the Task's first delivery.
