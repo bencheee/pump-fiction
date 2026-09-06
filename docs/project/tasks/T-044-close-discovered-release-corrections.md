@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:52:00+02:00`
+- **Updated:** `2026-09-06T15:54:00+02:00`
 - **Started:** `2026-09-06T15:40:00+02:00`
 - **Review started:** `2026-09-06T15:52:00+02:00`
 - **Approval requested:** `2026-09-06T15:52:00+02:00`
@@ -86,7 +86,7 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `f2a46162b80e747c369e42e4c4e49854ae72cc42`
 - **Subject:** `T-044: close the two discovered release corrections`
 - **Committed scope:** the finish-review explanation bullet; `src/shared/routing/test-support-route.ts` with its unit suite; the opt-in guard and `force-dynamic` on both test-support pages; `playwright.config.ts` back to one server, one `baseURL`, and two projects; `ADR-0029` and its registry row; the harness rule in the durability and mobile-UI-foundation documents; one prepared component assertion; this Task.
 
