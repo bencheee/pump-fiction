@@ -1,7 +1,7 @@
 # T-043 — Record the release verification matrix
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:16:00+02:00`
+- **Updated:** `2026-09-06T15:24:00+02:00`
 - **Started:** `2026-09-06T15:04:00+02:00`
 - **Review started:** `2026-09-06T15:14:00+02:00`
 - **Approval requested:** `2026-09-06T15:14:00+02:00`
-- **Approved:** Not reached
+- **Approved:** `2026-09-06T15:24:00+02:00`
 - **Testing started:** Not reached
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T15:24:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit. Two findings in the matrix, `R1` and `R2`, need their product decision.
+- **Next action:** None; `T-043` is `Done`. The Owner decided both findings, and `T-049` records their corrections.
 
 ## Scope
 
@@ -82,7 +82,7 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 - **No-test reason:** The delivery changes no application behavior, no database artifact, and no test source. Every claim it makes is a citation of a verification already executed and recorded against an approved delivery SHA; review and the internal-link check are the appropriate verification. The release run itself is `T-048`. Owner approval is still required before `Done`.
 - **Planned tests:** None
 - **Authorized commit:** Not applicable; `test_required` is `no`
-- **Results:** Not run
+- **Results:** Not applicable; `test_required` is `no` and the Owner approved that reason with the delivery.
 
 ## Delivery commit
 
@@ -108,10 +108,10 @@ Until they are decided, `T-048` cannot claim that documentation and implementati
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T15:24:00+02:00`
+- **Approval note:** Approved with the decisions on both findings (`R1 - donja navigacija se uvijek mora vidjeti. R2 - nema arhiviranja. Ostalo potvrđujem`). No feature test follows, because `test_required` is `no`; the two corrections become `T-049`.
 
 ## Definition of Ready
 
@@ -129,15 +129,15 @@ Until they are decided, `T-048` cannot claim that documentation and implementati
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks (`T-049` for findings `R1` and `R2`)
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -148,3 +148,5 @@ Until they are decided, `T-048` cannot claim that documentation and implementati
 | `2026-09-06T15:04:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for `F-010` (`kreni`); the breakdown is locked and the readiness answers are accepted |
 | `2026-09-06T15:04:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The record precedes the verification, so the matrix is the first delivery of the Feature |
 | `2026-09-06T15:14:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the matrix with all 57 rows and two recorded findings; static checks passed and no feature test ran |
+| `2026-09-06T15:24:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601` and decided both findings: the bottom navigation must always be visible, and there is no archiving |
+| `2026-09-06T15:24:00+02:00` | Claude Code primary agent / Executor | `Approved` | `Done` | `test_required` is `no` and the Owner approved that reason; the two corrections leave as `T-049` rather than as hidden residual scope |

@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T15:16:00+02:00`
-- **Progress:** `0/5 required Tasks Done; breakdown confirmed, awaiting the go-ahead`
+- **Updated:** `2026-09-06T15:24:00+02:00`
+- **Progress:** `1/6 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -28,18 +28,19 @@ All completed domain Features operate as one persistent, accessible, phone-only 
 
 ## Tasks
 
-Recorded on `2026-09-06` at the Owner's request and confirmed by them the same day, without committing or implementing anything. The record precedes the verification, and the verification precedes the close, as operations preceded screens in `F-005` through `F-009`. Five Tasks are required; `T-047` is `Canceled`, because the Owner performs the visual comparison themselves.
+Recorded on `2026-09-06` at the Owner's request and confirmed by them the same day, without committing or implementing anything. The record precedes the verification, and the verification precedes the close, as operations preceded screens in `F-005` through `F-009`. Six Tasks are required: `T-049` joined on `2026-09-06` when `T-043` found three stale sentences the Owner then decided. `T-047` is `Canceled`, because the Owner performs the visual comparison themselves.
 
 | Order | Task | Delivers | Depends on |
 | --- | --- | --- | --- |
-| 1 | [`T-043`](../tasks/T-043-record-release-verification-matrix.md) — Record the release verification matrix | One row per locked criterion: owning Feature, approved SHA, recorded evidence, and the remaining gap with the Task that closes it | `F-004`–`F-009`, `F-011`–`F-014` `Done` |
-| 2 | [`T-044`](../tasks/T-044-close-discovered-release-corrections.md) — Close the two discovered release corrections | The finish review's stale `Confirmed sets` copy, and one production-visibility rule for both test-support routes so the browser suite runs one server | `T-037` `Done`; readiness answers 5 and 6 accepted |
-| 3 | [`T-045`](../tasks/T-045-verify-cross-feature-persistence.md) — Verify cross-feature persistence and non-reinterpretation | The release evidence for `MVP-REL-003` and `MVP-REL-004` as one browser scenario | `T-043`, `T-044` |
-| 4 | [`T-046`](../tasks/T-046-verify-phone-interaction-and-affordances.md) — Verify phone interaction, affordances, and destructive confirmation | The release evidence for `MVP-UX-001`–`003` as one sweep over every route at four widths | `T-043`, `T-044` |
+| 1 | [`T-043`](../tasks/T-043-record-release-verification-matrix.md) — Record the release verification matrix (`Done`; approved delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601`) | One row per locked criterion: owning Feature, approved SHA, recorded evidence, and the remaining gap with the Task that closes it | `F-004`–`F-009`, `F-011`–`F-014` `Done` |
+| 2 | [`T-049`](../tasks/T-049-correct-two-locked-mvp-criteria.md) — Correct two locked MVP criteria and the stale shell sentence | The `MVP-REL-002` navigation sentence, the `MVP-PRG-007` heading, the architecture document's focused-shell claim, and the ADR-0025 omission that let the contradiction survive | `T-043`; the Owner's decisions of `2026-09-06` |
+| 3 | [`T-044`](../tasks/T-044-close-discovered-release-corrections.md) — Close the two discovered release corrections | The finish review's stale `Confirmed sets` copy, and one production-visibility rule for both test-support routes so the browser suite runs one server | `T-037` `Done`; readiness answers 5 and 6 accepted |
+| 4 | [`T-045`](../tasks/T-045-verify-cross-feature-persistence.md) — Verify cross-feature persistence and non-reinterpretation | The release evidence for `MVP-REL-003` and `MVP-REL-004` as one browser scenario | `T-043`, `T-044` |
+| 5 | [`T-046`](../tasks/T-046-verify-phone-interaction-and-affordances.md) — Verify phone interaction, affordances, and destructive confirmation | The release evidence for `MVP-UX-001`–`003` as one sweep over every route at four widths | `T-043`, `T-044` |
 | — | [`T-047`](../tasks/T-047-compare-against-accepted-visual-references.md) — Compare against the accepted visual references (`Canceled` on `2026-09-06`) | Nothing; the Owner makes the comparison themselves and `T-048` records what they report | Not applicable |
-| 5 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`; the Owner's comparison result |
+| 6 | [`T-048`](../tasks/T-048-run-release-verification-and-close-local-mvp.md) — Run the release verification and close the Local MVP | One complete suite run against one approved tree, the filled matrix, the recorded visual-comparison outcome, the documentation sweep, and the `F-010` and `M-001` completion records | `T-043`–`T-046`; the Owner's comparison result |
 
-`T-043` comes first because it is the only Task that makes the remaining scope observable: until each criterion's existing evidence and gap is written down, `T-045` and `T-046` would be verifying by assumption. `T-044` comes before the two verification Tasks because both run on the browser harness whose rule it settles, and because the release sweep should not read a screen that still contradicts an accepted decision.
+`T-043` came first because it was the only Task that made the remaining scope observable: until each criterion's existing evidence and gap was written down, `T-045` and `T-046` would have been verifying by assumption. It earned its place immediately by finding three sentences that contradicted accepted decisions, which `T-049` now corrects — before `T-046` verifies the navigation rule, so the sweep reads a criterion that matches the application. `T-044` comes before the two verification Tasks because both run on the browser harness whose rule it settles, and because the release sweep should not read a screen that still contradicts an accepted decision.
 
 ## Visual fidelity is the Owner's own
 
@@ -115,3 +116,5 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T14:52:00+02:00` | User / Owner | Canceled `T-047` and took the visual comparison on themselves; confirmed the rest of the breakdown and every remaining recommendation | Replied `t-047 zanemari, sam ću napraviti vizualnu usporedbu. ostalo potvrđujem da je ok`, which decides readiness answers 5 through 7 and the local decisions and leaves five required Tasks |
 | `2026-09-06T15:04:00+02:00` | User / Owner | Released `F-010` and started `T-043` | Gave the go-ahead (`kreni`) after the breakdown was locked; the record precedes the verification, so the matrix is first |
 | `2026-09-06T15:16:00+02:00` | Claude Code primary agent / Executor | Delivered `T-043` for review | Exact delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601` awaits the Owner's approval; it records two findings, `R1` and `R2`, that need their product decision |
+| `2026-09-06T15:24:00+02:00` | User / Approver | Approved `T-043` and decided both findings | `R1`: the bottom navigation must always be visible, so `MVP-REL-002` is corrected rather than the application; `R2`: there is no archiving, so the `MVP-PRG-007` heading follows its body |
+| `2026-09-06T15:24:00+02:00` | Claude Code primary agent / Planner | Completed `T-043` and opened `T-049` in `Ready` | `test_required` was `no` and the Owner approved that reason; the criteria document is locked, so its corrections take their own Task instead of hiding in an evidence commit |

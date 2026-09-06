@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-015` |
-| Task | `T-049` |
+| Task | `T-050` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -84,12 +84,13 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-041`](tasks/T-041-build-body-measurement-operations.md) | `F-009` | Build body measurement operations | `Now / 4` | `Done` | Claude Code primary agent | `2026-09-06T14:12:40+02:00` | [`tasks/T-041-build-body-measurement-operations.md`](tasks/T-041-build-body-measurement-operations.md) |
 | [`T-042`](tasks/T-042-build-body-mobile-experience.md) | `F-009` | Build Body mobile experience | `Now / 5` | `Done` | Claude Code primary agent | `2026-09-06T14:26:11+02:00` | [`tasks/T-042-build-body-mobile-experience.md`](tasks/T-042-build-body-mobile-experience.md) |
 
-| [`T-043`](tasks/T-043-record-release-verification-matrix.md) | `F-010` | Record the release verification matrix | `Now / 1` | `Awaiting Approval` | Claude Code primary agent | `2026-09-06T15:16:00+02:00` | [`tasks/T-043-record-release-verification-matrix.md`](tasks/T-043-record-release-verification-matrix.md) |
-| [`T-044`](tasks/T-044-close-discovered-release-corrections.md) | `F-010` | Close the two discovered release corrections | `Next / 2` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-044-close-discovered-release-corrections.md`](tasks/T-044-close-discovered-release-corrections.md) |
-| [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `F-010` | Verify cross-feature persistence and non-reinterpretation | `Next / 3` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-045-verify-cross-feature-persistence.md`](tasks/T-045-verify-cross-feature-persistence.md) |
-| [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) | `F-010` | Verify phone interaction, affordances, and destructive confirmation | `Next / 4` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-046-verify-phone-interaction-and-affordances.md`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
+| [`T-043`](tasks/T-043-record-release-verification-matrix.md) | `F-010` | Record the release verification matrix | `Now / 1` | `Done` | Claude Code primary agent | `2026-09-06T15:24:00+02:00` | [`tasks/T-043-record-release-verification-matrix.md`](tasks/T-043-record-release-verification-matrix.md) |
+| [`T-044`](tasks/T-044-close-discovered-release-corrections.md) | `F-010` | Close the two discovered release corrections | `Next / 3` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-044-close-discovered-release-corrections.md`](tasks/T-044-close-discovered-release-corrections.md) |
+| [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `F-010` | Verify cross-feature persistence and non-reinterpretation | `Next / 4` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-045-verify-cross-feature-persistence.md`](tasks/T-045-verify-cross-feature-persistence.md) |
+| [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) | `F-010` | Verify phone interaction, affordances, and destructive confirmation | `Next / 5` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-046-verify-phone-interaction-and-affordances.md`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 | [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) | `F-010` | Compare against the accepted visual references | `Next / —` | `Canceled` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-047-compare-against-accepted-visual-references.md`](tasks/T-047-compare-against-accepted-visual-references.md) |
-| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Next / 5` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
+| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Next / 6` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
+| [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Ready` | Claude Code primary agent | `2026-09-06T15:24:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
 
 ## Templates
 
