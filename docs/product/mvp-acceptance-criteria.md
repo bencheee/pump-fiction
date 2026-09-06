@@ -103,7 +103,7 @@ A split belongs to one program and has a name unique within that program. It can
 
 ### MVP-PRG-003 — Template ordering
 
-The user can reorder splits in a program and exercises in a split using a visible drag handle. Reordering does not change saved or active workouts. Reordering splits preserves the identity of the current next split and changes only what follows it.
+The user can reorder splits in a program and exercises in a split through a named control on every row. Reordering does not change saved or active workouts. Reordering splits preserves the identity of the current next split and changes only what follows it.
 
 ### MVP-PRG-004 — Set next split
 
@@ -271,7 +271,7 @@ All required flows are operable at phone viewport widths without horizontal tabl
 
 ### MVP-UX-002 — State and reorder affordances
 
-The current set is visibly distinct. Every reorderable list has an explicit drag handle, and completing a reorder auto-saves its new order.
+Every reorderable list exposes its reordering on each row, as a pair of named controls that move the row up and down and are unavailable at the ends of the list. Completing a reorder auto-saves the new order.
 
 ### MVP-UX-003 — Destructive confirmation
 

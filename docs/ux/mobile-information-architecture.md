@@ -28,7 +28,7 @@ An active workout opens its own screen but keeps the bottom navigation, so the u
 - Never require horizontal table scrolling.
 - Clearly highlight the active set.
 - Auto-save changes where specified, especially during active workouts.
-- Use visible drag handles for reordering; do not rely on hidden long-press behavior alone.
+- Reorder through a named control on every row — a move-up and a move-down button, each at least 44 by 44 CSS pixels, disabled at the ends of the list — rather than a drag handle. A named button is reachable by touch, keyboard, and assistive technology alike, states its target in its own name, and needs no pointer to hold a position on a scrolling phone list. Never rely on hidden long-press behavior.
 - Require confirmation before removing populated workout data, deleting a historical workout, or discarding a workout.
 
 ## Overlay and safe-area behavior

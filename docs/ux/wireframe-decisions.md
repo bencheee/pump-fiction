@@ -45,7 +45,7 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 **Add Split** contains its program, split name, exercise list, **Add Exercise**, and **Save Split**.
 
-**Edit Split** contains name, drag-handle ordering, planned sets/minimum reps/maximum reps for every exercise, **Remove**, **Add Exercise**, and **Delete Split**, which is disabled with an explanation for the last split of the current program.
+**Edit Split** contains name, per-row move-up and move-down ordering, planned sets/minimum reps/maximum reps for every exercise, **Remove**, **Add Exercise**, and **Delete Split**, which is disabled with an explanation for the last split of the current program.
 
 ## Active workout
 
