@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T18:24:00+02:00
+- **Last updated:** 2026-09-06T18:30:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which six of seven are `Done` and `T-047` is `Canceled`. **All 57 locked criteria now carry verification against an approved delivery**
@@ -16,7 +16,7 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Approve or reject exact `T-048` delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`, which authorizes the release run against one approved tree.
+Run and record the authorized release verification against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`.
 
 ## Now
 
@@ -36,11 +36,11 @@ None.
 
 ## Awaiting approval
 
-- [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` — the release documentation sweep, `test_required: yes`. Requested action: approve the exact commit, which authorizes the complete suite to run against it.
+None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` — authorized for the complete suite.
 
 ## Recently completed Tasks
 

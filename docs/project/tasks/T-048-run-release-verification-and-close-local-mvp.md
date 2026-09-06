@@ -1,7 +1,7 @@
 # T-048 — Run the release verification and close the Local MVP
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 6
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T18:24:00+02:00`
+- **Updated:** `2026-09-06T18:30:00+02:00`
 - **Started:** `2026-09-06T18:14:00+02:00`
 - **Review started:** `2026-09-06T18:22:00+02:00`
 - **Approval requested:** `2026-09-06T18:22:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T18:30:00+02:00`
+- **Testing started:** `2026-09-06T18:30:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the release run.
+- **Next action:** Run the complete suite against the approved tree, then record it and await the Owner's visual comparison.
 
 ## Scope
 
@@ -82,7 +82,7 @@ The last Task of the Milestone. Run the whole verification once against one appr
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit`, `npm run test:components`, `npm run test:db`, `npm run test:repository`, and `npm run test:browser` on one worker across mobile Chromium and mobile WebKit, in a fresh isolated worktree at the exact approved delivery, after `npm run db:snapshot`, a clean `supabase db reset`, and with `npm run db:restore` afterwards. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`
 - **Results:** Not run
 
 ## Delivery commit
@@ -114,10 +114,10 @@ The release reading found seven statements that accepted decisions had moved pas
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T18:30:00+02:00`
+- **Approval note:** Approved (`potvrda`), which authorizes the complete suite against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -154,3 +154,5 @@ The release reading found seven statements that accepted decisions had moved pas
 | `2026-09-06T18:14:00+02:00` | User / Owner | `Backlog` | `Ready` | Confirmed the close once `T-046` completed and all 57 criteria carried verification |
 | `2026-09-06T18:14:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The documentation sweep is delivered first; the release run follows its approval, and the Owner's visual comparison is recorded as evidence when they report it |
 | `2026-09-06T18:22:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the documentation sweep; approval authorizes the release run against this exact tree |
+| `2026-09-06T18:30:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` (`potvrda`) |
+| `2026-09-06T18:30:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The release run is one complete suite against one approved tree |
