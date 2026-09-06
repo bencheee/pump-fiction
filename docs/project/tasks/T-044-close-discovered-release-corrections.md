@@ -1,7 +1,7 @@
 # T-044 — Close the two discovered release corrections
 
 - **Feature:** `F-010`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:58:00+02:00`
+- **Updated:** `2026-09-06T16:12:00+02:00`
 - **Started:** `2026-09-06T15:40:00+02:00`
 - **Review started:** `2026-09-06T15:52:00+02:00`
 - **Approval requested:** `2026-09-06T15:52:00+02:00`
 - **Approved:** `2026-09-06T15:58:00+02:00`
 - **Testing started:** `2026-09-06T15:58:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T16:12:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized verification against the exact approved delivery and record its result.
+- **Next action:** None; `T-044` is `Done`. `T-045` follows.
 
 ## Scope
 
@@ -36,12 +36,12 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
 ## Acceptance criteria
 
-- [ ] The finish review names recorded sets, and no application screen says `confirmed` of a set.
-- [ ] Both test-support routes resolve to the not-found boundary in a production build without the opt-in flag, and both render with it.
-- [ ] `npm run test:browser` runs every spec, including the durability spec, against one production server; the second `webServer` entry and the `durability-chromium` and `durability-webkit` projects are gone.
-- [ ] The complete browser suite passes on mobile Chromium and mobile WebKit.
-- [ ] `ADR-0029` records the rule, and [`../../architecture/active-workout-durability.md`](../../architecture/active-workout-durability.md) and [`../../architecture/mobile-ui-foundation.md`](../../architecture/mobile-ui-foundation.md) state it where they describe each harness.
-- [ ] The `T-037` open item is recorded as closed.
+- [x] The finish review names recorded sets, and no application screen says `confirmed` of a set.
+- [x] Both test-support routes resolve to the not-found boundary in a production build without the opt-in flag, and both render with it.
+- [x] `npm run test:browser` runs every spec, including the durability spec, against one production server; the second `webServer` entry and the `durability-chromium` and `durability-webkit` projects are gone.
+- [x] The complete browser suite passes on mobile Chromium and mobile WebKit — 38/38.
+- [x] `ADR-0029` records the rule, and [`../../architecture/active-workout-durability.md`](../../architecture/active-workout-durability.md) and [`../../architecture/mobile-ui-foundation.md`](../../architecture/mobile-ui-foundation.md) state it where they describe each harness.
+- [x] The `T-037` open item is recorded as closed.
 
 ## Traceability
 
@@ -82,7 +82,13 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
   The plan promised one more check than the arrangement can perform. A browser negative check that both routes are not found *without* the flag would need a second server started without it — the two-server arrangement this Task removes. The rule is covered instead where it actually lives: the four unit cases pin the helper, including that `true`, `0`, `yes`, and an empty string all keep the routes hidden, and both pages call that helper as their first statement.
 - **Authorized commit:** `f2a46162b80e747c369e42e4c4e49854ae72cc42`
-- **Results:** Not run
+- **Results:** First verification on `2026-09-06T15:20:00+02:00` against exact approved delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, and Playwright `1.62.1`, after a clean `supabase db reset` onto the seed baseline. Unit passed **237/237 across 26 files**, the four new `isTestSupportEnabled` cases among them, and components **4/4**. The browser suite then passed **33 of 38**: every screen spec passed on both phones against the single production server, and all five failures were the durability spec, which this Task had just moved onto that server for the first time.
+
+  The failures were one test-infrastructure defect, not a behavior defect. Its `beforeEach` cleared IndexedDB from the harness page itself, and the harness opens the outbox the moment it mounts; `deleteDatabase` blocks for as long as any connection is open, so the cleanup deadlocked and every test in the file timed out in `beforeEach`. It had only ever passed because the spec ran against a development server, where the first compile lost the race to the `evaluate`. The production build makes the harness win that race every time, so the defect belongs to the arrangement this Task delivers and its correction stays in scope.
+
+  Replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331` clears from `/today`, which opens no outbox — only `/workout/current`, its finish route, and the harness construct one — then navigates to the harness and awaits hydration, and rejects on `onblocked` so the same mistake fails in two seconds with its reason instead of at a 30-second timeout. It inherits the Task approval under ADR-0028.
+
+  Second verification on `2026-09-06T16:12:00+02:00` against that replacement, after another clean reset: **the complete plan passed.** Unit **237/237 across 26 files**, components **4/4 across 2 files**, and the browser suite **38/38 in 1.8 minutes** — 19 on mobile Chromium and 19 on mobile WebKit, every spec including all three durability tests, against **one** production server with `PF_ENABLE_TEST_SUPPORT=1`. The database after the run matched a fresh seed exactly (10 exercises, 1 program, 3 splits, 0 workouts, and no weight or measurement rows), so every spec removed what it created. The local data is disposable by the Owner's direction of `2026-09-05`, so the seed baseline was left in place rather than snapshotted and restored.
 
 ## Delivery commit
 
@@ -93,6 +99,12 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 ## Discovered, not delivered
 
 `apply-active-workout-command.test.ts:131` names a case `rejects incomplete confirmed sets and unconfirmed populated removal payloads only when malformed`, while the case actually rejects a malformed `update_set` payload — negative kilograms and zero reps — and has nothing to do with confirmation. It is the same ADR-0027 leftover as the finish-review sentence, but it is a unit-test name rather than the finish-review copy this Task's confirmed scope names, so it is reported rather than swept in. One line, no behavior. The Owner decides whether it joins a later Task.
+
+## Replacement
+
+- **Replacement SHA:** `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331`
+- **Subject:** `T-044: clear the durability storage from a page that opens no outbox`
+- **Scope:** `tests/browser/active-workout-durability.spec.ts` alone — the `beforeEach` clears from `/today`, navigates to the harness, awaits hydration, and rejects on `onblocked`. Test source only; it inherits the Task approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
 ## Review
 
@@ -124,15 +136,15 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -144,3 +156,5 @@ Close the two items earlier Tasks discovered and left to the Owner, so the deliv
 | `2026-09-06T15:52:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered both corrections and `ADR-0029`; static checks passed, the assertions are prepared and unexecuted, and one further ADR-0027 leftover is reported rather than swept in |
 | `2026-09-06T15:58:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` (`odobreno`) |
 | `2026-09-06T15:58:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The harness rule changes how every spec is served, so the whole browser suite runs beside the unit and component suites |
+| `2026-09-06T15:45:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The suite passed 33 of 38 against `f2a46162b80e747c369e42e4c4e49854ae72cc42`; the five durability failures were a deadlocked `beforeEach` exposed by the production server, so the replacement corrects the spec under the inherited approval |
+| `2026-09-06T16:12:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331`: unit 237/237, components 4/4, and the whole browser suite 38/38 on one production server |
