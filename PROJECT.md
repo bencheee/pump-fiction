@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T11:01:09+02:00
+- **Last updated:** 2026-09-06T11:11:32+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus; every History screen is delivered
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-036` of `F-008` are `Done` and `T-037` is `In Progress`
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-036` of `F-008` are `Done` and `T-037` is `In Review`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-[`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T11:01:09+02:00. It is the last `F-008` Task: two older specs still call the archiving artifacts `T-021` removed, so `npm run test:browser` cannot run as a whole until they are repaired.
+[`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T11:11:32+02:00. It is the last `F-008` Task: two older specs still call the archiving artifacts `T-021` removed, so `npm run test:browser` cannot run as a whole until they are repaired.
 
 Every History screen is delivered and verified. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) through [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) are `Done`.
 
 ## Immediate next action
 
-Deliver `T-037` for the Owner's one approval; its verification runs the whole browser suite.
+Review exact `T-037` delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` and approve or reject it. Under ADR-0028 this is the one approval the Task needs; its verification runs the whole browser suite.
 
 ## Now
 
-- [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `In Progress` — Claude Code primary agent — 2026-09-06T11:01:09+02:00 — next: deliver for review.
+- [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `In Review` — Claude Code primary agent — 2026-09-06T11:11:32+02:00 — next: the Owner's decision on the exact delivery.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` — Claude Code primary agent — 2026-09-06T11:11:32+02:00 — requested action: review and approve or reject the exact commit. It touches test source and one workflow note only.
 
 ## Approved — ready for testing
 

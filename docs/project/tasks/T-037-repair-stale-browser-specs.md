@@ -1,7 +1,7 @@
 # T-037 — Repair the browser specs left stale by the archiving removal
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
@@ -11,13 +11,13 @@
 - **Created:** `2026-09-05T22:52:00+02:00`
 - **Updated:** `2026-09-06T11:11:32+02:00`
 - **Started:** `2026-09-06T11:01:09+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T11:11:32+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Repair both specs, run only the permitted static checks, and deliver one reviewable commit for the Owner's one approval under ADR-0028.
+- **Next action:** The Owner reviews exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`. Under ADR-0028 this is the one approval the Task needs; its verification is the whole browser suite.
 
 ## Scope
 
@@ -82,7 +82,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7`
 - **Subject:** `T-037: repair the stale browser specs`
 - **Committed scope:** `today-workout-start`, `active-workout`, `exercise-library`, and `programs-mobile` rewritten to the current screens with their fixtures on deletion and the current-program pointer; the `mobile-ui-foundation` navigation test flipped to ADR-0025 with a seeded workout; and the local database workflow note on the browser fixtures' seed-pointer courtesy
 
@@ -137,3 +137,4 @@ The finish review still says `Confirmed sets count toward exercise personal reco
 | `2026-09-05T22:52:00+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Discovered while preparing the `T-032` browser scenario: two specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole |
 | `2026-09-06T11:01:09+02:00` | User / Owner | `Backlog` | `Ready` | The go-ahead for the whole `F-008` covers its last Task; the Owner raised no objection to its placement in three reports |
 | `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began repairing the two browser specs left stale by `T-021` |
+| `2026-09-06T11:11:32+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`; static checks passed, all nine specs parse, and none has run |
