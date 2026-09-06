@@ -1,7 +1,7 @@
 # T-052 — Build the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T20:42:00+02:00`
+- **Updated:** `2026-09-06T21:04:00+02:00`
 - **Started:** `2026-09-06T19:56:00+02:00`
 - **Review started:** `2026-09-06T20:34:00+02:00`
 - **Approval requested:** `2026-09-06T20:34:00+02:00`
 - **Approved:** `2026-09-06T20:42:00+02:00`
 - **Testing started:** `2026-09-06T20:42:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T21:04:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized suite against the exact approved delivery and record the result.
+- **Next action:** None; `T-052` is `Done`. `T-053` restores entry on Today.
 
 ## Scope
 
@@ -40,13 +40,13 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 
 ## Acceptance criteria
 
-- [ ] The bottom navigation offers five destinations, each at least 44 by 44, and Body marks itself current on every route beneath `/body`.
-- [ ] `/body` opens on Weight; both tabs mark the current one without relying on color.
-- [ ] The Weight tab keeps the latest weigh-in, the weekly average, change and `n/7`, the change from the previous weigh-in, the chart, and the full list — and offers no way to create one.
-- [ ] A weigh-in and a measurement entry can still be corrected and deleted, each through `O01` for deletion.
-- [ ] `S22` still creates, renames, and deletes types, and no screen states the unit outside a measurement's label.
-- [ ] History offers exactly Workouts, Exercises, and Splits, and no route under `/history/weight` or `/history/body` resolves.
-- [ ] The whole browser suite passes, including the `T-046` sweep whose route inventory this changes.
+- [x] The bottom navigation offers five destinations, each at least 44 by 44, and Body marks itself current on every route beneath `/body`.
+- [x] `/body` opens on Weight; both tabs mark the current one without relying on color.
+- [x] The Weight tab keeps the latest weigh-in, the weekly average, change and `n/7`, the change from the previous weigh-in, the chart, and the full list — and offers no way to create one.
+- [x] A weigh-in and a measurement entry can still be corrected and deleted, each through `O01` for deletion.
+- [x] `S22` still creates, renames, and deletes types, and no screen states the unit outside a measurement's label.
+- [x] History offers exactly Workouts, Exercises, and Splits, and no route under `/history/weight` or `/history/body` resolves.
+- [x] The whole browser suite passes, including the `T-046` sweep whose route inventory this changes.
 
 ## Traceability
 
@@ -81,7 +81,17 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped component suites for the moved screens, and the **whole** browser suite on one worker across both phones — not just the moved specs, because the destination count, the route inventory, and two fixtures change under every other spec. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 - **Authorized commit:** `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`
-- **Results:** Not run
+- **Results:** Four runs against exact approved delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` and its inherited replacements, each in a fresh isolated worktree after a clean `supabase db reset`, with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, and Playwright `1.62.1`. Unit passed **237/237 across 26 files** and components **4/4** on the first run and were not disturbed again. Every browser failure was in a spec, none in the application.
+
+  **First run, 46 of 52.** The path rewrite had replaced `/history/weight` and `/history/body` wherever they appeared as strings and missed the four places they appear inside a regular expression, where each slash is escaped; and the weight scenario's third seeded weigh-in falls in the next calendar week, so the weekly-average list carries two rows and an unscoped match hit strict mode. Replacement `209124f4` corrects both.
+
+  **Second run, 49 of 52.** The Body scenario still read the second seeded entry as the latest when the third now is, and one WebKit active-workout test failed once and never again — it passed in isolation immediately and in all three later full runs, so it is recorded as a one-off rather than explained away. Replacement `461746ae` corrects the list assertion.
+
+  **Third run, 50 of 52.** The chart sentence names how many entries it draws and still said two. Replacement `109d2a0d3a1155620b4971ea8767561165e584ec` corrects it.
+
+  **Fourth run: 52/52 in 2.4 minutes**, 26 on mobile Chromium and 26 on mobile WebKit, against one production server. The database afterwards was identical to a fresh seed — 10 exercises, 1 program, 3 splits, and no workout, weight, measurement-type or measurement-entry rows.
+
+  Every one of the four faults was the same shape: a scenario that still described the screens as they were before the move. That is what the move was expected to break, and each was corrected in the tests rather than worked around in the application.
 
 ## Static-check plan and results
 
@@ -100,6 +110,16 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 - the History tab bar became `SubsectionNavigation` in `src/shared/ui` rather than being copied: one bar, two destinations, and the `aria-current` and underline behavior stays in one place;
 - the weight and measurement specs now seed three rows instead of two, because the screen they exercise can no longer add the third. Per-date uniqueness moved out of the browser scenarios with the forms that used to demonstrate it; it is the database's rule and its pgTAP suite still covers it;
 - `formatHistoryDate` stays in `src/app/(main)/history/history-presentation.ts` and Body imports it. It is a plain local-date formatter with no History semantics, and moving it would touch five History files for a naming improvement. Worth doing when something else opens that module; recorded here rather than swept in.
+
+## Replacements
+
+Three, all test source, all inheriting the Task approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md):
+
+| SHA | Corrects |
+| --- | --- |
+| `209124f457c6352b79329f0d7af82b6d542c4028` | The four escaped paths a string rewrite missed, and the second weekly average the third seed creates |
+| `461746ae2223841bfdd522cbf0c1a5f27064e2ee` | The list row assertion, which named the second seeded entry when the third is now latest |
+| `109d2a0d3a1155620b4971ea8767561165e584ec` | The chart sentence, which still said two entries |
 
 ## Review
 
@@ -131,15 +151,15 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -150,3 +170,4 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 | `2026-09-06T20:34:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the destination, the move, and every spec it invalidated; static checks passed and no feature test ran |
 | `2026-09-06T20:42:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` (`nastavi`) |
 | `2026-09-06T20:42:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The whole suite runs, because the destination count and the route inventory changed under every spec |
+| `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The whole browser suite passed 52/52 against inherited replacement `109d2a0d3a1155620b4971ea8767561165e584ec`, with unit 237/237, components 4/4, and a database identical to its baseline |
