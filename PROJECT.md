@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T15:24:00+02:00
+- **Last updated:** 2026-09-06T15:34:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Deliver [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — carry the Owner's two decisions into the locked criteria document and correct the architecture document's focused-shell claim.
+Approve or reject exact `T-049` delivery `6cffc618d03198b576374b71db47a6156a2a296d`; it is the only Task that has ever changed the locked criteria document.
 
 ## Now
 
-1. [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — `Ready`, Claude Code primary agent, `2026-09-06T15:24:00+02:00`; next action: correct the three sentences and deliver one reviewable commit.
+1. [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — `Awaiting Approval`, Claude Code primary agent, `2026-09-06T15:34:00+02:00`; next action: the Owner's decision on delivery `6cffc618d03198b576374b71db47a6156a2a296d`.
 
 ## Next
 
@@ -39,7 +39,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-049`](docs/project/tasks/T-049-correct-two-locked-mvp-criteria.md) — exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` — the two locked-criteria corrections, the architecture sentence, and the ADR-0025 amendment, `test_required: no`. Requested action: approve the exact commit.
 
 ## Approved — ready for testing
 

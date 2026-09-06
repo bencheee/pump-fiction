@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T15:24:00+02:00`
+- **Updated:** `2026-09-06T15:34:00+02:00`
 - **Progress:** `1/6 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `0`
+- **Awaiting approval Tasks:** `1`
 
 ## Outcome
 
@@ -118,3 +118,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T15:16:00+02:00` | Claude Code primary agent / Executor | Delivered `T-043` for review | Exact delivery `d79c08f5bfe3a8e7c796fdd9bb0fe943dea9c601` awaits the Owner's approval; it records two findings, `R1` and `R2`, that need their product decision |
 | `2026-09-06T15:24:00+02:00` | User / Approver | Approved `T-043` and decided both findings | `R1`: the bottom navigation must always be visible, so `MVP-REL-002` is corrected rather than the application; `R2`: there is no archiving, so the `MVP-PRG-007` heading follows its body |
 | `2026-09-06T15:24:00+02:00` | Claude Code primary agent / Planner | Completed `T-043` and opened `T-049` in `Ready` | `test_required` was `no` and the Owner approved that reason; the criteria document is locked, so its corrections take their own Task instead of hiding in an evidence commit |
+| `2026-09-06T15:34:00+02:00` | Claude Code primary agent / Executor | Delivered `T-049` for review | Exact delivery `6cffc618d03198b576374b71db47a6156a2a296d` carries both Owner decisions into the locked criteria document, corrects the architecture document's surviving focused-shell claim, and closes the ADR-0025 omission |

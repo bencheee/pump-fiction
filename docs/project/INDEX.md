@@ -90,7 +90,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) | `F-010` | Verify phone interaction, affordances, and destructive confirmation | `Next / 5` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-046-verify-phone-interaction-and-affordances.md`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 | [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) | `F-010` | Compare against the accepted visual references | `Next / —` | `Canceled` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-047-compare-against-accepted-visual-references.md`](tasks/T-047-compare-against-accepted-visual-references.md) |
 | [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Next / 6` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
-| [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Ready` | Claude Code primary agent | `2026-09-06T15:24:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
+| [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Awaiting Approval` | Claude Code primary agent | `2026-09-06T15:34:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
 
 ## Templates
 

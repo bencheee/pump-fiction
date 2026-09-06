@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T15:24:00+02:00`
-- **Updated:** `2026-09-06T15:32:00+02:00`
+- **Updated:** `2026-09-06T15:34:00+02:00`
 - **Started:** `2026-09-06T15:32:00+02:00`
 - **Review started:** `2026-09-06T15:32:00+02:00`
 - **Approval requested:** `2026-09-06T15:32:00+02:00`
@@ -86,7 +86,7 @@ Amend [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) to na
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `6cffc618d03198b576374b71db47a6156a2a296d`
 - **Subject:** `T-049: correct two locked MVP criteria and the stale shell sentence`
 - **Committed scope:** the `MVP-REL-002` second sentence and the `MVP-PRG-007` heading in the locked criteria document; one sentence in the local technical architecture; one consequence line in ADR-0025; the two findings marked resolved in the release verification matrix with their two criterion rows; this Task. No application source, schema, migration, generated type, or test source changed, and no other criterion moved.
 
