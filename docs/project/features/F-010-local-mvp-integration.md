@@ -6,10 +6,10 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T16:46:00+02:00`
+- **Updated:** `2026-09-06T16:52:00+02:00`
 - **Progress:** `3/6 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -125,3 +125,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T16:12:00+02:00` | Claude Code primary agent / Tester | Completed `T-044` | The complete plan passed against inherited replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331`: unit 237/237, components 4/4, and the whole browser suite 38/38 on one production server, the durability spec included for the first time |
 | `2026-09-06T16:20:00+02:00` | Claude Code primary agent / Executor | Started `T-045` | The record and the corrections are done, so the two release criteria no single Feature could prove come next |
 | `2026-09-06T16:46:00+02:00` | Claude Code primary agent / Executor | Delivered `T-045` for review | Exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` prepares the two release scenarios for `MVP-REL-003` and `MVP-REL-004`; it awaits the Owner's approval before either runs |
+| `2026-09-06T16:52:00+02:00` | User / Approver | Approved `T-045` | Authorized both release scenarios against exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` |

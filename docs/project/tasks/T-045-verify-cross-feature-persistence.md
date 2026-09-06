@@ -1,7 +1,7 @@
 # T-045 — Verify cross-feature persistence and non-reinterpretation
 
 - **Feature:** `F-010`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T16:46:00+02:00`
+- **Updated:** `2026-09-06T16:52:00+02:00`
 - **Started:** `2026-09-06T16:20:00+02:00`
 - **Review started:** `2026-09-06T16:44:00+02:00`
 - **Approval requested:** `2026-09-06T16:44:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T16:52:00+02:00`
+- **Testing started:** `2026-09-06T16:52:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the prepared scenario.
+- **Next action:** Run the authorized scenarios against the exact approved delivery and record the result.
 
 ## Scope
 
@@ -86,7 +86,7 @@ The delivery is test source and documentation. No application change is expected
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:browser` for this scenario alone on one worker across mobile Chromium and mobile WebKit, after a clean reset and with the Owner's data snapshotted and restored around it; then the unit suite to confirm nothing else moved. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`
 - **Results:** Not run
 
 ## Delivery commit
@@ -119,10 +119,10 @@ The rotation pointer is read from the programs list row, whose markup states it 
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T16:52:00+02:00`
+- **Approval note:** Approved (`potvrda`), which authorizes both scenarios against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -159,3 +159,5 @@ The rotation pointer is read from the programs list row, whose markup states it 
 | `2026-09-06T16:20:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead (`kreni`) once `T-044` completed |
 | `2026-09-06T16:20:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The matrix names `MVP-REL-003` and `MVP-REL-004` as the two gaps no single Feature could close |
 | `2026-09-06T16:44:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the two prepared scenarios; static checks passed and no feature test ran |
+| `2026-09-06T16:52:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` (`potvrda`) |
+| `2026-09-06T16:52:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The two release scenarios run on one worker across both phones, with the unit suite after them |
