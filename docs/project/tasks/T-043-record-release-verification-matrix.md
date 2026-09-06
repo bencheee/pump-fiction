@@ -1,7 +1,7 @@
 # T-043 — Record the release verification matrix
 
 - **Feature:** `F-010`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T14:52:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T15:04:00+02:00`
+- **Started:** `2026-09-06T15:04:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await the Owner's go-ahead. The readiness answers are accepted; nothing starts before the go-ahead.
+- **Next action:** Write the matrix, run the permitted static checks, and deliver one reviewable commit.
 
 ## Scope
 
@@ -55,7 +55,7 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 ## Dependencies and blockers
 
 - Dependencies: `F-004` through `F-009` and `F-011` through `F-014` `Done`, so every citation exists
-- Blockers: the Owner's go-ahead for `F-010`; the readiness answers are accepted as of `2026-09-06`
+- Blockers: None; the Owner gave the go-ahead on `2026-09-06` (`kreni`)
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -116,7 +116,7 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -136,3 +136,5 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 | --- | --- | --- | --- | --- |
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-010` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and every remaining recommended answer (`ostalo potvrđujem da je ok`); `T-047` is canceled and the visual comparison becomes the Owner's own |
+| `2026-09-06T15:04:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for `F-010` (`kreni`); the breakdown is locked and the readiness answers are accepted |
+| `2026-09-06T15:04:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The record precedes the verification, so the matrix is the first delivery of the Feature |

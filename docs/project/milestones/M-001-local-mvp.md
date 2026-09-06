@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-06T14:58:00+02:00`
+- **Updated:** `2026-09-06T15:04:00+02:00`
 - **Progress:** `13/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -196,3 +196,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-06T12:39:15+02:00` | User / Owner | Released `F-009` and started `T-038` | Accepted every recommended readiness answer and gave the go-ahead to implement the whole Feature |
 | `2026-09-06T14:27:19+02:00` | User / Owner | Completed `F-009`; Milestone remains incomplete | Confirmed the aggregate Weight and Body Progress result; `M-001` advances to 13/14 required Features Done |
 | `2026-09-06T14:58:00+02:00` | Claude Code primary agent / Planner | Recorded and locked the `F-010` breakdown `T-043`–`T-048` in `Backlog`, with `T-047` `Canceled` | The Owner asked for the last Feature's Tasks, took the visual comparison on themselves, and confirmed the rest; five required Tasks remain before the Milestone can close |
+| `2026-09-06T15:04:00+02:00` | User / Owner | Released `F-010` and started `T-043` | Gave the go-ahead for the last Feature; the release verification matrix is the first delivery |

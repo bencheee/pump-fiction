@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:58:00+02:00
+- **Last updated:** 2026-09-06T15:04:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-048`, of which five are required and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Start [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — record the release verification matrix, so the remaining release scope is observable before anything is verified.
+Deliver [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — the release verification matrix is being written; it needs review and the Owner's approval before `T-044` starts.
 
 ## Now
 
-1. [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — `Backlog`, Claude Code primary agent, `2026-09-06T14:52:00+02:00`; next action: move to `Ready` and write the matrix.
+1. [`T-043`](docs/project/tasks/T-043-record-release-verification-matrix.md) — `In Progress`, Claude Code primary agent, `2026-09-06T15:04:00+02:00`; next action: write the matrix and deliver one reviewable commit.
 
 ## Next
 

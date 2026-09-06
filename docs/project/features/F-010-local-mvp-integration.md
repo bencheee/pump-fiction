@@ -6,7 +6,7 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T14:52:00+02:00`
+- **Updated:** `2026-09-06T15:04:00+02:00`
 - **Progress:** `0/5 required Tasks Done; breakdown confirmed, awaiting the go-ahead`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -79,7 +79,7 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 ## Dependencies and blockers
 
 - Dependencies: `F-003` through `F-009` and `F-011` through `F-014` are `Done`, so every screen, operation, and verification this Feature reads exists; the Owner's own visual comparison, which `T-048` records
-- Blockers: the Owner's go-ahead; the readiness answers are accepted and no Task is `Ready` yet
+- Blockers: None; the Owner gave the go-ahead on `2026-09-06` (`kreni`) and `T-043` is `In Progress`
 
 ## Related decisions and documents
 
@@ -90,10 +90,10 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [x] Required Tasks are identified (`T-043` through `T-046` and `T-048`; `T-047` is `Canceled`); none is `Ready` until the Owner gives the go-ahead
+- [x] Required Tasks are identified (`T-043` through `T-046` and `T-048`; `T-047` is `Canceled`); `T-043` is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [x] Owner answered the readiness questions and confirmed the breakdown on `2026-09-06`; the go-ahead to start is separate
+- [x] Owner answered the readiness questions, confirmed the breakdown, and gave the go-ahead on `2026-09-06`
 
 ## Completion
 
@@ -113,3 +113,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-05T21:27:54+02:00` | User / Owner | Moved to `Next / 3` | `F-014` was confirmed, so `F-012` becomes the current focus |
 | `2026-09-06T14:36:00+02:00` | Claude Code primary agent / Planner | Recorded the six-Task breakdown `T-043`–`T-048` in `Backlog`, seven readiness questions with recommended answers, and the proposed local decisions | The Owner asked for the `F-010` Tasks; nothing is committed, locked, or started before their separate go-ahead |
 | `2026-09-06T14:52:00+02:00` | User / Owner | Canceled `T-047` and took the visual comparison on themselves; confirmed the rest of the breakdown and every remaining recommendation | Replied `t-047 zanemari, sam ću napraviti vizualnu usporedbu. ostalo potvrđujem da je ok`, which decides readiness answers 5 through 7 and the local decisions and leaves five required Tasks |
+| `2026-09-06T15:04:00+02:00` | User / Owner | Released `F-010` and started `T-043` | Gave the go-ahead (`kreni`) after the breakdown was locked; the record precedes the verification, so the matrix is first |
