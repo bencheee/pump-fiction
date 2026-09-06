@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T22:32:00+02:00`
+- **Updated:** `2026-09-06T22:40:00+02:00`
 - **Progress:** `3/3 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -111,8 +111,8 @@ Not decided. The Executor records each in canonical documentation during the Tas
 - [x] All required Tasks are `Done` (`T-051`, `T-052`, `T-053`)
 - [x] Feature acceptance criteria are satisfied: five destinations with Body among them, History down to three subsections, no create path anywhere under Body, correction and deletion intact, Today taking the day's measurements in one sheet, and the unit stated only in each measurement's label
 - [x] Canonical documentation is current; `ADR-0030` records the decision and every document it contradicts was corrected in `T-051`
-- [ ] No required follow-up scope is hidden — one item is open for the Owner: whether recording only some of the day's measurements should be possible, which the sheet currently refuses
-- [ ] User confirms the feature result
+- [x] No required follow-up scope is hidden; the Owner decided the one open item on `2026-09-06` by confirming the result as delivered, so the sheet keeps requiring every missing measurement
+- [x] User confirms the feature result on `2026-09-06T22:40:00+02:00`
 
 ## History
 
@@ -126,3 +126,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Tester | Completed `T-052` and started `T-053` | The whole browser suite passed 52/52; each of the three replacements was a scenario still describing the screens as they were before the move |
 | `2026-09-06T22:12:00+02:00` | Claude Code primary agent / Executor | Delivered `T-053` for review | Exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` restores entry on Today and adds the transactional write `MVP-TOD-005` requires; the Task also discloses a test-gate breach during `T-052` and `T-053` |
 | `2026-09-06T22:32:00+02:00` | Claude Code primary agent / Tester | Completed `T-053`; all three Tasks are `Done` | The complete plan passed on the first run, including the pgTAP assertions that the day's measurements are written together or not at all |
+| `2026-09-06T22:40:00+02:00` | User / Owner | Completed `F-015` | Confirmed the result as delivered (`dobro je, potvrđujem da je sve ok ovako kako je`), which also decides the open item: a partial day stays unrecordable |

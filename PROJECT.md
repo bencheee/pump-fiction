@@ -1,8 +1,8 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T22:32:00+02:00
-- **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
-- **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
+- **Last updated:** 2026-09-06T22:40:00+02:00
+- **Current phase:** **Local MVP complete, and its first post-MVP change delivered.** `M-001` closed on `2026-09-06` with 14/14 Features and a release run of 489 checks; `M-002` closed the same day with the Body destination
+- **Current Milestone:** None; [`M-001`](docs/project/milestones/M-001-local-mvp.md) and [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md) are both `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
@@ -10,15 +10,14 @@
 
 ## Current focus
 
-[`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) Body Destination and Today Entry, the first Feature of [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md). Weight and body measurements become their own bottom-navigation destination that reads and corrects but never creates, and everything for today is entered on Today.
-
-It revises three locked criteria and part of ADR-0003, which is why it is not in `M-001`: that Milestone is measured against the criteria this Feature changes. `M-001` is `Done` on what it delivered.
-
-The release run passed 489 checks across five suites against exact approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb`: unit 237/237, components 4/4, pgTAP 187/187, repository 9/9, and the browser suite 52/52 on both phones. The Owner confirmed the visual comparison against the accepted references on 2026-09-06 and reported no deviation. Three documentation findings — `R1`, `R2`, and `R3` — were raised by the release reading, decided by the Owner, and closed by `T-049` and `T-050`.
+None. Both Milestones are `Done`. The application has five destinations, 58 criteria, and every one of them verified against an approved delivery.
 
 ## Immediate next action
 
-Confirm the `F-015` result, and decide the one open item: the Today sheet requires every missing measurement before it saves, so a partial day cannot be recorded.
+None required. Two small items wait on the Owner's word whenever they want them:
+
+- the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
+- a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them.
 
 ## Now
 
@@ -60,7 +59,6 @@ None.
 
 ## Active work items
 
-- [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md) — Post-MVP Product Changes (`0/1 Features Done`)
-- [`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`3/3 Tasks Done`, awaiting the Owner's confirmation)
+None; every Milestone, Feature, and Task is terminal.
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

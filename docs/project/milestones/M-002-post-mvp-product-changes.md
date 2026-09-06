@@ -5,8 +5,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:10:00+02:00`
-- **Progress:** `0/1 required Features Done`
+- **Updated:** `2026-09-06T22:40:00+02:00`
+- **Progress:** `1/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -25,20 +25,20 @@ Accepted changes to the product the Local MVP delivered, each revising the locke
 
 ## Completion criteria
 
-- [ ] All required Features are `Done`
-- [ ] Every criterion this Milestone revises is revised by an explicit Owner decision, in the same Task that delivers its change
-- [ ] Canonical product, architecture, and project documentation is current
-- [ ] No required implementation or verification work remains hidden
-- [ ] User confirms the result
+- [x] All required Features are `Done`
+- [x] Every criterion this Milestone revises is revised by an explicit Owner decision, in the same Task that delivers its change: `T-051` carried all six, ahead of the Tasks that built against them
+- [x] Canonical product, architecture, and project documentation is current
+- [x] No required implementation or verification work remains hidden
+- [x] User confirms the result on `2026-09-06T22:40:00+02:00`
 
 ## Features
 
-- [`F-015`](../features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`Next / 1`)
+- [`F-015`](../features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`Done`)
 
 ## Dependencies and blockers
 
 - Dependencies: `M-001` complete, so the criteria being revised are known to be satisfied before they change
-- Blockers: `M-001` awaits the Owner's confirmation of its result
+- Blockers: None; `M-001` is `Done`
 
 ## Related decisions and documents
 
@@ -49,12 +49,13 @@ Accepted changes to the product the Local MVP delivered, each revising the locke
 
 - [x] Outcome and boundaries are clear
 - [x] Completion criteria are observable
-- [ ] Required Feature breakdown is identified; `F-015` is the first
+- [x] Required Feature breakdown is identified; `F-015` was the first and only
 - [x] Dependencies and blockers are understood
-- [ ] Owner confirms readiness
+- [x] Owner confirmed readiness and the result on `2026-09-06`
 
 ## History
 
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | Created in `Next` with `F-015` | The Owner asked for a Body destination that revises three locked criteria and one accepted ADR; that cannot land inside the Milestone those criteria measure |
+| `2026-09-06T22:40:00+02:00` | User / Owner | Completed `M-002` | Confirmed the `F-015` result as delivered; weight and body have their own destination, entry lives on Today, and the six criteria the change touched were revised by decision rather than outgrown |

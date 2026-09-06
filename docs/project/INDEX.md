@@ -17,7 +17,7 @@ Allocated identifiers are never reused, including after cancellation.
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
 | [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `14/14 Features Done` | User | `2026-09-06T19:22:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
-| [`M-002`](milestones/M-002-post-mvp-product-changes.md) | Post-MVP Product Changes | `Now / 1` | `0/1 Features Done` | User | `2026-09-06T22:32:00+02:00` | [`milestones/M-002-post-mvp-product-changes.md`](milestones/M-002-post-mvp-product-changes.md) |
+| [`M-002`](milestones/M-002-post-mvp-product-changes.md) | Post-MVP Product Changes | `Now / 1` | `1/1 Features Done` | User | `2026-09-06T22:40:00+02:00` | [`milestones/M-002-post-mvp-product-changes.md`](milestones/M-002-post-mvp-product-changes.md) |
 
 ## Features
 
@@ -37,7 +37,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Now / 1` | `7/7 Done` | User | `2026-09-06T11:50:42+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Now / 2` | `5/5 Done` | User | `2026-09-06T14:27:19+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Now / 1` | `0/5 Done` | User | `2026-09-06T15:04:00+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
-| [`F-015`](features/F-015-body-destination-and-today-entry.md) | `M-002` | Body Destination and Today Entry | `Now / 1` | `3/3 Done` | User | `2026-09-06T22:32:00+02:00` | [`features/F-015-body-destination-and-today-entry.md`](features/F-015-body-destination-and-today-entry.md) |
+| [`F-015`](features/F-015-body-destination-and-today-entry.md) | `M-002` | Body Destination and Today Entry | `Now / 1` | `3/3 Done` | User | `2026-09-06T22:40:00+02:00` | [`features/F-015-body-destination-and-today-entry.md`](features/F-015-body-destination-and-today-entry.md) |
 
 ## Tasks
 
