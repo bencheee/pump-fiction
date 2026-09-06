@@ -6,6 +6,12 @@ import {
   type ExerciseStatistics,
 } from "@/features/history/application/exercise-statistics-operations";
 import {
+  getSplitStatistics as runGetSplitStatistics,
+  listSplitHistory as runListSplitHistory,
+  type SplitHistory,
+  type SplitStatistics,
+} from "@/features/history/application/split-statistics-operations";
+import {
   correctHistoryWorkout as runCorrectHistoryWorkout,
   getHistoryWorkout as runGetHistoryWorkout,
   listWorkoutHistory as runListWorkoutHistory,
@@ -23,6 +29,7 @@ import type { OperationResult } from "@/shared/application/operation-result";
 
 import { createServerDatabaseClient } from "../database/client";
 import { SupabaseExerciseStatisticsRepository } from "../repositories/supabase-exercise-statistics-repository";
+import { SupabaseSplitStatisticsRepository } from "../repositories/supabase-split-statistics-repository";
 import { SupabaseWorkoutHistoryRepository } from "../repositories/supabase-workout-history-repository";
 
 function repository(): SupabaseWorkoutHistoryRepository {
@@ -70,4 +77,21 @@ export async function getExerciseStatistics(
     exerciseIdentityId,
     options,
   );
+}
+
+function splitRepository(): SupabaseSplitStatisticsRepository {
+  return new SupabaseSplitStatisticsRepository(createServerDatabaseClient());
+}
+
+export async function listSplitHistory(): Promise<
+  OperationResult<SplitHistory>
+> {
+  return runListSplitHistory(splitRepository());
+}
+
+export async function getSplitStatistics(
+  splitIdentityId: string,
+  options: Readonly<{ range?: ChartRange; localDate: string }>,
+): Promise<OperationResult<SplitStatistics>> {
+  return runGetSplitStatistics(splitRepository(), splitIdentityId, options);
 }

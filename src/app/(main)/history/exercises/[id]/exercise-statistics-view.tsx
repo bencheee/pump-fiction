@@ -28,6 +28,7 @@ const metricLabels: Readonly<Record<ChartMetric, string>> = {
   top_reps: "Highest reps",
   total_volume: "Workout volume",
   total_reps: "Workout reps",
+  duration: "Active duration",
 };
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
@@ -274,11 +275,10 @@ function ChartSummary({ series }: { series: ChartSeries }) {
 }
 
 function unitSuffix(series: ChartSeries): string {
-  return series.unit === "kg"
-    ? "kg"
-    : series.unit === "reps"
-      ? "reps"
-      : "kg·reps";
+  if (series.unit === "kg") return "kg";
+  if (series.unit === "reps") return "reps";
+  if (series.unit === "seconds") return "s";
+  return "kg·reps";
 }
 
 function PerformanceRow({ performance }: { performance: ExercisePerformance }) {

@@ -108,7 +108,7 @@ After approval, reset applies the exact migration history to a clean local datab
 
 Approved repository integration tests write to the same local database. They create suffixed fixtures, delete them afterwards, and restore the current-program pointer they moved, so an authorized verification leaves the seeded or restored data usable.
 
-`T-031` adds the `0006_workout_history` pgTAP suite and a workout-History repository integration test to that set, and `T-033` adds `0007_exercise_statistics` and an exercise-statistics repository integration test. The suite creates and finishes its own workouts, so it shares the precondition below.
+`T-031` adds the `0006_workout_history` pgTAP suite and a workout-History repository integration test to that set, `T-033` adds `0007_exercise_statistics` and an exercise-statistics repository integration test, and `T-035` adds `0008_split_statistics` and a split-statistics repository integration test. The suite creates and finishes its own workouts, so it shares the precondition below.
 
 `npm run test:repository` runs with `--no-file-parallelism`. Three of its files now start a workout, and they share one local database: `workouts_single_resumable` allows one resumable workout at a time and rotation pointers are shared state, so running the files concurrently makes them fail each other. Serial execution is a correctness requirement of these tests, not a speed preference; a new repository test that writes workouts must keep it.
 

@@ -53,6 +53,8 @@ The singleton time-zone update is one atomic PostgreSQL statement. A later featu
 
 `T-033` adds the exercise statistics reads beside them. `list_exercise_history` and `get_exercise_performances` group by `exercise_identity_id`, never by the live reference, so an exercise keeps one history after its definition is deleted. They shape and return raw performances; the personal records, eligibility, metrics, and chart series are derived in `src/features/history/domain/exercise-statistics.ts`, which keeps every product rule in one testable place and matches the neutral chart-data boundary [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md) requires.
 
+`T-035` adds `list_split_workouts`, the one read behind Split History. It returns saved split-sourced workouts with their identity snapshots and both name forms, and derives nothing; `src/features/history/domain/split-statistics.ts` groups by `source_split_identity_id`, applies the eligibility rule, and produces the summaries, the program filter, and the duration series.
+
 ## Approval-gated verification
 
 Vitest is configured for Node-based application tests. Prepared tests are separate from `npm run check` and must not run before approval of the exact delivery commit.

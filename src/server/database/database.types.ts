@@ -655,6 +655,7 @@ export type Database = {
       get_history_workout: { Args: { p_workout_id: string }; Returns: Json }
       get_today_view: { Args: never; Returns: Json }
       list_exercise_history: { Args: never; Returns: Json }
+      list_split_workouts: { Args: never; Returns: Json }
       list_workout_history: { Args: never; Returns: Json }
       mark_history_workout_completed: {
         Args: { p_workout_id: string }

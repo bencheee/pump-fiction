@@ -112,7 +112,7 @@ export function categoryOf(set: WorkoutSet): ComparisonCategory | null {
   };
 }
 
-export type RecordUnit = "kg" | "reps" | "volume";
+export type RecordUnit = "kg" | "reps" | "volume" | "seconds";
 
 export type PersonalRecord = Readonly<{
   key: string;
@@ -346,7 +346,13 @@ export function latestEligiblePerformance(
 }
 
 export type ChartMetric =
-  "top_load" | "least_load" | "top_reps" | "total_volume" | "total_reps";
+  | "top_load"
+  | "least_load"
+  | "top_reps"
+  | "total_volume"
+  | "total_reps"
+  /** Split History only: active duration per completed workout. */
+  | "duration";
 
 export type ChartRange = "week" | "month" | "quarter" | "year" | "all";
 
@@ -378,6 +384,7 @@ const metricLabels: Readonly<Record<ChartMetric, string>> = {
   top_reps: "Highest reps",
   total_volume: "Workout volume",
   total_reps: "Workout reps",
+  duration: "Active duration",
 };
 
 const metricUnits: Readonly<Record<ChartMetric, RecordUnit>> = {
@@ -386,6 +393,7 @@ const metricUnits: Readonly<Record<ChartMetric, RecordUnit>> = {
   top_reps: "reps",
   total_volume: "volume",
   total_reps: "reps",
+  duration: "seconds",
 };
 
 /**

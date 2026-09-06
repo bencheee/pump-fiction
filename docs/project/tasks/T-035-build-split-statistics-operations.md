@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:38:42+02:00`
+- **Updated:** `2026-09-06T10:45:28+02:00`
 - **Started:** `2026-09-06T10:38:42+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -74,18 +74,18 @@ Queries:
 
 ## Execution checklist
 
-- [ ] Define the split statistics domain shapes: split entry, duration aggregates, chart series and range, workout entry, program filter option, and the split history repository contract.
-- [ ] Implement identity grouping, the eligibility filter, the aggregates, and the range and series builders as pure functions.
-- [ ] Add read functions for the list aggregates, the filter options, and one split's completed workouts, mapped in the Supabase repository to domain shapes.
-- [ ] Add application operations returning `OperationResult` values through server composition.
-- [ ] Generate and review the migration; regenerate and review the database types.
-- [ ] Prepare the unit suite, the pgTAP suite, and a repository integration test; add the integration file to `test:repository`; do not run them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Define the split statistics domain shapes: split workout, split summary, workout entry, program option, and the repository contract. The chart series reuses the exercise chart shape with a new `duration` metric and `seconds` unit, so the two subsections share one chart contract.
+- [x] Implement identity grouping, the eligibility filter, the aggregates, and the range and series builders as pure functions. A split is named by its live template name while it exists and by its snapshot once deleted.
+- [x] Add the read behind the list and the detail. One function returns every saved split-sourced workout with its identity snapshots and both name forms; the domain derives the list aggregates, the filter options, and one split's workouts from it, so the database holds no aggregate.
+- [x] Add application operations returning `OperationResult` values through server composition and thin Server Actions.
+- [x] Generate and review the migration; regenerate and review the database types. The migration adds one function and no structural statement.
+- [x] Prepare the unit suite, the pgTAP suite, and a repository integration test; add the integration file to `test:repository`; do not run them.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T10:45:28+02:00` with Node.js `24.20.0`, npm `11.19.0`, Supabase CLI `2.116.0`, and local PostgreSQL `17`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, which compiled inside an immediately rolled-back transaction; regenerated types matched the committed file on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the unit, pgTAP, and repository suites are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -97,9 +97,9 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-035: build split statistics operations`
-- **Committed scope:** Not created
+- **Committed scope:** the `0005_split_statistics.sql` declarative schema with its function-only migration and regenerated types; the `split-statistics` domain and its `duration` extension of the shared chart types; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the prepared unit suite, the `0008_split_statistics` pgTAP suite, and the repository integration test with its `test:repository` registration; and the History product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
 

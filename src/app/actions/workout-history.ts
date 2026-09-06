@@ -8,7 +8,9 @@ import {
   correctHistoryWorkout,
   getExerciseStatistics,
   getHistoryWorkout,
+  getSplitStatistics,
   listExerciseHistory,
+  listSplitHistory,
   listWorkoutHistory,
 } from "@/server/application/workout-history";
 
@@ -37,4 +39,15 @@ export async function getExerciseStatisticsAction(
   }>,
 ) {
   return getExerciseStatistics(exerciseIdentityId, options);
+}
+
+export async function listSplitHistoryAction() {
+  return listSplitHistory();
+}
+
+export async function getSplitStatisticsAction(
+  splitIdentityId: string,
+  options: Readonly<{ range?: ChartRange; localDate: string }>,
+) {
+  return getSplitStatistics(splitIdentityId, options);
 }

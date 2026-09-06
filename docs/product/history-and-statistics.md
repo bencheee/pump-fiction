@@ -101,6 +101,8 @@ The chart opens on the metric that tells the most about the exercise: the load i
 
 The split list shows program, completed-workout count, average duration, and latest-performance date. Splits with the same name in different programs remain separate because statistics use persistent split identity.
 
+A split is named by its current template name, so a rename follows it, and by its snapshotted name once the template is deleted, so the workouts it produced stay listed under the name they were performed as. Only splits with at least one completed workout appear.
+
 A split detail shows completed-workout count, total duration, average duration, shortest and longest duration, latest duration, a duration chart, and its workouts.
 
 One-time and incomplete workouts are excluded from split-duration statistics.
