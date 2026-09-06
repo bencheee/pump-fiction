@@ -20,7 +20,7 @@ vi.mock("@/app/actions/workout-history", () => ({
 // The chart is presentation over the same series the accessible list shows, and
 // Recharts needs a laid-out container that jsdom does not provide. The browser
 // scenario covers it; here the data beside it is what matters.
-vi.mock("./[id]/progress-chart", () => ({
+vi.mock("@/features/history/ui/progress-chart", () => ({
   ProgressChart: () => null,
 }));
 

@@ -20,7 +20,7 @@ import {
   formatHistoryDate,
   incompleteExplanation,
 } from "../../history-presentation";
-import { ProgressChart } from "./progress-chart";
+import { ProgressChart } from "@/features/history/ui/progress-chart";
 
 const metricLabels: Readonly<Record<ChartMetric, string>> = {
   top_load: "Highest load",

@@ -9,14 +9,21 @@ import {
   YAxis,
 } from "recharts";
 
-import type { ChartSeries } from "@/features/history/domain/exercise-statistics";
+import type { ChartSeries } from "../domain/exercise-statistics";
 
 /**
  * The chart is never the only representation of the data: the caller renders a
  * textual summary and an accessible list beside it. Nothing here needs hover,
  * and the line animation is left off so reduced-motion preferences hold.
  */
-export function ProgressChart({ series }: { series: ChartSeries }) {
+export function ProgressChart({
+  series,
+  formatValue,
+}: {
+  series: ChartSeries;
+  /** Axis labels only; the values themselves stay as the domain produced them. */
+  formatValue?: (value: number) => string;
+}) {
   if (series.points.length === 0) return null;
 
   return (
@@ -43,6 +50,7 @@ export function ProgressChart({ series }: { series: ChartSeries }) {
             tick={{ fill: "var(--pf-text-3-deep)", fontSize: 11 }}
             tickLine={false}
             axisLine={false}
+            tickFormatter={formatValue}
           />
           <Line
             type="monotone"

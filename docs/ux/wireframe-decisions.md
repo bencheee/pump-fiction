@@ -83,6 +83,8 @@ The detail groups personal records by comparison category, one panel per categor
 
 Provide a program filter and split list with workout count and average duration. Detail provides average/shortest/longest duration, duration chart, and workout list.
 
+The filter appears only when more than one program has a completed split; a single program needs no filter. A split whose template was deleted stays listed under a marker and under the name it was performed as. The detail gives the six duration statistics as stat cards, the range selector, the duration chart with its sentence and value list, the exclusion rule in words, and each workout as a link to its own detail.
+
 ### Weight
 
 Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, and entry list.

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:50:32+02:00`
+- **Updated:** `2026-09-06T10:54:05+02:00`
 - **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -72,31 +72,31 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 
 ## Execution checklist
 
-- [ ] Implement `S17` with the program filter, identity-based rows, and empty and no-results states.
-- [ ] Implement `S18` aggregates, exclusion explanation, and the workout list with links.
-- [ ] Implement the range selector and the route-local Recharts duration chart with textual summary and accessible data list, keeping calculations out of presentation.
-- [ ] Wire the not-found boundary and the subsection navigation state.
-- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 8 (`S17` to `S18` with chart and list) with structural captures; do not run them.
-- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Implement `S17` with the program filter, identity-based rows, and empty and no-results states. The filter appears only when more than one program has a completed split.
+- [x] Implement `S18` aggregates, exclusion explanation, and the workout list with links.
+- [x] Implement the range selector and the duration chart with textual summary and accessible data list, keeping calculations out of presentation. The chart component moved from the exercise route to `src/features/history/ui/progress-chart.tsx` so both subsections share it, and it takes an axis-label formatter so durations read in minutes while their values stay in seconds.
+- [x] Wire the not-found boundary and the subsection navigation state.
+- [x] Prepare component tests and a browser scenario for critical flow 8 with structural captures; do not run them. The component suite stubs the chart for the same reason `T-034` did.
+- [x] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its route, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T10:54:05+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency rules, strict TypeScript, the Next.js `16.3.3` production build with `/history/splits` and `/history/splits/[id]` as dynamic routes, the asset checksums, Markdown lint, and every internal link; `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval of the exact delivery commit: the scoped component suite (`S17` filter and separation of same-named splits; `S18` aggregates, range changes, summary and list synchronization, exclusion explanation) and the serialized one-worker Chromium and WebKit phone scenario covering `S17` to `S18`, range changes, workout links, reflow, and structural captures. Must not run before Owner approval of the exact commit.
+- **Planned tests:** After the Task's one approval: the unit command, which carries the new component suite covering the `S17` program filter with same-named splits kept apart, the deleted-split marker, the empty state, and the `S18` six statistics, exclusion rule, series summary and named value list, range round trip, and workout links; then the serialized Chromium and WebKit run of `tests/browser/split-history.spec.ts` covering `S17` to `S18`, the statistics, the chart summary and values, the empty week range and the return to all, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
 - **Subject:** `T-036: build Split History screens`
-- **Committed scope:** Not created
+- **Committed scope:** `S17` with its loading state and program filter; `S18` with its loading state, six stat cards, range selector, series summary, named value list, exclusion rule, and workout links; the chart component promoted to `src/features/history/ui` with its formatter and its two updated importers; the prepared component suite and browser scenario; and the mobile UI foundation and wireframe decisions
 
 ## Review
 
