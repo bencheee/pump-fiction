@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:36:02+02:00
+- **Last updated:** 2026-09-06T13:32:55+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T13:36:02+02:00. Exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` renders `S19` and `S20` on the `T-038` operations and awaits the Owner's approval.
+[`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T13:32:55+02:00. The Owner approved exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`, which authorizes the recorded plan.
 
 [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) is `Done`, so weight has its entries, its Monday-to-Sunday weekly rules, its chart series, and its three writes.
 
 ## Immediate next action
 
-The Owner reviews and approves exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`. Only then does the recorded plan run: the component suite and the serialized Chromium and WebKit Weight scenario. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Run the complete recorded `T-039` plan and record the result. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `In Review` — Claude Code primary agent — 2026-09-06T13:36:02+02:00 — next: the Owner's approval of `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`.
+- [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `Testing` — Claude Code primary agent — 2026-09-06T13:32:55+02:00 — next: record the verification result.
 
 ## Next
 
@@ -38,11 +38,11 @@ None.
 
 ## Awaiting approval
 
-- [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` — Claude Code primary agent — 2026-09-06T13:36:02+02:00 — requested action: review and approve that commit, which authorizes the recorded verification.
+None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — approved delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` — Claude Code primary agent — 2026-09-06T13:32:55+02:00 — next required action: the complete recorded plan.
 
 ## Recently completed Tasks
 
