@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:06:46+02:00`
+- **Updated:** `2026-09-06T10:15:31+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** `2026-09-06T00:53:12+02:00`
 - **Approval requested:** `2026-09-06T10:06:46+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T10:06:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run only the recorded verification against exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767`.
+- **Next action:** Name the two value lists so each can be queried on its own, deliver a replacement, and request fresh approval.
 
 ## Scope
 
@@ -91,8 +91,10 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `b5772adb87d244bfc2404481e90f58a4046a7767`
-- **Results:** Not run at the time the scope breach below was recorded; the Owner then directed the work to continue, so the verification runs against the same approved commit.
+- **Authorized commit:** `b5772adb87d244bfc2404481e90f58a4046a7767` — approval invalidated by the failed verification below
+- **Results:** Failed on `2026-09-06T10:15:31+02:00` against exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **124 of 126 across 17 files**, failing two assertions in the new component suite.
+
+  Both failed for the same reason and both are test-only: `80 kg` appears in two places on `S16`, once in the highest-reps-at-each-load list and once in the chart-values list, and neither list can be addressed on its own, so the queries were ambiguous. The screens behave correctly. The fix names both lists, which also makes them addressable by assistive technology, so it touches the view as well as the test. The approval is invalidated and the browser scenario did not run.
 
 ## Recorded scope breach in the approved delivery
 
