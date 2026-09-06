@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:25:31+02:00`
+- **Updated:** `2026-09-06T10:31:52+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** `2026-09-06T10:25:31+02:00` for the second replacement
 - **Approval requested:** `2026-09-06T10:21:23+02:00` for the replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T10:21:23+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews the second replacement. Approving it restarts the complete recorded plan from the beginning.
+- **Next action:** Run the complete recorded plan from the beginning against second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`, which inherits the Task's approval under ADR-0028.
 
 ## Scope
 
@@ -91,7 +91,7 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
-- **Authorized commit:** none currently; the approvals of `b5772adb87d244bfc2404481e90f58a4046a7767` and `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` were both invalidated by the failed verifications below
+- **Authorized commit:** `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`, under the Task approval inherited per [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
 - **Results:** Failed on `2026-09-06T10:15:31+02:00` against exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **124 of 126 across 17 files**, failing two assertions in the new component suite.
 
   Both failed for the same reason and both are test-only: `80 kg` appears in two places on `S16`, once in the highest-reps-at-each-load list and once in the chart-values list, and neither list can be addressed on its own, so the queries were ambiguous. The screens behave correctly. The fix names both lists, which also makes them addressable by assistive technology, so it touches the view as well as the test. The approval is invalidated and the browser scenario did not run.
@@ -134,10 +134,10 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 
 ## Approval
 
-- **Approved commit:** None; the approval of `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` was invalidated by its failed verification
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** The Owner approved `b5772adb87d244bfc2404481e90f58a4046a7767` and then `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`, each with `potvrda`, and accepted the recorded scope breach in the first. Neither approval stands: both verifications failed. Second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` needs a fresh decision.
+- **Approved commit:** `b5772adb87d244bfc2404481e90f58a4046a7767` as the Task's first delivery; inherited by `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` and `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T10:06:46+02:00`, first delivery
+- **Approval note:** The Owner approved the first delivery and the first replacement with `potvrda`, and accepted the recorded scope breach in the first. On `2026-09-06T10:31:52+02:00` the Owner directed that repeated re-approval stop; [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) records the rule, and second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` is the first to inherit the Task approval under it.
 
 ## Definition of Ready
 
@@ -184,3 +184,4 @@ The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work t
 | `2026-09-06T10:21:23+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Restarted the complete recorded plan from the beginning against the exact approved replacement |
 | `2026-09-06T10:25:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Progress` | Gave the metric list a deliberate order, pinned each default, and recorded the rule; all permitted static checks passed |
 | `2026-09-06T10:25:31+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e`; it awaits fresh approval before the complete recorded plan restarts |
+| `2026-09-06T10:31:52+02:00` | User / Owner | `In Review` | `Testing` | Directed that replacements stop requiring re-approval; ADR-0028 records the rule and second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` inherits the Task approval, so the complete plan restarts against it |
