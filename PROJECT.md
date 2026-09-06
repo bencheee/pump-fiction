@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:54:26+02:00
+- **Last updated:** 2026-09-06T13:57:17+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,22 +10,21 @@
 
 ## Current focus
 
-No active work item. [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) is `Done`, which finishes weight: it is derived, it has `S19` and `S20`, and Today offers the day's weigh-in and then shows it. The complete plan passed against approved replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` after the component suite was found rendering Today without the shell's toast provider.
+[`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T13:57:17+02:00. It derives and persists everything `S21` through `S24` need: the measurement-type lifecycle, the entries, the two changes, and the chart series.
 
-[`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) starts Body, the last subsection and the last placeholder route.
+Weight is finished across its data, its screens, and Today.
 
 ## Immediate next action
 
-Start [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Deliver `T-041` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-None; `T-040` is `Done`.
+- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `In Progress` — Claude Code primary agent — 2026-09-06T13:57:17+02:00 — next: deliver one reviewable commit.
 
 ## Next
 
-1. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
-2. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
+1. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
 
 ## Later
 

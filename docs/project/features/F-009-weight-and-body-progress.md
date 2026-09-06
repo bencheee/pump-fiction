@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T13:54:26+02:00`
-- **Progress:** `3/5 required Tasks Done; T-041 is next`
+- **Updated:** `2026-09-06T13:57:17+02:00`
+- **Progress:** `3/5 required Tasks Done; T-041 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -38,7 +38,7 @@ Recorded on `2026-09-06` at the Owner's request, without committing or implement
 | 4 | [`T-041`](../tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations | Type lifecycle, entry validation and writes, change derivation, chart series, body queries | `F-004` Done; `T-038` for shared date rules |
 | 5 | [`T-042`](../tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience | `S21`–`S24`, `O01` with chart | `T-032`, `T-039`, `T-041` |
 
-`T-038`, `T-039`, and `T-040` are `Done`, so weight is complete; `T-041` and `T-042` remain in `Backlog` and deliver Body. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
+`T-038`, `T-039`, and `T-040` are `Done`, so weight is complete; `T-041` is `In Progress` and `T-042` remains in `Backlog`; together they deliver Body. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
 
 ## Boundary against F-008
 
@@ -131,3 +131,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T13:48:55+02:00` | User / Approver | Approved `T-040` | Authorized the recorded verification against exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` |
 | `2026-09-06T13:51:40+02:00` | Claude Code primary agent / Tester and Executor | Delivered the `T-040` replacement | The component suite rendered Today without the shell's toast provider; `88abdad827a907fc93c61fd7851cd5d1736057a6` corrects it and inherits the Task approval |
 | `2026-09-06T13:54:26+02:00` | Claude Code primary agent / Tester | Completed `T-040` | The complete plan passed: unit and component 192/192 and the Chromium and WebKit Today scenario 4/4; weight is finished and Body remains |
+| `2026-09-06T13:57:17+02:00` | Claude Code primary agent / Executor | Started `T-041` | Weight is finished, so Body begins with its data, as operations precede screens |

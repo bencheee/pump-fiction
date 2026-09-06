@@ -1,23 +1,23 @@
 # T-041 — Build body measurement operations
 
 - **Feature:** `F-009`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T12:22:31+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T13:57:17+02:00`
+- **Started:** `2026-09-06T13:57:17+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the Owner's answers to `F-009` readiness questions 1 and 2 and for `T-038` to be `Done`; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -72,7 +72,7 @@ Queries:
 ## Dependencies and blockers
 
 - Dependencies: `F-004` Done, which created the tables, the restrict reference, and the future-date trigger in `T-006`, and `F-011` Done, whose `T-021` made the type name unconditionally unique; `T-038` Done, whose entry-date validation and range helpers this Task shares within the History domain
-- Blockers: `T-038` is not `Done`; the Owner has not yet answered `F-009` readiness questions 1 and 2 or given the go-ahead
+- Blockers: None; `T-038` through `T-040` are `Done`, and the Owner answered readiness questions 1 and 2 and released the whole Feature on `2026-09-06`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -130,12 +130,12 @@ Queries:
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — readiness questions 1 and 2 are unanswered and `T-038` is not `Done`
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -155,3 +155,5 @@ Queries:
 | --- | --- | --- | --- | --- |
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the body measurement data and derivation within `F-009`; the Owner directed that nothing is committed or implemented until they say so |
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
+| `2026-09-06T13:57:17+02:00` | User / Owner | `Backlog` | `Ready` | Weight is finished and the Owner's go-ahead for the whole Feature authorizes Body |
+| `2026-09-06T13:57:17+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the body measurement data and derivation |
