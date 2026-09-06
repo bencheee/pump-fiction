@@ -6,9 +6,9 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 
 | Type | Next ID |
 | --- | --- |
-| Milestone | `M-002` |
-| Feature | `F-015` |
-| Task | `T-051` |
+| Milestone | `M-003` |
+| Feature | `F-016` |
+| Task | `T-054` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -17,6 +17,7 @@ Allocated identifiers are never reused, including after cancellation.
 | ID | Title | Horizon/order | Progress | Owner | Updated | Canonical file |
 | --- | --- | --- | --- | --- | --- | --- |
 | [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `14/14 Features Done` | User | `2026-09-06T19:22:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
+| [`M-002`](milestones/M-002-post-mvp-product-changes.md) | Post-MVP Product Changes | `Now / 1` | `0/1 Features Done` | User | `2026-09-06T19:30:00+02:00` | [`milestones/M-002-post-mvp-product-changes.md`](milestones/M-002-post-mvp-product-changes.md) |
 
 ## Features
 
@@ -36,6 +37,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-008`](features/F-008-history-and-statistics.md) | `M-001` | History and Statistics | `Now / 1` | `7/7 Done` | User | `2026-09-06T11:50:42+02:00` | [`features/F-008-history-and-statistics.md`](features/F-008-history-and-statistics.md) |
 | [`F-009`](features/F-009-weight-and-body-progress.md) | `M-001` | Weight and Body Progress | `Now / 2` | `5/5 Done` | User | `2026-09-06T14:27:19+02:00` | [`features/F-009-weight-and-body-progress.md`](features/F-009-weight-and-body-progress.md) |
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Now / 1` | `0/5 Done` | User | `2026-09-06T15:04:00+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
+| [`F-015`](features/F-015-body-destination-and-today-entry.md) | `M-002` | Body Destination and Today Entry | `Now / 1` | `0/3 Done` | User | `2026-09-06T19:30:00+02:00` | [`features/F-015-body-destination-and-today-entry.md`](features/F-015-body-destination-and-today-entry.md) |
 
 ## Tasks
 
@@ -92,6 +94,9 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Now / 7` | `Done` | Claude Code primary agent | `2026-09-06T18:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
 | [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T15:40:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
 | [`T-050`](tasks/T-050-correct-the-reorder-and-current-set-language.md) | `F-010` | Correct the reorder affordance and the current-set sentence | `Now / 6` | `Done` | Claude Code primary agent | `2026-09-06T17:40:00+02:00` | [`tasks/T-050-correct-the-reorder-and-current-set-language.md`](tasks/T-050-correct-the-reorder-and-current-set-language.md) |
+| [`T-051`](tasks/T-051-accept-the-body-destination.md) | `F-015` | Accept the Body destination | `Now / 1` | `Backlog` | Claude Code primary agent | `2026-09-06T19:30:00+02:00` | [`tasks/T-051-accept-the-body-destination.md`](tasks/T-051-accept-the-body-destination.md) |
+| [`T-052`](tasks/T-052-build-the-body-destination.md) | `F-015` | Build the Body destination | `Next / 2` | `Backlog` | Claude Code primary agent | `2026-09-06T19:30:00+02:00` | [`tasks/T-052-build-the-body-destination.md`](tasks/T-052-build-the-body-destination.md) |
+| [`T-053`](tasks/T-053-add-todays-measurement-entry.md) | `F-015` | Add today's measurement entry | `Next / 3` | `Backlog` | Claude Code primary agent | `2026-09-06T19:30:00+02:00` | [`tasks/T-053-add-todays-measurement-entry.md`](tasks/T-053-add-todays-measurement-entry.md) |
 
 ## Templates
 
