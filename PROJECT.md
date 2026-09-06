@@ -1,9 +1,9 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T17:14:00+02:00
+- **Last updated:** 2026-09-06T17:32:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
+- **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which seven are required, four are `Done`, and `T-047` is `Canceled`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
@@ -16,7 +16,7 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Decide finding `R3`: four canonical documents require a drag handle for reordering and the application delivers labelled arrow buttons instead. `T-046` cannot assert `MVP-UX-002` until that is settled.
+Approve or reject exact `T-050` delivery `17b12f4233282af479501fc9d0af50052d9ca39a`; `T-046` delivers its sweep against the corrected criteria once it is approved.
 
 ## Now
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-050`](docs/project/tasks/T-050-correct-the-reorder-and-current-set-language.md) — exact delivery `17b12f4233282af479501fc9d0af50052d9ca39a` — the five reorder sentences, the current-set sentence, and the ADR-0027 amendment, `test_required: no`. Requested action: approve the exact commit.
 
 ## Approved — ready for testing
 
@@ -58,6 +58,6 @@ None.
 ## Active work items
 
 - [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`13/14 Features Done`)
-- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`4/6 Tasks Done`)
+- [`F-010`](docs/project/features/F-010-local-mvp-integration.md) — Local MVP Integration (`4/7 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

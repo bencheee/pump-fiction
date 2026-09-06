@@ -8,7 +8,7 @@ This is the complete derived registry for canonical Milestone, Feature, and Task
 | --- | --- |
 | Milestone | `M-002` |
 | Feature | `F-015` |
-| Task | `T-050` |
+| Task | `T-051` |
 
 Allocated identifiers are never reused, including after cancellation.
 
@@ -89,8 +89,9 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-045`](tasks/T-045-verify-cross-feature-persistence.md) | `F-010` | Verify cross-feature persistence and non-reinterpretation | `Now / 4` | `Done` | Claude Code primary agent | `2026-09-06T17:04:00+02:00` | [`tasks/T-045-verify-cross-feature-persistence.md`](tasks/T-045-verify-cross-feature-persistence.md) |
 | [`T-046`](tasks/T-046-verify-phone-interaction-and-affordances.md) | `F-010` | Verify phone interaction, affordances, and destructive confirmation | `Now / 5` | `In Progress` | Claude Code primary agent | `2026-09-06T17:14:00+02:00` | [`tasks/T-046-verify-phone-interaction-and-affordances.md`](tasks/T-046-verify-phone-interaction-and-affordances.md) |
 | [`T-047`](tasks/T-047-compare-against-accepted-visual-references.md) | `F-010` | Compare against the accepted visual references | `Next / —` | `Canceled` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-047-compare-against-accepted-visual-references.md`](tasks/T-047-compare-against-accepted-visual-references.md) |
-| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Next / 6` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
+| [`T-048`](tasks/T-048-run-release-verification-and-close-local-mvp.md) | `F-010` | Run the release verification and close the Local MVP | `Next / 7` | `Backlog` | Claude Code primary agent | `2026-09-06T14:52:00+02:00` | [`tasks/T-048-run-release-verification-and-close-local-mvp.md`](tasks/T-048-run-release-verification-and-close-local-mvp.md) |
 | [`T-049`](tasks/T-049-correct-two-locked-mvp-criteria.md) | `F-010` | Correct two locked MVP criteria and the stale shell sentence | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T15:40:00+02:00` | [`tasks/T-049-correct-two-locked-mvp-criteria.md`](tasks/T-049-correct-two-locked-mvp-criteria.md) |
+| [`T-050`](tasks/T-050-correct-the-reorder-and-current-set-language.md) | `F-010` | Correct the reorder affordance and the current-set sentence | `Now / 6` | `Awaiting Approval` | Claude Code primary agent | `2026-09-06T17:32:00+02:00` | [`tasks/T-050-correct-the-reorder-and-current-set-language.md`](tasks/T-050-correct-the-reorder-and-current-set-language.md) |
 
 ## Templates
 

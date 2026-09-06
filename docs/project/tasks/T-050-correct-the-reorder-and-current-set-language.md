@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T17:26:00+02:00`
-- **Updated:** `2026-09-06T17:30:00+02:00`
+- **Updated:** `2026-09-06T17:32:00+02:00`
 - **Started:** `2026-09-06T17:30:00+02:00`
 - **Review started:** `2026-09-06T17:30:00+02:00`
 - **Approval requested:** `2026-09-06T17:30:00+02:00`
@@ -86,7 +86,7 @@ Amend ADR-0027 to name `MVP-UX-002` among the criteria it affects, the same omis
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `17b12f4233282af479501fc9d0af50052d9ca39a`
 - **Subject:** `T-050: correct the reorder affordance and the current-set sentence`
 - **Committed scope:** the `MVP-UX-002` and `MVP-PRG-003` clauses in the locked criteria; the split sentence in the programs document; the interaction rule in the mobile IA document, with the reasoning; the `Edit Split` description in the wireframe decisions; one consequence in ADR-0027; finding `R3` and two criterion rows in the release verification matrix; this Task.
 
