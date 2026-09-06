@@ -1,7 +1,7 @@
 # T-039 — Build Weight mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:36:44+02:00`
+- **Updated:** `2026-09-06T13:39:20+02:00`
 - **Started:** `2026-09-06T13:19:35+02:00`
 - **Review started:** `2026-09-06T13:36:02+02:00`
 - **Approval requested:** `2026-09-06T13:32:55+02:00`
 - **Approved:** `2026-09-06T13:32:55+02:00`
 - **Testing started:** `2026-09-06T13:32:55+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T13:39:20+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact replacement `d164327f20e2437d2662d8e0b73d38b519b76613`, then record the result.
+- **Next action:** None; `T-039` is `Done`. `F-009` continues with `T-040`.
 
 ## Scope
 
@@ -50,11 +50,11 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 
 ## Acceptance criteria
 
-- [ ] `S19` shows the latest weight, the individual change, the weekly average, the weekly change or its unavailable state, `n/7`, and the provisional or final label exactly as `T-038` derives them, and renders the empty and loading states.
-- [ ] The range selector offers week, month, quarter, and year; changing it updates the chart, the textual summary, and the accessible list together; the two series are distinguishable without color, and the chart needs no hover and respects reduced motion.
-- [ ] Creating, editing, and deleting an entry through `S20` returns to `S19` with a toast and visibly recalculated summaries and chart; deletion requires `O01` confirmation.
-- [ ] A future date, a duplicate date, and an invalid value are refused inline with announced messages, and the form keeps its values.
-- [ ] `S19` and `S20` match the accepted `v0.3` structure and chart geometry with the v0.4 cue placement on `S20`, reflow from 320 to 430 px, and meet the accepted touch, overlay-history, and accessibility behavior with no horizontal table scrolling.
+- [x] `S19` shows the latest weight, the individual change, the weekly average, the weekly change or its unavailable state, `n/7`, and the provisional or final label exactly as `T-038` derives them, and renders the empty and loading states.
+- [x] The range selector offers week, month, quarter, and year; changing it updates the chart, the textual summary, and the accessible list together; the two series are distinguishable without color, and the chart needs no hover and respects reduced motion.
+- [x] Creating, editing, and deleting an entry through `S20` returns to `S19` with a toast and visibly recalculated summaries and chart; deletion requires `O01` confirmation.
+- [x] A future date, a duplicate date, and an invalid value are refused inline with announced messages, and the form keeps its values.
+- [x] `S19` and `S20` match the accepted `v0.3` structure and chart geometry with the v0.4 cue placement on `S20`, reflow from 320 to 430 px, and meet the accepted touch, overlay-history, and accessibility behavior with no horizontal table scrolling.
 
 ## Traceability
 
@@ -96,6 +96,10 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 - **Results:** First verification on `2026-09-06T13:33:42+02:00` against exact approved delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Vitest `4.1.11`. `npm run test:unit` passed **187 of 188 across 22 files** and failed one assertion in the new component suite.
 
   The failure was mine and about the test, not the screen. The chart's value lists sit inside a collapsed disclosure, as they do on `S16` and `S18`, and the test asserted their contents were visible without opening it; jsdom correctly reports content inside a closed `details` element as not visible. Replacement `d164327f20e2437d2662d8e0b73d38b519b76613` clicks **Chart values** first, which is what a reader does and what the browser scenario already did. The complete plan restarts from the beginning against it.
+
+  Second verification, against exact replacement `d164327f20e2437d2662d8e0b73d38b519b76613` on `2026-09-06T13:39:20+02:00` in a fresh isolated worktree: **the complete plan passed**. `npm run test:unit` passed **188/188 across 22 files**, the new component suite 14/14 among them. The serialized Weight scenario passed **2/2**, one on mobile Chromium and one on mobile WebKit, on one worker against the production server, with **eight structural captures**, four per phone. It seeded two June 2026 weigh-ins, created, corrected, and deleted a third through `S20`, saw the refused duplicate date on the date field, read the legend and both value lists, and removed every row it made: `weight_entries` is empty again and the Owner's exercises, program, and splits are untouched.
+
+  One harness note for the next browser verification: an isolated worktree cannot reach `node_modules` through a symlink, because Turbopack refuses a link that leaves the project root. A hard-link copy (`cp -Rl`) takes about half a minute and works.
 
 ## Recorded decisions
 
@@ -143,15 +147,15 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA of the first delivery; the replacement inherited it under ADR-0028
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks: `T-040` puts the prompt on Today
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -166,3 +170,4 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 | `2026-09-06T13:32:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` with `potvrda` |
 | `2026-09-06T13:32:55+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
 | `2026-09-06T13:36:44+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | One prepared assertion read a collapsed disclosure without opening it; replacement `d164327f20e2437d2662d8e0b73d38b519b76613` corrects the test, inherits the Task approval under ADR-0028, and the complete plan restarts against it |
+| `2026-09-06T13:39:20+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against exact replacement `d164327f20e2437d2662d8e0b73d38b519b76613`: unit and component 188/188 and the serialized Chromium and WebKit Weight scenario 2/2 with eight structural captures |
