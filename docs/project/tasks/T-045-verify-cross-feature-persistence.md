@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T16:44:00+02:00`
+- **Updated:** `2026-09-06T16:46:00+02:00`
 - **Started:** `2026-09-06T16:20:00+02:00`
 - **Review started:** `2026-09-06T16:44:00+02:00`
 - **Approval requested:** `2026-09-06T16:44:00+02:00`
@@ -91,7 +91,7 @@ The delivery is test source and documentation. No application change is expected
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`
 - **Subject:** `T-045: verify cross-feature persistence and non-reinterpretation`
 - **Committed scope:** `tests/browser/release-persistence.spec.ts` alone — two prepared scenarios, their seeding through the accepted operations, and their teardown. Test source only.
 

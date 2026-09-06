@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T16:20:00+02:00
+- **Last updated:** 2026-09-06T16:46:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Deliver [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — the release evidence for `MVP-REL-003` and `MVP-REL-004`.
+Approve or reject exact `T-045` delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`, which authorizes the two prepared release scenarios.
 
 ## Now
 
-1. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — `In Progress`, Claude Code primary agent, `2026-09-06T16:20:00+02:00`; next action: write the scenario and deliver one reviewable commit.
+1. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — `Awaiting Approval`, Claude Code primary agent, `2026-09-06T16:46:00+02:00`; next action: the Owner's decision on delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6`.
 
 ## Next
 
@@ -37,7 +37,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — exact delivery `e59d513da9db55f36655bb3ef9ceb5b3438b90f6` — the two prepared release scenarios, `test_required: yes`. Requested action: approve the exact commit, which authorizes them to run.
 
 ## Approved — ready for testing
 
