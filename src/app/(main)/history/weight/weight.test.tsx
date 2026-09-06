@@ -205,18 +205,25 @@ describe("S19 Weight", () => {
     expect(actions.load).toHaveBeenCalledWith({ range: "quarter" });
   });
 
-  it("carries the chart in an accessible list, weekly averages included", () => {
+  it("carries the chart in an accessible list, weekly averages included", async () => {
+    const user = userEvent.setup();
     render(<WeightView progress={progress()} initialRange="month" />);
+
+    expect(
+      screen.getByText(/2 weigh-ins from 82.5 kg to 81.5 kg/),
+    ).toBeVisible();
+
+    // The lists sit inside a collapsed disclosure, as they do on S16 and S18.
+    await user.click(screen.getByText("Chart values"));
     const values = within(screen.getByRole("list", { name: "Chart values" }));
     expect(values.getAllByRole("listitem")).toHaveLength(2);
+    expect(values.getByText("81.5 kg")).toBeVisible();
+
     const weekly = within(
       screen.getByRole("list", { name: "Weekly averages" }),
     );
     expect(weekly.getByText(/Week of/)).toBeVisible();
     expect(weekly.getByText("82.0 kg")).toBeVisible();
-    expect(
-      screen.getByText(/2 weigh-ins from 82.5 kg to 81.5 kg/),
-    ).toBeVisible();
   });
 
   it("invites the first weigh-in instead of fabricating a zero", () => {
