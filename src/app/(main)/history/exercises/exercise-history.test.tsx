@@ -225,8 +225,13 @@ describe("exercise progress detail", () => {
     );
 
     await user.click(screen.getByText("Highest reps at each load"));
-    expect(screen.getByText("80 kg")).toBeInTheDocument();
-    expect(screen.getByText("8 reps")).toBeInTheDocument();
+    // The same load reads "80 kg" in the chart-values list too, so each list
+    // is addressed by its own name.
+    const loads = screen.getByRole("list", {
+      name: "Highest reps at each load, Weight",
+    });
+    expect(within(loads).getByText("80 kg")).toBeInTheDocument();
+    expect(within(loads).getByText("8 reps")).toBeInTheDocument();
   });
 
   it("summarises the series in words and lists every value", async () => {
@@ -239,7 +244,9 @@ describe("exercise progress detail", () => {
       screen.getByText(/Highest load across 2 workouts: 60 to 80 kg, best 80/),
     ).toBeInTheDocument();
     await user.click(screen.getByText("Chart values"));
-    expect(screen.getByText("80 kg")).toBeInTheDocument();
+    const values = screen.getByRole("list", { name: "Chart values" });
+    expect(within(values).getByText("80 kg")).toBeInTheDocument();
+    expect(within(values).getByText("60 kg")).toBeInTheDocument();
   });
 
   it("reloads the series when the metric or the range changes", async () => {

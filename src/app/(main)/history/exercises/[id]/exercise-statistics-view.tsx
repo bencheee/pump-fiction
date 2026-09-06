@@ -124,7 +124,10 @@ export function ExerciseStatisticsView({
                     <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
                       Highest reps at each load
                     </summary>
-                    <ul className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]">
+                    <ul
+                      aria-label={`Highest reps at each load, ${entry.category.label}`}
+                      className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
+                    >
                       {entry.repsByLoad.map((row) => (
                         <li key={row.load} className="flex justify-between">
                           <span>{row.load} kg</span>
@@ -188,7 +191,10 @@ export function ExerciseStatisticsView({
                 <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
                   Chart values
                 </summary>
-                <ul className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]">
+                <ul
+                  aria-label="Chart values"
+                  className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
+                >
                   {view.series.points.map((point) => (
                     <li key={point.workoutId} className="flex justify-between">
                       <span>{formatHistoryDate(point.date)}</span>

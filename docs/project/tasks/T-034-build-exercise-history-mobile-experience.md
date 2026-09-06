@@ -84,7 +84,7 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its route, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Passed on `2026-09-06T00:56:00+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency rules, strict TypeScript, the Next.js `16.3.3` production build with `/history/exercises` and `/history/exercises/[id]` as dynamic routes, the asset checksums, Markdown lint, and every internal link; `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran.
+- Results: Passed on `2026-09-06T00:56:00+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint including its accessibility and dependency rules, strict TypeScript, the Next.js `16.3.3` production build with `/history/exercises` and `/history/exercises/[id]` as dynamic routes, the asset checksums, Markdown lint, and every internal link; `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran. Re-run for the replacement on `2026-09-06T10:17:00+02:00`: `npm run check` passed every step again and `git diff --check` was clean. The replacement changes no schema, migration, or generated type. No feature test ran after the correction.
 
 ## Test plan and results
 

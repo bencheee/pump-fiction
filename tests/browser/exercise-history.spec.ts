@@ -37,7 +37,13 @@ test.describe("Exercise History experience", () => {
       // The chart is never the only representation of its data.
       await expect(page.getByText(/across 1 workout/)).toBeVisible();
       await page.getByText("Chart values").click();
-      await expect(page.getByText("80 kg", { exact: true })).toBeVisible();
+      // The same load also reads "80 kg" in the reps-per-load list, so the
+      // assertion names the list it means.
+      await expect(
+        page
+          .getByRole("list", { name: "Chart values" })
+          .getByText("80 kg", { exact: true }),
+      ).toBeVisible();
 
       // The metric and range selectors reload the series.
       await page.getByRole("button", { name: "Workout volume" }).click();
