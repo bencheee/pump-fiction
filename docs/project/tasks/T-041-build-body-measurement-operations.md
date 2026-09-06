@@ -1,7 +1,7 @@
 # T-041 — Build body measurement operations
 
 - **Feature:** `F-009`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:08:25+02:00`
+- **Updated:** `2026-09-06T14:12:40+02:00`
 - **Started:** `2026-09-06T13:57:17+02:00`
 - **Review started:** `2026-09-06T14:05:38+02:00`
 - **Approval requested:** `2026-09-06T14:08:25+02:00`
 - **Approved:** `2026-09-06T14:08:25+02:00`
 - **Testing started:** `2026-09-06T14:08:25+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T14:12:40+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
+- **Next action:** None; `T-041` is `Done`. `F-009` finishes with `T-042`.
 
 ## Scope
 
@@ -56,12 +56,12 @@ Queries:
 
 ## Acceptance criteria
 
-- [ ] Creating a type whose name differs only in case or surrounding whitespace from an existing one is rejected with a field error on the name; renaming a type keeps every entry attached.
-- [ ] Deleting a type with entries fails with the explanatory validation failure and changes nothing; deleting a type without entries succeeds.
-- [ ] Per type, a duplicate date, a future local date, and an invalid value are each rejected with a field error, and a retrospective date is accepted.
-- [ ] Latest, previous, first, latest change, and total change are correct for zero, one, two, and many entries, and editing or deleting any entry, including the first and the latest, recalculates all of them and the chart series (`MVP-BOD-004`).
-- [ ] Chart series contain only neutral serializable points, are correct at each range boundary in the configured time zone, `all` is unbounded, and no series or summary carries a positive or negative judgement.
-- [ ] Unit tests cover the change arithmetic, the edge counts, recalculation, and the range windows; pgTAP and repository tests cover the type lifecycle, uniqueness, restricted deletion, and the read and write functions; none is executed.
+- [x] Creating a type whose name differs only in case or surrounding whitespace from an existing one is rejected with a field error on the name; renaming a type keeps every entry attached.
+- [x] Deleting a type with entries fails with the explanatory validation failure and changes nothing; deleting a type without entries succeeds.
+- [x] Per type, a duplicate date, a future local date, and an invalid value are each rejected with a field error, and a retrospective date is accepted.
+- [x] Latest, previous, first, latest change, and total change are correct for zero, one, two, and many entries, and editing or deleting any entry, including the first and the latest, recalculates all of them and the chart series (`MVP-BOD-004`).
+- [x] Chart series contain only neutral serializable points, are correct at each range boundary in the configured time zone, `all` is unbounded, and no series or summary carries a positive or negative judgement.
+- [x] The unit tests covering the change arithmetic, the edge counts, recalculation, and the range windows passed, as did the pgTAP and repository tests over the type lifecycle, uniqueness, restricted deletion, and the reads and writes.
 
 ## Traceability
 
@@ -101,7 +101,11 @@ Queries:
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit` for the change arithmetic, the edge counts, recalculation, and the range windows; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new body measurement suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `cde56f00dbc7d98c28cca1c7843dd37000250bab`
-- **Results:** Not run
+- **Results:** Passed on `2026-09-06T14:12:40+02:00` against exact approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`. **The complete plan passed on the first run.**
+
+  `npm run test:unit` passed **218/218 across 24 files**, the two new body suites among them. `npm run db:snapshot` saved the local data; `supabase db reset` applied all 24 migrations and the seed; `npm run test:db` passed **187/187 across ten suites**, including the new `0010_body_measurements` **30/30**; `npm run test:repository` passed **9/9**, the body file included; the regenerated types matched the committed file exactly; and `npm run db:restore` returned the Owner's data faithfully, ten exercises, one program, and three splits, with no measurement type or entry left behind by either suite.
+
+  One note on the restore: run from the isolated worktree it reported no snapshot, because `supabase/snapshots/` is ignored and exists only in the main tree. The snapshot and the restore belong to the working copy that holds the data, not to the checkout under test.
 
 ## Recorded decisions
 
@@ -149,15 +153,15 @@ Queries:
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks: `T-042` renders what this derives
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -171,3 +175,4 @@ Queries:
 | `2026-09-06T14:08:25+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T14:08:25+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Replied `kreni` to the review request for exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` |
 | `2026-09-06T14:08:25+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |
+| `2026-09-06T14:12:40+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed on the first run: unit 218/218, pgTAP 187/187, repository 9/9, matching types, and a faithful restore |

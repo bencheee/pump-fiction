@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:08:25+02:00
+- **Last updated:** 2026-09-06T14:12:40+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T14:08:25+02:00. The Owner approved exact delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`, which authorizes the recorded plan.
+No active work item. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) is `Done`: body measurements have their types, their entries, both changes, and their chart series. The complete plan passed on the first run against approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`.
 
-Weight is finished across its data, its screens, and Today.
+[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) renders `S21` through `S24` and is the last Task of `F-009`.
 
 ## Immediate next action
 
-Run the complete recorded `T-041` plan and record the result. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Start [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — `Testing` — Claude Code primary agent — 2026-09-06T14:08:25+02:00 — next: record the verification result.
+None; `T-041` is `Done`.
 
 ## Next
 
@@ -40,10 +40,11 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations — approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — Claude Code primary agent — 2026-09-06T14:08:25+02:00 — next required action: the complete recorded plan.
+None.
 
 ## Recently completed Tasks
 
+- [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — completed `2026-09-06T14:12:40+02:00` — approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — unit 218/218, seeded reset, pgTAP 187/187, repository 9/9, unchanged types, and a faithful restore, on the first run.
 - [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — completed `2026-09-06T13:54:26+02:00` — first delivery `4992e617d3d367091332eb178525b2c61e35f0a5`, verified through inherited replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` — unit and component 192/192 and the Chromium and WebKit Today scenario 4/4 with eight structural captures.
 - [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — completed `2026-09-06T13:39:20+02:00` — first delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`, verified through inherited replacement `d164327f20e2437d2662d8e0b73d38b519b76613` — unit and component 188/188 and the serialized Chromium and WebKit Weight scenario 2/2 with eight structural captures.
 - [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — completed `2026-09-06T13:17:52+02:00` — first delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`, verified through inherited replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` — unit 174/174, seeded reset, pgTAP 157/157, repository 8/8, unchanged types, and a faithful restore.
