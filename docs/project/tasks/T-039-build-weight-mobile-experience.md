@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:32:55+02:00`
+- **Updated:** `2026-09-06T13:36:44+02:00`
 - **Started:** `2026-09-06T13:19:35+02:00`
 - **Review started:** `2026-09-06T13:36:02+02:00`
 - **Approval requested:** `2026-09-06T13:32:55+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T13:32:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
+- **Next action:** Run the complete recorded plan from the beginning against exact replacement `d164327f20e2437d2662d8e0b73d38b519b76613`, then record the result.
 
 ## Scope
 
@@ -85,15 +85,17 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its route, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Passed on `2026-09-06T13:34:18+02:00` with Node.js `22.21.0`, npm `10.9.4`, and Supabase CLI `2.116.0`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The build lists `/history/weight`, `/history/weight/new`, and `/history/weight/[date]/edit` as dynamic routes and leaves the Recharts bundle on the routes that import the shared chart. `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran: the component suite and the browser scenario are prepared and unexecuted.
+- Results: Passed on `2026-09-06T13:34:18+02:00` with Node.js `22.21.0`, npm `10.9.4`, and Supabase CLI `2.116.0`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The build lists `/history/weight`, `/history/weight/new`, and `/history/weight/[date]/edit` as dynamic routes and leaves the Recharts bundle on the routes that import the shared chart. `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran: the component suite and the browser scenario are prepared and unexecuted. Re-run for the replacement on `2026-09-06T13:36:44+02:00`: `npm run check` passed every step again and `git diff --check` was clean; the replacement touches test source only.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped component suite (`S19` summaries and the unavailable state; range selector synchronization; `S20` validation, save contract, and deletion) and the serialized one-worker Chromium and WebKit phone scenario on the `T-037` harness, against the production server and waiting for hydration before the first entry, covering `S19` to `S20` create, edit, and delete with recalculation, reflow, and structural captures; the scenario seeds and removes its own entries. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`
-- **Results:** Not run
+- **Authorized commit:** `d164327f20e2437d2662d8e0b73d38b519b76613`, under the Task approval inherited per [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
+- **Results:** First verification on `2026-09-06T13:33:42+02:00` against exact approved delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Vitest `4.1.11`. `npm run test:unit` passed **187 of 188 across 22 files** and failed one assertion in the new component suite.
+
+  The failure was mine and about the test, not the screen. The chart's value lists sit inside a collapsed disclosure, as they do on `S16` and `S18`, and the test asserted their contents were visible without opening it; jsdom correctly reports content inside a closed `details` element as not visible. Replacement `d164327f20e2437d2662d8e0b73d38b519b76613` clicks **Chart values** first, which is what a reader does and what the browser scenario already did. The complete plan restarts from the beginning against it.
 
 ## Recorded decisions
 
@@ -106,7 +108,8 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`
+- **Delivery commit SHA:** `d164327f20e2437d2662d8e0b73d38b519b76613` (test-source replacement; supersedes first delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`)
+- **Replacement scope:** one assertion in the prepared component suite, which now opens the disclosure it reads; no application code, document, schema, or generated type changed
 - **Subject:** `T-039: build Weight screens`
 - **Committed scope:** `S19` at `/history/weight` with its two stat cards, range selector, chart with legend, textual summary, accessible value lists, and weigh-in list; `S20` at `/history/weight/new` and `/history/weight/[date]/edit` with the date default, decimal field, inline validation, sticky cue row, save contract, and `O01` deletion; the shared `ProgressChart` extended with a companion series and a data-framed axis; `requireLocalDateRouteParam`; the prepared component suite and the prepared `weight` browser scenario; and the mobile-UI-foundation and screen-decision documents
 
@@ -115,7 +118,7 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-06T13:32:55+02:00`
 - **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Findings:** The authorized verification found the assertion below
 
 ## Approval
 
@@ -162,3 +165,4 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 | `2026-09-06T13:32:55+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T13:32:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` with `potvrda` |
 | `2026-09-06T13:32:55+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
+| `2026-09-06T13:36:44+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | One prepared assertion read a collapsed disclosure without opening it; replacement `d164327f20e2437d2662d8e0b73d38b519b76613` corrects the test, inherits the Task approval under ADR-0028, and the complete plan restarts against it |

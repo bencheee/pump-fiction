@@ -6,7 +6,7 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T13:32:55+02:00`
+- **Updated:** `2026-09-06T13:36:44+02:00`
 - **Progress:** `1/5 required Tasks Done; T-039 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -124,3 +124,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T13:19:35+02:00` | Claude Code primary agent / Executor | Started `T-039` | Operations precede the screens that depend on them; the Owner's go-ahead for the whole Feature authorizes the Weight screens |
 | `2026-09-06T13:36:02+02:00` | Claude Code primary agent / Executor | Delivered `T-039` for review | Exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` awaits the Owner's approval before any feature test runs |
 | `2026-09-06T13:32:55+02:00` | User / Approver | Approved `T-039` | Authorized the recorded verification against exact delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e` |
+| `2026-09-06T13:36:44+02:00` | Claude Code primary agent / Tester and Executor | Delivered the `T-039` replacement | A prepared assertion read a collapsed disclosure without opening it; `d164327f20e2437d2662d8e0b73d38b519b76613` corrects the test and inherits the Task approval |
