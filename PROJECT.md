@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:22:46+02:00
+- **Last updated:** 2026-09-06T14:26:11+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T14:22:46+02:00. The Owner approved exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`, which authorizes the recorded plan.
+No active work item. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) is `Done`, which makes all five Tasks of [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) `Done`. The complete plan passed on the first run against approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`.
 
-It is the last Task of [`F-009`](docs/project/features/F-009-weight-and-body-progress.md).
+Weight is derived, rendered as `S19` and `S20`, and offered on Today. Body has its data and `S21` through `S24`. No placeholder route remains in the application.
 
 ## Immediate next action
 
-Run the complete recorded `T-042` plan and record the result. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner's confirmation of the `F-009` result. With it, `M-001` reaches 13 of 14 Features and only [`F-010`](docs/project/features/F-010-local-mvp-integration.md) Local MVP Integration remains, which still needs a Task breakdown. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `Testing` — Claude Code primary agent — 2026-09-06T14:22:46+02:00 — next: record the verification result.
+None; every `F-009` Task is `Done`.
 
 ## Next
 
@@ -36,14 +36,15 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) — Weight and Body Progress — all five Tasks `Done` — User — 2026-09-06T14:26:11+02:00 — requested action: confirm the aggregate Feature result.
 
 ## Approved — ready for testing
 
-- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` — Claude Code primary agent — 2026-09-06T14:22:46+02:00 — next required action: the complete recorded plan.
+None.
 
 ## Recently completed Tasks
 
+- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — completed `2026-09-06T14:26:11+02:00` — approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` — unit and component 235/235 and the Chromium and WebKit Body scenario 2/2 with eight structural captures, on the first run.
 - [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — completed `2026-09-06T14:12:40+02:00` — approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab` — unit 218/218, seeded reset, pgTAP 187/187, repository 9/9, unchanged types, and a faithful restore, on the first run.
 - [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — completed `2026-09-06T13:54:26+02:00` — first delivery `4992e617d3d367091332eb178525b2c61e35f0a5`, verified through inherited replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` — unit and component 192/192 and the Chromium and WebKit Today scenario 4/4 with eight structural captures.
 - [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — completed `2026-09-06T13:39:20+02:00` — first delivery `37cf5ee592bb6a4851050980c9f6c65a6a73ce0e`, verified through inherited replacement `d164327f20e2437d2662d8e0b73d38b519b76613` — unit and component 188/188 and the serialized Chromium and WebKit Weight scenario 2/2 with eight structural captures.

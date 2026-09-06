@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T14:22:46+02:00`
-- **Progress:** `4/5 required Tasks Done; T-042 is Testing`
+- **Updated:** `2026-09-06T14:26:11+02:00`
+- **Progress:** `5/5 required Tasks Done; awaiting the Owner's confirmation`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -36,9 +36,9 @@ Recorded on `2026-09-06` at the Owner's request, without committing or implement
 | 2 | [`T-039`](../tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience (`Done`; approved replacement `d164327f20e2437d2662d8e0b73d38b519b76613`) | `S19`, `S20`, `O01` with the two-series chart | `T-032`, `T-034`, and `T-036` Done (shell, shared chart); `T-038` |
 | 3 | [`T-040`](../tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today (`Done`; approved replacement `88abdad827a907fc93c61fd7851cd5d1736057a6`) | The `S01` prompt and `S04` sheet of `MVP-TOD-004` | `T-038`, `T-039` |
 | 4 | [`T-041`](../tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations (`Done`; approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`) | Type lifecycle, entry validation and writes, change derivation, chart series, body queries | `F-004` Done; `T-038` for shared date rules |
-| 5 | [`T-042`](../tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience | `S21`–`S24`, `O01` with chart | `T-032`, `T-039`, `T-041` |
+| 5 | [`T-042`](../tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience (`Done`; approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`) | `S21`–`S24`, `O01` with chart | `T-032`, `T-039`, `T-041` |
 
-`T-038`, `T-039`, and `T-040` are `Done`, so weight is complete; `T-041` is `Done` and `T-042` is `In Progress`, the last Task of the Feature. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
+`T-038`, `T-039`, and `T-040` are `Done`, so weight is complete; All five are `Done`. Weight is derived, rendered, and offered on Today; Body has its data and its four screens; no placeholder route remains in the application. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
 
 ## Boundary against F-008
 
@@ -98,10 +98,10 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] All required Tasks are `Done`
+- [x] Feature acceptance criteria are satisfied
+- [x] Canonical documentation is current
+- [x] No required follow-up scope is hidden; no Task discovered any
 - [ ] User confirms the feature result
 
 ## History
@@ -138,3 +138,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T14:14:28+02:00` | Claude Code primary agent / Executor | Started `T-042` | Body has its data, so its screens can render it and replace the last placeholder route |
 | `2026-09-06T14:24:05+02:00` | Claude Code primary agent / Executor | Delivered `T-042` for review | Exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` awaits the Owner's approval before any feature test runs |
 | `2026-09-06T14:22:46+02:00` | User / Approver | Approved `T-042` | Authorized the recorded verification against exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` |
+| `2026-09-06T14:26:11+02:00` | Claude Code primary agent / Tester | Completed `T-042`; all five Tasks are `Done` | The complete plan passed on the first run; only the Owner's confirmation of the Feature result remains |

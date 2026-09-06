@@ -1,7 +1,7 @@
 # T-042 — Build Body mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:22:46+02:00`
+- **Updated:** `2026-09-06T14:26:11+02:00`
 - **Started:** `2026-09-06T14:14:28+02:00`
 - **Review started:** `2026-09-06T14:24:05+02:00`
 - **Approval requested:** `2026-09-06T14:22:46+02:00`
 - **Approved:** `2026-09-06T14:22:46+02:00`
 - **Testing started:** `2026-09-06T14:22:46+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T14:26:11+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
+- **Next action:** None; `T-042` is `Done`. `F-009` awaits the Owner's confirmation of the Feature result.
 
 ## Scope
 
@@ -57,12 +57,12 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 
 ## Acceptance criteria
 
-- [ ] `S21` lists every type with its latest value, date, and neutral latest change, renders the empty and loading states, and shows no archived section or badge.
-- [ ] `S22` creates and renames a type with inline announced validation and returns to `S21` with a toast; it deletes an entry-less type only after `O01` confirmation, and explains instead of offering deletion when entries exist.
-- [ ] `S23` shows the latest value, the latest change, and the total change or their unavailable states; the range selector offers month, quarter, year, and all; changing it updates the chart, the textual summary, and the accessible list together; the chart needs no hover and respects reduced motion.
-- [ ] Creating, editing, and deleting an entry through `S24` returns to `S23` with visibly recalculated values, deletion after `O01` confirmation, with a future date, a duplicate date, and an invalid value refused inline.
-- [ ] An increase or a decrease is never colored or labelled as good or bad anywhere on `S21`, `S23`, or `S24`.
-- [ ] `S21` through `S24` match the accepted `v0.3` structure and chart geometry with the v0.4 cue placement on `S22` and `S24`, wrap long names in the list, the form, the chart header, and the entry screen, reflow from 320 to 430 px, and meet the accepted touch, overlay-history, and accessibility behavior with no horizontal table scrolling.
+- [x] `S21` lists every type with its latest value, date, and neutral latest change, renders the empty and loading states, and shows no archived section or badge.
+- [x] `S22` creates and renames a type with inline announced validation and returns to `S21` with a toast; it deletes an entry-less type only after `O01` confirmation, and explains instead of offering deletion when entries exist.
+- [x] `S23` shows the latest value, the latest change, and the total change or their unavailable states; the range selector offers month, quarter, year, and all; changing it updates the chart, the textual summary, and the accessible list together; the chart needs no hover and respects reduced motion.
+- [x] Creating, editing, and deleting an entry through `S24` returns to `S23` with visibly recalculated values, deletion after `O01` confirmation, with a future date, a duplicate date, and an invalid value refused inline.
+- [x] An increase or a decrease is never colored or labelled as good or bad anywhere on `S21`, `S23`, or `S24`.
+- [x] `S21` through `S24` match the accepted `v0.3` structure and chart geometry with the v0.4 cue placement on `S22` and `S24`, wrap long names in the list, the form, the chart header, and the entry screen, reflow from 320 to 430 px, and meet the accepted touch, overlay-history, and accessibility behavior with no horizontal table scrolling.
 
 ## Traceability
 
@@ -102,7 +102,9 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped component suite (`S21` summaries; `S22` validation and delete rules; `S23` selector synchronization and unavailable states; `S24` validation) and the serialized one-worker Chromium and WebKit phone scenario on the `T-037` harness covering `S21` to `S22` create, `S23`, `S24` create, edit, and delete, the restricted-delete explanation, reflow, and structural captures; the scenario removes what it creates. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `ae55dd3ef85ce31a692577620736b64a9abf7e54`
-- **Results:** Not run
+- **Results:** Passed on `2026-09-06T14:26:11+02:00` against exact approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, and Playwright `1.62.1`. **The complete plan passed on the first run.**
+
+  `npm run test:unit` passed **235/235 across 25 files**, the new Body component suite 17/17 among them. The serialized Body scenario passed **2/2**, one on mobile Chromium and one on mobile WebKit, on one worker against the production server, with **eight structural captures**, four per phone. It read `S21` with its latest value and change and no archived state anywhere, opened `S23` and its chart values, saw a range that excludes the entries say so, created a retrospective entry through `S24`, met the refused duplicate date on the date field, corrected and deleted an entry, found `S22` explaining why a measurement with entries cannot be deleted, renamed it and saw every entry stay attached, deleted an empty measurement, and reflowed to 320 px. It removed every row it made: no measurement type or entry remains, and the Owner's exercises, program, and splits are untouched.
 
 ## Recorded decisions
 
@@ -150,15 +152,15 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks: none was discovered
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -172,3 +174,4 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 | `2026-09-06T14:22:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T14:22:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` with `potvrda` |
 | `2026-09-06T14:22:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
+| `2026-09-06T14:26:11+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed on the first run: unit and component 235/235 and the Chromium and WebKit Body scenario 2/2 with eight structural captures |
