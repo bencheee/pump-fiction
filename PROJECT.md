@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T10:50:32+02:00
+- **Last updated:** 2026-09-06T10:54:05+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-035` of `F-008` are `Done` and `T-036` is `In Progress`
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-035` of `F-008` are `Done` and `T-036` is `In Review`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-[`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T10:50:32+02:00. It renders `S17` and `S18` on the `T-035` derivation, the last screens of `F-008`.
+[`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T10:54:05+02:00. It renders `S17` and `S18` on the `T-035` derivation, the last screens of `F-008`.
 
 History has its data, its shell, and the Workouts and Exercises subsections. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md), [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md), [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md), [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md), and [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) are `Done`.
 
 ## Immediate next action
 
-Deliver `T-036`, the Split History screens, for the Owner's one approval.
+Review exact `T-036` delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` and approve or reject it. Under ADR-0028 this is the one approval the Task needs.
 
 ## Now
 
-- [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience — `In Progress` — Claude Code primary agent — 2026-09-06T10:50:32+02:00 — next: deliver for review.
+- [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience — `In Review` — Claude Code primary agent — 2026-09-06T10:54:05+02:00 — next: the Owner's decision on the exact delivery.
 
 ## Next
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience — exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` — Claude Code primary agent — 2026-09-06T10:54:05+02:00 — requested action: review and approve or reject the exact commit.
 
 ## Approved — ready for testing
 
