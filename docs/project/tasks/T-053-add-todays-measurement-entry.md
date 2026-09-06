@@ -1,7 +1,7 @@
 # T-053 — Add today's measurement entry
 
 - **Feature:** `F-015`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:10:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T21:04:00+02:00`
+- **Started:** `2026-09-06T21:04:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await `T-051` and `T-052` and the `F-015` go-ahead.
+- **Next action:** Build the card and its sheet, and deliver one reviewable commit.
 
 ## Scope
 
@@ -54,7 +54,7 @@ The entry path Body gave up, on the screen the Owner chose for it.
 ## Dependencies and blockers
 
 - Dependencies: `T-051` `Done` for the criterion, `T-052` `Done` for the destination the card links to
-- Blockers: the `F-015` go-ahead
+- Blockers: None; `T-052` is `Done` and the application records no value at all until this lands
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -110,12 +110,12 @@ The entry path Body gave up, on the screen the Owner chose for it.
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -134,3 +134,4 @@ The entry path Body gave up, on the screen the Owner chose for it.
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
+| `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-052` removed every create path, so this restores entry where the Owner chose to put it |

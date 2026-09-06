@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T20:36:00+02:00
+- **Last updated:** 2026-09-06T21:04:00+02:00
 - **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -18,7 +18,7 @@ The release run passed 489 checks across five suites against exact approved deli
 
 ## Immediate next action
 
-Approve or reject exact `T-052` delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, which authorizes the whole browser suite. Note that until `T-053` lands, nothing in the application records a weigh-in.
+Deliver [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — the `Body measurements` card and sheet on Today. Until it lands, nothing in the application records a weigh-in or a measurement.
 
 ## Now
 
@@ -26,7 +26,7 @@ Approve or reject exact `T-052` delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7b
 
 ## Next
 
-1. [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — the `Body measurements` card and sheet on Today.
+None; `T-053` is the last Task of `F-015` and is in `Now`.
 
 ## Later
 
@@ -38,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-- [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` — the Body destination, the moved routes, and every spec the move invalidates, `test_required: yes`. Requested action: approve the exact commit, which authorizes the whole browser suite.
+None.
 
 ## Approved — ready for testing
 
@@ -46,6 +46,7 @@ None.
 
 ## Recently completed Tasks
 
+- [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — completed `2026-09-06T21:04:00+02:00` — first delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, verified through three inherited replacements ending at `109d2a0d3a1155620b4971ea8767561165e584ec` — the whole browser suite 52/52, unit 237/237, components 4/4, and a database identical to its baseline.
 - [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — completed `2026-09-06T18:52:00+02:00` — approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` — the release run passed 489 checks across five suites against one approved tree on the first attempt, with matching generated types, a database identical to its baseline, and the Owner's confirmed visual comparison.
 - [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — completed `2026-09-06T18:06:00+02:00` — first delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`, verified through inherited replacement `5c07096fb34801166ddb798345e3fd1b9eb3e117` — the sweep 10/10 with no application defect: 29 routes reflowing at four widths, numeric keyboards, named reorder controls, and six confirmed destructive actions; the whole suite 52/52.
 - [`T-050`](docs/project/tasks/T-050-correct-the-reorder-and-current-set-language.md) — completed `2026-09-06T17:40:00+02:00` — approved delivery `17b12f4233282af479501fc9d0af50052d9ca39a` — five sentences requiring a drag handle the application never had, and the current-set sentence ADR-0027 left behind; `test_required: no`.
@@ -60,6 +61,6 @@ None.
 ## Active work items
 
 - [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md) — Post-MVP Product Changes (`0/1 Features Done`)
-- [`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`1/3 Tasks Done`)
+- [`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`2/3 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
