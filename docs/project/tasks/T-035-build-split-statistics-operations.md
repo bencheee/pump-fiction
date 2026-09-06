@@ -1,7 +1,7 @@
 # T-035 — Build split statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:45:28+02:00`
+- **Updated:** `2026-09-06T10:47:39+02:00`
 - **Started:** `2026-09-06T10:38:42+02:00`
 - **Review started:** `2026-09-06T10:45:28+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T10:47:39+02:00`
+- **Approved:** `2026-09-06T10:47:39+02:00`
+- **Testing started:** `2026-09-06T10:47:39+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `92b6d10b3472a13282c41712e3e75f939216f647`. Under ADR-0028 this is the one approval the Task needs; replacements inherit it.
+- **Next action:** Run the complete recorded plan against exact approved delivery `92b6d10b3472a13282c41712e3e75f939216f647`; any replacement inherits this approval under ADR-0028.
 
 ## Scope
 
@@ -92,7 +92,7 @@ Queries:
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for grouping, exclusions, aggregates, and range boundaries; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new split-history suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `92b6d10b3472a13282c41712e3e75f939216f647`
 - **Results:** Not run
 
 ## Delivery commit
@@ -104,16 +104,16 @@ Queries:
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T10:47:39+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `92b6d10b3472a13282c41712e3e75f939216f647` as the Task's first delivery
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T10:47:39+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -149,3 +149,6 @@ Queries:
 | `2026-09-06T10:38:42+02:00` | User / Owner | `Backlog` | `Ready` | The identity snapshot is in place and the go-ahead for the whole `F-008` authorizes the split statistics |
 | `2026-09-06T10:38:42+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the split statistics derivation |
 | `2026-09-06T10:45:28+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `92b6d10b3472a13282c41712e3e75f939216f647`; static checks passed and every prepared feature test remains unexecuted |
+| `2026-09-06T10:47:39+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T10:47:39+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `92b6d10b3472a13282c41712e3e75f939216f647` with `potvrda` |
+| `2026-09-06T10:47:39+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the recorded unit, pgTAP, and repository verification against the exact approved delivery |
