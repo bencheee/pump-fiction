@@ -92,7 +92,7 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
 - **Authorized commit:** `b5772adb87d244bfc2404481e90f58a4046a7767`
-- **Results:** Not started. A scope breach in the approved commit was found first and needs the Owner's decision; see below.
+- **Results:** Not run at the time the scope breach below was recorded; the Owner then directed the work to continue, so the verification runs against the same approved commit.
 
 ## Recorded scope breach in the approved delivery
 
@@ -109,7 +109,7 @@ The Owner decides between:
 - accepting the commit as approved and recording `T-038` as having entered history through it, since the file itself is wanted and the alternative rewrites nothing useful; or
 - a replacement delivery that removes `T-038` from the `T-034` scope, which requires the concurrent work to commit it separately so the file is not lost.
 
-Until that decision, this Task stays in `Testing` with nothing executed. Every future staging in this Task names its paths explicitly rather than using `git add -A`, because concurrent work shares this working tree.
+The Owner chose the first on `2026-09-06T10:14:11+02:00` by directing the work to continue: exact delivery `b5772adb87d244bfc2404481e90f58a4046a7767` stands as approved, `T-038` entered history through it, and the recorded verification runs against it unchanged. No replacement is required. Every future staging in this Task names its paths explicitly rather than using `git add -A`, because concurrent work shares this working tree.
 
 ## Delivery commit
 
