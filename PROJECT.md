@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:39:20+02:00
+- **Last updated:** 2026-09-06T13:41:30+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,23 +10,22 @@
 
 ## Current focus
 
-No active work item. [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) is `Done`: Weight has `S19` and `S20`, and only Body is still a placeholder route. The complete plan passed against approved replacement `d164327f20e2437d2662d8e0b73d38b519b76613` after one prepared assertion read a collapsed disclosure without opening it.
+[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T13:41:30+02:00. It puts the `MVP-TOD-004` prompt and its `S04` sheet on Today, the one weight surface outside History.
 
-[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) puts the `MVP-TOD-004` prompt on Today and is next in the Feature order.
+Weight is otherwise finished: [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) derives it and [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) renders `S19` and `S20`.
 
 ## Immediate next action
 
-Start [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Deliver `T-040` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-None; `T-039` is `Done`.
+- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `In Progress` — Claude Code primary agent — 2026-09-06T13:41:30+02:00 — next: deliver one reviewable commit.
 
 ## Next
 
-1. [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Today's weight prompt and `S04`; `Backlog`.
-2. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
-3. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
+1. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
+2. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
 
 ## Later
 

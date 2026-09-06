@@ -1,23 +1,23 @@
 # T-040 — Add today's weight prompt to Today
 
 - **Feature:** `F-009`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T12:22:31+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T13:41:30+02:00`
+- **Started:** `2026-09-06T13:41:30+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-038` and `T-039` to be `Done` and for the Owner's answer to `F-009` readiness question 3; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -26,7 +26,7 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 `S01` Today:
 
 - when the local date has no weight entry, a **Today's weight** card with the add action; the card stays in the no-program state and beside a restored-workout card, as the accepted wireframe keeps the weight action in both;
-- once today's entry exists, the create prompt is gone and never returns for that date; what stands in its place follows `F-009` readiness question 3;
+- once today's entry exists, the create prompt is gone and never returns for that date; per the accepted answer to `F-009` readiness question 3 the same card then shows the recorded value with a link to Weight and no create control;
 - the Today page loads the prompt state through server composition beside the existing Today aggregate, so `TodayView` and `get_today` stay unchanged.
 
 `S04` Today weight entry sheet:
@@ -60,7 +60,7 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 ## Dependencies and blockers
 
 - Dependencies: `T-038` Done (the create operation and the by-date read); `T-039` Done, whose weight field and validation presentation `S04` reuses
-- Blockers: `T-038` and `T-039` are not `Done`; the Owner has not yet answered `F-009` readiness question 3 or given the go-ahead
+- Blockers: None; `T-038` and `T-039` are `Done`, and the Owner answered readiness question 3 and released the whole Feature on `2026-09-06`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -116,12 +116,12 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — `T-038` and `T-039` are not `Done`, and readiness question 3 is unanswered
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -141,3 +141,5 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 | --- | --- | --- | --- | --- |
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the Today weight surface within `F-009`; the Owner directed that nothing is committed or implemented until they say so |
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
+| `2026-09-06T13:41:30+02:00` | User / Owner | `Backlog` | `Ready` | `T-039` is `Done` and the Owner's go-ahead for the whole Feature authorizes the Today surface |
+| `2026-09-06T13:41:30+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the `MVP-TOD-004` prompt on the `T-038` operations |
