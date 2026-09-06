@@ -89,6 +89,10 @@ The filter appears only when more than one program has a completed split; a sing
 
 Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, and entry list.
 
+The two summaries are stat cards: the latest weigh-in with its date and its change from the one before it, and this week with its average, its change from last week or the unavailable state, its `n/7` count, and whether it is provisional or final. A week with no weigh-in yet says so rather than showing a zero. The range selector offers week, month, quarter, and year, and opens on the month. The chart carries a legend naming its solid and dashed lines, a sentence above it, and an expandable list below that repeats both the weigh-ins and the weekly averages with their spans. Each weigh-in row opens the entry screen for that date.
+
+The entry screen defaults to today, accepts an earlier date, and refuses a later one. Its save, validation, and outcome cue is the first row of the sticky action bar, and **Delete Entry** appears only when correcting an existing weigh-in, behind the destructive confirmation that names what recalculates.
+
 ### Body
 
 Provide measurement-type list with latest values and changes. Detail provides total change, time-range selector, chart, and entry list.

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:19:35+02:00`
+- **Updated:** `2026-09-06T13:34:18+02:00`
 - **Started:** `2026-09-06T13:19:35+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
 
 ## Scope
 
@@ -75,17 +75,17 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 
 ## Execution checklist
 
-- [ ] Implement `S19` summaries, the entries list with its per-entry change, the empty and loading states, and the header add action.
-- [ ] Implement the range selector, extend the shared `ProgressChart` with a companion series distinguished without color and a legend, and render the textual summary and the accessible data list, keeping calculations out of presentation.
-- [ ] Implement `S20` create and edit with the date default, the decimal keyboard, inline announced validation, the sticky cue row, the save contract, and `O01` deletion.
-- [ ] Add the date route-parameter helper and wire the not-found boundary and the subsection navigation state.
-- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 9 (`S19` to `S20` create, edit, and delete with recalculation) with structural captures; do not run them.
-- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Implement `S19` summaries, the entries list with its per-entry change, the empty and loading states, and the header add action.
+- [x] Implement the range selector, extend the shared `ProgressChart` with a companion series distinguished without color and a legend, and render the textual summary and the accessible data list, keeping calculations out of presentation.
+- [x] Implement `S20` create and edit with the date default, the decimal keyboard, inline announced validation, the sticky cue row, the save contract, and `O01` deletion.
+- [x] Add the date route-parameter helper and wire the not-found boundary and the subsection navigation state.
+- [x] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 9 (`S19` to `S20` create, edit, and delete with recalculation) with structural captures; do not run them.
+- [x] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its route, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T13:34:18+02:00` with Node.js `22.21.0`, npm `10.9.4`, and Supabase CLI `2.116.0`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The build lists `/history/weight`, `/history/weight/new`, and `/history/weight/[date]/edit` as dynamic routes and leaves the Recharts bundle on the routes that import the shared chart. `git diff --check` was clean. This Task changes no schema, migration, or generated type. No feature test ran: the component suite and the browser scenario are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -95,11 +95,20 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
+## Recorded decisions
+
+- the History subsection bar owns the top of every `/history` screen, so the `S19` add action sits in the content flow rather than floating over it as the Exercises and Programs add actions do;
+- `requireLocalDateRouteParam` joins `requireUuidRouteParam` in `src/shared/routing/`, because a weigh-in is addressed by its local date;
+- the shared `ProgressChart` learned a companion series: it merges the two into one dataset keyed by date, draws the weekly averages dashed, names both in a real-text legend outside the hidden chart, and takes `frame="data"` so a series far from zero frames its values instead of the origin; every earlier chart keeps the axis it had;
+- `S19` opens on the month and offers week, month, quarter, and year, never `all`;
+- the trend sentence is built as one string, so a JSX line break cannot change what it reads;
+- the future date and the non-numeric value are covered by the component suite, and the duplicate date by the browser scenario, because only a server round trip can produce it.
+
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-039: build Weight screens`
-- **Committed scope:** Not created
+- **Committed scope:** `S19` at `/history/weight` with its two stat cards, range selector, chart with legend, textual summary, accessible value lists, and weigh-in list; `S20` at `/history/weight/new` and `/history/weight/[date]/edit` with the date default, decimal field, inline validation, sticky cue row, save contract, and `O01` deletion; the shared `ProgressChart` extended with a companion series and a data-framed axis; `requireLocalDateRouteParam`; the prepared component suite and the prepared `weight` browser scenario; and the mobile-UI-foundation and screen-decision documents
 
 ## Review
 
