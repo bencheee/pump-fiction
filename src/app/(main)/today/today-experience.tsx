@@ -13,7 +13,16 @@ import type {
 } from "@/features/active-workout/domain/workout";
 import { Action, Badge, Icon, PageFrame, Sheet } from "@/shared/ui";
 
-export function TodayExperience({ today }: { today: TodayView }) {
+import { TodayWeightCard, type TodayWeight } from "./today-weight";
+
+export function TodayExperience({
+  today,
+  weight,
+}: {
+  today: TodayView;
+  /** Null only when the weigh-in could not be read; Today still works. */
+  weight: TodayWeight | null;
+}) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
   const [pending, setPending] = useState(false);
@@ -132,6 +141,8 @@ export function TodayExperience({ today }: { today: TodayView }) {
           </Link>
         </div>
       ) : null}
+
+      {weight ? <TodayWeightCard weight={weight} /> : null}
 
       {error ? (
         <div

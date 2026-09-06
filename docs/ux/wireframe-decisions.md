@@ -57,6 +57,8 @@ Restoring a workout shows no banner: the restored workout itself is the evidence
 
 The finish review keeps **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and the separately confirmed **Discard Workout** together in one sticky action group, so discard stays reachable without scrolling.
 
+Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Weight once it does; it never offers a second entry, and it never edits or deletes.
+
 The workout keeps the bottom navigation and uses the finish flow defined in [`workouts.md`](../product/workouts.md).
 
 ## History

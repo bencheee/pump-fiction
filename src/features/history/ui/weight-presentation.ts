@@ -1,4 +1,4 @@
-import type { WeeklySummary } from "@/features/history/domain/weight";
+import type { WeeklySummary } from "../domain/weight";
 
 /** The typographic minus the accepted design uses for a fall. */
 const minus = "−";

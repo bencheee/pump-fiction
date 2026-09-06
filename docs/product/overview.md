@@ -29,11 +29,13 @@ Today shows:
 - the primary **Start Workout** action;
 - **Choose Another Split**;
 - **One-Time Workout**;
-- today's weight entry when one has not yet been recorded.
+- today's weight entry when one has not yet been recorded, and once it exists the recorded value in its place.
 
 **Choose Another Split** applies only to today's workout. It neither changes nor advances the future rotation.
 
 **One-Time Workout** accepts an arbitrary name and exercises selected from the active exercise library. It is not attached to a split and does not affect rotation. Its exercise performances still contribute to exercise statistics, while it does not contribute to split statistics.
+
+The weight card is the one weight surface outside History. While the local date holds no weigh-in it offers to add one, in a sheet fixed to that date. Once the day has one, the same card shows the recorded value with a link to Weight and no create control, so Today never reads as though a second entry were possible. Correcting or deleting a weigh-in happens in Weight, never here.
 
 Rotation rules are canonical in [`programs-and-splits.md`](programs-and-splits.md#rotation). Workout behavior is in [`workouts.md`](workouts.md), and weight entry rules are in [`weight-and-body.md`](weight-and-body.md#weight-tracker).
 

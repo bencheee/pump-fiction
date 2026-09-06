@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:41:30+02:00`
+- **Updated:** `2026-09-06T13:48:05+02:00`
 - **Started:** `2026-09-06T13:41:30+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
 
 ## Scope
 
@@ -70,16 +70,16 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 
 ## Execution checklist
 
-- [ ] Load today's weight prompt state in the Today page through server composition beside `getToday`, without changing `TodayView`.
-- [ ] Implement the `S01` prompt card and its replacement state per question 3 across the populated, no-program, and restored-workout layouts.
-- [ ] Implement the `S04` sheet with the fixed date, the decimal field, the save lifecycle, the duplicate-resolved state, retry, and overlay-history behavior, reusing the `T-039` weight field presentation.
-- [ ] Extend the Today component tests and the Today browser scenario for the prompt, the sheet, the saved state, and the conflict; do not run them.
-- [ ] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
+- [x] Load today's weight prompt state in the Today page through server composition beside `getToday`, without changing `TodayView`.
+- [x] Implement the `S01` prompt card and its replacement state per question 3 across the populated, no-program, and restored-workout layouts.
+- [x] Implement the `S04` sheet with the fixed date, the decimal field, the save lifecycle, the duplicate-resolved state, retry, and overlay-history behavior, reusing the `T-039` weight field presentation.
+- [x] Extend the Today component tests and the Today browser scenario for the prompt, the sheet, the saved state, and the conflict; do not run them.
+- [x] Update canonical documents, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T13:48:05+02:00` with Node.js `22.21.0`, npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. `git diff --check` was clean. This Task changes no schema, migration, or generated type, and no server operation: it reads `getTodayWeight` and writes through the `T-038` create action. No feature test ran: the extended Today component suite and the extended Today browser scenario are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -89,11 +89,20 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
+## Recorded decisions
+
+- Today reads the day's weigh-in beside its aggregate rather than inside it, so `TodayView` and `get_today` are untouched;
+- a weigh-in that cannot be read leaves the card out instead of failing Today, because starting a workout is what Today is for;
+- the sheet's date is fixed to the local date and cannot be in the future, so the only refusal it can receive is a weigh-in that appeared meanwhile; it treats that as **resolved** rather than failed, closes the create path, and reloads Today onto the value that now exists;
+- `weight-presentation.ts` moved to `src/features/history/ui/` once Today became its second reader, under the demonstrated-reuse rule of the mobile UI foundation;
+- the card sits below the workout actions and above the rotation note in every state, including no program and a restored workout;
+- the browser harness note `T-039` uncovered is recorded here rather than left in a Task file: a worktree needs a hard-link copy of `node_modules`, because Turbopack refuses a symlink that leaves the project root.
+
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-040: add today's weight prompt`
-- **Committed scope:** Not created
+- **Committed scope:** the `S01` weight card and its `S04` sheet in `today-weight.tsx`; the Today page reading the weigh-in beside its aggregate and the experience rendering the card; `weight-presentation.ts` promoted to the History `ui` module with its `S19` import repointed; four prepared Today component scenarios and a prepared Today browser scenario for the prompt, the sheet, the saved state, and Weight; and the product-overview, mobile-UI-foundation, and screen-decision documents, the last also carrying the `T-039` browser-harness note
 
 ## Review
 

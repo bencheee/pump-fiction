@@ -141,6 +141,69 @@ test.describe("Today workout-start experience", () => {
       });
     }
   });
+
+  test("covers the MVP-TOD-004 weight prompt, its sheet, and Weight", async ({
+    page,
+  }, testInfo) => {
+    // The prompt is about the local date, so this scenario writes today's
+    // weigh-in and deletes exactly the row it created. It never removes one it
+    // found: if today already had a weigh-in the card would show that value and
+    // this test would fail rather than destroy it.
+    let createdToday = false;
+
+    try {
+      await page.goto("/today");
+      const card = page.getByRole("region", { name: "Today's weight" });
+      await expect(card).toBeVisible();
+      const add = card.getByRole("button", { name: "Add today's weight" });
+      await expect(add).toBeVisible();
+
+      // S04 is a sheet fixed to today, dismissible like every other overlay.
+      await add.click();
+      const sheet = page.getByRole("dialog", { name: "Add today's weight" });
+      await expect(sheet).toBeVisible();
+      await testInfo.attach(`today-weight-sheet-${testInfo.project.name}.png`, {
+        body: await page.screenshot({ fullPage: true }),
+        contentType: "image/png",
+      });
+      await page.keyboard.press("Escape");
+      await expect(sheet).toBeHidden();
+
+      await add.click();
+      await fillHydrated(sheet.getByLabel("Weight (kg)"), "82.4");
+      await sheet.getByRole("button", { name: "Save Weight" }).click();
+      createdToday = true;
+
+      // The prompt is gone for the day and the recorded value stands in its
+      // place, with no second create path.
+      await expect(sheet).toBeHidden();
+      await expect(card.getByText("82.4 kg")).toBeVisible();
+      await expect(
+        card.getByRole("button", { name: "Add today's weight" }),
+      ).toHaveCount(0);
+      await testInfo.attach(`today-weight-saved-${testInfo.project.name}.png`, {
+        body: await page.screenshot({ fullPage: true }),
+        contentType: "image/png",
+      });
+
+      // The same weigh-in is what Weight shows, and correcting it lives there.
+      await card.getByRole("link", { name: "See Weight" }).click();
+      await expect(page).toHaveURL(/\/history\/weight$/);
+      await expect(
+        page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
+      ).toContainText("82.4 kg");
+
+      // Reloading Today keeps the recorded state; the prompt never returns.
+      await page.goto("/today");
+      await expect(
+        page
+          .getByRole("region", { name: "Today's weight" })
+          .getByText("82.4 kg"),
+      ).toBeVisible();
+    } finally {
+      if (createdToday) await removeTodaysWeighIn();
+    }
+  });
 });
 
 function adminClient() {
@@ -224,4 +287,17 @@ async function cleanUp(fixture: {
       .from("app_settings")
       .update({ current_program_id: fixture.seededProgramId })
       .eq("id", 1);
+}
+
+/** Removes only the weigh-in this suite created, on the configured local date. */
+async function removeTodaysWeighIn() {
+  const client = adminClient();
+  const { data, error: readError } = await client.rpc("get_weight_overview");
+  if (readError) throw readError;
+  const localDate = (data as { localDate: string }).localDate;
+  const { error } = await client
+    .from("weight_entries")
+    .delete()
+    .eq("entry_date", localDate);
+  if (error) throw error;
 }

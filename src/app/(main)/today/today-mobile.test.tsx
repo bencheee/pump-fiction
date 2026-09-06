@@ -17,6 +17,7 @@ const actions = vi.hoisted(() => ({
   refresh: vi.fn(),
   setNext: vi.fn(),
   startWorkout: vi.fn(),
+  createWeight: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
@@ -28,12 +29,25 @@ vi.mock("@/app/actions/programs", () => ({
 vi.mock("@/app/actions/workouts", () => ({
   startWorkoutAction: actions.startWorkout,
 }));
+vi.mock("@/app/actions/weight", () => ({
+  createWeightEntryAction: actions.createWeight,
+}));
 
 const programId = "11111111-1111-4111-8111-111111111111";
 const proposedId = "22222222-2222-4222-8222-222222222222";
 const alternateId = "33333333-3333-4333-8333-333333333333";
 const exerciseAId = "44444444-4444-4444-8444-444444444444";
 const exerciseBId = "55555555-5555-4555-8555-555555555555";
+
+const noWeighIn = { localDate: "2026-08-26", entry: null } as const;
+const recorded = {
+  localDate: "2026-08-26",
+  entry: {
+    id: "77777777-7777-4777-8777-777777777777",
+    entryDate: "2026-08-26",
+    weightKg: 82.4,
+  },
+} as const;
 
 const today: TodayView = {
   localDate: "2026-08-26",
@@ -86,7 +100,7 @@ describe("Today and workout-start mobile experience", () => {
   it("starts the proposal and can place an alternate on Today without moving rotation", async () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
-    render(<TodayExperience today={today} />);
+    render(<TodayExperience today={today} weight={noWeighIn} />);
 
     expect(screen.getByText("Wed 26 Aug")).toBeVisible();
     expect(screen.getByText("Avg 1h 08m · 7 workouts")).toBeVisible();
@@ -112,6 +126,99 @@ describe("Today and workout-start mobile experience", () => {
     expect(actions.push).toHaveBeenCalledWith("/workout/current");
   });
 
+  it("offers today's weight only while the day has none", async () => {
+    const user = userEvent.setup();
+    actions.createWeight.mockResolvedValue({ ok: true, value: recorded.entry });
+    render(<TodayExperience today={today} weight={noWeighIn} />);
+
+    const card = within(screen.getByRole("region", { name: "Today's weight" }));
+    await user.click(card.getByRole("button", { name: "Add today's weight" }));
+    const sheet = screen.getByRole("dialog", { name: "Add today's weight" });
+    await user.type(within(sheet).getByLabelText("Weight (kg)"), "82.4");
+    await user.click(
+      within(sheet).getByRole("button", { name: "Save Weight" }),
+    );
+
+    expect(actions.createWeight).toHaveBeenCalledWith({
+      entryDate: "2026-08-26",
+      weightKg: 82.4,
+    });
+    expect(actions.refresh).toHaveBeenCalled();
+  });
+
+  it("shows the recorded weight instead of a second-entry prompt", () => {
+    render(<TodayExperience today={today} weight={recorded} />);
+
+    const card = within(screen.getByRole("region", { name: "Today's weight" }));
+    expect(card.getByText("82.4 kg")).toBeVisible();
+    expect(card.getByRole("link", { name: "See Weight" })).toHaveAttribute(
+      "href",
+      "/history/weight",
+    );
+    expect(
+      card.queryByRole("button", { name: "Add today's weight" }),
+    ).toBeNull();
+  });
+
+  it("resolves a weigh-in that appeared while the sheet was open", async () => {
+    const user = userEvent.setup();
+    actions.createWeight.mockResolvedValue({
+      ok: false,
+      error: {
+        code: "validation",
+        message: "Check the weigh-in and try again.",
+        retryable: false,
+        fieldErrors: { entryDate: ["That date already has a weigh-in."] },
+      },
+    });
+    render(<TodayExperience today={today} weight={noWeighIn} />);
+
+    await user.click(
+      screen.getByRole("button", { name: "Add today's weight" }),
+    );
+    const sheet = screen.getByRole("dialog", { name: "Add today's weight" });
+    await user.type(within(sheet).getByLabelText("Weight (kg)"), "82.4");
+    await user.click(
+      within(sheet).getByRole("button", { name: "Save Weight" }),
+    );
+
+    expect(screen.getByText(/Today already has a weigh-in/)).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Save Weight" })).toBeNull();
+    expect(actions.refresh).toHaveBeenCalled();
+  });
+
+  it("keeps the weight card beside a restored workout and with no program", () => {
+    render(
+      <TodayExperience
+        today={{ ...today, proposedSplit: null, alternateSplits: [] }}
+        weight={noWeighIn}
+      />,
+    );
+    expect(
+      screen.getByRole("region", { name: "Today's weight" }),
+    ).toBeVisible();
+    cleanup();
+
+    render(
+      <TodayExperience
+        today={{
+          ...today,
+          currentWorkout: {
+            id: "66666666-6666-4666-8666-666666666666",
+            name: "Lower Body",
+            status: "active",
+            accumulatedActiveSeconds: 60,
+            activeSegmentStartedAt: null,
+          },
+        }}
+        weight={noWeighIn}
+      />,
+    );
+    expect(
+      screen.getByRole("region", { name: "Today's weight" }),
+    ).toBeVisible();
+  });
+
   it("replaces all second-start actions with an accurate restore card", () => {
     render(
       <TodayExperience
@@ -125,6 +232,7 @@ describe("Today and workout-start mobile experience", () => {
             activeSegmentStartedAt: null,
           },
         }}
+        weight={noWeighIn}
       />,
     );
 

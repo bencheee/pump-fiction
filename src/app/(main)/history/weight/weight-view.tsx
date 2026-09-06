@@ -24,7 +24,7 @@ import {
   formatRecordedDays,
   noPreviousWeek,
   weekStatusLabel,
-} from "./weight-presentation";
+} from "@/features/history/ui/weight-presentation";
 
 /** Weight offers no `all` range; `weight-and-body.md` names these four. */
 const weightRanges: readonly ChartRange[] = [
