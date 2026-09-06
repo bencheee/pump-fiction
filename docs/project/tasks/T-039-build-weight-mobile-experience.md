@@ -1,23 +1,23 @@
 # T-039 — Build Weight mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 2
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T12:22:31+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T13:19:35+02:00`
+- **Started:** `2026-09-06T13:19:35+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for `T-038` to be `Done`; only then may the Owner move this Task to `Ready`.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -65,7 +65,7 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 ## Dependencies and blockers
 
 - Dependencies: `T-032`, `T-034`, and `T-036` Done, which built the shell, the placeholder route, and the shared `ProgressChart` in the History `ui` module; `T-038` Done (data)
-- Blockers: `T-038` is not `Done`; the Owner has not yet given the `F-009` go-ahead
+- Blockers: None; `T-038` is `Done` through approved replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` and the Owner released the whole Feature on `2026-09-06`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -122,12 +122,12 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — `T-038` is not `Done`
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -147,3 +147,5 @@ Implement the phone-only Weight subsection of History on the `T-038` operations,
 | --- | --- | --- | --- | --- |
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the Weight subsection delivery within `F-009`; the Owner directed that nothing is committed or implemented until they say so |
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
+| `2026-09-06T13:19:35+02:00` | User / Owner | `Backlog` | `Ready` | `T-038` is `Done` and the Owner's go-ahead for the whole Feature authorizes the screens that render it |
+| `2026-09-06T13:19:35+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Weight subsection on the `T-038` operations |

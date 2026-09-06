@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:17:52+02:00
+- **Last updated:** 2026-09-06T13:19:35+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,24 +10,23 @@
 
 ## Current focus
 
-No active work item. [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) is `Done`: weight has its entries, its weekly rules, and its writes. The complete plan passed against approved replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` after the first verification found a missing grant on two `security invoker` helpers, which the repository suite caught and the replacement corrected under the inherited approval of ADR-0028.
+[`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T13:19:35+02:00. It renders `S19` and `S20` on the `T-038` operations, replacing the last placeholder route but one.
 
-[`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) renders it as `S19` and `S20` and is next in the Feature order.
+[`T-038`](docs/project/tasks/T-038-build-weight-operations.md) is `Done`, so weight has its entries, its Monday-to-Sunday weekly rules, its chart series, and its three writes.
 
 ## Immediate next action
 
-Start [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Deliver `T-039` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-None; `T-038` is `Done`.
+- [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience — `In Progress` — Claude Code primary agent — 2026-09-06T13:19:35+02:00 — next: deliver one reviewable commit.
 
 ## Next
 
-1. [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Weight screens `S19` and `S20`; `Backlog`.
-2. [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Today's weight prompt and `S04`; `Backlog`.
-3. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
-4. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
+1. [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Today's weight prompt and `S04`; `Backlog`.
+2. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
+3. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
 
 ## Later
 
