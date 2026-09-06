@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T00:49:17+02:00`
+- **Updated:** `2026-09-06T12:22:31+02:00`
 - **Started:** Not reached
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,18 +17,18 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the Owner's answers to the `F-009` readiness questions and the go-ahead; only then may the Owner move this Task to `Ready`.
+- **Next action:** Wait for the Owner's answers to the `F-009` readiness questions and the go-ahead; with both, the Owner moves this Task to `Ready` and it starts first.
 
 ## Scope
 
-Derive and persist everything `S19`, `S20`, and the Today weight prompt need, without rendering any of it. The product rules live as pure functions in a Progress domain under `src/features/progress`, and the server boundary supplies only the stored entries and the configured local date they reduce, so every weekly rule is testable without a browser or a database.
+Derive and persist everything `S19`, `S20`, and the Today weight prompt need, without rendering any of it. The product rules live as pure functions in the History domain under `src/features/history`, beside the exercise and split statistics, because Weight is a History subsection under ADR-0003 and the chart contract and range helper it reuses already live there; the server boundary supplies only the stored entries and the configured local date they reduce, so every weekly rule is testable without a browser or a database.
 
 Domain derivation, from every stored weight entry:
 
 - calendar weeks running Monday through Sunday in the configured time zone; `weekly average = sum of existing entries / number of entries`; `weekly change = current weekly average − previous weekly average`, unavailable rather than zero when the immediately preceding week has no entries (`MVP-WGT-002`);
 - the recorded-days count of a week as `n/7`, and the provisional flag: the current week is provisional on every day before its Sunday and final on Sunday; every past week is final;
 - the latest entry, its change from the previous individual weigh-in by date, and the change carried by every entry for the list newest first;
-- neutral serializable chart series for the week, month, quarter, and year ranges as trailing windows ending on the local date: a daily series of the entries in the window and a weekly-average series with one point per calendar week intersecting the window, each point carrying week start and end, average, recorded days, and the provisional flag, so the chart draws without computing;
+- neutral serializable chart series in the History chart contract of `T-033` and `T-035`, generalized so a point needs no workout id and a series can carry a companion series, for the week, month, quarter, and year ranges as the trailing windows `rangeStart` already defines: a daily series of the entries in the window and a companion weekly-average series with one point per calendar week intersecting the window, each point carrying week start and end, average, recorded days, and the provisional flag, so the chart draws without computing; the History callers keep their series unchanged;
 - entry validation: a `YYYY-MM-DD` date not after the local date, a decimal kilogram value above zero with at most two decimals within `numeric(6,2)`, and the local date as the default (`MVP-WGT-001`).
 
 Writes, each one Server Action, one repository call, one PostgreSQL function, and the generic retry contract:
@@ -47,7 +47,7 @@ Queries:
 - Body measurements, owned by `T-041`
 - Any authoritative aggregate table or cached weekly value
 - Any change to `app_settings` or the time-zone operation
-- Feature tests before exact-commit approval
+- Feature tests before the Task's first approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
 
 ## Acceptance criteria
 
@@ -66,19 +66,19 @@ Queries:
 
 ## Dependencies and blockers
 
-- Dependencies: `F-004` Done, which created `weight_entries`, its per-date uniqueness, and the future-date trigger in `T-006`; `T-033` Done, whose trailing-range helper this Task promotes rather than writes again
-- Blockers: `F-009` is `Next / 2` behind `F-008`; the Owner has not answered the `F-009` readiness questions or confirmed Feature readiness
+- Dependencies: `F-004` Done, which created `weight_entries`, its per-date uniqueness, and the future-date trigger in `T-006`; `T-033` and `T-035` Done, whose `ChartRange`, `rangeStart`, and chart contract this Task reuses and generalizes rather than writes again
+- Blockers: None from other work, since `F-008` is `Done`; the Owner has not yet answered the `F-009` readiness questions or given the go-ahead
 - Blocked from status: Not blocked
 
 ## Documentation impact
 
-- Documents to create or update: the weight and body product document (the local decisions `F-009` assigns to this Task: display rounding, the trailing week window against the calendar week, weekly point placement, previous weigh-in by date), the domain model Progress section (derived in the domain, no aggregate table), the server boundary document (a `T-038` paragraph), the local database workflow (new declarative schema file, pgTAP suite, and repository test), this Task, `F-009`, registry, dashboard, and project state
+- Documents to create or update: the weight and body product document (the local decisions `F-009` assigns to this Task: display rounding, the trailing week window against the calendar week, weekly point placement, previous weigh-in by date), the domain model Progress section (derived in the History domain, no aggregate table), the server boundary document (a `T-038` paragraph), the local database workflow (new declarative schema file, pgTAP suite, and repository test), this Task, `F-009`, registry, dashboard, and project state
 - Documentation that should remain unchanged: the weekly formulas themselves, the locked MVP criteria text, body measurement behavior, History, active-workout behavior, and every UI document
 
 ## Execution checklist
 
 - [ ] Define the weight domain shapes: entry, weekly summary, latest summary, chart range and series, validation input, and the repository contract.
-- [ ] Implement the calendar-week grouping, weekly average and change, the provisional rule, the latest and individual change, entry validation, and the range and series builders as pure functions over the entries and the local date; promote the trailing-range helper from the History domain to a module both Features may import.
+- [ ] Implement the calendar-week grouping, weekly average and change, the provisional rule, the latest and individual change, entry validation, and the range and series builders as pure functions over the entries and the local date; reuse `rangeStart` and generalize the chart contract so a point needs no workout id and a series can carry the companion weekly-average series, keeping the History callers unchanged.
 - [ ] Add the declarative schema file with the overview and by-date read functions and the create, update, and delete functions, each returning the affected entry; map the uniqueness and future-date failures to field errors in the Supabase repository.
 - [ ] Add application operations that reduce the entries to the `S19` view, validate and route the writes, and return `OperationResult` values through server composition and thin Server Actions; the caller passes the configured local date, so derivation stays pure.
 - [ ] Generate and review the migration; regenerate and review the database types.
@@ -94,7 +94,7 @@ Queries:
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
-- **Planned tests:** After approval of the exact delivery commit: `npm run test:unit` for the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new weight suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before Owner approval of the exact commit.
+- **Planned tests:** After the Task's one approval: `npm run test:unit` for the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new weight suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
@@ -149,3 +149,4 @@ Queries:
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the weight data and derivation within `F-009`; the Owner directed that nothing is committed or implemented until they say so |
+| `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |

@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T11:50:42+02:00
-- **Current phase:** Local MVP implementation — `F-008` History and Statistics is `Done` with the Owner's confirmation on `2026-09-06`; `F-009` follows in the Owner's order
+- **Last updated:** 2026-09-06T12:22:31+02:00
+- **Current phase:** Local MVP implementation — `F-008` History and Statistics is `Done` with the Owner's confirmation on `2026-09-06`; `F-009` follows in the Owner's order and now has its locked Task breakdown
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete
+- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is planned (`T-038` through `T-042` in `Backlog`) and awaits the Owner's go-ahead
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` is next
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-`F-008` is `Done`: the Owner confirmed the History and Statistics result on 2026-09-06T11:50:42+02:00. No work item is active. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order, and nothing of it starts before the Owner's go-ahead.
+`F-008` is `Done`: the Owner confirmed the History and Statistics result on 2026-09-06T11:50:42+02:00. No work item is active. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order, and nothing of it starts before the Owner's go-ahead. Its Task breakdown was recorded at the Owner's request and locked once `F-008` completed: [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) through [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) are in `Backlog`, operations before screens, and the Feature file carries three readiness questions with recommended answers, chiefly the stale archiving sentence in the weight and body document and what Today shows once the day's weight exists.
 
 Every History screen is delivered and verified. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) through [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) are `Done`.
 
 ## Immediate next action
 
-The Owner's go-ahead for `F-009`, and the Owner's word on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner's answers to the three `F-009` readiness questions and the go-ahead; with both, move [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) to `Ready` and start it. Also the Owner's word on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
@@ -24,7 +24,7 @@ None; every `Now` Task is `Done`.
 
 ## Next
 
-[`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order; nothing of it starts before the Owner's go-ahead.
+1. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) — Weight and Body Progress; five Tasks in `Backlog` (Executor Claude Code primary agent, locked `2026-09-06T12:22:31+02:00`) awaiting the readiness answers and the go-ahead before `T-038` can become `Ready`.
 
 ## Later
 
