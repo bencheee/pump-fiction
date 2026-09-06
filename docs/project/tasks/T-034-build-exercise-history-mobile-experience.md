@@ -98,7 +98,9 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 
   Second verification, against exact approved replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` on `2026-09-06T10:23:42+02:00` in a fresh isolated worktree: `npm run test:unit` passed **126/126 across 17 files**, so the named lists resolved the earlier ambiguity. The browser scenario then failed on both mobile Chromium and mobile WebKit, looking for a kilogram value in the chart-values list of a weights exercise and finding reps instead.
 
-  The cause is a default nobody chose. `availableMetrics` built its list in the order it happened to add entries, which put highest reps first for every exercise, so the detail of a weights exercise opened on reps rather than on load. That is a poor default for a lifter and it is what the scenario, reasonably, did not expect. The list now has a deliberate order. The approval is invalidated.
+  The cause is a default nobody chose. `availableMetrics` built its list in the order it happened to add entries, which put highest reps first for every exercise, so the detail of a weights exercise opened on reps rather than on load. That is a poor default for a lifter and it is what the scenario, reasonably, did not expect. The list now has a deliberate order. That approval was invalidated; the correction then inherited the Task approval under ADR-0028.
+
+  Third verification, against second replacement `4d4f895fc5807cffb172ec5d2a343d68bca31b8e` on `2026-09-06T10:35:17+02:00` under the inherited approval: `npm run test:unit` passed **127/127 across 17 files**, and the browser scenario passed on mobile Chromium and failed on mobile WebKit at the search step. The search box held the typed text but the list had not filtered. A diagnostic run of the same scenario with real keystrokes instead of Playwright's `fill()` passed on WebKit, which places the cause in the test's interaction with a `type="search"` field rather than in the screen: a person typing is exactly what the passing variant does. The spec now types into the search field.
 
 ## Recorded scope breach in the approved delivery
 

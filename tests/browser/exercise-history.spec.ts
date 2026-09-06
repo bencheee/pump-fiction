@@ -15,9 +15,12 @@ test.describe("Exercise History experience", () => {
       await expect(
         page.getByRole("link", { name: new RegExp(fixture.exercise) }).first(),
       ).toBeVisible();
-      await page.getByLabel("Search").fill("zzz-no-such-exercise");
+      // WebKit does not filter on Playwright's programmatic fill of a search
+      // field, so the scenario types the way a person does.
+      await page.getByLabel("Search").pressSequentially("zzz-no-such-exercise");
       await expect(page.getByText("No matching exercise")).toBeVisible();
-      await page.getByLabel("Search").fill(fixture.exercise);
+      await page.getByLabel("Search").clear();
+      await page.getByLabel("Search").pressSequentially(fixture.exercise);
       await testInfo.attach(`history-exercises-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
