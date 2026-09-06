@@ -1,7 +1,7 @@
 # T-034 — Build Exercise History mobile experience
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 4
 - **Target date:** None
@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:21:23+02:00`
+- **Updated:** `2026-09-06T10:23:42+02:00`
 - **Started:** `2026-09-06T00:46:12+02:00`
 - **Review started:** `2026-09-06T10:17:05+02:00` for the replacement
 - **Approval requested:** `2026-09-06T10:21:23+02:00` for the replacement
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T10:21:23+02:00` for the replacement
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact approved replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`.
+- **Next action:** Give the metric list a deliberate order so a load-bearing exercise opens on its load, deliver a second replacement, and request fresh approval.
 
 ## Scope
 
@@ -91,10 +91,14 @@ Implement the phone-only Exercises subsection of History on the `T-033` operatio
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After approval of the exact delivery commit: the unit command, which carries the new component suite covering `S15` search, its no-results and empty states, the deleted-definition marker, and `S16` category grouping, the lower-is-better cue, the reps-per-load list, the series summary and value list, the selector round trips, and the performance links with their exclusion marker; then the serialized Chromium and WebKit run of `tests/browser/exercise-history.spec.ts` covering `S15` to `S16`, the derived records, the chart summary and values, metric and range changes including an empty range, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before Owner approval of the exact commit.
-- **Authorized commit:** `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`; the approval of `b5772adb87d244bfc2404481e90f58a4046a7767` was invalidated by the failed verification below
+- **Authorized commit:** none currently; the approvals of `b5772adb87d244bfc2404481e90f58a4046a7767` and `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` were both invalidated by the failed verifications below
 - **Results:** Failed on `2026-09-06T10:15:31+02:00` against exact approved delivery `b5772adb87d244bfc2404481e90f58a4046a7767` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Vitest `4.1.11`. `npm ci` installed 653 packages with no vulnerabilities and `npm run test:unit` passed **124 of 126 across 17 files**, failing two assertions in the new component suite.
 
   Both failed for the same reason and both are test-only: `80 kg` appears in two places on `S16`, once in the highest-reps-at-each-load list and once in the chart-values list, and neither list can be addressed on its own, so the queries were ambiguous. The screens behave correctly. The fix names both lists, which also makes them addressable by assistive technology, so it touches the view as well as the test. The approval is invalidated and the browser scenario did not run.
+
+  Second verification, against exact approved replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` on `2026-09-06T10:23:42+02:00` in a fresh isolated worktree: `npm run test:unit` passed **126/126 across 17 files**, so the named lists resolved the earlier ambiguity. The browser scenario then failed on both mobile Chromium and mobile WebKit, looking for a kilogram value in the chart-values list of a weights exercise and finding reps instead.
+
+  The cause is a default nobody chose. `availableMetrics` built its list in the order it happened to add entries, which put highest reps first for every exercise, so the detail of a weights exercise opened on reps rather than on load. That is a poor default for a lifter and it is what the scenario, reasonably, did not expect. The list now has a deliberate order. The approval is invalidated.
 
 ## Recorded scope breach in the approved delivery
 

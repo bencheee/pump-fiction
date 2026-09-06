@@ -1,25 +1,25 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T10:21:23+02:00
+- **Last updated:** 2026-09-06T10:23:42+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031`, `T-032`, and `T-033` of `F-008` are `Done` and `T-034` is `Testing` against an approved replacement
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031`, `T-032`, and `T-033` of `F-008` are `Done` and `T-034` is back in `In Progress` after a second failed verification
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 
 ## Current focus
 
-[`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T10:21:23+02:00. Unit and component tests passed 124 of 126; two queries could not tell the two value lists apart. It renders `S15` and `S16` on the `T-033` derivation, with the first chart in the application.
+[`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T10:23:42+02:00. Unit and component tests passed 126/126; the browser scenario found that a weights exercise opened its chart on reps rather than on load. Unit and component tests passed 124 of 126; two queries could not tell the two value lists apart. It renders `S15` and `S16` on the `T-033` derivation, with the first chart in the application.
 
 History already has its data, its first screens, and its exercise statistics. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) delivered the month-grouped reads, the saved-workout detail, and ten transactional corrections. [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md) delivered the subsection shell, `S13`, `S14`, and the correction screen. [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md) delivered the identity-grouped reads and every derivation rule behind them.
 
 ## Immediate next action
 
-Run the complete recorded `T-034` plan from the beginning against approved replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73`, then record the result.
+Deliver the `T-034` second replacement that orders the metric list deliberately, then request fresh approval.
 
 ## Now
 
-- [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — `In Progress` — Claude Code primary agent — 2026-09-06T10:21:23+02:00 — next: record the verification result.
+- [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — `In Progress` — Claude Code primary agent — 2026-09-06T10:23:42+02:00 — next: deliver the second replacement for fresh approval.
 
 ## Next
 
@@ -41,7 +41,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) — Build Exercise History mobile experience — approved replacement `b50df7b355bdaf6ab47ad1d763ce537cb0bcbd73` — Claude Code primary agent — 2026-09-06T10:21:23+02:00 — next required action: the complete recorded plan, restarted from the beginning.
+None. The `T-034` replacement approval was invalidated by its failed verification.
 
 ## Recently completed Tasks
 
