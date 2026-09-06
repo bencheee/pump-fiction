@@ -128,17 +128,19 @@ describe("split progress detail", () => {
       <SplitStatisticsView statistics={statistics} localDate="2026-09-05" />,
     );
 
-    for (const label of [
-      "Completed",
-      "Average",
-      "Shortest",
-      "Longest",
-      "Latest",
-      "Total",
-    ])
-      expect(screen.getByText(label)).toBeInTheDocument();
-    expect(screen.getByText("1 h 10 min")).toBeInTheDocument();
-    expect(screen.getByText("3 h")).toBeInTheDocument();
+    // The same duration also appears in the value list and the workout list,
+    // so each statistic is read from its own card.
+    const card = (label: string) => {
+      const section = screen.getByText(label).closest("section");
+      if (!section) throw new Error(`No card for ${label}`);
+      return within(section);
+    };
+    expect(card("Completed").getByText("3")).toBeInTheDocument();
+    expect(card("Average").getByText("1 h")).toBeInTheDocument();
+    expect(card("Shortest").getByText("50 min")).toBeInTheDocument();
+    expect(card("Longest").getByText("1 h 10 min")).toBeInTheDocument();
+    expect(card("Latest").getByText("1 h")).toBeInTheDocument();
+    expect(card("Total").getByText("3 h")).toBeInTheDocument();
     expect(
       screen.getByText(/One-time workouts and workouts saved as incomplete/),
     ).toBeInTheDocument();

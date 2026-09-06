@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T21:58:22+02:00`
-- **Updated:** `2026-09-06T10:56:19+02:00`
+- **Updated:** `2026-09-06T10:58:20+02:00`
 - **Started:** `2026-09-06T10:50:32+02:00`
 - **Review started:** `2026-09-06T10:54:05+02:00`
 - **Approval requested:** `2026-09-06T10:56:19+02:00`
@@ -90,7 +90,7 @@ Implement the phone-only Splits subsection of History on the `T-035` operations,
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the unit command, which carries the new component suite covering the `S17` program filter with same-named splits kept apart, the deleted-split marker, the empty state, and the `S18` six statistics, exclusion rule, series summary and named value list, range round trip, and workout links; then the serialized Chromium and WebKit run of `tests/browser/split-history.spec.ts` covering `S17` to `S18`, the statistics, the chart summary and values, the empty week range and the return to all, the link back to `S14`, reflow to 320 px, and two structural captures per platform. Only that spec runs, for the reason recorded in [`T-032`](T-032-build-workout-history-mobile-experience.md) and tracked by [`T-037`](T-037-repair-stale-browser-specs.md). Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `e5f9bf82970ca37c213fb84fef554a4d37593a78`
-- **Results:** Not run
+- **Results:** First verification on `2026-09-06T10:58:20+02:00` against exact approved delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, Vitest `4.1.11`, and Playwright `1.62.1`: the serialized Split History scenario passed **1/1 on mobile Chromium and 1/1 on mobile WebKit in 25.2 seconds together**, and `npm run test:unit` passed **142 of 143 across 19 files**. The one failure is a test-only ambiguity: the longest duration reads `1 h 10 min` in its stat card, in the chart-values list, and in the workout list, and the assertion did not say which. The screens behave correctly. The correction inherits the Task approval under ADR-0028.
 
 ## Delivery commit
 
