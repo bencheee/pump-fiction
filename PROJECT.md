@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:24:05+02:00
+- **Last updated:** 2026-09-06T14:22:46+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T14:24:05+02:00. Exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` renders `S21` through `S24` and leaves no placeholder route in the application; it awaits the Owner's approval.
+[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T14:22:46+02:00. The Owner approved exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`, which authorizes the recorded plan.
 
 It is the last Task of [`F-009`](docs/project/features/F-009-weight-and-body-progress.md).
 
 ## Immediate next action
 
-The Owner reviews and approves exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`. Only then does the recorded plan run: the component suite and the serialized Chromium and WebKit Body scenario. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Run the complete recorded `T-042` plan and record the result. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `In Review` — Claude Code primary agent — 2026-09-06T14:24:05+02:00 — next: the Owner's approval of `ae55dd3ef85ce31a692577620736b64a9abf7e54`.
+- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `Testing` — Claude Code primary agent — 2026-09-06T14:22:46+02:00 — next: record the verification result.
 
 ## Next
 
@@ -36,11 +36,11 @@ None.
 
 ## Awaiting approval
 
-- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` — Claude Code primary agent — 2026-09-06T14:24:05+02:00 — requested action: review and approve that commit, which authorizes the recorded verification.
+None.
 
 ## Approved — ready for testing
 
-None.
+- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — approved delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` — Claude Code primary agent — 2026-09-06T14:22:46+02:00 — next required action: the complete recorded plan.
 
 ## Recently completed Tasks
 

@@ -1,7 +1,7 @@
 # T-042 — Build Body mobile experience
 
 - **Feature:** `F-009`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:24:05+02:00`
+- **Updated:** `2026-09-06T14:22:46+02:00`
 - **Started:** `2026-09-06T14:14:28+02:00`
 - **Review started:** `2026-09-06T14:24:05+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T14:22:46+02:00`
+- **Approved:** `2026-09-06T14:22:46+02:00`
+- **Testing started:** `2026-09-06T14:22:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews and approves exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`. No feature test runs before that approval.
+- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
 
 ## Scope
 
@@ -101,7 +101,7 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped component suite (`S21` summaries; `S22` validation and delete rules; `S23` selector synchronization and unavailable states; `S24` validation) and the serialized one-worker Chromium and WebKit phone scenario on the `T-037` harness covering `S21` to `S22` create, `S23`, `S24` create, edit, and delete, the restricted-delete explanation, reflow, and structural captures; the scenario removes what it creates. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `ae55dd3ef85ce31a692577620736b64a9abf7e54`
 - **Results:** Not run
 
 ## Recorded decisions
@@ -123,16 +123,16 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
+- **Reviewed at:** `2026-09-06T14:22:46+02:00`
+- **Outcome:** Recommended for approval
 - **Findings:** None recorded
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `ae55dd3ef85ce31a692577620736b64a9abf7e54`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T14:22:46+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -169,3 +169,6 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 | `2026-09-06T14:14:28+02:00` | User / Owner | `Backlog` | `Ready` | `T-041` is `Done` and the Owner's go-ahead for the whole Feature authorizes the Body screens |
 | `2026-09-06T14:14:28+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the Body subsection, the last Task of `F-009` |
 | `2026-09-06T14:24:05+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54`; static checks passed and both prepared suites remain unexecuted |
+| `2026-09-06T14:22:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T14:22:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` with `potvrda` |
+| `2026-09-06T14:22:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |

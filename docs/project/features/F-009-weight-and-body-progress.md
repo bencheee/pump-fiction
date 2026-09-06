@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T14:24:05+02:00`
-- **Progress:** `4/5 required Tasks Done; T-042 is In Review`
+- **Updated:** `2026-09-06T14:22:46+02:00`
+- **Progress:** `4/5 required Tasks Done; T-042 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -137,3 +137,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T14:12:40+02:00` | Claude Code primary agent / Tester | Completed `T-041` | The complete plan passed on the first run: unit 218/218, pgTAP 187/187, repository 9/9, matching types, and a faithful restore |
 | `2026-09-06T14:14:28+02:00` | Claude Code primary agent / Executor | Started `T-042` | Body has its data, so its screens can render it and replace the last placeholder route |
 | `2026-09-06T14:24:05+02:00` | Claude Code primary agent / Executor | Delivered `T-042` for review | Exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` awaits the Owner's approval before any feature test runs |
+| `2026-09-06T14:22:46+02:00` | User / Approver | Approved `T-042` | Authorized the recorded verification against exact delivery `ae55dd3ef85ce31a692577620736b64a9abf7e54` |
