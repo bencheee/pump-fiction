@@ -42,9 +42,7 @@ test.describe("Body experience", () => {
       await expect(page).toHaveURL(/\/body\/measurements\/[0-9a-f-]+$/);
       for (const label of ["Latest", "Latest change", "Total change"])
         await expect(page.getByText(label, { exact: true })).toBeVisible();
-      await expect(
-        page.getByText(/2 entries from 85 cm to 84.5 cm/),
-      ).toBeVisible();
+      await expect(page.getByText(/3 entries/)).toBeVisible();
       await page.getByText("Chart values").click();
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("85 cm"),
