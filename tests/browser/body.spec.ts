@@ -100,7 +100,9 @@ test.describe("Body experience", () => {
       // S22 renames the measurement and keeps everything recorded for it, and
       // refuses to delete it while those entries exist.
       await page.getByRole("link", { name: "Edit measurement" }).click();
-      await expect(page).toHaveURL(/\/history\/body\/types\/[0-9a-f-]+\/edit$/);
+      await expect(page).toHaveURL(
+        /\/body\/measurements\/types\/[0-9a-f-]+\/edit$/,
+      );
       await expect(page.getByText("2 measurements recorded")).toBeVisible();
       await expect(
         page.getByRole("button", { name: "Delete Measurement" }),
@@ -111,7 +113,7 @@ test.describe("Body experience", () => {
       });
       await fillHydrated(page.getByLabel("Name"), `${waist} at navel`);
       await page.getByRole("button", { name: "Save Measurement" }).click();
-      await expect(page).toHaveURL(/\/history\/body$/);
+      await expect(page).toHaveURL(/\/body\/measurements$/);
       await expect(
         page.getByRole("link", { name: new RegExp(`${waist} at navel`) }),
       ).toContainText("84.5 cm");
@@ -124,7 +126,7 @@ test.describe("Body experience", () => {
         .getByRole("alertdialog")
         .getByRole("button", { name: "Delete Measurement" })
         .click();
-      await expect(page).toHaveURL(/\/history\/body$/);
+      await expect(page).toHaveURL(/\/body\/measurements$/);
       await expect(
         page.getByRole("link", { name: new RegExp(spare) }),
       ).toHaveCount(0);

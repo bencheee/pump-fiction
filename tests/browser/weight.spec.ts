@@ -38,10 +38,13 @@ test.describe("Weight experience", () => {
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("83 kg"),
       ).toBeVisible();
+      // Three weigh-ins now span two calendar weeks, so the list carries two
+      // rows rather than one.
       await expect(
         page
           .getByRole("list", { name: "Weekly averages" })
-          .getByText(/Week of/),
+          .getByText(/Week of/)
+          .first(),
       ).toBeVisible();
       await testInfo.attach(`weight-s19-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),

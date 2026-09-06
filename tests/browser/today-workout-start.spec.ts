@@ -188,7 +188,7 @@ test.describe("Today workout-start experience", () => {
 
       // The same weigh-in is what Weight shows, and correcting it lives there.
       await card.getByRole("link", { name: "See Weight" }).click();
-      await expect(page).toHaveURL(/\/history\/weight$/);
+      await expect(page).toHaveURL(/\/body\/weight$/);
       await expect(
         page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
       ).toContainText("82.4 kg");
