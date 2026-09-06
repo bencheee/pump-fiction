@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:05:56+02:00`
+- **Updated:** `2026-09-06T13:12:11+02:00`
 - **Started:** `2026-09-06T12:39:15+02:00`
 - **Review started:** `2026-09-06T13:15:07+02:00`
 - **Approval requested:** `2026-09-06T13:05:56+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T13:05:56+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
+- **Next action:** Run the complete recorded plan from the beginning against exact replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7`, then record the result.
 
 ## Scope
 
@@ -99,20 +99,28 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency boundaries, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, declarative-schema strict-coverage sync with migration review, regenerated-type diff, database lint, and `git diff --check`
-- Results: Passed on `2026-09-06T13:12:40+02:00` with Node.js `22.21.0`, npm `10.9.4`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, seven functions and no structural statement, which compiled inside an immediately rolled-back transaction before being applied locally for introspection; `npm run db:types` then added exactly the seven new function signatures and produced no further change on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the two unit suites, the pgTAP suite, and the repository integration test are prepared and unexecuted.
+- Results: Passed on `2026-09-06T13:12:40+02:00` with Node.js `22.21.0`, npm `10.9.4`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`. `npm run check` passed Prettier, ESLint including the dependency-boundary rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The declarative sync produced one function-only migration under `--strict-coverage`, seven functions and no structural statement, which compiled inside an immediately rolled-back transaction before being applied locally for introspection; `npm run db:types` then added exactly the seven new function signatures and produced no further change on a second run; `supabase db lint --level error` reported no schema errors; and `git diff --check` was clean. No feature test ran: the two unit suites, the pgTAP suite, and the repository integration test are prepared and unexecuted. Re-run for the replacement on `2026-09-06T13:12:11+02:00`: `npm run check` passed every step again, a clean reset followed by the strict-coverage declarative sync reported no schema changes, `supabase db lint --level error` reported none, the regenerated types were unchanged because a grant does not reach them, and `git diff --check` was clean.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: `npm run test:unit` for the calendar-week boundaries, the provisional rule, the unavailable change, `n/7`, the individual change, the range windows, and recalculation; `npm run db:snapshot`; a clean `supabase db reset`; `npm run test:db` including the new weight suite; `npm run test:repository` including the new integration test; regenerated types compared with the committed file; then `npm run db:restore`. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** `94196f3be1f8f7b47b204637a16cc30d0520e916`
-- **Results:** Not run
+- **Authorized commit:** `f9edf3a4c3492faf672e12b2dc452d61898a21d7`, under the Task approval inherited per [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
+- **Results:** First verification on `2026-09-06T13:08:46+02:00` against exact approved delivery `94196f3be1f8f7b47b204637a16cc30d0520e916` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and local PostgreSQL `17.6`.
+
+  `npm run test:unit` passed **174/174 across 21 files**, `supabase db reset` applied all 22 migrations and the seed, and `npm run test:db` passed **157/157 across nine suites**, including the new `0009_weight_operations` 22/22. The repository suite then failed **1 of 8 files**: every call from the application role was refused with `42501 permission denied for function weight_entry_json`.
+
+  The defect is real and mine. `weight_entry_json` and `assert_weight_entry_values` are `security invoker`, so the caller executes them, and the schema revoked them from everyone without granting them to `service_role`. The five public functions were granted correctly, so nothing above the repository boundary could have caught it: the pgTAP suite runs as `postgres`, which owns them. Every internal helper in `0001_core.sql` carries that grant, and these two did not follow the convention.
+
+  Replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` adds the two grants to the declarative schema and to this Task's own migration, so one Task keeps one migration and a reset replays the corrected privileges. `supabase db reset` followed by the strict-coverage declarative sync then reported **no schema changes**, confirming the schema and the database agree, and the read that failed returned its JSON. The complete plan restarts from the beginning against the replacement.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `94196f3be1f8f7b47b204637a16cc30d0520e916`
-- **Subject:** `T-038: build weight operations`
+- **Delivery commit SHA:** `f9edf3a4c3492faf672e12b2dc452d61898a21d7` (grant-only replacement; supersedes first delivery `94196f3be1f8f7b47b204637a16cc30d0520e916`)
+- **Subject:** `T-038: grant the weight helpers to the service role`
+- **Replacement scope:** two `grant execute` statements, in the declarative schema and in this Task's own migration; no application code, no new database object, and no change to the generated types
+- **Original subject:** `T-038: build weight operations`
 - **Committed scope:** the `0006_weight_operations.sql` declarative schema with its function-only migration and regenerated types; the History chart contract extracted to `domain/chart.ts` and generalized with an optional workout, a span, and a companion series, its consumers repointed and their series unchanged; the `weight` domain with the calendar weeks, the weekly average and change, the provisional rule, the individual change, and the two-series chart, beside `weight-validation`; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the two prepared unit suites, the `0009_weight_operations` pgTAP suite, and the repository integration test with its `test:repository` registration; and the weight-and-body product, domain-model, server-boundary, and local-database-workflow documents
 
 ## Review
@@ -120,7 +128,7 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-06T13:05:56+02:00`
 - **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Findings:** The authorized verification found the missing helper grant, recorded below
 
 ## Approval
 
@@ -167,3 +175,4 @@ The `F-009` local decisions this Task settles, now written into [`weight-and-bod
 | `2026-09-06T13:05:56+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T13:05:56+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `94196f3be1f8f7b47b204637a16cc30d0520e916` with `potvrda` |
 | `2026-09-06T13:05:56+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded unit, pgTAP, and repository verification against the exact approved delivery |
+| `2026-09-06T13:12:11+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | The repository suite refused every call with `42501`, because the two `security invoker` helpers were never granted to `service_role`; replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7` corrects the grants, inherits the Task approval under ADR-0028, and the complete plan restarts against it |
