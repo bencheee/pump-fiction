@@ -1,7 +1,7 @@
 # T-053 — Add today's measurement entry
 
 - **Feature:** `F-015`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T22:12:00+02:00`
+- **Updated:** `2026-09-06T22:18:00+02:00`
 - **Started:** `2026-09-06T21:04:00+02:00`
 - **Review started:** `2026-09-06T22:10:00+02:00`
 - **Approval requested:** `2026-09-06T22:10:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T22:18:00+02:00`
+- **Testing started:** `2026-09-06T22:18:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the verification.
+- **Next action:** Run the authorized suites against the exact approved delivery and record the result.
 
 ## A test-gate breach, disclosed
 
@@ -89,7 +89,7 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 - **Planned tests:** After the Task's one approval: `npm run test:unit`, including the four new Today component tests covering the no-type-defined, missing, refused-blank, and recorded states; `npm run test:db` for the four new pgTAP assertions, which check that the transactional write applies every value and that a refusal leaves nothing behind; `npm run test:repository`; and the whole browser suite, because Today gains a card that every Today scenario walks past. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
   No browser scenario is added for the card. The Today spec already covers the weight card's four states and this one mirrors it exactly; the component tests cover the four states and the refusal, and the pgTAP suite covers the transaction. If the Owner wants a browser walk of the sheet as well, it is a small addition to the existing Today scenario rather than a new one.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `c5417723e42e2d04e172fc6f754284fd11ed23df`
 - **Results:** Not run
 
 ## Static-check plan and results
@@ -112,10 +112,10 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `c5417723e42e2d04e172fc6f754284fd11ed23df`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T22:18:00+02:00`
+- **Approval note:** Approved (`odobreno`), which authorizes the unit, database, repository, and whole-browser-suite verification against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -150,3 +150,5 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-052` removed every create path, so this restores entry where the Owner chose to put it |
 | `2026-09-06T22:10:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the card, its sheet, and the transactional write; static checks passed, the suites are prepared, and the test-gate breach during `T-052` and this Task is recorded above |
+| `2026-09-06T22:18:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` (`odobreno`) |
+| `2026-09-06T22:18:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The migration and the new Today card mean the database and browser suites run beside the unit one |
