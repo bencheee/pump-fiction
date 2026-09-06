@@ -27,6 +27,7 @@ Use this file as a router. Read only the documents needed for the current task a
 | Audited external mobile-design handoff candidate | [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md) |
 | Current operational focus and next work | [`../PROJECT.md`](../PROJECT.md) |
 | Complete work-item registry and next IDs | [`project/INDEX.md`](project/INDEX.md) |
+| Per-criterion release verification evidence and remaining gaps | [`project/mvp-release-verification.md`](project/mvp-release-verification.md) |
 | Current phase, open questions, next step | [`PROJECT_STATE.md`](PROJECT_STATE.md) |
 | Accepted architectural/product decisions | [`decisions/README.md`](decisions/README.md) |
 

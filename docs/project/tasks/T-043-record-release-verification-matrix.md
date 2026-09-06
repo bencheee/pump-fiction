@@ -1,7 +1,7 @@
 # T-043 — Record the release verification matrix
 
 - **Feature:** `F-010`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T15:04:00+02:00`
+- **Updated:** `2026-09-06T15:14:00+02:00`
 - **Started:** `2026-09-06T15:04:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T15:14:00+02:00`
+- **Approval requested:** `2026-09-06T15:14:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Write the matrix, run the permitted static checks, and deliver one reviewable commit.
+- **Next action:** The Owner's approval of the exact delivery commit. Two findings in the matrix, `R1` and `R2`, need their product decision.
 
 ## Scope
 
@@ -39,12 +39,12 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 
 ## Acceptance criteria
 
-- [ ] All 57 criteria appear exactly once, in the locked document's order, and the document states that count.
-- [ ] Every covered row cites an approved delivery SHA and the result recorded in the owning Task, and every link resolves.
-- [ ] Every gap row names `T-045`, `T-046`, or `T-048`, or states why the criterion needs no further work.
-- [ ] The document states what the release run in `T-048` executes, and records that the fidelity comparison is the Owner's own and reaches the repository through `T-048`.
-- [ ] `MVP-REL-003`, `MVP-REL-004`, and `MVP-UX-001` through `MVP-UX-003` are visibly owned by `F-010` rather than by a Feature that only touched them.
-- [ ] [`../../INDEX.md`](../../INDEX.md) routes to the new document and `npm run links:internal` passes.
+- [x] All 57 criteria appear exactly once, in the locked document's order, and the document states that count.
+- [x] Every covered row cites an approved delivery SHA and the result recorded in the owning Task, and every link resolves.
+- [x] Every gap row names `T-045`, `T-046`, or `T-048`, or states why the criterion needs no further work.
+- [x] The document states what the release run in `T-048` executes, and records that the fidelity comparison is the Owner's own and reaches the repository through `T-048`.
+- [x] `MVP-REL-003`, `MVP-REL-004`, and `MVP-UX-001` through `MVP-UX-003` are visibly owned by `F-010` rather than by a Feature that only touched them.
+- [x] [`../../INDEX.md`](../../INDEX.md) routes to the new document and `npm run links:internal` passes.
 
 ## Traceability
 
@@ -65,16 +65,16 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 
 ## Execution checklist
 
-- [ ] Read each owning Task's recorded verification and collect its approved SHA, command, and result.
-- [ ] Write the 57 rows with their citations, owning Feature, and remaining gap.
-- [ ] Write the release-run rule from the Owner's accepted answers, and record that the fidelity comparison is the Owner's own.
-- [ ] Add the router row and check every internal link.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Read each owning Task's recorded verification and collect its approved SHA, command, and result.
+- [x] Write the 57 rows with their citations, owning Feature, and remaining gap.
+- [x] Write the release-run rule from the Owner's accepted answers, and record that the fidelity comparison is the Owner's own.
+- [x] Add the router row and check every internal link.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T15:14:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the UI asset checksums (8 fonts, 38 icons), Markdown lint across 129 files, and all 1358 internal links across 183 unique targets. `git diff --check` was clean. This Task changes no application source, schema, migration, generated type, or test source, so the build output is unchanged. No feature test ran.
 
 ## Test plan and results
 
@@ -86,16 +86,25 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-043: record the release verification matrix`
-- **Committed scope:** Not created
+- **Committed scope:** `docs/project/mvp-release-verification.md` with the 57 criterion rows, the release-run rule, the fidelity-comparison record, and the two findings; the [`../../INDEX.md`](../../INDEX.md) router row; this Task. No application source, schema, migration, generated type, or test source changed.
+
+## Findings recorded by this delivery
+
+Reading all 57 criteria against the delivered application surfaced two disagreements between the locked criteria document and accepted decisions. The document is locked, so neither is corrected here; both need the Owner's product decision and a Task.
+
+- **R1** — `MVP-REL-002` still says an active workout uses a focused screen without the bottom navigation. [ADR-0025](../../decisions/0025-active-workout-in-the-main-shell.md) moved the active workout into the main shell on `2026-09-05` and `T-024` delivered it. The ADR lists the criteria that keep their text and does not mention this one, so the criterion was never updated. It is the only locked criterion that states the opposite of what the application does.
+- **R2** — `MVP-PRG-007` keeps the heading `Archive a split` while its body correctly describes deletion under [ADR-0024](../../decisions/0024-deletion-with-preserved-history.md). Cosmetic.
+
+Until they are decided, `T-048` cannot claim that documentation and implementation agree, which is an `F-010` acceptance criterion.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T15:14:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The delivery adds one document and one router row and changes nothing else. Every citation resolves and the link check covers them. The two criteria findings are reported, not corrected, because the criteria document is locked.
 
 ## Approval
 
@@ -138,3 +147,4 @@ Add its router row to [`../../INDEX.md`](../../INDEX.md). This Task is documenta
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and every remaining recommended answer (`ostalo potvrđujem da je ok`); `T-047` is canceled and the visual comparison becomes the Owner's own |
 | `2026-09-06T15:04:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead for `F-010` (`kreni`); the breakdown is locked and the readiness answers are accepted |
 | `2026-09-06T15:04:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The record precedes the verification, so the matrix is the first delivery of the Feature |
+| `2026-09-06T15:14:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the matrix with all 57 rows and two recorded findings; static checks passed and no feature test ran |
