@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-05T22:02:36+02:00`
+- **Updated:** `2026-09-06T11:39:47+02:00`
 - **Progress:** `11/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -62,7 +62,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; the Owner released the `F-008` hold on `2026-09-05` and its first Task is `In Progress`
+- Blockers: None; every `F-008` Task is `Done` and the Feature awaits the Owner's confirmation of its result
 
 ## Related decisions and documents
 
@@ -190,3 +190,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-05T21:40:51+02:00` | User / Owner | Held `F-008` | Confirmed `F-012` and directed that History and Statistics is not to be started yet |
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Recorded the `F-008` breakdown `T-031`–`T-036` in `Backlog` | The Owner asked for the Tasks without starting implementation; the boundary against `F-009` and six readiness questions await the Owner |
 | `2026-09-05T22:02:36+02:00` | User / Owner | Released the `F-008` hold and started `T-031` | Accepted every recommended readiness answer and gave the go-ahead to implement the whole Feature |
+| `2026-09-06T11:39:47+02:00` | Claude Code primary agent / Tester | Completed T-037 within F-008 | The whole browser suite passed 32/32 against inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724`; all seven F-008 Tasks are Done pending the Owner's feature-result confirmation |

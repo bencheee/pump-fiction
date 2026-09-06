@@ -1,7 +1,7 @@
 # T-037 — Repair the browser specs left stale by the archiving removal
 
 - **Feature:** `F-008`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T22:52:00+02:00`
-- **Updated:** `2026-09-06T11:34:09+02:00`
+- **Updated:** `2026-09-06T11:39:47+02:00`
 - **Started:** `2026-09-06T11:01:09+02:00`
 - **Review started:** `2026-09-06T11:11:32+02:00`
 - **Approval requested:** `2026-09-06T11:19:46+02:00`
 - **Approved:** `2026-09-06T11:19:46+02:00`
 - **Testing started:** `2026-09-06T11:19:46+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T11:39:47+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete browser suite against replacement `060bf92e4f28ef44006e39c75561cbae973ae724`, which inherits the approval under ADR-0028, in a fresh isolated worktree on a freshly reset database.
+- **Next action:** None; `T-037` is `Done`. All seven `F-008` Tasks are `Done`, and the Owner's confirmation of the Feature result remains.
 
 ## Scope
 
@@ -42,9 +42,9 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 
 ## Acceptance criteria
 
-- [ ] No spec references `archive_program`, `programs.status`, or any other removed artifact or copy.
-- [ ] `npm run test:browser` runs every spec without a fixture error on a freshly reset database.
-- [ ] The scenarios still assert what they asserted before, with no coverage quietly dropped. Where the product removed the behavior, the assertion follows the accepted replacement and this Task says so: archive and reactivate become delete with its confirmation, split count, successor rule, last-split guard, and no-current-program outcome (ADR-0024); the restored-session banner becomes the restored values themselves (`T-023`); set confirmation becomes the recorded count by values (ADR-0027); the focused shell becomes the primary navigation staying visible during a workout (ADR-0025).
+- [x] No spec references `archive_program`, `programs.status`, or any other removed artifact or copy.
+- [x] `npm run test:browser` runs every spec without a fixture error on a freshly reset database.
+- [x] The scenarios still assert what they asserted before, with no coverage quietly dropped. Where the product removed the behavior, the assertion follows the accepted replacement and this Task says so: archive and reactivate become delete with its confirmation, split count, successor rule, last-split guard, and no-current-program outcome (ADR-0024); the restored-session banner becomes the restored values themselves (`T-023`); set confirmation becomes the recorded count by values (ADR-0027); the focused shell becomes the primary navigation staying visible during a workout (ADR-0025).
 
 ## Traceability
 
@@ -72,7 +72,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint, strict TypeScript, production build, Markdown lint, internal links, and `git diff --check`
-- Results: Passed on `2026-09-06T11:11:32+02:00` with Node.js `24.20.0` and npm `11.19.0`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link; `npx playwright test --list` parsed all nine specs into 32 tests without running any; a repository-wide search found no remaining reference to archiving, program statuses, draft saves, set confirmation, the restored-session banner, or the focused shell; `git diff --check` was clean. No feature test ran. The replacement passed the same chain on `2026-09-06T11:34:08+02:00`: `npm run check` including the production build with both test-support routes static, `npx playwright test --list` with 32 tests in 9 files across the four projects, six of them in the durability projects, and a clean `git diff --check`.
+- Results: Passed on `2026-09-06T11:11:32+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link; `npx playwright test --list` parsed all nine specs into 32 tests without running any; a repository-wide search found no remaining reference to archiving, program statuses, draft saves, set confirmation, the restored-session banner, or the focused shell; `git diff --check` was clean. No feature test ran. The replacement passed the same chain on `2026-09-06T11:34:08+02:00`: `npm run check` including the production build with both test-support routes static, `npx playwright test --list` with 32 tests in 9 files across the four projects, six of them in the durability projects, and a clean `git diff --check`.
 
 ## Test plan and results
 
@@ -80,7 +80,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: a clean reset, then the complete `npm run test:browser` suite, serialized on one worker across mobile Chromium and mobile WebKit, all nine specs and 32 tests. Must not run before that approval; replacements inherit it under ADR-0028.
 - **Authorized commit:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7`
-- **Results:** First verification on `2026-09-06T11:21:11+02:00` against exact approved delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` in a fresh isolated worktree with Node.js `24.20.0`, npm `11.19.0`, and Playwright `1.62.1`, after a clean `supabase db reset`: `npm run test:browser -- --workers=1` passed **25 of 32 in 4.6 minutes**. All four rewritten specs and the foundation test passed on mobile Chromium, and all but one on mobile WebKit; the three History scenarios passed on both. Seven failures in two clusters, both in test infrastructure: `active-workout-durability.spec.ts`, three tests on each browser, never reached its harness, because the page is production-hidden by design and the suite has run a production server since `T-009`; and `programs-mobile.spec.ts` on WebKit typed the first exercise name before React had hydrated the field, React rendered its empty state over it, and the save failed validation. The screens behave correctly in both cases. The replacement inherits the Task approval under ADR-0028 and the complete plan restarts against it.
+- **Results:** First verification on `2026-09-06T11:21:11+02:00` against exact approved delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Playwright `1.62.1`, after a clean `supabase db reset`: `npm run test:browser -- --workers=1` passed **25 of 32 in 4.6 minutes**. All four rewritten specs and the foundation test passed on mobile Chromium, and all but one on mobile WebKit; the three History scenarios passed on both. Seven failures in two clusters, both in test infrastructure: `active-workout-durability.spec.ts`, three tests on each browser, never reached its harness, because the page is production-hidden by design and the suite has run a production server since `T-009`; and `programs-mobile.spec.ts` on WebKit typed the first exercise name before React had hydrated the field, React rendered its empty state over it, and the save failed validation. The screens behave correctly in both cases. The replacement inherits the Task approval under ADR-0028 and the complete plan restarts against it. Second verification on `2026-09-06T11:35:31+02:00` against inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Playwright `1.62.1`, after `npm ci` of 655 packages and a clean `supabase db reset`: `npm run test:browser -- --workers=1` passed **32 of 32 in 1.7 minutes**, 13 on mobile Chromium and 13 on mobile WebKit against the production server, and the three durability tests on each browser against the development server. The complete plan passed.
 
 ## Delivery commit
 
@@ -127,15 +127,15 @@ The `mobile-ui-foundation` harness has no production guard, while the durability
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -150,3 +150,4 @@ The `mobile-ui-foundation` harness has no production guard, while the durability
 | `2026-09-06T11:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete browser-suite verification against the exact approved delivery |
 | `2026-09-06T11:25:48+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The complete suite passed 25 of 32 against `d65b0b092e04ab17761c11a4c78dd6648369a8a7`: the durability spec never reached its production-hidden harness and WebKit typed before hydration in the programs flow; both are test-infrastructure faults and the approval is inherited |
 | `2026-09-06T11:34:09+02:00` | Claude Code primary agent / Executor | `Testing` | `Testing` | Delivered replacement `060bf92e4f28ef44006e39c75561cbae973ae724` with a development server for the durability spec and a hydration wait; static checks passed and the complete plan restarts against it |
+| `2026-09-06T11:39:47+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724`: the whole browser suite 32/32, 26 on the production server across mobile Chromium and WebKit and 6 durability tests on the development server |
