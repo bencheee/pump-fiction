@@ -1,7 +1,7 @@
 # T-046 — Verify phone interaction, affordances, and destructive confirmation
 
 - **Feature:** `F-010`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 4
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T17:14:00+02:00`
+- **Updated:** `2026-09-06T17:48:00+02:00`
 - **Started:** `2026-09-06T17:14:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T17:48:00+02:00`
+- **Approval requested:** `2026-09-06T17:48:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's decision on finding `R3`, the reorder affordance; the rest of the sweep is being written.
+- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the sweep.
 
 ## Scope
 
@@ -43,11 +43,11 @@ The delivery is test source and documentation. A defect the run finds is correct
 
 ## Acceptance criteria
 
-- [ ] The sweep covers every delivered route, and adding a route without covering it fails the sweep rather than passing silently.
+- [x] The sweep covers every delivered route, and adding a route without covering it fails the sweep rather than passing silently.
 - [ ] No route scrolls horizontally at 320, 360, 390, or 430 CSS pixels, and no element inside one does.
 - [ ] Every numeric input exposes the expected `inputmode`, and the sweep names the field when one does not.
-- [ ] Every reorderable list has a named drag handle, and a completed reorder persists across a reload with no save control.
-- [ ] The current set carries a non-color cue.
+- [ ] Every reorderable list has named move-up and move-down controls, unavailable at the ends of the list, and a completed reorder persists across a reload with no save control.
+- [x] Withdrawn with finding `R3`: `T-050` removed the current-set sentence from `MVP-UX-002`, because nothing designates a current set once ADR-0027 removed set confirmation.
 - [ ] Every destructive action listed in the scope is refused until the `O01` confirmation is accepted.
 - [ ] It passes on mobile Chromium and mobile WebKit against the approved delivery, with structural captures at both reference viewports.
 - [ ] The matrix rows for `MVP-UX-001` through `MVP-UX-003` cite this run and its approved SHA.
@@ -60,8 +60,8 @@ The delivery is test source and documentation. A defect the run finds is correct
 
 ## Dependencies and blockers
 
-- Dependencies: `T-043` for the named gap; `T-044` for the settled harness rule; `F-004` through `F-009` `Done`, so every route exists and no placeholder remains
-- Blockers: finding `R3` below blocks one acceptance criterion; the rest is unblocked
+- Dependencies: `T-043` `Done` for the named gap; `T-044` `Done` for the harness rule; `T-050` `Done`, which corrected the criterion this sweep asserts; `F-004` through `F-009` `Done`, so every route exists and no placeholder remains
+- Blockers: None; the Owner decided finding `R3` on `2026-09-06` and `T-050` delivered its corrections
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -71,18 +71,27 @@ The delivery is test source and documentation. A defect the run finds is correct
 
 ## Execution checklist
 
-- [ ] Derive the route inventory from the application rather than a hand-written list, so a new route cannot escape the sweep.
-- [ ] Write the reflow, `inputmode`, thumb-band, and touch-target assertions for the four widths.
-- [ ] Write the drag-handle, auto-save reorder, and current-set cue assertions.
-- [ ] Write the destructive-confirmation assertions for every listed action.
-- [ ] Attach structural captures at 390 by 844 and 360 by 800.
-- [ ] Prepare the sweep; do not run it.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Derive the route inventory from the application rather than a hand-written list, so a new route cannot escape the sweep.
+- [x] Write the reflow, `inputmode`, thumb-band, and touch-target assertions for the four widths.
+- [x] Write the drag-handle, auto-save reorder, and current-set cue assertions.
+- [x] Write the destructive-confirmation assertions for every listed action.
+- [x] Attach structural captures at 390 by 844 and 360 by 800.
+- [x] Prepare the sweep; do not run it.
+- [x] Run only permitted static checks and deliver one reviewable commit.
+
+## Finding R3, raised and resolved
+
+Reading the application for the affordances `MVP-UX-002` names, before writing a line of this sweep, found two requirements no screen has ever met:
+
+- five sentences across four documents required a visible drag handle for reordering, while every reorderable list has always offered a pair of named 44 by 44 arrow buttons instead — and `T-013` recorded the criterion as met against a screen that had arrows;
+- `MVP-UX-002` opened with `The current set is visibly distinct.`, a concept [ADR-0027](../../decisions/0027-a-set-is-recorded-by-its-values.md) removed with set confirmation, described in no other document and rendered on no screen.
+
+The Owner decided both on `2026-09-06`: the named controls are correct and the sentence is a leftover. [`T-050`](T-050-correct-the-reorder-and-current-set-language.md) delivered the corrections and this sweep asserts them. Had the sweep been written against the criteria as they stood, it would have failed on an affordance the project never intended to build.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint including the accessibility rules, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T17:48:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint including the accessibility rules, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 132 files, and all 1411 internal links. `git diff --check` was clean. The route derivation was run directly against the filesystem: 29 routes, 29 fixtures, nothing uncovered and nothing stale. This Task adds test source only. No feature test ran; the sweep is prepared and unexecuted.
 
 ## Test plan and results
 
@@ -94,16 +103,16 @@ The delivery is test source and documentation. A defect the run finds is correct
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-046: verify phone interaction, affordances, and destructive confirmation`
-- **Committed scope:** Not created
+- **Committed scope:** `tests/browser/release-phone-interaction.spec.ts` alone — five prepared tests, the filesystem-derived route inventory with its fixture map, and the seeding and teardown. Test source only.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T17:48:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The route inventory is read out of `src/app/(main)` rather than written by hand, and the sweep fails on a route with no fixture and on a fixture with no route, so neither can drift silently. Reflow resizes rather than reloads, which keeps 29 routes to one navigation each while still measuring all four accepted widths. The destructive test cancels every confirmation and checks the screen stayed, so it proves the gate rather than the dialog.
 
 ## Approval
 
@@ -146,3 +155,4 @@ The delivery is test source and documentation. A defect the run finds is correct
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and the proposed local decisions (`ostalo potvrđujem da je ok`); only the go-ahead remains |
 | `2026-09-06T17:14:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead (`kreni`) once `T-045` completed |
 | `2026-09-06T17:14:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The last three open criteria; reading the application for its affordances surfaced finding `R3` before a line of the sweep was written |
+| `2026-09-06T17:48:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the sweep once `T-050` corrected the criterion it asserts; static checks passed and no feature test ran |
