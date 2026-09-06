@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T17:40:00+02:00
+- **Last updated:** 2026-09-06T17:50:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-050`, of which seven are required, five are `Done`, and `T-047` is `Canceled`
@@ -16,7 +16,7 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Deliver [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — the sweep now asserts the corrected affordance, which closes the last three open criteria.
+Approve or reject exact `T-046` delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0`, which authorizes the sweep over all 29 routes.
 
 ## Now
 
@@ -36,7 +36,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-046`](docs/project/tasks/T-046-verify-phone-interaction-and-affordances.md) — exact delivery `300db8bed59d9ce62057064a0dea51ed3ae054e0` — the phone-interaction sweep over all 29 routes, `test_required: yes`. Requested action: approve the exact commit, which authorizes it to run.
 
 ## Approved — ready for testing
 

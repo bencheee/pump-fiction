@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T17:48:00+02:00`
+- **Updated:** `2026-09-06T17:50:00+02:00`
 - **Started:** `2026-09-06T17:14:00+02:00`
 - **Review started:** `2026-09-06T17:48:00+02:00`
 - **Approval requested:** `2026-09-06T17:48:00+02:00`
@@ -103,7 +103,7 @@ The Owner decided both on `2026-09-06`: the named controls are correct and the s
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `300db8bed59d9ce62057064a0dea51ed3ae054e0`
 - **Subject:** `T-046: verify phone interaction, affordances, and destructive confirmation`
 - **Committed scope:** `tests/browser/release-phone-interaction.spec.ts` alone — five prepared tests, the filesystem-derived route inventory with its fixture map, and the seeding and teardown. Test source only.
 
