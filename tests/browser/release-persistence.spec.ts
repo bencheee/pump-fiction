@@ -333,9 +333,23 @@ async function seed(stamp: string) {
     startedAt: `${completedAt}T10:00:00Z`,
     finishedAt: `${completedAt}T11:00:00Z`,
     outcome: "completed",
+    // The press keeps its second set empty on purpose, so the saved workout
+    // also carries a planned set that was never recorded.
     entries: [
-      { setIndex: 0, loadMode: "weight", loadKg: 60, reps: 8 },
-      { setIndex: 2, loadMode: "bodyweight", loadKg: null, reps: 12 },
+      {
+        exerciseId: pressId,
+        position: 1,
+        loadMode: "weight",
+        loadKg: 60,
+        reps: 8,
+      },
+      {
+        exerciseId: chinId,
+        position: 1,
+        loadMode: "bodyweight",
+        loadKg: null,
+        reps: 12,
+      },
     ],
   });
   const incompleteWorkoutId = await recordWorkout(client, {
@@ -343,7 +357,15 @@ async function seed(stamp: string) {
     startedAt: `${incompleteAt}T10:00:00Z`,
     finishedAt: `${incompleteAt}T10:30:00Z`,
     outcome: "incomplete",
-    entries: [{ setIndex: 0, loadMode: "weight", loadKg: 50, reps: 10 }],
+    entries: [
+      {
+        exerciseId: pressId,
+        position: 1,
+        loadMode: "weight",
+        loadKg: 50,
+        reps: 10,
+      },
+    ],
   });
 
   // One current workout, left active with an entered set and a note.
@@ -357,7 +379,7 @@ async function seed(stamp: string) {
   const current = await currentWorkout(client);
   const sets = await workoutSets(client, current);
   await command(client, current, 0, "update_set", {
-    workoutSetId: sets[0].id,
+    workoutSetId: setFor(sets, pressId, 1).id,
     loadMode: "weight",
     loadKg: 60,
     bandDirection: null,
@@ -431,10 +453,9 @@ async function recordWorkout(
     startedAt: string;
     finishedAt: string;
     outcome: "completed" | "incomplete";
-    // Sets come back ordered by exercise position and then set position, so
-    // an entry names the index it means rather than relying on its own order.
     entries: {
-      setIndex: number;
+      exerciseId: string;
+      position: number;
       loadMode: string;
       loadKg: number | null;
       reps: number;
@@ -453,8 +474,7 @@ async function recordWorkout(
 
   let revision = 0;
   for (const entry of options.entries) {
-    const target = sets[entry.setIndex];
-    if (!target) throw new Error("Expected a snapshotted starter set.");
+    const target = setFor(sets, entry.exerciseId, entry.position);
     await command(client, workoutId, revision, "update_set", {
       workoutSetId: target.id,
       loadMode: entry.loadMode,
@@ -486,21 +506,50 @@ async function currentWorkout(
   return data.id;
 }
 
+/**
+ * Returns each starter set with the exercise it belongs to. A set is addressed
+ * by that exercise and its own position rather than by a flat index: ordering
+ * an embedded resource orders the embedding, not the rows, so a flat index
+ * would silently point at another exercise's set and record a value its
+ * snapshot does not allow.
+ */
 async function workoutSets(
   client: ReturnType<typeof adminClient>,
   workoutId: string,
-): Promise<{ id: string }[]> {
+): Promise<{ id: string; position: number; exerciseId: string }[]> {
   const { data, error } = await client
     .from("workout_sets")
-    .select("id, position, workout_exercises!inner(workout_id, position)")
-    .eq("workout_exercises.workout_id", workoutId)
-    .order("position", {
-      referencedTable: "workout_exercises",
-    })
-    .order("position");
+    .select("id, position, workout_exercises!inner(workout_id, exercise_id)")
+    .eq("workout_exercises.workout_id", workoutId);
   if (error) throw error;
   if (!data?.length) throw new Error("Expected snapshotted starter sets.");
-  return data;
+  return data.map((row) => {
+    const parent = row.workout_exercises as unknown as {
+      exercise_id: string | null;
+    };
+    if (parent.exercise_id === null)
+      throw new Error("Expected the seeded occurrence to keep its exercise.");
+    return {
+      id: row.id,
+      position: row.position,
+      exerciseId: parent.exercise_id,
+    };
+  });
+}
+
+function setFor(
+  sets: { id: string; position: number; exerciseId: string }[],
+  exerciseId: string,
+  position: number,
+): { id: string } {
+  const found = sets.find(
+    (set) => set.exerciseId === exerciseId && set.position === position,
+  );
+  if (!found)
+    throw new Error(
+      `Expected a starter set at position ${position} of ${exerciseId}.`,
+    );
+  return found;
 }
 
 async function command(
