@@ -1,7 +1,7 @@
 # T-035 — Build split statistics operations
 
 - **Feature:** `F-008`
-- **Status:** `In Progress`
+- **Status:** `In Review`
 - **Horizon:** `Now`
 - **Order:** 5
 - **Target date:** None
@@ -11,13 +11,13 @@
 - **Created:** `2026-09-05T21:58:22+02:00`
 - **Updated:** `2026-09-06T10:45:28+02:00`
 - **Started:** `2026-09-06T10:38:42+02:00`
-- **Review started:** Not reached
+- **Review started:** `2026-09-06T10:45:28+02:00`
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews exact delivery `92b6d10b3472a13282c41712e3e75f939216f647`. Under ADR-0028 this is the one approval the Task needs; replacements inherit it.
 
 ## Scope
 
@@ -97,7 +97,7 @@ Queries:
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the evidence commit that follows this delivery
+- **Delivery commit SHA:** `92b6d10b3472a13282c41712e3e75f939216f647`
 - **Subject:** `T-035: build split statistics operations`
 - **Committed scope:** the `0005_split_statistics.sql` declarative schema with its function-only migration and regenerated types; the `split-statistics` domain and its `duration` extension of the shared chart types; the repository contract, Supabase repository, application operations, server composition, and Server Actions; the prepared unit suite, the `0008_split_statistics` pgTAP suite, and the repository integration test with its `test:repository` registration; and the History product, domain-model, server-boundary, and local-database-workflow documents
 
@@ -148,3 +148,4 @@ Queries:
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the split statistics derivation within `F-008`; the Owner directed that implementation must not start |
 | `2026-09-06T10:38:42+02:00` | User / Owner | `Backlog` | `Ready` | The identity snapshot is in place and the go-ahead for the whole `F-008` authorizes the split statistics |
 | `2026-09-06T10:38:42+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the split statistics derivation |
+| `2026-09-06T10:45:28+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `92b6d10b3472a13282c41712e3e75f939216f647`; static checks passed and every prepared feature test remains unexecuted |

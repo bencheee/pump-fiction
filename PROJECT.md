@@ -1,26 +1,26 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T10:38:42+02:00
+- **Last updated:** 2026-09-06T10:45:28+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-034` of `F-008` are `Done` and `T-035` is `In Progress`
+- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-034` of `F-008` are `Done` and `T-035` is `In Review`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-[`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T10:38:42+02:00. It derives the split duration statistics behind `S17` and `S18`.
+[`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations — `In Review`, Executor Claude Code primary agent, last change 2026-09-06T10:45:28+02:00. It derives the split duration statistics behind `S17` and `S18`.
 
 History has its data, its shell, the Workouts subsection, and the Exercises subsection with the first chart. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md), [`T-032`](docs/project/tasks/T-032-build-workout-history-mobile-experience.md), [`T-033`](docs/project/tasks/T-033-build-exercise-statistics-operations.md), and [`T-034`](docs/project/tasks/T-034-build-exercise-history-mobile-experience.md) are `Done`.
 
 ## Immediate next action
 
-Deliver `T-035`, the split statistics derivation, for the Owner's review.
+Review exact `T-035` delivery `92b6d10b3472a13282c41712e3e75f939216f647` and approve or reject it. Under ADR-0028 this is the one approval the Task needs.
 
 ## Now
 
-- [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations — `In Progress` — Claude Code primary agent — 2026-09-06T10:38:42+02:00 — next: deliver for review.
+- [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations — `In Review` — Claude Code primary agent — 2026-09-06T10:45:28+02:00 — next: the Owner's decision on the exact delivery.
 
 ## Next
 
@@ -37,7 +37,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-035`](docs/project/tasks/T-035-build-split-statistics-operations.md) — Build split statistics operations — exact delivery `92b6d10b3472a13282c41712e3e75f939216f647` — Claude Code primary agent — 2026-09-06T10:45:28+02:00 — requested action: review and approve or reject the exact commit.
 
 ## Approved — ready for testing
 
