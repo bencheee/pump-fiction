@@ -594,25 +594,56 @@ async function measurementTypeId(
   return created.id;
 }
 
+/**
+ * Removes everything the fixture created. Every step is checked: a measurement
+ * type cannot be deleted while its entries exist, which is the rule
+ * MVP-BOD-001 states and the entries table enforces with `on delete restrict`,
+ * so entries go first and a teardown that fails says so instead of quietly
+ * leaving rows behind for the next run to trip over.
+ */
 async function cleanUp(fixture: Fixture) {
   const client = adminClient();
-  await client.from("workouts").delete().eq("id", fixture.completedWorkoutId);
-  await client.from("workouts").delete().eq("id", fixture.incompleteWorkoutId);
-  await client.from("workouts").delete().in("status", ["active", "paused"]);
-  await client
-    .from("app_settings")
-    .update({ current_program_id: null })
-    .eq("id", 1);
-  await client.from("programs").delete().eq("id", fixture.programId);
-  await client
-    .from("exercises")
-    .delete()
-    .in("id", [fixture.pressId, fixture.chinId]);
-  await client
-    .from("measurement_types")
-    .delete()
-    .in("id", [fixture.waistId, fixture.armId]);
+  const types = [fixture.waistId, fixture.armId];
+
+  await mustSucceed(
+    client.from("workouts").delete().in("status", ["active", "paused"]),
+  );
+  await mustSucceed(
+    client
+      .from("workouts")
+      .delete()
+      .in("id", [fixture.completedWorkoutId, fixture.incompleteWorkoutId]),
+  );
+  await mustSucceed(
+    client
+      .from("app_settings")
+      .update({ current_program_id: null })
+      .eq("id", 1),
+  );
+  await mustSucceed(
+    client.from("programs").delete().eq("id", fixture.programId),
+  );
+  await mustSucceed(
+    client
+      .from("exercises")
+      .delete()
+      .in("id", [fixture.pressId, fixture.chinId]),
+  );
+  await mustSucceed(
+    client
+      .from("measurement_entries")
+      .delete()
+      .in("measurement_type_id", types),
+  );
+  await mustSucceed(client.from("measurement_types").delete().in("id", types));
   await removeMonth(client);
+}
+
+async function mustSucceed(
+  request: PromiseLike<{ error: { message: string } | null }>,
+): Promise<void> {
+  const { error } = await request;
+  if (error) throw new Error(`Teardown step failed: ${error.message}`);
 }
 
 async function removeMonth(client: ReturnType<typeof adminClient>) {
