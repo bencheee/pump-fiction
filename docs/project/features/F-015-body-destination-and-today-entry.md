@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T22:12:00+02:00`
-- **Progress:** `2/3 required Tasks Done`
+- **Updated:** `2026-09-06T22:32:00+02:00`
+- **Progress:** `3/3 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -63,7 +63,7 @@ Recorded on `2026-09-06` at the Owner's request, without committing or implement
 | --- | --- | --- | --- |
 | 1 | [`T-051`](../tasks/T-051-accept-the-body-destination.md) — Accept the Body destination (`Done`; approved delivery `4108680d6e411544190d7c3a8e4cb2752c694c42`) | The criteria revisions, `ADR-0030`, and every document that states the four-destination rule or puts weight and body under History | The Owner's go-ahead |
 | 2 | [`T-052`](../tasks/T-052-build-the-body-destination.md) — Build the Body destination (`Done`; approved delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, verified through inherited replacement `109d2a0d3a1155620b4971ea8767561165e584ec`) | The fifth destination with its two tabs, `S19`–`S24` moved and stripped of creation, History reduced to three subsections, the unit in the label, and every spec the move invalidates | `T-051` |
-| 3 | [`T-053`](../tasks/T-053-add-todays-measurement-entry.md) — Add today's measurement entry | The `Body measurements` card and its sheet on Today, which is where the entry paths Body gave up now live | `T-051`, `T-052` |
+| 3 | [`T-053`](../tasks/T-053-add-todays-measurement-entry.md) — Add today's measurement entry (`Done`; approved delivery `c5417723e42e2d04e172fc6f754284fd11ed23df`) | The `Body measurements` card and its sheet on Today, which is where the entry paths Body gave up now live | `T-051`, `T-052` |
 
 `T-052` and `T-053` each carry their own tests, as every screen Task in this project has, so the suite is never left red between them. `T-052` is the larger: it moves six routes, removes four create paths, and breaks the foundation spec's four-destination assertion, `T-046`'s route inventory, and the `T-045` fixture.
 
@@ -108,10 +108,10 @@ Not decided. The Executor records each in canonical documentation during the Tas
 
 ## Completion
 
-- [ ] All required Tasks are `Done`
-- [ ] Feature acceptance criteria are satisfied
-- [ ] Canonical documentation is current
-- [ ] No required follow-up scope is hidden
+- [x] All required Tasks are `Done` (`T-051`, `T-052`, `T-053`)
+- [x] Feature acceptance criteria are satisfied: five destinations with Body among them, History down to three subsections, no create path anywhere under Body, correction and deletion intact, Today taking the day's measurements in one sheet, and the unit stated only in each measurement's label
+- [x] Canonical documentation is current; `ADR-0030` records the decision and every document it contradicts was corrected in `T-051`
+- [ ] No required follow-up scope is hidden — one item is open for the Owner: whether recording only some of the day's measurements should be possible, which the sheet currently refuses
 - [ ] User confirms the feature result
 
 ## History
@@ -125,3 +125,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | `2026-09-06T20:36:00+02:00` | Claude Code primary agent / Executor | Delivered `T-052` for review | Exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` moves the screens into a destination of their own and strips their create paths; until `T-053` the application records no weigh-in at all |
 | `2026-09-06T21:04:00+02:00` | Claude Code primary agent / Tester | Completed `T-052` and started `T-053` | The whole browser suite passed 52/52; each of the three replacements was a scenario still describing the screens as they were before the move |
 | `2026-09-06T22:12:00+02:00` | Claude Code primary agent / Executor | Delivered `T-053` for review | Exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` restores entry on Today and adds the transactional write `MVP-TOD-005` requires; the Task also discloses a test-gate breach during `T-052` and `T-053` |
+| `2026-09-06T22:32:00+02:00` | Claude Code primary agent / Tester | Completed `T-053`; all three Tasks are `Done` | The complete plan passed on the first run, including the pgTAP assertions that the day's measurements are written together or not at all |

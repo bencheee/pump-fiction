@@ -1,7 +1,7 @@
 # T-053 — Add today's measurement entry
 
 - **Feature:** `F-015`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T22:18:00+02:00`
+- **Updated:** `2026-09-06T22:32:00+02:00`
 - **Started:** `2026-09-06T21:04:00+02:00`
 - **Review started:** `2026-09-06T22:10:00+02:00`
 - **Approval requested:** `2026-09-06T22:10:00+02:00`
 - **Approved:** `2026-09-06T22:18:00+02:00`
 - **Testing started:** `2026-09-06T22:18:00+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T22:32:00+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the authorized suites against the exact approved delivery and record the result.
+- **Next action:** None; `T-053` is `Done`. `F-015` and `M-002` await the Owner's confirmation.
 
 ## A test-gate breach, disclosed
 
@@ -50,12 +50,12 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 
 ## Acceptance criteria
 
-- [ ] The card appears while a defined measurement lacks today's value, names the missing ones, and disappears when a type is defined but all are recorded.
-- [ ] No card appears when no measurement type exists.
-- [ ] The sheet takes every missing measurement in one save, refuses an invalid value inline, and announces the refusal.
-- [ ] After saving, Today shows today's values with a link to Body and offers no second create path.
-- [ ] A value for another date is reachable only through Body, and the sheet offers no date field.
-- [ ] Today's existing behavior is unchanged: the proposed workout, the weight card, and the current-workout card all still read as they did.
+- [x] The card appears while a defined measurement lacks today's value, names the missing ones, and disappears when a type is defined but all are recorded.
+- [x] No card appears when no measurement type exists.
+- [x] The sheet takes every missing measurement in one save, refuses an invalid value inline, and announces the refusal.
+- [x] After saving, Today shows today's values with a link to Body and offers no second create path.
+- [x] A value for another date is reachable only through Body, and the sheet offers no date field.
+- [x] Today's existing behavior is unchanged: the proposed workout, the weight card, and the current-workout card all still read as they did.
 
 ## Traceability
 
@@ -90,7 +90,18 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 
   No browser scenario is added for the card. The Today spec already covers the weight card's four states and this one mirrors it exactly; the component tests cover the four states and the refusal, and the pgTAP suite covers the transaction. If the Owner wants a browser walk of the sheet as well, it is a small addition to the existing Today scenario rather than a new one.
 - **Authorized commit:** `c5417723e42e2d04e172fc6f754284fd11ed23df`
-- **Results:** Not run
+- **Results:** **The complete plan passed on the first run**, on `2026-09-06T22:32:00+02:00` against exact approved delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` in a fresh isolated worktree, after a clean `supabase db reset`, with Node.js `22.21.0`, npm `10.9.4`, Vitest `4.1.11`, Supabase CLI `2.116.0`, and Playwright `1.62.1`.
+
+  | Suite | Result |
+  | --- | --- |
+  | `npm run test:unit` | **241/241** across 26 files, the four new Today tests among them |
+  | `npm run test:db` | **191/191** across 10 pgTAP files, up from 187 by the four transactional assertions |
+  | `npm run test:repository` | **9/9** |
+  | `npm run test:browser -- --workers=1` | **52/52**, 26 on mobile Chromium and 26 on mobile WebKit |
+
+  The pgTAP additions are the ones that matter here: `create_measurement_entries` wrote both values it was given, and a refused value left **nothing** behind from that date. That is the whole of what `MVP-TOD-005` means by recording the day's measurements together, checked rather than asserted.
+
+  The database after the run was identical to a fresh seed — 10 exercises, 1 program, 3 splits, and no workout, weight, measurement-type, or measurement-entry rows. No replacement was needed, which is the first time in this Feature.
 
 ## Static-check plan and results
 
@@ -133,15 +144,15 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed, or approved no-test reason is recorded
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -152,3 +163,4 @@ The alternative was to weaken the criterion to match a simpler implementation. T
 | `2026-09-06T22:10:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the card, its sheet, and the transactional write; static checks passed, the suites are prepared, and the test-gate breach during `T-052` and this Task is recorded above |
 | `2026-09-06T22:18:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` (`odobreno`) |
 | `2026-09-06T22:18:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The migration and the new Today card mean the database and browser suites run beside the unit one |
+| `2026-09-06T22:32:00+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed on the first run: unit 241/241, pgTAP 191/191, repository 9/9, the whole browser suite 52/52, and a database identical to its baseline |
