@@ -1,23 +1,23 @@
 # T-038 — Build weight operations
 
 - **Feature:** `F-009`
-- **Status:** `Backlog`
-- **Horizon:** `Next`
+- **Status:** `In Progress`
+- **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
 - **Executor:** Claude Code primary agent
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T12:22:31+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T12:39:15+02:00`
+- **Started:** `2026-09-06T12:39:15+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Wait for the Owner's answers to the `F-009` readiness questions and the go-ahead; with both, the Owner moves this Task to `Ready` and it starts first.
+- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
 
 ## Scope
 
@@ -67,7 +67,7 @@ Queries:
 ## Dependencies and blockers
 
 - Dependencies: `F-004` Done, which created `weight_entries`, its per-date uniqueness, and the future-date trigger in `T-006`; `T-033` and `T-035` Done, whose `ChartRange`, `rangeStart`, and chart contract this Task reuses and generalizes rather than writes again
-- Blockers: None from other work, since `F-008` is `Done`; the Owner has not yet answered the `F-009` readiness questions or given the go-ahead
+- Blockers: None; the Owner answered the `F-009` readiness questions and gave the go-ahead on `2026-09-06`
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -125,12 +125,12 @@ Queries:
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved — the `F-009` readiness questions are unanswered
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -150,3 +150,5 @@ Queries:
 | --- | --- | --- | --- | --- |
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Not allocated | `Backlog` | Created as the weight data and derivation within `F-009`; the Owner directed that nothing is committed or implemented until they say so |
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | `Backlog` | `Backlog` | Locked after `F-008` completed: aligned with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; committed at the Owner's direction |
+| `2026-09-06T12:39:15+02:00` | User / Owner | `Backlog` | `Ready` | The Owner accepted every `F-009` readiness answer and gave the go-ahead for the whole Feature |
+| `2026-09-06T12:39:15+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began the weight data and derivation, the first Task of `F-009` |

@@ -1,30 +1,33 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T12:22:31+02:00
-- **Current phase:** Local MVP implementation — `F-008` History and Statistics is `Done` with the Owner's confirmation on `2026-09-06`; `F-009` follows in the Owner's order and now has its locked Task breakdown
+- **Last updated:** 2026-09-06T12:39:15+02:00
+- **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is planned (`T-038` through `T-042` in `Backlog`) and awaits the Owner's go-ahead
+- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `In Progress`
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` is next
+- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` started the same day
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-`F-008` is `Done`: the Owner confirmed the History and Statistics result on 2026-09-06T11:50:42+02:00. No work item is active. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order, and nothing of it starts before the Owner's go-ahead. Its Task breakdown was recorded at the Owner's request and locked once `F-008` completed: [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) through [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) are in `Backlog`, operations before screens, and the Feature file carries three readiness questions with recommended answers, chiefly the stale archiving sentence in the weight and body document and what Today shows once the day's weight exists.
+[`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — Build weight operations — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T12:39:15+02:00. It derives and persists everything `S19`, `S20`, and the Today weight prompt need: the Monday–Sunday weekly average and change, the provisional rule, the individual change, the chart series, and the create, update, and delete writes.
 
-Every History screen is delivered and verified. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) through [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) are `Done`.
+The Owner released `F-009` on `2026-09-06` with `potvrda`, accepting all three recommended readiness answers: the stale archiving sentence in the weight and body document goes, a measurement type may be renamed, and Today shows the day's recorded weight with a link to Weight once it exists. `F-008` is `Done` and gave this Feature the History shell, the Weight and Body placeholder routes, the shared `ProgressChart`, and the range helper.
 
 ## Immediate next action
 
-The Owner's answers to the three `F-009` readiness questions and the go-ahead; with both, move [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) to `Ready` and start it. Also the Owner's word on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Deliver `T-038` as one reviewable commit after the permitted static checks, then request the Owner's review. No feature test runs before that approval. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-None; every `Now` Task is `Done`.
+- [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) — Build weight operations — `In Progress` — Claude Code primary agent — 2026-09-06T12:39:15+02:00 — next: deliver one reviewable commit.
 
 ## Next
 
-1. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) — Weight and Body Progress; five Tasks in `Backlog` (Executor Claude Code primary agent, locked `2026-09-06T12:22:31+02:00`) awaiting the readiness answers and the go-ahead before `T-038` can become `Ready`.
+1. [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) — Weight screens `S19` and `S20`; `Backlog`.
+2. [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Today's weight prompt and `S04`; `Backlog`.
+3. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) — Body measurement operations; `Backlog`.
+4. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
 
 ## Later
 

@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T12:22:31+02:00`
-- **Progress:** `0/5 required Tasks Done; all in Backlog`
+- **Updated:** `2026-09-06T12:39:15+02:00`
+- **Progress:** `0/5 required Tasks Done; T-038 is In Progress`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -48,19 +48,19 @@ Accepted on `2026-09-05` as `F-008` readiness answer 6:
 - `F-009` replaces those placeholders with `S19`–`S24` and owns every weight and body calculation.
 - Today's weight prompt (`MVP-TOD-004`) belongs to `F-009`; `T-015` left the weight surface intentionally absent from Today.
 
-## Readiness questions
+## Readiness answers
 
-Proposed on `2026-09-06`. The Owner decides each before the first Task becomes `Ready`; the Task named in the last column records the answer in canonical documentation as part of its delivery.
+The Owner gave the go-ahead for the whole Feature on `2026-09-06` and amended no recommendation, which accepts every recommended answer below. They are decided. The Task named in the last column records each one in canonical documentation as part of its delivery.
 
-| # | Question | Recommended answer | Recorded by |
+| # | Question | Accepted answer | Recorded by |
 | --- | --- | --- | --- |
 | 1 | [`weight-and-body.md`](../../product/weight-and-body.md) says a measurement type has no archived state and cannot be deleted while it has entries, yet two lines later still says archiving preserves history and permits reactivation. The frozen design package also still carries archived states for `S21`–`S23` and `O05` on `S21`/`S22`. Remove the stale sentence and treat deletion as the only lifecycle action? | Yes. `T-041` removes the sentence; `S21`–`S23` carry no archived state or badge and `O05` does not apply, as `F-008` already decided for the exercise list; `S22` offers **Delete Type** only while the type has no entries and otherwise explains that its entries are the only record of the measurement, exactly what `MVP-BOD-001` states. | `T-041`, `T-042` |
 | 2 | The design manifest gives `S22` an edit route, but the product document and `MVP-BOD-001` name only create and delete for a type. May a type be renamed? | Yes. Renaming changes only the name; entries are keyed by the type id and stay attached, and the unit stays `cm`. Record it as a local decision in the product document without changing the locked criterion. | `T-041`, `T-042` |
 | 3 | `MVP-TOD-004` says that once today's entry exists the new-entry prompt is no longer shown as though another entry can be created. What does Today show instead: nothing, or today's recorded value? | Show today's recorded value in the same card with a link to `/history/weight` and no create control. The `S04` wireframe says "close or show the saved value on Today", and the link gives an accidental value one correction path through `S20` instead of a second create path. The strict-minimum alternative is to drop the card entirely. | `T-040` |
 
-## Proposed local decisions
+## Accepted local decisions
 
-Proposed with the breakdown. The Executor records each in the canonical documents during the Task that touches it, unless the Owner amends it:
+Accepted with the same go-ahead. The Executor records each in the canonical documents during the Task that touches it:
 
 - weight and body live in the History feature under `src/features/history`, beside the exercise and split statistics, because they are History subsections under ADR-0003 and the shared chart component, chart contract, and range helper already live there; the entry-date validation and the local-date rules are written once, and the domain-model Progress section names the modules. The earlier `src/features/progress` idea was dropped when `T-034` and `T-036` placed the shared chart in History's `ui` module;
 - `ChartRange`, `rangeStart`, and the chart contract of `T-033` and `T-035` are reused, not rewritten: `T-038` generalizes the contract so a point needs no workout id and a series can carry a companion series, and `T-039` teaches `ProgressChart` to draw that companion; the History callers stay unchanged;
@@ -80,7 +80,7 @@ Proposed with the breakdown. The Executor records each in the canonical document
 ## Dependencies and blockers
 
 - Dependencies: `F-003`, `F-004`, and `F-011` are `Done`, so the tables, the per-date uniqueness, the future-date trigger, and the unconditional type-name uniqueness exist; `F-008` is `Done` on `2026-09-06`, supplying the History shell, the Weight and Body placeholders, the shared chart component and contract, the range helper, and a runnable browser suite
-- Blockers: None from other work. The Owner has not yet answered the three readiness questions or given the go-ahead; nothing is implemented before both
+- Blockers: None; the Owner answered the three readiness questions and gave the go-ahead for the whole Feature on `2026-09-06`
 
 ## Related decisions and documents
 
@@ -91,10 +91,10 @@ Proposed with the breakdown. The Executor records each in the canonical document
 
 - [x] Outcome and boundaries are clear
 - [x] Acceptance criteria are observable and linked
-- [ ] Required Tasks are identified (`T-038` through `T-042`); none is `Ready`
+- [x] Required Tasks are identified (`T-038` through `T-042`); `T-038` is `In Progress`
 - [x] Dependencies and blockers are understood
 - [x] Documentation impact is known
-- [ ] Owner confirms readiness
+- [x] Owner answered the readiness questions and confirmed readiness on `2026-09-06` by giving the go-ahead for the whole Feature
 
 ## Completion
 
@@ -115,3 +115,5 @@ Proposed with the breakdown. The Executor records each in the canonical document
 | `2026-09-06T00:49:17+02:00` | Claude Code primary agent / Planner | Recorded the five-Task breakdown `T-038`–`T-042` in `Backlog`, three readiness questions with recommended answers, and the proposed local decisions | The Owner asked for the Tasks and directed that nothing is committed or implemented until they say so; `F-009` stays behind `F-008` |
 | `2026-09-06T10:14:11+02:00` | User / Owner | Accepted that `T-038` entered git history through the `T-034` delivery `b5772adb87d244bfc2404481e90f58a4046a7767` | That delivery was staged with `git add -A` while this breakdown was held uncommitted; the Owner let the commit stand rather than replace it, so `T-038` is tracked ahead of its siblings |
 | `2026-09-06T12:22:31+02:00` | Claude Code primary agent / Planner | Locked the breakdown after `F-008` completed: aligned the five Tasks with ADR-0028, the shared History chart and range helper, and the `T-037` browser harness; recorded the registry, dashboard, milestone, and project state | The Owner asked to fold in any `F-008` outcome that affects the plan and then lock, commit, and push it; the readiness questions stay open for the go-ahead |
+| `2026-09-06T12:39:15+02:00` | User / Owner | Accepted every recommended readiness answer and local decision, confirmed Feature readiness, and gave the go-ahead | Replied `potvrda` without amending any recommendation, which decides the archiving sentence, the measurement-type rename, and the Today weight card |
+| `2026-09-06T12:39:15+02:00` | Claude Code primary agent / Executor | Moved `T-038` to `Ready` and started it | Operations precede the screens that depend on them; one Task is `In Progress` at a time |
