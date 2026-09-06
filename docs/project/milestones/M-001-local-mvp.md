@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T15:43:40+02:00`
-- **Updated:** `2026-09-06T11:39:47+02:00`
-- **Progress:** `11/14 required Features Done`
+- **Updated:** `2026-09-06T11:50:42+02:00`
+- **Progress:** `12/14 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -40,7 +40,7 @@ A complete local, single-user, phone-only application that satisfies all locked 
 - [`F-013`](../features/F-013-local-verification-data.md) — Local Verification Data (`Done`)
 - [`F-014`](../features/F-014-exercise-and-set-entry-model.md) — Exercise and Set-Entry Model Corrections (`Done`)
 - [`F-012`](../features/F-012-active-workout-command-recovery.md) — Active-Workout Command Recovery (`Done`)
-- [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Next / 1`)
+- [`F-008`](../features/F-008-history-and-statistics.md) — History and Statistics (`Done`)
 - [`F-009`](../features/F-009-weight-and-body-progress.md) — Weight and Body Progress (`Next / 2`)
 - [`F-010`](../features/F-010-local-mvp-integration.md) — Local MVP Integration (`Next / 3`)
 
@@ -62,7 +62,7 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 ## Dependencies and blockers
 
 - Dependencies: Accepted product specification, MVP criteria, development governance, and project-management workflow
-- Blockers: None; every `F-008` Task is `Done` and the Feature awaits the Owner's confirmation of its result
+- Blockers: None; `F-008` is `Done` and `F-009` follows in the Owner's order, awaiting the Owner's go-ahead
 
 ## Related decisions and documents
 
@@ -191,3 +191,4 @@ Each of the 57 locked criteria has exactly one primary implementation owner. Sup
 | `2026-09-05T21:58:22+02:00` | Claude Code primary agent / Planner | Recorded the `F-008` breakdown `T-031`–`T-036` in `Backlog` | The Owner asked for the Tasks without starting implementation; the boundary against `F-009` and six readiness questions await the Owner |
 | `2026-09-05T22:02:36+02:00` | User / Owner | Released the `F-008` hold and started `T-031` | Accepted every recommended readiness answer and gave the go-ahead to implement the whole Feature |
 | `2026-09-06T11:39:47+02:00` | Claude Code primary agent / Tester | Completed T-037 within F-008 | The whole browser suite passed 32/32 against inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724`; all seven F-008 Tasks are Done pending the Owner's feature-result confirmation |
+| `2026-09-06T11:50:42+02:00` | User / Owner | Completed `F-008`; Milestone remains incomplete | Confirmed the aggregate History and Statistics result; `M-001` advances to 12/14 required Features Done and `F-009` waits for the Owner's go-ahead |

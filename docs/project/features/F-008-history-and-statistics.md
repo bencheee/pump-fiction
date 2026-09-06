@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T11:39:47+02:00`
+- **Updated:** `2026-09-06T11:50:42+02:00`
 - **Progress:** `7/7 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -40,7 +40,7 @@ Recorded on `2026-09-05` at the Owner's request, without starting implementation
 | 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience (`Done`; first delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`, verified through inherited replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`) | `S17`, `S18` with chart | `T-032`, `T-035` |
 | 7 | [`T-037`](../tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal (`Done`; first delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`, verified through inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724`) | A runnable `npm run test:browser` | None |
 
-All seven Tasks are `Done`; only the Owner's confirmation of the Feature result remains. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
+All seven Tasks are `Done` and the Owner confirmed the Feature result on `2026-09-06`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
 
 ## Boundary against F-009
 
@@ -101,7 +101,7 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 - [x] Feature acceptance criteria are satisfied
 - [x] Canonical documentation is current
 - [x] No required follow-up scope is hidden
-- [ ] User confirms the feature result
+- [x] User confirms the feature result
 
 ## History
 
@@ -137,3 +137,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T11:19:46+02:00` | User / Approver | Approved `T-037` | Exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` approved with `potvrda`; the complete browser suite now runs against it |
 | `2026-09-06T11:34:09+02:00` | Claude Code primary agent / Tester and Executor | Replaced the `T-037` delivery | The first run passed 25 of 32 and found two test-infrastructure faults, the durability spec unrunnable since `T-009` and a WebKit hydration race; replacement `060bf92e4f28ef44006e39c75561cbae973ae724` inherits the approval under ADR-0028 |
 | `2026-09-06T11:39:47+02:00` | Claude Code primary agent / Tester | Completed `T-037` within `F-008` | Inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724` passed the whole browser suite 32/32 across four Playwright projects; all seven required Tasks are `Done` and only the Owner's feature-result confirmation remains |
+| `2026-09-06T11:50:42+02:00` | User / Owner | Completed `F-008` | Explicitly confirmed the aggregate History and Statistics result (`potvrda`) |

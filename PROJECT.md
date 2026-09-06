@@ -1,22 +1,22 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T11:39:47+02:00
-- **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus; every `F-008` Task is `Done` and the Feature awaits the Owner's confirmation
+- **Last updated:** 2026-09-06T11:50:42+02:00
+- **Current phase:** Local MVP implementation — `F-008` History and Statistics is `Done` with the Owner's confirmation on `2026-09-06`; `F-009` follows in the Owner's order
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
-- **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; every `F-008` Task, `T-031` through `T-037`, is `Done`
+- **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
-- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` is next in that order and started the same day
+- **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` followed and is `Done` on `2026-09-06`; `F-009` is next
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
 
 ## Current focus
 
-All seven `F-008` Tasks are `Done`. [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) completed 2026-09-06T11:39:47+02:00: `npm run test:browser` runs as a whole again, 32/32 across four Playwright projects, after the durability spec, unrunnable since `T-009`, was given a development server beside the production one and the first entry after a navigation waits for hydration.
+`F-008` is `Done`: the Owner confirmed the History and Statistics result on 2026-09-06T11:50:42+02:00. No work item is active. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order, and nothing of it starts before the Owner's go-ahead.
 
 Every History screen is delivered and verified. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) through [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) are `Done`.
 
 ## Immediate next action
 
-The Owner confirms or rejects the `F-008` Feature result: all seven Tasks are `Done`, every History screen is verified, and `npm run test:browser` runs as a whole again. Two discovered items have no Task and await the Owner's word: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+The Owner's go-ahead for `F-009`, and the Owner's word on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
@@ -24,7 +24,7 @@ None; every `Now` Task is `Done`.
 
 ## Next
 
-None within `F-008`. [`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order once `F-008` is confirmed.
+[`F-009`](docs/project/features/F-009-weight-and-body-progress.md) follows in the Owner's order; nothing of it starts before the Owner's go-ahead.
 
 ## Later
 
@@ -52,6 +52,6 @@ None.
 
 ## Active work items
 
-- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`11/14 Features Done`)
+- [`M-001`](docs/project/milestones/M-001-local-mvp.md) — Local MVP (`12/14 Features Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
