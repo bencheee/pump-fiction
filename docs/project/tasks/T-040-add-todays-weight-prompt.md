@@ -1,7 +1,7 @@
 # T-040 — Add today's weight prompt to Today
 
 - **Feature:** `F-009`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:51:40+02:00`
+- **Updated:** `2026-09-06T13:54:26+02:00`
 - **Started:** `2026-09-06T13:41:30+02:00`
 - **Review started:** `2026-09-06T13:49:31+02:00`
 - **Approval requested:** `2026-09-06T13:48:55+02:00`
 - **Approved:** `2026-09-06T13:48:55+02:00`
 - **Testing started:** `2026-09-06T13:48:55+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-06T13:54:26+02:00`
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan from the beginning against exact replacement `88abdad827a907fc93c61fd7851cd5d1736057a6`, then record the result.
+- **Next action:** None; `T-040` is `Done`. `F-009` continues with `T-041`.
 
 ## Scope
 
@@ -45,11 +45,11 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 
 ## Acceptance criteria
 
-- [ ] Today shows the weight prompt exactly when the local date has no entry, in the populated, no-program, and restored-workout states, and never offers a second create path once today's entry exists.
-- [ ] Saving from `S04` creates today's entry, refreshes Today, and the same value is visible on `S19` without further action.
-- [ ] A conflict with an entry created elsewhere resolves to the existing value; a validation error is inline and announced; a persistence failure keeps the value and offers retry.
-- [ ] The sheet respects overlay history and safe areas, and `S01` and `S04` match the accepted `v0.3` structure, reflow from 320 to 430 px, and keep **Start Workout** in thumb reach.
-- [ ] The existing Today component tests and browser scenario keep passing once extended for the prompt, with no change to rotation, start, or restore behavior.
+- [x] Today shows the weight prompt exactly when the local date has no entry, in the populated, no-program, and restored-workout states, and never offers a second create path once today's entry exists.
+- [x] Saving from `S04` creates today's entry, refreshes Today, and the same value is visible on `S19` without further action.
+- [x] A conflict with an entry created elsewhere resolves to the existing value; a validation error is inline and announced; a persistence failure keeps the value and offers retry.
+- [x] The sheet respects overlay history and safe areas, and `S01` and `S04` match the accepted `v0.3` structure, reflow from 320 to 430 px, and keep **Start Workout** in thumb reach.
+- [x] The existing Today component tests and browser scenario keep passing once extended for the prompt, with no change to rotation, start, or restore behavior.
 
 ## Traceability
 
@@ -90,6 +90,8 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 - **Results:** First verification on `2026-09-06T13:50:03+02:00` against exact approved delivery `4992e617d3d367091332eb178525b2c61e35f0a5` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Vitest `4.1.11`. `npm run test:unit` passed **187 of 192 across 22 files** and failed five Today scenarios, three new and two older than this Task, all with `useToast requires a ToastProvider ancestor`.
 
   The application was right and the tests were not. The weight card raises a toast when the day's weigh-in is saved, as every other save does, and `MainShell` owns that one provider; the suite rendered `TodayExperience` bare. Replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` sends every render through a helper that stands in for the shell, the way the exercise-form suite already does. The complete plan restarts from the beginning against it.
+
+  Second verification, against exact replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` on `2026-09-06T13:54:26+02:00` in a fresh isolated worktree: **the complete plan passed**. `npm run test:unit` passed **192/192 across 22 files**, the four new Today scenarios among them. The Today browser scenario passed **4/4**, both its tests on mobile Chromium and mobile WebKit, on one worker against the production server, with eight structural captures. The weight run opened the sheet, dismissed it with Escape, saved `82.4 kg`, saw the prompt replaced by the recorded value with no second create path, followed the link to Weight and found the same weigh-in in its list, and reloaded Today to confirm the prompt does not return. It removed the row it created: `weight_entries` is empty again, and the exercises, program, and splits are untouched.
 
 ## Recorded decisions
 
@@ -137,15 +139,15 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval
-- [ ] User approved the exact commit SHA
-- [ ] Scope and acceptance criteria are satisfied
-- [ ] Canonical documentation and required ADRs are current
-- [ ] Authorized feature tests passed, or approved no-test reason is recorded
-- [ ] Static checks and all evidence are recorded
-- [ ] Dashboard, registry, and parent progress are current
-- [ ] Follow-up scope has separate Tasks
-- [ ] Audit history is complete
+- [x] Reviewer recommends approval
+- [x] User approved the exact commit SHA of the first delivery; the replacement inherited it under ADR-0028
+- [x] Scope and acceptance criteria are satisfied
+- [x] Canonical documentation and required ADRs are current
+- [x] Authorized feature tests passed
+- [x] Static checks and all evidence are recorded
+- [x] Dashboard, registry, and parent progress are current
+- [x] Follow-up scope has separate Tasks: `T-041` and `T-042` deliver Body
+- [x] Audit history is complete
 
 ## Transition history
 
@@ -160,3 +162,4 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 | `2026-09-06T13:48:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` with `odobreno` |
 | `2026-09-06T13:48:55+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
 | `2026-09-06T13:51:40+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | Five Today scenarios failed for want of the toast provider the shell gives them; replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` corrects the suite, inherits the Task approval under ADR-0028, and the complete plan restarts against it |
+| `2026-09-06T13:54:26+02:00` | Claude Code primary agent / Tester | `Testing` | `Done` | The complete plan passed against exact replacement `88abdad827a907fc93c61fd7851cd5d1736057a6`: unit and component 192/192 and the Chromium and WebKit Today scenario 4/4 with eight structural captures |

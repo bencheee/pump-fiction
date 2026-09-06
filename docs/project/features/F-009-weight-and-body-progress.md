@@ -6,8 +6,8 @@
 - **Order:** 2
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T13:51:40+02:00`
-- **Progress:** `2/5 required Tasks Done; T-040 is Testing`
+- **Updated:** `2026-09-06T13:54:26+02:00`
+- **Progress:** `3/5 required Tasks Done; T-041 is next`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -34,11 +34,11 @@ Recorded on `2026-09-06` at the Owner's request, without committing or implement
 | --- | --- | --- | --- |
 | 1 | [`T-038`](../tasks/T-038-build-weight-operations.md) — Build weight operations (`Done`; approved replacement `f9edf3a4c3492faf672e12b2dc452d61898a21d7`) | Weight entry validation and writes, Monday–Sunday weekly derivation, chart series, weight queries | `F-004`, `T-033`, and `T-035` Done (schema, chart contract, range helper) |
 | 2 | [`T-039`](../tasks/T-039-build-weight-mobile-experience.md) — Build Weight mobile experience (`Done`; approved replacement `d164327f20e2437d2662d8e0b73d38b519b76613`) | `S19`, `S20`, `O01` with the two-series chart | `T-032`, `T-034`, and `T-036` Done (shell, shared chart); `T-038` |
-| 3 | [`T-040`](../tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today | The `S01` prompt and `S04` sheet of `MVP-TOD-004` | `T-038`, `T-039` |
+| 3 | [`T-040`](../tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today (`Done`; approved replacement `88abdad827a907fc93c61fd7851cd5d1736057a6`) | The `S01` prompt and `S04` sheet of `MVP-TOD-004` | `T-038`, `T-039` |
 | 4 | [`T-041`](../tasks/T-041-build-body-measurement-operations.md) — Build body measurement operations | Type lifecycle, entry validation and writes, change derivation, chart series, body queries | `F-004` Done; `T-038` for shared date rules |
 | 5 | [`T-042`](../tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience | `S21`–`S24`, `O01` with chart | `T-032`, `T-039`, `T-041` |
 
-`T-038` and `T-039` are `Done`, `T-040` is `In Progress`, and the remaining two are in `Backlog`. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
+`T-038`, `T-039`, and `T-040` are `Done`, so weight is complete; `T-041` and `T-042` remain in `Backlog` and deliver Body. The breakdown was locked on `2026-09-06` after `F-008` completed, and the outcomes of `F-008` it absorbed are listed under the local decisions. `T-040` is separate because it changes the Today route, which has its own component tests and browser scenario, and because `MVP-TOD-004` is its own criterion; the Owner may merge it into `T-039` if fewer approval cycles matter more than that separation. `T-041` and `T-042` depend on the weight Tasks only for the shared date-rule and chart plumbing; the Owner may reorder Body before Weight, in which case the shared pieces move to `T-041` and `T-042`.
 
 ## Boundary against F-008
 
@@ -130,3 +130,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T13:49:31+02:00` | Claude Code primary agent / Executor | Delivered `T-040` for review | Exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` awaits the Owner's approval before any feature test runs |
 | `2026-09-06T13:48:55+02:00` | User / Approver | Approved `T-040` | Authorized the recorded verification against exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` |
 | `2026-09-06T13:51:40+02:00` | Claude Code primary agent / Tester and Executor | Delivered the `T-040` replacement | The component suite rendered Today without the shell's toast provider; `88abdad827a907fc93c61fd7851cd5d1736057a6` corrects it and inherits the Task approval |
+| `2026-09-06T13:54:26+02:00` | Claude Code primary agent / Tester | Completed `T-040` | The complete plan passed: unit and component 192/192 and the Chromium and WebKit Today scenario 4/4; weight is finished and Body remains |
