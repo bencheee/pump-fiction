@@ -1,7 +1,7 @@
 # T-045 — Verify cross-feature persistence and non-reinterpretation
 
 - **Feature:** `F-010`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 3
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T14:36:00+02:00`
-- **Updated:** `2026-09-06T16:20:00+02:00`
+- **Updated:** `2026-09-06T16:44:00+02:00`
 - **Started:** `2026-09-06T16:20:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T16:44:00+02:00`
+- **Approval requested:** `2026-09-06T16:44:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Write the scenario, run only static checks, and deliver one reviewable commit.
+- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the prepared scenario.
 
 ## Scope
 
@@ -69,17 +69,17 @@ The delivery is test source and documentation. No application change is expected
 
 ## Execution checklist
 
-- [ ] Write the seeding and teardown helpers so the scenario owns every row it creates.
-- [ ] Write the persistence half: reload, reopen, and assert each category and the restored active workout.
-- [ ] Write the non-reinterpretation half: definition edit, definition deletion, split deletion, historical correction, historical deletion.
-- [ ] Attach structural captures at both reference viewports.
-- [ ] Prepare the scenario; do not run it.
-- [ ] Run only permitted static checks and deliver one reviewable commit.
+- [x] Write the seeding and teardown helpers so the scenario owns every row it creates.
+- [x] Write the persistence half: reload, reopen, and assert each category and the restored active workout.
+- [x] Write the non-reinterpretation half: definition edit, definition deletion, split deletion, historical correction, historical deletion.
+- [x] Attach structural captures at both reference viewports.
+- [x] Prepare the scenario; do not run it.
+- [x] Run only permitted static checks and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T16:44:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint, strict TypeScript, the production build, the UI asset checksums, Markdown lint across 131 files, and all 1390 internal links. `git diff --check` was clean. This Task adds test source only: no application source, schema, migration, or generated type changed. No feature test ran; the scenario is prepared and unexecuted.
 
 ## Test plan and results
 
@@ -91,16 +91,31 @@ The delivery is test source and documentation. No application change is expected
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-045: verify cross-feature persistence and non-reinterpretation`
-- **Committed scope:** Not created
+- **Committed scope:** `tests/browser/release-persistence.spec.ts` alone — two prepared scenarios, their seeding through the accepted operations, and their teardown. Test source only.
+
+## Written against the source, not against assumption
+
+Every locator and every enum value in the scenario was read out of the application before it was written, because a browser scenario that guesses costs an approval cycle. Six assumptions were wrong and were corrected before delivery rather than discovered by a run:
+
+- the restored active workout renders its values in fields, not as History text, so the reopened context reads the kilogram and reps field values, the note textarea, and the `Active duration` label;
+- that label is the timer's only handle: there is no test id anywhere in the workout routes;
+- the timer formats as `m:ss`, so the seed starts the current workout 25 minutes in the past and the assertion is a range a restarted timer could not satisfy;
+- a bodyweight set renders through `formatSetSummary` as `× 12`, not `12 reps`;
+- the load-mode enum member is `weight_resistance_band`, not `weight_with_resistance_band`;
+- sets come back ordered by exercise position and then set position, so the completed workout's second entry belongs to set index 2, the chin-up, not index 1, which is the press's second set — the original indexing would have tried to record a bodyweight value against a weights exercise.
+
+One more would have failed every assertion in the reopened context: a context built from the raw `browser` fixture inherits nothing from the project, so `baseURL` and the phone profile are passed in explicitly. Without that, every relative `goto` would have thrown.
+
+The rotation pointer is read from the programs list row, whose markup states it as `Next: <split>` beside the split count and the `Current` badge — one row that proves the program, its splits, the current-program flag, and the pointer together.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T16:44:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The reopen half is the part no earlier scenario could reach: a fresh context carries no localStorage, no IndexedDB, and no session, so whatever survives it is genuinely persisted rather than remembered by the browser. The pointer deliberately sits on the second split, so a rotation state that was lost and rebuilt from scratch would land on the first and fail. The scenario adds no application code; a defect it finds is corrected as an in-scope replacement or becomes its own Task.
 
 ## Approval
 
@@ -143,3 +158,4 @@ The delivery is test source and documentation. No application change is expected
 | `2026-09-06T14:52:00+02:00` | User / Owner | `Backlog` | `Backlog` | Confirmed the breakdown and the proposed local decisions (`ostalo potvrđujem da je ok`); only the go-ahead remains |
 | `2026-09-06T16:20:00+02:00` | User / Owner | `Backlog` | `Ready` | Gave the go-ahead (`kreni`) once `T-044` completed |
 | `2026-09-06T16:20:00+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | The matrix names `MVP-REL-003` and `MVP-REL-004` as the two gaps no single Feature could close |
+| `2026-09-06T16:44:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the two prepared scenarios; static checks passed and no feature test ran |
