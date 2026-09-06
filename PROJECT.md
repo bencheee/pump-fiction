@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T11:19:46+02:00
+- **Last updated:** 2026-09-06T11:34:09+02:00
 - **Current phase:** Local MVP implementation — `F-008` History and Statistics is the current focus; every History screen is delivered
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-007` and `F-011` through `F-014` complete; `T-031` through `T-036` of `F-008` are `Done` and `T-037` is `Testing`
@@ -10,17 +10,17 @@
 
 ## Current focus
 
-[`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T11:19:46+02:00. It is the last `F-008` Task: two older specs still call the archiving artifacts `T-021` removed, so `npm run test:browser` cannot run as a whole until they are repaired.
+[`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T11:34:09+02:00. It is the last `F-008` Task: two older specs still call the archiving artifacts `T-021` removed, so `npm run test:browser` cannot run as a whole until they are repaired.
 
 Every History screen is delivered and verified. [`T-031`](docs/project/tasks/T-031-build-workout-history-operations.md) through [`T-036`](docs/project/tasks/T-036-build-split-history-mobile-experience.md) are `Done`.
 
 ## Immediate next action
 
-None. Exact `T-037` delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` is approved; the complete browser suite is running against it, and the Owner's next decision is the `F-008` Feature result once `T-037` is `Done`.
+None. Exact `T-037` delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` is approved; its first run found two test-infrastructure faults, replacement `060bf92e4f28ef44006e39c75561cbae973ae724` inherits the approval under ADR-0028 and the complete suite runs against it, and the Owner's next decision is the `F-008` Feature result once `T-037` is `Done`.
 
 ## Now
 
-- [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `Testing` — Claude Code primary agent — 2026-09-06T11:19:46+02:00 — next: the complete browser suite on the exact approved delivery.
+- [`T-037`](docs/project/tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal — `Testing` — Claude Code primary agent — 2026-09-06T11:34:09+02:00 — next: the complete browser suite on inherited replacement `060bf92e4f28ef44006e39c75561cbae973ae724`.
 
 ## Next
 

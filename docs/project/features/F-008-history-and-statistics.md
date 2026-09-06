@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T11:19:46+02:00`
+- **Updated:** `2026-09-06T11:34:09+02:00`
 - **Progress:** `6/7 required Tasks Done; T-037 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -135,3 +135,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-036` and started `T-037` | The complete plan passed under the inherited approval; every History screen is delivered and the last Task restores the whole browser suite |
 | `2026-09-06T11:11:32+02:00` | Claude Code primary agent / Executor | Delivered `T-037` for review | Exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` repairs five specs, not two: the staleness reached every spec written before `T-018` |
 | `2026-09-06T11:19:46+02:00` | User / Approver | Approved `T-037` | Exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` approved with `potvrda`; the complete browser suite now runs against it |
+| `2026-09-06T11:34:09+02:00` | Claude Code primary agent / Tester and Executor | Replaced the `T-037` delivery | The first run passed 25 of 32 and found two test-infrastructure faults, the durability spec unrunnable since `T-009` and a WebKit hydration race; replacement `060bf92e4f28ef44006e39c75561cbae973ae724` inherits the approval under ADR-0028 |

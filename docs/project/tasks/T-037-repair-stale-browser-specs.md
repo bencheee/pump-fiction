@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T22:52:00+02:00`
-- **Updated:** `2026-09-06T11:34:08+02:00`
+- **Updated:** `2026-09-06T11:34:09+02:00`
 - **Started:** `2026-09-06T11:01:09+02:00`
 - **Review started:** `2026-09-06T11:11:32+02:00`
 - **Approval requested:** `2026-09-06T11:19:46+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T11:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete browser suite against the replacement recorded below, which inherits the approval under ADR-0028, in a fresh isolated worktree on a freshly reset database.
+- **Next action:** Run the complete browser suite against replacement `060bf92e4f28ef44006e39c75561cbae973ae724`, which inherits the approval under ADR-0028, in a fresh isolated worktree on a freshly reset database.
 
 ## Scope
 
@@ -87,7 +87,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 - **Delivery commit SHA:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7`
 - **Subject:** `T-037: repair the stale browser specs`
 - **Committed scope:** `today-workout-start`, `active-workout`, `exercise-library`, and `programs-mobile` rewritten to the current screens with their fixtures on deletion and the current-program pointer; the `mobile-ui-foundation` navigation test flipped to ADR-0025 with a seeded workout; and the local database workflow note on the browser fixtures' seed-pointer courtesy
-- **Replacement, inheriting the approval:** Recorded by the evidence commit that follows it
+- **Replacement, inheriting the approval:** `060bf92e4f28ef44006e39c75561cbae973ae724`
 - **Replacement subject:** `T-037: run the durability harness beside the production server`
 - **Replacement scope:** the Playwright configuration with a development server on `3101` and the `durability-chromium` and `durability-webkit` projects for that spec alone, production `baseURL` for every other spec; `tests/browser/support/hydration.ts` and its use at every first entry after a full navigation in the four rewritten specs; the durability document's sentence on where the harness is available; this Task
 
@@ -106,7 +106,7 @@ The `mobile-ui-foundation` harness has no production guard, while the durability
 
 ## Approval
 
-- **Approved commit:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7` as the Task's first delivery; inherited by the replacement recorded above
+- **Approved commit:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7` as the Task's first delivery; inherited by `060bf92e4f28ef44006e39c75561cbae973ae724`
 - **Approved by:** User / Approver
 - **Approved at:** `2026-09-06T11:19:46+02:00`
 - **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
@@ -148,3 +148,5 @@ The `mobile-ui-foundation` harness has no production guard, while the durability
 | `2026-09-06T11:19:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T11:19:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` with `potvrda` |
 | `2026-09-06T11:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete browser-suite verification against the exact approved delivery |
+| `2026-09-06T11:25:48+02:00` | Claude Code primary agent / Tester | `Testing` | `Testing` | The complete suite passed 25 of 32 against `d65b0b092e04ab17761c11a4c78dd6648369a8a7`: the durability spec never reached its production-hidden harness and WebKit typed before hydration in the programs flow; both are test-infrastructure faults and the approval is inherited |
+| `2026-09-06T11:34:09+02:00` | Claude Code primary agent / Executor | `Testing` | `Testing` | Delivered replacement `060bf92e4f28ef44006e39c75561cbae973ae724` with a development server for the durability spec and a hydration wait; static checks passed and the complete plan restarts against it |
