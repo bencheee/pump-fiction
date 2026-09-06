@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:50:00+02:00`
-- **Progress:** `0/3 required Tasks Done`
+- **Updated:** `2026-09-06T19:56:00+02:00`
+- **Progress:** `1/3 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -61,7 +61,7 @@ Recorded on `2026-09-06` at the Owner's request, without committing or implement
 
 | Order | Task | Delivers | Depends on |
 | --- | --- | --- | --- |
-| 1 | [`T-051`](../tasks/T-051-accept-the-body-destination.md) — Accept the Body destination | The criteria revisions, `ADR-0030`, and every document that states the four-destination rule or puts weight and body under History | The Owner's go-ahead |
+| 1 | [`T-051`](../tasks/T-051-accept-the-body-destination.md) — Accept the Body destination (`Done`; approved delivery `4108680d6e411544190d7c3a8e4cb2752c694c42`) | The criteria revisions, `ADR-0030`, and every document that states the four-destination rule or puts weight and body under History | The Owner's go-ahead |
 | 2 | [`T-052`](../tasks/T-052-build-the-body-destination.md) — Build the Body destination | The fifth destination with its two tabs, `S19`–`S24` moved and stripped of creation, History reduced to three subsections, the unit in the label, and every spec the move invalidates | `T-051` |
 | 3 | [`T-053`](../tasks/T-053-add-todays-measurement-entry.md) — Add today's measurement entry | The `Body measurements` card and its sheet on Today, which is where the entry paths Body gave up now live | `T-051`, `T-052` |
 
@@ -121,3 +121,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | Created in `Next` with the three-Task breakdown and the Owner's three answers | The Owner asked for a Body destination, entry moved to Today, and Weight and Body removed from History; nothing is committed or started before their go-ahead |
 | `2026-09-06T19:34:00+02:00` | User / Owner | Released `F-015` and started `T-051` | Gave the go-ahead (`nastavi`) after confirming the `M-001` result; the criteria move before anything builds against them |
 | `2026-09-06T19:50:00+02:00` | Claude Code primary agent / Executor | Delivered `T-051` for review | Exact delivery `4108680d6e411544190d7c3a8e4cb2752c694c42` records `ADR-0030`, revises five criteria, adds `MVP-TOD-005`, and corrects every document that stated the old rules |
+| `2026-09-06T19:56:00+02:00` | User / Approver | Approved `T-051`; completed it and started `T-052` | `test_required` was `no`; the criteria describe the destination, so it can now be built |

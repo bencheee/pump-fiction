@@ -1,7 +1,7 @@
 # T-052 — Build the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `Backlog`
+- **Status:** `In Progress`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:10:00+02:00`
-- **Started:** Not reached
+- **Updated:** `2026-09-06T19:56:00+02:00`
+- **Started:** `2026-09-06T19:56:00+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Await `T-051` and the `F-015` go-ahead.
+- **Next action:** Build the destination, move the routes, correct the specs, and deliver one reviewable commit.
 
 ## Scope
 
@@ -57,7 +57,7 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 ## Dependencies and blockers
 
 - Dependencies: `T-051` `Done`, so the criteria describe what this builds
-- Blockers: the `F-015` go-ahead
+- Blockers: None; `T-051` is `Done` and the criteria describe what this builds
 - Blocked from status: Not blocked
 
 ## Documentation impact
@@ -115,12 +115,12 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 - [x] Acceptance criteria are observable
 - [x] MVP criteria, ADRs, and canonical documents are linked or explicitly not applicable
 - [x] Executor and Reviewer are named
-- [ ] Dependencies are known and blocking issues resolved
+- [x] Dependencies are known and blocking issues resolved
 - [x] Documentation impact and execution checklist are defined
 - [x] Static-check plan is defined
 - [x] `test_required` and an unexecuted plan or no-test reason are recorded
 - [x] Scope fits one independently reviewable delivery commit
-- [ ] Owner confirms transition to `Ready`
+- [x] Owner confirms transition to `Ready`
 
 ## Definition of Done
 
@@ -139,3 +139,4 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 | Timestamp | Actor/role | From | To | Reason or outcome |
 | --- | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
+| `2026-09-06T19:56:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-051` is `Done`, so the destination is built against criteria that describe it |

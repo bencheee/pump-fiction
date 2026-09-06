@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T19:50:00+02:00
+- **Last updated:** 2026-09-06T19:56:00+02:00
 - **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -18,7 +18,7 @@ The release run passed 489 checks across five suites against exact approved deli
 
 ## Immediate next action
 
-Approve or reject exact `T-051` delivery `4108680d6e411544190d7c3a8e4cb2752c694c42`; `T-052` builds the destination against it.
+Deliver [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — the fifth destination, the moved routes, and every spec the move invalidates.
 
 ## Now
 
@@ -26,8 +26,7 @@ Approve or reject exact `T-051` delivery `4108680d6e411544190d7c3a8e4cb2752c694c
 
 ## Next
 
-1. [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — the fifth destination, the moved routes, and every spec the move invalidates.
-2. [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — the `Body measurements` card and sheet on Today.
+1. [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — the `Body measurements` card and sheet on Today.
 
 ## Later
 
@@ -39,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-- [`T-051`](docs/project/tasks/T-051-accept-the-body-destination.md) — exact delivery `4108680d6e411544190d7c3a8e4cb2752c694c42` — `ADR-0030`, five revised criteria, and the new `MVP-TOD-005`, `test_required: no`. Requested action: approve the exact commit.
+None.
 
 ## Approved — ready for testing
 
@@ -61,6 +60,6 @@ None.
 ## Active work items
 
 - [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md) — Post-MVP Product Changes (`0/1 Features Done`)
-- [`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`0/3 Tasks Done`)
+- [`F-015`](docs/project/features/F-015-body-destination-and-today-entry.md) — Body Destination and Today Entry (`1/3 Tasks Done`)
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
