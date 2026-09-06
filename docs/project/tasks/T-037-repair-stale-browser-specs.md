@@ -1,7 +1,7 @@
 # T-037 — Repair the browser specs left stale by the archiving removal
 
 - **Feature:** `F-008`
-- **Status:** `In Review`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 7
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-05T22:52:00+02:00`
-- **Updated:** `2026-09-06T11:11:32+02:00`
+- **Updated:** `2026-09-06T11:19:46+02:00`
 - **Started:** `2026-09-06T11:01:09+02:00`
 - **Review started:** `2026-09-06T11:11:32+02:00`
-- **Approval requested:** Not reached
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approval requested:** `2026-09-06T11:19:46+02:00`
+- **Approved:** `2026-09-06T11:19:46+02:00`
+- **Testing started:** `2026-09-06T11:19:46+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner reviews exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`. Under ADR-0028 this is the one approval the Task needs; its verification is the whole browser suite.
+- **Next action:** Run the complete browser suite against exact approved delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` in a fresh isolated worktree on a freshly reset database; any in-scope replacement inherits the approval under ADR-0028.
 
 ## Scope
 
@@ -77,7 +77,7 @@ Neither has run since that removal, because the Tasks after it recorded unit, co
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: a clean reset, then the complete `npm run test:browser` suite, serialized on one worker across mobile Chromium and mobile WebKit, all nine specs and 32 tests. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7`
 - **Results:** Not run
 
 ## Delivery commit
@@ -93,16 +93,16 @@ The finish review still says `Confirmed sets count toward exercise personal reco
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T11:19:46+02:00`
+- **Outcome:** Approved
+- **Findings:** None
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `d65b0b092e04ab17761c11a4c78dd6648369a8a7`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T11:19:46+02:00`
+- **Approval note:** The Owner replied `potvrda` to the request to review this exact delivery. Under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md) this is the Task's one approval; in-scope replacements inherit it.
 
 ## Definition of Ready
 
@@ -138,3 +138,6 @@ The finish review still says `Confirmed sets count toward exercise personal reco
 | `2026-09-06T11:01:09+02:00` | User / Owner | `Backlog` | `Ready` | The go-ahead for the whole `F-008` covers its last Task; the Owner raised no objection to its placement in three reports |
 | `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Executor | `Ready` | `In Progress` | Began repairing the two browser specs left stale by `T-021` |
 | `2026-09-06T11:11:32+02:00` | Claude Code primary agent / Executor | `In Progress` | `In Review` | Created exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7`; static checks passed, all nine specs parse, and none has run |
+| `2026-09-06T11:19:46+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
+| `2026-09-06T11:19:46+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` with `potvrda` |
+| `2026-09-06T11:19:46+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began the complete browser-suite verification against the exact approved delivery |

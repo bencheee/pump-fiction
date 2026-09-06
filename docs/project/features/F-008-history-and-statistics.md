@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T11:11:32+02:00`
-- **Progress:** `6/7 required Tasks Done; T-037 is In Review`
+- **Updated:** `2026-09-06T11:19:46+02:00`
+- **Progress:** `6/7 required Tasks Done; T-037 is Testing`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -40,7 +40,7 @@ Recorded on `2026-09-05` at the Owner's request, without starting implementation
 | 6 | [`T-036`](../tasks/T-036-build-split-history-mobile-experience.md) — Build Split History mobile experience (`Done`; first delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78`, verified through inherited replacement `1c28f61c293ca3845cf2462ecc98ab6af4cde8c6`) | `S17`, `S18` with chart | `T-032`, `T-035` |
 | 7 | [`T-037`](../tasks/T-037-repair-stale-browser-specs.md) — Repair the browser specs left stale by the archiving removal | A runnable `npm run test:browser` | None |
 
-`T-031` through `T-036` are `Done` and `T-037` is `In Review`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
+`T-031` through `T-036` are `Done` and `T-037` is `Testing`. `T-037` was discovered while preparing the `T-032` browser scenario: two older specs still call the archiving artifacts `T-021` removed, so the browser suite cannot run as a whole. It belongs here because it is what restores browser verification for these screens, and the Owner may reassign it. `T-033` and `T-035` depend on `T-031` only for the identity decision in readiness question 1; if the Owner chooses the snapshot-only answer, they depend on nothing beyond `F-007`. The Owner may merge `T-035` and `T-036` into one Task if fewer approval cycles matter more than the operations-before-screens split.
 
 ## Boundary against F-009
 
@@ -134,3 +134,4 @@ Accepted with the same go-ahead. The Executor records each in the canonical docu
 | `2026-09-06T10:54:05+02:00` | Claude Code primary agent / Executor | Delivered `T-036` for review | Exact delivery `e5f9bf82970ca37c213fb84fef554a4d37593a78` awaits the one approval the Task needs |
 | `2026-09-06T11:01:09+02:00` | Claude Code primary agent / Tester and Executor | Completed `T-036` and started `T-037` | The complete plan passed under the inherited approval; every History screen is delivered and the last Task restores the whole browser suite |
 | `2026-09-06T11:11:32+02:00` | Claude Code primary agent / Executor | Delivered `T-037` for review | Exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` repairs five specs, not two: the staleness reached every spec written before `T-018` |
+| `2026-09-06T11:19:46+02:00` | User / Approver | Approved `T-037` | Exact delivery `d65b0b092e04ab17761c11a4c78dd6648369a8a7` approved with `potvrda`; the complete browser suite now runs against it |
