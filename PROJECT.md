@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T14:12:40+02:00
+- **Last updated:** 2026-09-06T14:14:28+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,21 +10,21 @@
 
 ## Current focus
 
-No active work item. [`T-041`](docs/project/tasks/T-041-build-body-measurement-operations.md) is `Done`: body measurements have their types, their entries, both changes, and their chart series. The complete plan passed on the first run against approved delivery `cde56f00dbc7d98c28cca1c7843dd37000250bab`.
+[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `In Progress`, Executor Claude Code primary agent, last change 2026-09-06T14:14:28+02:00. It renders `S21` through `S24` on the `T-041` operations and replaces the last placeholder route in the application.
 
-[`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) renders `S21` through `S24` and is the last Task of `F-009`.
+It is the last Task of [`F-009`](docs/project/features/F-009-weight-and-body-progress.md).
 
 ## Immediate next action
 
-Start [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) on the Owner's word. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
+Deliver `T-042` as one reviewable commit after the permitted static checks, then request the Owner's review. The Owner's word is also still open on two discovered items without a Task: the finish review's `Confirmed sets` copy, and one rule for the two test-support harnesses.
 
 ## Now
 
-None; `T-041` is `Done`.
+- [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Build Body mobile experience — `In Progress` — Claude Code primary agent — 2026-09-06T14:14:28+02:00 — next: deliver one reviewable commit.
 
 ## Next
 
-1. [`T-042`](docs/project/tasks/T-042-build-body-mobile-experience.md) — Body screens `S21`–`S24`; `Backlog`.
+None; `T-042` is the last Task of `F-009`.
 
 ## Later
 
