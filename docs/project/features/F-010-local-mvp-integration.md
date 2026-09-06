@@ -6,7 +6,7 @@
 - **Order:** 3
 - **Target date:** None
 - **Created:** `2026-08-25T16:35:55+02:00`
-- **Updated:** `2026-09-06T16:12:00+02:00`
+- **Updated:** `2026-09-06T16:20:00+02:00`
 - **Progress:** `3/6 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -123,3 +123,4 @@ Accepted with the same confirmation on `2026-09-06`. The Executor records each i
 | `2026-09-06T15:54:00+02:00` | Claude Code primary agent / Executor | Delivered `T-044` for review | Exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` rewords the finish review and gives both test-support routes one rule as `ADR-0029`; it awaits the Owner's approval before any feature test runs |
 | `2026-09-06T15:58:00+02:00` | User / Approver | Approved `T-044` | Authorized the unit, component, and whole-browser-suite verification against exact delivery `f2a46162b80e747c369e42e4c4e49854ae72cc42` |
 | `2026-09-06T16:12:00+02:00` | Claude Code primary agent / Tester | Completed `T-044` | The complete plan passed against inherited replacement `1bee438efe2a7fc4f9e3a399ccaf5ff27a465331`: unit 237/237, components 4/4, and the whole browser suite 38/38 on one production server, the durability spec included for the first time |
+| `2026-09-06T16:20:00+02:00` | Claude Code primary agent / Executor | Started `T-045` | The record and the corrections are done, so the two release criteria no single Feature could prove come next |

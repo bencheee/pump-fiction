@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T16:12:00+02:00
+- **Last updated:** 2026-09-06T16:20:00+02:00
 - **Current phase:** Local MVP integration — every domain Feature is `Done`; `F-010` Local MVP Integration is the last Feature and its breakdown is recorded
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-009` and `F-011` through `F-014` complete; `F-010` holds `T-043` through `T-049`, of which six are required, one is `Done`, and `T-047` is `Canceled`
@@ -16,11 +16,11 @@ Both items that had no Task now have one: the finish review's `Confirmed sets` c
 
 ## Immediate next action
 
-Start [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — the release evidence for `MVP-REL-003` and `MVP-REL-004`.
+Deliver [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — the release evidence for `MVP-REL-003` and `MVP-REL-004`.
 
 ## Now
 
-1. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — `Backlog`, Claude Code primary agent, `2026-09-06T16:12:00+02:00`; next action: move to `Ready` and write the scenario.
+1. [`T-045`](docs/project/tasks/T-045-verify-cross-feature-persistence.md) — `In Progress`, Claude Code primary agent, `2026-09-06T16:20:00+02:00`; next action: write the scenario and deliver one reviewable commit.
 
 ## Next
 
