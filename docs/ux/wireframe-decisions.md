@@ -99,4 +99,10 @@ The entry screen defaults to today, accepts an earlier date, and refuses a later
 
 Provide measurement-type list with latest values and changes. Detail provides total change, time-range selector, chart, and entry list.
 
+The list is ordered by name and each row carries the latest value, its date, and its change, or says that nothing is recorded yet. It shows no archived section, badge, or filter, because [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed archiving, and it states once that a rise or a fall is neither good nor bad on its own.
+
+The type form shows the unit as read-only text. It offers **Delete Measurement** only while the type holds nothing; with entries it explains that they are the only record and that renaming keeps every one of them, rather than disabling a control silently. Renaming is an ordinary save.
+
+The detail gives the latest value, the latest change, and the total change as stat cards, each saying so plainly when there is nothing to compare against. Its range selector offers month, quarter, year, and all, and opens on all. The entry screen mirrors the weight entry screen, scoped to its type: today by default, an earlier date accepted, a later one refused, the cue in the first row of the sticky action bar, and deletion behind the destructive confirmation.
+
 History calculations are canonical in [`history-and-statistics.md`](../product/history-and-statistics.md) and [`weight-and-body.md`](../product/weight-and-body.md).

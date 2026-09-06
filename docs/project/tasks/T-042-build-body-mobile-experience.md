@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T14:14:28+02:00`
+- **Updated:** `2026-09-06T14:22:36+02:00`
 - **Started:** `2026-09-06T14:14:28+02:00`
 - **Review started:** Not reached
 - **Approval requested:** Not reached
@@ -17,7 +17,7 @@
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the recorded scope, run only the permitted static checks, and deliver one reviewable commit for the Owner's review.
+- **Next action:** The Owner reviews the exact delivery commit. No feature test runs before that approval.
 
 ## Scope
 
@@ -83,18 +83,18 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 
 ## Execution checklist
 
-- [ ] Implement `S21` with the type summaries, neutral change presentation, the empty and loading states, and the header add action.
-- [ ] Implement `S22` create and rename with validation, the sticky cue row, the save contract, `O01` deletion for entry-less types, and the explanation for types with entries.
-- [ ] Implement `S23` summaries, the range selector, the route-local chart with the textual summary and the accessible list, and the entries list with its per-entry change.
-- [ ] Implement `S24` create and edit with the date default, the decimal keyboard, inline announced validation, the sticky cue row, the save contract, and `O01` deletion.
-- [ ] Wire the UUID and date route-parameter validation, the not-found boundary, and the subsection navigation state.
-- [ ] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 9 (`S21` to `S23` to `S24`, plus `S22` create and delete) with structural captures; do not run them.
-- [ ] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Implement `S21` with the type summaries, neutral change presentation, the empty and loading states, and the header add action.
+- [x] Implement `S22` create and rename with validation, the sticky cue row, the save contract, `O01` deletion for entry-less types, and the explanation for types with entries.
+- [x] Implement `S23` summaries, the range selector, the route-local chart with the textual summary and the accessible list, and the entries list with its per-entry change.
+- [x] Implement `S24` create and edit with the date default, the decimal keyboard, inline announced validation, the sticky cue row, the save contract, and `O01` deletion.
+- [x] Wire the UUID and date route-parameter validation, the not-found boundary, and the subsection navigation state.
+- [x] Prepare component tests and a serialized Chromium/WebKit scenario for critical flow 9 (`S21` to `S23` to `S24`, plus `S22` create and delete) with structural captures; do not run them.
+- [x] Update canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build with the chart bundle confined to its routes, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T14:22:36+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. The build lists all six Body routes as dynamic but for the static type-create form, and **no placeholder route remains in the application**. `git diff --check` was clean. This Task changes no schema, migration, generated type, or server operation. No feature test ran: the component suite and the browser scenario are prepared and unexecuted.
 
 ## Test plan and results
 
@@ -104,11 +104,21 @@ Implement the phone-only Body subsection of History on the `T-041` operations, i
 - **Authorized commit:** Not authorized
 - **Results:** Not run
 
+## Recorded decisions
+
+- `/history/body/types/...` is a static segment beside the dynamic `/history/body/[typeId]`, so the type forms and the measurement detail cannot collide;
+- `S22` offers **Delete Measurement** only while the type holds nothing and otherwise explains why, rather than disabling a control without saying so;
+- `S21` states once, in words, that a rise or a fall is neither good nor bad, which is where the neutrality `MVP-BOD-003` requires is said rather than implied;
+- `S23` opens on `all` and offers month, quarter, year, and all; each stat card says plainly when it has nothing to compare against;
+- `body-presentation.ts` sits beside `weight-presentation.ts` in the feature's `ui` module;
+- the trend sentence is built as one string, as `S19` does, so a JSX line break cannot change what it reads;
+- `S21` is a server component, since it holds no client state; the browser scenario covers it and the component suite covers the three that do.
+
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-042: build Body screens`
-- **Committed scope:** Not created
+- **Committed scope:** `S21` at `/history/body` replacing the last placeholder route; `S22` at `/history/body/types/new` and `/history/body/types/[id]/edit` with the read-only unit, the rename, and the conditional deletion; `S23` at `/history/body/[typeId]` with its three stat cards, range selector, chart, textual summary, accessible value list, and entry list; `S24` at `/history/body/[typeId]/new` and `/history/body/[typeId]/[date]/edit`; `body-presentation.ts` in the History `ui` module; the prepared component suite and the prepared `body` browser scenario; and the mobile-UI-foundation and screen-decision documents
 
 ## Review
 
