@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T19:56:00+02:00
+- **Last updated:** 2026-09-06T20:36:00+02:00
 - **Current phase:** **Local MVP complete.** The Owner confirmed the result on `2026-09-06`: 14/14 Features `Done`, all 57 locked criteria verified against approved deliveries, and a release run of 489 checks against one approved tree
 - **Current Milestone:** [`M-002 — Post-MVP Product Changes`](docs/project/milestones/M-002-post-mvp-product-changes.md); [`M-001`](docs/project/milestones/M-001-local-mvp.md) is `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -18,7 +18,7 @@ The release run passed 489 checks across five suites against exact approved deli
 
 ## Immediate next action
 
-Deliver [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — the fifth destination, the moved routes, and every spec the move invalidates.
+Approve or reject exact `T-052` delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, which authorizes the whole browser suite. Note that until `T-053` lands, nothing in the application records a weigh-in.
 
 ## Now
 
@@ -38,7 +38,7 @@ None.
 
 ## Awaiting approval
 
-None.
+- [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` — the Body destination, the moved routes, and every spec the move invalidates, `test_required: yes`. Requested action: approve the exact commit, which authorizes the whole browser suite.
 
 ## Approved — ready for testing
 

@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T20:34:00+02:00`
+- **Updated:** `2026-09-06T20:36:00+02:00`
 - **Started:** `2026-09-06T19:56:00+02:00`
 - **Review started:** `2026-09-06T20:34:00+02:00`
 - **Approval requested:** `2026-09-06T20:34:00+02:00`
@@ -90,7 +90,7 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Recorded by the following evidence commit
+- **Delivery commit SHA:** `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`
 - **Subject:** `T-052: build the Body destination`
 - **Committed scope:** the fifth destination in `shell.tsx`; `src/shared/ui/subsection-navigation.tsx` extracted from the History bar and used by both destinations; `/body` with its layout, its tab bar, and its redirect to Weight; six routes moved from `/history/weight` and `/history/body`; the two create routes deleted; the add actions removed from `S19` and `S23`; the unit moved into the name hint and the detail label; History reduced to three tabs; the foundation spec, the `T-046` inventory and fixtures, the `T-045` fixture, and the weight, body, workout-history, and Today specs; the mobile UI foundation and wireframe decisions; this Task.
 

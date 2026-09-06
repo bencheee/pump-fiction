@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:56:00+02:00`
+- **Updated:** `2026-09-06T20:36:00+02:00`
 - **Progress:** `1/3 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `0`
+- **Awaiting approval Tasks:** `1`
 
 ## Outcome
 
@@ -122,3 +122,4 @@ Not decided. The Executor records each in canonical documentation during the Tas
 | `2026-09-06T19:34:00+02:00` | User / Owner | Released `F-015` and started `T-051` | Gave the go-ahead (`nastavi`) after confirming the `M-001` result; the criteria move before anything builds against them |
 | `2026-09-06T19:50:00+02:00` | Claude Code primary agent / Executor | Delivered `T-051` for review | Exact delivery `4108680d6e411544190d7c3a8e4cb2752c694c42` records `ADR-0030`, revises five criteria, adds `MVP-TOD-005`, and corrects every document that stated the old rules |
 | `2026-09-06T19:56:00+02:00` | User / Approver | Approved `T-051`; completed it and started `T-052` | `test_required` was `no`; the criteria describe the destination, so it can now be built |
+| `2026-09-06T20:36:00+02:00` | Claude Code primary agent / Executor | Delivered `T-052` for review | Exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` moves the screens into a destination of their own and strips their create paths; until `T-053` the application records no weigh-in at all |
