@@ -9,7 +9,7 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T00:49:17+02:00`
-- **Updated:** `2026-09-06T13:48:55+02:00`
+- **Updated:** `2026-09-06T13:51:40+02:00`
 - **Started:** `2026-09-06T13:41:30+02:00`
 - **Review started:** `2026-09-06T13:49:31+02:00`
 - **Approval requested:** `2026-09-06T13:48:55+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-06T13:48:55+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the complete recorded plan against the exact approved delivery, then record the result.
+- **Next action:** Run the complete recorded plan from the beginning against exact replacement `88abdad827a907fc93c61fd7851cd5d1736057a6`, then record the result.
 
 ## Scope
 
@@ -79,15 +79,17 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 ## Static-check plan and results
 
 - Planned checks: formatting, ESLint dependency and accessibility rules, strict TypeScript, production build, UI asset checksums, Markdown lint, internal links, and `git diff --check`
-- Results: Passed on `2026-09-06T13:48:05+02:00` with Node.js `22.21.0`, npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. `git diff --check` was clean. This Task changes no schema, migration, or generated type, and no server operation: it reads `getTodayWeight` and writes through the `T-038` create action. No feature test ran: the extended Today component suite and the extended Today browser scenario are prepared and unexecuted.
+- Results: Passed on `2026-09-06T13:48:05+02:00` with Node.js `22.21.0`, npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the asset checksums, Markdown lint, and every internal link. `git diff --check` was clean. This Task changes no schema, migration, or generated type, and no server operation: it reads `getTodayWeight` and writes through the `T-038` create action. No feature test ran: the extended Today component suite and the extended Today browser scenario are prepared and unexecuted. Re-run for the replacement on `2026-09-06T13:51:40+02:00`: `npm run check` passed every step again and `git diff --check` was clean; the replacement touches test source only.
 
 ## Test plan and results
 
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped Today component suite (prompt visibility per state, sheet lifecycle, conflict resolution) and the serialized one-worker Chromium and WebKit Today scenario on the `T-037` harness, extended with the prompt, the save, and its reflection on `S19`; the scenario removes the entry it creates. Must not run before that approval; replacements inherit it under ADR-0028.
-- **Authorized commit:** `4992e617d3d367091332eb178525b2c61e35f0a5`
-- **Results:** Not run
+- **Authorized commit:** `88abdad827a907fc93c61fd7851cd5d1736057a6`, under the Task approval inherited per [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md)
+- **Results:** First verification on `2026-09-06T13:50:03+02:00` against exact approved delivery `4992e617d3d367091332eb178525b2c61e35f0a5` in a fresh isolated worktree with Node.js `22.21.0`, npm `10.9.4`, and Vitest `4.1.11`. `npm run test:unit` passed **187 of 192 across 22 files** and failed five Today scenarios, three new and two older than this Task, all with `useToast requires a ToastProvider ancestor`.
+
+  The application was right and the tests were not. The weight card raises a toast when the day's weigh-in is saved, as every other save does, and `MainShell` owns that one provider; the suite rendered `TodayExperience` bare. Replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` sends every render through a helper that stands in for the shell, the way the exercise-form suite already does. The complete plan restarts from the beginning against it.
 
 ## Recorded decisions
 
@@ -100,7 +102,8 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 
 ## Delivery commit
 
-- **Delivery commit SHA:** `4992e617d3d367091332eb178525b2c61e35f0a5`
+- **Delivery commit SHA:** `88abdad827a907fc93c61fd7851cd5d1736057a6` (test-source replacement; supersedes first delivery `4992e617d3d367091332eb178525b2c61e35f0a5`)
+- **Replacement scope:** every `TodayExperience` render in the component suite now goes through a helper that provides the toast the shell provides; no application code, document, schema, or generated type changed
 - **Subject:** `T-040: add today's weight prompt`
 - **Committed scope:** the `S01` weight card and its `S04` sheet in `today-weight.tsx`; the Today page reading the weigh-in beside its aggregate and the experience rendering the card; `weight-presentation.ts` promoted to the History `ui` module with its `S19` import repointed; four prepared Today component scenarios and a prepared Today browser scenario for the prompt, the sheet, the saved state, and Weight; and the product-overview, mobile-UI-foundation, and screen-decision documents, the last also carrying the `T-039` browser-harness note
 
@@ -109,7 +112,7 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 - **Reviewer:** User
 - **Reviewed at:** `2026-09-06T13:48:55+02:00`
 - **Outcome:** Recommended for approval
-- **Findings:** None recorded
+- **Findings:** The authorized verification found the missing provider below
 
 ## Approval
 
@@ -156,3 +159,4 @@ Add the `MVP-TOD-004` weight surface to Today on the `T-038` operations, without
 | `2026-09-06T13:48:55+02:00` | User / Reviewer | `In Review` | `Awaiting Approval` | Reviewed the exact delivery with no findings |
 | `2026-09-06T13:48:55+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Explicitly approved exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5` with `odobreno` |
 | `2026-09-06T13:48:55+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | Began only the recorded component and browser verification against the exact approved delivery |
+| `2026-09-06T13:51:40+02:00` | Claude Code primary agent / Tester and Executor | `Testing` | `Testing` | Five Today scenarios failed for want of the toast provider the shell gives them; replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` corrects the suite, inherits the Task approval under ADR-0028, and the complete plan restarts against it |

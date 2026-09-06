@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T13:48:55+02:00
+- **Last updated:** 2026-09-06T13:51:40+02:00
 - **Current phase:** Local MVP implementation — `F-008` is `Done` and `F-009` Weight and Body Progress is the current focus, released by the Owner on `2026-09-06`
 - **Current Milestone:** [`M-001 — Local MVP`](docs/project/milestones/M-001-local-mvp.md)
 - **Implementation:** `F-004` through `F-008` and `F-011` through `F-014` complete; `F-009` is released and `T-038` of its five Tasks is `Done`
@@ -10,7 +10,7 @@
 
 ## Current focus
 
-[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T13:48:55+02:00. The Owner approved exact delivery `4992e617d3d367091332eb178525b2c61e35f0a5`, which authorizes the recorded plan.
+[`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `Testing`, Executor Claude Code primary agent, last change 2026-09-06T13:48:55+02:00. The first verification found the component suite rendering Today without the shell's toast provider, which replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` corrects under the inherited approval of ADR-0028.
 
 Weight is otherwise finished: [`T-038`](docs/project/tasks/T-038-build-weight-operations.md) derives it and [`T-039`](docs/project/tasks/T-039-build-weight-mobile-experience.md) renders `S19` and `S20`.
 
@@ -20,7 +20,7 @@ Run the complete recorded `T-040` plan and record the result. The Owner's word i
 
 ## Now
 
-- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `Testing` — Claude Code primary agent — 2026-09-06T13:48:55+02:00 — next: record the verification result.
+- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — `Testing` — Claude Code primary agent — 2026-09-06T13:51:40+02:00 — next: the complete plan restarted against `88abdad827a907fc93c61fd7851cd5d1736057a6`.
 
 ## Next
 
@@ -41,7 +41,7 @@ None.
 
 ## Approved — ready for testing
 
-- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — approved delivery `4992e617d3d367091332eb178525b2c61e35f0a5` — Claude Code primary agent — 2026-09-06T13:48:55+02:00 — next required action: the complete recorded plan.
+- [`T-040`](docs/project/tasks/T-040-add-todays-weight-prompt.md) — Add today's weight prompt to Today — inherited approval, exact replacement `88abdad827a907fc93c61fd7851cd5d1736057a6` — Claude Code primary agent — 2026-09-06T13:51:40+02:00 — next required action: the complete recorded plan, restarted from the beginning.
 
 ## Recently completed Tasks
 
