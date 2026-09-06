@@ -1,7 +1,7 @@
 # T-052 — Build the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `Awaiting Approval`
+- **Status:** `Testing`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T20:36:00+02:00`
+- **Updated:** `2026-09-06T20:42:00+02:00`
 - **Started:** `2026-09-06T19:56:00+02:00`
 - **Review started:** `2026-09-06T20:34:00+02:00`
 - **Approval requested:** `2026-09-06T20:34:00+02:00`
-- **Approved:** Not reached
-- **Testing started:** Not reached
+- **Approved:** `2026-09-06T20:42:00+02:00`
+- **Testing started:** `2026-09-06T20:42:00+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the whole browser suite.
+- **Next action:** Run the authorized suite against the exact approved delivery and record the result.
 
 ## Scope
 
@@ -80,7 +80,7 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 - **Test required:** `yes`
 - **No-test reason:** Not applicable
 - **Planned tests:** After the Task's one approval: the scoped component suites for the moved screens, and the **whole** browser suite on one worker across both phones — not just the moved specs, because the destination count, the route inventory, and two fixtures change under every other spec. Must not run before that approval; replacements inherit it under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
-- **Authorized commit:** Not authorized
+- **Authorized commit:** `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`
 - **Results:** Not run
 
 ## Static-check plan and results
@@ -110,10 +110,10 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 
 ## Approval
 
-- **Approved commit:** Not approved
-- **Approved by:** Not approved
-- **Approved at:** Not approved
-- **Approval note:** Not approved
+- **Approved commit:** `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-06T20:42:00+02:00`
+- **Approval note:** Approved (`nastavi`), which authorizes the unit, component, and whole-browser-suite verification against this exact tree. Replacements within scope inherit it under ADR-0028.
 
 ## Definition of Ready
 
@@ -148,3 +148,5 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T19:56:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-051` is `Done`, so the destination is built against criteria that describe it |
 | `2026-09-06T20:34:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the destination, the move, and every spec it invalidated; static checks passed and no feature test ran |
+| `2026-09-06T20:42:00+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff` (`nastavi`) |
+| `2026-09-06T20:42:00+02:00` | Claude Code primary agent / Tester | `Approved` | `Testing` | The whole suite runs, because the destination count and the route inventory changed under every spec |
