@@ -23,7 +23,11 @@ export default async function MeasurementDetailPage({
   if (!result.ok) {
     return (
       <div className="flex min-h-full flex-col">
-        <TopBar title="Measurement" backHref="/history/body" backLabel="Body" />
+        <TopBar
+          title="Measurement"
+          backHref="/body/measurements"
+          backLabel="Body"
+        />
         <PageFrame title="Measurement unavailable" className="pt-5">
           <EmptyState
             title="That measurement couldn't be loaded"

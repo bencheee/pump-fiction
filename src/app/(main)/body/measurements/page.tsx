@@ -8,7 +8,7 @@ import {
 } from "@/features/history/ui/body-presentation";
 import { EmptyState, Icon, ListRow, PageFrame } from "@/shared/ui";
 
-import { formatHistoryDate } from "../history-presentation";
+import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ export default async function BodyHistoryPage() {
           body={result.error.message}
           action={
             <Link
-              href="/history/body"
+              href="/body/measurements"
               className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
             >
               Retry
@@ -42,7 +42,7 @@ export default async function BodyHistoryPage() {
           action sits in the flow rather than floating over it. */}
       <div className="-mt-2 flex justify-end">
         <Link
-          href="/history/body/types/new"
+          href="/body/measurements/types/new"
           className="flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-accent-strong)]"
         >
           <Icon name="plus" size={18} />
@@ -60,7 +60,7 @@ export default async function BodyHistoryPage() {
           {measurements.map((measurement) => (
             <li key={measurement.id}>
               <ListRow
-                href={`/history/body/${measurement.id}`}
+                href={`/body/measurements/${measurement.id}`}
                 title={measurement.name}
                 detail={
                   measurement.latest === null ? (

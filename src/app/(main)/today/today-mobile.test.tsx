@@ -159,7 +159,7 @@ describe("Today and workout-start mobile experience", () => {
     expect(card.getByText("82.4 kg")).toBeVisible();
     expect(card.getByRole("link", { name: "See Weight" })).toHaveAttribute(
       "href",
-      "/history/weight",
+      "/body/weight",
     );
     expect(
       card.queryByRole("button", { name: "Add today's weight" }),

@@ -81,8 +81,8 @@ test.describe("Local MVP phone interaction", () => {
         "/exercises/new",
         `/programs/${fixture.programId}/splits/new`,
         "/workout/current",
-        "/history/weight/new",
-        `/history/body/${fixture.typeId}/new`,
+        `/body/weight/${weighInAt}/edit`,
+        `/body/measurements/${fixture.typeId}/${measuredAt}/edit`,
         `/history/workouts/${fixture.workoutId}/edit`,
       ];
 
@@ -209,12 +209,12 @@ test.describe("Local MVP phone interaction", () => {
       await expectConfirmed(page, `/splits/${fixture.splitBId}/edit`, {
         name: "Delete Split",
       });
-      await expectConfirmed(page, `/history/weight/${weighInAt}/edit`, {
+      await expectConfirmed(page, `/body/weight/${weighInAt}/edit`, {
         name: "Delete Entry",
       });
       await expectConfirmed(
         page,
-        `/history/body/${fixture.typeId}/${measuredAt}/edit`,
+        `/body/measurements/${fixture.typeId}/${measuredAt}/edit`,
         { name: "Delete Entry" },
       );
 
@@ -295,21 +295,20 @@ const routeFixtures: Record<string, (fixture: Fixture) => string> = {
   "/exercises/new": () => "/exercises/new",
   "/exercises/[id]/edit": (f) => `/exercises/${f.exerciseId}/edit`,
   "/history": () => "/history",
-  "/history/body": () => "/history/body",
-  "/history/body/[typeId]": (f) => `/history/body/${f.typeId}`,
-  "/history/body/[typeId]/[date]/edit": (f) =>
-    `/history/body/${f.typeId}/${measuredAt}/edit`,
-  "/history/body/[typeId]/new": (f) => `/history/body/${f.typeId}/new`,
-  "/history/body/types/[id]/edit": (f) =>
-    `/history/body/types/${f.typeId}/edit`,
-  "/history/body/types/new": () => "/history/body/types/new",
+  "/body": () => "/body",
+  "/body/measurements": () => "/body/measurements",
+  "/body/measurements/[typeId]": (f) => `/body/measurements/${f.typeId}`,
+  "/body/measurements/[typeId]/[date]/edit": (f) =>
+    `/body/measurements/${f.typeId}/${measuredAt}/edit`,
+  "/body/measurements/types/[id]/edit": (f) =>
+    `/body/measurements/types/${f.typeId}/edit`,
+  "/body/measurements/types/new": () => "/body/measurements/types/new",
   "/history/exercises": () => "/history/exercises",
   "/history/exercises/[id]": (f) => `/history/exercises/${f.exerciseId}`,
   "/history/splits": () => "/history/splits",
   "/history/splits/[id]": (f) => `/history/splits/${f.splitAId}`,
-  "/history/weight": () => "/history/weight",
-  "/history/weight/[date]/edit": () => `/history/weight/${weighInAt}/edit`,
-  "/history/weight/new": () => "/history/weight/new",
+  "/body/weight": () => "/body/weight",
+  "/body/weight/[date]/edit": () => `/body/weight/${weighInAt}/edit`,
   "/history/workouts": () => "/history/workouts",
   "/history/workouts/[id]": (f) => `/history/workouts/${f.workoutId}`,
   "/history/workouts/[id]/edit": (f) => `/history/workouts/${f.workoutId}/edit`,

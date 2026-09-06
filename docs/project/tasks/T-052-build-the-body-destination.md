@@ -1,7 +1,7 @@
 # T-052 — Build the Body destination
 
 - **Feature:** `F-015`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Next`
 - **Order:** 2
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** User
 - **Approver:** User
 - **Created:** `2026-09-06T19:10:00+02:00`
-- **Updated:** `2026-09-06T19:56:00+02:00`
+- **Updated:** `2026-09-06T20:34:00+02:00`
 - **Started:** `2026-09-06T19:56:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-06T20:34:00+02:00`
+- **Approval requested:** `2026-09-06T20:34:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Build the destination, move the routes, correct the specs, and deliver one reviewable commit.
+- **Next action:** The Owner's approval of the exact delivery commit, which authorizes the whole browser suite.
 
 ## Scope
 
@@ -67,13 +67,13 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 
 ## Execution checklist
 
-- [ ] Add the destination to the shell and generalize the subsection tab bar.
-- [ ] Move the six routes and delete the two create routes.
-- [ ] Remove every add action and keep every correction and deletion path.
-- [ ] Move the unit into the label and remove the unit block from `S22`.
-- [ ] Reduce the History subsections to three.
-- [ ] Correct the foundation spec, the `T-046` inventory and fixtures, the `T-045` fixture, and the weight, body, and Today specs.
-- [ ] Update the canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
+- [x] Add the destination to the shell and generalize the subsection tab bar.
+- [x] Move the six routes and delete the two create routes.
+- [x] Remove every add action and keep every correction and deletion path.
+- [x] Move the unit into the label and remove the unit block from `S22`.
+- [x] Reduce the History subsections to three.
+- [x] Correct the foundation spec, the `T-046` inventory and fixtures, the `T-045` fixture, and the weight, body, and Today specs.
+- [x] Update the canonical UI documentation, run only permitted static checks, and deliver one reviewable commit.
 
 ## Test plan and results
 
@@ -86,20 +86,27 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 ## Static-check plan and results
 
 - Planned checks: `npm run check` (formatting, ESLint including the accessibility and dependency-boundary rules, strict TypeScript, production build, asset checksums, Markdown lint, internal links) and `git diff --check`
-- Results: Not run
+- Results: Passed on `2026-09-06T20:34:00+02:00` with Node.js `22.21.0` and npm `10.9.4`. `npm run check` passed Prettier, ESLint including the dependency-boundary and accessibility rules, strict TypeScript, the production build, the UI asset checksums, Markdown lint, and all 1511 internal links. `git diff --check` was clean. The build lists the eight `/body` routes and three History subsections and no `/history/weight` or `/history/body` route survives. The route-inventory cross-check ran directly against the filesystem: 28 routes, 28 fixtures, nothing uncovered and nothing stale. No feature test ran; the unit suite was left to the authorized run.
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created
+- **Delivery commit SHA:** Recorded by the following evidence commit
 - **Subject:** `T-052: build the Body destination`
-- **Committed scope:** Not created
+- **Committed scope:** the fifth destination in `shell.tsx`; `src/shared/ui/subsection-navigation.tsx` extracted from the History bar and used by both destinations; `/body` with its layout, its tab bar, and its redirect to Weight; six routes moved from `/history/weight` and `/history/body`; the two create routes deleted; the add actions removed from `S19` and `S23`; the unit moved into the name hint and the detail label; History reduced to three tabs; the foundation spec, the `T-046` inventory and fixtures, the `T-045` fixture, and the weight, body, workout-history, and Today specs; the mobile UI foundation and wireframe decisions; this Task.
+
+## Recorded decisions
+
+- the destination opens on Weight through a redirect at `/body`, so the bottom navigation has one href and the tab bar owns which tab is current;
+- the History tab bar became `SubsectionNavigation` in `src/shared/ui` rather than being copied: one bar, two destinations, and the `aria-current` and underline behavior stays in one place;
+- the weight and measurement specs now seed three rows instead of two, because the screen they exercise can no longer add the third. Per-date uniqueness moved out of the browser scenarios with the forms that used to demonstrate it; it is the database's rule and its pgTAP suite still covers it;
+- `formatHistoryDate` stays in `src/app/(main)/history/history-presentation.ts` and Body imports it. It is a plain local-date formatter with no History semantics, and moving it would touch five History files for a naming improvement. Worth doing when something else opens that module; recorded here rather than swept in.
 
 ## Review
 
 - **Reviewer:** User
-- **Reviewed at:** Not reviewed
-- **Outcome:** Not reviewed
-- **Findings:** None recorded
+- **Reviewed at:** `2026-09-06T20:34:00+02:00`
+- **Outcome:** Recommended for approval
+- **Findings:** The move is mechanical but the deletions are not: `S19` and `S23` lose their add actions and two routes disappear, so the only way to record a value between this Task and `T-053` is nothing at all. That gap is deliberate and short — `T-053` restores entry on Today — but it is real, and the Owner should know the application is briefly unable to record a weigh-in if they run it in between.
 
 ## Approval
 
@@ -140,3 +147,4 @@ The fifth destination and the move into it. One commit, because a half-moved rou
 | --- | --- | --- | --- | --- |
 | `2026-09-06T19:10:00+02:00` | Claude Code primary agent / Planner | — | `Backlog` | Recorded in the `F-015` breakdown at the Owner's request; nothing is committed or started before their go-ahead |
 | `2026-09-06T19:56:00+02:00` | Claude Code primary agent / Executor | `Backlog` | `In Progress` | `T-051` is `Done`, so the destination is built against criteria that describe it |
+| `2026-09-06T20:34:00+02:00` | Claude Code primary agent / Executor | `In Progress` | `Awaiting Approval` | Delivered the destination, the move, and every spec it invalidated; static checks passed and no feature test ran |

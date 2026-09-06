@@ -19,19 +19,16 @@ test.describe("Weight experience", () => {
 
     try {
       // S19 lists the seeded weigh-ins newest first, each with its change.
-      await page.goto("/history/weight");
+      await page.goto("/body/weight");
       const entries = page.getByRole("list", { name: "Weigh-ins" });
-      await expect(entries.getByRole("link")).toHaveCount(2);
+      await expect(entries.getByRole("link")).toHaveCount(3);
       const newest = entries.getByRole("link").first();
-      await expect(newest).toContainText("83 kg");
-      await expect(newest).toContainText("+1.0 kg");
+      await expect(newest).toContainText("80.5 kg");
 
       // The chart is never the only representation of its data, and its two
       // series are named rather than distinguished by color alone.
       await page.getByRole("button", { name: "Year" }).click();
-      await expect(
-        page.getByText(/2 weigh-ins from 82 kg to 83 kg/),
-      ).toBeVisible();
+      await expect(page.getByText(/3 weigh-ins/)).toBeVisible();
       const legend = page.getByRole("list", { name: "Chart legend" });
       await expect(legend.getByText("Weight, solid line")).toBeVisible();
       await expect(
@@ -57,57 +54,33 @@ test.describe("Weight experience", () => {
         page.getByText(/No weigh-in falls inside this range/),
       ).toBeVisible();
 
-      // S20 creates a retrospective weigh-in and returns to S19 recalculated.
-      await page.getByRole("link", { name: "Add weigh-in" }).click();
-      await expect(page).toHaveURL(/\/history\/weight\/new$/);
-      await testInfo.attach(`weight-s20-new-${testInfo.project.name}.png`, {
-        body: await page.screenshot({ fullPage: true }),
-        contentType: "image/png",
-      });
-      await page.getByLabel("Date").fill(created);
-      await fillHydrated(page.getByLabel("Weight (kg)"), "80.5");
-      await page.getByRole("button", { name: "Save Weight" }).click();
-      await expect(page).toHaveURL(/\/history\/weight$/);
+      // Body reads and corrects; it never creates. ADR-0030 moved creation to
+      // Today, and per-date uniqueness stays where it always was, in the
+      // database, covered by its own pgTAP suite.
       await expect(
-        page.getByRole("list", { name: "Weigh-ins" }).getByRole("link"),
-      ).toHaveCount(3);
-      await expect(
-        page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
-      ).toContainText("80.5 kg");
-
-      // The database owns per-date uniqueness, and it reaches the date field.
-      await page.getByRole("link", { name: "Add weigh-in" }).click();
-      await page.getByLabel("Date").fill(created);
-      await fillHydrated(page.getByLabel("Weight (kg)"), "79");
-      await page.getByRole("button", { name: "Save Weight" }).click();
-      await expect(
-        page.getByText("That date already has a weigh-in."),
-      ).toBeVisible();
-      await expect(page.getByLabel("Weight (kg)")).toHaveValue("79");
-      await testInfo.attach(`weight-s20-refused-${testInfo.project.name}.png`, {
-        body: await page.screenshot({ fullPage: true }),
-        contentType: "image/png",
-      });
+        page.getByRole("link", { name: "Add weigh-in" }),
+      ).toHaveCount(0);
+      await expect(page.getByRole("link", { name: /add/i })).toHaveCount(0);
 
       // A correction recalculates the change the next weigh-in carries.
-      await page.goto(`/history/weight/${created}/edit`);
+      await page.goto(`/body/weight/${created}/edit`);
       await fillHydrated(page.getByLabel("Weight (kg)"), "79.5");
       await expect(page.getByText("Unsaved changes")).toBeVisible();
       await page.getByRole("button", { name: "Save Weight" }).click();
-      await expect(page).toHaveURL(/\/history\/weight$/);
+      await expect(page).toHaveURL(/\/body\/weight$/);
       await expect(
         page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
       ).toContainText("79.5 kg");
 
       // Deleting asks first and returns to a recalculated S19.
-      await page.goto(`/history/weight/${created}/edit`);
+      await page.goto(`/body/weight/${created}/edit`);
       await page.getByRole("button", { name: "Delete Entry" }).click();
       await expect(page.getByText("Delete this weigh-in?")).toBeVisible();
       await page
         .getByRole("alertdialog")
         .getByRole("button", { name: "Delete Entry" })
         .click();
-      await expect(page).toHaveURL(/\/history\/weight$/);
+      await expect(page).toHaveURL(/\/body\/weight$/);
       await expect(
         page.getByRole("list", { name: "Weigh-ins" }).getByRole("link"),
       ).toHaveCount(2);
@@ -141,9 +114,13 @@ function adminClient() {
 async function seedWeighIns() {
   const client = adminClient();
   await removeFixtures();
+  // Three, because Body creates none: ADR-0030 moved creation to Today, so
+  // the correction and deletion this scenario exercises need a third row that
+  // the screen itself can no longer add.
   for (const [entryDate, weightKg] of [
     [seeded.first, 82],
     [seeded.second, 83],
+    [created, 80.5],
   ] as const) {
     const { error } = await client.rpc("create_weight_entry", {
       p_entry_date: entryDate,

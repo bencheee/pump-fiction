@@ -23,7 +23,7 @@ export default async function EditMeasurementTypePage({
       <div className="flex min-h-full flex-col">
         <TopBar
           title="Edit Measurement"
-          backHref="/history/body"
+          backHref="/body/measurements"
           backLabel="Body"
         />
         <PageFrame title="Measurement unavailable" className="pt-5">

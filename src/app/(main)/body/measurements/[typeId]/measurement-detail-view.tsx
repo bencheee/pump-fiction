@@ -16,14 +16,13 @@ import { ProgressChart } from "@/features/history/ui/progress-chart";
 import {
   Chip,
   EmptyState,
-  Icon,
   ListRow,
   PageFrame,
   StatCard,
   TopBar,
 } from "@/shared/ui";
 
-import { formatHistoryDate } from "../../history-presentation";
+import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
 /** Body offers no `week` range; `weight-and-body.md` names these four. */
 const bodyRanges: readonly ChartRange[] = ["month", "quarter", "year", "all"];
@@ -61,28 +60,30 @@ export function MeasurementDetailView({
 
   return (
     <div className="flex min-h-full flex-col">
-      <TopBar title={type.name} backHref="/history/body" backLabel="Body" />
+      <TopBar
+        title={type.name}
+        backHref="/body/measurements"
+        backLabel="Body"
+      />
       <PageFrame title={type.name} className="pt-5">
+        {/* The unit is a label under the name rather than a section of its
+            own, which ADR-0030 decided. */}
+        <p className="-mt-2 text-[12.5px] text-[var(--pf-text-2)]">
+          Measured in centimetres
+        </p>
         <div className="flex flex-wrap justify-end gap-2">
           <Link
-            href={`/history/body/types/${type.id}/edit`}
+            href={`/body/measurements/types/${type.id}/edit`}
             className="flex min-h-11 items-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-text-2)]"
           >
             Edit measurement
-          </Link>
-          <Link
-            href={`/history/body/${type.id}/new`}
-            className="flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-accent-strong)]"
-          >
-            <Icon name="plus" size={18} />
-            Add entry
           </Link>
         </div>
 
         {detail.latest === null ? (
           <EmptyState
             title="Nothing recorded yet"
-            body="Add the first entry and this screen starts tracking how it changes."
+            body="Record this measurement on Today and this screen starts tracking how it changes."
           />
         ) : (
           <>
@@ -174,7 +175,7 @@ export function MeasurementDetailView({
                 {detail.entries.map((entry) => (
                   <li key={entry.id}>
                     <ListRow
-                      href={`/history/body/${type.id}/${entry.entryDate}/edit`}
+                      href={`/body/measurements/${type.id}/${entry.entryDate}/edit`}
                       title={formatCm(entry.valueCm)}
                       detail={
                         <>

@@ -57,13 +57,13 @@ Restoring a workout shows no banner: the restored workout itself is the evidence
 
 The finish review keeps **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and the separately confirmed **Discard Workout** together in one sticky action group, so discard stays reachable without scrolling.
 
-Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Weight once it does; it never offers a second entry, and it never edits or deletes.
+Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Body once it does; it never offers a second entry, and it never edits or deletes. Since [ADR-0030](../decisions/0030-body-is-its-own-destination.md) it is one of two entry cards, and the only place a weigh-in is created.
 
 The workout keeps the bottom navigation and uses the finish flow defined in [`workouts.md`](../product/workouts.md).
 
 ## History
 
-History provides Workouts, Exercises, Splits, Weight, and Body subsections. A subsection bar sits above the content and marks the current subsection without relying on color.
+History provides Workouts, Exercises, and Splits. A subsection bar sits above the content and marks the current one without relying on color; the Body destination carries the same bar over its own two tabs.
 
 ### Workouts
 
@@ -89,20 +89,20 @@ The filter appears only when more than one program has a completed split; a sing
 
 ### Weight
 
-Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, and entry list.
+The first tab of the Body destination. Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, and entry list — and no way to create one.
 
 The two summaries are stat cards: the latest weigh-in with its date and its change from the one before it, and this week with its average, its change from last week or the unavailable state, its `n/7` count, and whether it is provisional or final. A week with no weigh-in yet says so rather than showing a zero. The range selector offers week, month, quarter, and year, and opens on the month. The chart carries a legend naming its solid and dashed lines, a sentence above it, and an expandable list below that repeats both the weigh-ins and the weekly averages with their spans. Each weigh-in row opens the entry screen for that date.
 
-The entry screen defaults to today, accepts an earlier date, and refuses a later one. Its save, validation, and outcome cue is the first row of the sticky action bar, and **Delete Entry** appears only when correcting an existing weigh-in, behind the destructive confirmation that names what recalculates.
+The screen offers no add action: a weigh-in is created on Today and nowhere else. Each row opens the entry screen for its date, which corrects the value it already holds. That screen's save, validation, and outcome cue is the first row of the sticky action bar, and **Delete Entry** sits behind the destructive confirmation that names what recalculates.
 
-### Body
+### Measurements
 
-Provide measurement-type list with latest values and changes. Detail provides total change, time-range selector, chart, and entry list.
+The second tab of the Body destination. Provide measurement-type list with latest values and changes. Detail provides total change, time-range selector, chart, and entry list.
 
 The list is ordered by name and each row carries the latest value, its date, and its change, or says that nothing is recorded yet. It shows no archived section, badge, or filter, because [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed archiving, and it states once that a rise or a fall is neither good nor bad on its own.
 
-The type form shows the unit as read-only text. It offers **Delete Measurement** only while the type holds nothing; with entries it explains that they are the only record and that renaming keeps every one of them, rather than disabling a control silently. Renaming is an ordinary save.
+The type form states the unit in the hint under the name rather than as a block of its own, which ADR-0030 decided. It offers **Delete Measurement** only while the type holds nothing; with entries it explains that they are the only record and that renaming keeps every one of them, rather than disabling a control silently. Renaming is an ordinary save.
 
-The detail gives the latest value, the latest change, and the total change as stat cards, each saying so plainly when there is nothing to compare against. Its range selector offers month, quarter, year, and all, and opens on all. The entry screen mirrors the weight entry screen, scoped to its type: today by default, an earlier date accepted, a later one refused, the cue in the first row of the sticky action bar, and deletion behind the destructive confirmation.
+The detail names the unit under the measurement's name, then gives the latest value, the latest change, and the total change as stat cards, each saying so plainly when there is nothing to compare against. Its range selector offers month, quarter, year, and all, and opens on all. It offers no add action either: a value is recorded on Today. Each row opens the entry screen for its date, which mirrors the weight one — the cue in the first row of the sticky action bar, and deletion behind the destructive confirmation.
 
 History calculations are canonical in [`history-and-statistics.md`](../product/history-and-statistics.md) and [`weight-and-body.md`](../product/weight-and-body.md).

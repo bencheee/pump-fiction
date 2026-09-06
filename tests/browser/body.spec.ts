@@ -22,7 +22,7 @@ test.describe("Body experience", () => {
     try {
       // S21 lists the measurement with its latest value and change, and offers
       // no archived state: ADR-0024 removed it.
-      await page.goto("/history/body");
+      await page.goto("/body/measurements");
       const list = page.getByRole("list", { name: "Measurements" });
       const row = list.getByRole("link", { name: new RegExp(waist) });
       await expect(row).toBeVisible();
@@ -38,7 +38,7 @@ test.describe("Body experience", () => {
       // S23 shows the latest value and both changes, and its chart is never the
       // only representation of the data.
       await row.click();
-      await expect(page).toHaveURL(/\/history\/body\/[0-9a-f-]+$/);
+      await expect(page).toHaveURL(/\/body\/measurements\/[0-9a-f-]+$/);
       for (const label of ["Latest", "Latest change", "Total change"])
         await expect(page.getByText(label, { exact: true })).toBeVisible();
       await expect(
@@ -60,26 +60,15 @@ test.describe("Body experience", () => {
       ).toBeVisible();
       await page.getByRole("button", { name: "All" }).click();
 
-      // S24 records a retrospective measurement and returns recalculated.
-      await page.getByRole("link", { name: "Add entry" }).click();
-      await page.getByLabel("Date").fill(created);
-      await fillHydrated(page.getByLabel("Measurement (cm)"), "84");
-      await page.getByRole("button", { name: "Save Entry" }).click();
-      await expect(page).toHaveURL(/\/history\/body\/[0-9a-f-]+$/);
-      await expect(
-        page.getByRole("list", { name: "Entries" }).getByRole("link"),
-      ).toHaveCount(3);
-      await expect(page.getByText("−1.0 cm")).toBeVisible();
+      // Body reads and corrects; it never creates. ADR-0030 moved creation to
+      // Today, and per-type-and-date uniqueness stays in the database, covered
+      // by its own pgTAP suite.
+      await expect(page.getByRole("link", { name: "Add entry" })).toHaveCount(
+        0,
+      );
 
-      // The database owns per-type-and-date uniqueness.
-      await page.getByRole("link", { name: "Add entry" }).click();
-      await page.getByLabel("Date").fill(created);
-      await fillHydrated(page.getByLabel("Measurement (cm)"), "83");
-      await page.getByRole("button", { name: "Save Entry" }).click();
-      await expect(
-        page.getByText("That date already has a measurement."),
-      ).toBeVisible();
-      await page.goBack();
+      // The unit is a label under the name, not a section of its own.
+      await expect(page.getByText("Measured in centimetres")).toBeVisible();
 
       // A correction and a deletion both return to a recalculated S23.
       await page
@@ -176,11 +165,13 @@ async function seedMeasurements() {
   });
   if (error) throw error;
   const typeId = (data as { id: string }).id;
-  for (const [index, entryDate] of seededDates.entries()) {
+  // Three, because Body creates none: ADR-0030 moved creation to Today, so the
+  // correction and deletion below need a third row the screen cannot add.
+  for (const [index, entryDate] of [...seededDates, created].entries()) {
     const { error: entryError } = await client.rpc("create_measurement_entry", {
       p_measurement_type_id: typeId,
       p_entry_date: entryDate,
-      p_value_cm: index === 0 ? 85 : 84.5,
+      p_value_cm: index === 0 ? 85 : index === 1 ? 84.5 : 84,
     });
     if (entryError) throw entryError;
   }

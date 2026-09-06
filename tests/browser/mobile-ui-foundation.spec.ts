@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
 test.describe("mobile UI foundation", () => {
-  test("main shell keeps four accessible destinations inside the fixed phone references", async ({
+  test("main shell keeps five accessible destinations inside the fixed phone references", async ({
     page,
   }, testInfo) => {
     for (const viewport of [
@@ -14,7 +14,7 @@ test.describe("mobile UI foundation", () => {
 
       const navigation = page.getByRole("navigation", { name: "Primary" });
       const destinations = navigation.getByRole("link");
-      await expect(destinations).toHaveCount(4);
+      await expect(destinations).toHaveCount(5);
       await expect(page.getByRole("link", { name: "Today" })).toHaveAttribute(
         "aria-current",
         "page",

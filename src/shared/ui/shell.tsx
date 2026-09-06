@@ -15,16 +15,27 @@ type Destination = {
   icon: IconName;
 };
 
-const destinations: Destination[] = [
+// The five destinations of ADR-0030. History and Body both land on their
+// first tab, so each carries the root its whole subtree lives under.
+const destinations: (Destination & { root?: string })[] = [
   { href: "/today", label: "Today", icon: "calendar-check" },
-  { href: "/history/workouts", label: "History", icon: "history" },
+  {
+    href: "/history/workouts",
+    label: "History",
+    icon: "history",
+    root: "/history",
+  },
   { href: "/programs", label: "Programs", icon: "layout-grid" },
   { href: "/exercises", label: "Exercises", icon: "dumbbell" },
+  { href: "/body/weight", label: "Body", icon: "scale", root: "/body" },
 ];
 
-function isCurrentDestination(pathname: string, href: string): boolean {
-  const root = href === "/history/workouts" ? "/history" : href;
-  return pathname === href || pathname.startsWith(`${root}/`);
+function isCurrentDestination(
+  pathname: string,
+  destination: { href: string; root?: string },
+): boolean {
+  const root = destination.root ?? destination.href;
+  return pathname === destination.href || pathname.startsWith(`${root}/`);
 }
 
 export function BottomNavigation() {
@@ -33,10 +44,10 @@ export function BottomNavigation() {
   return (
     <nav
       aria-label="Primary"
-      className="pf-safe-bottom grid shrink-0 grid-cols-4 border-t border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
+      className="pf-safe-bottom grid shrink-0 grid-cols-5 border-t border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
     >
       {destinations.map((destination) => {
-        const current = isCurrentDestination(pathname, destination.href);
+        const current = isCurrentDestination(pathname, destination);
 
         return (
           <Link

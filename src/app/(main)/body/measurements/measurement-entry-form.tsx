@@ -39,7 +39,7 @@ export function MeasurementEntryForm({
   entry?: MeasurementEntry;
   localDate: string;
 }) {
-  const parent = `/history/body/${type.id}`;
+  const parent = `/body/measurements/${type.id}`;
   const [entryDate, setEntryDate] = useState(entry?.entryDate ?? localDate);
   const [value, setValue] = useState(entry ? String(entry.valueCm) : "");
   const [errors, setErrors] = useState<FieldErrors>({});

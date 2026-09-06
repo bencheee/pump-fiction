@@ -25,7 +25,7 @@ import {
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
 
 const validationMessage = "Check the highlighted fields.";
-const parent = "/history/weight";
+const parent = "/body/weight";
 
 export function WeightForm({
   entry,

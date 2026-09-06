@@ -31,11 +31,7 @@ export default async function EditWeightEntryPage({
 function Unavailable({ message }: { message: string }) {
   return (
     <div className="flex min-h-full flex-col">
-      <TopBar
-        title="Edit Weight"
-        backHref="/history/weight"
-        backLabel="Weight"
-      />
+      <TopBar title="Edit Weight" backHref="/body/weight" backLabel="Weight" />
       <PageFrame title="Weigh-in unavailable" className="pt-5">
         <EmptyState title="That weigh-in couldn't be loaded" body={message} />
       </PageFrame>

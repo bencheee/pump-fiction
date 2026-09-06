@@ -182,7 +182,7 @@ describe("S19 Weight", () => {
     const rows = within(screen.getByRole("list", { name: "Weigh-ins" }));
     const links = rows.getAllByRole("link");
     expect(links).toHaveLength(2);
-    expect(links[0]).toHaveAttribute("href", "/history/weight/2026-09-01/edit");
+    expect(links[0]).toHaveAttribute("href", "/body/weight/2026-09-01/edit");
     expect(links[0]).toHaveTextContent("81.5 kg");
     expect(links[0]).toHaveTextContent("−1.0 kg");
     expect(links[1]).toHaveTextContent("82.5 kg");
@@ -305,7 +305,7 @@ describe("S20 weight entry", () => {
       entryDate: today,
       weightKg: 82.4,
     });
-    expect(router.replace).toHaveBeenCalledWith("/history/weight");
+    expect(router.replace).toHaveBeenCalledWith("/body/weight");
     expect(router.refresh).toHaveBeenCalled();
   });
 
@@ -353,6 +353,6 @@ describe("S20 weight entry", () => {
       }),
     );
     expect(actions.remove).toHaveBeenCalledWith(entry.id);
-    expect(router.replace).toHaveBeenCalledWith("/history/weight");
+    expect(router.replace).toHaveBeenCalledWith("/body/weight");
   });
 });

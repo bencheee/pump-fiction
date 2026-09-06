@@ -16,17 +16,13 @@ test.describe("Workout History experience", () => {
       const subsections = page.getByRole("navigation", {
         name: "History subsections",
       });
-      for (const label of [
-        "Workouts",
-        "Exercises",
-        "Splits",
-        "Weight",
-        "Body",
-      ]) {
+      for (const label of ["Workouts", "Exercises", "Splits"]) {
         await expect(
           subsections.getByRole("link", { name: label }),
         ).toBeVisible();
       }
+      // Weight and Body left History for a destination of their own; ADR-0030.
+      await expect(subsections.getByRole("link")).toHaveCount(3);
       await expect(
         subsections.getByRole("link", { name: "Workouts" }),
       ).toHaveAttribute("aria-current", "page");

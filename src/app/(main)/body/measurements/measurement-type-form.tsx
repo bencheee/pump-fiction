@@ -24,7 +24,7 @@ import {
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
 
 const validationMessage = "Check the highlighted fields.";
-const parent = "/history/body";
+const parent = "/body/measurements";
 
 /**
  * `S22`. A measurement type is a name and a fixed unit. Under ADR-0024 it has
@@ -109,7 +109,7 @@ export function MeasurementTypeForm({
             label="Name"
             value={name}
             error={errors.name?.[0]}
-            hint="Whatever you call it: waist at navel, left upper arm, chest."
+            hint="Whatever you call it: waist at navel, left upper arm, chest. Measured in centimetres."
             disabled={isSaving}
             autoComplete="off"
             onChange={(event) => {
@@ -119,16 +119,6 @@ export function MeasurementTypeForm({
               setErrors({});
             }}
           />
-
-          <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-            <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-              Unit
-            </p>
-            <p className="pf-numeric mt-2 text-[21px] font-semibold">cm</p>
-            <p className="mt-2 text-[12.5px] text-[var(--pf-text-2)]">
-              Every measurement is recorded in centimetres.
-            </p>
-          </section>
 
           {measurement && !measurement.deletable ? (
             <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">

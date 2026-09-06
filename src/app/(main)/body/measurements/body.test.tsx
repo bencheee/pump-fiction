@@ -141,12 +141,13 @@ describe("S22 measurement type", () => {
     });
     renderWithToast(<MeasurementTypeForm />);
 
-    expect(screen.getByText("cm")).toBeVisible();
+    // ADR-0030 removed the unit block; the unit is a label under the name.
+    expect(screen.getByText(/Measured in centimetres/)).toBeVisible();
     await user.type(screen.getByLabelText("Name"), "Waist");
     await user.click(screen.getByRole("button", { name: "Save Measurement" }));
 
     expect(actions.createType).toHaveBeenCalledWith({ name: "Waist" });
-    expect(router.replace).toHaveBeenCalledWith("/history/body");
+    expect(router.replace).toHaveBeenCalledWith("/body/measurements");
   });
 
   it("refuses a blank name without calling the server", async () => {
@@ -318,7 +319,7 @@ describe("S23 measurement detail", () => {
     expect(links).toHaveLength(3);
     expect(links[0]).toHaveAttribute(
       "href",
-      `/history/body/${typeId}/2026-08-01/edit`,
+      `/body/measurements/${typeId}/2026-08-01/edit`,
     );
     expect(links[0]).toHaveTextContent("84 cm");
     expect(links.at(-1)).toHaveTextContent("First measurement");
@@ -367,7 +368,7 @@ describe("S24 measurement entry", () => {
       entryDate: today,
       valueCm: 84.2,
     });
-    expect(router.replace).toHaveBeenCalledWith(`/history/body/${typeId}`);
+    expect(router.replace).toHaveBeenCalledWith(`/body/measurements/${typeId}`);
   });
 
   it("shows a refused duplicate date on the date field", async () => {
@@ -408,6 +409,6 @@ describe("S24 measurement entry", () => {
       }),
     );
     expect(actions.deleteEntry).toHaveBeenCalledWith(entry.id);
-    expect(router.replace).toHaveBeenCalledWith(`/history/body/${typeId}`);
+    expect(router.replace).toHaveBeenCalledWith(`/body/measurements/${typeId}`);
   });
 });

@@ -19,7 +19,7 @@ export default async function WeightHistoryPage() {
           body={result.error.message}
           action={
             <Link
-              href="/history/weight"
+              href="/body/weight"
               className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
             >
               Retry

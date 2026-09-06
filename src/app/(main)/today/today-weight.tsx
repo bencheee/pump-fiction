@@ -57,7 +57,7 @@ function RecordedWeight({ entry }: { entry: WeightEntry }) {
         Recorded {formatHistoryDate(entry.entryDate)}. Correct it in Weight.
       </p>
       <Link
-        href="/history/weight"
+        href="/body/weight"
         className="mt-4 flex min-h-11 items-center self-start border-b border-[var(--pf-border-control)] font-medium text-[var(--pf-text-2)]"
       >
         See Weight

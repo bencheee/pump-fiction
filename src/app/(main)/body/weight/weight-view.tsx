@@ -1,22 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useTransition } from "react";
 
 import { getWeightProgressAction } from "@/app/actions/weight";
 import type { WeightProgress } from "@/features/history/application/weight-operations";
 import type { ChartRange, ChartSeries } from "@/features/history/domain/chart";
 import { ProgressChart } from "@/features/history/ui/progress-chart";
-import {
-  Chip,
-  EmptyState,
-  Icon,
-  ListRow,
-  PageFrame,
-  StatCard,
-} from "@/shared/ui";
+import { Chip, EmptyState, ListRow, PageFrame, StatCard } from "@/shared/ui";
 
-import { formatHistoryDate } from "../history-presentation";
+import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 import {
   formatAverageKg,
   formatChangeKg,
@@ -64,22 +56,10 @@ export function WeightView({
 
   return (
     <PageFrame title="Weight" className="pt-6">
-      {/* The History subsection bar owns the top of the screen, so the add
-          action sits in the flow rather than floating over it. */}
-      <div className="-mt-2 flex justify-end">
-        <Link
-          href="/history/weight/new"
-          className="flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-accent-strong)]"
-        >
-          <Icon name="plus" size={18} />
-          Add weigh-in
-        </Link>
-      </div>
-
       {overview.latest === null ? (
         <EmptyState
           title="No weigh-in yet"
-          body="Add today's weight and this screen starts tracking your weekly average."
+          body="Record today's weight on Today and this screen starts tracking your weekly average."
         />
       ) : (
         <>
@@ -158,7 +138,7 @@ export function WeightView({
               {overview.entries.map((entry) => (
                 <li key={entry.id}>
                   <ListRow
-                    href={`/history/weight/${entry.entryDate}/edit`}
+                    href={`/body/weight/${entry.entryDate}/edit`}
                     title={formatKg(entry.weightKg)}
                     detail={
                       <>

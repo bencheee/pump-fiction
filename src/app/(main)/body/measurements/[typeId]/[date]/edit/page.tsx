@@ -44,7 +44,11 @@ export default async function EditMeasurementEntryPage({
 function Unavailable({ message }: { message: string }) {
   return (
     <div className="flex min-h-full flex-col">
-      <TopBar title="Edit Entry" backHref="/history/body" backLabel="Body" />
+      <TopBar
+        title="Edit Entry"
+        backHref="/body/measurements"
+        backLabel="Body"
+      />
       <PageFrame title="Entry unavailable" className="pt-5">
         <EmptyState title="That entry couldn't be loaded" body={message} />
       </PageFrame>

@@ -248,13 +248,13 @@ async function expectEverythingPresent(
   await expect(incomplete).toContainText("Incomplete");
 
   // Weight entries.
-  await page.goto("/history/weight");
+  await page.goto("/body/weight");
   await expect(
     page.getByRole("list", { name: "Weigh-ins" }).getByRole("link"),
   ).toHaveCount(2);
 
   // Measurement types and their entries.
-  await page.goto("/history/body");
+  await page.goto("/body/measurements");
   const measurements = page.getByRole("list", { name: "Measurements" });
   await expect(
     measurements.getByRole("link", { name: new RegExp(fixture.arm) }),
