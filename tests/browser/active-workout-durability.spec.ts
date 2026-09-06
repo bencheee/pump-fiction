@@ -1,16 +1,30 @@
 import { expect, test } from "@playwright/test";
 
+import { awaitHydration } from "./support/hydration";
+
 test.beforeEach(async ({ page }) => {
-  await page.goto("/test-support/active-workout-durability");
+  // Clear storage from a route that opens no outbox connection. The harness
+  // opens IndexedDB the moment it mounts, and deleteDatabase blocks for as
+  // long as any connection is open, so clearing from the harness page itself
+  // deadlocks. That only ever worked because the spec ran against a
+  // development server, where the first compile lost the race to the evaluate;
+  // ADR-0029 moved it onto the production build, where the harness wins it.
+  // Today opens no outbox: only /workout/current, its finish route, and this
+  // harness construct one.
+  await page.goto("/today");
   await page.evaluate(async () => {
     localStorage.clear();
     await new Promise<void>((resolve, reject) => {
       const request = indexedDB.deleteDatabase("pump-fiction-active-workout");
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
+      request.onblocked = () =>
+        reject(new Error("deleteDatabase blocked: a connection is still open"));
     });
   });
-  await page.reload();
+
+  await page.goto("/test-support/active-workout-durability");
+  await awaitHydration(page.getByRole("button", { name: "Enqueue command" }));
 });
 
 test("keeps a failed command across reload and removes it only after acknowledgement", async ({
