@@ -47,6 +47,7 @@ import {
   Chip,
   DestructiveDialog,
   Icon,
+  normalizeDecimalInput,
   NumericField,
   Sheet,
   StickyActionBar,
@@ -1020,7 +1021,7 @@ function isPopulatedSet(set: WorkoutSet): boolean {
 }
 
 function parsePositiveDecimal(text: string): number | null {
-  const value = Number(text.trim().replace(",", "."));
+  const value = Number(normalizeDecimalInput(text));
   return Number.isFinite(value) && value > 0 ? value : null;
 }
 

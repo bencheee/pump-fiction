@@ -28,6 +28,7 @@ An active workout opens its own screen but keeps the bottom navigation, so the u
 
 - Put primary actions within comfortable thumb reach.
 - Use numeric keyboards for numeric inputs.
+- Accept a dot or a comma as the decimal separator, because a phone offers whichever its locale uses. A value carrying more than one separator stays refused rather than guessed at. Integer inputs take neither.
 - Never require horizontal table scrolling.
 - Clearly highlight the active set.
 - Auto-save changes where specified, especially during active workouts.

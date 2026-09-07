@@ -287,10 +287,21 @@ describe("S20 weight entry", () => {
 
     await user.type(screen.getByLabelText("Weight (kg)"), "eighty");
     await user.click(screen.getByRole("button", { name: "Save Weight" }));
-    expect(
-      screen.getByText("Enter a number, using a dot for decimals."),
-    ).toBeVisible();
+    expect(screen.getByText("Enter a number.")).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
+  });
+
+  it("accepts a comma as the decimal separator", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({ ok: true, value: entry });
+    renderWithToast(<WeightForm localDate={today} />);
+
+    await user.type(screen.getByLabelText("Weight (kg)"), "89,2");
+    await user.click(screen.getByRole("button", { name: "Save Weight" }));
+
+    expect(actions.create).toHaveBeenCalledWith(
+      expect.objectContaining({ weightKg: 89.2 }),
+    );
   });
 
   it("saves a new weigh-in and returns to Weight", async () => {

@@ -15,6 +15,7 @@ import { validateMeasurementEntry } from "@/features/history/domain/body-validat
 import {
   Action,
   DestructiveDialog,
+  normalizeDecimalInput,
   NumericField,
   SaveStatus,
   StickyActionBar,
@@ -79,9 +80,9 @@ export function MeasurementEntryForm({
     // number belongs to the domain validator both this screen and the server use.
     const typed = value.trim();
     if (typed === "") return fail({ valueCm: ["Enter a measurement."] });
-    const valueCm = Number(typed);
+    const valueCm = Number(normalizeDecimalInput(typed));
     if (!Number.isFinite(valueCm))
-      return fail({ valueCm: ["Enter a number, using a dot for decimals."] });
+      return fail({ valueCm: ["Enter a number."] });
 
     const validation = validateMeasurementEntry(
       { measurementTypeId: type.id, entryDate, valueCm },

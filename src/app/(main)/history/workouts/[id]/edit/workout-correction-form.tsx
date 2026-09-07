@@ -21,6 +21,7 @@ import {
   Chip,
   DestructiveDialog,
   Icon,
+  normalizeDecimalInput,
   NumericField,
   PageFrame,
   SaveStatus,
@@ -192,7 +193,7 @@ export function WorkoutCorrectionForm({
         const loadKg =
           fields.load === null || entry.loadKg === ""
             ? null
-            : Number(entry.loadKg);
+            : Number(normalizeDecimalInput(entry.loadKg));
         const bandStrength =
           fields.band === null || entry.bandStrength === ""
             ? null

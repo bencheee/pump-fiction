@@ -1,4 +1,5 @@
 export { Action, type ActionProps } from "./action";
+export { normalizeDecimalInput } from "./decimal-input";
 export { Chip, NumericField, TextAreaField, TextField } from "./form-controls";
 export { useSaveOutcome, useSavedSnapshot, type SavePhase } from "./form-state";
 export { Icon, iconNames, type IconName } from "./icon";

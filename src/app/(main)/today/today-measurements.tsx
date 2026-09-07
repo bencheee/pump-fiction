@@ -12,6 +12,7 @@ import {
 import { formatCm } from "@/features/history/ui/body-presentation";
 import {
   Action,
+  normalizeDecimalInput,
   NumericField,
   SaveStatus,
   Sheet,
@@ -117,7 +118,7 @@ function AddTodayMeasurements({
       missing.map((one) => ({
         measurementTypeId: one.id,
         entryDate: localDate,
-        valueCm: Number((values[one.id] ?? "").trim()),
+        valueCm: Number(normalizeDecimalInput(values[one.id] ?? "")),
       })),
     );
 

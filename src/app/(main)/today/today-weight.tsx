@@ -9,6 +9,7 @@ import type { WeightEntry } from "@/features/history/domain/weight";
 import { formatKg } from "@/features/history/ui/weight-presentation";
 import {
   Action,
+  normalizeDecimalInput,
   NumericField,
   SaveStatus,
   Sheet,
@@ -79,9 +80,8 @@ function AddTodayWeight({ localDate }: { localDate: string }) {
   async function save(close: () => void) {
     const typed = weight.trim();
     if (typed === "") return refuse("Enter a weight.");
-    const weightKg = Number(typed);
-    if (!Number.isFinite(weightKg))
-      return refuse("Enter a number, using a dot for decimals.");
+    const weightKg = Number(normalizeDecimalInput(typed));
+    if (!Number.isFinite(weightKg)) return refuse("Enter a number.");
 
     setMessage(undefined);
     setPhase("saving");

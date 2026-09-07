@@ -12,6 +12,7 @@ import { validateWeightEntry } from "@/features/history/domain/weight-validation
 import {
   Action,
   DestructiveDialog,
+  normalizeDecimalInput,
   NumericField,
   SaveStatus,
   StickyActionBar,
@@ -73,9 +74,9 @@ export function WeightForm({
     // number belongs to the domain validator both this screen and the server use.
     const typed = weight.trim();
     if (typed === "") return fail({ weightKg: ["Enter a weight."] });
-    const weightKg = Number(typed);
+    const weightKg = Number(normalizeDecimalInput(typed));
     if (!Number.isFinite(weightKg))
-      return fail({ weightKg: ["Enter a number, using a dot for decimals."] });
+      return fail({ weightKg: ["Enter a number."] });
 
     const validation = validateWeightEntry({ entryDate, weightKg }, localDate);
     if (!validation.ok) return fail(validation.fieldErrors);
