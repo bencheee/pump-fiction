@@ -4,7 +4,7 @@
 - **Supabase CLI:** `2.116.0`
 - **Local PostgreSQL:** `17`
 
-This workflow implements the persistence decisions in [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). It does not define production credentials, authentication, authorization, Row Level Security, or deployment.
+This workflow implements the persistence decisions in [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). It does not define production credentials, authentication, authorization, Row Level Security, or deployment; hosted access is decided in [ADR-0031](../decisions/0031-shared-password-protects-the-hosted-application.md). One command below reaches the hosted database, and it is marked as such.
 
 ## Prerequisites
 
@@ -94,6 +94,22 @@ npm run db:restore
 When no snapshot exists, `db:restore` reports that and changes nothing, because the seed baseline the reset already applied is the fallback.
 
 The usual cycle around the verification gate is `npm run db:snapshot`, then the gate below, then `npm run db:restore`.
+
+## Production data backup
+
+This is the one command here that reaches the hosted database rather than the local one:
+
+```sh
+npm run db:backup
+```
+
+It writes a data-only dump of the hosted `public` schema to `supabase/snapshots/production-<timestamp>.sql`, in the same ignored directory as the local snapshots and distinguished from them by the `production-` prefix. It requires a linked project (`npx supabase link --project-ref <ref>`) and the hosted database password, which it takes from `SUPABASE_DB_PASSWORD`, then from an ignored `.env.deploy.local`, and otherwise leaves the CLI to prompt for.
+
+The dump carries data only. The schema is reproduced from `supabase/migrations`, so a rebuild is `supabase db push` followed by the dump, never the dump alone.
+
+There is deliberately no `db:restore` counterpart for production. Reloading the local database is safe because that data is disposable; putting a dump back into production is rare and destructive, and stays a deliberate manual step rather than a one-word command.
+
+Take a backup before editing hosted data by hand. The hosted project is on the Supabase free plan, which takes no automated backups and offers no point-in-time recovery, so these dumps are the only copy of the Owner's training history that exists off the server.
 
 ## Verification gate
 

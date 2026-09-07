@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `F-004` Application and Data Foundation, `F-005` Exercise Library, `F-006` Programs and Splits, `F-007` Today and Active Workout, and `F-011` MVP Experience Corrections are complete, the last with the Owner's confirmed feature result covering Today, workout start, the active workout, and the finish review.
+The functional specification, textual mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management system, local technical architecture, MVP Feature breakdown, and external UI/UX collaboration process are accepted. `M-001` and `M-002` are `Done`, and on `2026-09-07` the application was deployed to Vercel and hosted Supabase, which closes the production-protection open question through [ADR-0031](decisions/0031-shared-password-protects-the-hosted-application.md). `F-004` Application and Data Foundation, `F-005` Exercise Library, `F-006` Programs and Splits, `F-007` Today and Active Workout, and `F-011` MVP Experience Corrections are complete, the last with the Owner's confirmed feature result covering Today, workout start, the active workout, and the finish review.
 
 ## Conceptually completed
 
@@ -13,7 +13,7 @@ The functional specification, textual mobile-wireframe decisions, local-MVP acce
 - Workout, exercise, and split History behavior, PR rules, and derived statistics
 - Weight and user-defined body-measurement behavior
 - Logical domain entities and template/snapshot separation
-- Local-first delivery direction and future Vercel/Supabase target
+- Local-first delivery direction, with the Vercel/Supabase target reached on `2026-09-07`
 - Testable local-MVP acceptance criteria with stable IDs (locked)
 - Documentation-as-system-of-record and approval-gated feature-testing rules
 - Complete repository-native project-management workflow, templates, dashboard, and registry
@@ -46,6 +46,7 @@ The [`INDEX.md`](INDEX.md) routes to each canonical specification.
 - Mobile UI uses Tailwind CSS 4, application-owned tokens/primitives, and selective Radix; charts use Recharts 3 behind a neutral data boundary; static checks and future approval-gated test tools are explicit: [ADR-0020](decisions/0020-mobile-ui-charting-and-quality-tooling.md)
 - External UI/UX work uses an Owner-approved design brief and a separate versioned handoff; fixed visual references define objective fidelity: [ADR-0022](decisions/0022-versioned-external-design-handoff.md)
 - The audited v0.4 prototype/specifications override the retained v0.3 PNGs only for documented color/contrast tokens, save/validation/outcome cue placement, and corrected S09/S10 validation fixtures: [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md)
+- One shared password gates the hosted application, and the hosted database stays closed by grant rather than by Row Level Security: [ADR-0031](decisions/0031-shared-password-protects-the-hosted-application.md)
 - Nutrition and calorie tracking are outside product scope, not open questions.
 - Local-MVP behavior and release boundary: [`product/mvp-acceptance-criteria.md`](product/mvp-acceptance-criteria.md)
 
@@ -53,13 +54,12 @@ Accepted core product behavior is canonical in the topic documents, not duplicat
 
 ## Accepted post-MVP or pre-production work
 
-Export/backup, PWA installation, and explicit protection against accidental active-workout closure are accepted post-MVP capabilities. Production-access protection is required before deployment. Active-workout auto-save and restore remain part of the locked local MVP.
+Export/backup, PWA installation, and explicit protection against accidental active-workout closure are accepted post-MVP capabilities. Production-access protection was required before deployment and is now decided by [ADR-0031](decisions/0031-shared-password-protects-the-hosted-application.md). Active-workout auto-save and restore remain part of the locked local MVP.
 
 ## Open questions
 
 These are not decisions and must not be inferred during implementation:
 
-- production protection for the private app;
 - PWA implementation details;
 - backup/export format and priority;
 - whether and how to support estimated 1RM;

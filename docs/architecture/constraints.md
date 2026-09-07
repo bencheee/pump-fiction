@@ -2,9 +2,9 @@
 
 ## Current technical posture
 
-Implementation has started through `T-005`. The locked runtime is Next.js `16.3.3` with App Router, React `19.2.8`, strict TypeScript `5.9.3`, and Node.js `24.20.0` LTS; see [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md) and the exact baseline in [`local-technical-architecture.md`](local-technical-architecture.md). Local persistence uses the Supabase CLI stack and PostgreSQL, declarative SQL schemas, versioned migrations, and server-only `@supabase/supabase-js` access; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). The single-app module boundaries and durable active-workout command flow are accepted in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). Mobile UI, charting, static checks, and future test tools are accepted in [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md). The application is developed and run locally before the anticipated Vercel and hosted-Supabase production phase; see [ADR-0004](../decisions/0004-local-first-development.md).
+Implementation has started through `T-005`. The locked runtime is Next.js `16.3.3` with App Router, React `19.2.8`, strict TypeScript `5.9.3`, and Node.js `24.20.0` LTS; see [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md) and the exact baseline in [`local-technical-architecture.md`](local-technical-architecture.md). Local persistence uses the Supabase CLI stack and PostgreSQL, declarative SQL schemas, versioned migrations, and server-only `@supabase/supabase-js` access; see [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md). The single-app module boundaries and durable active-workout command flow are accepted in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). Mobile UI, charting, static checks, and future test tools are accepted in [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md). The application was developed and run locally before the Vercel and hosted-Supabase production phase; see [ADR-0004](../decisions/0004-local-first-development.md). That phase began on `2026-09-07`: the application is deployed to Vercel against a hosted Supabase project carrying the same migration history.
 
-The local data model and workflow use PostgreSQL semantics and the same versioned migration history intended for hosted Supabase. Production authentication, authorization, Row Level Security, credentials, and private-app protection remain explicit pre-deployment decisions.
+The local data model and workflow use PostgreSQL semantics and the same versioned migration history the hosted project runs. Private-app protection is decided by [ADR-0031](../decisions/0031-shared-password-protects-the-hosted-application.md): one shared password gates the hosted application, and the hosted database is closed by table and function grants rather than by Row Level Security, so the public API keys are refused everywhere. There is no authentication or authorization beyond that gate, because there is no user record to authorize; see [ADR-0001](../decisions/0001-private-mobile-only-app.md). Credentials live only in the Vercel project environment and in ignored local files.
 
 ## Product-driven constraints
 
@@ -21,7 +21,7 @@ The local data model and workflow use PostgreSQL semantics and the same versione
 
 ## Decisions intentionally deferred
 
-The canonical unresolved-decision list is in [`PROJECT_STATE.md`](../PROJECT_STATE.md#open-questions). Do not select a production protection method, PWA mechanism, backup format, or unresolved product capability merely to begin coding.
+The canonical unresolved-decision list is in [`PROJECT_STATE.md`](../PROJECT_STATE.md#open-questions). Do not select a PWA mechanism, backup format, or unresolved product capability merely to begin coding. The production protection method is no longer among them; ADR-0031 decides it.
 
 ## Documentation maintenance
 

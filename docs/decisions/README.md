@@ -34,6 +34,7 @@ ADRs preserve important cross-cutting product, technical, and delivery-governanc
 | [0028](0028-replacements-inherit-task-approval.md) | Accepted | A replacement within a Task's scope inherits the approval of its first delivery and is re-verified without a new decision |
 | [0029](0029-one-visibility-rule-for-test-support-routes.md) | Accepted | Both test-support routes are hidden unless `PF_ENABLE_TEST_SUPPORT` is set, so one production server runs the whole browser suite |
 | [0030](0030-body-is-its-own-destination.md) | Accepted | Weight and body measurements become a fifth destination that reads and corrects; today's values are entered on Today |
+| [0031](0031-shared-password-protects-the-hosted-application.md) | Accepted | One shared password gates the hosted application; the database stays closed by grant rather than by Row Level Security |
 
 ## Lifecycle
 

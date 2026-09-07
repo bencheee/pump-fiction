@@ -22,6 +22,7 @@
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:snapshot": "node scripts/db-snapshot.mjs",
+    "db:backup": "node scripts/db-backup.mjs",
     "db:restore": "node scripts/db-restore.mjs",
     "db:types": "supabase gen types typescript --local --schema public | sed -e '${/^$/d;}' > src/server/database/database.types.ts",
     "test:db": "supabase test db",

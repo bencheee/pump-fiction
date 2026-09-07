@@ -1,12 +1,13 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-06T22:40:00+02:00
-- **Current phase:** **Local MVP complete, and its first post-MVP change delivered.** `M-001` closed on `2026-09-06` with 14/14 Features and a release run of 489 checks; `M-002` closed the same day with the Body destination
+- **Last updated:** 2026-09-07T10:05:00+02:00
+- **Current phase:** **Deployed and in use.** `M-001` closed on `2026-09-06` with 14/14 Features and a release run of 489 checks, and `M-002` closed the same day with the Body destination; on `2026-09-07` the application went to Vercel and hosted Supabase and now holds the Owner's real training data
 - **Current Milestone:** None; [`M-001`](docs/project/milestones/M-001-local-mvp.md) and [`M-002`](docs/project/milestones/M-002-post-mvp-product-changes.md) are both `Done`
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
+- **Production:** Vercel plus a hosted Supabase project running the same 25 migrations, gated by one shared password under [ADR-0031](docs/decisions/0031-shared-password-protects-the-hosted-application.md). Data is backed up only by running `npm run db:backup`; the free plan takes none on its own
 
 ## Current focus
 
@@ -14,14 +15,16 @@ None. Both Milestones are `Done`. The application has five destinations, 58 crit
 
 ## Immediate next action
 
-None required. Two small items wait on the Owner's word whenever they want them:
+None required. Four small items wait on the Owner's word whenever they want them:
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
-- a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them.
+- a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
+- the production deployment has no written workflow of its own: which environment variables the Vercel project holds, and that a schema change now needs `supabase db push` against the hosted project as well as locally, are recorded only in [ADR-0031](docs/decisions/0031-shared-password-protects-the-hosted-application.md) and [`local-database-workflow.md`](docs/architecture/local-database-workflow.md);
+- the ignored `.env.deploy.local` holds the hosted database password and service-role key on the Owner's machine, and nothing decides whether it stays.
 
 ## Now
 
-None; every Task of `F-015` is `Done` and the Feature awaits the Owner's confirmation.
+None; `F-015` is `Done` and the Owner confirmed its result on `2026-09-06`.
 
 ## Next
 
