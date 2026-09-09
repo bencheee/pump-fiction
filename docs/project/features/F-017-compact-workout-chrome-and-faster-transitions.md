@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:15:19+02:00`
+- **Updated:** `2026-09-09T14:29:18+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -47,7 +47,7 @@ Workout recording gives more space to exercise content and removes application-o
 
 - [x] Outcome and boundaries are clear.
 - [x] Acceptance criteria are observable and linked.
-- [x] Required Tasks are identified; `T-055` is `Approved` for verification.
+- [x] Required Tasks are identified; `T-055` is `Testing` on an approval-inherited test-source replacement.
 - [x] Dependencies and blockers are understood.
 - [x] Documentation impact is known.
 - [x] Owner confirmed readiness through the implementation request on `2026-09-09`.
@@ -67,3 +67,4 @@ Workout recording gives more space to exercise content and removes application-o
 | `2026-09-09T13:17:18+02:00` | User / Owner | Created, readied, and released `F-017` | Requested the UI refinement and asked whether the reported transition latency can be optimized in the application. |
 | `2026-09-09T14:09:02+02:00` | Codex primary agent / Executor | Delivery awaiting approval | `T-055` delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` passed static review with no finding; feature tests remain locked. |
 | `2026-09-09T14:15:19+02:00` | User / Approver | Task approved | Approved exact `T-055` delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` and unlocked its scoped verification. |
+| `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | Test-source replacement | Component/application, pgTAP, repository, and schema-type checks pass; replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligns two stale save-status assertions before the serial browser repeat. |

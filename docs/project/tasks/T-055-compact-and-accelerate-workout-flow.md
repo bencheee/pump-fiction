@@ -1,7 +1,7 @@
 # T-055 — Compact and accelerate the workout flow
 
 - **Feature:** `F-017`
-- **Status:** `Approved`
+- **Status:** `Testing`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:15:19+02:00`
+- **Updated:** `2026-09-09T14:29:18+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
 - **Review started:** `2026-09-09T14:09:02+02:00`
 - **Approval requested:** `2026-09-09T14:09:02+02:00`
 - **Approved:** `2026-09-09T14:15:19+02:00`
-- **Testing started:** Not reached
+- **Testing started:** `2026-09-09T14:18:54+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Run the authorized scoped verification against exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` and record the result.
+- **Next action:** Repeat the four mobile-browser scenarios serially against approval-inherited replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f`, compare the database with its clean baseline, and restore the Owner's snapshot.
 
 ## Scope
 
@@ -74,13 +74,19 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **No-test reason:** Not applicable.
 - **Planned tests:** After approval of the exact delivery commit, run the active-workout and Today component files, active-workout application/unit and repository coverage affected by start hydration, pgTAP workout operations, and the matching mobile Chromium/WebKit Today and active-workout scenarios. Include a database baseline comparison.
 - **Authorized commit:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
-- **Results:** Not run.
+- **Results:** In an isolated worktree, exact approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` passed component/application tests 31/31, pgTAP 19/19, the workout repository integration 1/1, and generated database types matched the clean 26-migration schema. Initial repository and browser invocations without exported `.env.local` values stopped before application assertions. The first environment-complete parallel browser run exposed two verification-source conditions: its active-workout scenario still expected the now screen-reader-only saved cue to be visible, and four database-mutating project cases interfered through their shared local database. Approval-inherited replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` changes only the two stale assertions from visible to attached; the complete four-case browser scope will repeat serially.
 
 ## Delivery commit
 
 - **Delivery commit SHA:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
 - **Subject:** `T-055: compact and accelerate workout flow`
 - **Committed scope:** Compact active-workout header and chevron-free disclosures; a round local finish-review sheet and blocking start/finish progress; Today aggregate split prescriptions; single-RPC start hydration; lazy exercise-library loading; additive migration and generated declaration; prepared component, repository, pgTAP, and browser assertions; and the affected canonical and project records.
+
+## Replacement
+
+- **Replacement SHA:** `68c63e50c2a3b53c82df5ea2efcfd4629258610f`
+- **Subject:** `T-055: align browser save-status assertion`
+- **Scope:** Test source only: both active-workout assertions now require the saved status to remain in the accessibility tree, matching its intentional screen-reader-only presentation. It inherits the Task approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
 ## Review
 
@@ -130,3 +136,5 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | `2026-09-09T13:17:18+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began by tracing the Today, start, current-workout, and finish-review data paths. |
 | `2026-09-09T14:09:02+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` with no finding; static checks passed except unavailable `lychee`, and no feature test ran. |
 | `2026-09-09T14:15:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` (`odobravam`) and unlocked its scoped verification. |
+| `2026-09-09T14:18:54+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the authorized scoped verification in an isolated worktree at the exact approved delivery. |
+| `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Lower layers pass; the first browser run found a stale visibility assertion and shared-database parallel interference, so test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` will repeat the same scope serially under inherited approval. |
