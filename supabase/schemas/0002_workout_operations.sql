@@ -125,7 +125,20 @@ as $$
       split.position,
       split.id = program.next_split_id as is_proposed,
       count(workout.id)::integer as completed_count,
-      round(avg(workout.accumulated_active_seconds))::integer as average_seconds
+      round(avg(workout.accumulated_active_seconds))::integer as average_seconds,
+      coalesce((
+        select jsonb_agg(jsonb_build_object(
+          'exerciseId', exercise.id,
+          'exerciseName', exercise.name,
+          'position', split_item.position,
+          'plannedSets', split_item.planned_sets,
+          'minReps', split_item.min_reps,
+          'maxReps', split_item.max_reps
+        ) order by split_item.position)
+        from public.split_exercises as split_item
+        join public.exercises as exercise on exercise.id = split_item.exercise_id
+        where split_item.split_id = split.id
+      ), '[]'::jsonb) as exercises
     from active_program as program
     join public.splits as split on split.program_id = program.id
     left join public.workouts as workout on workout.source_split_id = split.id and workout.status = 'completed'
@@ -134,11 +147,11 @@ as $$
   select jsonb_build_object(
     'localDate', (pg_catalog.now() at time zone settings.time_zone)::date,
     'proposedSplit', (
-      select jsonb_build_object('programId', choice.program_id, 'programName', choice.program_name, 'splitId', choice.split_id, 'splitName', choice.split_name, 'position', choice.position, 'averageDurationSeconds', choice.average_seconds, 'completedWorkoutCount', choice.completed_count)
+      select jsonb_build_object('programId', choice.program_id, 'programName', choice.program_name, 'splitId', choice.split_id, 'splitName', choice.split_name, 'position', choice.position, 'averageDurationSeconds', choice.average_seconds, 'completedWorkoutCount', choice.completed_count, 'exercises', choice.exercises)
       from choices as choice where choice.is_proposed
     ),
     'alternateSplits', coalesce((
-      select jsonb_agg(jsonb_build_object('programId', choice.program_id, 'programName', choice.program_name, 'splitId', choice.split_id, 'splitName', choice.split_name, 'position', choice.position, 'averageDurationSeconds', choice.average_seconds, 'completedWorkoutCount', choice.completed_count) order by choice.position)
+      select jsonb_agg(jsonb_build_object('programId', choice.program_id, 'programName', choice.program_name, 'splitId', choice.split_id, 'splitName', choice.split_name, 'position', choice.position, 'averageDurationSeconds', choice.average_seconds, 'completedWorkoutCount', choice.completed_count, 'exercises', choice.exercises) order by choice.position)
       from choices as choice where not choice.is_proposed
     ), '[]'::jsonb),
     'currentWorkout', (
@@ -218,6 +231,24 @@ begin
     raise exception using errcode = 'PF206', message = 'Workout source kind is invalid';
   end if;
   return created_workout_id;
+end;
+$$;
+
+create or replace function public.start_workout_and_get_current(
+  p_source_kind public.workout_source_kind,
+  p_split_id uuid,
+  p_one_time_name text,
+  p_exercise_ids uuid[],
+  p_started_at timestamptz
+)
+returns jsonb
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+begin
+  perform public.start_workout(p_source_kind, p_split_id, p_one_time_name, p_exercise_ids, p_started_at);
+  return public.get_current_workout();
 end;
 $$;
 
@@ -355,6 +386,8 @@ $$;
 revoke execute on function public.get_current_workout() from public, anon, authenticated;
 revoke execute on function public.get_today_view() from public, anon, authenticated;
 revoke execute on function public.start_workout(public.workout_source_kind, uuid, text, uuid[], timestamptz) from public, anon, authenticated;
+revoke execute on function public.start_workout_and_get_current(public.workout_source_kind, uuid, text, uuid[], timestamptz) from public, anon, authenticated;
 grant execute on function public.get_current_workout() to service_role;
 grant execute on function public.get_today_view() to service_role;
 grant execute on function public.start_workout(public.workout_source_kind, uuid, text, uuid[], timestamptz) to service_role;
+grant execute on function public.start_workout_and_get_current(public.workout_source_kind, uuid, text, uuid[], timestamptz) to service_role;

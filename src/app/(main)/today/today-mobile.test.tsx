@@ -65,6 +65,16 @@ const today: TodayView = {
     position: 0,
     averageDurationSeconds: 4080,
     completedWorkoutCount: 7,
+    exercises: [
+      {
+        exerciseId: exerciseAId,
+        exerciseName: "Back Squat",
+        position: 1,
+        plannedSets: 3,
+        minReps: 5,
+        maxReps: 8,
+      },
+    ],
   },
   alternateSplits: [
     {
@@ -75,6 +85,16 @@ const today: TodayView = {
       position: 1,
       averageDurationSeconds: null,
       completedWorkoutCount: 0,
+      exercises: [
+        {
+          exerciseId: exerciseBId,
+          exerciseName: "Overhead Press",
+          position: 1,
+          plannedSets: 4,
+          minReps: 6,
+          maxReps: 10,
+        },
+      ],
     },
   ],
   currentWorkout: null,
@@ -142,33 +162,7 @@ describe("Today and workout-start mobile experience", () => {
   it("previews every exercise in the selected split beneath Start Workout", async () => {
     const user = userEvent.setup();
     renderToday(
-      <TodayExperience
-        today={today}
-        weight={noWeighIn}
-        measurements={null}
-        splitExercises={{
-          [proposedId]: [
-            {
-              exerciseId: exerciseAId,
-              exerciseName: "Back Squat",
-              position: 1,
-              plannedSets: 3,
-              minReps: 5,
-              maxReps: 8,
-            },
-          ],
-          [alternateId]: [
-            {
-              exerciseId: exerciseBId,
-              exerciseName: "Overhead Press",
-              position: 1,
-              plannedSets: 4,
-              minReps: 6,
-              maxReps: 10,
-            },
-          ],
-        }}
-      />,
+      <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
     );
 
     expect(screen.getByText("Back Squat")).toBeVisible();

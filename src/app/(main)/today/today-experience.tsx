@@ -11,8 +11,14 @@ import type {
   TodaySplit,
   TodayView,
 } from "@/features/active-workout/domain/workout";
-import type { SplitExercisePrescription } from "@/features/programs/domain/program";
-import { Action, Badge, Icon, PageFrame, Sheet } from "@/shared/ui";
+import {
+  Action,
+  Badge,
+  BlockingProgress,
+  Icon,
+  PageFrame,
+  Sheet,
+} from "@/shared/ui";
 
 import type { TodayMeasurements } from "@/features/history/domain/body";
 
@@ -23,15 +29,11 @@ export function TodayExperience({
   today,
   weight,
   measurements,
-  splitExercises = {},
 }: {
   today: TodayView;
   /** Null only when the weigh-in could not be read; Today still works. */
   weight: TodayWeight | null;
   measurements: TodayMeasurements | null;
-  splitExercises?: Readonly<
-    Record<string, readonly SplitExercisePrescription[]>
-  >;
 }) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
@@ -110,9 +112,7 @@ export function TodayExperience({
               {pending ? "Starting…" : "Start Workout"}
             </Action>
           )}
-          <SplitExercisePreview
-            exercises={splitExercises[selectedSplit.splitId] ?? []}
-          />
+          <SplitExercisePreview exercises={selectedSplit.exercises} />
         </section>
       ) : (
         <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-5">
@@ -183,6 +183,7 @@ export function TodayExperience({
         Rotation position: {today.proposedSplit?.splitName ?? "No active split"}
         . One-time workouts and today-only alternates never advance it.
       </p>
+      {pending ? <BlockingProgress label="Starting workout…" /> : null}
     </PageFrame>
   );
 }
@@ -190,7 +191,7 @@ export function TodayExperience({
 function SplitExercisePreview({
   exercises,
 }: {
-  exercises: readonly SplitExercisePrescription[];
+  exercises: TodaySplit["exercises"];
 }) {
   return (
     <div className="mt-4 border-t border-[var(--pf-border)] pt-3">

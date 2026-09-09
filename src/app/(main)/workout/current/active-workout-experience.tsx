@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { getCurrentWorkoutAction } from "@/app/actions/workouts";
+import { listExercisesAction } from "@/app/actions/exercises";
 import { applyCommandToWorkout } from "@/features/active-workout/domain/apply-command-to-workout";
 import { describeCommandTarget } from "@/features/active-workout/domain/describe-command-target";
 import type { ActiveWorkoutCommand } from "@/features/active-workout/domain/active-workout-command";
@@ -44,11 +44,11 @@ import {
 } from "@/features/exercises/ui/exercise-presentation";
 import {
   Action,
+  BlockingProgress,
   DestructiveDialog,
   Icon,
   normalizeDecimalInput,
   Sheet,
-  StickyActionBar,
   TextAreaField,
   TextField,
 } from "@/shared/ui";
@@ -75,6 +75,7 @@ function setBaseMode(exercise: WorkoutExercise): ExerciseLoadMode {
 }
 
 type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
+type FinishOutcome = "completed" | "incomplete" | "discarded";
 
 export function ActiveWorkoutExperience({
   initial,
@@ -83,7 +84,8 @@ export function ActiveWorkoutExperience({
   transport,
 }: {
   initial: CurrentWorkout;
-  exercises: readonly Exercise[];
+  /** Optional eager data for isolated consumers; the routed screen loads lazily. */
+  exercises?: readonly Exercise[];
   outbox?: ActiveWorkoutOutbox;
   transport?: ActiveWorkoutCommandTransport;
 }) {
@@ -111,9 +113,14 @@ export function ActiveWorkoutExperience({
   >({});
   const [now, setNow] = useState(() => Date.now());
   const [discardedChange, setDiscardedChange] = useState<string | null>(null);
+  const [placeholderNames, setPlaceholderNames] = useState<
+    Readonly<Record<string, string>>
+  >({});
   const [expandedExerciseId, setExpandedExerciseId] = useState<string | null>(
     null,
   );
+  const requestedFinishRef = useRef<FinishOutcome | null>(null);
+  const [finishing, setFinishing] = useState(false);
   const recoveringRef = useRef(false);
 
   const adoptWorkout = useCallback((next: CurrentWorkout) => {
@@ -195,7 +202,16 @@ export function ActiveWorkoutExperience({
   }, [adoptWorkout, delivery, initial.id, router]);
 
   useEffect(() => {
-    const unsubscribe = delivery.controller.subscribe(setStatus);
+    const unsubscribe = delivery.controller.subscribe((nextStatus) => {
+      setStatus(nextStatus);
+      if (
+        nextStatus.state === "save_failed" &&
+        requestedFinishRef.current !== null
+      ) {
+        requestedFinishRef.current = null;
+        setFinishing(false);
+      }
+    });
     void restoreActiveWorkout(
       initial.id,
       delivery.outbox,
@@ -241,10 +257,12 @@ export function ActiveWorkoutExperience({
     void recoverFromConflict();
   }, [recoverFromConflict, status]);
 
-  const exercisesById = useMemo(
-    () => new Map(exercises.map((exercise) => [exercise.id, exercise])),
-    [exercises],
-  );
+  useEffect(() => {
+    if (requestedFinishRef.current === null) return;
+    if (status.state === "saved") {
+      router.replace("/today");
+    }
+  }, [router, status]);
 
   const paused = workout.status === "paused";
   const activeSegmentSeconds =
@@ -320,6 +338,16 @@ export function ActiveWorkoutExperience({
     send("reorder_exercises", { workoutExerciseIds: ids });
   }
 
+  function finishWorkout(outcome: FinishOutcome) {
+    if (finishing) return;
+    requestedFinishRef.current = outcome;
+    setFinishing(true);
+    send("finish_workout", {
+      outcome,
+      finishedAt: new Date().toISOString(),
+    });
+  }
+
   const cue = firstError
     ? { kind: "validation" as const, message: firstError }
     : status.state === "saving"
@@ -334,19 +362,11 @@ export function ActiveWorkoutExperience({
 
   return (
     <div className="flex min-h-full flex-col">
-      <header className="sticky top-0 z-5 border-b border-[var(--pf-border)] bg-[var(--pf-bg-canvas)] px-[var(--pf-gutter)] pt-[calc(env(safe-area-inset-top)+10px)] pb-2.5">
-        <div className="flex items-start justify-between gap-3">
-          <h1 className="min-w-0 text-[17px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
+      <header className="sticky top-0 z-5 flex h-[calc(40px+env(safe-area-inset-top))] items-end border-b border-[var(--pf-border)] bg-[var(--pf-bg-canvas)] px-[var(--pf-gutter)] pt-[env(safe-area-inset-top)]">
+        <div className="flex h-10 w-full min-w-0 items-center gap-2">
+          <h1 className="min-w-0 flex-1 truncate text-[14px] leading-none font-semibold">
             {workout.name}
           </h1>
-          <span
-            aria-label="Active duration"
-            className={`pf-numeric text-[21px] leading-[1.2] font-semibold ${paused ? "text-[var(--pf-warn)]" : ""}`}
-          >
-            {formatWorkoutClock(displaySeconds)}
-          </span>
-        </div>
-        <div className="mt-1.5 flex justify-end">
           <button
             type="button"
             onClick={() =>
@@ -354,10 +374,16 @@ export function ActiveWorkoutExperience({
                 transitionedAt: new Date().toISOString(),
               })
             }
-            className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-border-control)] px-4 font-semibold"
+            className="relative h-10 shrink-0 text-[11px] leading-none font-semibold text-[var(--pf-accent-strong)] after:absolute after:inset-x-0 after:-inset-y-0.5"
           >
             {paused ? "Resume" : "Continue Later"}
           </button>
+          <span
+            aria-label="Active duration"
+            className={`pf-numeric shrink-0 text-[16px] leading-none font-semibold ${paused ? "text-[var(--pf-warn)]" : ""}`}
+          >
+            {formatWorkoutClock(displaySeconds)}
+          </span>
         </div>
       </header>
 
@@ -396,9 +422,7 @@ export function ActiveWorkoutExperience({
           placeholderIds.has(exercise.id) ? (
             <PlaceholderExerciseCard
               key={exercise.id}
-              name={
-                exercisesById.get(exercise.exerciseId)?.name ?? "New exercise"
-              }
+              name={placeholderNames[exercise.id] ?? "New exercise"}
             />
           ) : (
             <ExerciseCard
@@ -444,22 +468,30 @@ export function ActiveWorkoutExperience({
         )}
 
         <AddExerciseSheet
-          exercises={exercises}
-          onAdd={(ids) => {
-            for (const exerciseId of ids) send("add_exercise", { exerciseId });
+          initialExercises={exercises}
+          onAdd={(selectedExercises) => {
+            for (const exercise of selectedExercises) {
+              const commandId = send("add_exercise", {
+                exerciseId: exercise.id,
+              });
+              setPlaceholderNames((current) => ({
+                ...current,
+                [commandId]: exercise.name,
+              }));
+            }
           }}
         />
       </main>
 
-      <StickyActionBar className="z-10">
+      <div className="sticky bottom-0 z-10 mt-auto flex items-center justify-end gap-2 bg-[linear-gradient(to_bottom,transparent_0,var(--pf-bg-canvas)_18px)] px-[var(--pf-gutter)] pt-7 pb-3">
         <div
           role="status"
           aria-live="polite"
-          className={`flex min-h-11 items-center gap-2 text-[13px] font-medium ${
+          className={`mr-auto flex min-h-10 min-w-0 items-center gap-2 rounded-[var(--pf-r-pill)] bg-[var(--pf-bg-canvas)] px-3 text-[12px] font-medium ${
             cue.kind === "validation" || cue.kind === "failure"
               ? "text-[var(--pf-danger)]"
               : cue.kind === "saved"
-                ? "text-[var(--pf-ok)]"
+                ? "sr-only"
                 : "text-[var(--pf-text-2)]"
           }`}
         >
@@ -474,8 +506,9 @@ export function ActiveWorkoutExperience({
                     : "circle-check"
             }
             size={14}
+            className={cue.kind === "saving" ? "animate-spin" : undefined}
           />
-          <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+          <span className="min-w-0 [overflow-wrap:anywhere]">
             {cue.message}
           </span>
           {cue.kind === "failure" ? (
@@ -483,7 +516,7 @@ export function ActiveWorkoutExperience({
               <button
                 type="button"
                 onClick={() => void recoverFromConflict()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+                className="min-h-10 font-semibold underline underline-offset-4"
               >
                 Refresh
               </button>
@@ -491,20 +524,160 @@ export function ActiveWorkoutExperience({
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+                className="min-h-10 font-semibold underline underline-offset-4"
               >
                 Retry
               </button>
             )
           ) : null}
         </div>
-        <Link
-          href="/workout/current/finish"
-          className="flex min-h-[var(--pf-size-primary-action)] w-full items-center justify-center rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 font-semibold text-[var(--pf-on-accent)]"
+        <FinishWorkoutSheet
+          workout={workout}
+          displaySeconds={displaySeconds}
+          submitting={finishing}
+          onFinish={finishWorkout}
+        />
+      </div>
+      {finishing ? <BlockingProgress label="Finishing workout…" /> : null}
+    </div>
+  );
+}
+
+function FinishWorkoutSheet({
+  workout,
+  displaySeconds,
+  submitting,
+  onFinish,
+}: {
+  workout: CurrentWorkout;
+  displaySeconds: number;
+  submitting: boolean;
+  onFinish: (outcome: FinishOutcome) => void;
+}) {
+  const isOneTime = workout.sourceKind === "one_time";
+  const recordedSets = workout.exercises.reduce(
+    (total, exercise) =>
+      total +
+      exercise.sets.filter((set) => isSetRecorded(set.loadMode, set)).length,
+    0,
+  );
+  const plannedWithoutValues = workout.exercises.flatMap((exercise) =>
+    exercise.plannedSets === null
+      ? []
+      : exercise.sets
+          .filter(
+            (set) =>
+              set.position <= (exercise.plannedSets ?? 0) &&
+              !isSetRecorded(set.loadMode, set),
+          )
+          .map((set) => `${exercise.exerciseName} set ${set.position}`),
+  );
+
+  return (
+    <Sheet
+      title="Review & Finish"
+      description={workout.name}
+      trigger={
+        <button
+          type="button"
+          aria-label="Review and finish workout"
+          className="flex size-13 shrink-0 items-center justify-center rounded-full bg-[var(--pf-accent)] text-[var(--pf-on-accent)] shadow-[var(--pf-shadow-toast)]"
         >
-          Review &amp; Finish
-        </Link>
-      </StickyActionBar>
+          <Icon name="check" size={20} />
+        </button>
+      }
+    >
+      {(close) => (
+        <div className="space-y-4">
+          <dl className="grid grid-cols-3 gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3 text-center">
+            <FinishMetric
+              label="Duration"
+              value={formatWorkoutClock(displaySeconds)}
+            />
+            <FinishMetric
+              label="Exercises"
+              value={String(workout.exercises.length)}
+            />
+            <FinishMetric label="Recorded sets" value={String(recordedSets)} />
+          </dl>
+
+          {!isOneTime && plannedWithoutValues.length > 0 ? (
+            <div className="text-[13px] leading-[1.45] text-[var(--pf-warn)]">
+              <p className="flex items-start gap-2 font-medium">
+                <Icon name="triangle-alert" size={14} className="mt-0.5" />
+                {plannedWithoutValues.length} planned set
+                {plannedWithoutValues.length === 1 ? "" : "s"} left without
+                values
+              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-8">
+                {plannedWithoutValues.map((entry) => (
+                  <li key={entry}>{entry}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {isOneTime ? (
+            <p className="text-[13px] leading-[1.45] text-[var(--pf-text-3-deep)]">
+              No planned-set metric: this workout has no prescription, so its
+              set rows are workout-local rather than planned.
+            </p>
+          ) : null}
+
+          <div role="group" aria-label="Finish actions" className="space-y-2">
+            <Action
+              className="w-full"
+              disabled={submitting}
+              onClick={() => onFinish("completed")}
+            >
+              Complete Workout
+            </Action>
+            <Action
+              variant="secondary"
+              className="w-full"
+              disabled={submitting}
+              onClick={() => onFinish("incomplete")}
+            >
+              Save as Incomplete
+            </Action>
+            <button
+              type="button"
+              onClick={close}
+              className="flex min-h-11 w-full items-center justify-center font-semibold text-[var(--pf-accent-strong)]"
+            >
+              Continue Workout
+            </button>
+            <DestructiveDialog
+              trigger={
+                <Action
+                  variant="danger"
+                  className="w-full"
+                  disabled={submitting}
+                >
+                  Discard Workout
+                </Action>
+              }
+              title="Discard this workout?"
+              description="Its entered sets and notes are lost, no History record is created, and rotation is unchanged."
+              confirmLabel="Discard Workout"
+              onConfirm={() => onFinish("discarded")}
+            />
+          </div>
+        </div>
+      )}
+    </Sheet>
+  );
+}
+
+function FinishMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="min-w-0">
+      <dt className="text-[10px] font-semibold tracking-[0.05em] text-[var(--pf-text-2)] uppercase">
+        {label}
+      </dt>
+      <dd className="pf-numeric mt-1 truncate text-[16px] font-semibold">
+        {value}
+      </dd>
     </div>
   );
 }
@@ -618,7 +791,17 @@ function ExerciseCard({
     <section
       ref={cardRef}
       aria-label={exercise.exerciseName}
-      className="scroll-mt-[84px] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
+      onClick={(event) => {
+        if (expanded) return;
+        const target = event.target;
+        if (
+          target instanceof Element &&
+          target.closest("button, a, input, select, textarea")
+        )
+          return;
+        onToggle();
+      }}
+      className="scroll-mt-[calc(40px+env(safe-area-inset-top))] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
     >
       <div className="flex items-start gap-1">
         <button
@@ -627,13 +810,8 @@ function ExerciseCard({
           aria-expanded={expanded}
           aria-controls={contentId}
           onClick={onToggle}
-          className="flex min-h-11 min-w-0 flex-1 items-start gap-2 text-left"
+          className="flex min-h-11 min-w-0 flex-1 items-start text-left"
         >
-          <Icon
-            name={expanded ? "chevron-down" : "chevron-right"}
-            size={14}
-            className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
-          />
           <span className="min-w-0 flex-1">
             <span className="block text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
               {exercise.exerciseName}
@@ -985,15 +1163,29 @@ function SetRow({
 }
 
 function AddExerciseSheet({
-  exercises,
+  initialExercises,
   onAdd,
 }: {
-  exercises: readonly Exercise[];
-  onAdd: (exerciseIds: readonly string[]) => void;
+  initialExercises?: readonly Exercise[];
+  onAdd: (exercises: readonly Exercise[]) => void;
 }) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<readonly string[]>([]);
-  const filtered = exercises.filter((exercise) =>
+  const [exercises, setExercises] = useState<readonly Exercise[] | null>(
+    initialExercises ?? null,
+  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
+  async function loadExercises() {
+    if (exercises !== null || loading) return;
+    setLoading(true);
+    setError(undefined);
+    const result = await listExercisesAction();
+    if (result.ok) setExercises(result.value);
+    else setError(result.error.message);
+    setLoading(false);
+  }
+  const filtered = (exercises ?? []).filter((exercise) =>
     exercise.name.toLowerCase().includes(query.trim().toLowerCase()),
   );
 
@@ -1009,6 +1201,9 @@ function AddExerciseSheet({
     <Sheet
       title="Add Exercise"
       description="Choose from your active library. This workout only."
+      onOpenChange={(open) => {
+        if (open) void loadExercises();
+      }}
       trigger={
         <button
           type="button"
@@ -1031,7 +1226,27 @@ function AddExerciseSheet({
           <p className="text-[12.5px] text-[var(--pf-text-3-deep)]">
             Archived exercises are not listed.
           </p>
-          {filtered.length === 0 ? (
+          {loading ? (
+            <p
+              role="status"
+              className="flex min-h-20 items-center justify-center gap-2 text-[var(--pf-text-2)]"
+            >
+              <Icon name="loader-circle" size={16} /> Loading exercises…
+            </p>
+          ) : error ? (
+            <div className="py-3 text-center">
+              <p role="alert" className="text-[var(--pf-danger)]">
+                {error}
+              </p>
+              <button
+                type="button"
+                className="mt-2 min-h-11 font-semibold text-[var(--pf-accent-strong)]"
+                onClick={() => void loadExercises()}
+              >
+                Retry
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
             <p className="py-4 text-center text-[var(--pf-text-2)]">
               No active exercise matches this search.
             </p>
@@ -1081,9 +1296,13 @@ function AddExerciseSheet({
           )}
           <Action
             className="w-full"
-            disabled={selected.length === 0}
+            disabled={selected.length === 0 || exercises === null}
             onClick={() => {
-              onAdd(selected);
+              onAdd(
+                (exercises ?? []).filter((exercise) =>
+                  selected.includes(exercise.id),
+                ),
+              );
               setSelected([]);
               close();
             }}

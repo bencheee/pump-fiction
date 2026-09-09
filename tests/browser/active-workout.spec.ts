@@ -157,27 +157,25 @@ test.describe("Active workout experience", () => {
         contentType: "image/png",
       });
 
-      await page.getByRole("link", { name: "Review & Finish" }).click();
-      await expect(page).toHaveURL(/\/workout\/current\/finish$/);
+      await page
+        .getByRole("button", { name: "Review and finish workout" })
+        .click();
+      await expect(page).toHaveURL(/\/workout\/current$/);
+      const finishReview = page.getByRole("dialog", {
+        name: "Review & Finish",
+      });
       await expect(
-        page.getByText("Proposed split · active rotation"),
+        finishReview.getByText("Recorded sets", { exact: true }),
       ).toBeVisible();
-      await expect(
-        page.getByText("Recorded sets", { exact: true }),
-      ).toBeVisible();
-      await expect(
-        page.getByText("Sets left without values", { exact: true }),
-      ).toBeVisible();
-      await expect(page.getByText(`${exerciseA} set 2`)).toBeVisible();
-      await expect(
-        page.getByText(/Rotation advances to the next split/),
-      ).toBeVisible();
+      await expect(finishReview.getByText(`${exerciseA} set 2`)).toBeVisible();
       await testInfo.attach(`finish-review-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
       });
 
-      await page.getByRole("button", { name: "Complete Workout" }).click();
+      await finishReview
+        .getByRole("button", { name: "Complete Workout" })
+        .click();
       await expect(page).toHaveURL(/\/today$/);
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
 
@@ -195,14 +193,19 @@ test.describe("Active workout experience", () => {
         page.getByText("Workout-local, no prescription · 0 of 1 recorded"),
       ).toBeVisible();
 
-      await page.getByRole("link", { name: "Review & Finish" }).click();
-      await expect(page.getByText("One-time workout · no split")).toBeVisible();
+      await page
+        .getByRole("button", { name: "Review and finish workout" })
+        .click();
+      const oneTimeReview = page.getByRole("dialog", {
+        name: "Review & Finish",
+      });
       await expect(
-        page.getByText("Sets left without values", { exact: true }),
+        oneTimeReview.getByText(/planned set.*left without values/),
       ).not.toBeAttached();
-      await expect(page.getByText(/No planned-set metric/)).toBeVisible();
 
-      await page.getByRole("button", { name: "Discard Workout" }).click();
+      await oneTimeReview
+        .getByRole("button", { name: "Discard Workout" })
+        .click();
       await page
         .getByRole("alertdialog", { name: "Discard this workout?" })
         .getByRole("button", { name: "Discard Workout" })

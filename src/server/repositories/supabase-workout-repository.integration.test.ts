@@ -72,7 +72,15 @@ describe("SupabaseWorkoutRepository", () => {
       workoutIds.push(current.id);
       expect(current.exercises).toHaveLength(1);
       expect(current.exercises[0]?.sets).toHaveLength(3);
-      expect((await workouts.getToday()).currentWorkout?.id).toBe(current.id);
+      const today = await workouts.getToday();
+      expect(today.currentWorkout?.id).toBe(current.id);
+      expect(today.proposedSplit?.exercises).toEqual([
+        expect.objectContaining({
+          exerciseId: exercise.id,
+          exerciseName: exercise.name,
+          plannedSets: 3,
+        }),
+      ]);
 
       const workoutSetId = current.exercises[0]?.sets[0]?.id;
       if (!workoutSetId) throw new Error("Expected initial workout set");

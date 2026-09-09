@@ -38,8 +38,8 @@ export class SupabaseWorkoutRepository implements WorkoutRepository {
 
   async start(definition: StartWorkoutDefinition): Promise<CurrentWorkout> {
     try {
-      const { error } = await this.client.rpc(
-        "start_workout",
+      const { data, error } = await this.client.rpc(
+        "start_workout_and_get_current",
         definition.sourceKind === "one_time"
           ? {
               p_source_kind: definition.sourceKind,
@@ -57,9 +57,8 @@ export class SupabaseWorkoutRepository implements WorkoutRepository {
             },
       );
       if (error) throw mapPostgrestError(error);
-      const current = await this.getCurrent();
-      if (current === null) throw new WorkoutRepositoryError("unexpected");
-      return current;
+      if (data === null) throw new WorkoutRepositoryError("unexpected");
+      return data as unknown as CurrentWorkout;
     } catch (error) {
       throw normalize(error);
     }

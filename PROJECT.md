@@ -1,8 +1,8 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T12:58:13+02:00
-- **Current phase:** **Deployed and in use.** `M-001`, `M-002`, and `M-003` are complete.
-- **Current Milestone:** None; [`M-003`](docs/project/milestones/M-003-workout-usability-refinements.md) is `Done`.
+- **Last updated:** 2026-09-09T14:04:50+02:00
+- **Current phase:** **Deployed and in use, with workout-flow refinement in progress.** `M-001`, `M-002`, and `M-003` remain complete.
+- **Current Milestone:** [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) — Workout Flow Speed and Chrome
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-None; [`F-016`](docs/project/features/F-016-today-preview-and-workout-density.md), [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md), and `M-003` are `Done`.
+[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `In Progress`.
 
 ## Immediate next action
 
-No active delivery work. The next product change needs its own ready Milestone, Feature, and Task.
+Implement and statically check `T-055`, then deliver its exact commit for Owner review without running feature tests.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ No active delivery work. The next product change needs its own ready Milestone, 
 
 ## Now
 
-None.
+[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — `In Progress` — Codex primary agent — eliminate the diagnosed round trips and deliver the compact workout chrome.
 
 ## Next
 
@@ -63,6 +63,6 @@ None.
 
 ## Active work items
 
-None; every Milestone, Feature, and Task is terminal.
+[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is the only active Task.
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

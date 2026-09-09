@@ -4,8 +4,13 @@ import type { ExerciseDefinitionInput } from "@/features/exercises/domain/exerci
 import {
   createExercise,
   deleteExercise,
+  listExercises,
   updateExercise,
 } from "@/server/application/exercises";
+
+export async function listExercisesAction() {
+  return listExercises();
+}
 
 export async function createExerciseAction(input: ExerciseDefinitionInput) {
   return createExercise(input);

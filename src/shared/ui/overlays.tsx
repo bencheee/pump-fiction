@@ -13,17 +13,23 @@ export function Sheet({
   description,
   children,
   closeLabel = "Close",
+  onOpenChange,
 }: {
   trigger: ReactElement;
   title: string;
   description?: string;
   children: ReactNode | ((close: () => void) => ReactNode);
   closeLabel?: string;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const overlay = useTransientOverlay();
+  const requestOpenChange = (open: boolean) => {
+    overlay.requestOpenChange(open);
+    onOpenChange?.(open);
+  };
 
   return (
-    <Dialog.Root open={overlay.open} onOpenChange={overlay.requestOpenChange}>
+    <Dialog.Root open={overlay.open} onOpenChange={requestOpenChange}>
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="pf-scrim-sheet fixed inset-0 z-40" />
@@ -47,7 +53,7 @@ export function Sheet({
           ) : null}
           <div className="mt-5">
             {typeof children === "function"
-              ? children(() => overlay.requestOpenChange(false))
+              ? children(() => requestOpenChange(false))
               : children}
           </div>
         </Dialog.Content>

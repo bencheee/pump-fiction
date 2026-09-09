@@ -57,13 +57,15 @@ During a workout the user may:
 - apply or remove the definition's single permitted addition on a set, and change its values;
 - add a workout-specific note.
 
-Exercise cards form a single-open accordion and all start collapsed. Opening one closes the previously open card and scrolls the newly opened card to the top of the workout's visible content below its sticky header. The card header holds its compact named reorder and removal controls in the title row; no drag handle is shown. A set uses one horizontal row: its number, applicable value inputs, compact optional-addition icon when allowed, and icon-only removal. Persistent exercise guidance is yellow, set-entry inputs and compact row actions are 32 CSS pixels high, and **Add Set** is right-aligned green text without a bordered button shape.
+Exercise cards form a single-open accordion and all start collapsed. Opening one closes the previously open card and scrolls the newly opened card to the top of the workout's visible content below its sticky header. The title/card surface is the disclosure affordance, with no chevron. The card header holds its compact named reorder and removal controls in the title row; no drag handle is shown. A set uses one horizontal row: its number, applicable value inputs, compact optional-addition icon when allowed, and icon-only removal. Persistent exercise guidance is yellow, set-entry inputs and compact row actions are 32 CSS pixels high, and **Add Set** is right-aligned green text without a bordered button shape.
 
 None of these actions changes the originating split.
 
 ## Timer and continuation
 
 The timer measures active workout duration. **Continue Later** pauses it, so time spent away from the workout is excluded. Browsing to another screen during a workout does not pause anything: the workout stays active, the duration keeps growing, and Today offers **Resume Workout** to return.
+
+The active-workout header places the workout name, text-only **Continue Later** or **Resume**, and the live clock in one row whose content is 40 CSS pixels high beyond the phone safe-area inset.
 
 Persist:
 
@@ -74,12 +76,14 @@ The exact timestamps retained for completed History are described in [`domain-mo
 
 ## Finishing a workout
 
-The finish review shows active duration, exercise count, recorded-set count, and any planned sets left without values, which it names instead of blocking the finish. Its actions stay together in one sticky group:
+One round check action at the lower-right opens the finish review as an in-place sheet from the current client workout snapshot, so opening the review does not wait for another route or database read. The review shows active duration, exercise count, recorded-set count, and any planned sets left without values, which it names instead of blocking the finish. Its actions stay together in the sheet:
 
 - **Complete Workout**;
 - **Save as Incomplete**;
 - **Continue Workout**;
 - a separate, confirmed action to discard the workout entirely.
+
+Starting or finishing a workout shows a full-viewport progress layer until its persistence and navigation complete, preventing duplicate interaction while the database-backed transition is pending.
 
 A completed workout enters History and eligible statistics. It advances rotation only if it was the split proposed by the active rotation, according to [`programs-and-splits.md`](programs-and-splits.md#rotation).
 

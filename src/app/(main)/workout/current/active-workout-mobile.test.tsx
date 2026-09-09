@@ -35,6 +35,7 @@ const actions = vi.hoisted(() => ({
   replace: vi.fn(),
   refresh: vi.fn(),
   getCurrent: vi.fn(),
+  listExercises: vi.fn(),
 }));
 const scrollIntoView = vi.fn();
 
@@ -48,6 +49,9 @@ vi.mock("next/navigation", () => ({
 }));
 vi.mock("@/app/actions/workouts", () => ({
   getCurrentWorkoutAction: actions.getCurrent,
+}));
+vi.mock("@/app/actions/exercises", () => ({
+  listExercisesAction: actions.listExercises,
 }));
 
 const workoutId = "00000000-0000-4000-8000-00000000000a";
@@ -258,6 +262,7 @@ beforeEach(() => {
       retryable: true,
     },
   });
+  actions.listExercises.mockResolvedValue({ ok: true, value: library });
 });
 
 afterEach(cleanup);
@@ -277,6 +282,7 @@ describe("Active-workout mobile experience", () => {
     const squatToggle = within(squat).getByRole("button", {
       name: "Expand Squat",
     });
+    expect(squat.querySelector('[style*="chevron"]')).toBeNull();
     expect(squatToggle).toHaveAttribute("aria-expanded", "false");
     await user.click(squatToggle);
     await waitFor(() => {
@@ -309,7 +315,7 @@ describe("Active-workout mobile experience", () => {
       within(squat).queryByLabelText("Resistance band"),
     ).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
-    expect(await screen.findByText("All changes saved")).toBeVisible();
+    expect(await screen.findByText("All changes saved")).toBeInTheDocument();
 
     expect(squatToggle).toHaveAttribute("aria-expanded", "false");
     expect(within(squat).getAllByLabelText("kg")[0]).not.toBeVisible();
@@ -337,6 +343,56 @@ describe("Active-workout mobile experience", () => {
       expect(navigation.getByRole("link", { name: destination })).toBeVisible();
     }
     expect(screen.getByLabelText("Active duration")).toBeVisible();
+    expect(screen.getByRole("banner")).toHaveClass(
+      "h-[calc(40px+env(safe-area-inset-top))]",
+    );
+    expect(screen.getByRole("button", { name: "Continue Later" })).toHaveClass(
+      "text-[var(--pf-accent-strong)]",
+    );
+  });
+
+  it("loads the exercise library only when Add Exercise opens", async () => {
+    const user = userEvent.setup();
+    render(
+      <ActiveWorkoutExperience
+        initial={makeWorkout()}
+        outbox={new FakeOutbox()}
+        transport={new FakeTransport()}
+      />,
+    );
+
+    expect(actions.listExercises).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Add Exercise" }));
+    await waitFor(() => expect(actions.listExercises).toHaveBeenCalledOnce());
+    expect(
+      within(screen.getByRole("dialog", { name: "Add Exercise" })).getByRole(
+        "button",
+        { name: "Face Pull" },
+      ),
+    ).toBeVisible();
+  });
+
+  it("opens the finish review locally from the round check action", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+
+    await user.click(
+      screen.getByRole("button", { name: "Review and finish workout" }),
+    );
+    const review = screen.getByRole("dialog", { name: "Review & Finish" });
+    expect(within(review).getByText("Duration")).toBeVisible();
+    expect(within(review).getByText("Recorded sets")).toBeVisible();
+    expect(actions.getCurrent).not.toHaveBeenCalled();
+
+    await user.click(
+      within(review).getByRole("button", { name: "Complete Workout" }),
+    );
+    await waitFor(() => {
+      expect(transport.last("finish_workout").payload).toMatchObject({
+        outcome: "completed",
+      });
+    });
+    await waitFor(() => expect(actions.replace).toHaveBeenCalledWith("/today"));
   });
 
   it("records a set from its entered values with no confirmation step", async () => {

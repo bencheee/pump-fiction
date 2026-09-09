@@ -16,6 +16,16 @@ export type TodaySplit = Readonly<{
   position: number;
   averageDurationSeconds: number | null;
   completedWorkoutCount: number;
+  exercises: readonly TodaySplitExercise[];
+}>;
+
+export type TodaySplitExercise = Readonly<{
+  exerciseId: string;
+  exerciseName: string;
+  position: number;
+  plannedSets: number;
+  minReps: number;
+  maxReps: number;
 }>;
 
 export type TodayView = Readonly<{

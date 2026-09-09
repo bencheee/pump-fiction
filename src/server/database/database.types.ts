@@ -789,6 +789,16 @@ export type Database = {
         }
         Returns: string
       }
+      start_workout_and_get_current: {
+        Args: {
+          p_exercise_ids: string[]
+          p_one_time_name: string
+          p_source_kind: Database["public"]["Enums"]["workout_source_kind"]
+          p_split_id: string
+          p_started_at: string
+        }
+        Returns: Json
+      }
       update_exercise_definition: {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]

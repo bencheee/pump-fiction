@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(18);
+select plan(19);
 
 insert into public.exercises (id, name, base_type, persistent_note)
 values ('14000000-0000-4000-8000-000000000001', 'T-014 Press', 'weights', 'Brace hard');
@@ -13,9 +13,12 @@ select public.create_split_definition((select id from public.programs where name
 select public.create_split_definition((select id from public.programs where name = 'T-014 Plan'), 'Next', array['14000000-0000-4000-8000-000000000001'::uuid], array[2], array[5], array[8]);
 select public.set_current_program((select id from public.programs where name = 'T-014 Plan'), (select id from public.splits where name = 'Push'));
 
-select lives_ok(
-  $$ select public.start_workout('proposed_split', (select id from public.splits where name = 'Push'), '', array[]::uuid[], '2026-09-03T10:00:00Z') $$,
-  'a proposed workout starts atomically'
+select is(public.get_today_view() #>> '{proposedSplit,exercises,0,exerciseName}', 'T-014 Press', 'Today includes the proposed split exercise preview in its aggregate');
+
+select is(
+  (select public.start_workout_and_get_current('proposed_split', (select id from public.splits where name = 'Push'), '', array[]::uuid[], '2026-09-03T10:00:00Z') #>> '{name}'),
+  'Push',
+  'a proposed workout starts atomically and returns its hydrated snapshot'
 );
 select is((select status::text from public.workouts where status in ('active', 'paused')), 'active', 'the new workout is active');
 select is((select split_name_snapshot from public.workouts where status = 'active'), 'Push', 'the split name is snapshotted');
