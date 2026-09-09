@@ -1,7 +1,7 @@
 # T-054 — Refine Today and active-workout density
 
 - **Feature:** `F-016`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:25:00+02:00`
+- **Updated:** `2026-09-09T12:37:00+02:00`
 - **Started:** `2026-09-09T11:50:00+02:00`
-- **Review started:** Not reached for replacement
-- **Approval requested:** Not reached for replacement
+- **Review started:** `2026-09-09T12:37:00+02:00` for replacement
+- **Approval requested:** `2026-09-09T12:37:00+02:00` for replacement
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Deliver the Owner-requested in-scope replacement with one-row sets and single-open, initially collapsed exercise cards.
+- **Next action:** Owner reviews and approves or rejects replacement delivery `5379fd83ac295df9abe1b385854b168338543718`; feature tests remain locked until approval.
 
 ## Scope
 
@@ -78,15 +78,16 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 ## Delivery commit
 
 - **Delivery commit SHA:** `7c29e9a6c147f8f516bdc6a32be9636ad297f847`
-- **Subject:** `T-054: refine today and active workout density`
-- **Committed scope:** Superseded by the in-scope replacement requested on `2026-09-09`; replacement SHA not created.
+- **Replacement delivery SHA:** `5379fd83ac295df9abe1b385854b168338543718`
+- **Subject:** `T-054: compact sets into an exercise accordion`
+- **Committed scope:** The first delivery plus the Owner's in-scope revision: all exercise cards start collapsed in a controlled single-open accordion; opening one closes the prior card and aligns the new card below the sticky header; each set is one compact horizontal row with its number, applicable 32-pixel fields, compact optional-addition control, and final removal X; band strength uses a compact labelled select.
 
 ## Review
 
 - **Reviewer:** Codex primary agent
-- **Reviewed at:** Replacement not reviewed.
-- **Outcome:** Changes requested by the Owner.
-- **Findings:** The first delivery still used two vertical rows per set and opened every exercise card. The Owner clarified that sets must be one row and the cards form a single-open accordion that starts closed and aligns an opened card with the viewport.
+- **Reviewed at:** `2026-09-09T12:37:00+02:00`
+- **Outcome:** Recommended for approval.
+- **Findings:** The replacement resolves the Owner's four review points. The optional per-set addition remains available as a compact named icon so the one-row layout does not remove behavior. Static checks pass except for unavailable `lychee`; no feature test or post-change browser inspection ran.
 
 ## Approval
 
@@ -129,3 +130,4 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 | `2026-09-09T11:50:00+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began with the requested Playwright inspection of the approved current application. |
 | `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `7c29e9a6c147f8f516bdc6a32be9636ad297f847`; permitted static checks passed except unavailable `lychee`, and no feature test ran. |
 | `2026-09-09T12:25:00+02:00` | User / Owner | `Awaiting Approval` | `In Progress` | Requested an in-scope replacement: one horizontal row per set, all exercise cards initially collapsed, only one expanded at a time, and the opened card aligned to the viewport. |
+| `2026-09-09T12:37:00+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed replacement `5379fd83ac295df9abe1b385854b168338543718`; available static checks passed and feature tests remain locked. |
