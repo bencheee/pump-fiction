@@ -166,6 +166,10 @@ export function ActiveWorkoutExperience({
         (state, entry) => applyCommandToWorkout(state, entry.command),
         result.value,
       );
+      // A command can be applied optimistically while this refresh is between
+      // its server read and outbox read. Do not let that stale snapshot erase
+      // the newer local revision; the next saved transition will refresh again.
+      if (workoutRef.current.revision > optimistic.revision) return;
       adoptWorkout(optimistic);
       setPlaceholderIds(
         new Set(
