@@ -12,10 +12,10 @@ This is the canonical summary of accepted local technical architecture. Each cro
 - React `19.x` aligned with the chosen Next.js release
 - TypeScript with strict type checking
 - Node.js `24.x` LTS
-- Exact compatible security-patched versions and dependency lockfile selected at implementation initialization
-- Major upgrades require an explicit Task and documentation update
+- Exact compatible security-patched versions and dependency lockfile
+- Major upgrades require migration-guidance review and a documentation update
 
-The `T-005` initialization baseline, verified on 2026-08-31, locks Node.js `24.20.0` with npm `11.19.0`, Next.js `16.3.3`, React and React DOM `19.2.8`, and TypeScript `5.9.3`. Exact direct and transitive package versions are committed in `package-lock.json`.
+The current baseline locks Node.js `24.20.0` with npm `11.19.0`, Next.js `16.3.3`, React and React DOM `19.2.8`, and TypeScript `5.9.3`. Exact direct and transitive package versions are committed in `package-lock.json`.
 
 Canonical decision: [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md).
 
@@ -23,15 +23,15 @@ Canonical decision: [ADR-0017](../decisions/0017-nextjs-app-router-runtime.md).
 
 - Supabase CLI local stack with PostgreSQL from the first implementation phase
 - Docker-compatible container runtime as a local-development prerequisite
-- No hosted Supabase dependency during the local MVP
+- The hosted Supabase project runs the same migration history as local development
 - Declarative SQL under `supabase/schemas/` as the single schema source of truth
 - Reviewed, timestamped migrations under `supabase/migrations/`, versioned with the schema change
 - `@supabase/supabase-js` as the initial data client, without an ORM
 - TypeScript database types generated from the local schema and committed with schema changes
 - All database access confined to server-only repository/service modules; no browser or Client Component database clients
-- Hosted Supabase later receives the same migration history; production credentials, authentication, RLS, and access protection remain a separate pre-deployment decision
+- Production credentials stay outside the repository; hosted access is protected as defined by [ADR-0031](../decisions/0031-shared-password-protects-the-hosted-application.md)
 
-The `T-006` local database baseline locks Supabase CLI `2.116.0` and local PostgreSQL `17`. The repeatable schema, migration, generated-type, and approval-gated verification commands are canonical in [`local-database-workflow.md`](local-database-workflow.md).
+The local database baseline locks Supabase CLI `2.116.0` and local PostgreSQL `17`. The repeatable schema, migration, generated-type, backup, and verification commands are canonical in [`local-database-workflow.md`](local-database-workflow.md).
 
 Canonical decision: [ADR-0018](../decisions/0018-local-supabase-postgres-and-server-data-access.md).
 
@@ -44,12 +44,12 @@ Canonical decision: [ADR-0018](../decisions/0018-local-supabase-postgres-and-ser
 - `src/features/` for feature behavior, contracts, application operations, UI, and client controllers
 - `src/server/` for server-only database/repository infrastructure
 - `src/shared/` only for demonstrated cross-feature UI, types, and utilities
-- One root layout with nested route groups/layouts for the main mobile shell and focused workout shell
+- One root layout with the main mobile shell around every user-facing route
 - Server Components by default; smallest practical Client Component islands for interaction and browser APIs
 - Reads through query services, ordinary mutations through thin Server Actions, and active-workout commands through a dedicated `POST` Route Handler
 - `server-only` enforcement around database clients, repositories, and secrets
 
-The `T-007` implementation details, dependency rules, environment contract, neutral operation result, and approval-gated server test workflow are canonical in [`server-data-boundaries.md`](server-data-boundaries.md).
+Implementation details, dependency rules, the environment contract, the neutral operation result, and server tests are canonical in [`server-data-boundaries.md`](server-data-boundaries.md).
 
 ### Routing and identifier conventions
 
@@ -73,7 +73,7 @@ The `T-007` implementation details, dependency rules, environment contract, neut
 - Ordinary mutations are transactional server operations and reuse the accepted generic failure-plus-retry treatment; partial database writes are rolled back
 - Active-workout revision conflicts follow the dedicated recoverable refresh/replay flow and never silently overwrite acknowledged or pending state
 
-The `T-008` implemented command envelope, Route Handler response, PostgreSQL transaction, IndexedDB outbox, FIFO controller, restore/replay API, and approval-gated verification workflow are canonical in [`active-workout-durability.md`](active-workout-durability.md). The initial operation set establishes workout-note autosave and timer transitions; later feature Tasks extend the same path for their agreed domain operations.
+The command envelope, Route Handler response, PostgreSQL transaction, IndexedDB outbox, FIFO controller, restore/replay API, and verification commands are canonical in [`active-workout-durability.md`](active-workout-durability.md).
 
 Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md).
 
@@ -88,33 +88,30 @@ Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-acti
 - Query/domain services own all calculations and return neutral serializable chart series
 - Responsive charts never carry important information without a textual summary and/or accessible data list
 
-The initialized package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`. Their presence establishes the accepted foundation; feature code adopts them only when its ready Task requires them.
+The package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`.
 
-The `T-009` mobile foundation installs the frozen local Barlow fonts and Lucide SVG assets, translates v0.4 tokens into application-owned CSS variables and Tailwind aliases, and provides the safe-area-aware main shell, shared route and not-found conventions, history-backed transient overlay wrappers, and only demonstrated cross-feature primitives. Asset/license guidance, component scope, and approval-gated UI verification commands are canonical in [`mobile-ui-foundation.md`](mobile-ui-foundation.md).
+The mobile foundation uses frozen local Barlow fonts and Lucide SVG assets, translates v0.4 tokens into application-owned CSS variables and Tailwind aliases, and provides the safe-area-aware main shell, shared route and not-found conventions, history-backed transient overlay wrappers, and demonstrated cross-feature primitives. Asset/license guidance, component scope, and UI verification commands are canonical in [`mobile-ui-foundation.md`](mobile-ui-foundation.md).
 
 ### Quality boundaries
 
 - Static checks: ESLint flat config with Next.js/TypeScript rules, Prettier with Tailwind ordering, `tsc --noEmit`, Next.js production build, `markdownlint-cli2`, and Lychee internal-link validation
-- `npm run check` aggregates static checks only and can run before approval
+- `npm run check` aggregates static checks only
 - External-link validation remains a separate best-effort static check
-- Future tests: Vitest, React Testing Library with `user-event`, local Supabase/PostgreSQL integration tests, and Playwright Mobile Safari/WebKit plus Mobile Chrome/Chromium
+- Tests: Vitest, React Testing Library with `user-event`, local Supabase/PostgreSQL integration tests, and Playwright Mobile Safari/WebKit plus Mobile Chrome/Chromium
 - Real-browser Playwright scenarios own IndexedDB outbox and reload/retry/conflict verification
-- Test commands remain separate from checks, lifecycle scripts, hooks, and pre-approval automation
-- No test or manual feature validation runs before the user approves the exact Task commit SHA
+- Test commands remain separate from static checks and lifecycle scripts
 
 The initialized static-tool baseline locks ESLint `9.39.5`, `eslint-config-next` `16.3.3`, Prettier `3.9.6`, `prettier-plugin-tailwindcss` `0.8.1`, and `markdownlint-cli2` `0.23.2`; local link checking uses Lychee `0.24.x`. ESLint `9.39.5` is the newest ESLint release compatible with the plugin peer ranges shipped by the selected Next.js configuration; adopting ESLint `10` waits for that compatibility rather than forcing unsupported peer overrides.
 
-The `T-008` browser-verification baseline locks `@playwright/test` `1.62.1`. Browser binaries are installed and the prepared phone-sized Chromium/WebKit scenarios are executed only after approval of the exact delivery commit.
+The browser-verification baseline locks `@playwright/test` `1.62.1` and covers phone-sized Chromium and WebKit scenarios.
 
-The `T-009` component-test source locks React Testing Library `16.3.3`, `user-event` `14.6.6`, DOM matchers `7.0.1`, and jsdom `30.0.1`. These test dependencies and their separate commands do not grant permission to execute UI tests before exact-commit approval.
+Component tests use React Testing Library `16.3.3`, `user-event` `14.6.6`, DOM matchers `7.0.1`, and jsdom `30.0.1`.
 
 Canonical decision: [ADR-0020](../decisions/0020-mobile-ui-charting-and-quality-tooling.md).
 
-## Explicitly deferred beyond local architecture
+## Explicitly deferred
 
-- Production authentication, authorization, RLS, credentials, and private-app access protection
 - PWA implementation details
-- Backup/export format and priority
-- Product questions retained in [`PROJECT_STATE.md`](../PROJECT_STATE.md#open-questions)
-
-Do not initialize implementation inside `T-001`. Initialization begins only through a separately ready implementation Task after this architecture commit is reviewed and approved.
+- Backup/export UX and format
+- Estimated 1RM, RIR/RPE, rest timer, warm-up sets, and accidental-workout-closure protection
+- Final application name

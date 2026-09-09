@@ -2,11 +2,9 @@
 
 This repository specifies a private, single-user, mobile-only web application for tracking gym workouts, exercise progress, weight, and body measurements. The final user-facing application name remains open.
 
-The functional specification, mobile-wireframe decisions, local-MVP acceptance criteria, development governance, repository-native project-management workflow, local technical architecture, and frozen mobile design handoff are accepted. Application implementation has started with the runtime and static-quality baseline.
+The application is implemented, deployed on Vercel, and backed by hosted Supabase. Its product behavior, technical architecture, mobile UX, and frozen design references are documented in this repository.
 
 Project documentation starts at [`docs/INDEX.md`](docs/INDEX.md). Codex and other contributors should first read [`AGENTS.md`](AGENTS.md), then use the index to load only the context relevant to the current task.
-
-Current phase, accepted boundaries, and unresolved decisions are tracked in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).
 
 ## Local prerequisites
 
@@ -23,7 +21,7 @@ npm ci
 npm run dev
 ```
 
-`npm run dev` starts the local development server; it is not part of the pre-approval static-check workflow. Independently runnable static commands are:
+`npm run dev` starts the local development server. Independently runnable static commands are:
 
 ```sh
 npm run format:check
@@ -35,7 +33,7 @@ npm run links:internal
 npm run check
 ```
 
-`npm run check` aggregates only formatting, linting, type checking, compilation, Markdown linting, and offline internal-link validation. The optional `npm run links:external` command performs network-dependent external-link validation. No test command, lifecycle hook, or install hook is defined.
+`npm run check` aggregates formatting, linting, type checking, compilation, asset validation, Markdown linting, and offline internal-link validation. The optional `npm run links:external` command performs network-dependent external-link validation. Test commands remain separate.
 
 ## Source boundaries
 
@@ -60,16 +58,18 @@ npm run db:restore
 
 A reset applies the committed `supabase/seed.sql` baseline, so the local application stays usable without manual re-entry. `npm run db:snapshot` and `npm run db:restore` carry your own local data across a reset; snapshots are written to the Git-ignored `supabase/snapshots/`.
 
-Database reset and `npm run test:db` are approval-gated verification commands and are intentionally excluded from `npm run check`.
+Database reset and `npm run test:db` can change local data, so take or restore a snapshot when needed. They are intentionally excluded from `npm run check`.
 
-## Approval-gated feature tests
+## Tests
 
-The repository prepares unit, local-repository integration, and mobile-browser commands separately from static checks:
+The repository provides database, unit, component, repository-integration, and mobile-browser commands separately from static checks:
 
 ```sh
 npm run test:unit
+npm run test:components
+npm run test:db
 npm run test:repository
 npm run test:browser
 ```
 
-Do not run them until the exact Task delivery commit is approved under [`docs/process/development-governance.md`](docs/process/development-governance.md). `npm run test:repository` needs a database without a resumable workout, so run it on a freshly reset database and restore a snapshot only afterwards. Browser verification additionally requires the locked Playwright package's Chromium and WebKit binaries; install them only when the approved browser-test scope is ready to run.
+`npm run test:repository` needs a database without a resumable workout, so use a fresh reset and restore personal data afterwards when applicable. Browser verification requires the locked Playwright package's Chromium and WebKit binaries.

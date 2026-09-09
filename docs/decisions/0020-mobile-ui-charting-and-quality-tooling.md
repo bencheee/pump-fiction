@@ -4,9 +4,9 @@
 
 ## Context
 
-The phone-only application needs a consistent visual system, accessible interaction primitives, and responsive progress charts without adopting a desktop-oriented component suite. The implementation also needs a static-check baseline and a future testing toolchain that preserve the project's strict separation between pre-approval static analysis and post-approval feature testing.
+The phone-only application needs a consistent visual system, accessible interaction primitives, responsive progress charts without a desktop-oriented component suite, a static-check baseline, and a layered test toolchain.
 
-Documentation quality is especially important because repository Markdown is the canonical product, architecture, governance, and project-management record. Test commands must remain structurally separate so a normal formatting, lint, type, build, or documentation check cannot accidentally execute prohibited tests.
+Repository Markdown is the canonical product and architecture reference. Test commands remain structurally separate so normal formatting, lint, type, build, or documentation checks do not unexpectedly run stateful test suites.
 
 ## Decision
 
@@ -41,11 +41,11 @@ Configure these checks as independently runnable npm scripts:
 
 External-link validation is a separate best-effort static check so network or third-party availability cannot falsely invalidate the mandatory local documentation check. Architecture/dependency-boundary rules should be enforced through ESLint where practical, in addition to Next.js `server-only` enforcement.
 
-Provide one `npm run check` aggregation that runs static checks only. It must not call any unit, component, integration, end-to-end, database-backed, or manual feature test. Static checks remain permitted before commit approval under the accepted governance.
+Provide one `npm run check` aggregation that runs static checks only. It must not call unit, component, integration, end-to-end, database-backed, or manual feature tests.
 
 ### Future test tooling and gate
 
-When an implementation Task explicitly introduces the relevant test setup, use:
+Use:
 
 - Vitest for pure domain/application unit tests and server-side integration tests;
 - React Testing Library, `user-event`, and DOM matchers for interactive React component behavior;
@@ -53,11 +53,11 @@ When an implementation Task explicitly introduces the relevant test setup, use:
 - Playwright for end-to-end behavior using phone-only Mobile Safari/WebKit and Mobile Chrome/Chromium projects;
 - a real browser IndexedDB implementation in Playwright for active-workout outbox, acknowledgement, reload, retry, and conflict scenarios.
 
-Prefer behavior-focused assertions over large component snapshots. The detailed test plan belongs to the implementing Task and traces to stable MVP criterion IDs.
+Prefer behavior-focused assertions over large component snapshots. Tests may trace to stable MVP criterion IDs where useful.
 
-Test dependencies, configuration, and test source do not authorize execution. Test commands stay separate from `npm run check`, dependency lifecycle scripts, pre-commit hooks, and any automatic workflow that could run before approval. No test command, application run performed to validate behavior, database-backed verification, or manual feature scenario may execute until the user approves the exact Task commit SHA. Any changed SHA invalidates that authorization.
+Test commands stay separate from `npm run check`, dependency lifecycle scripts, and pre-commit hooks. Database resets and stateful integration suites are run deliberately because they can modify local data.
 
-Select and lock the latest stable compatible test-tool versions when their setup Task is implemented. Major tool migrations require an explicit Task and documentation update.
+Lock stable compatible test-tool versions. Major tool migrations require migration-guidance review and a documentation update.
 
 ## Consequences
 
@@ -65,21 +65,16 @@ Select and lock the latest stable compatible test-tool versions when their setup
 - Radix reduces accessibility risk for complex controls while remaining optional and unstyled.
 - Recharts provides responsive React-native chart composition, but its client bundle is kept away from routes without charts.
 - Separating chart calculations from rendering keeps historical corrections and product rules testable without a browser chart library.
-- The static-check command provides broad pre-approval feedback without crossing the test gate.
+- The static-check command provides broad feedback without unexpectedly running stateful tests.
 - Markdown linting and internal-link checking directly protect the repository system of record.
 - Mobile browser projects align E2E verification with the product boundary; desktop E2E projects are not required.
-- The future toolchain has multiple layers, but each layer has a distinct responsibility and remains dormant until its exact commit is approved for testing.
+- The test toolchain has multiple layers, each with a distinct responsibility.
 
 ## Related documents
 
 - [`../architecture/local-technical-architecture.md`](../architecture/local-technical-architecture.md)
 - [`../architecture/constraints.md`](../architecture/constraints.md)
-- [`../process/development-governance.md`](../process/development-governance.md)
-- [`../process/project-management.md`](../process/project-management.md)
 - [`../product/history-and-statistics.md`](../product/history-and-statistics.md)
-- [`../project/tasks/T-001-define-local-technical-architecture.md`](../project/tasks/T-001-define-local-technical-architecture.md)
-- [`0006-approval-gated-feature-testing.md`](0006-approval-gated-feature-testing.md)
-- [`0014-commit-approval-and-verification-records.md`](0014-commit-approval-and-verification-records.md)
 
 ## Official references
 

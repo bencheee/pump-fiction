@@ -28,7 +28,7 @@ The Owner accepted a clean local database reset instead of converting existing r
 
 - The Exercise Library shows only real choices, so a weights exercise offers one optional addition and a bodyweight exercise offers two mutually exclusive ones.
 - `MVP-EXE-001`, `MVP-EXE-003`, and `MVP-EXE-004` are rewritten for this model; `MVP-EXE-002` and `MVP-EXE-005` are unchanged, and band direction and strength stay separate concepts.
-- Set entry derives its fields from the definition instead of a per-set mode menu; that user-visible change is delivered separately by `T-020`.
+- Set entry derives its fields from the definition instead of a per-set mode menu.
 - Workout snapshots keep storing the permitted modes, so historical sets remain readable exactly as performed.
 - Any local data that used the retired type or modes is discarded by the reset rather than migrated.
 
@@ -38,4 +38,3 @@ The Owner accepted a clean local database reset instead of converting existing r
 - [`../product/workouts.md`](../product/workouts.md)
 - [`../product/mvp-acceptance-criteria.md`](../product/mvp-acceptance-criteria.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
-- [`../project/tasks/T-019-simplify-exercise-load-mode-model.md`](../project/tasks/T-019-simplify-exercise-load-mode-model.md)

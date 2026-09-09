@@ -1,30 +1,23 @@
 # Pump Fiction agent guide
 
-This repository (working title: Pump Fiction) specifies a private, single-user, mobile-only web app for recording gym workouts and body progress. The user-facing app name is not yet decided.
+This repository contains a deployed private, single-user, phone-only web app for recording gym workouts and body progress. “Pump Fiction” is the working repository name; the user-facing name is undecided.
 
 ## Project boundaries
 
 - Design for phones only; do not create or optimize a desktop experience.
 - Nutrition and calorie tracking are out of scope.
-- The repository is currently documentation-only and implementation has not started. Accepted framework, persistence, application-boundary, UI, charting, and quality choices are canonical in [`docs/architecture/local-technical-architecture.md`](docs/architecture/local-technical-architecture.md); do not invent choices beyond it or initialize implementation outside a ready Task.
 - Do not add features that have not been explicitly agreed.
+- Preserve the existing Next.js, Supabase, application-boundary, active-workout durability, mobile UI, charting, and quality choices unless the user explicitly changes them.
 
 ## Required context flow
 
 1. Before working, read [`docs/INDEX.md`](docs/INDEX.md).
-2. For planning, implementation, review, commit, or testing work, also read the small [`PROJECT.md`](PROJECT.md) dashboard and the linked active work item.
-3. Use the index to read only the documents relevant to the task. Do not load all of `docs/` without a concrete need.
-4. Before changing behavior, check the relevant accepted decisions and canonical specification.
-5. When behavior changes, update its canonical documentation in the same task.
+2. Use the index to read only the product, architecture, UX, or decision documents relevant to the request.
+3. Before changing behavior, check the relevant accepted decisions and canonical specification.
+4. When behavior changes, update its canonical documentation in the same change.
 
-Keep the cold-start bundle small: this guide, `docs/INDEX.md`, and—only for managed delivery work—`PROJECT.md` plus its linked active Task. Do not preload the full registry, project state, all ADRs, completed Tasks, or design exports. Work items reference canonical requirements by link and stable ID; they do not duplicate full specifications.
+Keep the cold-start bundle to this guide and `docs/INDEX.md`. Do not preload all documentation, ADRs, or design exports.
 
-Documentation is part of the work, not a follow-up. Record every architectural decision in an ADR and update every affected canonical document in the same task. An architectural change is not complete while its documentation is missing or stale. Record a small local decision in its canonical topic document. Never silently change an accepted decision. Mark unresolved choices as open questions instead of inventing answers.
+Documentation describes the current application. Keep affected canonical documents synchronized with behavior, record cross-cutting architectural decisions in an ADR, and record small local decisions in the relevant topic document. If code and documentation disagree, report and resolve the mismatch explicitly.
 
-Do not run automated or manual feature tests until the user explicitly confirms that the relevant commit is fully approved. Implementation or commit authorization does not imply test authorization. After confirmation, test only the approved feature/commit scope. Read [`docs/process/development-governance.md`](docs/process/development-governance.md) before implementation, commit, or testing work.
-
-Formatting, linting, type checking, compilation/build, and documentation-link validation are permitted static checks before approval. Record them in the Task; never treat them as permission to run feature tests.
-
-A Task targets one delivery commit. Review, approval, testing, and completion are recorded afterward through path-limited evidence commits as defined by [ADR-0021](docs/decisions/0021-delivery-and-evidence-commit-model.md); evidence commits never change delivered scope.
-
-If code and documentation disagree, report the mismatch. Documentation describes currently agreed behavior, not aspirational features; avoid duplicating the same specification across documents.
+For small future changes, implement and verify proportionally to risk. Run the narrowest relevant checks first; broader tests are appropriate when shared behavior, persistence, migrations, or critical workout flows change.

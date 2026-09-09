@@ -1,11 +1,9 @@
 # T-004 external design handoff v0.4-frozen
 
 - **External package status:** Frozen
-- **Repository acceptance status:** Accepted in approved `T-004` delivery `3529d318cf647094c640807671b2050502e8be92`
+- **Repository status:** Accepted visual reference
 - **Prepared:** 2026-08-31
 - **Owner:** User
-- **Executor:** Codex primary agent
-- **Task:** [`T-004`](../../project/tasks/T-004-audit-and-accept-design-handoff.md)
 - **Return contract:** [`handoff-prompt.md`](handoff-prompt.md)
 
 This compact manifest identifies the external mobile-design package audited for implementation. Repository product and architecture documents remain canonical for behavior and technical boundaries. This package is canonical for visual and interaction intent only where it does not conflict with them.
@@ -49,7 +47,7 @@ Use the v0.4 prototype, tokens, and specifications for:
 - save, validation, and outcome cue placement on `S06`, `S08`, `S09`, `S10`, `S12`, `S20`, `S22`, and `S24`;
 - corrected `PF-S09-validation` and `PF-S10-validation` fixtures.
 
-Those v0.4-only areas and the known loading-frame ghost are excluded from pixel-diff against the v0.3 PNGs. WebKit raster verification moves to the later approved implementation-validation scope. Outside those exceptions, unexplained differences remain findings.
+Those v0.4-only areas and the known loading-frame ghost are excluded from pixel-diff against the v0.3 PNGs. Outside those exceptions, unexplained differences remain findings.
 
 ## Superseded by later accepted decisions
 

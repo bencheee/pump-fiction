@@ -6,7 +6,7 @@ The application is a private progress tracker for one gym user. It records plann
 
 It is exclusively a phone experience. Nutrition and calorie tracking are explicitly out of scope. Features not present in these canonical documents are not part of the agreed MVP unless the user accepts them.
 
-The product boundary is recorded by [ADR-0001](../decisions/0001-private-mobile-only-app.md). Current phase and open questions live in [`PROJECT_STATE.md`](../PROJECT_STATE.md).
+The product boundary is recorded by [ADR-0001](../decisions/0001-private-mobile-only-app.md). The application is implemented and deployed; these product documents describe its current behavior.
 
 ## Primary navigation
 
@@ -44,8 +44,8 @@ Correcting or deleting an existing value happens in Body, never here — and a d
 
 Rotation rules are canonical in [`programs-and-splits.md`](programs-and-splits.md#rotation). Workout behavior is in [`workouts.md`](workouts.md), and weight and measurement entry rules are in [`weight-and-body.md`](weight-and-body.md#weight-tracker).
 
-## Accepted release boundary
+## Possible future additions
 
-Automatic saving and reliable restoration of the active workout are functionally required in the local MVP.
+Automatic saving and reliable restoration of the active workout are core delivered behavior.
 
-Export/backup, PWA installation, and explicit protection against accidentally closing an active workout are accepted post-MVP capabilities. Production-access protection is required before deployment but is not part of the local MVP. Their exact mechanisms remain open in [`PROJECT_STATE.md`](../PROJECT_STATE.md).
+The following ideas are deliberately undecided and must not be inferred as requirements: PWA installation, backup/export UX and format, estimated 1RM, RIR/RPE, a rest timer, warm-up sets, explicit protection against accidentally closing an active workout, and the final application name.

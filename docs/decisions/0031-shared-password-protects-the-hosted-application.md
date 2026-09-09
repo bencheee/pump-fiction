@@ -4,9 +4,9 @@
 
 ## Context
 
-[ADR-0001](0001-private-mobile-only-app.md) made the product private and single-user with no accounts, and [ADR-0004](0004-local-first-development.md) deferred hosting until the local MVP was complete. `PROJECT_STATE.md` carried *production protection for the private app* as an open question, and [`constraints.md`](../architecture/constraints.md) required the method to be chosen explicitly rather than settled during implementation.
+[ADR-0001](0001-private-mobile-only-app.md) made the product private and single-user with no accounts, and [ADR-0004](0004-local-first-development.md) deferred hosting until the local application was complete. Hosting required an explicit access-protection decision.
 
-`M-001` and `M-002` closed on `2026-09-06`, and the Owner deployed on `2026-09-07` to Vercel and hosted Supabase. Hosting changes one thing local development never exercised: the application answers at a public URL. Every screen and every server action reaches the database through the service-role key, so before this decision anyone who reached that URL held the Owner's data — readable, writable, and deletable.
+The application was deployed on `2026-09-07` to Vercel and hosted Supabase. Hosting changes one thing local development never exercised: the application answers at a public URL. Every screen and every server action reaches the database through the service-role key, so without a gate anyone who reached that URL would hold the Owner's data — readable, writable, and deletable.
 
 The database side needed nothing. Every table revokes all privileges from `anon` and `authenticated` and grants only `service_role`, and every function does the same. Against the hosted project both public keys were refused on every table, for reads and for writes, with Row Level Security never enabled. Closing the Data API by grant rather than by policy is what [ADR-0018](0018-local-supabase-postgres-and-server-data-access.md) already implied, and hosting confirmed it holds.
 

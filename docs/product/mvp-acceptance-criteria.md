@@ -1,11 +1,11 @@
 # MVP acceptance criteria
 
-- **Status:** Locked — approved on 2026-08-25. Behavior changes require an explicit product decision and corresponding documentation update.
-- **Target:** The first complete local, single-user, phone-only MVP. Production deployment is a later phase.
+- **Status:** Delivered baseline. Behavior changes require a corresponding documentation update.
+- **Target:** The implemented private, single-user, phone-only application.
 
 ## How to use this document
 
-These criteria define observable acceptance, not implementation design. There are 58: the 57 locked on 2026-08-25 plus `MVP-TOD-005`, added on 2026-09-06 with [ADR-0030](../decisions/0030-body-is-its-own-destination.md). Stable IDs should be referenced from implementation plans and tests. The linked product documents remain canonical for full behavior; if a criterion and its canonical document disagree, report and resolve the mismatch before implementation.
+These 58 criteria define observable behavior, not implementation design. Stable IDs may be referenced from tests and change discussions. The linked product documents remain canonical for full behavior; if a criterion and its canonical document disagree, report and resolve the mismatch before changing the application.
 
 Unless a criterion explicitly says otherwise:
 
@@ -283,13 +283,11 @@ The app asks for confirmation before removing populated active-workout data, del
 
 ## Explicitly outside these core criteria
 
-- accounts and login during local development;
+- individual user accounts and account management;
 - desktop-specific layouts;
 - nutrition and calorie tracking;
 - estimated 1RM, RIR/RPE, rest timer, and warm-up-set behavior unless separately accepted;
 - export/backup, PWA installation, and explicit protection against accidentally closing an active workout, which are accepted post-MVP capabilities;
-- final framework, persistence technology, styling library, chart library, and test framework;
-- production deployment mechanics.
 
 UI language and the application name may change copy but do not alter these behavioral acceptance criteria.
 
@@ -298,4 +296,4 @@ UI language and the application name may change copy but do not alter these beha
 - Deleting the last split of the current program is blocked.
 - Export/backup and PWA installation are accepted post-MVP capabilities.
 - Explicit protection against accidentally closing an active workout is post-MVP. Immediate auto-save and reliable restore remain required by this MVP.
-- Production-access protection is not part of the local MVP and must be decided before production deployment.
+- Hosted access is protected by the shared-password gate in [ADR-0031](../decisions/0031-shared-password-protects-the-hosted-application.md).

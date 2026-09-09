@@ -16,7 +16,7 @@ Use:
 - TypeScript with strict type checking;
 - Node.js `24.x` LTS.
 
-At framework initialization, select and lock the latest security-patched stable Next.js `16.x`, React `19.x`, and Node.js `24.x` releases compatible with one another. Commit the dependency lockfile. Do not automatically adopt major versions; each major upgrade requires its own Task, review of official migration/security guidance, and documentation update.
+The repository locks compatible security-patched Next.js `16.x`, React `19.x`, and Node.js `24.x` releases in its dependency lockfile. Do not automatically adopt major versions; each major upgrade requires review of official migration and security guidance plus a documentation update.
 
 Interactive workout flows may use Client Components inside the App Router. This decision does not yet select component boundaries, data fetching, persistence, package manager, or deployment configuration.
 
@@ -38,7 +38,6 @@ The accepted external-design handoff resolves the remaining route conventions: a
 
 - [`../architecture/local-technical-architecture.md`](../architecture/local-technical-architecture.md)
 - [`../architecture/constraints.md`](../architecture/constraints.md)
-- [`../project/tasks/T-001-define-local-technical-architecture.md`](../project/tasks/T-001-define-local-technical-architecture.md)
 - [`0004-local-first-development.md`](0004-local-first-development.md)
 
 ## Official references

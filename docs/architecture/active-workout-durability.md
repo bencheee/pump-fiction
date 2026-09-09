@@ -2,7 +2,7 @@
 
 - **Status:** Implemented foundation
 
-This document records the concrete `T-008` command transport foundation and the `T-014` Today/workout application and persistence operations under [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). It does not claim completed workout screens or general offline support.
+This document records the implemented command transport, Today/workout application operations, and persistence behavior under [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md). It does not provide general offline support.
 
 ## Command envelope and endpoint
 
@@ -29,7 +29,7 @@ type ActiveWorkoutCommand = {
 };
 ```
 
-`update_set` replaces the complete current set payload, so mode changes cannot retain inapplicable hidden values. It carries no confirmation field: whether a set counts is derived from its values, not sent by the client. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI Tasks consume this union and must not create a parallel mutation path.
+`update_set` replaces the complete current set payload, so mode changes cannot retain inapplicable hidden values. It carries no confirmation field: whether a set counts is derived from its values, not sent by the client. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI consumes this union and must not create a parallel mutation path.
 
 The thin Route Handler parses JSON, calls the server composition boundary, and maps the application result to HTTP:
 
@@ -82,13 +82,13 @@ On reload or reopen, `restoreActiveWorkout()` first calls the supplied authorita
 
 ## Workout-screen consumption
 
-`T-016` supplies that reducer as `applyCommandToWorkout`, a pure local mirror of the persistence function that also assigns each optimistic structural addition (`add_set`, `add_exercise`) the command ID as a synthetic placeholder identity. Placeholder rows stay non-interactive until the queue drains, after which the screen refreshes the authoritative aggregate through the read operation and replaces synthetic identities with server-created rows.
+`applyCommandToWorkout` is a pure local mirror of the persistence function that also assigns each optimistic structural addition (`add_set`, `add_exercise`) the command ID as a synthetic placeholder identity. Placeholder rows stay non-interactive until the queue drains, after which the screen refreshes the authoritative aggregate through the read operation and replaces synthetic identities with server-created rows.
 
-Conflict recovery follows the recorded `refresh_and_replay` contract: the screen fetches the authoritative workout, then re-enqueues the retained FIFO commands as fresh envelopes with new command IDs rebased onto the refreshed revision before flushing again. Original command IDs are never reused with a different expected revision because they are consumed idempotency evidence. A refreshed aggregate that no longer contains the workout returns the user to Today. Rejection recovery, accepted by the Owner on `2026-09-05` after a permanently refused command stranded a workout under `T-025`, reuses that same path. The refused command is terminal: it leaves the outbox before the status is reported, so it is never retried and never blocks the commands behind it. The screen then runs the refresh-and-replay recovery without waiting for a gesture, because a workout must not sit stranded behind a change it cannot save, and it states plainly that one change could not be saved and was undone, naming the affected set or exercise. The remaining commands are rebased onto the refreshed revision exactly as after a conflict. Nothing offers Retry for a refused command, since retrying it would only fail the same way.
+Conflict recovery follows the `refresh_and_replay` contract: the screen fetches the authoritative workout, then re-enqueues the retained FIFO commands as fresh envelopes with new command IDs rebased onto the refreshed revision before flushing again. Original command IDs are never reused with a different expected revision because they are consumed idempotency evidence. A refreshed aggregate that no longer contains the workout returns the user to Today. Rejection recovery reuses the same path. The refused command is terminal: it leaves the outbox before the status is reported, so it is never retried and never blocks the commands behind it. The screen then runs refresh-and-replay without waiting for a gesture, and states plainly that one change could not be saved and was undone, naming the affected set or exercise. The remaining commands are rebased onto the refreshed revision exactly as after a conflict. Nothing offers Retry for a refused command, since retrying it would only fail the same way.
 
-## Approval-gated verification
+## Verification
 
-Prepared tests remain separate from static checks and must not run before the exact delivery commit is approved:
+The relevant verification commands are:
 
 ```sh
 npm run test:unit

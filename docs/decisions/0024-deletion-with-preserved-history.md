@@ -26,7 +26,7 @@ Program lifecycle statuses are replaced by an explicit selection. `app_settings.
 
 Deleting the last split of the current program stays rejected, as the Owner confirmed, because Today would otherwise have no proposable workout. Deleting any other split moves the rotation pointer with the existing successor rule.
 
-A measurement type keeps no snapshot layer, because its entries are the only record of that measurement. Deleting a type that still has entries therefore stays rejected by the entry reference; `F-009` owns the final measurement experience.
+A measurement type keeps no snapshot layer, because its entries are the only record of that measurement. Deleting a type that still has entries therefore stays rejected by the entry reference.
 
 ## Consequences
 
@@ -36,7 +36,7 @@ A measurement type keeps no snapshot layer, because its entries are the only rec
 - `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, the History wording for deleted exercises, and the release-boundary archiving bullet are rewritten for deletion.
 - [ADR-0002](0002-template-snapshot-history-model.md) keeps its snapshot decision; only its archiving language is superseded here.
 
-## Amendment — persistent identity snapshots (T-031)
+## Amendment — persistent identity snapshots
 
 Nulling the reference preserves the record but loses the identity that
 [`history-and-statistics.md`](../product/history-and-statistics.md) needs:
@@ -59,7 +59,7 @@ whether the definition is currently in the library. Statistics group by the
 identity columns instead. Occurrences orphaned before this change were
 backfilled by their snapshotted name and base type, which merges two deleted
 definitions that once shared a name; that reconstruction affects only rows
-orphaned earlier and is recorded in the `T-031` migration.
+orphaned earlier and is recorded in the corresponding migration.
 
 Nothing else in this decision changes: deletion is still permanent, still
 immediate, and still costs History no record.
@@ -71,5 +71,3 @@ immediate, and still costs History no record.
 - [`../product/history-and-statistics.md`](../product/history-and-statistics.md)
 - [`../product/weight-and-body.md`](../product/weight-and-body.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
-- [`../project/tasks/T-021-replace-archiving-with-deletion-in-data.md`](../project/tasks/T-021-replace-archiving-with-deletion-in-data.md)
-- [`../project/tasks/T-031-build-workout-history-operations.md`](../project/tasks/T-031-build-workout-history-operations.md)

@@ -19,17 +19,17 @@ The Supabase CLI is a locked project dev dependency. Use it through npm scripts 
 - `supabase/schemas/*.sql` is the structural source of truth.
 - `supabase/migrations/*.sql` is the reviewed, ordered deployment history.
 - `src/server/database/database.types.ts` is generated from the local `public` schema and committed with every schema change.
-- `supabase/tests/database/*.test.sql` contains database-backed pgTAP verification that may run only after the exact delivery commit is approved.
+- `supabase/tests/database/*.test.sql` contains database-backed pgTAP verification.
 
 Studio and ad hoc SQL editor changes are never canonical. Make structural changes in the declarative schema first.
 
 The initial singleton settings row is migration-owned data because the declarative diff manages structure rather than DML. It starts with `Europe/Zagreb`, matching the accepted local environment, and remains editable as the application's configured IANA time zone. Units remain kilograms and centimeters.
 
-Exercise definitions use deferred constraint triggers to require a complete, type-compatible allowed-mode set at transaction end: the implied base mode must be present, at most one optional addition may accompany it, and a partial unique index makes a second optional addition impossible. `T-028` retired the `assisted` base type by recreating `exercise_base_type`; because the composite foreign keys carry the base type into the child tables, that migration drops both of them, converts every column, and restores them, and it re-grants usage on the recreated type. The `create_exercise_definition` and `update_exercise_definition` functions are the server mutation boundary for the multi-table definition write; both preserve the exercise UUID, split membership, and workout snapshots as applicable. Direct callers must not split definition and mode writes across transactions.
+Exercise definitions use deferred constraint triggers to require a complete, type-compatible allowed-mode set at transaction end: the implied base mode must be present, at most one optional addition may accompany it, and a partial unique index makes a second optional addition impossible. The migration that retired the `assisted` base type recreates `exercise_base_type`; because composite foreign keys carry the base type into child tables, it drops both keys, converts every column, restores the keys, and re-grants usage on the recreated type. The `create_exercise_definition` and `update_exercise_definition` functions are the server mutation boundary for the multi-table definition write; both preserve the exercise UUID, split membership, and workout snapshots as applicable. Direct callers must not split definition and mode writes across transactions.
 
 Program and split template writes use database functions for every operation that spans current-program selection, ordering, prescriptions, or the next-split pointer. `set_current_program` moves `app_settings.current_program_id` and the pointer in one transaction, and a deferred trigger requires the current program to point at one of its splits. Split-definition replacement rejects an unknown exercise. Reordering requires the complete identity set and changes only template positions. `delete_split` selects the successor from the pre-deletion order with wrap and rejects the last split of the current program; `delete_program` and `delete_exercise` rely on the cascading and null-setting references that keep History intact. `advance_program_after_proposed_completion` is the narrow compare-and-set rotation transition for a future proposed-split completion transaction: it advances only while the completed split is still the current program's pointer. The later workout-finish transaction owns exact-once invocation and excludes alternate, one-time, incomplete, and historical paths.
 
-Set rows carry one shape check, which accepts any partially entered set, including a band mode without a strength; `T-025` corrected it after a partial band entry was rejected mid-workout. `T-029` then removed `is_confirmed` and its completeness constraint: whether a set counts is derived by the immutable `workout_set_is_recorded(load_mode, load_kg, band_strength, reps)`, which the current-workout read uses for last-performance eligibility.
+Set rows carry one shape check that accepts any partially entered set, including a band mode without a strength. There is no `is_confirmed` field or completeness constraint: whether a set counts is derived by the immutable `workout_set_is_recorded(load_mode, load_kg, band_strength, reps)`, which the current-workout read uses for last-performance eligibility.
 
 Today and workout reads use `get_today_view()` and `get_current_workout()` to return server-only domain aggregates. `start_workout(...)` atomically enforces the singleton resumable session and copies split or one-time exercise snapshots. The extended `apply_active_workout_command(...)` owns all workout-local set/exercise/note/order/timer edits and terminal outcomes; proposed rotation comparison and advancement occur inside the completion transaction. A discarded workout is deleted, while its foreign-key-free command acknowledgement remains only for retry idempotency.
 
@@ -64,13 +64,13 @@ npm run db:stop
    git diff -- src/server/database/database.types.ts
    ```
 
-6. Commit the declarative schema, migration, generated types, documentation, and prepared tests in the same Task.
+6. Keep the declarative schema, migration, generated types, documentation, and relevant tests in the same change.
 
 Supabase CLI `2.116.0` no longer uses `[db.migrations].schema_paths` as the baseline for the legacy `db diff` command. Use `db schema declarative sync`; `schema_paths` still declares the ordered schema tree in `supabase/config.toml`.
 
 ## Local baseline seed
 
-`supabase/seed.sql` is a committed baseline that the CLI applies at the end of every `supabase db reset`, enabled through `[db.seed]` in `supabase/config.toml`. Without it the approval-gated reset leaves an empty database, and the application cannot be used until every exercise, program, and split is entered again by hand.
+`supabase/seed.sql` is a committed baseline that the CLI applies at the end of every `supabase db reset`, enabled through `[db.seed]` in `supabase/config.toml`. Without it a reset leaves an empty database, and the application cannot be used until every exercise, program, and split is entered again by hand.
 
 The seed writes through `create_exercise_definition`, `create_program`, `create_split_definition`, and `set_current_program`, so the deferred definition and current-program constraints are satisfied exactly as an application write satisfies them. It creates ten exercises, one program with three splits, and a current-program pointer. It creates no workout and no history, so Today, History, statistics, and rotation start empty.
 
@@ -93,7 +93,7 @@ npm run db:restore
 
 When no snapshot exists, `db:restore` reports that and changes nothing, because the seed baseline the reset already applied is the fallback.
 
-The usual cycle around the verification gate is `npm run db:snapshot`, then the gate below, then `npm run db:restore`.
+The usual cycle around destructive database verification is `npm run db:snapshot`, the reset and tests, then `npm run db:restore`.
 
 ## Production data backup
 
@@ -111,23 +111,23 @@ There is deliberately no `db:restore` counterpart for production. Reloading the 
 
 Take a backup before editing hosted data by hand. The hosted project is on the Supabase free plan, which takes no automated backups and offers no point-in-time recovery, so these dumps are the only copy of the Owner's training history that exists off the server.
 
-## Verification gate
+## Database verification
 
-The following are database-backed feature verification and must not run before the user approves the exact Task delivery commit:
+The following commands reset local data and run database-backed verification:
 
 ```sh
 npm exec supabase db reset
 npm run test:db
 ```
 
-After approval, reset applies the exact migration history to a clean local database and then the baseline seed, pgTAP exercises the prepared constraints, and regenerated types are compared with the committed file. Neither command is called by install hooks, lifecycle hooks, or `npm run check`.
+The reset applies the exact migration history to a clean local database and then the baseline seed; pgTAP exercises the prepared constraints. Neither command is called by install hooks, lifecycle hooks, or `npm run check`.
 
-Approved repository integration tests write to the same local database. They create suffixed fixtures, delete them afterwards, and restore the current-program pointer they moved, so an authorized verification leaves the seeded or restored data usable.
+Repository integration tests write to the same local database. They create suffixed fixtures, delete them afterwards, and restore the current-program pointer they moved, so a run leaves the seeded or restored data usable.
 
-`T-031` adds the `0006_workout_history` pgTAP suite and a workout-History repository integration test to that set, `T-033` adds `0007_exercise_statistics` and an exercise-statistics repository integration test, `T-035` adds `0008_split_statistics` and a split-statistics repository integration test, `T-038` adds `0009_weight_operations` and a weight repository integration test, and `T-041` adds `0010_body_measurements` and a body repository integration test. The weight and body suites work on dates far in the past and on suffixed fixture names, and remove those rows again, because a weigh-in is unique per local date and a measurement type by name. The suite creates and finishes its own workouts, so it shares the precondition below.
+The database suites cover workout History, exercise and split statistics, weight operations, and body measurements. The weight and body suites work on dates far in the past and on suffixed fixture names, and remove those rows again, because a weigh-in is unique per local date and a measurement type by name. The suite creates and finishes its own workouts, so it shares the precondition below.
 
 `npm run test:repository` runs with `--no-file-parallelism`. Three of its files now start a workout, and they share one local database: `workouts_single_resumable` allows one resumable workout at a time and rotation pointers are shared state, so running the files concurrently makes them fail each other. Serial execution is a correctness requirement of these tests, not a speed preference; a new repository test that writes workouts must keep it.
 
-The browser specs share the same courtesy. Each one that needs a current program of its own reads the seeded pointer first and puts it back afterwards, deletes the workouts, program, and exercises it created, and never leaves a resumable workout behind. `T-037` brought every spec onto that pattern when it repaired the ones the archiving removal had left stale.
+Browser specs follow the same isolation pattern. Each one that needs a current program reads the seeded pointer first and restores it afterwards, deletes the workouts, program, and exercises it created, and never leaves a resumable workout behind.
 
 Those tests share the pgTAP precondition: two of them start their own workout, and `workouts_single_resumable` allows one active or paused workout per database, so they fail with a duplicate-key error whenever a resumable workout already exists. Run them on a freshly reset database, before restoring a snapshot that contains an active workout. The usual full cycle is `npm run db:snapshot`, the reset, `npm run test:db`, `npm run test:repository`, and only then `npm run db:restore`.

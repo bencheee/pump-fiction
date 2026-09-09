@@ -40,4 +40,3 @@ Removing an enum label cannot be done in place, so the migration recreates `exer
 - [`../product/workouts.md`](../product/workouts.md)
 - [`../product/mvp-acceptance-criteria.md`](../product/mvp-acceptance-criteria.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
-- [`../project/tasks/T-028-merge-assisted-into-bodyweight.md`](../project/tasks/T-028-merge-assisted-into-bodyweight.md)

@@ -23,7 +23,7 @@ Keep configuration, `public/`, and `supabase/` at the repository root. Put appli
 
 Do not add a shared abstraction pre-emptively. Move code to `shared` only after it has a demonstrated cross-feature responsibility.
 
-Use one root layout. Organize the four-destination mobile shell and focused active-workout shell with nested App Router route groups/layouts so the grouping does not alter URLs and navigation does not require separate root layouts.
+Use one root layout and one five-destination mobile shell. Active-workout routes stay inside that shell under [ADR-0025](0025-active-workout-in-the-main-shell.md), so route grouping does not alter URLs or require separate root layouts.
 
 ### Server and client boundaries
 
@@ -43,7 +43,7 @@ Use thin Server Actions for ordinary first-party form mutations. Use a dedicated
 
 PostgreSQL remains authoritative for acknowledged workout state. Enforce at the database level that at most one resumable active or paused workout exists.
 
-Each active-workout change is represented as a typed command containing at least a unique command ID, workout ID, expected workout revision, operation, payload, and client creation time. Discrete actions such as confirming a set, reordering, adding/removing, changing mode, and timer transitions enqueue immediately.
+Each active-workout change is represented as a typed command containing at least a unique command ID, workout ID, expected workout revision, operation, payload, and client creation time. Discrete actions such as entering set values, reordering, adding/removing, changing mode, and timer transitions enqueue immediately.
 
 Before sending a command, persist it transactionally in a narrow browser IndexedDB outbox. The client controller then sends pending commands to the Route Handler in FIFO order. The server validates and applies each command in a PostgreSQL transaction, records or otherwise enforces command-ID idempotency, checks the expected revision, and returns the resulting revision. Only a successful acknowledgement removes the command from the outbox.
 
@@ -74,7 +74,6 @@ Persist timer transitions, not per-second ticks. Store accumulated active durati
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
 - [`../product/workouts.md`](../product/workouts.md)
 - [`../ux/mobile-information-architecture.md`](../ux/mobile-information-architecture.md)
-- [`../project/tasks/T-001-define-local-technical-architecture.md`](../project/tasks/T-001-define-local-technical-architecture.md)
 - [`0017-nextjs-app-router-runtime.md`](0017-nextjs-app-router-runtime.md)
 - [`0018-local-supabase-postgres-and-server-data-access.md`](0018-local-supabase-postgres-and-server-data-access.md)
 

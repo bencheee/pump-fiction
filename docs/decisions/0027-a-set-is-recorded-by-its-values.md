@@ -28,7 +28,7 @@ The old confirmation check constraint is removed with the column. The shape chec
 
 ## Consequences
 
-- `MVP-UX-002` opened with `The current set is visibly distinct.` Nothing designates a current set once confirmation is gone: sets are filled in any order. That sentence was missed here and removed later by [`T-050`](../project/tasks/T-050-correct-the-reorder-and-current-set-language.md), after [`T-046`](../project/tasks/T-046-verify-phone-interaction-and-affordances.md) found it while reading the application for the affordances the criterion names. Telling recorded work from planned stays required and stays delivered: each exercise heading counts `N of M recorded`.
+- Nothing designates a current set once confirmation is gone: sets are filled in any order. Telling recorded work from planned work remains required: each exercise heading counts `N of M recorded`.
 - Set entry is one gesture. Values auto-save exactly as before, and no further action records the set.
 - The finish review counts recorded sets and sets left without values, replacing confirmed sets and empty planned sets.
 - The exercise card reads `N of M recorded` instead of `N of M confirmed`.
@@ -43,4 +43,3 @@ The old confirmation check constraint is removed with the column. The shape chec
 - [`../product/mvp-acceptance-criteria.md`](../product/mvp-acceptance-criteria.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
 - [`../architecture/active-workout-durability.md`](../architecture/active-workout-durability.md)
-- [`../project/tasks/T-029-record-a-set-by-its-values.md`](../project/tasks/T-029-record-a-set-by-its-values.md)

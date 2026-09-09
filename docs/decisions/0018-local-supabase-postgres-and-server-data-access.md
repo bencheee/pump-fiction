@@ -22,7 +22,7 @@ All application database access is server-only and passes through repository/ser
 
 The local server may use local Supabase credentials that never enter browser bundles. Production credentials, authentication, authorization, Row Level Security, and private-app protection require an explicit pre-deployment decision; local privilege choices do not silently become the production security model.
 
-When production is approved, provision hosted Supabase PostgreSQL, link it explicitly, preview pending migrations, and apply the same versioned migration history. The database engine, schema authority, application data boundary, and query API therefore remain unchanged; environment configuration and the separately accepted production-access model change.
+The hosted Supabase PostgreSQL project uses the same versioned migration history. The database engine, schema authority, application data boundary, and query API therefore remain unchanged between local and production environments; only environment configuration and the production-access model differ.
 
 ## Consequences
 
@@ -31,18 +31,16 @@ When production is approved, provision hosted Supabase PostgreSQL, link it expli
 - Schema review remains SQL-visible and auditable, with one canonical declarative representation and an ordered deployment history.
 - The full local Supabase stack costs more startup time and requires a Docker-compatible runtime.
 - Avoiding an ORM reduces dependencies and schema duplication, but complex queries may require explicit SQL or Supabase query composition inside the repository layer.
-- Generated TypeScript database types must be refreshed whenever the schema changes and committed with the same Task.
+- Generated TypeScript database types must be refreshed whenever the schema changes and kept in the same change.
 - Server-only repositories isolate the UI from future authentication, RLS, connection, or data-client changes.
-- Schema application/reset and database-backed verification remain subject to the project's commit-approval testing gate when performed as feature verification.
+- Schema application/reset and database-backed verification remain separate from the non-destructive static-check command.
 
 ## Related documents
 
 - [`../architecture/local-technical-architecture.md`](../architecture/local-technical-architecture.md)
 - [`../architecture/constraints.md`](../architecture/constraints.md)
 - [`../architecture/domain-model.md`](../architecture/domain-model.md)
-- [`../project/tasks/T-001-define-local-technical-architecture.md`](../project/tasks/T-001-define-local-technical-architecture.md)
 - [`0004-local-first-development.md`](0004-local-first-development.md)
-- [`0006-approval-gated-feature-testing.md`](0006-approval-gated-feature-testing.md)
 
 ## Official references
 

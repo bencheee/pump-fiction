@@ -4,11 +4,11 @@
 
 ## Context
 
-The application carries two routes that exist only to drive an approval-gated browser test: `/test-support/mobile-ui-foundation`, added by `T-009`, and `/test-support/active-workout-durability`, added by `T-008`. They were given different visibility rules and neither rule was written down.
+The application carries two routes that exist only to drive browser tests: `/test-support/mobile-ui-foundation` and `/test-support/active-workout-durability`. They originally had different visibility rules and neither rule was written down.
 
-The durability route hid itself in a production build through `notFound()` on `NODE_ENV`. The mobile-UI-foundation route had no guard at all. `T-009` then moved the browser suite onto a production server without noticing that it had just made one of the two harnesses unreachable, and the durability spec was silently unrunnable from `2026-09-01` until `T-037` found it on `2026-09-06`.
+The durability route hid itself in a production build through `notFound()` on `NODE_ENV`, while the mobile-UI-foundation route had no guard. Moving the browser suite onto a production server therefore made one harness unreachable until the inconsistency was found.
 
-`T-037` repaired it the only way its test-only scope allowed: a second development server on port `3101`, started beside the production server, running that spec alone through two extra Playwright projects. That works, and it verifies the durability harness against a development build rather than the build the phone user gets. It also left the asymmetry in place, and `T-037` recorded the open question rather than answering it, because a uniform rule is an application change.
+A temporary repair used a second development server on port `3101` beside the production server, but that verified the durability harness against a different build. The uniform rule below replaced that asymmetry.
 
 ## Decision
 
@@ -30,5 +30,3 @@ Both test-support routes take one rule: they are hidden unless the server was st
 
 - [`../architecture/active-workout-durability.md`](../architecture/active-workout-durability.md)
 - [`../architecture/mobile-ui-foundation.md`](../architecture/mobile-ui-foundation.md)
-- [`../project/tasks/T-037-repair-stale-browser-specs.md`](../project/tasks/T-037-repair-stale-browser-specs.md)
-- [`../project/tasks/T-044-close-discovered-release-corrections.md`](../project/tasks/T-044-close-discovered-release-corrections.md)
