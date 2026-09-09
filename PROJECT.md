@@ -1,13 +1,13 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T15:02:09+02:00
-- **Current phase:** **Deployed and in use; the locally verified workout-flow refinement is ready for hosted rollout.** `M-001` through `M-004` are complete.
+- **Last updated:** 2026-09-09T15:15:38+02:00
+- **Current phase:** **Deployed and in use; the verified workout-flow refinement is live on hosted Supabase and Vercel.** `M-001` through `M-004` are complete.
 - **Current Milestone:** None; [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) is `Done`
 - **Implementation:** all required Tasks in every completed Feature are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
-- **Production:** Vercel plus a hosted Supabase project running the same 25 migrations, gated by one shared password under [ADR-0031](docs/decisions/0031-shared-password-protects-the-hosted-application.md). Data is backed up only by running `npm run db:backup`; the free plan takes none on its own
+- **Production:** Vercel plus a hosted Supabase project running the same 26 migrations, gated by one shared password under [ADR-0031](docs/decisions/0031-shared-password-protects-the-hosted-application.md). Data is backed up only by running `npm run db:backup`; the free plan takes none on its own
 
 ## Current focus
 
@@ -15,7 +15,7 @@ None; [`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-tr
 
 ## Immediate next action
 
-Push the completed `T-055` evidence chain to GitHub. For hosted rollout, apply migration `20260909131718_accelerate_workout_flow.sql` to Supabase before deploying the application code to Vercel.
+None. `T-055` and its evidence chain are on GitHub, Vercel reports production deployment `6350435874` successful for exact commit `791e41ec4b553eb1f9488d49f724891c8fe091d8`, and hosted Supabase is current through migration `20260909131718_accelerate_workout_flow.sql`.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;

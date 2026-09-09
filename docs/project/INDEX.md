@@ -102,7 +102,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-052`](tasks/T-052-build-the-body-destination.md) | `F-015` | Build the Body destination | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T21:04:00+02:00` | [`tasks/T-052-build-the-body-destination.md`](tasks/T-052-build-the-body-destination.md) |
 | [`T-053`](tasks/T-053-add-todays-measurement-entry.md) | `F-015` | Add today's measurement entry | `Now / 3` | `Done` | Claude Code primary agent | `2026-09-06T22:32:00+02:00` | [`tasks/T-053-add-todays-measurement-entry.md`](tasks/T-053-add-todays-measurement-entry.md) |
 | [`T-054`](tasks/T-054-refine-today-and-active-workout-density.md) | `F-016` | Refine Today and active-workout density | `Now / 1` | `Done` | Codex primary agent | `2026-09-09T12:58:13+02:00` | [`tasks/T-054-refine-today-and-active-workout-density.md`](tasks/T-054-refine-today-and-active-workout-density.md) |
-| [`T-055`](tasks/T-055-compact-and-accelerate-workout-flow.md) | `F-017` | Compact and accelerate the workout flow | `Now / 1` | `Done` | Codex primary agent | `2026-09-09T15:02:09+02:00` | [`tasks/T-055-compact-and-accelerate-workout-flow.md`](tasks/T-055-compact-and-accelerate-workout-flow.md) |
+| [`T-055`](tasks/T-055-compact-and-accelerate-workout-flow.md) | `F-017` | Compact and accelerate the workout flow | `Now / 1` | `Done` | Codex primary agent | `2026-09-09T15:15:38+02:00` | [`tasks/T-055-compact-and-accelerate-workout-flow.md`](tasks/T-055-compact-and-accelerate-workout-flow.md) |
 
 ## Templates
 

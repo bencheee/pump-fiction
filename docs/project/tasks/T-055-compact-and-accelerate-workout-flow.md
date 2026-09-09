@@ -9,7 +9,7 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T15:02:09+02:00`
+- **Updated:** `2026-09-09T15:15:38+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
 - **Review started:** `2026-09-09T14:09:02+02:00`
 - **Approval requested:** `2026-09-09T14:09:02+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-09T14:18:54+02:00`
 - **Completed:** `2026-09-09T15:02:09+02:00`
 - **Canceled:** Not reached
-- **Next action:** None; `T-055` is `Done`. Hosted rollout applies the new Supabase migration before deploying the Vercel application.
+- **Next action:** None; `T-055` is `Done` and its hosted rollout is complete.
 
 ## Scope
 
@@ -114,6 +114,13 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **Approved at:** `2026-09-09T14:15:19+02:00`
 - **Approval note:** Approved (`odobravam`), authorizing only the recorded scoped verification.
 
+## Hosted rollout
+
+- **Production backup:** Ignored data-only snapshot `supabase/snapshots/production-20260909151233.sql` was captured before the schema change.
+- **Hosted Supabase:** Dry-run named only `20260909131718_accelerate_workout_flow.sql`; the migration applied successfully, and the following dry-run reported the remote database up to date with all 26 migrations.
+- **Vercel:** GitHub deployment `6350435874` reports `success` for production exact commit `791e41ec4b553eb1f9488d49f724891c8fe091d8`. The Git integration had completed that deployment before the database command was run; the additive migration was then applied and verified before rollout closure.
+- **Endpoint check:** The immutable Vercel deployment URL answered through Vercel Deployment Protection, so the repository records platform success rather than claiming an application-level smoke test through the Owner's production alias.
+
 ## Definition of Ready
 
 - [x] ID, parent Feature, horizon, and order are set.
@@ -153,3 +160,4 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | The serial browser repeat passed 3/4 and exposed an application race before finish; replacement `85e3259dc4f0842c565be972408946c51a5bdb23` prevents stale hydration from overwriting a newer optimistic revision and will repeat the complete scope. |
 | `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Trace identified a cross-reload acknowledgement window after the next serial run failed both active-workout cases; replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only after an outcome is selected, under the blocker, and will repeat the complete scope. |
 | `2026-09-09T15:02:09+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Final replacement `2d7f866db9d6261a8f0b414ad064b91adfff0e35` passed 31/31 component/application, 19/19 pgTAP, 1/1 repository, and 4/4 mobile-browser checks with matching generated types and a semantically identical database baseline; the Owner's snapshot was restored. |
+| `2026-09-09T15:15:38+02:00` | Codex primary agent / Executor | `Done` | `Done` | Hosted rollout recorded: production backup captured, Supabase migration applied and rechecked current, and Vercel production deployment `6350435874` succeeded for exact commit `791e41ec4b553eb1f9488d49f724891c8fe091d8`. |
