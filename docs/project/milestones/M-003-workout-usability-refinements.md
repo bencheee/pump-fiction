@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:50:52+02:00`
-- **Progress:** `0/1 required Features Done`
+- **Updated:** `2026-09-09T12:58:13+02:00`
+- **Progress:** `1/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -21,11 +21,11 @@ Today previews the exercises in the workout it is about to start, and the active
 
 ## Completion criteria
 
-- [ ] Today lists every exercise in the selected planned split beneath its start action.
-- [ ] Active-workout exercise cards provide the requested compact, collapsible presentation without removing existing workout operations.
-- [ ] All required Features are `Done`.
-- [ ] Canonical documentation is current.
-- [ ] User confirms the milestone result.
+- [x] Today lists every exercise in the selected planned split beneath its start action.
+- [x] Active-workout exercise cards provide the requested compact, collapsible presentation without removing existing workout operations.
+- [x] All required Features are `Done`.
+- [x] Canonical documentation is current.
+- [x] User confirms the milestone result.
 
 ## Features
 
@@ -58,3 +58,4 @@ Today previews the exercises in the workout it is about to start, and the active
 | `2026-09-09T12:25:00+02:00` | User / Owner | Requested an in-scope replacement | `T-054` returned to implementation for the clarified density and accordion behavior. |
 | `2026-09-09T12:37:00+02:00` | Codex primary agent / Executor | Delivered the replacement for approval | `T-054` replacement `5379fd83ac295df9abe1b385854b168338543718` is awaiting the Owner. |
 | `2026-09-09T12:50:52+02:00` | User / Owner | Approved the Milestone result | Exact `T-054` replacement `5379fd83ac295df9abe1b385854b168338543718` is authorized for verification and completion. |
+| `2026-09-09T12:58:13+02:00` | Codex primary agent / Tester | Completed `M-003` | `F-016` and `T-054` are `Done`; authorized component and cross-engine browser verification passed. |

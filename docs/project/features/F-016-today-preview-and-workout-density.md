@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:50:52+02:00`
-- **Progress:** `0/1 required Tasks Done`
+- **Updated:** `2026-09-09T12:58:13+02:00`
+- **Progress:** `1/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -54,11 +54,11 @@ The next workout is visible before it starts, and recording it requires material
 
 ## Completion
 
-- [ ] All required Tasks are `Done`.
-- [ ] Feature acceptance criteria are satisfied.
-- [ ] Canonical documentation is current.
-- [ ] No required follow-up scope is hidden.
-- [ ] User confirms the feature result.
+- [x] All required Tasks are `Done`.
+- [x] Feature acceptance criteria are satisfied.
+- [x] Canonical documentation is current.
+- [x] No required follow-up scope is hidden.
+- [x] User confirms the feature result.
 
 ## History
 
@@ -69,3 +69,4 @@ The next workout is visible before it starts, and recording it requires material
 | `2026-09-09T12:25:00+02:00` | User / Owner | Returned `T-054` to implementation | Requested a denser one-row set presentation and clarified the exercise cards as a single-open accordion that starts closed. |
 | `2026-09-09T12:37:00+02:00` | Codex primary agent / Executor | Delivered the `T-054` replacement for approval | Exact replacement `5379fd83ac295df9abe1b385854b168338543718` resolves the Owner's review points; feature tests remain locked. |
 | `2026-09-09T12:50:52+02:00` | User / Owner | Approved `T-054` and confirmed the Feature result | Exact replacement `5379fd83ac295df9abe1b385854b168338543718` is authorized for its planned tests. |
+| `2026-09-09T12:58:13+02:00` | Codex primary agent / Tester | Completed `F-016` | Its only Task is `Done` after `26/26` component tests and `4/4` targeted Chromium/WebKit scenarios passed against the approved replacement. |

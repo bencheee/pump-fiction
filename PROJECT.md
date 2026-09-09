@@ -1,8 +1,8 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T12:50:52+02:00
-- **Current phase:** **Deployed and in use, with workout usability refinements in progress.** `M-001` and `M-002` remain complete; `M-003` refines Today and active-workout density without changing workout semantics.
-- **Current Milestone:** [`M-003`](docs/project/milestones/M-003-workout-usability-refinements.md) — Workout Usability Refinements
+- **Last updated:** 2026-09-09T12:58:13+02:00
+- **Current phase:** **Deployed and in use.** `M-001`, `M-002`, and `M-003` are complete.
+- **Current Milestone:** None; [`M-003`](docs/project/milestones/M-003-workout-usability-refinements.md) is `Done`.
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-016`](docs/project/features/F-016-today-preview-and-workout-density.md) — Today Preview and Workout Density. [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) replacement `5379fd83ac295df9abe1b385854b168338543718` is `Approved` and ready for its authorized tests.
+None; [`F-016`](docs/project/features/F-016-today-preview-and-workout-density.md), [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md), and `M-003` are `Done`.
 
 ## Immediate next action
 
-Run the targeted Today and active-workout component and Chromium/WebKit browser tests against exact approved commit `5379fd83ac295df9abe1b385854b168338543718`, then record completion.
+No active delivery work. The next product change needs its own ready Milestone, Feature, and Task.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ Run the targeted Today and active-workout component and Chromium/WebKit browser 
 
 ## Now
 
-`T-054` — verify exact approved replacement `5379fd83ac295df9abe1b385854b168338543718`.
+None.
 
 ## Next
 
@@ -44,10 +44,11 @@ None.
 
 ## Approved — ready for testing
 
-[`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) — approved replacement `5379fd83ac295df9abe1b385854b168338543718`.
+None.
 
 ## Recently completed Tasks
 
+- [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) — completed `2026-09-09T12:58:13+02:00` — approved replacement `5379fd83ac295df9abe1b385854b168338543718` — component `26/26` and precisely scoped mobile Chromium/WebKit browser scenarios `4/4`.
 - [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — completed `2026-09-06T22:32:00+02:00` — approved delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` — unit 241/241, pgTAP 191/191, repository 9/9, and the whole browser suite 52/52, on the first run, with a database identical to its baseline.
 - [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — completed `2026-09-06T21:04:00+02:00` — first delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, verified through three inherited replacements ending at `109d2a0d3a1155620b4971ea8767561165e584ec` — the whole browser suite 52/52, unit 237/237, components 4/4, and a database identical to its baseline.
 - [`T-048`](docs/project/tasks/T-048-run-release-verification-and-close-local-mvp.md) — completed `2026-09-06T18:52:00+02:00` — approved delivery `9d8648d8dfd2acdc24cf60f8731d57821d6d75fb` — the release run passed 489 checks across five suites against one approved tree on the first attempt, with matching generated types, a database identical to its baseline, and the Owner's confirmed visual comparison.
