@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T11:50:00+02:00
+- **Last updated:** 2026-09-09T12:05:00+02:00
 - **Current phase:** **Deployed and in use, with workout usability refinements in progress.** `M-001` and `M-002` remain complete; `M-003` refines Today and active-workout density without changing workout semantics.
 - **Current Milestone:** [`M-003`](docs/project/milestones/M-003-workout-usability-refinements.md) — Workout Usability Refinements
 - **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-016`](docs/project/features/F-016-today-preview-and-workout-density.md) — Today Preview and Workout Density. [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) is `In Progress`.
+[`F-016`](docs/project/features/F-016-today-preview-and-workout-density.md) — Today Preview and Workout Density. [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) is `Awaiting Approval` at exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847`.
 
 ## Immediate next action
 
-Implement `T-054`, update canonical documentation and prepared tests, run static checks only, then deliver the exact commit for review. Feature tests remain approval-gated.
+Owner reviews and approves or rejects `T-054` exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847`. Feature tests remain approval-gated.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ Implement `T-054`, update canonical documentation and prepared tests, run static
 
 ## Now
 
-`T-054` — Today split preview and compact, collapsible active-workout cards.
+None; `T-054` is delivered and awaiting approval.
 
 ## Next
 
@@ -40,7 +40,7 @@ None.
 
 ## Awaiting approval
 
-None.
+`T-054` — exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847`.
 
 ## Approved — ready for testing
 

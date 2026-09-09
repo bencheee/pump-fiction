@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T11:50:00+02:00`
+- **Updated:** `2026-09-09T12:05:00+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `0`
+- **Awaiting approval Tasks:** `1`
 
 ## Outcome
 
@@ -65,3 +65,4 @@ The next workout is visible before it starts, and recording it requires material
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-09T11:50:00+02:00` | User / Owner | Created, readied, and released `F-016` | Requested the complete UI refinement as one cohesive outcome. |
+| `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor | Delivered `T-054` for approval | Exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847` implements the full Feature scope; feature tests remain approval-gated. |

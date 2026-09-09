@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T11:50:00+02:00`
+- **Updated:** `2026-09-09T12:05:00+02:00`
 - **Progress:** `0/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -54,3 +54,4 @@ Today previews the exercises in the workout it is about to start, and the active
 | Timestamp | Actor/role | Change | Reason |
 | --- | --- | --- | --- |
 | `2026-09-09T11:50:00+02:00` | User / Owner | Created and released `M-003` | Requested a Today split preview and a denser active-workout UI after asking for a Playwright inspection of the current screens. |
+| `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor | Delivered the Milestone's one Task for approval | `T-054` exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847` is awaiting the Owner. |

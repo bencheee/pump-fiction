@@ -1,7 +1,7 @@
 # T-054 — Refine Today and active-workout density
 
 - **Feature:** `F-016`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:04:00+02:00`
+- **Updated:** `2026-09-09T12:05:00+02:00`
 - **Started:** `2026-09-09T11:50:00+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-09T12:05:00+02:00`
+- **Approval requested:** `2026-09-09T12:05:00+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Implement the documented Today preview and active-workout presentation, then run static checks only.
+- **Next action:** Owner reviews and approves or rejects exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847`; feature tests remain locked until approval.
 
 ## Scope
 
@@ -77,16 +77,16 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created.
+- **Delivery commit SHA:** `7c29e9a6c147f8f516bdc6a32be9636ad297f847`
 - **Subject:** `T-054: refine today and active workout density`
-- **Committed scope:** Not created.
+- **Committed scope:** Today reads the selected split's existing prescription and previews every exercise; active-workout exercise cards are compact and collapsible with revised exercise/set actions, Last time rows, yellow guidance, 32-pixel inputs, and borderless Add Set; component/browser specifications are prepared; all affected canonical and project documents are current.
 
 ## Review
 
 - **Reviewer:** Codex primary agent
-- **Reviewed at:** Not reviewed.
-- **Outcome:** Not reviewed.
-- **Findings:** None recorded.
+- **Reviewed at:** `2026-09-09T12:05:00+02:00`
+- **Outcome:** Recommended for approval.
+- **Findings:** Scope, accepted behavior, and documentation agree. Static checks pass except that internal-link validation is unavailable because `lychee` is not installed. The initial approved-state Playwright inspection also exposed a pre-existing one-second hydration mismatch in the restored-workout timer; this delivery neither introduces nor changes that timer behavior.
 
 ## Approval
 
@@ -127,3 +127,4 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 | --- | --- | --- | --- | --- |
 | `2026-09-09T11:50:00+02:00` | User / Owner | — | `Ready` | The implementation request defines the observable scope and releases it for work. |
 | `2026-09-09T11:50:00+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began with the requested Playwright inspection of the approved current application. |
+| `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `7c29e9a6c147f8f516bdc6a32be9636ad297f847`; permitted static checks passed except unavailable `lychee`, and no feature test ran. |
