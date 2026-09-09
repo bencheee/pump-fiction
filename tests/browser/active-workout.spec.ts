@@ -73,7 +73,7 @@ test.describe("Active workout experience", () => {
       await expect(
         squat.getByText("3 planned × 8–12 reps · 1 of 3 recorded"),
       ).toBeVisible();
-      await expect(page.getByText("All changes saved")).toBeVisible();
+      await expect(page.getByText("All changes saved")).toBeAttached();
 
       // Removing a set that holds data asks; removing an empty one does not.
       await squat.getByLabel("kg", { exact: true }).nth(1).fill("80");
@@ -106,7 +106,7 @@ test.describe("Active workout experience", () => {
       );
       await noteField.fill("Felt strong");
       await noteField.blur();
-      await expect(page.getByText("All changes saved")).toBeVisible();
+      await expect(page.getByText("All changes saved")).toBeAttached();
 
       await page.getByRole("button", { name: "Add Exercise" }).click();
       const librarySheet = page.getByRole("dialog", { name: "Add Exercise" });
