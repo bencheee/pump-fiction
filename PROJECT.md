@@ -1,9 +1,9 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T14:04:50+02:00
+- **Last updated:** 2026-09-09T14:09:02+02:00
 - **Current phase:** **Deployed and in use, with workout-flow refinement in progress.** `M-001`, `M-002`, and `M-003` remain complete.
 - **Current Milestone:** [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) — Workout Flow Speed and Chrome
-- **Implementation:** every Feature's required Tasks are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
+- **Implementation:** all required Tasks in every completed Feature are `Done`; `F-017` has one delivered Task awaiting approval. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `In Progress`.
+[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Awaiting Approval` for delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`.
 
 ## Immediate next action
 
-Implement and statically check `T-055`, then deliver its exact commit for Owner review without running feature tests.
+Owner reviews and approves or rejects exact `T-055` delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`; approval unlocks its scoped component, repository, pgTAP, and mobile-browser verification.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ Implement and statically check `T-055`, then deliver its exact commit for Owner 
 
 ## Now
 
-[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — `In Progress` — Codex primary agent — eliminate the diagnosed round trips and deliver the compact workout chrome.
+None; the delivered Task is waiting for Owner approval.
 
 ## Next
 
@@ -40,7 +40,7 @@ None.
 
 ## Awaiting approval
 
-None.
+[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` — review recommends approval; feature tests remain locked.
 
 ## Approved — ready for testing
 

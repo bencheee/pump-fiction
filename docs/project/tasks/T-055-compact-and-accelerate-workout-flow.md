@@ -1,7 +1,7 @@
 # T-055 — Compact and accelerate the workout flow
 
 - **Feature:** `F-017`
-- **Status:** `In Progress`
+- **Status:** `Awaiting Approval`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:04:50+02:00`
+- **Updated:** `2026-09-09T14:09:02+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
-- **Review started:** Not reached
-- **Approval requested:** Not reached
+- **Review started:** `2026-09-09T14:09:02+02:00`
+- **Approval requested:** `2026-09-09T14:09:02+02:00`
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Create the delivery commit, review it against this Task and the canonical documents, and request Owner approval without running feature tests.
+- **Next action:** Owner approves or rejects exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`; approval authorizes only the recorded component, repository, pgTAP, and mobile-browser plan.
 
 ## Scope
 
@@ -31,12 +31,12 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 
 ## Acceptance criteria
 
-- [ ] Exercise disclosures show no chevron and remain operable from the card title/surface with accessible expanded state.
-- [ ] Workout name, timer action, and clock occupy one row no taller than 40 CSS pixels beyond safe area; the timer action is text-only.
-- [ ] A single round check action at lower right opens the complete finish review locally and immediately.
-- [ ] Pending start and finish mutations show a full-viewport blocking loader and prevent duplicate interaction.
-- [ ] Today split previews arrive inside `get_today_view`, eliminating the per-split query waterfall.
-- [ ] `start_workout` returns the hydrated workout directly, and Current Workout does not load the full exercise library until Add Exercise is opened.
+- [x] Exercise disclosures show no chevron and remain operable from the card title/surface with accessible expanded state.
+- [x] Workout name, timer action, and clock occupy one row no taller than 40 CSS pixels beyond safe area; the timer action is text-only.
+- [x] A single round check action at lower right opens the complete finish review locally and immediately.
+- [x] Pending start and finish mutations show a full-viewport blocking loader and prevent duplicate interaction.
+- [x] Today split previews arrive inside `get_today_view`, eliminating the per-split query waterfall.
+- [x] `start_workout` returns the hydrated workout directly, and Current Workout does not load the full exercise library until Add Exercise is opened.
 
 ## Traceability
 
@@ -78,16 +78,16 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 
 ## Delivery commit
 
-- **Delivery commit SHA:** Not created.
+- **Delivery commit SHA:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
 - **Subject:** `T-055: compact and accelerate workout flow`
-- **Committed scope:** Not created.
+- **Committed scope:** Compact active-workout header and chevron-free disclosures; a round local finish-review sheet and blocking start/finish progress; Today aggregate split prescriptions; single-RPC start hydration; lazy exercise-library loading; additive migration and generated declaration; prepared component, repository, pgTAP, and browser assertions; and the affected canonical and project records.
 
 ## Review
 
 - **Reviewer:** Codex primary agent
-- **Reviewed at:** Not reviewed.
-- **Outcome:** Not reviewed.
-- **Findings:** None recorded.
+- **Reviewed at:** `2026-09-09T14:09:02+02:00`
+- **Outcome:** Recommended for approval.
+- **Findings:** No defect found in exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`. The ordinary finish path now reads the already-current client snapshot, while its durable command queue remains the authority for all outcomes; direct finish-route support remains as a fallback. Today removes its per-split application waterfall, start removes its second RPC, and Current Workout removes the eager library read. The new RPC is additive and must reach hosted Supabase before application deployment. Static checks passed except for the unavailable `lychee` executable; approval-gated runtime and database verification has not run.
 
 ## Approval
 
@@ -112,7 +112,7 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 
 ## Definition of Done
 
-- [ ] Reviewer recommends approval.
+- [x] Reviewer recommends approval.
 - [ ] User approved the exact commit SHA.
 - [ ] Scope and acceptance criteria are satisfied.
 - [ ] Canonical documentation and required ADRs are current.
@@ -128,3 +128,4 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | --- | --- | --- | --- | --- |
 | `2026-09-09T13:17:18+02:00` | User / Owner | — | `Ready` | The UI request and named latency question define observable scope and release it for work. |
 | `2026-09-09T13:17:18+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began by tracing the Today, start, current-workout, and finish-review data paths. |
+| `2026-09-09T14:09:02+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` with no finding; static checks passed except unavailable `lychee`, and no feature test ran. |
