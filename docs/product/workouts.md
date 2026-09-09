@@ -83,7 +83,7 @@ One round check action at the lower-right opens the finish review as an in-place
 - **Continue Workout**;
 - a separate, confirmed action to discard the workout entirely.
 
-Starting or finishing a workout shows a full-viewport progress layer until its persistence and navigation complete, preventing duplicate interaction while the database-backed transition is pending.
+Starting or finishing a workout shows a full-viewport progress layer until its persistence and navigation complete, preventing duplicate interaction while the database-backed transition is pending. Opening the review remains entirely local. Once a finish outcome is selected, the blocked transition first drains pending workout commands and reads the current authoritative workout once before sending the terminal command, so an acknowledgement racing a reload cannot make the finish use a stale revision.
 
 A completed workout enters History and eligible statistics. It advances rotation only if it was the split proposed by the active rotation, according to [`programs-and-splits.md`](programs-and-splits.md#rotation).
 
