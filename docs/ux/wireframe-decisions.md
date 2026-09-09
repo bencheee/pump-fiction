@@ -49,9 +49,11 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 ## Active workout
 
-Each exercise card shows name, type, targeted sets and rep range, persistent exercise note, last-time result, the exact initial set count from the split, per-set load and reps inputs, **Remove set**, **Add set**, and **Today's note**. There is no set-confirmation control: entering the values records the set.
+Each exercise card shows name, type, targeted sets and rep range, persistent exercise note, last-time result, the exact initial set count from the split, per-set load and reps inputs, icon-only set removal, **Add Set**, and **Today's note**. The card is independently collapsible and starts expanded. Its small up, down, and remove icons share the upper-right title row, while the collapse disclosure sits with the title; there is no drag handle. There is no set-confirmation control: entering the values records the set.
 
-A set shows the fields of its exercise's implied mode. When the definition permits an addition, each set carries one control that applies it or removes it again, named for the addition the definition actually allows, such as **Add resistance band**, **Add weight**, **Assist with weight**, or **Assist with band**. A definition with no addition has no control. Direction is retained for band modes.
+A set shows the fields of its exercise's implied mode in 32-pixel-high inputs. Its title row places the named optional-addition control immediately before the icon-only remove action. When the definition permits an addition, the control applies it or removes it again and is named for the addition the definition actually allows, such as **Add resistance band**, **Add weight**, **Assist with weight**, or **Assist with band**. A definition with no addition has no control. Direction is retained for band modes. **Add Set** is borderless green text aligned to the right.
+
+The persistent **Exercise note** uses the warning-yellow token. **Last time** places its date in the heading and lists each set on a separate line in reps-first notation.
 
 Restoring a workout shows no banner: the restored workout itself is the evidence. The exercise-note heading reads only **Exercise note**, and the note stays read-only.
 

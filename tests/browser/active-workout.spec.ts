@@ -77,7 +77,9 @@ test.describe("Active workout experience", () => {
       // Removing a set that holds data asks; removing an empty one does not.
       await squat.getByLabel("kg", { exact: true }).nth(1).fill("80");
       await squat.getByLabel("kg", { exact: true }).nth(1).blur();
-      await squat.getByText("Remove set").nth(1).click();
+      await squat
+        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
+        .click();
       await page
         .getByRole("alertdialog", { name: `Remove set 2 of ${exerciseA}?` })
         .getByRole("button", { name: "Remove Set" })
@@ -85,7 +87,9 @@ test.describe("Active workout experience", () => {
       await expect(
         squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
       ).toBeVisible();
-      await squat.getByText("Remove set").nth(1).click();
+      await squat
+        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
+        .click();
       await expect(
         squat.getByText("3 planned × 8–12 reps · 1 of 1 recorded"),
       ).toBeVisible();

@@ -65,6 +65,7 @@ test.describe("Today workout-start experience", () => {
 
       await page.goto("/today");
       await expect(page.getByRole("heading", { name: splitA })).toBeVisible();
+      await expect(page.getByText(exerciseA, { exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Choose another split" }).click();
       await expect(
         page.getByRole("dialog", { name: "Choose Another Split" }),

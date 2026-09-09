@@ -271,7 +271,8 @@ describe("Active-workout mobile experience", () => {
       screen.getByText("2 planned × 6–10 reps · 1 of 2 recorded"),
     ).toBeVisible();
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
-    expect(screen.getByText("22 Aug · 85 kg × 6")).toBeVisible();
+    expect(screen.getByText("Last time · 22 Aug")).toBeVisible();
+    expect(screen.getByText("6 x 85 kg")).toBeVisible();
     expect(screen.getByText("No completed performance yet.")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: /Confirm set/ }),
@@ -292,6 +293,16 @@ describe("Active-workout mobile experience", () => {
     ).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
     expect(await screen.findByText("All changes saved")).toBeVisible();
+
+    const collapse = within(squat).getByRole("button", { name: /Squat/ });
+    expect(collapse).toHaveAttribute("aria-expanded", "true");
+    expect(within(squat).getAllByLabelText("kg")[0]).toHaveStyle({
+      height: "32px",
+      minHeight: "32px",
+    });
+    await userEvent.setup().click(collapse);
+    expect(collapse).toHaveAttribute("aria-expanded", "false");
+    expect(within(squat).queryByText("Set 1")).not.toBeVisible();
   });
 
   it("keeps primary navigation available during the workout", () => {
@@ -450,7 +461,11 @@ describe("Active-workout mobile experience", () => {
     const { transport } = renderExperience();
 
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
-    await user.click(within(pullUp).getAllByText("Remove set")[0]!);
+    await user.click(
+      within(pullUp).getByRole("button", {
+        name: "Remove set 1 of Pull-Up",
+      }),
+    );
     const dialog = await screen.findByRole("alertdialog", {
       name: "Remove set 1 of Pull-Up?",
     });
@@ -464,7 +479,9 @@ describe("Active-workout mobile experience", () => {
     });
 
     const squat = screen.getByRole("region", { name: "Squat" });
-    await user.click(within(squat).getAllByText("Remove set")[2]!);
+    await user.click(
+      within(squat).getByRole("button", { name: "Remove set 3 of Squat" }),
+    );
     await waitFor(() => {
       expect(transport.last("remove_set").payload).toMatchObject({
         confirmedPopulatedRemoval: false,

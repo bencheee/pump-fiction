@@ -37,6 +37,8 @@ The accepted technical durability mechanism is defined in [ADR-0019](../decision
 
 **Last time** finds the latest completed performance of the same persistent exercise, regardless of split or whether it was a one-time workout. It reflects corrections subsequently made in History.
 
+During an active workout, its heading carries the performance date and each set is shown on its own line in reps-first notation, such as `3 x BW`, `3 x 10 kg`, or `3 x medium assistance band`.
+
 Incomplete workouts do not qualify because they do not contribute to exercise statistics. See [`history-and-statistics.md`](history-and-statistics.md#statistics-eligibility-and-recalculation).
 
 ## Two kinds of notes
@@ -54,6 +56,8 @@ During a workout the user may:
 - add or remove a set;
 - apply or remove the definition's single permitted addition on a set, and change its values;
 - add a workout-specific note.
+
+Each exercise card can be collapsed independently and starts expanded. The card header holds its compact named reorder and removal controls in the title row; no drag handle is shown. Each set likewise keeps its optional-addition action and icon-only removal in the Set title row. Persistent exercise guidance is yellow, set-entry inputs are 32 CSS pixels high, and **Add Set** is right-aligned green text without a bordered button shape.
 
 None of these actions changes the originating split.
 

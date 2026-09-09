@@ -29,11 +29,37 @@ export function formatSetSummary(set: WorkoutSet): string {
 }
 
 export function formatLastPerformance(performance: LastPerformance): string {
-  const date = new Intl.DateTimeFormat("en-GB", {
+  const date = formatLastPerformanceDate(performance.workoutDate);
+  const sets = performance.sets.map(formatSetSummary).join(", ");
+  return sets.length > 0 ? `${date} · ${sets}` : date;
+}
+
+export function formatLastPerformanceDate(workoutDate: string): string {
+  return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
     timeZone: "UTC",
-  }).format(new Date(`${performance.workoutDate}T00:00:00Z`));
-  const sets = performance.sets.map(formatSetSummary).join(", ");
-  return sets.length > 0 ? `${date} · ${sets}` : date;
+  }).format(new Date(`${workoutDate}T00:00:00Z`));
+}
+
+export function formatWorkoutSetLine(set: WorkoutSet): string {
+  const reps = set.reps ?? "—";
+  if (set.loadMode === null) return `${reps} x —`;
+
+  switch (set.loadMode) {
+    case "bodyweight":
+      return `${reps} x BW`;
+    case "weight":
+      return `${reps} x ${set.loadKg ?? "—"} kg`;
+    case "bodyweight_added_weight":
+      return `${reps} x BW + ${set.loadKg ?? "—"} kg`;
+    case "bodyweight_resistance_band":
+      return `${reps} x BW + ${set.bandStrength ?? "—"} resistance band`;
+    case "weight_resistance_band":
+      return `${reps} x ${set.loadKg ?? "—"} kg + ${set.bandStrength ?? "—"} resistance band`;
+    case "assistance_weight":
+      return `${reps} x ${set.loadKg ?? "—"} kg assistance`;
+    case "assistance_band":
+      return `${reps} x ${set.bandStrength ?? "—"} assistance band`;
+  }
 }

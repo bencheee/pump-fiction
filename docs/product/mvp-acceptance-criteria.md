@@ -39,7 +39,7 @@ Canonical behavior: [`overview.md`](overview.md#today).
 
 ### MVP-TOD-001 — Proposed workout
 
-Given an active program with a next active split, Today shows the local date, that split, its completed-history average duration when available, and a primary **Start Workout** action.
+Given an active program with a next active split, Today shows the local date, that split, every exercise in it in split order, its completed-history average duration when available, and a primary **Start Workout** action. A today-only alternate selection replaces that preview with its own exercises.
 
 ### MVP-TOD-002 — Today-only split choice
 
@@ -151,7 +151,7 @@ At most one current active or paused workout exists. Reloading or reopening rest
 
 ### MVP-WRK-006 — Last time
 
-For each exercise, **Last time** shows the latest eligible performance for the same persistent exercise identity across every split and one-time workout. Historical corrections are reflected; incomplete workouts are excluded.
+For each exercise, **Last time** shows the latest eligible performance for the same persistent exercise identity across every split and one-time workout. Its date is in the heading and its sets appear one per line in reps-first notation. Historical corrections are reflected; incomplete workouts are excluded.
 
 ### MVP-WRK-007 — Workout-specific note
 

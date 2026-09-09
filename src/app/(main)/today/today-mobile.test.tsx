@@ -139,6 +139,54 @@ describe("Today and workout-start mobile experience", () => {
     expect(actions.push).toHaveBeenCalledWith("/workout/current");
   });
 
+  it("previews every exercise in the selected split beneath Start Workout", async () => {
+    const user = userEvent.setup();
+    renderToday(
+      <TodayExperience
+        today={today}
+        weight={noWeighIn}
+        measurements={null}
+        splitExercises={{
+          [proposedId]: [
+            {
+              exerciseId: exerciseAId,
+              exerciseName: "Back Squat",
+              position: 1,
+              plannedSets: 3,
+              minReps: 5,
+              maxReps: 8,
+            },
+          ],
+          [alternateId]: [
+            {
+              exerciseId: exerciseBId,
+              exerciseName: "Overhead Press",
+              position: 1,
+              plannedSets: 4,
+              minReps: 6,
+              maxReps: 10,
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getByText("Back Squat")).toBeVisible();
+    expect(screen.getByText("3 × 5–8")).toBeVisible();
+    await user.click(
+      screen.getByRole("button", { name: "Choose another split" }),
+    );
+    const dialog = screen.getByRole("dialog", { name: "Choose Another Split" });
+    await user.click(
+      within(dialog).getAllByRole("button", {
+        name: "Put on Today, don't start yet",
+      })[1]!,
+    );
+    expect(screen.queryByText("Back Squat")).not.toBeInTheDocument();
+    expect(screen.getByText("Overhead Press")).toBeVisible();
+    expect(screen.getByText("4 × 6–10")).toBeVisible();
+  });
+
   it("offers today's weight only while the day has none", async () => {
     const user = userEvent.setup();
     actions.createWeight.mockResolvedValue({ ok: true, value: recorded.entry });

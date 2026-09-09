@@ -56,7 +56,8 @@ import {
 } from "@/shared/ui";
 
 import {
-  formatLastPerformance,
+  formatLastPerformanceDate,
+  formatWorkoutSetLine,
   formatWorkoutClock,
 } from "@/features/active-workout/ui/workout-presentation";
 
@@ -550,6 +551,7 @@ function ExerciseCard({
   onChangeMode: (set: WorkoutSet, mode: ExerciseLoadMode) => void;
   onClearFeedback: (setId: string) => void;
 }) {
+  const [collapsed, setCollapsed] = useState(false);
   const [noteState, setNoteState] = useState(() => ({
     committed: exercise.workoutNote,
     draft: exercise.workoutNote,
@@ -577,140 +579,160 @@ function ExerciseCard({
     <button
       type="button"
       aria-label={`Remove ${exercise.exerciseName}`}
-      className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)]"
+      className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
     >
-      <Icon name="x" size={18} />
+      <Icon name="x" size={14} />
     </button>
   );
+  const contentId = `exercise-${exercise.id}-content`;
 
   return (
     <section
       aria-label={exercise.exerciseName}
       className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
     >
-      <div className="flex items-start gap-2">
-        <Icon
-          name="grip-vertical"
-          size={18}
-          className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
-        />
-        <div className="min-w-0 flex-1">
-          <h2 className="text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-            {exercise.exerciseName}
-          </h2>
-          <p className="mt-1 text-[12.5px] text-[var(--pf-text-2)]">{meta}</p>
-        </div>
-      </div>
-      <div className="mt-3 flex justify-end gap-2">
+      <div className="flex items-start gap-1">
         <button
           type="button"
-          aria-label={`Move ${exercise.exerciseName} up`}
-          disabled={index === 0}
-          onClick={() => onMove(index, -1)}
-          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
+          aria-expanded={!collapsed}
+          aria-controls={contentId}
+          onClick={() => setCollapsed((value) => !value)}
+          className="flex min-h-11 min-w-0 flex-1 items-start gap-2 text-left"
         >
-          <Icon name="arrow-up" size={18} />
-        </button>
-        <button
-          type="button"
-          aria-label={`Move ${exercise.exerciseName} down`}
-          disabled={index === count - 1}
-          onClick={() => onMove(index, 1)}
-          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
-        >
-          <Icon name="arrow-down" size={18} />
-        </button>
-        {populated ? (
-          <DestructiveDialog
-            trigger={removeTrigger}
-            title={`Remove ${exercise.exerciseName} from this workout?`}
-            description="Entered sets are discarded. Your library and the source split are unchanged."
-            confirmLabel="Remove Exercise"
-            onConfirm={() => onRemoveExercise(true)}
+          <Icon
+            name={collapsed ? "chevron-right" : "chevron-down"}
+            size={14}
+            className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
           />
-        ) : (
+          <span className="min-w-0 flex-1">
+            <span className="block text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
+              {exercise.exerciseName}
+            </span>
+            <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
+              {meta}
+            </span>
+          </span>
+        </button>
+        <div className="flex shrink-0 items-start">
           <button
             type="button"
-            aria-label={`Remove ${exercise.exerciseName}`}
-            onClick={() => onRemoveExercise(false)}
-            className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)]"
+            aria-label={`Move ${exercise.exerciseName} up`}
+            disabled={index === 0}
+            onClick={() => onMove(index, -1)}
+            className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
           >
-            <Icon name="x" size={18} />
+            <Icon name="arrow-up" size={14} />
           </button>
-        )}
-      </div>
-
-      {exercise.persistentNote ? (
-        <div className="mt-4 border-l-2 border-[var(--pf-border-strong)] pl-3">
-          <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Exercise note
-          </p>
-          <p className="mt-1 text-[13px] leading-[1.5] [overflow-wrap:anywhere] text-[var(--pf-text-2)]">
-            {exercise.persistentNote}
-          </p>
-        </div>
-      ) : null}
-
-      <div className="mt-4 rounded-[var(--pf-r2)] bg-[var(--pf-bg-surface-2)] p-3">
-        <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-          Last time
-        </p>
-        <p className="pf-numeric mt-1 text-[14px] [overflow-wrap:anywhere]">
-          {exercise.lastPerformance !== null
-            ? formatLastPerformance(exercise.lastPerformance)
-            : "No completed performance yet."}
-        </p>
-      </div>
-
-      <div className="mt-2 divide-y divide-[var(--pf-border)]">
-        {exercise.sets.map((set) =>
-          placeholderIds.has(set.id) ? (
-            <p
-              key={set.id}
-              role="status"
-              className="flex min-h-11 items-center gap-2 py-3 text-[13px] text-[var(--pf-text-2)]"
-            >
-              <Icon name="loader-circle" size={14} /> Adding set…
-            </p>
-          ) : (
-            <SetRow
-              key={set.id}
-              exercise={exercise}
-              set={set}
-              feedback={feedback[set.id]}
-              onUpdate={onUpdateSet}
-              onChangeMode={onChangeMode}
-              onRemove={onRemoveSet}
-              onClearFeedback={onClearFeedback}
+          <button
+            type="button"
+            aria-label={`Move ${exercise.exerciseName} down`}
+            disabled={index === count - 1}
+            onClick={() => onMove(index, 1)}
+            className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
+          >
+            <Icon name="arrow-down" size={14} />
+          </button>
+          {populated ? (
+            <DestructiveDialog
+              trigger={removeTrigger}
+              title={`Remove ${exercise.exerciseName} from this workout?`}
+              description="Entered sets are discarded. Your library and the source split are unchanged."
+              confirmLabel="Remove Exercise"
+              onConfirm={() => onRemoveExercise(true)}
             />
-          ),
-        )}
+          ) : (
+            <button
+              type="button"
+              aria-label={`Remove ${exercise.exerciseName}`}
+              onClick={() => onRemoveExercise(false)}
+              className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
+            >
+              <Icon name="x" size={14} />
+            </button>
+          )}
+        </div>
       </div>
 
-      <button
-        type="button"
-        onClick={onAddSet}
-        className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)]"
-      >
-        <Icon name="plus" size={16} /> Add Set
-      </button>
+      <div id={contentId} hidden={collapsed}>
+        {exercise.persistentNote ? (
+          <div className="mt-3 border-l-2 border-[var(--pf-warn)] pl-3 text-[var(--pf-warn)]">
+            <p className="text-[11px] font-semibold tracking-[0.1em] uppercase">
+              Exercise note
+            </p>
+            <p className="mt-1 text-[13px] leading-[1.4] [overflow-wrap:anywhere]">
+              {exercise.persistentNote}
+            </p>
+          </div>
+        ) : null}
 
-      <div className="mt-4">
-        <TextAreaField
-          id={`workout-note-${exercise.id}`}
-          label="Today's note · saved with this workout"
-          placeholder="Optional note for this occurrence"
-          value={noteDraft}
-          onChange={(event) =>
-            setNoteState((current) => ({
-              ...current,
-              draft: event.target.value,
-            }))
-          }
-          onBlur={() => {
-            if (noteDraft !== exercise.workoutNote) onNoteCommit(noteDraft);
-          }}
-        />
+        <div className="mt-3 border-t border-[var(--pf-border)] pt-3">
+          <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            Last time
+            {exercise.lastPerformance !== null
+              ? ` · ${formatLastPerformanceDate(exercise.lastPerformance.workoutDate)}`
+              : ""}
+          </p>
+          {exercise.lastPerformance !== null ? (
+            <ul className="pf-numeric mt-1 space-y-0.5 text-[13px] [overflow-wrap:anywhere]">
+              {exercise.lastPerformance.sets.map((set) => (
+                <li key={set.id}>{formatWorkoutSetLine(set)}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-1 text-[13px]">No completed performance yet.</p>
+          )}
+        </div>
+
+        <div className="mt-2 divide-y divide-[var(--pf-border)]">
+          {exercise.sets.map((set) =>
+            placeholderIds.has(set.id) ? (
+              <p
+                key={set.id}
+                role="status"
+                className="flex min-h-11 items-center gap-2 py-3 text-[13px] text-[var(--pf-text-2)]"
+              >
+                <Icon name="loader-circle" size={14} /> Adding set…
+              </p>
+            ) : (
+              <SetRow
+                key={set.id}
+                exercise={exercise}
+                set={set}
+                feedback={feedback[set.id]}
+                onUpdate={onUpdateSet}
+                onChangeMode={onChangeMode}
+                onRemove={onRemoveSet}
+                onClearFeedback={onClearFeedback}
+              />
+            ),
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={onAddSet}
+          className="ml-auto flex min-h-11 items-center justify-end gap-1.5 font-semibold text-[var(--pf-ok)]"
+        >
+          <Icon name="plus" size={14} /> Add Set
+        </button>
+
+        <div className="mt-4">
+          <TextAreaField
+            id={`workout-note-${exercise.id}`}
+            label="Today's note · saved with this workout"
+            placeholder="Optional note for this occurrence"
+            value={noteDraft}
+            onChange={(event) =>
+              setNoteState((current) => ({
+                ...current,
+                draft: event.target.value,
+              }))
+            }
+            onBlur={() => {
+              if (noteDraft !== exercise.workoutNote) onNoteCommit(noteDraft);
+            }}
+          />
+        </div>
       </div>
     </section>
   );
@@ -773,18 +795,66 @@ function SetRow({
     if (parsed !== set.reps) onUpdate(set, mode, { reps: parsed });
   }
   return (
-    <div className="py-4 first:pt-2 last:pb-2">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="py-3 first:pt-2 last:pb-2">
+      <div className="flex min-h-11 items-center gap-1">
         <span className="font-semibold">Set {set.position}</span>
+        <div className="ml-auto flex min-w-0 items-center">
+          {optionalMode !== null ? (
+            <button
+              type="button"
+              onClick={() =>
+                onChangeMode(
+                  set,
+                  mode === optionalMode ? baseMode : optionalMode,
+                )
+              }
+              className="flex min-h-11 min-w-0 items-center gap-1 px-2 text-[12px] font-medium text-[var(--pf-accent-strong)]"
+            >
+              <Icon name={mode === optionalMode ? "x" : "plus"} size={13} />
+              <span className="truncate">
+                {mode === optionalMode
+                  ? `Remove ${optionalModeNoun[optionalMode]}`
+                  : exerciseOptionalModeLabels[optionalMode]}
+              </span>
+            </button>
+          ) : null}
+          {isPopulatedSet(set) ? (
+            <DestructiveDialog
+              trigger={
+                <button
+                  type="button"
+                  aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
+                  className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
+                >
+                  <Icon name="x" size={14} />
+                </button>
+              }
+              title={`Remove set ${set.position} of ${exercise.exerciseName}?`}
+              description="Its entered values are discarded. The source split is unchanged."
+              confirmLabel="Remove Set"
+              onConfirm={() => onRemove(set, true)}
+            />
+          ) : (
+            <button
+              type="button"
+              aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
+              onClick={() => onRemove(set, false)}
+              className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
+            >
+              <Icon name="x" size={14} />
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-end gap-3">
+      <div className="mt-1 flex flex-wrap items-end gap-2">
         {loadLabel !== null ? (
           <div className="min-w-[104px] flex-1">
             <NumericField
               id={`set-${set.id}-load`}
               label={loadLabel}
               value={loadDraft}
+              style={{ height: 32, minHeight: 32 }}
               autoComplete="off"
               onChange={(event) => {
                 setLoadDraft(event.target.value);
@@ -834,6 +904,7 @@ function SetRow({
             label="Reps"
             inputMode="numeric"
             value={repsDraft}
+            style={{ height: 32, minHeight: 32 }}
             autoComplete="off"
             onChange={(event) => {
               setRepsDraft(event.target.value);
@@ -843,21 +914,6 @@ function SetRow({
           />
         </div>
       </div>
-
-      {optionalMode !== null ? (
-        <button
-          type="button"
-          onClick={() =>
-            onChangeMode(set, mode === optionalMode ? baseMode : optionalMode)
-          }
-          className="mt-3 flex min-h-11 items-center gap-1.5 rounded-[var(--pf-r-pill)] border border-dashed border-[var(--pf-border-control)] px-3 text-[13px] font-medium text-[var(--pf-accent-strong)]"
-        >
-          <Icon name={mode === optionalMode ? "x" : "plus"} size={14} />
-          {mode === optionalMode
-            ? `Remove ${optionalModeNoun[optionalMode]}`
-            : exerciseOptionalModeLabels[optionalMode]}
-        </button>
-      ) : null}
 
       {feedback?.kind === "error" ? (
         <p
@@ -875,31 +931,6 @@ function SetRow({
           <Icon name="info" size={14} /> {feedback.message}
         </p>
       ) : null}
-
-      {isPopulatedSet(set) ? (
-        <DestructiveDialog
-          trigger={
-            <button
-              type="button"
-              className="mt-2 min-h-11 text-[13px] font-medium text-[var(--pf-text-2)]"
-            >
-              Remove set
-            </button>
-          }
-          title={`Remove set ${set.position} of ${exercise.exerciseName}?`}
-          description="Its entered values are discarded. The source split is unchanged."
-          confirmLabel="Remove Set"
-          onConfirm={() => onRemove(set, true)}
-        />
-      ) : (
-        <button
-          type="button"
-          onClick={() => onRemove(set, false)}
-          className="mt-2 min-h-11 text-[13px] font-medium text-[var(--pf-text-2)]"
-        >
-          Remove set
-        </button>
-      )}
     </div>
   );
 }

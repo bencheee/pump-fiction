@@ -26,6 +26,7 @@ Today shows:
 
 - today's date;
 - the next split in the active program rotation;
+- every exercise in the split currently selected for today, in split order;
 - that split's average duration when completed historical data exists;
 - the primary **Start Workout** action;
 - **Choose Another Split**;

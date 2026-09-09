@@ -11,6 +11,7 @@ import type {
   TodaySplit,
   TodayView,
 } from "@/features/active-workout/domain/workout";
+import type { SplitExercisePrescription } from "@/features/programs/domain/program";
 import { Action, Badge, Icon, PageFrame, Sheet } from "@/shared/ui";
 
 import type { TodayMeasurements } from "@/features/history/domain/body";
@@ -22,11 +23,15 @@ export function TodayExperience({
   today,
   weight,
   measurements,
+  splitExercises = {},
 }: {
   today: TodayView;
   /** Null only when the weigh-in could not be read; Today still works. */
   weight: TodayWeight | null;
   measurements: TodayMeasurements | null;
+  splitExercises?: Readonly<
+    Record<string, readonly SplitExercisePrescription[]>
+  >;
 }) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
@@ -105,6 +110,9 @@ export function TodayExperience({
               {pending ? "Starting…" : "Start Workout"}
             </Action>
           )}
+          <SplitExercisePreview
+            exercises={splitExercises[selectedSplit.splitId] ?? []}
+          />
         </section>
       ) : (
         <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-5">
@@ -176,6 +184,35 @@ export function TodayExperience({
         . One-time workouts and today-only alternates never advance it.
       </p>
     </PageFrame>
+  );
+}
+
+function SplitExercisePreview({
+  exercises,
+}: {
+  exercises: readonly SplitExercisePrescription[];
+}) {
+  return (
+    <div className="mt-4 border-t border-[var(--pf-border)] pt-3">
+      <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+        Exercises
+      </p>
+      <ol className="mt-2 space-y-1.5">
+        {exercises.map((exercise) => (
+          <li
+            key={exercise.exerciseId}
+            className="flex items-baseline gap-2 text-[13px]"
+          >
+            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+              {exercise.exerciseName}
+            </span>
+            <span className="pf-numeric shrink-0 text-[12px] text-[var(--pf-text-3-deep)]">
+              {exercise.plannedSets} × {exercise.minReps}–{exercise.maxReps}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }
 
