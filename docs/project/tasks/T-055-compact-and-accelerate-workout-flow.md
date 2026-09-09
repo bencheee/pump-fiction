@@ -1,7 +1,7 @@
 # T-055 — Compact and accelerate the workout flow
 
 - **Feature:** `F-017`
-- **Status:** `Awaiting Approval`
+- **Status:** `Approved`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:09:02+02:00`
+- **Updated:** `2026-09-09T14:15:19+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
 - **Review started:** `2026-09-09T14:09:02+02:00`
 - **Approval requested:** `2026-09-09T14:09:02+02:00`
-- **Approved:** Not reached
+- **Approved:** `2026-09-09T14:15:19+02:00`
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner approves or rejects exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`; approval authorizes only the recorded component, repository, pgTAP, and mobile-browser plan.
+- **Next action:** Run the authorized scoped verification against exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` and record the result.
 
 ## Scope
 
@@ -73,7 +73,7 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **Test required:** `yes`
 - **No-test reason:** Not applicable.
 - **Planned tests:** After approval of the exact delivery commit, run the active-workout and Today component files, active-workout application/unit and repository coverage affected by start hydration, pgTAP workout operations, and the matching mobile Chromium/WebKit Today and active-workout scenarios. Include a database baseline comparison.
-- **Authorized commit:** Not authorized.
+- **Authorized commit:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
 - **Results:** Not run.
 
 ## Delivery commit
@@ -91,10 +91,10 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 
 ## Approval
 
-- **Approved commit:** Not approved.
-- **Approved by:** Not approved.
-- **Approved at:** Not approved.
-- **Approval note:** Not approved.
+- **Approved commit:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
+- **Approved by:** User / Approver
+- **Approved at:** `2026-09-09T14:15:19+02:00`
+- **Approval note:** Approved (`odobravam`), authorizing only the recorded scoped verification.
 
 ## Definition of Ready
 
@@ -129,3 +129,4 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | `2026-09-09T13:17:18+02:00` | User / Owner | — | `Ready` | The UI request and named latency question define observable scope and release it for work. |
 | `2026-09-09T13:17:18+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began by tracing the Today, start, current-workout, and finish-review data paths. |
 | `2026-09-09T14:09:02+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` with no finding; static checks passed except unavailable `lychee`, and no feature test ran. |
+| `2026-09-09T14:15:19+02:00` | User / Approver | `Awaiting Approval` | `Approved` | Approved exact delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` (`odobravam`) and unlocked its scoped verification. |

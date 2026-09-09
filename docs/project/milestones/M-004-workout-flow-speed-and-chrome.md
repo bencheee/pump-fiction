@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:09:02+02:00`
+- **Updated:** `2026-09-09T14:15:19+02:00`
 - **Progress:** `0/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -56,3 +56,4 @@ The active workout keeps its controls compact, opens its finish review immediate
 | --- | --- | --- | --- |
 | `2026-09-09T13:17:18+02:00` | User / Owner | Created and released `M-004` | Requested compact workout chrome, immediate blocking feedback around finish review, and an explanation and correction of the observed Today/start/review latency. |
 | `2026-09-09T14:09:02+02:00` | Codex primary agent / Executor | First Task delivered | `T-055` is awaiting Owner approval before verification. |
+| `2026-09-09T14:15:19+02:00` | User / Approver | First Task approved | Exact `T-055` delivery is approved for its scoped verification. |

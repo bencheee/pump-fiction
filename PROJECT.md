@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T14:09:02+02:00
+- **Last updated:** 2026-09-09T14:15:19+02:00
 - **Current phase:** **Deployed and in use, with workout-flow refinement in progress.** `M-001`, `M-002`, and `M-003` remain complete.
 - **Current Milestone:** [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) — Workout Flow Speed and Chrome
 - **Implementation:** all required Tasks in every completed Feature are `Done`; `F-017` has one delivered Task awaiting approval. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Awaiting Approval` for delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`.
+[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Approved` for scoped verification of delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`.
 
 ## Immediate next action
 
-Owner reviews and approves or rejects exact `T-055` delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`; approval unlocks its scoped component, repository, pgTAP, and mobile-browser verification.
+Run the recorded `T-055` component, repository, pgTAP, and mobile-browser verification against exact approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`, then record the result.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ Owner reviews and approves or rejects exact `T-055` delivery `c67e578ff1f7ffb9bf
 
 ## Now
 
-None; the delivered Task is waiting for Owner approval.
+[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — `Approved` — Codex primary agent — run the authorized scoped verification.
 
 ## Next
 
@@ -40,11 +40,11 @@ None.
 
 ## Awaiting approval
 
-[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` — review recommends approval; feature tests remain locked.
+None.
 
 ## Approved — ready for testing
 
-None.
+[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` — scoped verification is authorized.
 
 ## Recently completed Tasks
 
