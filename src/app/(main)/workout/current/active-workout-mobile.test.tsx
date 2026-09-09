@@ -374,6 +374,10 @@ describe("Active-workout mobile experience", () => {
 
   it("opens the finish review locally from the round check action", async () => {
     const user = userEvent.setup();
+    actions.getCurrent.mockResolvedValue({
+      ok: true,
+      value: makeWorkout({ revision: 7 }),
+    });
     const { transport } = renderExperience();
 
     await user.click(
@@ -391,6 +395,7 @@ describe("Active-workout mobile experience", () => {
       expect(transport.last("finish_workout").payload).toMatchObject({
         outcome: "completed",
       });
+      expect(transport.last("finish_workout").expectedRevision).toBe(7);
     });
     await waitFor(() => expect(actions.replace).toHaveBeenCalledWith("/today"));
   });

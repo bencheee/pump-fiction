@@ -342,10 +342,33 @@ export function ActiveWorkoutExperience({
     send("reorder_exercises", { workoutExerciseIds: ids });
   }
 
-  function finishWorkout(outcome: FinishOutcome) {
+  async function finishWorkout(outcome: FinishOutcome) {
     if (finishing) return;
-    requestedFinishRef.current = outcome;
     setFinishing(true);
+
+    const drained = await delivery.controller.flush();
+    if (drained.kind === "stopped") {
+      setFinishing(false);
+      return;
+    }
+
+    // The review itself is intentionally local. Before the terminal command,
+    // reconcile once with the server under the blocking progress layer: a
+    // reload can race the previous page's final acknowledgement after that
+    // command has already left the shared IndexedDB outbox.
+    const current = await getCurrentWorkoutAction();
+    if (current.ok) {
+      if (
+        current.value === null ||
+        current.value.id !== workoutRef.current.id
+      ) {
+        router.replace("/today");
+        return;
+      }
+      adoptWorkout(current.value);
+    }
+
+    requestedFinishRef.current = outcome;
     send("finish_workout", {
       outcome,
       finishedAt: new Date().toISOString(),
