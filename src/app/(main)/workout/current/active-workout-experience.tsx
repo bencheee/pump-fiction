@@ -44,11 +44,9 @@ import {
 } from "@/features/exercises/ui/exercise-presentation";
 import {
   Action,
-  Chip,
   DestructiveDialog,
   Icon,
   normalizeDecimalInput,
-  NumericField,
   Sheet,
   StickyActionBar,
   TextAreaField,
@@ -113,6 +111,9 @@ export function ActiveWorkoutExperience({
   >({});
   const [now, setNow] = useState(() => Date.now());
   const [discardedChange, setDiscardedChange] = useState<string | null>(null);
+  const [expandedExerciseId, setExpandedExerciseId] = useState<string | null>(
+    null,
+  );
   const recoveringRef = useRef(false);
 
   const adoptWorkout = useCallback((next: CurrentWorkout) => {
@@ -407,6 +408,12 @@ export function ActiveWorkoutExperience({
               count={workout.exercises.length}
               placeholderIds={placeholderIds}
               feedback={feedback}
+              expanded={expandedExerciseId === exercise.id}
+              onToggle={() =>
+                setExpandedExerciseId((current) =>
+                  current === exercise.id ? null : exercise.id,
+                )
+              }
               onMove={moveExercise}
               onRemoveExercise={(confirmed) =>
                 send("remove_exercise", {
@@ -524,6 +531,8 @@ function ExerciseCard({
   count,
   placeholderIds,
   feedback,
+  expanded,
+  onToggle,
   onMove,
   onRemoveExercise,
   onAddSet,
@@ -538,6 +547,8 @@ function ExerciseCard({
   count: number;
   placeholderIds: ReadonlySet<string>;
   feedback: Readonly<Record<string, RowFeedback>>;
+  expanded: boolean;
+  onToggle: () => void;
   onMove: (index: number, direction: -1 | 1) => void;
   onRemoveExercise: (confirmedPopulatedRemoval: boolean) => void;
   onAddSet: () => void;
@@ -551,7 +562,7 @@ function ExerciseCard({
   onChangeMode: (set: WorkoutSet, mode: ExerciseLoadMode) => void;
   onClearFeedback: (setId: string) => void;
 }) {
-  const [collapsed, setCollapsed] = useState(false);
+  const cardRef = useRef<HTMLElement>(null);
   const [noteState, setNoteState] = useState(() => ({
     committed: exercise.workoutNote,
     draft: exercise.workoutNote,
@@ -586,21 +597,40 @@ function ExerciseCard({
   );
   const contentId = `exercise-${exercise.id}-content`;
 
+  useEffect(() => {
+    if (!expanded) return;
+    const frame = window.requestAnimationFrame(() => {
+      const card = cardRef.current;
+      if (typeof card?.scrollIntoView !== "function") return;
+      card.scrollIntoView({
+        block: "start",
+        behavior:
+          window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ===
+          true
+            ? "auto"
+            : "smooth",
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [expanded]);
+
   return (
     <section
+      ref={cardRef}
       aria-label={exercise.exerciseName}
-      className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
+      className="scroll-mt-[84px] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
     >
       <div className="flex items-start gap-1">
         <button
           type="button"
-          aria-expanded={!collapsed}
+          aria-label={`${expanded ? "Collapse" : "Expand"} ${exercise.exerciseName}`}
+          aria-expanded={expanded}
           aria-controls={contentId}
-          onClick={() => setCollapsed((value) => !value)}
+          onClick={onToggle}
           className="flex min-h-11 min-w-0 flex-1 items-start gap-2 text-left"
         >
           <Icon
-            name={collapsed ? "chevron-right" : "chevron-down"}
+            name={expanded ? "chevron-down" : "chevron-right"}
             size={14}
             className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
           />
@@ -653,7 +683,7 @@ function ExerciseCard({
         </div>
       </div>
 
-      <div id={contentId} hidden={collapsed}>
+      <div id={contentId} hidden={!expanded}>
         {exercise.persistentNote ? (
           <div className="mt-3 border-l-2 border-[var(--pf-warn)] pl-3 text-[var(--pf-warn)]">
             <p className="text-[11px] font-semibold tracking-[0.1em] uppercase">
@@ -794,125 +824,144 @@ function SetRow({
     const parsed = parsePositiveInteger(repsDraft);
     if (parsed !== set.reps) onUpdate(set, mode, { reps: parsed });
   }
-  return (
-    <div className="py-3 first:pt-2 last:pb-2">
-      <div className="flex min-h-11 items-center gap-1">
-        <span className="font-semibold">Set {set.position}</span>
-        <div className="ml-auto flex min-w-0 items-center">
-          {optionalMode !== null ? (
-            <button
-              type="button"
-              onClick={() =>
-                onChangeMode(
-                  set,
-                  mode === optionalMode ? baseMode : optionalMode,
-                )
-              }
-              className="flex min-h-11 min-w-0 items-center gap-1 px-2 text-[12px] font-medium text-[var(--pf-accent-strong)]"
-            >
-              <Icon name={mode === optionalMode ? "x" : "plus"} size={13} />
-              <span className="truncate">
-                {mode === optionalMode
-                  ? `Remove ${optionalModeNoun[optionalMode]}`
-                  : exerciseOptionalModeLabels[optionalMode]}
-              </span>
-            </button>
-          ) : null}
-          {isPopulatedSet(set) ? (
-            <DestructiveDialog
-              trigger={
-                <button
-                  type="button"
-                  aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
-                  className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
-                >
-                  <Icon name="x" size={14} />
-                </button>
-              }
-              title={`Remove set ${set.position} of ${exercise.exerciseName}?`}
-              description="Its entered values are discarded. The source split is unchanged."
-              confirmLabel="Remove Set"
-              onConfirm={() => onRemove(set, true)}
-            />
-          ) : (
-            <button
-              type="button"
-              aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
-              onClick={() => onRemove(set, false)}
-              className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
-            >
-              <Icon name="x" size={14} />
-            </button>
-          )}
-        </div>
-      </div>
+  const modeLabel =
+    optionalMode === null
+      ? null
+      : mode === optionalMode
+        ? `Remove ${optionalModeNoun[optionalMode]}`
+        : exerciseOptionalModeLabels[optionalMode];
 
-      <div className="mt-1 flex flex-wrap items-end gap-2">
+  return (
+    <div className="py-2 first:pt-1 last:pb-1">
+      <div className="flex min-w-0 items-center gap-1.5">
+        <span
+          aria-label={`Set ${set.position}`}
+          className="pf-numeric w-4 shrink-0 text-center text-[13px] font-semibold text-[var(--pf-text-2)]"
+        >
+          {set.position}
+        </span>
         {loadLabel !== null ? (
-          <div className="min-w-[104px] flex-1">
-            <NumericField
+          <div className="relative min-w-0 flex-1">
+            <label className="sr-only" htmlFor={`set-${set.id}-load`}>
+              {loadLabel}
+            </label>
+            <input
               id={`set-${set.id}-load`}
-              label={loadLabel}
+              inputMode="decimal"
               value={loadDraft}
-              style={{ height: 32, minHeight: 32 }}
               autoComplete="off"
+              className="pf-numeric h-8 w-full min-w-0 rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-8 text-[16px]"
               onChange={(event) => {
                 setLoadDraft(event.target.value);
                 if (feedback?.kind === "error") onClearFeedback(set.id);
               }}
               onBlur={commitLoad}
             />
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[9px] font-semibold text-[var(--pf-text-3-deep)] uppercase"
+            >
+              {loadLabel}
+            </span>
           </div>
         ) : null}
         {fields.band !== null ? (
-          <div className="flex flex-col gap-1.5">
-            <span
-              id={`set-${set.id}-band-label`}
-              className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-            >
+          <div className="relative min-w-0 flex-1">
+            <label className="sr-only" htmlFor={`set-${set.id}-band`}>
               {fields.band === "resistance"
                 ? "Resistance band"
                 : "Assistance band"}
-            </span>
-            <div
-              role="group"
-              aria-labelledby={`set-${set.id}-band-label`}
-              className="flex gap-2"
+            </label>
+            <select
+              id={`set-${set.id}-band`}
+              value={set.bandStrength ?? ""}
+              className="h-8 w-full min-w-0 appearance-none rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-5 text-[13px] capitalize"
+              onChange={(event) => {
+                if (event.target.value === "") return;
+                onUpdate(set, mode, {
+                  bandStrength: event.target.value as NonNullable<
+                    WorkoutSet["bandStrength"]
+                  >,
+                });
+                if (feedback?.kind === "error") onClearFeedback(set.id);
+              }}
             >
-              {(["light", "medium", "strong"] as const).map((strength) => (
-                <Chip
-                  key={strength}
-                  selected={set.bandStrength === strength}
-                  onClick={() => {
-                    onUpdate(set, mode, { bandStrength: strength });
-                    if (feedback?.kind === "error") onClearFeedback(set.id);
-                  }}
-                >
-                  {strength === "light"
-                    ? "Light"
-                    : strength === "medium"
-                      ? "Medium"
-                      : "Strong"}
-                </Chip>
-              ))}
-            </div>
+              <option value="" disabled>
+                Band
+              </option>
+              <option value="light">Light</option>
+              <option value="medium">Medium</option>
+              <option value="strong">Strong</option>
+            </select>
+            <Icon
+              name="chevron-down"
+              size={12}
+              className="pointer-events-none absolute top-1/2 right-1.5 -translate-y-1/2 text-[var(--pf-text-3-deep)]"
+            />
           </div>
         ) : null}
-        <div className="min-w-[88px] flex-1">
-          <NumericField
+        <div className="relative min-w-0 flex-1">
+          <label className="sr-only" htmlFor={`set-${set.id}-reps`}>
+            Reps
+          </label>
+          <input
             id={`set-${set.id}-reps`}
-            label="Reps"
             inputMode="numeric"
             value={repsDraft}
-            style={{ height: 32, minHeight: 32 }}
             autoComplete="off"
+            className="pf-numeric h-8 w-full min-w-0 rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-9 text-[16px]"
             onChange={(event) => {
               setRepsDraft(event.target.value);
               if (feedback?.kind === "error") onClearFeedback(set.id);
             }}
             onBlur={commitReps}
           />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[9px] font-semibold text-[var(--pf-text-3-deep)] uppercase"
+          >
+            Reps
+          </span>
         </div>
+        {optionalMode !== null && modeLabel !== null ? (
+          <button
+            type="button"
+            aria-label={modeLabel}
+            title={modeLabel}
+            onClick={() =>
+              onChangeMode(set, mode === optionalMode ? baseMode : optionalMode)
+            }
+            className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-accent-strong)]"
+          >
+            <Icon name={mode === optionalMode ? "minus" : "plus"} size={13} />
+          </button>
+        ) : null}
+        {isPopulatedSet(set) ? (
+          <DestructiveDialog
+            trigger={
+              <button
+                type="button"
+                aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
+                className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-text-2)]"
+              >
+                <Icon name="x" size={14} />
+              </button>
+            }
+            title={`Remove set ${set.position} of ${exercise.exerciseName}?`}
+            description="Its entered values are discarded. The source split is unchanged."
+            confirmLabel="Remove Set"
+            onConfirm={() => onRemove(set, true)}
+          />
+        ) : (
+          <button
+            type="button"
+            aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
+            onClick={() => onRemove(set, false)}
+            className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-text-2)]"
+          >
+            <Icon name="x" size={14} />
+          </button>
+        )}
       </div>
 
       {feedback?.kind === "error" ? (

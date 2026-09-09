@@ -57,7 +57,7 @@ During a workout the user may:
 - apply or remove the definition's single permitted addition on a set, and change its values;
 - add a workout-specific note.
 
-Each exercise card can be collapsed independently and starts expanded. The card header holds its compact named reorder and removal controls in the title row; no drag handle is shown. Each set likewise keeps its optional-addition action and icon-only removal in the Set title row. Persistent exercise guidance is yellow, set-entry inputs are 32 CSS pixels high, and **Add Set** is right-aligned green text without a bordered button shape.
+Exercise cards form a single-open accordion and all start collapsed. Opening one closes the previously open card and scrolls the newly opened card to the top of the workout's visible content below its sticky header. The card header holds its compact named reorder and removal controls in the title row; no drag handle is shown. A set uses one horizontal row: its number, applicable value inputs, compact optional-addition icon when allowed, and icon-only removal. Persistent exercise guidance is yellow, set-entry inputs and compact row actions are 32 CSS pixels high, and **Add Set** is right-aligned green text without a bordered button shape.
 
 None of these actions changes the originating split.
 

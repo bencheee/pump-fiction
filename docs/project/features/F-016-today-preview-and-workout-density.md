@@ -6,10 +6,10 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:05:00+02:00`
+- **Updated:** `2026-09-09T12:25:00+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
-- **Awaiting approval Tasks:** `1`
+- **Awaiting approval Tasks:** `0`
 
 ## Outcome
 
@@ -17,16 +17,16 @@ The next workout is visible before it starts, and recording it requires material
 
 ## Scope
 
-- Included: ordered exercises under Today's Start Workout action; compact exercise-card header actions; collapsible exercise cards open by default; compact Last time, notes, set headers, set inputs, and Add Set treatment.
+- Included: ordered exercises under Today's Start Workout action; compact exercise-card header actions; a single-open exercise accordion collapsed by default; compact Last time, notes, one-row sets, and Add Set treatment.
 - Excluded: persistence and command semantics, exercise definitions, split editing, the finish flow, and non-phone layouts.
 
 ## Acceptance criteria
 
 - Today shows all exercises from whichever split is selected for today, in split order and directly below Start Workout.
-- Exercise cards open expanded and can be collapsed independently.
+- Exercise cards start collapsed; opening one closes the previous card and positions the newly opened card at the top of the workout content viewport.
 - Exercise reorder/remove controls use small icons in the card's upper-right title row and no drag handle is shown.
 - Last time places its date in the heading and renders one performance set per line in reps-first notation.
-- Each set's optional addition and icon-only removal sit in its title row; set inputs are 32 px high; Add Set is right-aligned green text without a border.
+- Each set uses one horizontal row for its number, applicable inputs, compact optional-addition action, and icon-only removal; row controls are 32 px high and Add Set is right-aligned green text without a border.
 - Persistent exercise notes use the warning-yellow text token.
 
 ## Tasks
@@ -66,3 +66,4 @@ The next workout is visible before it starts, and recording it requires material
 | --- | --- | --- | --- |
 | `2026-09-09T11:50:00+02:00` | User / Owner | Created, readied, and released `F-016` | Requested the complete UI refinement as one cohesive outcome. |
 | `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor | Delivered `T-054` for approval | Exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847` implements the full Feature scope; feature tests remain approval-gated. |
+| `2026-09-09T12:25:00+02:00` | User / Owner | Returned `T-054` to implementation | Requested a denser one-row set presentation and clarified the exercise cards as a single-open accordion that starts closed. |

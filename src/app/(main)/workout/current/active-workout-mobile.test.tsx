@@ -36,6 +36,7 @@ const actions = vi.hoisted(() => ({
   refresh: vi.fn(),
   getCurrent: vi.fn(),
 }));
+const scrollIntoView = vi.fn();
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
@@ -247,6 +248,7 @@ function renderExperience(
 
 beforeEach(() => {
   vi.clearAllMocks();
+  Element.prototype.scrollIntoView = scrollIntoView;
   window.sessionStorage.clear();
   actions.getCurrent.mockResolvedValue({
     ok: false,
@@ -262,6 +264,7 @@ afterEach(cleanup);
 
 describe("Active-workout mobile experience", () => {
   it("renders the canonical S10 state with snapshots, Last time, and mode fields", async () => {
+    const user = userEvent.setup();
     renderExperience();
 
     expect(
@@ -270,17 +273,31 @@ describe("Active-workout mobile experience", () => {
     expect(
       screen.getByText("2 planned × 6–10 reps · 1 of 2 recorded"),
     ).toBeVisible();
+    const squat = screen.getByRole("region", { name: "Squat" });
+    const squatToggle = within(squat).getByRole("button", {
+      name: "Expand Squat",
+    });
+    expect(squatToggle).toHaveAttribute("aria-expanded", "false");
+    await user.click(squatToggle);
+    await waitFor(() => {
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "smooth",
+      });
+    });
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
     expect(screen.getByText("Last time · 22 Aug")).toBeVisible();
     expect(screen.getByText("6 x 85 kg")).toBeVisible();
-    expect(screen.getByText("No completed performance yet.")).toBeVisible();
     expect(
       screen.queryByRole("button", { name: /Confirm set/ }),
     ).not.toBeInTheDocument();
 
-    const squat = screen.getByRole("region", { name: "Squat" });
     expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
+    expect(screen.getByText("No completed performance yet.")).toBeVisible();
     expect(within(pullUp).getByLabelText("added kg")).toBeVisible();
     expect(
       within(pullUp).getAllByRole("button", { name: /Add weight/ }),
@@ -289,20 +306,14 @@ describe("Active-workout mobile experience", () => {
       within(pullUp).getByRole("button", { name: "Remove added weight" }),
     ).toBeVisible();
     expect(
-      within(squat).queryByRole("group", { name: "Resistance band" }),
+      within(squat).queryByLabelText("Resistance band"),
     ).not.toBeInTheDocument();
     expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
     expect(await screen.findByText("All changes saved")).toBeVisible();
 
-    const collapse = within(squat).getByRole("button", { name: /Squat/ });
-    expect(collapse).toHaveAttribute("aria-expanded", "true");
-    expect(within(squat).getAllByLabelText("kg")[0]).toHaveStyle({
-      height: "32px",
-      minHeight: "32px",
-    });
-    await userEvent.setup().click(collapse);
-    expect(collapse).toHaveAttribute("aria-expanded", "false");
-    expect(within(squat).queryByText("Set 1")).not.toBeVisible();
+    expect(squatToggle).toHaveAttribute("aria-expanded", "false");
+    expect(within(squat).getAllByLabelText("kg")[0]).not.toBeVisible();
+    expect(screen.queryByText("Set 1")).not.toBeInTheDocument();
   });
 
   it("keeps primary navigation available during the workout", () => {
@@ -332,6 +343,9 @@ describe("Active-workout mobile experience", () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
 
     expect(
       screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
@@ -360,6 +374,9 @@ describe("Active-workout mobile experience", () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
 
     expect(
       within(pullUp).queryByRole("button", { name: /Change load mode/ }),
@@ -383,9 +400,12 @@ describe("Active-workout mobile experience", () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
 
     expect(
-      within(squat).queryByRole("group", { name: "Resistance band" }),
+      within(squat).queryByLabelText("Resistance band"),
     ).not.toBeInTheDocument();
 
     await user.click(
@@ -400,9 +420,7 @@ describe("Active-workout mobile experience", () => {
         loadMode: "weight_resistance_band",
       });
     });
-    expect(
-      within(squat).getByRole("group", { name: "Resistance band" }),
-    ).toBeVisible();
+    expect(within(squat).getByLabelText("Resistance band")).toBeVisible();
     expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
   });
 
@@ -410,6 +428,9 @@ describe("Active-workout mobile experience", () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
     const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
 
     const firstLoad = within(squat).getAllByLabelText("kg")[0]!;
     await user.clear(firstLoad);
@@ -434,6 +455,9 @@ describe("Active-workout mobile experience", () => {
     transport.rejectOnce = (command) => command.operation === "update_set";
     const { outbox } = renderExperience(workout, transport);
     const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
 
     await user.type(within(squat).getAllByLabelText("kg")[1]!, "90");
     await user.tab();
@@ -462,6 +486,9 @@ describe("Active-workout mobile experience", () => {
 
     const pullUp = screen.getByRole("region", { name: "Pull-Up" });
     await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
+    await user.click(
       within(pullUp).getByRole("button", {
         name: "Remove set 1 of Pull-Up",
       }),
@@ -479,6 +506,9 @@ describe("Active-workout mobile experience", () => {
     });
 
     const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
     await user.click(
       within(squat).getByRole("button", { name: "Remove set 3 of Squat" }),
     );
@@ -546,6 +576,14 @@ describe("Active-workout mobile experience", () => {
       />,
     );
 
+    await userEvent
+      .setup()
+      .click(
+        within(screen.getByRole("region", { name: "Squat" })).getByRole(
+          "button",
+          { name: "Expand Squat" },
+        ),
+      );
     expect(await screen.findByDisplayValue("Pending note")).toBeVisible();
     expect(screen.queryByLabelText("Restored workout")).not.toBeInTheDocument();
     await waitFor(() => {

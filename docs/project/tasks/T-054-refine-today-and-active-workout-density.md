@@ -1,7 +1,7 @@
 # T-054 — Refine Today and active-workout density
 
 - **Feature:** `F-016`
-- **Status:** `Awaiting Approval`
+- **Status:** `In Progress`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T11:50:00+02:00`
-- **Updated:** `2026-09-09T12:05:00+02:00`
+- **Updated:** `2026-09-09T12:25:00+02:00`
 - **Started:** `2026-09-09T11:50:00+02:00`
-- **Review started:** `2026-09-09T12:05:00+02:00`
-- **Approval requested:** `2026-09-09T12:05:00+02:00`
+- **Review started:** Not reached for replacement
+- **Approval requested:** Not reached for replacement
 - **Approved:** Not reached
 - **Testing started:** Not reached
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Owner reviews and approves or rejects exact delivery `7c29e9a6c147f8f516bdc6a32be9636ad297f847`; feature tests remain locked until approval.
+- **Next action:** Deliver the Owner-requested in-scope replacement with one-row sets and single-open, initially collapsed exercise cards.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 ## Acceptance criteria
 
 - [x] Today lists every exercise in the selected planned split directly beneath Start Workout, in split order.
-- [x] Every exercise card is independently collapsible, starts expanded, and has no drag handle.
+- [x] Exercise cards start collapsed; only one expands at a time and it aligns to the top of the workout content viewport.
 - [x] Exercise move and remove icons are visually smaller and share the title row's upper-right edge.
 - [x] Last time includes the date in its heading and lists sets one per row using reps-first notation.
-- [x] A set's addition and icon-only remove actions share the Set title row; populated removal still confirms.
+- [x] Each set uses one horizontal row for its number, applicable inputs, compact addition action, and icon-only removal; populated removal still confirms.
 - [x] Exercise notes are yellow, set inputs are 32 px tall, and Add Set is borderless green text aligned right.
 
 ## Traceability
@@ -65,7 +65,7 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 ## Static-check plan and results
 
 - Planned checks: `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm run build`, `npm run docs:lint`, `npm run links:internal`, and `git diff --check`.
-- Results: On `2026-09-09T12:03:00+02:00`, Prettier, ESLint, strict TypeScript, the production build, UI asset checks, and Markdown lint all passed through `npm run check`; `git diff --check` also passed. The final internal-link step could not start because the environment has no `lychee` executable (`sh: lychee: command not found`). No feature test was run.
+- Results: The first delivery passed its available checks at `2026-09-09T12:03:00+02:00`. The replacement repeated them at `2026-09-09T12:34:00+02:00`: Prettier, ESLint, strict TypeScript, the production build, UI asset checks, Markdown lint, and `git diff --check` passed. On both runs, only the final internal-link command could not start because the environment has no `lychee` executable (`sh: lychee: command not found`). No feature test was run.
 
 ## Test plan and results
 
@@ -79,14 +79,14 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 
 - **Delivery commit SHA:** `7c29e9a6c147f8f516bdc6a32be9636ad297f847`
 - **Subject:** `T-054: refine today and active workout density`
-- **Committed scope:** Today reads the selected split's existing prescription and previews every exercise; active-workout exercise cards are compact and collapsible with revised exercise/set actions, Last time rows, yellow guidance, 32-pixel inputs, and borderless Add Set; component/browser specifications are prepared; all affected canonical and project documents are current.
+- **Committed scope:** Superseded by the in-scope replacement requested on `2026-09-09`; replacement SHA not created.
 
 ## Review
 
 - **Reviewer:** Codex primary agent
-- **Reviewed at:** `2026-09-09T12:05:00+02:00`
-- **Outcome:** Recommended for approval.
-- **Findings:** Scope, accepted behavior, and documentation agree. Static checks pass except that internal-link validation is unavailable because `lychee` is not installed. The initial approved-state Playwright inspection also exposed a pre-existing one-second hydration mismatch in the restored-workout timer; this delivery neither introduces nor changes that timer behavior.
+- **Reviewed at:** Replacement not reviewed.
+- **Outcome:** Changes requested by the Owner.
+- **Findings:** The first delivery still used two vertical rows per set and opened every exercise card. The Owner clarified that sets must be one row and the cards form a single-open accordion that starts closed and aligns an opened card with the viewport.
 
 ## Approval
 
@@ -128,3 +128,4 @@ Deliver the Owner's Today split preview and compact active-workout card presenta
 | `2026-09-09T11:50:00+02:00` | User / Owner | — | `Ready` | The implementation request defines the observable scope and releases it for work. |
 | `2026-09-09T11:50:00+02:00` | Codex primary agent / Executor | `Ready` | `In Progress` | Began with the requested Playwright inspection of the approved current application. |
 | `2026-09-09T12:05:00+02:00` | Codex primary agent / Executor and Reviewer | `In Progress` | `Awaiting Approval` | Delivered and reviewed exact commit `7c29e9a6c147f8f516bdc6a32be9636ad297f847`; permitted static checks passed except unavailable `lychee`, and no feature test ran. |
+| `2026-09-09T12:25:00+02:00` | User / Owner | `Awaiting Approval` | `In Progress` | Requested an in-scope replacement: one horizontal row per set, all exercise cards initially collapsed, only one expanded at a time, and the opened card aligned to the viewport. |

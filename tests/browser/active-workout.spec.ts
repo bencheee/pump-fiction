@@ -59,6 +59,7 @@ test.describe("Active workout experience", () => {
 
       // A set is recorded by its values alone; nothing confirms it.
       const squat = page.getByRole("region", { name: exerciseA });
+      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
       await expect(
         squat.getByText("3 planned × 8–12 reps · 0 of 3 recorded"),
       ).toBeVisible();
@@ -98,7 +99,7 @@ test.describe("Active workout experience", () => {
       await expect(
         squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
       ).toBeVisible();
-      await expect(squat.getByText("Set 2", { exact: true })).toBeVisible();
+      await expect(squat.getByLabel("Set 2", { exact: true })).toBeVisible();
 
       const noteField = squat.getByLabel(
         "Today's note · saved with this workout",
@@ -134,6 +135,7 @@ test.describe("Active workout experience", () => {
       // Reloading restores sets, notes, order, and duration in place; the
       // restored-session banner was removed in T-023, so the values prove it.
       await page.reload();
+      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
       await expect(squat.getByLabel("kg", { exact: true }).nth(0)).toHaveValue(
         "82.5",
       );
