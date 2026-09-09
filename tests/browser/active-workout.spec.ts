@@ -14,6 +14,7 @@ test.describe("Active workout experience", () => {
     const program = `Block ${stamp}`;
     const splitA = `Lower ${stamp}`;
     const splitB = `Upper ${stamp}`;
+    let discardedWorkoutId: string | null = null;
 
     try {
       for (const exercise of [exerciseA, exerciseB]) {
@@ -189,6 +190,7 @@ test.describe("Active workout experience", () => {
       await page.keyboard.press("Escape");
       await page.getByRole("button", { name: "Start Workout" }).click();
       await expect(page).toHaveURL(/\/workout\/current$/);
+      discardedWorkoutId = await currentWorkoutId();
       await expect(
         page.getByText("Workout-local, no prescription · 0 of 1 recorded"),
       ).toBeVisible();
@@ -219,6 +221,7 @@ test.describe("Active workout experience", () => {
         program,
         exercises: [exerciseA, exerciseB],
         seededProgramId,
+        discardedWorkoutId,
       });
     }
   });
@@ -242,6 +245,17 @@ async function clearCurrentWorkout() {
   await client.from("active_workout_commands").delete().in("workout_id", ids);
   const { error } = await client.from("workouts").delete().in("id", ids);
   if (error) throw error;
+}
+
+async function currentWorkoutId(): Promise<string> {
+  const client = adminClient();
+  const { data, error } = await client
+    .from("workouts")
+    .select("id")
+    .in("status", ["active", "paused"])
+    .single();
+  if (error) throw error;
+  return data.id as string;
 }
 
 /**
@@ -270,9 +284,15 @@ async function cleanUp(fixture: {
   program: string;
   exercises: readonly string[];
   seededProgramId: string | null;
+  discardedWorkoutId: string | null;
 }) {
   const client = adminClient();
   await clearCurrentWorkout();
+  if (fixture.discardedWorkoutId)
+    await client
+      .from("active_workout_commands")
+      .delete()
+      .eq("workout_id", fixture.discardedWorkoutId);
   const { data: programs } = await client
     .from("programs")
     .select("id")
