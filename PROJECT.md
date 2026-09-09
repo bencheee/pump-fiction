@@ -1,9 +1,9 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T14:47:13+02:00
-- **Current phase:** **Deployed and in use, with workout-flow refinement in progress.** `M-001`, `M-002`, and `M-003` remain complete.
-- **Current Milestone:** [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) — Workout Flow Speed and Chrome
-- **Implementation:** all required Tasks in every completed Feature are `Done`; `F-017` has one delivered Task awaiting approval. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
+- **Last updated:** 2026-09-09T15:02:09+02:00
+- **Current phase:** **Deployed and in use; the locally verified workout-flow refinement is ready for hosted rollout.** `M-001` through `M-004` are complete.
+- **Current Milestone:** None; [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) is `Done`
+- **Implementation:** all required Tasks in every completed Feature are `Done`. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
 - **Canonical registry:** [`docs/project/INDEX.md`](docs/project/INDEX.md)
 - **Working order:** `F-013`, `F-014`, and `F-012` are `Done` in the order the Owner set on `2026-09-05`; `F-008` and `F-009` followed and are `Done` on `2026-09-06`
 - **Approval rule:** since `2026-09-06`, [ADR-0028](docs/decisions/0028-replacements-inherit-task-approval.md) — the Owner approves a Task's first delivery once; replacements within scope inherit it
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Testing` on approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`.
+None; [`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) and [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) are `Done`.
 
 ## Immediate next action
 
-Repeat the approved lower-layer and four mobile browser scenarios against approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`, compare the database with its clean baseline, restore the Owner's snapshot, and record completion.
+Push the completed `T-055` evidence chain to GitHub. For hosted rollout, apply migration `20260909131718_accelerate_workout_flow.sql` to Supabase before deploying the application code to Vercel.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;
@@ -24,7 +24,7 @@ Repeat the approved lower-layer and four mobile browser scenarios against approv
 
 ## Now
 
-[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — `Testing` — Codex primary agent — verify the optimistic-refresh correction and finish baseline verification.
+None.
 
 ## Next
 
@@ -44,10 +44,11 @@ None.
 
 ## Approved — ready for testing
 
-None; `T-055` verification is in progress.
+None.
 
 ## Recently completed Tasks
 
+- [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) — completed `2026-09-09T15:02:09+02:00` — approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`, verified through approval-inherited replacements ending at `2d7f866db9d6261a8f0b414ad064b91adfff0e35` — component/application `31/31`, pgTAP `19/19`, repository `1/1`, mobile Chromium/WebKit `4/4`, matching generated types, and a database semantically identical to its baseline.
 - [`T-054`](docs/project/tasks/T-054-refine-today-and-active-workout-density.md) — completed `2026-09-09T12:58:13+02:00` — approved replacement `5379fd83ac295df9abe1b385854b168338543718` — component `26/26` and precisely scoped mobile Chromium/WebKit browser scenarios `4/4`.
 - [`T-053`](docs/project/tasks/T-053-add-todays-measurement-entry.md) — completed `2026-09-06T22:32:00+02:00` — approved delivery `c5417723e42e2d04e172fc6f754284fd11ed23df` — unit 241/241, pgTAP 191/191, repository 9/9, and the whole browser suite 52/52, on the first run, with a database identical to its baseline.
 - [`T-052`](docs/project/tasks/T-052-build-the-body-destination.md) — completed `2026-09-06T21:04:00+02:00` — first delivery `c7daf2154aa36097bd0a17034ad3a81fed0c7bff`, verified through three inherited replacements ending at `109d2a0d3a1155620b4971ea8767561165e584ec` — the whole browser suite 52/52, unit 237/237, components 4/4, and a database identical to its baseline.
@@ -63,6 +64,6 @@ None; `T-055` verification is in progress.
 
 ## Active work items
 
-[`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is the only active Task.
+None.
 
 Detailed phase state and unresolved product/technical decisions remain in [`docs/PROJECT_STATE.md`](docs/PROJECT_STATE.md).

@@ -6,8 +6,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:47:13+02:00`
-- **Progress:** `0/1 required Tasks Done`
+- **Updated:** `2026-09-09T15:02:09+02:00`
+- **Progress:** `1/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
 
@@ -47,18 +47,18 @@ Workout recording gives more space to exercise content and removes application-o
 
 - [x] Outcome and boundaries are clear.
 - [x] Acceptance criteria are observable and linked.
-- [x] Required Tasks are identified; `T-055` is `Testing` on an approval-inherited test-source replacement.
+- [x] Required Tasks are identified; `T-055` is `Done`.
 - [x] Dependencies and blockers are understood.
 - [x] Documentation impact is known.
 - [x] Owner confirmed readiness through the implementation request on `2026-09-09`.
 
 ## Completion
 
-- [ ] All required Tasks are `Done`.
-- [ ] Feature acceptance criteria are satisfied.
-- [ ] Canonical documentation is current.
-- [ ] No required follow-up scope is hidden.
-- [ ] User confirms the feature result.
+- [x] All required Tasks are `Done`.
+- [x] Feature acceptance criteria are satisfied.
+- [x] Canonical documentation is current.
+- [x] No required follow-up scope is hidden.
+- [x] User confirms the feature result.
 
 ## History
 
@@ -70,3 +70,4 @@ Workout recording gives more space to exercise content and removes application-o
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | Test-source replacement | Component/application, pgTAP, repository, and schema-type checks pass; replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligns two stale save-status assertions before the serial browser repeat. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | Application replacement | The serial browser repeat passed 3/4 and exposed stale hydration overwriting a newer optimistic revision; replacement `85e3259dc4f0842c565be972408946c51a5bdb23` guards that race. |
 | `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | Finish synchronization replacement | Trace isolated the cross-reload acknowledgement window; replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only after an outcome is selected, under the blocker. |
+| `2026-09-09T15:02:09+02:00` | Codex primary agent / Tester | Feature completed | Final replacement `2d7f866db9d6261a8f0b414ad064b91adfff0e35` passed every scoped layer and `T-055` is `Done`; the Owner's approval closes the Feature. |

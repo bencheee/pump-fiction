@@ -5,8 +5,8 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:47:13+02:00`
-- **Progress:** `0/1 required Features Done`
+- **Updated:** `2026-09-09T15:02:09+02:00`
+- **Progress:** `1/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
 
@@ -21,12 +21,12 @@ The active workout keeps its controls compact, opens its finish review immediate
 
 ## Completion criteria
 
-- [ ] The active-workout chrome matches the Owner's compact interaction request.
-- [ ] Review opens from current client state and database-backed transitions block duplicate interaction while pending.
-- [ ] The identified redundant Today and workout-start reads are removed without changing their results.
-- [ ] All required Features are `Done`.
-- [ ] Canonical documentation is current.
-- [ ] User confirms the milestone result.
+- [x] The active-workout chrome matches the Owner's compact interaction request.
+- [x] Review opens from current client state and database-backed transitions block duplicate interaction while pending.
+- [x] The identified redundant Today and workout-start reads are removed without changing their results.
+- [x] All required Features are `Done`.
+- [x] Canonical documentation is current.
+- [x] User confirms the milestone result.
 
 ## Features
 
@@ -60,3 +60,4 @@ The active workout keeps its controls compact, opens its finish review immediate
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | First Task testing | Verification passes below browser level; a test-source-only replacement is ready for the serial browser repeat. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | First Task corrected | The serial browser repeat found and corrected a stale-hydration race under the inherited approval. |
 | `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | First Task corrected again | Trace isolated the remaining cross-reload acknowledgement window and the next inherited replacement synchronizes the selected finish outcome. |
+| `2026-09-09T15:02:09+02:00` | Codex primary agent / Tester | Milestone completed | `F-017` and `T-055` are `Done` after the exact final replacement passed every scoped verification layer. |

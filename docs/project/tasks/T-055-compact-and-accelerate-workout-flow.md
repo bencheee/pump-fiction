@@ -1,7 +1,7 @@
 # T-055 — Compact and accelerate the workout flow
 
 - **Feature:** `F-017`
-- **Status:** `Testing`
+- **Status:** `Done`
 - **Horizon:** `Now`
 - **Order:** 1
 - **Target date:** None
@@ -9,15 +9,15 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:47:13+02:00`
+- **Updated:** `2026-09-09T15:02:09+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
 - **Review started:** `2026-09-09T14:09:02+02:00`
 - **Approval requested:** `2026-09-09T14:09:02+02:00`
 - **Approved:** `2026-09-09T14:15:19+02:00`
 - **Testing started:** `2026-09-09T14:18:54+02:00`
-- **Completed:** Not reached
+- **Completed:** `2026-09-09T15:02:09+02:00`
 - **Canceled:** Not reached
-- **Next action:** Repeat the complete authorized lower-layer and four-case mobile-browser scope against approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`, compare the database with its clean baseline, and restore the Owner's snapshot.
+- **Next action:** None; `T-055` is `Done`. Hosted rollout applies the new Supabase migration before deploying the Vercel application.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **No-test reason:** Not applicable.
 - **Planned tests:** After approval of the exact delivery commit, run the active-workout and Today component files, active-workout application/unit and repository coverage affected by start hydration, pgTAP workout operations, and the matching mobile Chromium/WebKit Today and active-workout scenarios. Include a database baseline comparison.
 - **Authorized commit:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
-- **Results:** In an isolated worktree, exact approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` passed component/application tests 31/31, pgTAP 19/19, the workout repository integration 1/1, and generated database types matched the clean 26-migration schema. Initial repository and browser invocations without exported `.env.local` values stopped before application assertions. The first environment-complete parallel browser run exposed two verification-source conditions: its active-workout scenario still expected the now screen-reader-only saved cue to be visible, and four database-mutating project cases interfered through their shared local database. Test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligned those assertions. The next two serial runs showed the finish conflict in WebKit and then both engines. Trace proved the server accepted `resume_timer` as revision 11 while the freshly reloaded client still held revision 10 and an empty outbox. Approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` keeps review opening local, then under the existing blocker drains pending delivery, reads the authoritative revision once, and sends the selected finish outcome. Its complete verification is pending.
+- **Results:** Final approval-inherited replacement `2d7f866db9d6261a8f0b414ad064b91adfff0e35` passed the complete scoped plan against a clean 26-migration database: component/application 31/31, pgTAP 19/19, workout repository integration 1/1, and the Today plus active-workout scenarios 4/4 across mobile Chromium and WebKit, serially over the shared database. Generated database types exactly matched the migrated schema. The normalized before/after data dumps were identical after excluding pg_dump's random restriction token and the expected `app_settings.updated_at` touch; all rows, pointers, exercises, workouts, commands, and user values matched. The Owner's pre-test local snapshot was restored. Earlier environment-only starts and superseded replacement runs remain recorded above; no unresolved product defect remains.
 
 ## Delivery commit
 
@@ -92,7 +92,13 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **Second replacement scope:** One refresh guard prevents a late authoritative hydration from overwriting a newer locally applied command revision.
 - **Third replacement SHA:** `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`
 - **Third replacement subject:** `T-055: synchronize before finish outcome`
-- **Third replacement scope:** The locally opened review remains unchanged. After the user selects an outcome, the blocking path drains pending delivery, reads the authoritative workout revision once, and only then queues the terminal command; its component assertion proves revision 7 is used over stale initial revision 4. All replacements stay inside the Task and inherit approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
+- **Third replacement scope:** The locally opened review remains unchanged. After the user selects an outcome, the blocking path drains pending delivery, reads the authoritative workout revision once, and only then queues the terminal command; its component assertion proves revision 7 is used over stale initial revision 4.
+- **Fourth replacement SHA:** `4e8b103f46dd0660c8389787a09f51139b183cda`
+- **Fourth replacement subject:** `T-055: clean discarded workout acknowledgements`
+- **Fourth replacement scope:** Browser cleanup remembers the discarded one-time workout ID and removes only its FK-free acknowledgement, making fixture teardown semantically identical to its clean seed baseline.
+- **Final replacement SHA:** `2d7f866db9d6261a8f0b414ad064b91adfff0e35`
+- **Final replacement subject:** `T-055: document finish synchronization`
+- **Final replacement scope:** Canonical product, UX, UI-foundation, and server-boundary documents record that Review opens locally while outcome selection synchronizes under the blocker. All replacements stay inside the Task and inherit approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
 ## Review
 
@@ -125,14 +131,14 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 ## Definition of Done
 
 - [x] Reviewer recommends approval.
-- [ ] User approved the exact commit SHA.
-- [ ] Scope and acceptance criteria are satisfied.
-- [ ] Canonical documentation and required ADRs are current.
-- [ ] Authorized feature tests passed.
-- [ ] Static checks and all evidence are recorded.
-- [ ] Dashboard, registry, and parent progress are current.
-- [ ] Follow-up scope has separate Tasks.
-- [ ] Audit history is complete.
+- [x] User approved the exact commit SHA.
+- [x] Scope and acceptance criteria are satisfied.
+- [x] Canonical documentation and required ADRs are current.
+- [x] Authorized feature tests passed.
+- [x] Static checks and all evidence are recorded.
+- [x] Dashboard, registry, and parent progress are current.
+- [x] Follow-up scope has separate Tasks.
+- [x] Audit history is complete.
 
 ## Transition history
 
@@ -146,3 +152,4 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Lower layers pass; the first browser run found a stale visibility assertion and shared-database parallel interference, so test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` will repeat the same scope serially under inherited approval. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | The serial browser repeat passed 3/4 and exposed an application race before finish; replacement `85e3259dc4f0842c565be972408946c51a5bdb23` prevents stale hydration from overwriting a newer optimistic revision and will repeat the complete scope. |
 | `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Trace identified a cross-reload acknowledgement window after the next serial run failed both active-workout cases; replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only after an outcome is selected, under the blocker, and will repeat the complete scope. |
+| `2026-09-09T15:02:09+02:00` | Codex primary agent / Tester | `Testing` | `Done` | Final replacement `2d7f866db9d6261a8f0b414ad064b91adfff0e35` passed 31/31 component/application, 19/19 pgTAP, 1/1 repository, and 4/4 mobile-browser checks with matching generated types and a semantically identical database baseline; the Owner's snapshot was restored. |
