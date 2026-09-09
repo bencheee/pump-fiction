@@ -6,7 +6,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:37:15+02:00`
+- **Updated:** `2026-09-09T14:47:13+02:00`
 - **Progress:** `0/1 required Tasks Done`
 - **Blocked Tasks:** `0`
 - **Awaiting approval Tasks:** `0`
@@ -69,3 +69,4 @@ Workout recording gives more space to exercise content and removes application-o
 | `2026-09-09T14:15:19+02:00` | User / Approver | Task approved | Approved exact `T-055` delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` and unlocked its scoped verification. |
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | Test-source replacement | Component/application, pgTAP, repository, and schema-type checks pass; replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligns two stale save-status assertions before the serial browser repeat. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | Application replacement | The serial browser repeat passed 3/4 and exposed stale hydration overwriting a newer optimistic revision; replacement `85e3259dc4f0842c565be972408946c51a5bdb23` guards that race. |
+| `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | Finish synchronization replacement | Trace isolated the cross-reload acknowledgement window; replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only after an outcome is selected, under the blocker. |

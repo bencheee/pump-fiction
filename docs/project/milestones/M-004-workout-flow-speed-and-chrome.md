@@ -5,7 +5,7 @@
 - **Order:** 1
 - **Target date:** None
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:37:15+02:00`
+- **Updated:** `2026-09-09T14:47:13+02:00`
 - **Progress:** `0/1 required Features Done`
 - **Blocked children:** `0`
 - **Awaiting approval children:** `0`
@@ -59,3 +59,4 @@ The active workout keeps its controls compact, opens its finish review immediate
 | `2026-09-09T14:15:19+02:00` | User / Approver | First Task approved | Exact `T-055` delivery is approved for its scoped verification. |
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | First Task testing | Verification passes below browser level; a test-source-only replacement is ready for the serial browser repeat. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | First Task corrected | The serial browser repeat found and corrected a stale-hydration race under the inherited approval. |
+| `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | First Task corrected again | Trace isolated the remaining cross-reload acknowledgement window and the next inherited replacement synchronizes the selected finish outcome. |

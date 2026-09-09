@@ -1,6 +1,6 @@
 # Project dashboard
 
-- **Last updated:** 2026-09-09T14:37:15+02:00
+- **Last updated:** 2026-09-09T14:47:13+02:00
 - **Current phase:** **Deployed and in use, with workout-flow refinement in progress.** `M-001`, `M-002`, and `M-003` remain complete.
 - **Current Milestone:** [`M-004`](docs/project/milestones/M-004-workout-flow-speed-and-chrome.md) — Workout Flow Speed and Chrome
 - **Implementation:** all required Tasks in every completed Feature are `Done`; `F-017` has one delivered Task awaiting approval. **All 57 locked criteria carry verification against an approved delivery**, and the release run of 489 checks against one approved tree contradicts none of them
@@ -11,11 +11,11 @@
 
 ## Current focus
 
-[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Testing` on approval-inherited replacement `85e3259dc4f0842c565be972408946c51a5bdb23`.
+[`F-017`](docs/project/features/F-017-compact-workout-chrome-and-faster-transitions.md) — Compact Workout Chrome and Faster Transitions. [`T-055`](docs/project/tasks/T-055-compact-and-accelerate-workout-flow.md) is `Testing` on approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`.
 
 ## Immediate next action
 
-Repeat the approved lower-layer and four mobile browser scenarios against approval-inherited replacement `85e3259dc4f0842c565be972408946c51a5bdb23`, compare the database with its clean baseline, restore the Owner's snapshot, and record completion.
+Repeat the approved lower-layer and four mobile browser scenarios against approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`, compare the database with its clean baseline, restore the Owner's snapshot, and record completion.
 
 - the unit-test name `apply_active_workout_command.test.ts:131` still says `confirmed sets` while its case checks a malformed payload, the last ADR-0027 leftover, reported by [`T-044`](docs/project/tasks/T-044-close-discovered-release-corrections.md);
 - a command queued for a workout that no longer exists is sent and refused rather than discarded on sight, so the user is told about a change that no longer concerns them;

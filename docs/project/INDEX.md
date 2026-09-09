@@ -19,7 +19,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`M-001`](milestones/M-001-local-mvp.md) | Local MVP | `Now / 1` | `14/14 Features Done` | User | `2026-09-06T19:22:00+02:00` | [`milestones/M-001-local-mvp.md`](milestones/M-001-local-mvp.md) |
 | [`M-002`](milestones/M-002-post-mvp-product-changes.md) | Post-MVP Product Changes | `Now / 1` | `1/1 Features Done` | User | `2026-09-06T22:40:00+02:00` | [`milestones/M-002-post-mvp-product-changes.md`](milestones/M-002-post-mvp-product-changes.md) |
 | [`M-003`](milestones/M-003-workout-usability-refinements.md) | Workout Usability Refinements | `Now / 1` | `1/1 Features Done` | User | `2026-09-09T12:58:13+02:00` | [`milestones/M-003-workout-usability-refinements.md`](milestones/M-003-workout-usability-refinements.md) |
-| [`M-004`](milestones/M-004-workout-flow-speed-and-chrome.md) | Workout Flow Speed and Chrome | `Now / 1` | `0/1 Features Done` | User | `2026-09-09T14:37:15+02:00` | [`milestones/M-004-workout-flow-speed-and-chrome.md`](milestones/M-004-workout-flow-speed-and-chrome.md) |
+| [`M-004`](milestones/M-004-workout-flow-speed-and-chrome.md) | Workout Flow Speed and Chrome | `Now / 1` | `0/1 Features Done` | User | `2026-09-09T14:47:13+02:00` | [`milestones/M-004-workout-flow-speed-and-chrome.md`](milestones/M-004-workout-flow-speed-and-chrome.md) |
 
 ## Features
 
@@ -41,7 +41,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`F-010`](features/F-010-local-mvp-integration.md) | `M-001` | Local MVP Integration | `Now / 1` | `0/5 Done` | User | `2026-09-06T15:04:00+02:00` | [`features/F-010-local-mvp-integration.md`](features/F-010-local-mvp-integration.md) |
 | [`F-015`](features/F-015-body-destination-and-today-entry.md) | `M-002` | Body Destination and Today Entry | `Now / 1` | `3/3 Done` | User | `2026-09-06T22:40:00+02:00` | [`features/F-015-body-destination-and-today-entry.md`](features/F-015-body-destination-and-today-entry.md) |
 | [`F-016`](features/F-016-today-preview-and-workout-density.md) | `M-003` | Today Preview and Workout Density | `Now / 1` | `1/1 Done` | User | `2026-09-09T12:58:13+02:00` | [`features/F-016-today-preview-and-workout-density.md`](features/F-016-today-preview-and-workout-density.md) |
-| [`F-017`](features/F-017-compact-workout-chrome-and-faster-transitions.md) | `M-004` | Compact Workout Chrome and Faster Transitions | `Now / 1` | `0/1 Done` | User | `2026-09-09T14:37:15+02:00` | [`features/F-017-compact-workout-chrome-and-faster-transitions.md`](features/F-017-compact-workout-chrome-and-faster-transitions.md) |
+| [`F-017`](features/F-017-compact-workout-chrome-and-faster-transitions.md) | `M-004` | Compact Workout Chrome and Faster Transitions | `Now / 1` | `0/1 Done` | User | `2026-09-09T14:47:13+02:00` | [`features/F-017-compact-workout-chrome-and-faster-transitions.md`](features/F-017-compact-workout-chrome-and-faster-transitions.md) |
 
 ## Tasks
 
@@ -102,7 +102,7 @@ Allocated identifiers are never reused, including after cancellation.
 | [`T-052`](tasks/T-052-build-the-body-destination.md) | `F-015` | Build the Body destination | `Now / 2` | `Done` | Claude Code primary agent | `2026-09-06T21:04:00+02:00` | [`tasks/T-052-build-the-body-destination.md`](tasks/T-052-build-the-body-destination.md) |
 | [`T-053`](tasks/T-053-add-todays-measurement-entry.md) | `F-015` | Add today's measurement entry | `Now / 3` | `Done` | Claude Code primary agent | `2026-09-06T22:32:00+02:00` | [`tasks/T-053-add-todays-measurement-entry.md`](tasks/T-053-add-todays-measurement-entry.md) |
 | [`T-054`](tasks/T-054-refine-today-and-active-workout-density.md) | `F-016` | Refine Today and active-workout density | `Now / 1` | `Done` | Codex primary agent | `2026-09-09T12:58:13+02:00` | [`tasks/T-054-refine-today-and-active-workout-density.md`](tasks/T-054-refine-today-and-active-workout-density.md) |
-| [`T-055`](tasks/T-055-compact-and-accelerate-workout-flow.md) | `F-017` | Compact and accelerate the workout flow | `Now / 1` | `Testing` | Codex primary agent | `2026-09-09T14:37:15+02:00` | [`tasks/T-055-compact-and-accelerate-workout-flow.md`](tasks/T-055-compact-and-accelerate-workout-flow.md) |
+| [`T-055`](tasks/T-055-compact-and-accelerate-workout-flow.md) | `F-017` | Compact and accelerate the workout flow | `Now / 1` | `Testing` | Codex primary agent | `2026-09-09T14:47:13+02:00` | [`tasks/T-055-compact-and-accelerate-workout-flow.md`](tasks/T-055-compact-and-accelerate-workout-flow.md) |
 
 ## Templates
 

@@ -9,7 +9,7 @@
 - **Reviewer:** Codex primary agent
 - **Approver:** User
 - **Created:** `2026-09-09T13:17:18+02:00`
-- **Updated:** `2026-09-09T14:37:15+02:00`
+- **Updated:** `2026-09-09T14:47:13+02:00`
 - **Started:** `2026-09-09T13:17:18+02:00`
 - **Review started:** `2026-09-09T14:09:02+02:00`
 - **Approval requested:** `2026-09-09T14:09:02+02:00`
@@ -17,7 +17,7 @@
 - **Testing started:** `2026-09-09T14:18:54+02:00`
 - **Completed:** Not reached
 - **Canceled:** Not reached
-- **Next action:** Repeat the complete authorized lower-layer and four-case mobile-browser scope against approval-inherited replacement `85e3259dc4f0842c565be972408946c51a5bdb23`, compare the database with its clean baseline, and restore the Owner's snapshot.
+- **Next action:** Repeat the complete authorized lower-layer and four-case mobile-browser scope against approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`, compare the database with its clean baseline, and restore the Owner's snapshot.
 
 ## Scope
 
@@ -74,7 +74,7 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **No-test reason:** Not applicable.
 - **Planned tests:** After approval of the exact delivery commit, run the active-workout and Today component files, active-workout application/unit and repository coverage affected by start hydration, pgTAP workout operations, and the matching mobile Chromium/WebKit Today and active-workout scenarios. Include a database baseline comparison.
 - **Authorized commit:** `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49`
-- **Results:** In an isolated worktree, exact approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` passed component/application tests 31/31, pgTAP 19/19, the workout repository integration 1/1, and generated database types matched the clean 26-migration schema. Initial repository and browser invocations without exported `.env.local` values stopped before application assertions. The first environment-complete parallel browser run exposed two verification-source conditions: its active-workout scenario still expected the now screen-reader-only saved cue to be visible, and four database-mutating project cases interfered through their shared local database. Test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligned those assertions; its serial browser run passed 3/4, while WebKit exposed a real stale-hydration race before finish. Approval-inherited replacement `85e3259dc4f0842c565be972408946c51a5bdb23` prevents an older authoritative response from overwriting a newer optimistic revision. Its complete verification is pending.
+- **Results:** In an isolated worktree, exact approved delivery `c67e578ff1f7ffb9bf5bbd6f7c56178259576f49` passed component/application tests 31/31, pgTAP 19/19, the workout repository integration 1/1, and generated database types matched the clean 26-migration schema. Initial repository and browser invocations without exported `.env.local` values stopped before application assertions. The first environment-complete parallel browser run exposed two verification-source conditions: its active-workout scenario still expected the now screen-reader-only saved cue to be visible, and four database-mutating project cases interfered through their shared local database. Test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` aligned those assertions. The next two serial runs showed the finish conflict in WebKit and then both engines. Trace proved the server accepted `resume_timer` as revision 11 while the freshly reloaded client still held revision 10 and an empty outbox. Approval-inherited replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` keeps review opening local, then under the existing blocker drains pending delivery, reads the authoritative revision once, and sends the selected finish outcome. Its complete verification is pending.
 
 ## Delivery commit
 
@@ -89,14 +89,17 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 - **First replacement scope:** Test source only: both active-workout assertions now require the saved status to remain in the accessibility tree, matching its intentional screen-reader-only presentation.
 - **Second replacement SHA:** `85e3259dc4f0842c565be972408946c51a5bdb23`
 - **Second replacement subject:** `T-055: preserve newer optimistic revision`
-- **Second replacement scope:** One refresh guard prevents a late authoritative hydration from overwriting a newer locally applied command revision. Both replacements stay inside the Task and inherit approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
+- **Second replacement scope:** One refresh guard prevents a late authoritative hydration from overwriting a newer locally applied command revision.
+- **Third replacement SHA:** `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd`
+- **Third replacement subject:** `T-055: synchronize before finish outcome`
+- **Third replacement scope:** The locally opened review remains unchanged. After the user selects an outcome, the blocking path drains pending delivery, reads the authoritative workout revision once, and only then queues the terminal command; its component assertion proves revision 7 is used over stale initial revision 4. All replacements stay inside the Task and inherit approval under [ADR-0028](../../decisions/0028-replacements-inherit-task-approval.md).
 
 ## Review
 
 - **Reviewer:** Codex primary agent
 - **Reviewed at:** `2026-09-09T14:09:02+02:00`
 - **Outcome:** Recommended for approval.
-- **Findings:** The delivery review found no static defect. Verification later exposed and corrected one stale browser assertion and one application race: a structural refresh could adopt an older snapshot after a new optimistic command had advanced the local revision. Second replacement `85e3259dc4f0842c565be972408946c51a5bdb23` refuses that stale adoption. The ordinary finish path reads the already-current client snapshot, while its durable command queue remains the authority for all outcomes; direct finish-route support remains as a fallback. Today removes its per-split application waterfall, start removes its second RPC, and Current Workout removes the eager library read. The new RPC is additive and must reach hosted Supabase before application deployment.
+- **Findings:** The delivery review found no static defect. Verification later corrected one stale browser assertion and isolated two possible stale-state windows. The decisive trace showed a cross-reload acknowledgement race, not a structural-refresh overwrite: the server accepted revision 11 after the new page had captured revision 10 and after the shared outbox no longer exposed the acknowledged command. Third replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only the selected finish outcome under the blocker, so Review still opens locally and immediately. Today removes its per-split application waterfall, start removes its second RPC, and Current Workout removes the eager library read. The new RPC is additive and must reach hosted Supabase before application deployment.
 
 ## Approval
 
@@ -142,3 +145,4 @@ Deliver the Owner's compact active-workout header, disclosure, and finish-review
 | `2026-09-09T14:18:54+02:00` | Codex primary agent / Tester | `Approved` | `Testing` | Began the authorized scoped verification in an isolated worktree at the exact approved delivery. |
 | `2026-09-09T14:29:18+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Lower layers pass; the first browser run found a stale visibility assertion and shared-database parallel interference, so test-source replacement `68c63e50c2a3b53c82df5ea2efcfd4629258610f` will repeat the same scope serially under inherited approval. |
 | `2026-09-09T14:37:15+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | The serial browser repeat passed 3/4 and exposed an application race before finish; replacement `85e3259dc4f0842c565be972408946c51a5bdb23` prevents stale hydration from overwriting a newer optimistic revision and will repeat the complete scope. |
+| `2026-09-09T14:47:13+02:00` | Codex primary agent / Tester | `Testing` | `Testing` | Trace identified a cross-reload acknowledgement window after the next serial run failed both active-workout cases; replacement `ead40cc3eed8e7cae12ac59eb147d2e19e9cbcbd` synchronizes only after an outcome is selected, under the blocker, and will repeat the complete scope. |
