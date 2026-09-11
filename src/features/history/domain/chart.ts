@@ -19,6 +19,8 @@ export type ChartMetric =
   | "top_reps"
   | "total_volume"
   | "total_reps"
+  | "top_seconds"
+  | "total_seconds"
   /** Split History only: active duration per completed workout. */
   | "duration"
   /** Weight only: one weigh-in, and the Monday–Sunday average beside it. */
@@ -75,6 +77,8 @@ export const metricLabels: Readonly<Record<ChartMetric, string>> = {
   top_reps: "Highest reps",
   total_volume: "Workout volume",
   total_reps: "Workout reps",
+  top_seconds: "Longest set",
+  total_seconds: "Workout duration",
   duration: "Active duration",
   weight: "Weight",
   weekly_average: "Weekly average",
@@ -87,6 +91,8 @@ export const metricUnits: Readonly<Record<ChartMetric, MeasureUnit>> = {
   top_reps: "reps",
   total_volume: "volume",
   total_reps: "reps",
+  top_seconds: "seconds",
+  total_seconds: "seconds",
   duration: "seconds",
   weight: "kg",
   weekly_average: "kg",

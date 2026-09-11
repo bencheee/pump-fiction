@@ -14,7 +14,7 @@ Weight and Body calculations are canonical in [`weight-and-body.md`](weight-and-
 
 ## Workout history
 
-Workouts are ordered newest first and grouped by month. Each item shows date, split or one-time-workout name, active duration, performed exercise count, and incomplete status where applicable.
+Completed workouts are ordered newest first and grouped by month. Each item shows date, split or one-time-workout name, active duration, and performed exercise count.
 
 Months group by the workout's local date, which is already stored in the configured time zone. The performed exercise count counts the exercises holding at least one recorded set, so an exercise the user opened but left empty is not counted as performed.
 
@@ -35,8 +35,6 @@ The user can edit date, start and finish, exercises and order, sets, load modes,
 
 The recorded active duration is not among them. It stays as measured, because the paused wall-clock time it already excludes cannot be reconstructed from corrected timestamps.
 
-An incomplete workout can be marked completed, which makes it eligible data. The reverse is not offered: returning a completed workout to incomplete would silently withdraw statistics that already exist.
-
 Any historical edit recalculates all affected derived statistics. It does not update a split template or affect rotation. A workout can be deleted after confirmation; deletion also recalculates affected statistics and does not rewind rotation.
 
 ## Exercise history
@@ -46,13 +44,13 @@ The exercise list contains every exercise with at least one historical performan
 - latest eligible performance;
 - personal records;
 - a progress chart;
-- all performances across all splits and one-time workouts, including those from incomplete workouts, which are marked as excluded from statistics;
+- all completed performances across all splits and one-time workouts;
 - workout-specific notes;
 - links from performances to their workouts.
 
 ## Statistics eligibility and recalculation
 
-Only recorded sets in completed workouts contribute to PRs and exercise charts; a set is recorded once it holds everything its mode requires, as defined by [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). Only completed split-based workouts contribute to that split's duration statistics. One-time workouts contribute to exercise but not split statistics. Incomplete workouts contribute to neither.
+Only recorded sets in completed workouts contribute to PRs and exercise charts; a set is recorded once it holds everything its mode requires, as defined by [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). Only completed split-based workouts contribute to that split's duration statistics. One-time workouts contribute to exercise but not split statistics.
 
 Statistics are derived from canonical history rather than stored as authoritative aggregates. Editing, deleting, or changing completion status causes recalculation. See [`domain-model.md`](../architecture/domain-model.md#derived-statistics).
 
@@ -105,4 +103,6 @@ A split is named by its current template name, so a rename follows it, and by it
 
 A split detail shows completed-workout count, total duration, average duration, shortest and longest duration, latest duration, a duration chart, and its workouts.
 
-One-time and incomplete workouts are excluded from split-duration statistics.
+One-time workouts are excluded from split-duration statistics.
+
+For exercises measured in seconds, records and charts use longest-set and total-workout seconds rather than describing those values as reps or volume.

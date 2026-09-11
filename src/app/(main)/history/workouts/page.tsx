@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { listWorkoutHistory } from "@/server/application/workout-history";
-import { Badge, EmptyState, ListRow, PageFrame } from "@/shared/ui";
+import { EmptyState, ListRow, PageFrame } from "@/shared/ui";
 
 import { formatHistoryMonth, summaryDetail } from "../history-presentation";
 
@@ -50,14 +50,7 @@ export default async function WorkoutHistoryPage() {
                   <ListRow
                     href={`/history/workouts/${workout.id}`}
                     title={workout.name}
-                    detail={
-                      <span className="flex flex-wrap items-center gap-2">
-                        <span>{summaryDetail(workout)}</span>
-                        {workout.status === "incomplete" ? (
-                          <Badge tone="warn">Incomplete</Badge>
-                        ) : null}
-                      </span>
-                    }
+                    detail={summaryDetail(workout)}
                   />
                 </li>
               ))}

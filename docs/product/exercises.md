@@ -9,10 +9,16 @@ Each exercise has:
 - a persistent identity;
 - a unique active name;
 - one base type;
+- one set measurement, `reps` or `seconds`;
 - explicitly allowed load or assistance modes;
 - a persistent exercise note.
 
 Supported base types are `weights` and `bodyweight`.
+
+Set measurement defaults to `reps`. The Owner can override an exercise to
+`seconds` for timed movements such as Side plank. The measurement is part of
+the workout snapshot, so changing it affects future workouts only and never
+relabels unrelated historical performances.
 
 Each type implies the mode every one of its sets always has, and the user chooses at most one optional addition on top of it. A mode the user cannot change is never offered as a choice; see [ADR-0023](../decisions/0023-simplified-exercise-load-mode-model.md) and [ADR-0026](../decisions/0026-two-exercise-types-with-assistance-under-bodyweight.md), which moves assistance under `bodyweight`.
 
@@ -29,11 +35,11 @@ Load mode and all applicable values are stored per set, not merely per exercise 
 
 ### Weights
 
-A basic set stores kilograms and reps, for example `60 kg × 8`. An exercise may optionally permit a resistance band alongside the weight, for example `60 kg + medium resistance band × 8`.
+A basic set stores kilograms and the exercise's repetition count or timed duration, for example `60 kg × 8` or `60 kg · 30 sec`. An exercise may optionally permit a resistance band alongside the weight.
 
 ### Bodyweight
 
-A basic bodyweight set stores reps. An exercise may additionally allow one of added kilograms, a resistance band, assistance kilograms, or an assistance band, never more than one:
+A basic bodyweight set stores reps or seconds according to the definition. An exercise may additionally allow one of added kilograms, a resistance band, assistance kilograms, or an assistance band, never more than one:
 
 - `BW × 12`
 - `BW + 10 kg × 8`

@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(47);
+select plan(45);
 
 -- T-031 fixtures. Names are prefixed so the unfiltered name lookups in the
 -- other suites and the committed seed stay unambiguous.
@@ -43,21 +43,20 @@ select public.apply_active_workout_command(
   '2026-08-10T11:00:00Z'
 );
 
--- An incomplete September workout with nothing recorded. Completing the first
--- workout advanced rotation onto T-031 Pull, so this one starts it as the
--- proposed split; saving it incomplete leaves the pointer where it is.
+-- A completed September alternate with nothing recorded. Empty planned rows do
+-- not block completion and the alternate does not move rotation.
 select public.start_workout('proposed_split', (select id from public.splits where name = 'T-031 Pull'), '', array[]::uuid[], '2026-09-02T10:00:00Z');
 select public.apply_active_workout_command(
   '31000000-0000-4000-8000-000000000103',
   (select id from public.workouts where status = 'active'), 0, 'finish_workout',
-  '{"outcome":"incomplete","finishedAt":"2026-09-02T10:30:00Z"}'::jsonb,
+  '{"outcome":"completed","finishedAt":"2026-09-02T10:30:00Z"}'::jsonb,
   '2026-09-02T10:30:00Z'
 );
 
 -- Reads
 select is(jsonb_array_length(public.list_workout_history()), 2, 'saved workouts are grouped by calendar month');
 select is(public.list_workout_history() -> 0 ->> 'month', '2026-09', 'the newest month comes first');
-select is(public.list_workout_history() -> 0 -> 'workouts' -> 0 ->> 'status', 'incomplete', 'an incomplete workout stays in History with its status');
+select is(public.list_workout_history() -> 0 -> 'workouts' -> 0 ->> 'status', 'completed', 'completion is the only saved workout status');
 select is((public.list_workout_history() -> 0 -> 'workouts' -> 0 ->> 'performedExerciseCount')::integer, 0, 'an exercise without a recorded set is not counted as performed');
 select is((public.list_workout_history() -> 1 -> 'workouts' -> 0 ->> 'performedExerciseCount')::integer, 1, 'an exercise with a recorded set is counted once');
 select is(
@@ -88,50 +87,50 @@ select throws_ok(
 
 -- Notes and sets
 select lives_ok(
-  $$ select public.set_history_workout_exercise_note((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.exercise_name_snapshot = 'T-031 Press'), 'Felt heavy') $$,
+  $$ select public.set_history_workout_exercise_note((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.exercise_name_snapshot = 'T-031 Press'), 'Felt heavy') $$,
   'a workout-specific note is correctable'
 );
 select is(
-  (select occurrence.workout_note from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.exercise_name_snapshot = 'T-031 Press'),
+  (select occurrence.workout_note from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.exercise_name_snapshot = 'T-031 Press'),
   'Felt heavy',
   'the corrected note is stored with that workout only'
 );
 select lives_ok(
-  $$ select public.update_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout_set.position = 2), '{"loadMode":"weight","loadKg":65,"bandDirection":null,"bandStrength":null,"reps":6}'::jsonb) $$,
+  $$ select public.update_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and workout_set.position = 2), '{"loadMode":"weight","loadKg":65,"bandDirection":null,"bandStrength":null,"reps":6}'::jsonb) $$,
   'a set left without values is correctable afterwards'
 );
 select is(
-  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and public.workout_set_is_recorded(workout_set.load_mode, workout_set.load_kg, workout_set.band_strength, workout_set.reps)),
+  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and public.workout_set_is_recorded(workout_set.load_mode, workout_set.load_kg, workout_set.band_strength, workout_set.reps)),
   2,
   'the corrected set becomes eligible data by its values alone'
 );
 select throws_ok(
-  $$ select public.update_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout_set.position = 2), '{"loadMode":"assistance_band","loadKg":null,"bandDirection":"assistance","bandStrength":"light","reps":6}'::jsonb) $$,
+  $$ select public.update_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and workout_set.position = 2), '{"loadMode":"assistance_band","loadKg":null,"bandDirection":"assistance","bandStrength":"light","reps":6}'::jsonb) $$,
   '23503'::character(5),
   NULL,
   'a mode outside the snapshotted allowed modes is rejected'
 );
 select lives_ok(
-  $$ select public.add_history_set((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.exercise_name_snapshot = 'T-031 Press')) $$,
+  $$ select public.add_history_set((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.exercise_name_snapshot = 'T-031 Press')) $$,
   'a set can be added to a saved workout'
 );
 select is(
-  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed'),
+  (select count(*)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push'),
   3,
   'the added set joins the saved workout'
 );
 select throws_ok(
-  $$ select public.remove_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout_set.position = 1), false) $$,
+  $$ select public.remove_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and workout_set.position = 1), false) $$,
   'PF204'::character(5),
   'Populated set removal requires confirmation',
   'removing a set that holds data requires confirmation'
 );
 select lives_ok(
-  $$ select public.remove_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout_set.position = 1), true) $$,
+  $$ select public.remove_history_set((select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and workout_set.position = 1), true) $$,
   'a confirmed removal of populated data succeeds'
 );
 select is(
-  (select max(workout_set.position)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed'),
+  (select max(workout_set.position)::integer from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push'),
   2,
   'remaining set positions are renumbered contiguously'
 );
@@ -162,17 +161,17 @@ select lives_ok(
     (select id from public.workouts where status = 'completed' and split_name_snapshot = 'T-031 Push'),
     array[
       (select occurrence.id from public.workout_exercises as occurrence where occurrence.exercise_name_snapshot = 'T-031 Ghost'),
-      (select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.exercise_name_snapshot = 'T-031 Press')
+      (select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.exercise_name_snapshot = 'T-031 Press')
     ]) $$,
   'a complete order is applied'
 );
 select is(
-  (select occurrence.exercise_name_snapshot from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.position = 1),
+  (select occurrence.exercise_name_snapshot from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.position = 1),
   'T-031 Ghost',
   'the corrected order is stored'
 );
 select throws_ok(
-  $$ select public.remove_history_workout_exercise((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and occurrence.exercise_name_snapshot = 'T-031 Press'), false) $$,
+  $$ select public.remove_history_workout_exercise((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push' and occurrence.exercise_name_snapshot = 'T-031 Press'), false) $$,
   'PF204'::character(5),
   'Populated exercise removal requires confirmation',
   'removing an exercise that holds data requires confirmation'
@@ -194,7 +193,7 @@ select lives_ok(
   'removing an occurrence without data needs no confirmation'
 );
 select is(
-  (select max(occurrence.position)::integer from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed'),
+  (select max(occurrence.position)::integer from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'completed' and workout.split_name_snapshot = 'T-031 Push'),
   1,
   'remaining occurrence positions are renumbered contiguously'
 );
@@ -207,30 +206,21 @@ select is(
 );
 select is(
   (select next_split_id from public.programs where name = 'T-031 Plan'),
-  (select id from public.splits where name = 'T-031 Pull'),
+  (select id from public.splits where name = 'T-031 Push'),
   'no correction moved the rotation pointer'
 );
 
--- Completion status
-select lives_ok(
-  $$ select public.mark_history_workout_completed((select id from public.workouts where status = 'incomplete')) $$,
-  'an incomplete workout can be marked completed later'
-);
-select is((select count(*)::integer from public.workouts where status = 'incomplete'), 0, 'the marked workout enters eligible History');
-select is(
-  (select next_split_id from public.programs where name = 'T-031 Plan'),
-  (select id from public.splits where name = 'T-031 Pull'),
-  'marking a workout completed later never changes the then-current rotation'
-);
-select throws_ok(
-  $$ select public.mark_history_workout_completed((select id from public.workouts where split_name_snapshot = 'T-031 Pull')) $$,
-  'PF202'::character(5),
-  'Only an incomplete workout can be marked completed',
-  'a completed workout is not returned to incomplete through this path'
-);
-
 -- The current workout is never corrected from History
-select public.start_workout('proposed_split', (select id from public.splits where name = 'T-031 Pull'), '', array[]::uuid[], '2026-09-06T10:00:00Z');
+select lives_ok(
+  $$ select public.set_history_workout_exercise_note((select occurrence.id from public.workout_exercises as occurrence join public.workouts as workout on workout.id = occurrence.workout_id where workout.split_name_snapshot = 'T-031 Pull'), 'Knee was sore') $$,
+  'the immediately previous workout can retain an exercise note'
+);
+select public.start_workout('proposed_split', (select id from public.splits where name = 'T-031 Push'), '', array[]::uuid[], '2026-09-06T10:00:00Z');
+select is(
+  public.get_current_workout() -> 'exercises' -> 0 -> 'previousWorkoutNote' ->> 'note',
+  'Knee was sore',
+  'the next workout exposes the immediately previous exercise note'
+);
 select is(public.get_history_workout((select id from public.workouts where status = 'active')), 'null'::jsonb, 'the current workout has no History detail');
 select throws_ok(
   $$ select public.delete_history_workout((select id from public.workouts where status = 'active')) $$,
@@ -265,7 +255,7 @@ select is(
 );
 select is(
   (select next_split_id from public.programs where name = 'T-031 Plan'),
-  (select id from public.splits where name = 'T-031 Pull'),
+  (select id from public.splits where name = 'T-031 Push'),
   'deleting a workout never rewinds rotation'
 );
 

@@ -21,7 +21,12 @@ type ExerciseRow = Pick<
   "id" | "name" | "base_type" | "persistent_note"
 >;
 
-const exerciseColumns = "id, name, base_type, persistent_note" as const;
+type ExerciseRowWithMeasurement = ExerciseRow & {
+  measurement_type: Exercise["measurementType"];
+};
+
+const exerciseColumns =
+  "id, name, base_type, measurement_type, persistent_note" as const;
 
 export class SupabaseExerciseRepository implements ExerciseRepository {
   constructor(private readonly client: ServerDatabaseClient) {}
@@ -65,6 +70,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
         {
           p_name: definition.name,
           p_base_type: definition.baseType,
+          p_measurement_type: definition.measurementType ?? "reps",
           p_persistent_note: definition.persistentNote,
           p_load_modes: [...definition.allowedLoadModes],
         },
@@ -85,6 +91,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
           p_exercise_id: id,
           p_name: definition.name,
           p_base_type: definition.baseType,
+          p_measurement_type: definition.measurementType ?? "reps",
           p_persistent_note: definition.persistentNote,
           p_load_modes: [...definition.allowedLoadModes],
         },
@@ -115,7 +122,9 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
     return exercise;
   }
 
-  private async hydrate(rows: readonly ExerciseRow[]): Promise<Exercise[]> {
+  private async hydrate(
+    rows: readonly ExerciseRowWithMeasurement[],
+  ): Promise<Exercise[]> {
     if (rows.length === 0) return [];
 
     const ids = rows.map((row) => row.id);
@@ -152,6 +161,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
       id: row.id,
       name: row.name,
       baseType: row.base_type,
+      measurementType: row.measurement_type,
       allowedLoadModes: (modesByExercise.get(row.id) ?? []).sort(
         (left, right) =>
           exerciseLoadModes.indexOf(left) - exerciseLoadModes.indexOf(right),

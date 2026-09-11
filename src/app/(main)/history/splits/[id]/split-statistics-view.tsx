@@ -134,8 +134,8 @@ export function SplitStatisticsView({
             </ul>
           </details>
           <p className="text-[12.5px] text-[var(--pf-text-2)]">
-            Only completed workouts of this split count. One-time workouts and
-            workouts saved as incomplete are excluded.
+            Only completed workouts of this split count. One-time workouts are
+            excluded.
           </p>
         </section>
 

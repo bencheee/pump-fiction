@@ -93,7 +93,7 @@ export default async function ExercisesPage({
               key={exercise.id}
               href={`/exercises/${exercise.id}/edit`}
               title={exercise.name}
-              detail={`${exerciseTypeLabels[exercise.baseType]} · ${exercise.allowedLoadModes.length} ${exercise.allowedLoadModes.length === 1 ? "mode" : "modes"}`}
+              detail={`${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${exercise.allowedLoadModes.length} ${exercise.allowedLoadModes.length === 1 ? "mode" : "modes"}`}
             />
           ))}
         </div>

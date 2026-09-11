@@ -22,7 +22,6 @@ import {
   formatExerciseCount,
   formatHistoryDate,
   formatHistoryDuration,
-  incompleteExplanation,
 } from "../../history-presentation";
 
 export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
@@ -66,27 +65,6 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
           {formatHistoryDate(workout.workoutDate)}
           {workout.programName ? ` · ${workout.programName}` : null}
         </p>
-
-        {workout.status === "incomplete" ? (
-          <section className="flex flex-col items-start gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-warn)] bg-[var(--pf-bg-surface)] p-3">
-            <Badge tone="warn">Incomplete</Badge>
-            <p className="text-[13px] text-[var(--pf-text-2)]">
-              {incompleteExplanation}
-            </p>
-            <Action
-              variant="secondary"
-              disabled={pending}
-              onClick={() =>
-                apply(
-                  { kind: "mark_completed", workoutId: workout.id },
-                  "Marked completed. Affected statistics were recalculated.",
-                )
-              }
-            >
-              Mark completed
-            </Action>
-          </section>
-        ) : null}
 
         <div className="grid grid-cols-2 gap-2">
           <StatCard
@@ -156,7 +134,9 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
                         <span className="text-[var(--pf-text-2)]">
                           Set {set.position}
                         </span>
-                        <span>{formatSetSummary(set)}</span>
+                        <span>
+                          {formatSetSummary(set, exercise.measurementType)}
+                        </span>
                       </li>
                     ))}
                   </ol>

@@ -12,7 +12,7 @@ import type {
 } from "@/features/exercises/domain/exercise";
 
 /** History holds only saved workouts; the current one is not part of it. */
-export type HistoryWorkoutStatus = "completed" | "incomplete";
+export type HistoryWorkoutStatus = "completed";
 
 export type HistoryWorkoutSummary = Readonly<{
   id: string;
@@ -43,6 +43,7 @@ export type HistoryWorkoutExercise = Readonly<{
   position: number;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
+  measurementType?: import("@/features/exercises/domain/exercise").ExerciseMeasurementType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
   plannedSets: number | null;
@@ -113,7 +114,6 @@ export type HistoryCorrection =
       workoutId: string;
       workoutExerciseIds: readonly string[];
     }>
-  | Readonly<{ kind: "mark_completed"; workoutId: string }>
   | Readonly<{ kind: "delete"; workoutId: string }>;
 
 export type HistoryCorrectionKind = HistoryCorrection["kind"];

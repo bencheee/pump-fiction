@@ -57,7 +57,7 @@ The persistent **Exercise note** uses the warning-yellow token. **Last time** pl
 
 Restoring a workout shows no banner: the restored workout itself is the evidence. The exercise-note heading reads only **Exercise note**, and the note stays read-only.
 
-The workout header is one row: truncated workout name, text-only **Continue Later** or **Resume**, and the live clock, in 40 CSS pixels beyond the safe-area inset. At the lower-right, one round check action replaces the full-width Review & Finish button. It opens the review immediately as an in-place sheet from the already loaded workout. The sheet keeps **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and the separately confirmed **Discard Workout** together, so discard stays reachable without leaving and reloading the active screen. Start and finish persistence cover the viewport with a progress layer so a pending database transition cannot be triggered twice; after an outcome is selected, that layer also covers the final queue drain and authoritative-revision synchronization before the terminal command.
+The workout header is one row: truncated workout name, text-only **Continue Later** or **Resume**, and the live clock, in 40 CSS pixels beyond the safe-area inset. At the lower-right, one round check action replaces the full-width Review & Finish button. It opens the review immediately as an in-place sheet from the already loaded workout. The sheet keeps **Complete Workout**, **Continue Workout**, and the separately confirmed **Discard Workout** together, so discard stays reachable without leaving and reloading the active screen. Start and finish persistence cover the viewport with a progress layer so a pending database transition cannot be triggered twice; after an outcome is selected, that layer also covers the final queue drain and authoritative-revision synchronization before the terminal command.
 
 Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Body once it does; it never offers a second entry, and it never edits or deletes. Since [ADR-0030](../decisions/0030-body-is-its-own-destination.md) it is one of two entry cards, and the only place a weigh-in is created.
 
@@ -71,9 +71,9 @@ History provides Workouts, Exercises, and Splits. A subsection bar sits above th
 
 ### Workouts
 
-The list groups saved workouts by calendar month, newest first. Each row shows the saved split or one-time name, the date, the active duration, the performed exercise count, and an incomplete badge where it applies.
+The list groups completed workouts by calendar month, newest first. Each row shows the saved split or one-time name, the date, the active duration, and the performed exercise count.
 
-A workout detail renders the saved snapshot with its timing, source names, ordered exercises, prescriptions, note snapshots, and sets. An incomplete workout also carries the explanation of what it is excluded from and the action that marks it completed. Deleting asks for confirmation and returns to the list.
+A workout detail renders the saved snapshot with its timing, source names, ordered exercises, prescriptions, note snapshots, and sets. Deleting asks for confirmation and returns to the list.
 
 Editing is a separate screen. It corrects the date, start, finish, set values, and workout notes behind one **Save corrections** action that returns to the detail, following the same save contract as the definition forms. Adding, removing, and reordering sets and exercises apply immediately, each with the confirmation that populated data requires, and are unavailable while the form holds unsaved edits, because applying one reloads the workout.
 
@@ -83,7 +83,7 @@ Provide a searchable list with latest-performance summaries. Detail provides PR 
 
 Search filters the loaded list in the browser rather than per keystroke on the server. An exercise whose definition was deleted stays in the list under a marker rather than disappearing.
 
-The detail groups personal records by comparison category, one panel per category, and never merges a band strength or direction with another. A record whose progress runs downwards, such as assistance, says so in words beside its value and reverses its chart axis, so the direction never rests on color or on the reader's assumption. Every chart is accompanied by a sentence summarising the series and an expandable list of its values. Performances from incomplete workouts appear in the list under the same explanation the workout detail gives.
+The detail groups personal records by comparison category, one panel per category, and never merges a band strength or direction with another. A record whose progress runs downwards, such as assistance, says so in words beside its value and reverses its chart axis, so the direction never rests on color or on the reader's assumption. Every chart is accompanied by a sentence summarising the series and an expandable list of its values.
 
 ### Splits
 

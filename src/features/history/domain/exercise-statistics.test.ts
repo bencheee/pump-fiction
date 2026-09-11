@@ -73,31 +73,13 @@ describe("recorded sets and eligibility", () => {
     ).toBe(false);
   });
 
-  it("excludes an incomplete workout and includes a one-time one", () => {
+  it("includes a completed one-time workout", () => {
     const sets = [set({ loadMode: "weight", loadKg: 60, reps: 8 })];
-    expect(
-      isEligiblePerformance(performance({ sets, status: "incomplete" })),
-    ).toBe(false);
     expect(
       isEligiblePerformance(
         performance({ sets, status: "completed", sourceKind: "one_time" }),
       ),
     ).toBe(true);
-  });
-
-  it("keeps an incomplete performance out of every record", () => {
-    const performances = [
-      performance({
-        workoutId: "33000000-0000-4000-8000-0000000000a1",
-        sets: [set({ loadMode: "weight", loadKg: 60, reps: 8 })],
-      }),
-      performance({
-        workoutId: "33000000-0000-4000-8000-0000000000a2",
-        status: "incomplete",
-        sets: [set({ loadMode: "weight", loadKg: 200, reps: 20 })],
-      }),
-    ];
-    expect(recordsOf(performances, "weight").highest_load?.value).toBe(60);
   });
 });
 
@@ -269,28 +251,9 @@ describe("personal records", () => {
 });
 
 describe("latest eligible performance", () => {
-  it("skips an incomplete workout even when it is the newest", () => {
-    const performances = [
-      performance({
-        workoutDate: "2026-09-01",
-        status: "incomplete",
-        sets: [set({ loadMode: "weight", loadKg: 90, reps: 5 })],
-      }),
-      performance({
-        workoutDate: "2026-08-20",
-        sets: [set({ loadMode: "weight", loadKg: 60, reps: 8 })],
-      }),
-    ];
-    expect(latestEligiblePerformance(performances)?.workoutDate).toBe(
-      "2026-08-20",
-    );
-  });
-
   it("returns null when nothing counts yet", () => {
     expect(
-      latestEligiblePerformance([
-        performance({ status: "incomplete", sets: [set({ reps: 8 })] }),
-      ]),
+      latestEligiblePerformance([performance({ sets: [set({ reps: 8 })] })]),
     ).toBeNull();
   });
 });

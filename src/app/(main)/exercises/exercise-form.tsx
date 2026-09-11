@@ -13,10 +13,12 @@ import {
   baseLoadModeByBaseType,
   defaultLoadModesByBaseType,
   exerciseBaseTypes,
+  exerciseMeasurementTypes,
   optionalLoadModesByBaseType,
   type Exercise,
   type ExerciseBaseType,
   type ExerciseLoadMode,
+  type ExerciseMeasurementType,
 } from "@/features/exercises/domain/exercise";
 import { validateExerciseDefinition } from "@/features/exercises/domain/exercise-validation";
 import {
@@ -48,6 +50,8 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   const [baseType, setBaseType] = useState<ExerciseBaseType>(
     exercise?.baseType ?? "weights",
   );
+  const [measurementType, setMeasurementType] =
+    useState<ExerciseMeasurementType>(exercise?.measurementType ?? "reps");
   const [modes, setModes] = useState<readonly ExerciseLoadMode[]>(
     exercise?.allowedLoadModes ?? defaultLoadModesByBaseType.weights,
   );
@@ -61,6 +65,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   const definition = {
     name,
     baseType,
+    measurementType,
     allowedLoadModes: modes,
     persistentNote: note,
   };
@@ -208,10 +213,45 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 
           <fieldset disabled={isSaving}>
             <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
+              Set measurement
+            </legend>
+            <div
+              role="group"
+              aria-label="Set measurement options"
+              className="grid grid-cols-2 gap-2"
+            >
+              {exerciseMeasurementTypes.map((type) => (
+                <button
+                  key={type}
+                  type="button"
+                  aria-pressed={measurementType === type}
+                  onClick={() => {
+                    setMeasurementType(type);
+                    markChanged("measurementType");
+                  }}
+                  className={`min-h-14 rounded-[var(--pf-r2)] border px-3 font-semibold ${
+                    measurementType === type
+                      ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent-strong)]"
+                      : "border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)]"
+                  }`}
+                >
+                  {type === "reps" ? "Reps" : "Seconds"}
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-[12.5px] text-[var(--pf-text-2)]">
+              {measurementType === "reps"
+                ? "Each set records a repetition count."
+                : "Each set records its duration in seconds."}
+            </p>
+          </fieldset>
+
+          <fieldset disabled={isSaving}>
+            <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
               Optional per-set additions
             </legend>
             <p className="mb-2 text-[12.5px] text-[var(--pf-text-2)]">
-              {baseModeSummary[baseType]}
+              {baseModeSummary(baseType, measurementType)}
             </p>
             <div className="space-y-2">
               {optionalLoadModesByBaseType[baseType].map((mode, index) => {
@@ -250,7 +290,10 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
                         {exerciseOptionalModeLabels[mode]}
                       </span>
                       <span className="mt-0.5 block text-[12.5px] text-[var(--pf-text-2)]">
-                        {exerciseModeDetails[mode]}
+                        {exerciseModeDetails[mode].replace(
+                          "reps",
+                          measurementType === "seconds" ? "seconds" : "reps",
+                        )}
                       </span>
                     </span>
                   </button>
@@ -331,12 +374,14 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
 function snapshotOf(definition: {
   name: string;
   baseType: ExerciseBaseType;
+  measurementType: ExerciseMeasurementType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
 }): string {
   return JSON.stringify([
     definition.name,
     definition.baseType,
+    definition.measurementType,
     [...definition.allowedLoadModes].sort(),
     definition.persistentNote,
   ]);
@@ -350,7 +395,12 @@ function deleteDescription(splitUsageCount: number): string {
   return `${usage} Workouts already recorded keep this exercise in History.`;
 }
 
-const baseModeSummary: Readonly<Record<ExerciseBaseType, string>> = {
-  weights: "Every set stores kilograms and reps.",
-  bodyweight: "Every set stores reps.",
-};
+function baseModeSummary(
+  baseType: ExerciseBaseType,
+  measurementType: ExerciseMeasurementType,
+): string {
+  const measurement = measurementType === "seconds" ? "seconds" : "reps";
+  return baseType === "weights"
+    ? `Every set stores kilograms and ${measurement}.`
+    : `Every set stores ${measurement}.`;
+}

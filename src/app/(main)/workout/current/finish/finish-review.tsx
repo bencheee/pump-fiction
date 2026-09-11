@@ -30,7 +30,7 @@ import {
 
 import { formatWorkoutClock } from "@/features/active-workout/ui/workout-presentation";
 
-type FinishOutcome = "completed" | "incomplete" | "discarded";
+type FinishOutcome = "completed" | "discarded";
 
 export function FinishReview({
   initial,
@@ -331,14 +331,6 @@ export function FinishReview({
           onClick={() => finish("completed")}
         >
           {submitting ? "Finishing…" : "Complete Workout"}
-        </Action>
-        <Action
-          variant="secondary"
-          className="w-full"
-          disabled={submitting}
-          onClick={() => finish("incomplete")}
-        >
-          Save as Incomplete
         </Action>
         <Link
           href="/workout/current"

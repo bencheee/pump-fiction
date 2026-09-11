@@ -36,7 +36,7 @@ test.describe("Split History experience", () => {
       ])
         await expect(page.getByText(label, { exact: true })).toBeVisible();
       await expect(
-        page.getByText(/One-time workouts and workouts saved as incomplete/),
+        page.getByText(/One-time workouts are excluded/),
       ).toBeVisible();
 
       // The chart is never the only representation of its data.

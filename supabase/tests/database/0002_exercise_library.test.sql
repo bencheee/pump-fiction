@@ -195,7 +195,7 @@ select throws_ok(
 select function_privs_are(
   'public',
   'create_exercise_definition',
-  array['text', 'exercise_base_type', 'text', 'load_mode[]'],
+  array['text', 'exercise_base_type', 'text', 'load_mode[]', 'exercise_measurement_type'],
   'service_role',
   array['EXECUTE'],
   'only the server service role can execute the exercise create operation'

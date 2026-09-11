@@ -44,7 +44,7 @@ export type ActiveWorkoutCommand =
   | Envelope<"reorder_exercises", { workoutExerciseIds: string[] }>
   | Envelope<
       "finish_workout",
-      { outcome: "completed" | "incomplete" | "discarded"; finishedAt: string }
+      { outcome: "completed" | "discarded"; finishedAt: string }
     >;
 
 export type CommandValidationResult =
@@ -220,9 +220,7 @@ export function parseActiveWorkoutCommand(
   if (input.operation === "finish_workout") {
     if (
       !hasExactKeys(payload, ["outcome", "finishedAt"]) ||
-      !["completed", "incomplete", "discarded"].includes(
-        payload.outcome as string,
-      ) ||
+      !["completed", "discarded"].includes(payload.outcome as string) ||
       !isTimestamp(payload.finishedAt)
     )
       return invalid(
@@ -235,7 +233,7 @@ export function parseActiveWorkoutCommand(
         ...common,
         operation: input.operation,
         payload: {
-          outcome: payload.outcome as "completed" | "incomplete" | "discarded",
+          outcome: payload.outcome as "completed" | "discarded",
           finishedAt: payload.finishedAt,
         },
       },

@@ -22,7 +22,10 @@ type SplitRow = Pick<
   Tables<"splits">,
   "id" | "program_id" | "name" | "position"
 >;
-type ExerciseRow = Pick<Tables<"exercises">, "id" | "name">;
+type ExerciseRow = Pick<
+  Tables<"exercises">,
+  "id" | "name" | "measurement_type"
+>;
 
 const programColumns = "id, name, next_split_id" as const;
 const splitColumns = "id, program_id, name, position" as const;
@@ -272,7 +275,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
     if (exerciseIds.length > 0) {
       const result = await this.client
         .from("exercises")
-        .select("id, name")
+        .select("id, name, measurement_type")
         .in("id", exerciseIds);
       if (result.error) throw mapPostgrestError(result.error);
       exercises = result.data;
@@ -289,6 +292,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
         return {
           exerciseId: exercise.id,
           exerciseName: exercise.name,
+          measurementType: exercise.measurement_type,
           position: prescription.position,
           plannedSets: prescription.planned_sets,
           minReps: prescription.min_reps,

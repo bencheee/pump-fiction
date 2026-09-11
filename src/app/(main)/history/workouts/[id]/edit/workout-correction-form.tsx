@@ -562,7 +562,9 @@ function ExerciseCard({
               ) : null}
               <NumericField
                 id={`set-${set.id}-reps`}
-                label="Reps"
+                label={
+                  exercise.measurementType === "seconds" ? "Seconds" : "Reps"
+                }
                 inputMode="numeric"
                 value={entry.reps}
                 onChange={(event) =>

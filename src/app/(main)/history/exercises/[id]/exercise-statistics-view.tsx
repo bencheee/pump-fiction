@@ -19,10 +19,7 @@ import type {
 } from "@/features/history/domain/exercise-statistics";
 import { Badge, Chip, EmptyState, PageFrame, TopBar } from "@/shared/ui";
 
-import {
-  formatHistoryDate,
-  incompleteExplanation,
-} from "../../history-presentation";
+import { formatHistoryDate } from "../../history-presentation";
 import { ProgressChart } from "@/features/history/ui/progress-chart";
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
@@ -85,7 +82,12 @@ export function ExerciseStatisticsView({
               {formatHistoryDate(view.latestPerformance.workoutDate)} ·{" "}
               {view.latestPerformance.sets
                 .filter((set) => set.loadMode !== null && set.reps !== null)
-                .map(formatSetSummary)
+                .map((set) =>
+                  formatSetSummary(
+                    set,
+                    view.latestPerformance?.measurementType,
+                  ),
+                )
                 .join(", ")}
             </p>
           )}
@@ -232,7 +234,13 @@ function RecordRow({ record }: { record: PersonalRecord }) {
       </dt>
       <dd className="pf-numeric justify-self-end font-semibold">
         {record.value}
-        {record.unit === "kg" ? " kg" : record.unit === "reps" ? " reps" : ""}
+        {record.unit === "kg"
+          ? " kg"
+          : record.unit === "reps"
+            ? " reps"
+            : record.unit === "seconds"
+              ? " sec"
+              : ""}
         {record.reps !== null && record.unit !== "reps"
           ? ` × ${record.reps}`
           : ""}
@@ -276,10 +284,9 @@ function unitSuffix(series: ChartSeries): string {
 }
 
 function PerformanceRow({ performance }: { performance: ExercisePerformance }) {
-  const eligible = performance.status === "completed";
   const sets = performance.sets
     .filter((set) => set.loadMode !== null && set.reps !== null)
-    .map(formatSetSummary);
+    .map((set) => formatSetSummary(set, performance.measurementType));
 
   return (
     <article className="rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] p-3">
@@ -291,16 +298,10 @@ function PerformanceRow({ performance }: { performance: ExercisePerformance }) {
           {formatHistoryDate(performance.workoutDate)} ·{" "}
           {performance.workoutName}
         </Link>
-        {eligible ? null : <Badge tone="warn">Incomplete</Badge>}
       </div>
       <p className="pf-numeric mt-1 text-[13px]">
         {sets.length > 0 ? sets.join(", ") : "No recorded set"}
       </p>
-      {eligible ? null : (
-        <p className="mt-1 text-[12.5px] text-[var(--pf-text-2)]">
-          {incompleteExplanation}
-        </p>
-      )}
       {performance.workoutNote ? (
         <p className="mt-1 text-[13px]">
           <span className="font-semibold">Workout note:</span>{" "}

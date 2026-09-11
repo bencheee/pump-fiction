@@ -1,7 +1,7 @@
 import type { SplitWorkout } from "../domain/split-statistics";
 
 export interface SplitStatisticsRepository {
-  /** Every saved split-sourced workout, completed or incomplete, newest first. */
+  /** Every completed split-sourced workout, newest first. */
   listSplitWorkouts(): Promise<readonly SplitWorkout[]>;
 }
 

@@ -84,9 +84,8 @@ describe("split summaries", () => {
     });
   });
 
-  it("excludes incomplete and one-time workouts and includes an alternate", () => {
+  it("excludes one-time workouts and includes an alternate", () => {
     const summaries = splitSummaries([
-      workout({ status: "incomplete", activeDurationSeconds: 99_999 }),
       workout({ sourceKind: "one_time", activeDurationSeconds: 99_999 }),
       workout({ sourceKind: "alternate_split", activeDurationSeconds: 1_800 }),
       workout({ activeDurationSeconds: 3_600 }),
@@ -156,7 +155,6 @@ describe("split workouts and duration series", () => {
     workout({ workoutDate: "2026-05-01", activeDurationSeconds: 3_000 }),
     workout({ workoutDate: "2026-08-20", activeDurationSeconds: 4_200 }),
     workout({ workoutDate: "2026-09-04", activeDurationSeconds: 3_600 }),
-    workout({ workoutDate: "2026-09-05", status: "incomplete" }),
     workout({ workoutDate: "2026-09-05", splitIdentityId: pullA }),
   ];
 

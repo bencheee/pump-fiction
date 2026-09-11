@@ -2,7 +2,7 @@
 
 ## Starting a workout
 
-Starting a split creates a separate workout snapshot. It includes the workout name, an automatic timer, ordered exercises, persistent exercise notes, each exercise's last performance, planned sets and rep ranges, actual set inputs, workout-specific exercise notes, and the actions needed to modify or finish the session.
+Starting a split creates a separate workout snapshot. It includes the workout name, an automatic timer, ordered exercises, persistent exercise notes, each exercise's set measurement, last performance, planned sets and repetition/seconds ranges, actual set inputs, workout-specific exercise notes, and the actions needed to modify or finish the session.
 
 The snapshot boundary and stored fields are canonical in [`domain-model.md`](../architecture/domain-model.md#workout-snapshots). The source split remains unchanged by all workout-local edits.
 
@@ -24,12 +24,12 @@ A set's fields come from the exercise definition rather than from a per-set menu
 
 Examples of resulting fields:
 
-- bodyweight: reps;
+- bodyweight: reps or seconds according to the exercise snapshot;
 - bodyweight with its allowed addition: added kg and reps, or resistance-band strength and reps;
 - weights: kg, optional resistance-band strength when allowed, and reps;
 - bodyweight with assistance: assistance kg and reps, or assistance-band strength and reps, according to the single addition its definition allows.
 
-Weights permit decimal values. Reps are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save. Entering the values is the record: a set is *recorded* once it holds everything its mode requires, and nothing else marks it; see [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). A partially entered set is kept as entered and simply does not count. Active-workout auto-save is a functionally important requirement. If a change is permanently refused, it is undone rather than retried: the workout stays usable, every other change is saved, and the screen names the set or exercise whose change was lost.
+Weights permit decimal values. Reps and seconds are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save. Entering the values is the record: a set is *recorded* once it holds everything its mode requires, and nothing else marks it; see [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). A partially entered set is kept as entered and simply does not count. Active-workout auto-save is a functionally important requirement. If a change is permanently refused, it is undone rather than retried: the workout stays usable, every other change is saved, and the screen names the set or exercise whose change was lost.
 
 The accepted technical durability mechanism is defined in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md); this document remains authoritative for user-visible workout behavior.
 
@@ -39,12 +39,10 @@ The accepted technical durability mechanism is defined in [ADR-0019](../decision
 
 During an active workout, its heading carries the performance date and each set is shown on its own line in reps-first notation, such as `3 x BW`, `3 x 10 kg`, or `3 x medium assistance band`.
 
-Incomplete workouts do not qualify because they do not contribute to exercise statistics. See [`history-and-statistics.md`](history-and-statistics.md#statistics-eligibility-and-recalculation).
-
 ## Two kinds of notes
 
 1. **Exercise note** is persistent guidance from the Exercise Library. Its snapshot is read-only during the workout.
-2. **Workout exercise note** applies only to that exercise in this workout. It auto-saves, remains in History, and is not carried into the next workout.
+2. **Workout exercise note** applies to that exercise in this workout. It auto-saves and remains in History. If the immediately preceding completed workout occurrence has a note, it appears as read-only context in the next workout. Completing that next occurrence without a note stops the older note from appearing again.
 
 ## Workout-local changes
 
@@ -79,7 +77,6 @@ The exact timestamps retained for completed History are described in [`domain-mo
 One round check action at the lower-right opens the finish review as an in-place sheet from the current client workout snapshot, so opening the review does not wait for another route or database read. The review shows active duration, exercise count, recorded-set count, and any planned sets left without values, which it names instead of blocking the finish. Its actions stay together in the sheet:
 
 - **Complete Workout**;
-- **Save as Incomplete**;
 - **Continue Workout**;
 - a separate, confirmed action to discard the workout entirely.
 
@@ -87,4 +84,4 @@ Starting or finishing a workout shows a full-viewport progress layer until its p
 
 A completed workout enters History and eligible statistics. It advances rotation only if it was the split proposed by the active rotation, according to [`programs-and-splits.md`](programs-and-splits.md#rotation).
 
-An incomplete workout remains in History but does not enter PRs, exercise charts, or split-duration statistics and never advances rotation. It can later be marked completed; this recalculates statistics but does not affect the then-current rotation.
+Completion saves every entered value and note even when some planned sets are left empty. Empty or partially entered sets simply do not count as recorded sets. There is no incomplete saved-workout state.

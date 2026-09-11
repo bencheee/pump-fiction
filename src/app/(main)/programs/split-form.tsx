@@ -96,6 +96,7 @@ export function SplitForm({
       {
         exerciseId: exercise.id,
         exerciseName: exercise.name,
+        measurementType: exercise.measurementType ?? "reps",
         plannedSets: "3",
         minReps: "8",
         maxReps: "12",
@@ -340,7 +341,13 @@ export function SplitForm({
                       />
                       <NumericField
                         id={`min-reps-${index}`}
-                        label="Min reps"
+                        label={
+                          exerciseLibrary.find(
+                            (exercise) => exercise.id === item.exerciseId,
+                          )?.measurementType === "seconds"
+                            ? "Min seconds"
+                            : "Min reps"
+                        }
                         type="number"
                         min="1"
                         step="1"
@@ -357,7 +364,13 @@ export function SplitForm({
                       />
                       <NumericField
                         id={`max-reps-${index}`}
-                        label="Max reps"
+                        label={
+                          exerciseLibrary.find(
+                            (exercise) => exercise.id === item.exerciseId,
+                          )?.measurementType === "seconds"
+                            ? "Max seconds"
+                            : "Max reps"
+                        }
                         type="number"
                         min="1"
                         step="1"
@@ -444,6 +457,7 @@ function snapshotOf(
     name,
     prescriptions.map((item) => [
       item.exerciseId,
+      item.measurementType,
       item.plannedSets,
       item.minReps,
       item.maxReps,
@@ -457,6 +471,7 @@ function toDraftPrescription(
   return {
     exerciseId: item.exerciseId,
     exerciseName: item.exerciseName,
+    measurementType: item.measurementType ?? "reps",
     plannedSets: String(item.plannedSets),
     minReps: String(item.minReps),
     maxReps: String(item.maxReps),

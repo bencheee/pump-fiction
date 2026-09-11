@@ -1,7 +1,7 @@
 begin;
 
 create extension if not exists pgtap with schema extensions;
-select plan(11);
+select plan(10);
 
 -- T-035 fixtures, prefixed so the other suites and the seed stay unambiguous.
 select public.create_exercise_definition('T-035 Press', 'weights', '', array['weight']::public.load_mode[]);
@@ -24,9 +24,6 @@ select public.set_current_program((select plan_a from t035), (select x_a from t0
 -- Completed proposed X in Plan A; rotation moves to Y.
 select public.start_workout('proposed_split', (select x_a from t035), '', array[]::uuid[], '2026-08-10T10:00:00Z');
 select public.apply_active_workout_command('35000000-0000-4000-8000-000000000101', (select id from public.workouts where status = 'active'), 0, 'finish_workout', '{"outcome":"completed","finishedAt":"2026-08-10T11:00:00Z"}'::jsonb, '2026-08-10T11:00:00Z');
--- Incomplete proposed Y: excluded, and rotation stays on Y.
-select public.start_workout('proposed_split', (select y_a from t035), '', array[]::uuid[], '2026-08-12T10:00:00Z');
-select public.apply_active_workout_command('35000000-0000-4000-8000-000000000102', (select id from public.workouts where status = 'active'), 0, 'finish_workout', '{"outcome":"incomplete","finishedAt":"2026-08-12T10:20:00Z"}'::jsonb, '2026-08-12T10:20:00Z');
 -- Completed alternate X in Plan A: counts for X, rotation untouched.
 select public.start_workout('alternate_split', (select x_a from t035), '', array[]::uuid[], '2026-08-14T10:00:00Z');
 select public.apply_active_workout_command('35000000-0000-4000-8000-000000000103', (select id from public.workouts where status = 'active'), 0, 'finish_workout', '{"outcome":"completed","finishedAt":"2026-08-14T10:30:00Z"}'::jsonb, '2026-08-14T10:30:00Z');
@@ -38,8 +35,7 @@ select public.set_current_program((select plan_b from t035), (select x_b from t0
 select public.start_workout('proposed_split', (select x_b from t035), '', array[]::uuid[], '2026-08-16T10:00:00Z');
 select public.apply_active_workout_command('35000000-0000-4000-8000-000000000105', (select id from public.workouts where status = 'active'), 0, 'finish_workout', '{"outcome":"completed","finishedAt":"2026-08-16T10:50:00Z"}'::jsonb, '2026-08-16T10:50:00Z');
 
-select is(jsonb_array_length(public.list_split_workouts()), 4, 'every saved split-sourced workout is returned and the one-time workout is not');
-select is((select count(*)::integer from jsonb_array_elements(public.list_split_workouts()) as row where row ->> 'status' = 'incomplete'), 1, 'the incomplete workout is returned with its status so the domain can exclude it');
+select is(jsonb_array_length(public.list_split_workouts()), 3, 'every saved split-sourced workout is returned and the one-time workout is not');
 select is((select count(*)::integer from jsonb_array_elements(public.list_split_workouts()) as row where row ->> 'sourceKind' = 'alternate_split'), 1, 'the alternate workout is returned for its split');
 select is(public.list_split_workouts() -> 0 ->> 'workoutDate', '2026-08-16', 'rows come back newest first');
 select is(

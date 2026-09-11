@@ -1,6 +1,7 @@
 create extension if not exists pgcrypto with schema extensions;
 
 create type public.exercise_base_type as enum ('weights', 'bodyweight');
+create type public.exercise_measurement_type as enum ('reps', 'seconds');
 create type public.load_mode as enum (
   'weight',
   'weight_resistance_band',
@@ -12,7 +13,7 @@ create type public.load_mode as enum (
 );
 create type public.band_direction as enum ('resistance', 'assistance');
 create type public.band_strength as enum ('light', 'medium', 'strong');
-create type public.workout_status as enum ('active', 'paused', 'completed', 'incomplete');
+create type public.workout_status as enum ('active', 'paused', 'completed');
 create type public.workout_source_kind as enum ('proposed_split', 'alternate_split', 'one_time');
 create type public.active_workout_command_operation as enum (
   'set_workout_exercise_note',
@@ -42,6 +43,7 @@ create table public.exercises (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   base_type public.exercise_base_type not null,
+  measurement_type public.exercise_measurement_type not null default 'reps',
   persistent_note text not null default '',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
@@ -183,7 +185,7 @@ create table public.workouts (
   check (
     (status = 'active' and active_segment_started_at is not null and finished_at is null)
     or (status = 'paused' and active_segment_started_at is null and finished_at is null)
-    or (status in ('completed', 'incomplete') and active_segment_started_at is null and finished_at is not null)
+    or (status = 'completed' and active_segment_started_at is null and finished_at is not null)
   ),
   check (finished_at is null or finished_at >= started_at),
   check (
@@ -211,7 +213,7 @@ create unique index workouts_single_resumable
 
 create index workouts_history_order
   on public.workouts (workout_date desc, started_at desc)
-  where status in ('completed', 'incomplete');
+  where status = 'completed';
 
 create index workouts_source_split_history
   on public.workouts (source_split_identity_id, workout_date desc)
@@ -228,6 +230,7 @@ create table public.workout_exercises (
   position integer not null check (position > 0),
   exercise_name_snapshot text not null,
   exercise_base_type_snapshot public.exercise_base_type not null,
+  measurement_type_snapshot public.exercise_measurement_type not null default 'reps',
   persistent_note_snapshot text not null default '',
   planned_sets_snapshot integer check (planned_sets_snapshot > 0),
   min_reps_snapshot integer check (min_reps_snapshot > 0),
@@ -586,7 +589,8 @@ create or replace function public.create_exercise_definition(
   p_name text,
   p_base_type public.exercise_base_type,
   p_persistent_note text,
-  p_load_modes public.load_mode[]
+  p_load_modes public.load_mode[],
+  p_measurement_type public.exercise_measurement_type default 'reps'
 )
 returns uuid
 language plpgsql
@@ -595,8 +599,8 @@ as $$
 declare
   created_exercise_id uuid;
 begin
-  insert into public.exercises (name, base_type, persistent_note)
-  values (btrim(p_name), p_base_type, p_persistent_note)
+  insert into public.exercises (name, base_type, measurement_type, persistent_note)
+  values (btrim(p_name), p_base_type, p_measurement_type, p_persistent_note)
   returning id into created_exercise_id;
 
   insert into public.exercise_load_modes (
@@ -616,7 +620,8 @@ create or replace function public.update_exercise_definition(
   p_name text,
   p_base_type public.exercise_base_type,
   p_persistent_note text,
-  p_load_modes public.load_mode[]
+  p_load_modes public.load_mode[],
+  p_measurement_type public.exercise_measurement_type default 'reps'
 )
 returns uuid
 language plpgsql
@@ -638,6 +643,7 @@ begin
   set
     name = btrim(p_name),
     base_type = p_base_type,
+    measurement_type = p_measurement_type,
     persistent_note = p_persistent_note
   where id = p_exercise_id;
 
@@ -1452,14 +1458,14 @@ revoke execute on function public.delete_program(uuid) from public, anon, authen
 revoke execute on function public.delete_split(uuid) from public, anon, authenticated;
 revoke execute on function public.create_program(text) from public, anon, authenticated;
 revoke execute on function public.create_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) from public, anon, authenticated;
-revoke execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
+revoke execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[], public.exercise_measurement_type) from public, anon, authenticated;
 revoke execute on function public.reorder_program_splits(uuid, uuid[]) from public, anon, authenticated;
 revoke execute on function public.reorder_split_exercises(uuid, uuid[]) from public, anon, authenticated;
 revoke execute on function public.set_program_next_split(uuid, uuid) from public, anon, authenticated;
 revoke execute on function public.set_updated_at() from public, anon, authenticated;
 revoke execute on function public.update_program_name(uuid, text) from public, anon, authenticated;
 revoke execute on function public.update_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) from public, anon, authenticated;
-revoke execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) from public, anon, authenticated;
+revoke execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[], public.exercise_measurement_type) from public, anon, authenticated;
 revoke execute on function public.validate_app_time_zone() from public, anon, authenticated;
 revoke execute on function public.validate_current_program() from public, anon, authenticated;
 revoke execute on function public.validate_exercise_load_modes() from public, anon, authenticated;
@@ -1475,14 +1481,14 @@ grant execute on function public.delete_program(uuid) to service_role;
 grant execute on function public.delete_split(uuid) to service_role;
 grant execute on function public.create_program(text) to service_role;
 grant execute on function public.create_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) to service_role;
-grant execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[]) to service_role;
+grant execute on function public.create_exercise_definition(text, public.exercise_base_type, text, public.load_mode[], public.exercise_measurement_type) to service_role;
 grant execute on function public.reorder_program_splits(uuid, uuid[]) to service_role;
 grant execute on function public.reorder_split_exercises(uuid, uuid[]) to service_role;
 grant execute on function public.set_program_next_split(uuid, uuid) to service_role;
 grant execute on function public.set_updated_at() to service_role;
 grant execute on function public.update_program_name(uuid, text) to service_role;
 grant execute on function public.update_split_definition(uuid, text, uuid[], integer[], integer[], integer[]) to service_role;
-grant execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[]) to service_role;
+grant execute on function public.update_exercise_definition(uuid, text, public.exercise_base_type, text, public.load_mode[], public.exercise_measurement_type) to service_role;
 grant execute on function public.validate_app_time_zone() to service_role;
 grant execute on function public.validate_current_program() to service_role;
 grant execute on function public.validate_exercise_load_modes() to service_role;
@@ -1494,6 +1500,7 @@ grant usage on type
   public.band_direction,
   public.band_strength,
   public.exercise_base_type,
+  public.exercise_measurement_type,
   public.load_mode,
   public.workout_source_kind,
   public.workout_status

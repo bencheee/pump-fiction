@@ -59,6 +59,7 @@ describe("SupabaseExerciseRepository", () => {
       const updated = await repository.update(created.id, {
         name: editedName,
         baseType: "bodyweight",
+        measurementType: "seconds",
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
       });
@@ -80,6 +81,7 @@ describe("SupabaseExerciseRepository", () => {
         id: created.id,
         name: editedName,
         baseType: "bodyweight",
+        measurementType: "seconds",
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
         splitUsageCount: 1,

@@ -1,6 +1,7 @@
 import type {
   ExerciseBaseType,
   ExerciseLoadMode,
+  ExerciseMeasurementType,
 } from "@/features/exercises/domain/exercise";
 import type { BandDirection, BandStrength } from "./active-workout-command";
 
@@ -22,6 +23,7 @@ export type TodaySplit = Readonly<{
 export type TodaySplitExercise = Readonly<{
   exerciseId: string;
   exerciseName: string;
+  measurementType?: ExerciseMeasurementType;
   position: number;
   plannedSets: number;
   minReps: number;
@@ -56,7 +58,13 @@ export type WorkoutSet = Readonly<{
 export type LastPerformance = Readonly<{
   workoutId: string;
   workoutDate: string;
+  measurementType?: ExerciseMeasurementType;
   sets: readonly WorkoutSet[];
+}>;
+
+export type PreviousWorkoutNote = Readonly<{
+  workoutDate: string;
+  note: string;
 }>;
 
 export type WorkoutExercise = Readonly<{
@@ -65,6 +73,7 @@ export type WorkoutExercise = Readonly<{
   position: number;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
+  measurementType?: ExerciseMeasurementType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
   plannedSets: number | null;
@@ -73,6 +82,7 @@ export type WorkoutExercise = Readonly<{
   workoutNote: string;
   sets: readonly WorkoutSet[];
   lastPerformance: LastPerformance | null;
+  previousWorkoutNote?: PreviousWorkoutNote | null;
 }>;
 
 export type CurrentWorkout = Readonly<{

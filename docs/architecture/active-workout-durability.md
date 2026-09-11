@@ -29,7 +29,7 @@ type ActiveWorkoutCommand = {
 };
 ```
 
-`update_set` replaces the complete current set payload, so mode changes cannot retain inapplicable hidden values. It carries no confirmation field: whether a set counts is derived from its values, not sent by the client. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed, incomplete, and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI consumes this union and must not create a parallel mutation path.
+`update_set` replaces the complete current set payload, so mode changes cannot retain inapplicable hidden values. It carries no confirmation field: whether a set counts is derived from its values, not sent by the client. Adding and removing sets, adding/removing/reordering workout exercises, notes, and timer transitions are discrete commands. Populated set/exercise removal carries explicit confirmation evidence. `finish_workout` owns completed and discard outcomes; it also performs any eligible proposed-split rotation transition in the same transaction. The UI consumes this union and must not create a parallel mutation path.
 
 The thin Route Handler parses JSON, calls the server composition boundary, and maps the application result to HTTP:
 
@@ -63,7 +63,7 @@ Discard deletes the canonical workout and its owned occurrences/sets while retai
 
 Split starts copy program/split identity and names, ordered exercise identity/definition/note/modes, prescription, and exactly the planned number of empty set rows. One-time starts copy the ordered active exercise definitions and create one empty workout-local starter set per selected exercise without inventing a split prescription. Starting never advances rotation.
 
-`get_current_workout()` returns the authoritative resumable aggregate, including revision, timer persistence, ordered exercises/sets, snapshots, workout notes, and the latest eligible completed performance for each persistent exercise identity. Incomplete workouts are excluded from Last time.
+`get_current_workout()` returns the authoritative resumable aggregate, including revision, timer persistence, ordered exercises/sets, snapshots, workout notes, the latest eligible completed performance, and the immediately previous workout note for each persistent exercise identity.
 
 ## IndexedDB outbox and delivery
 

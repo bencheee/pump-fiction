@@ -16,6 +16,7 @@ export type Program = Readonly<{
 export type SplitExercisePrescription = Readonly<{
   exerciseId: string;
   exerciseName: string;
+  measurementType?: import("@/features/exercises/domain/exercise").ExerciseMeasurementType;
   position: number;
   plannedSets: number;
   minReps: number;

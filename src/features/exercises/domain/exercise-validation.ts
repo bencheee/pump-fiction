@@ -3,14 +3,17 @@ import {
   baseLoadModeByBaseType,
   exerciseBaseTypes,
   exerciseLoadModes,
+  exerciseMeasurementTypes,
   type ExerciseBaseType,
   type ExerciseDefinition,
   type ExerciseLoadMode,
+  type ExerciseMeasurementType,
 } from "./exercise";
 
 export type ExerciseDefinitionInput = Readonly<{
   name: unknown;
   baseType: unknown;
+  measurementType?: unknown;
   allowedLoadModes: unknown;
   persistentNote: unknown;
 }>;
@@ -28,6 +31,12 @@ export function validateExerciseDefinition(
   const fieldErrors: Record<string, string[]> = {};
   const name = typeof input.name === "string" ? input.name.trim() : "";
   const baseType = isExerciseBaseType(input.baseType) ? input.baseType : null;
+  const measurementType =
+    input.measurementType === undefined
+      ? "reps"
+      : isExerciseMeasurementType(input.measurementType)
+        ? input.measurementType
+        : null;
   const persistentNote =
     typeof input.persistentNote === "string" ? input.persistentNote : null;
   const allowedLoadModes = parseLoadModes(input.allowedLoadModes);
@@ -38,6 +47,10 @@ export function validateExerciseDefinition(
 
   if (baseType === null) {
     fieldErrors.baseType = ["Choose an exercise type."];
+  }
+
+  if (measurementType === null) {
+    fieldErrors.measurementType = ["Choose whether sets use reps or seconds."];
   }
 
   if (persistentNote === null) {
@@ -54,6 +67,7 @@ export function validateExerciseDefinition(
   if (
     Object.keys(fieldErrors).length > 0 ||
     baseType === null ||
+    measurementType === null ||
     persistentNote === null ||
     allowedLoadModes === null
   ) {
@@ -65,10 +79,17 @@ export function validateExerciseDefinition(
     value: {
       name,
       baseType,
+      measurementType,
       allowedLoadModes,
       persistentNote,
     },
   };
+}
+
+function isExerciseMeasurementType(
+  value: unknown,
+): value is ExerciseMeasurementType {
+  return exerciseMeasurementTypes.some((type) => type === value);
 }
 
 function parseLoadModes(value: unknown): ExerciseLoadMode[] | null {

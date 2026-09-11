@@ -1,5 +1,6 @@
 import { setModeFields } from "../domain/set-entry";
 import type { LastPerformance, WorkoutSet } from "../domain/workout";
+import type { ExerciseMeasurementType } from "@/features/exercises/domain/exercise";
 
 export function formatWorkoutClock(seconds: number): string {
   const whole = Math.max(0, Math.floor(seconds));
@@ -11,7 +12,10 @@ export function formatWorkoutClock(seconds: number): string {
     : `${minutes}:${String(remainder).padStart(2, "0")}`;
 }
 
-export function formatSetSummary(set: WorkoutSet): string {
+export function formatSetSummary(
+  set: WorkoutSet,
+  measurementType: ExerciseMeasurementType = "reps",
+): string {
   const parts: string[] = [];
   if (set.loadMode !== null) {
     const fields = setModeFields[set.loadMode];
@@ -24,13 +28,18 @@ export function formatSetSummary(set: WorkoutSet): string {
     if (fields.band !== null && set.bandStrength !== null)
       parts.push(`${set.bandStrength} ${fields.band} band`);
   }
-  if (set.reps !== null) parts.push(`× ${set.reps}`);
+  if (set.reps !== null)
+    parts.push(
+      measurementType === "seconds" ? `${set.reps} sec` : `× ${set.reps}`,
+    );
   return parts.length > 0 ? parts.join(" ") : "No values";
 }
 
 export function formatLastPerformance(performance: LastPerformance): string {
   const date = formatLastPerformanceDate(performance.workoutDate);
-  const sets = performance.sets.map(formatSetSummary).join(", ");
+  const sets = performance.sets
+    .map((set) => formatSetSummary(set, performance.measurementType))
+    .join(", ");
   return sets.length > 0 ? `${date} · ${sets}` : date;
 }
 
@@ -42,8 +51,15 @@ export function formatLastPerformanceDate(workoutDate: string): string {
   }).format(new Date(`${workoutDate}T00:00:00Z`));
 }
 
-export function formatWorkoutSetLine(set: WorkoutSet): string {
+export function formatWorkoutSetLine(
+  set: WorkoutSet,
+  measurementType: ExerciseMeasurementType = "reps",
+): string {
   const reps = set.reps ?? "—";
+  if (measurementType === "seconds") {
+    const load = formatSetSummary({ ...set, reps: null });
+    return load === "No values" ? `${reps} sec` : `${load} · ${reps} sec`;
+  }
   if (set.loadMode === null) return `${reps} x —`;
 
   switch (set.loadMode) {

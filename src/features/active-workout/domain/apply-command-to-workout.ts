@@ -108,6 +108,7 @@ function applyOperation(
             position: workout.exercises.length + 1,
             exerciseName: "",
             exerciseBaseType: "weights",
+            measurementType: "reps",
             allowedLoadModes: [],
             persistentNote: "",
             plannedSets: null,
@@ -116,6 +117,7 @@ function applyOperation(
             workoutNote: "",
             sets: [],
             lastPerformance: null,
+            previousWorkoutNote: null,
           },
         ],
       };

@@ -83,7 +83,7 @@ export function validateHistoryCorrection(
     if (!isBandStrength(input.bandStrength))
       return invalid("bandStrength", "Choose a band strength.");
     if (!isNullablePositiveInteger(input.reps))
-      return invalid("reps", "Enter whole reps above zero.");
+      return invalid("reps", "Enter a whole number above zero.");
     return {
       ok: true,
       value: {
@@ -172,7 +172,7 @@ export function validateHistoryCorrection(
     };
   }
 
-  if (input.kind === "mark_completed" || input.kind === "delete") {
+  if (input.kind === "delete") {
     if (!isUuid(input.workoutId))
       return invalid("workoutId", "Choose a saved workout.");
     return {

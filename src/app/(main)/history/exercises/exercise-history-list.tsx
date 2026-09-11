@@ -83,7 +83,7 @@ function latestSummary(entry: ExerciseHistoryEntry): string {
   if (latest === null) return "No eligible performance yet";
   const best = latest.sets
     .filter((set) => set.loadMode !== null && set.reps !== null)
-    .map(formatSetSummary);
+    .map((set) => formatSetSummary(set, latest.measurementType));
   return [formatHistoryDate(latest.workoutDate), best.at(0) ?? "Recorded"].join(
     " · ",
   );

@@ -195,21 +195,6 @@ describe("workout history operations", () => {
     expect(repository.getById).not.toHaveBeenCalled();
   });
 
-  it("explains that the current workout is not corrected from History", async () => {
-    const repository = createRepository();
-    repository.correct.mockRejectedValueOnce(
-      new WorkoutHistoryRepositoryError("conflict"),
-    );
-    const result = await correctHistoryWorkout(repository, {
-      kind: "mark_completed",
-      workoutId,
-    });
-    expect(result).toMatchObject({
-      ok: false,
-      error: { code: "conflict", retryable: false },
-    });
-  });
-
   it("asks for confirmation before removing recorded data", async () => {
     const repository = createRepository();
     repository.correct.mockRejectedValueOnce(

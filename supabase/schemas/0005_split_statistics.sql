@@ -34,7 +34,7 @@ as $$
     from public.workouts as workout
     left join public.splits as split on split.id = workout.source_split_identity_id
     left join public.programs as program on program.id = workout.source_program_identity_id
-    where workout.status in ('completed', 'incomplete')
+    where workout.status = 'completed'
       and workout.source_kind in ('proposed_split', 'alternate_split')
   ), '[]'::jsonb);
 $$;

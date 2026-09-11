@@ -14,7 +14,7 @@ import { fillHydrated } from "./support/hydration";
 // removed again, and nothing touches today, which may hold a real weigh-in.
 const month = { from: "2026-05-01", to: "2026-05-31" };
 const completedAt = "2026-05-12";
-const incompleteAt = "2026-05-14";
+const secondCompletedAt = "2026-05-14";
 const weighIns = ["2026-05-08", "2026-05-11"] as const;
 const measuredAt = ["2026-05-08", "2026-05-15"] as const;
 
@@ -236,16 +236,15 @@ async function expectEverythingPresent(
     page.getByRole("link", { name: "Resume Workout" }),
   ).toBeVisible();
 
-  // Completed and incomplete workouts, the latter marked as such.
+  // Completed workouts.
   await page.goto("/history/workouts");
   await expect(
     page.getByRole("link", { name: new RegExp(fixture.pushSplit) }).first(),
   ).toBeVisible();
-  const incomplete = page
+  const secondCompleted = page
     .getByRole("link", { name: new RegExp(fixture.legsSplit) })
     .first();
-  await expect(incomplete).toBeVisible();
-  await expect(incomplete).toContainText("Incomplete");
+  await expect(secondCompleted).toBeVisible();
 
   // Weight entries.
   await page.goto("/body/weight");
@@ -367,11 +366,11 @@ async function seed(stamp: string) {
       },
     ],
   });
-  const incompleteWorkoutId = await recordWorkout(client, {
+  const secondCompletedWorkoutId = await recordWorkout(client, {
     splitId: legsSplitId,
-    startedAt: `${incompleteAt}T10:00:00Z`,
-    finishedAt: `${incompleteAt}T10:30:00Z`,
-    outcome: "incomplete",
+    startedAt: `${secondCompletedAt}T10:00:00Z`,
+    finishedAt: `${secondCompletedAt}T10:30:00Z`,
+    outcome: "completed",
     entries: [
       {
         exerciseId: pressId,
@@ -452,7 +451,7 @@ async function seed(stamp: string) {
     legsSplitId,
     legsSplit,
     completedWorkoutId,
-    incompleteWorkoutId,
+    secondCompletedWorkoutId,
     waistId,
     waist,
     armId,
@@ -467,7 +466,7 @@ async function recordWorkout(
     splitId: string;
     startedAt: string;
     finishedAt: string;
-    outcome: "completed" | "incomplete";
+    outcome: "completed";
     entries: {
       exerciseId: string;
       position: number;
@@ -612,7 +611,7 @@ async function cleanUp(fixture: Fixture) {
     client
       .from("workouts")
       .delete()
-      .in("id", [fixture.completedWorkoutId, fixture.incompleteWorkoutId]),
+      .in("id", [fixture.completedWorkoutId, fixture.secondCompletedWorkoutId]),
   );
   await mustSucceed(
     client

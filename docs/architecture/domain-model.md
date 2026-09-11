@@ -6,7 +6,7 @@ This is a logical model, not the SQL schema. Local persistence is accepted as Su
 
 ### `exercises`
 
-Persistent exercise definitions: identity, unique name, base type, and persistent note. There is no status; removal is deletion, per [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
+Persistent exercise definitions: identity, unique name, base type, set measurement (`reps` or `seconds`, defaulting to reps), and persistent note. There is no status; removal is deletion, per [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
 
 ### `exercise_load_modes`
 
@@ -34,7 +34,7 @@ Rotation semantics are canonical in [`programs-and-splits.md`](../product/progra
 
 ### `workouts`
 
-Stores status (active/paused/completed/incomplete as required by the lifecycle), source kind (proposed split, today-only alternate split, or one-time), source references where applicable, snapshot program/split names, custom one-time name where applicable, local workout date, start and finish timestamps, accumulated active duration, current active-segment start timestamp when running, and enough source context to apply but never retroactively reapply the rotation rule.
+Stores status (`active`, `paused`, or `completed`), source kind (proposed split, today-only alternate split, or one-time), source references where applicable, snapshot program/split names, custom one-time name where applicable, local workout date, start and finish timestamps, accumulated active duration, current active-segment start timestamp when running, and enough source context to apply but never retroactively reapply the rotation rule.
 
 Only one workout may be active or paused as the resumable current workout.
 
@@ -42,7 +42,7 @@ The physical schema must enforce that invariant and maintain a workout revision 
 
 ### `workout_exercises`
 
-Ordered exercise performances within a workout. Each retains the original exercise reference plus exercise and prescription snapshots, and its workout-specific note.
+Ordered exercise performances within a workout. Each retains the original exercise reference plus exercise, measurement, and prescription snapshots, and its workout-specific note.
 
 It also stores `exercise_identity_id`, a `not null` snapshot of the exercise's id that is never cleared. The reference says whether the definition is still in the library; the identity is what Exercise History groups by, so performances stay combined after the definition is deleted. `workouts` stores `source_program_identity_id` and `source_split_identity_id` the same way for split-sourced workouts. See the identity amendment in [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
 
@@ -98,12 +98,11 @@ One singleton application-settings record (`id = 1`) holds the configured IANA t
 
 ## Historical correction
 
-A saved `completed` or `incomplete` workout is corrected through the ordinary transactional operations in `0003_workout_history.sql`, never through the active-workout command flow. Every one of them refuses an `active` or `paused` workout, so the two write paths cannot overlap, and none of them writes to a template row or a rotation pointer.
+A saved `completed` workout is corrected through the ordinary transactional operations in `0003_workout_history.sql`, never through the active-workout command flow. Every one of them refuses an `active` or `paused` workout, so the two write paths cannot overlap, and none of them writes to a template row or a rotation pointer.
 
 Two rules constrain what a correction may change:
 
 - The recorded active duration stays as measured. Editing the date, start, or finish does not recompute it, because paused wall-clock time cannot be reconstructed afterwards.
-- Completion moves only from `incomplete` to `completed`. Returning a completed workout to incomplete would silently withdraw statistics and is not an accepted operation.
 
 Correcting a set applies the same snapshotted allowed modes, shape check, and positive-value checks that constrain a set entered during the workout, so History cannot hold a set the active workout could not have produced.
 

@@ -31,7 +31,7 @@ A measurement type keeps no snapshot layer, because its entries are the only rec
 ## Consequences
 
 - Deleting an exercise, split, or program is permanent and immediate, and no screen offers archiving or reactivation.
-- Every completed and incomplete workout keeps its sets, notes, duration, and names after any deletion, so History and statistics are unaffected.
+- Every saved workout keeps its sets, notes, duration, and names after any deletion, so History and statistics are unaffected.
 - Deleted definitions can no longer be recovered; the Owner accepted that in exchange for a model without hidden state.
 - `MVP-EXE-008`, `MVP-PRG-001`, `MVP-PRG-007`, `MVP-BOD-001`, the History wording for deleted exercises, and the release-boundary archiving bullet are rewritten for deletion.
 - [ADR-0002](0002-template-snapshot-history-model.md) keeps its snapshot decision; only its archiving language is superseded here.

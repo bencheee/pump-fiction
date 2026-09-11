@@ -75,7 +75,7 @@ function setBaseMode(exercise: WorkoutExercise): ExerciseLoadMode {
 }
 
 type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
-type FinishOutcome = "completed" | "incomplete" | "discarded";
+type FinishOutcome = "completed" | "discarded";
 
 export function ActiveWorkoutExperience({
   initial,
@@ -659,14 +659,6 @@ function FinishWorkoutSheet({
             >
               Complete Workout
             </Action>
-            <Action
-              variant="secondary"
-              className="w-full"
-              disabled={submitting}
-              onClick={() => onFinish("incomplete")}
-            >
-              Save as Incomplete
-            </Action>
             <button
               type="button"
               onClick={close}
@@ -781,7 +773,7 @@ function ExerciseCard({
     exercise.plannedSets !== null
       ? `${exercise.plannedSets} planned${
           exercise.minReps !== null && exercise.maxReps !== null
-            ? ` × ${exercise.minReps}–${exercise.maxReps} reps`
+            ? ` × ${exercise.minReps}–${exercise.maxReps} ${exercise.measurementType === "seconds" ? "sec" : "reps"}`
             : ""
         } · ${recordedCount} of ${exercise.sets.length} recorded`
       : `Workout-local, no prescription · ${recordedCount} of ${exercise.sets.length} recorded`;
@@ -900,6 +892,20 @@ function ExerciseCard({
           </div>
         ) : null}
 
+        {exercise.previousWorkoutNote ? (
+          <div className="mt-3 border-l-2 border-[var(--pf-accent-strong)] pl-3">
+            <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+              Note from last workout ·{" "}
+              {formatLastPerformanceDate(
+                exercise.previousWorkoutNote.workoutDate,
+              )}
+            </p>
+            <p className="mt-1 text-[13px] leading-[1.4] [overflow-wrap:anywhere]">
+              {exercise.previousWorkoutNote.note}
+            </p>
+          </div>
+        ) : null}
+
         <div className="mt-3 border-t border-[var(--pf-border)] pt-3">
           <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
             Last time
@@ -910,7 +916,12 @@ function ExerciseCard({
           {exercise.lastPerformance !== null ? (
             <ul className="pf-numeric mt-1 space-y-0.5 text-[13px] [overflow-wrap:anywhere]">
               {exercise.lastPerformance.sets.map((set) => (
-                <li key={set.id}>{formatWorkoutSetLine(set)}</li>
+                <li key={set.id}>
+                  {formatWorkoutSetLine(
+                    set,
+                    exercise.lastPerformance?.measurementType,
+                  )}
+                </li>
               ))}
             </ul>
           ) : (
@@ -1107,7 +1118,7 @@ function SetRow({
         ) : null}
         <div className="relative min-w-0 flex-1">
           <label className="sr-only" htmlFor={`set-${set.id}-reps`}>
-            Reps
+            {exercise.measurementType === "seconds" ? "Seconds" : "Reps"}
           </label>
           <input
             id={`set-${set.id}-reps`}
@@ -1125,7 +1136,7 @@ function SetRow({
             aria-hidden="true"
             className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[9px] font-semibold text-[var(--pf-text-3-deep)] uppercase"
           >
-            Reps
+            {exercise.measurementType === "seconds" ? "Sec" : "Reps"}
           </span>
         </div>
         {optionalMode !== null && modeLabel !== null ? (

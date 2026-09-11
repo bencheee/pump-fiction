@@ -142,7 +142,7 @@ describe("split progress detail", () => {
     expect(card("Latest").getByText("1 h")).toBeInTheDocument();
     expect(card("Total").getByText("3 h")).toBeInTheDocument();
     expect(
-      screen.getByText(/One-time workouts and workouts saved as incomplete/),
+      screen.getByText(/One-time workouts are excluded/),
     ).toBeInTheDocument();
   });
 

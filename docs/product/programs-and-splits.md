@@ -38,7 +38,7 @@ Exercises in one-time workouts still contribute to exercise history and statisti
 
 Program editing includes **Set as Next**, which persistently changes the rotation pointer. It is distinct from choosing a different split only for today.
 
-An incomplete workout never advances rotation. Marking it completed later from History still does not change the current rotation. Deleting or editing historical workouts also never rewinds or changes rotation. Completion semantics are canonical in [`workouts.md`](workouts.md#finishing-a-workout).
+Completing the proposed workout advances rotation even when some planned sets are empty. Discarding it does not. Deleting or editing historical workouts never rewinds or changes rotation. Completion semantics are canonical in [`workouts.md`](workouts.md#finishing-a-workout).
 
 ## Deleting programs and splits
 

@@ -102,9 +102,32 @@ describe("ExerciseForm", () => {
     expect(actions.create).toHaveBeenCalledWith({
       name: "Pull-up",
       baseType: "bodyweight",
+      measurementType: "reps",
       allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
       persistentNote: "",
     });
+  });
+
+  it("defaults to reps and can save a seconds override", async () => {
+    const user = userEvent.setup();
+    actions.create.mockResolvedValue({ ok: true, value: { id: "created" } });
+    renderForm(<ExerciseForm />);
+
+    const measurement = screen.getByRole("group", {
+      name: "Set measurement options",
+    });
+    expect(
+      within(measurement).getByRole("button", { name: "Reps" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await user.click(
+      within(measurement).getByRole("button", { name: "Seconds" }),
+    );
+    await user.type(screen.getByLabelText("Name"), "Side plank");
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
+
+    expect(actions.create).toHaveBeenCalledWith(
+      expect.objectContaining({ measurementType: "seconds" }),
+    );
   });
 
   it("reports unsaved changes only after the form is edited", async () => {
@@ -209,6 +232,7 @@ describe("ExerciseForm", () => {
     expect(actions.create).toHaveBeenCalledWith({
       name: "Assisted dip",
       baseType: "bodyweight",
+      measurementType: "reps",
       allowedLoadModes: ["bodyweight", "assistance_weight"],
       persistentNote: "",
     });

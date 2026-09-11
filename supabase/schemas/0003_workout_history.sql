@@ -1,6 +1,6 @@
 -- T-031: workout History reads and corrections.
 --
--- History owns the saved `completed` and `incomplete` workouts. The current
+-- History owns saved `completed` workouts. The current
 -- `active` or `paused` workout is never corrected from here: it belongs to the
 -- revisioned command flow in `0002_workout_operations.sql`. Every function below
 -- refuses it, so the two write paths cannot overlap.
@@ -43,7 +43,7 @@ as $$
           )
       ) as performed_exercise_count
     from public.workouts as workout
-    where workout.status in ('completed', 'incomplete')
+    where workout.status = 'completed'
   ), months as (
     select
       pg_catalog.to_char(entry.workout_date, 'YYYY-MM') as month,
@@ -105,6 +105,7 @@ as $$
             'position', occurrence.position,
             'exerciseName', occurrence.exercise_name_snapshot,
             'exerciseBaseType', occurrence.exercise_base_type_snapshot,
+            'measurementType', occurrence.measurement_type_snapshot,
             'allowedLoadModes', coalesce((
               select jsonb_agg(mode.load_mode order by mode.load_mode)
               from public.workout_exercise_load_modes as mode
@@ -136,7 +137,7 @@ as $$
     )
     from public.workouts as workout
     where workout.id = p_workout_id
-      and workout.status in ('completed', 'incomplete')
+      and workout.status = 'completed'
   ), 'null'::jsonb);
 $$;
 
@@ -153,7 +154,7 @@ declare
 begin
   select workout.* into target from public.workouts as workout where workout.id = p_workout_id for update;
   if not found then raise exception using errcode = 'PF201', message = 'Workout does not exist'; end if;
-  if target.status not in ('completed', 'incomplete') then raise exception using errcode = 'PF202', message = 'The current workout is corrected from the active workout, not from History'; end if;
+  if target.status <> 'completed' then raise exception using errcode = 'PF202', message = 'The current workout is corrected from the active workout, not from History'; end if;
   return target;
 end;
 $$;
@@ -304,8 +305,8 @@ begin
   -- A corrected workout receives the definition as it stands now, exactly as an
   -- exercise added during a workout does. Existing occurrences keep their own
   -- older snapshots.
-  insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, persistent_note_snapshot)
-  values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.persistent_note)
+  insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, persistent_note_snapshot)
+  values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.measurement_type, source_exercise.persistent_note)
   returning * into created_occurrence;
   insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
   select created_occurrence.id, source_exercise.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = source_exercise.id;
@@ -371,23 +372,6 @@ begin
 end;
 $$;
 
-create or replace function public.mark_history_workout_completed(p_workout_id uuid)
-returns void
-language plpgsql
-security invoker
-set search_path = ''
-as $$
-declare
-  target public.workouts%rowtype;
-begin
-  target = public.require_history_workout(p_workout_id);
-  if target.status <> 'incomplete' then raise exception using errcode = 'PF202', message = 'Only an incomplete workout can be marked completed'; end if;
-  -- Rotation is deliberately untouched. A workout completed after the fact
-  -- never advances or rewinds the then-current pointer.
-  update public.workouts set status = 'completed' where id = p_workout_id;
-end;
-$$;
-
 create or replace function public.delete_history_workout(p_workout_id uuid)
 returns void
 language plpgsql
@@ -414,7 +398,6 @@ revoke execute on function public.remove_history_set(uuid, boolean) from public,
 revoke execute on function public.add_history_workout_exercise(uuid, uuid) from public, anon, authenticated;
 revoke execute on function public.remove_history_workout_exercise(uuid, boolean) from public, anon, authenticated;
 revoke execute on function public.reorder_history_workout_exercises(uuid, uuid[]) from public, anon, authenticated;
-revoke execute on function public.mark_history_workout_completed(uuid) from public, anon, authenticated;
 revoke execute on function public.delete_history_workout(uuid) from public, anon, authenticated;
 
 grant execute on function public.list_workout_history() to service_role;
@@ -428,5 +411,4 @@ grant execute on function public.remove_history_set(uuid, boolean) to service_ro
 grant execute on function public.add_history_workout_exercise(uuid, uuid) to service_role;
 grant execute on function public.remove_history_workout_exercise(uuid, boolean) to service_role;
 grant execute on function public.reorder_history_workout_exercises(uuid, uuid[]) to service_role;
-grant execute on function public.mark_history_workout_completed(uuid) to service_role;
 grant execute on function public.delete_history_workout(uuid) to service_role;

@@ -104,15 +104,13 @@ const completed: HistoryWorkout = {
   ],
 };
 
-const incomplete: HistoryWorkout = { ...completed, status: "incomplete" };
-
 const summary: HistoryWorkoutSummary = {
   id: workoutId,
   workoutDate: "2026-08-09",
   name: "Push",
   programName: "Strength",
   sourceKind: "proposed_split",
-  status: "incomplete",
+  status: "completed",
   activeDurationSeconds: 3600,
   performedExerciseCount: 1,
 };
@@ -140,21 +138,6 @@ describe("workout History detail", () => {
     expect(screen.getByText("1 h")).toBeInTheDocument();
   });
 
-  it("offers marking an incomplete workout completed and explains the exclusion", async () => {
-    const user = userEvent.setup();
-    render(<WorkoutDetail workout={incomplete} />);
-
-    expect(
-      screen.getByText(/does not feed personal records/),
-    ).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Mark completed" }));
-
-    expect(actions.correct).toHaveBeenCalledWith({
-      kind: "mark_completed",
-      workoutId,
-    });
-  });
-
   it("requires confirmation before deleting and returns to the list", async () => {
     const user = userEvent.setup();
     render(<WorkoutDetail workout={completed} />);
@@ -170,26 +153,6 @@ describe("workout History detail", () => {
 
     expect(actions.correct).toHaveBeenCalledWith({ kind: "delete", workoutId });
     expect(actions.push).toHaveBeenCalledWith("/history/workouts");
-  });
-
-  it("reports a failed correction without leaving the screen", async () => {
-    const user = userEvent.setup();
-    actions.correct.mockResolvedValue({
-      ok: false,
-      error: {
-        code: "conflict",
-        message: "That workout is still in progress.",
-        retryable: false,
-      },
-    });
-    render(<WorkoutDetail workout={incomplete} />);
-
-    await user.click(screen.getByRole("button", { name: "Mark completed" }));
-
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "That workout is still in progress.",
-    );
-    expect(actions.push).not.toHaveBeenCalled();
   });
 });
 

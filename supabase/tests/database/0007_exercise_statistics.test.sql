@@ -47,23 +47,6 @@ select public.apply_active_workout_command(
   '2026-08-10T11:00:00Z'
 );
 
--- An incomplete September workout that still holds a recorded set. Completing
--- the first workout advanced rotation onto T-033 B, so it starts as proposed.
-select public.start_workout('proposed_split', (select id from public.splits where name = 'T-033 B'), '', array[]::uuid[], '2026-09-02T10:00:00Z');
-select public.apply_active_workout_command(
-  '33000000-0000-4000-8000-000000000104',
-  (select id from public.workouts where status = 'active'), 0, 'update_set',
-  jsonb_build_object('workoutSetId', (select workout_set.id from public.workout_sets as workout_set join public.workout_exercises as occurrence on occurrence.id = workout_set.workout_exercise_id join public.workouts as workout on workout.id = occurrence.workout_id where workout.status = 'active' limit 1),
-    'loadMode', 'weight', 'loadKg', 200, 'bandDirection', null, 'bandStrength', null, 'reps', 20),
-  '2026-09-02T10:05:00Z'
-);
-select public.apply_active_workout_command(
-  '33000000-0000-4000-8000-000000000105',
-  (select id from public.workouts where status = 'active'), 1, 'finish_workout',
-  '{"outcome":"incomplete","finishedAt":"2026-09-02T10:30:00Z"}'::jsonb,
-  '2026-09-02T10:30:00Z'
-);
-
 -- A second exercise whose definition is then deleted.
 select public.add_history_workout_exercise(
   (select id from public.workouts where split_name_snapshot = 'T-033 A'),
@@ -83,27 +66,27 @@ select is((public.list_exercise_history() -> 1 ->> 'stillInLibrary')::boolean, t
 select is(
   public.list_exercise_history() -> 1 -> 'latestPerformance' ->> 'workoutId',
   (select id::text from public.workouts where split_name_snapshot = 'T-033 A'),
-  'the latest performance skips the newer incomplete workout'
+  'the latest completed performance is returned'
 );
 
 -- One identity's performances
 select is(
   jsonb_array_length(public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances'),
-  2,
-  'both the completed and the incomplete performance are returned'
+  1,
+  'the completed performance is returned'
 );
 select is(
   public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances' -> 0 ->> 'status',
-  'incomplete',
-  'performances come back newest first, incomplete included and marked'
+  'completed',
+  'performances carry the single saved status'
 );
 select is(
-  jsonb_array_length(public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances' -> 1 -> 'sets'),
+  jsonb_array_length(public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances' -> 0 -> 'sets'),
   2,
   'each performance carries its stored sets'
 );
 select is(
-  public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances' -> 1 -> 'sets' -> 0 ->> 'loadKg',
+  public.get_exercise_performances((select id from public.exercises where name = 'T-033 Press')) -> 'performances' -> 0 -> 'sets' -> 0 ->> 'loadKg',
   '60.00',
   'set values are returned as stored'
 );

@@ -34,6 +34,7 @@ describe("exercise operations", () => {
     expect(repository.create).toHaveBeenCalledWith({
       name: "Pull-up",
       baseType: "bodyweight",
+      measurementType: "reps",
       allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
       persistentNote: "Keep the ribs down.",
     });
@@ -84,6 +85,7 @@ describe("exercise operations", () => {
     const assistanceAndBand = await createExercise(repository, {
       name: "Assisted dip",
       baseType: "bodyweight",
+      measurementType: "reps",
       allowedLoadModes: ["bodyweight", "assistance_weight", "assistance_band"],
       persistentNote: "",
     });
@@ -132,6 +134,7 @@ describe("exercise operations", () => {
     expect(repository.create).toHaveBeenCalledWith({
       name: "Assisted dip",
       baseType: "bodyweight",
+      measurementType: "reps",
       allowedLoadModes: ["bodyweight", "assistance_weight"],
       persistentNote: "",
     });

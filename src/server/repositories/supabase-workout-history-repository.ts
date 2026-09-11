@@ -100,10 +100,6 @@ export class SupabaseWorkoutHistoryRepository implements WorkoutHistoryRepositor
           p_workout_id: correction.workoutId,
           p_workout_exercise_ids: [...correction.workoutExerciseIds],
         });
-      case "mark_completed":
-        return this.client.rpc("mark_history_workout_completed", {
-          p_workout_id: correction.workoutId,
-        });
       case "delete":
         return this.client.rpc("delete_history_workout", {
           p_workout_id: correction.workoutId,

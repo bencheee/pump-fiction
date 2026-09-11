@@ -141,16 +141,6 @@ const statistics: ExerciseStatistics = {
         },
       ],
     },
-    {
-      workoutId: "34000000-0000-4000-8000-000000000011",
-      workoutExerciseId: "34000000-0000-4000-8000-000000000021",
-      workoutDate: "2026-09-02",
-      workoutName: "Pull",
-      status: "incomplete",
-      sourceKind: "proposed_split",
-      workoutNote: "",
-      sets: [],
-    },
   ],
   series: {
     metric: "top_load",
@@ -270,7 +260,7 @@ describe("exercise progress detail", () => {
     });
   });
 
-  it("links each performance to its workout and marks the excluded one", () => {
+  it("links each performance to its workout", () => {
     render(
       <ExerciseStatisticsView statistics={statistics} localDate="2026-09-05" />,
     );
@@ -278,9 +268,5 @@ describe("exercise progress detail", () => {
     expect(
       screen.getByRole("link", { name: /Sun 9 Aug · Push/ }),
     ).toHaveAttribute("href", `/history/workouts/${workoutId}`);
-    expect(screen.getByText("Incomplete")).toBeInTheDocument();
-    expect(
-      screen.getByText(/does not feed personal records/),
-    ).toBeInTheDocument();
   });
 });

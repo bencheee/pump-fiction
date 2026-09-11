@@ -27,7 +27,7 @@ The bottom navigation exposes exactly Today, History, Programs, Exercises, and B
 
 ### MVP-REL-003 — Persistent canonical history
 
-Reloading or reopening the application preserves exercise definitions, programs, splits, rotation state, active-workout state, completed and incomplete workouts, weight entries, measurement types, and measurement entries.
+Reloading or reopening the application preserves exercise definitions, programs, splits, rotation state, active-workout state, completed workouts, weight entries, measurement types, and measurement entries.
 
 ### MVP-REL-004 — No silent data reinterpretation
 
@@ -115,11 +115,11 @@ The user can reorder splits in a program and exercises in a split through a name
 
 ### MVP-PRG-005 — Proposed-split rotation
 
-Starting the proposed split does not move rotation. Completing it advances to the next active split, wrapping after the last active split. Saving it incomplete, discarding it, editing it later, or deleting it later does not advance or rewind rotation.
+Starting the proposed split does not move rotation. Completing it advances to the next active split, wrapping after the last active split. Discarding it, editing it later, or deleting it later does not advance or rewind rotation.
 
 ### MVP-PRG-006 — Alternate and one-time rotation
 
-Completing a Today-only alternate split or a one-time workout never advances rotation. Marking an incomplete historical workout completed later also never changes the then-current rotation.
+Completing a Today-only alternate split or a one-time workout never advances rotation.
 
 ### MVP-PRG-007 — Delete a split
 
@@ -139,7 +139,7 @@ Each snapshotted split exercise initially receives exactly its planned number of
 
 ### MVP-WRK-003 — Per-set mode and validation
 
-Each set displays only the inputs of its snapshot's implied mode, and where the definition permits an addition each set can independently apply or remove exactly that addition. No set offers a menu of modes. Decimal load/assistance values are allowed where applicable, reps must be positive integers, and no screen offers a confirmation control. An incomplete set is kept as entered and is not eligible data.
+Each set displays only the inputs of its snapshot's implied mode, and where the definition permits an addition each set can independently apply or remove exactly that addition. No set offers a menu of modes. Decimal load/assistance values are allowed where applicable, reps and seconds must be positive integers, and no screen offers a confirmation control. A partial set is kept as entered and is not eligible data.
 
 ### MVP-WRK-004 — Immediate persistence
 
@@ -151,7 +151,7 @@ At most one current active or paused workout exists. Reloading or reopening rest
 
 ### MVP-WRK-006 — Last time
 
-For each exercise, **Last time** shows the latest eligible performance for the same persistent exercise identity across every split and one-time workout. Its date is in the heading and its sets appear one per line in reps-first notation. Historical corrections are reflected; incomplete workouts are excluded.
+For each exercise, **Last time** shows the latest eligible performance for the same persistent exercise identity across every split and one-time workout. Its date is in the heading and its sets appear one per line using the snapshotted reps or seconds measurement. Historical corrections are reflected.
 
 ### MVP-WRK-007 — Workout-specific note
 
@@ -171,11 +171,11 @@ The timer counts active workout time. **Continue Later** pauses it; elapsed wall
 
 ### MVP-WRK-011 — Finish review
 
-Before finalization, the review shows active duration, exercise count, recorded-set count, and the planned sets left without values, which it names rather than blocking the finish, with actions for **Complete Workout**, **Save as Incomplete**, **Continue Workout**, and separately confirmed discard.
+Before finalization, the review shows active duration, exercise count, recorded-set count, and the planned sets left without values, which it names rather than blocking the finish, with actions for **Complete Workout**, **Continue Workout**, and separately confirmed discard.
 
 ### MVP-WRK-012 — Completion outcomes
 
-Completing creates an eligible History workout and applies the source-specific rotation rule. Saving incomplete keeps the workout in History but excludes it from PRs, exercise charts, and split-duration statistics. Discard removes the current workout after confirmation without creating History or advancing rotation.
+Completing creates an eligible History workout and applies the source-specific rotation rule even when planned rows are empty. Discard removes the current workout after confirmation without creating History or advancing rotation.
 
 ## History and statistics
 
@@ -187,7 +187,7 @@ History contains Workouts, Exercises, and Splits. Exercise performance statistic
 
 ### MVP-HIS-002 — Workout list and snapshot detail
 
-Workouts appear newest first, grouped by month, with date, saved split/one-time name, active duration, performed exercise count, and incomplete marker. Detail displays saved timing, source identity/name, ordered exercise/prescription snapshots, actual sets, exercise-note snapshots, and workout-specific notes.
+Workouts appear newest first, grouped by month, with date, saved split/one-time name, active duration, performed exercise count. Detail displays saved timing, source identity/name, ordered exercise/prescription snapshots, actual sets, exercise-note snapshots, and workout-specific notes.
 
 ### MVP-HIS-003 — Historical correction
 
@@ -203,7 +203,7 @@ Exercises with historical performances appear in Exercise History even after the
 
 ### MVP-HIS-006 — Statistics eligibility
 
-Only recorded sets from completed workouts feed exercise PRs and charts. Only completed split workouts feed their persistent split's duration statistics. One-time workouts feed exercise statistics only; incomplete workouts feed neither.
+Only recorded sets from completed workouts feed exercise PRs and charts. Only completed split workouts feed their persistent split's duration statistics. One-time workouts feed exercise statistics only.
 
 ### MVP-HIS-007 — Weights PRs
 
@@ -223,7 +223,7 @@ The exercise detail can select metrics meaningful to its type—including weight
 
 ### MVP-HIS-011 — Split statistics
 
-Split History keeps same-named splits from different programs separate. It derives completed count, total/average/shortest/longest/latest duration, duration chart, and workout list; one-time and incomplete workouts are excluded.
+Split History keeps same-named splits from different programs separate. It derives completed count, total/average/shortest/longest/latest duration, duration chart, and workout list; one-time workouts are excluded.
 
 ## Weight
 

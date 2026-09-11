@@ -58,7 +58,7 @@ export type ProgramOption = Readonly<{
 
 /**
  * Only a completed split-sourced workout feeds its split. A one-time workout
- * has no split; an incomplete one is excluded; a today-only alternate counts
+ * has no split; a today-only alternate counts
  * for the split it ran. `MVP-HIS-006`, `MVP-HIS-011`.
  */
 export function isEligibleSplitWorkout(workout: SplitWorkout): boolean {

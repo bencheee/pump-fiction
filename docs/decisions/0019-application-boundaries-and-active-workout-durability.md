@@ -53,7 +53,7 @@ On load or reopen, fetch the canonical current workout from the server, load pen
 
 IndexedDB stores pending active-workout commands only. It is not the canonical workout database, a general application cache, or a promise that the entire application works offline. General offline behavior remains out of scope unless separately accepted.
 
-Persist timer transitions, not per-second ticks. Store accumulated active duration and the current active-segment start timestamp as already required by the domain model; calculate the live display from those values. Start, pause, continue, finish, and incomplete-completion commands use the same transactional mutation path as other workout changes.
+Persist timer transitions, not per-second ticks. Store accumulated active duration and the current active-segment start timestamp as already required by the domain model; calculate the live display from those values. Start, pause, continue, and finish commands use the same transactional mutation path as other workout changes.
 
 ## Consequences
 

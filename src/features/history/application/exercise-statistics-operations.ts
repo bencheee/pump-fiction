@@ -20,6 +20,7 @@ export type ExerciseStatistics = Readonly<{
   exerciseIdentityId: string;
   exerciseName: string;
   exerciseBaseType: string;
+  measurementType?: import("../domain/exercise-statistics").ExercisePerformances["measurementType"];
   stillInLibrary: boolean;
   latestPerformance: ExercisePerformance | null;
   categories: readonly CategoryRecords[];
@@ -75,6 +76,7 @@ export async function getExerciseStatistics(
     exerciseIdentityId: loaded.exerciseIdentityId,
     exerciseName: loaded.exerciseName,
     exerciseBaseType: loaded.exerciseBaseType,
+    measurementType: loaded.measurementType,
     stillInLibrary: loaded.stillInLibrary,
     latestPerformance: latestEligiblePerformance(loaded.performances),
     categories: personalRecords(loaded.performances),

@@ -10,6 +10,7 @@ import type {
 import type {
   ExerciseBaseType,
   ExerciseLoadMode,
+  ExerciseMeasurementType,
 } from "@/features/exercises/domain/exercise";
 import {
   metricLabels,
@@ -31,6 +32,7 @@ export type ExercisePerformance = Readonly<{
   workoutName: string;
   status: HistoryWorkoutStatus;
   sourceKind: WorkoutSourceKind;
+  measurementType?: ExerciseMeasurementType;
   workoutNote: string;
   sets: readonly WorkoutSet[];
 }>;
@@ -39,6 +41,7 @@ export type ExerciseHistoryEntry = Readonly<{
   exerciseIdentityId: string;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
+  measurementType?: ExerciseMeasurementType;
   stillInLibrary: boolean;
   latestPerformance: ExercisePerformance | null;
 }>;
@@ -47,6 +50,7 @@ export type ExercisePerformances = Readonly<{
   exerciseIdentityId: string;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
+  measurementType?: ExerciseMeasurementType;
   stillInLibrary: boolean;
   performances: readonly ExercisePerformance[];
 }>;
@@ -66,7 +70,7 @@ export function isRecordedSet(set: WorkoutSet): boolean {
 
 /**
  * Only recorded sets of completed workouts feed personal records and charts.
- * One-time workouts count; incomplete workouts do not. `MVP-HIS-006`.
+ * One-time workouts count because they are completed workouts too.
  */
 export function isEligiblePerformance(
   performance: ExercisePerformance,
@@ -87,6 +91,7 @@ export type ComparisonCategory = Readonly<{
   loadMode: ExerciseLoadMode;
   bandDirection: BandDirection | null;
   bandStrength: BandStrength | null;
+  measurementType?: ExerciseMeasurementType;
 }>;
 
 const modeLabels: Readonly<Record<ExerciseLoadMode, string>> = {
@@ -119,6 +124,7 @@ export function categoryOf(set: WorkoutSet): ComparisonCategory | null {
     loadMode: set.loadMode,
     bandDirection: fields.band,
     bandStrength: strength,
+    measurementType: "reps",
   };
 }
 
@@ -169,7 +175,18 @@ function eligibleSetsByCategory(
     if (performance.status !== "completed") continue;
     for (const set of performance.sets) {
       if (!isRecordedSet(set)) continue;
-      const category = categoryOf(set);
+      const baseCategory = categoryOf(set);
+      const category =
+        baseCategory === null
+          ? null
+          : {
+              ...baseCategory,
+              key:
+                performance.measurementType === "seconds"
+                  ? `seconds:${baseCategory.key}`
+                  : baseCategory.key,
+              measurementType: performance.measurementType ?? "reps",
+            };
       if (category === null) continue;
       const bucket = grouped.get(category.key) ?? { category, sets: [] };
       bucket.sets.push({
@@ -194,6 +211,7 @@ export function personalRecords(
     const fields = setModeFields[category.loadMode];
     const records: PersonalRecord[] = [];
     const assistance = fields.load === "assistance_kg";
+    const usesSeconds = category.measurementType === "seconds";
 
     if (fields.load !== null) {
       const best = sets.reduce((leader, candidate) =>
@@ -204,7 +222,7 @@ export function personalRecords(
         label: assistance ? "Least assistance" : "Highest load",
         value: best.set.loadKg ?? 0,
         unit: "kg",
-        reps: best.set.reps,
+        reps: usesSeconds ? null : best.set.reps,
         lowerIsBetter: assistance,
         workoutId: best.workoutId,
         workoutDate: best.workoutDate,
@@ -215,10 +233,10 @@ export function personalRecords(
       (candidate.set.reps ?? 0) > (leader.set.reps ?? 0) ? candidate : leader,
     );
     records.push({
-      key: "highest_reps",
-      label: "Highest reps in a set",
+      key: usesSeconds ? "highest_seconds" : "highest_reps",
+      label: usesSeconds ? "Longest set" : "Highest reps in a set",
       value: bestReps.set.reps ?? 0,
-      unit: "reps",
+      unit: usesSeconds ? "seconds" : "reps",
       reps: null,
       lowerIsBetter: false,
       workoutId: bestReps.workoutId,
@@ -226,7 +244,7 @@ export function personalRecords(
     });
 
     // Volume needs a load to multiply; assistance is not a lifted load.
-    if (fields.load === "kg" || fields.load === "added_kg") {
+    if (!usesSeconds && (fields.load === "kg" || fields.load === "added_kg")) {
       const bestVolume = sets.reduce((leader, candidate) =>
         setVolume(candidate) > setVolume(leader) ? candidate : leader,
       );
@@ -258,10 +276,12 @@ export function personalRecords(
       const bestWorkout = leaderOf(perWorkout);
       if (bestWorkout)
         records.push({
-          key: "highest_workout_reps",
-          label: "Highest workout reps",
+          key: usesSeconds ? "highest_workout_seconds" : "highest_workout_reps",
+          label: usesSeconds
+            ? "Longest workout duration"
+            : "Highest workout reps",
           value: bestWorkout.value,
-          unit: "reps",
+          unit: usesSeconds ? "seconds" : "reps",
           reps: null,
           lowerIsBetter: false,
           workoutId: bestWorkout.workoutId,
@@ -272,7 +292,7 @@ export function personalRecords(
     result.push({
       category,
       records,
-      repsByLoad: fields.load === null ? [] : repsByLoad(sets),
+      repsByLoad: fields.load === null || usesSeconds ? [] : repsByLoad(sets),
     });
   }
 
@@ -365,17 +385,27 @@ const metricOrder: readonly ChartMetric[] = [
   "top_load",
   "least_load",
   "top_reps",
+  "top_seconds",
   "total_volume",
   "total_reps",
+  "total_seconds",
 ];
 
 /** The metrics that mean something for the categories this exercise actually has. */
 export function availableMetrics(
   performances: readonly ExercisePerformance[],
 ): readonly ChartMetric[] {
-  const metrics = new Set<ChartMetric>(["top_reps"]);
+  const metrics = new Set<ChartMetric>();
   for (const { category } of eligibleSetsByCategory(performances).values()) {
     const fields = setModeFields[category.loadMode];
+    if (category.measurementType === "seconds") {
+      metrics.add("top_seconds");
+      metrics.add("total_seconds");
+      if (fields.load === "assistance_kg") metrics.add("least_load");
+      else if (fields.load !== null) metrics.add("top_load");
+      continue;
+    }
+    metrics.add("top_reps");
     if (fields.load === "assistance_kg") metrics.add("least_load");
     else if (fields.load !== null) {
       metrics.add("top_load");
@@ -408,9 +438,27 @@ export function chartSeries(
 
     for (const set of performance.sets) {
       if (!isRecordedSet(set)) continue;
-      const category = categoryOf(set);
-      if (category === null) continue;
-      if (categoryKey !== undefined && category.key !== categoryKey) continue;
+      const baseCategory = categoryOf(set);
+      if (baseCategory === null) continue;
+      const categoryKeyForSet =
+        performance.measurementType === "seconds"
+          ? `seconds:${baseCategory.key}`
+          : baseCategory.key;
+      if (categoryKey !== undefined && categoryKeyForSet !== categoryKey)
+        continue;
+      if (
+        (metric === "top_reps" ||
+          metric === "total_reps" ||
+          metric === "total_volume") &&
+        (performance.measurementType ?? "reps") !== "reps"
+      )
+        continue;
+      if (
+        (metric === "top_seconds" || metric === "total_seconds") &&
+        performance.measurementType !== "seconds"
+      )
+        continue;
+      const category = baseCategory;
       const fields = setModeFields[category.loadMode];
       seen = true;
       if (
@@ -422,14 +470,20 @@ export function chartSeries(
       if (metric === "least_load" && fields.load === "assistance_kg")
         top = Math.min(top, set.loadKg ?? 0);
       if (metric === "top_reps") top = Math.max(top, set.reps ?? 0);
+      if (metric === "top_seconds") top = Math.max(top, set.reps ?? 0);
       if (metric === "total_volume")
         total += (set.loadKg ?? 0) * (set.reps ?? 0);
       if (metric === "total_reps") total += set.reps ?? 0;
+      if (metric === "total_seconds") total += set.reps ?? 0;
     }
 
     if (!seen) continue;
     const value =
-      metric === "total_volume" || metric === "total_reps" ? total : top;
+      metric === "total_volume" ||
+      metric === "total_reps" ||
+      metric === "total_seconds"
+        ? total
+        : top;
     if (!Number.isFinite(value) || value === 0) continue;
     points.set(performance.workoutId, {
       workoutId: performance.workoutId,

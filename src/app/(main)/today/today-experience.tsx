@@ -209,6 +209,7 @@ function SplitExercisePreview({
             </span>
             <span className="pf-numeric shrink-0 text-[12px] text-[var(--pf-text-3-deep)]">
               {exercise.plannedSets} × {exercise.minReps}–{exercise.maxReps}
+              {exercise.measurementType === "seconds" ? " sec" : " reps"}
             </span>
           </li>
         ))}

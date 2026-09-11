@@ -21,6 +21,7 @@ as $$
       occurrence.exercise_identity_id,
       occurrence.exercise_name_snapshot,
       occurrence.exercise_base_type_snapshot,
+      occurrence.measurement_type_snapshot,
       occurrence.exercise_id,
       occurrence.workout_note,
       workout.id as workout_id,
@@ -42,7 +43,7 @@ as $$
       ) as has_recorded_set
     from public.workout_exercises as occurrence
     join public.workouts as workout on workout.id = occurrence.workout_id
-    where workout.status in ('completed', 'incomplete')
+    where workout.status = 'completed'
   ), identities as (
     select
       occurrence.exercise_identity_id,
@@ -70,6 +71,11 @@ as $$
         'exerciseIdentityId', identity.exercise_identity_id,
         'exerciseName', identity.exercise_name,
         'exerciseBaseType', identity.exercise_base_type,
+        'measurementType', (
+          select later.measurement_type_snapshot from occurrences as later
+          where later.exercise_identity_id = identity.exercise_identity_id
+          order by later.workout_date desc, later.started_at desc limit 1
+        ),
         'stillInLibrary', exists (
           select 1 from public.exercises as definition
           where definition.id = identity.exercise_identity_id
@@ -82,6 +88,7 @@ as $$
             'workoutName', latest.workout_name,
             'status', latest.status,
             'sourceKind', latest.source_kind,
+            'measurementType', latest.measurement_type_snapshot,
             'workoutNote', latest.workout_note,
             'sets', public.workout_set_snapshots(latest.id)
           )
@@ -136,6 +143,7 @@ as $$
       occurrence.id,
       occurrence.exercise_name_snapshot,
       occurrence.exercise_base_type_snapshot,
+      occurrence.measurement_type_snapshot,
       occurrence.workout_note,
       workout.id as workout_id,
       workout.workout_date,
@@ -146,7 +154,7 @@ as $$
     from public.workout_exercises as occurrence
     join public.workouts as workout on workout.id = occurrence.workout_id
     where occurrence.exercise_identity_id = p_exercise_identity_id
-      and workout.status in ('completed', 'incomplete')
+      and workout.status = 'completed'
       -- An occurrence nobody entered anything into is not a performance.
       and exists (
         select 1
@@ -171,6 +179,10 @@ as $$
         select latest.exercise_base_type_snapshot from occurrences as latest
         order by latest.workout_date desc, latest.started_at desc limit 1
       ),
+      'measurementType', (
+        select latest.measurement_type_snapshot from occurrences as latest
+        order by latest.workout_date desc, latest.started_at desc limit 1
+      ),
       'stillInLibrary', exists (
         select 1 from public.exercises as definition
         where definition.id = p_exercise_identity_id
@@ -184,6 +196,7 @@ as $$
             'workoutName', occurrence.workout_name,
             'status', occurrence.status,
             'sourceKind', occurrence.source_kind,
+            'measurementType', occurrence.measurement_type_snapshot,
             'workoutNote', occurrence.workout_note,
             'sets', public.workout_set_snapshots(occurrence.id)
           )

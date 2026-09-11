@@ -166,7 +166,7 @@ describe("Today and workout-start mobile experience", () => {
     );
 
     expect(screen.getByText("Back Squat")).toBeVisible();
-    expect(screen.getByText("3 × 5–8")).toBeVisible();
+    expect(screen.getByText("3 × 5–8 reps")).toBeVisible();
     await user.click(
       screen.getByRole("button", { name: "Choose another split" }),
     );
@@ -178,7 +178,7 @@ describe("Today and workout-start mobile experience", () => {
     );
     expect(screen.queryByText("Back Squat")).not.toBeInTheDocument();
     expect(screen.getByText("Overhead Press")).toBeVisible();
-    expect(screen.getByText("4 × 6–10")).toBeVisible();
+    expect(screen.getByText("4 × 6–10 reps")).toBeVisible();
   });
 
   it("offers today's weight only while the day has none", async () => {

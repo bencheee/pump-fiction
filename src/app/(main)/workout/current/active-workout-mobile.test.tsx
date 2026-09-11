@@ -152,12 +152,17 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
         position: 1,
         exerciseName: "Squat",
         exerciseBaseType: "weights",
+        measurementType: "reps",
         allowedLoadModes: ["weight", "weight_resistance_band"],
         persistentNote: "Brace before unracking.",
         plannedSets: 3,
         minReps: 5,
         maxReps: 8,
         workoutNote: "",
+        previousWorkoutNote: {
+          workoutDate: "2026-08-22",
+          note: "Knee hurt near the bottom.",
+        },
         sets: [
           makeSet({
             id: "00000000-0000-4000-8000-0000000000d1",
@@ -292,6 +297,8 @@ describe("Active-workout mobile experience", () => {
       });
     });
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
+    expect(screen.getByText("Knee hurt near the bottom.")).toBeVisible();
+    expect(screen.getByText(/Note from last workout · 22 Aug/)).toBeVisible();
     expect(screen.getByText("Last time · 22 Aug")).toBeVisible();
     expect(screen.getByText("6 x 85 kg")).toBeVisible();
     expect(

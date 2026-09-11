@@ -111,6 +111,7 @@ export type Database = {
           base_type: Database["public"]["Enums"]["exercise_base_type"]
           created_at: string
           id: string
+          measurement_type: Database["public"]["Enums"]["exercise_measurement_type"]
           name: string
           persistent_note: string
           updated_at: string
@@ -119,6 +120,7 @@ export type Database = {
           base_type: Database["public"]["Enums"]["exercise_base_type"]
           created_at?: string
           id?: string
+          measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           name: string
           persistent_note?: string
           updated_at?: string
@@ -127,6 +129,7 @@ export type Database = {
           base_type?: Database["public"]["Enums"]["exercise_base_type"]
           created_at?: string
           id?: string
+          measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           name?: string
           persistent_note?: string
           updated_at?: string
@@ -369,6 +372,7 @@ export type Database = {
           exercise_name_snapshot: string
           id: string
           max_reps_snapshot: number | null
+          measurement_type_snapshot: Database["public"]["Enums"]["exercise_measurement_type"]
           min_reps_snapshot: number | null
           persistent_note_snapshot: string
           planned_sets_snapshot: number | null
@@ -385,6 +389,7 @@ export type Database = {
           exercise_name_snapshot: string
           id?: string
           max_reps_snapshot?: number | null
+          measurement_type_snapshot?: Database["public"]["Enums"]["exercise_measurement_type"]
           min_reps_snapshot?: number | null
           persistent_note_snapshot?: string
           planned_sets_snapshot?: number | null
@@ -401,6 +406,7 @@ export type Database = {
           exercise_name_snapshot?: string
           id?: string
           max_reps_snapshot?: number | null
+          measurement_type_snapshot?: Database["public"]["Enums"]["exercise_measurement_type"]
           min_reps_snapshot?: number | null
           persistent_note_snapshot?: string
           planned_sets_snapshot?: number | null
@@ -631,6 +637,7 @@ export type Database = {
         Args: {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
           p_load_modes: Database["public"]["Enums"]["load_mode"][]
+          p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
         }
@@ -696,10 +703,6 @@ export type Database = {
       list_exercise_history: { Args: never; Returns: Json }
       list_split_workouts: { Args: never; Returns: Json }
       list_workout_history: { Args: never; Returns: Json }
-      mark_history_workout_completed: {
-        Args: { p_workout_id: string }
-        Returns: undefined
-      }
       measurement_entry_json: {
         Args: {
           entry: Database["public"]["Tables"]["measurement_entries"]["Row"]
@@ -804,6 +807,7 @@ export type Database = {
           p_base_type: Database["public"]["Enums"]["exercise_base_type"]
           p_exercise_id: string
           p_load_modes: Database["public"]["Enums"]["load_mode"][]
+          p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
         }
@@ -878,6 +882,7 @@ export type Database = {
       band_direction: "resistance" | "assistance"
       band_strength: "light" | "medium" | "strong"
       exercise_base_type: "weights" | "bodyweight"
+      exercise_measurement_type: "reps" | "seconds"
       load_mode:
         | "weight"
         | "weight_resistance_band"
@@ -887,7 +892,7 @@ export type Database = {
         | "assistance_weight"
         | "assistance_band"
       workout_source_kind: "proposed_split" | "alternate_split" | "one_time"
-      workout_status: "active" | "paused" | "completed" | "incomplete"
+      workout_status: "active" | "paused" | "completed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1030,6 +1035,7 @@ export const Constants = {
       band_direction: ["resistance", "assistance"],
       band_strength: ["light", "medium", "strong"],
       exercise_base_type: ["weights", "bodyweight"],
+      exercise_measurement_type: ["reps", "seconds"],
       load_mode: [
         "weight",
         "weight_resistance_band",
@@ -1040,7 +1046,7 @@ export const Constants = {
         "assistance_band",
       ],
       workout_source_kind: ["proposed_split", "alternate_split", "one_time"],
-      workout_status: ["active", "paused", "completed", "incomplete"],
+      workout_status: ["active", "paused", "completed"],
     },
   },
 } as const

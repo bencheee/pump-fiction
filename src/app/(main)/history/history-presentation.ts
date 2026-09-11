@@ -1,7 +1,4 @@
-import type {
-  HistoryWorkoutStatus,
-  HistoryWorkoutSummary,
-} from "@/features/history/domain/workout-history";
+import type { HistoryWorkoutSummary } from "@/features/history/domain/workout-history";
 
 /** `2026-09` becomes `September 2026`. */
 export function formatHistoryMonth(month: string): string {
@@ -47,14 +44,6 @@ export function summaryDetail(summary: HistoryWorkoutSummary): string {
     formatHistoryDuration(summary.activeDurationSeconds),
     formatExerciseCount(summary.performedExerciseCount),
   ].join(" · ");
-}
-
-/** Why an incomplete workout is kept but excluded, stated once. */
-export const incompleteExplanation =
-  "Saved as incomplete. It stays in History but does not feed personal records, exercise charts, or split durations.";
-
-export function isIncomplete(status: HistoryWorkoutStatus): boolean {
-  return status === "incomplete";
 }
 
 /** The datetime-local value a saved timestamp starts from. */
