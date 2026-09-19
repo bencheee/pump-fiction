@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
-import { fillHydrated } from "./support/hydration";
+import { awaitHydration } from "./support/hydration";
 
 // F-010 owns MVP-REL-003 and MVP-REL-004, the two criteria no single Feature
 // could prove: each one is about what happens *between* the Features. Every
@@ -65,13 +65,25 @@ test.describe("Local MVP integration", () => {
         // The seed started it 25 minutes ago, so a timer that restarted from
         // zero rather than resuming would read under a minute.
         await fresh.goto("/workout/current");
+        // The queue opens on the first set without values, so the recorded one
+        // is reached through its segment; its wheels sit on what was saved.
+        await fresh
+          .getByRole("button", { name: /set 1$/ })
+          .first()
+          .click();
         await expect(
-          fresh.getByLabel("kg", { exact: true }).first(),
-        ).toHaveValue("60");
-        await expect(fresh.getByLabel("Reps").first()).toHaveValue("8");
+          fresh.getByRole("button", { name: "Kilograms 57.5" }),
+        ).toBeVisible();
         await expect(
-          fresh.getByLabel("Today's note · saved with this workout"),
-        ).toHaveValue(fixture.workoutNote);
+          fresh.getByRole("button", { name: "Reps 7" }),
+        ).toBeVisible();
+
+        await fresh.getByRole("button", { name: /Note/ }).click();
+        await expect(fresh.getByLabel("Today's note")).toHaveValue(
+          fixture.workoutNote,
+        );
+        await fresh.getByRole("button", { name: "Cancel" }).click();
+
         await expect(fresh.getByLabel("Active duration")).toHaveText(
           /^(2[5-9]|[3-9]\d):\d{2}$/,
         );
@@ -157,7 +169,19 @@ test.describe("Local MVP integration", () => {
       // otherwise types into a controlled field before React attaches to it,
       // which is the race T-037 recorded.
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}/edit`);
-      await fillHydrated(page.getByLabel("Kilograms").first(), "95");
+      const setRow = page
+        .getByRole("button", { name: /^Correct set 1 of / })
+        .first();
+      await awaitHydration(setRow);
+      await setRow.click();
+      const setPanel = page.getByRole("dialog", { name: "Correct set" });
+      // 60 kg up to 95, two 2.5 kg steps at a time.
+      for (const stop of [65, 70, 75, 80, 85, 90, 95]) {
+        await setPanel
+          .getByRole("button", { name: `Kilograms ${stop}` })
+          .click();
+      }
+      await setPanel.getByRole("button", { name: "Apply to set" }).click();
       await page.getByRole("button", { name: "Save corrections" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
       await expect(page.getByText("95 kg × 8")).toBeVisible();
