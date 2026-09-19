@@ -15,19 +15,24 @@ import {
 import type { Program, ProgramSplit } from "@/features/programs/domain/program";
 import { validateProgramDefinition } from "@/features/programs/domain/program-validation";
 import {
-  Action,
+  ActionOverlay,
+  ActionsTrigger,
   Badge,
   DestructiveDialog,
   EmptyState,
   Icon,
+  Kicker,
+  Overlay,
   SaveStatus,
-  Sheet,
+  ScreenBody,
   StickyActionBar,
   TextField,
   TopBar,
+  useReorder,
   useSaveOutcome,
   useSavedSnapshot,
   useToast,
+  useTransientOverlay,
   type SavePhase,
 } from "@/shared/ui";
 
@@ -110,16 +115,14 @@ export function ProgramForm({ program }: { program?: Program }) {
     router.refresh();
   }
 
-  async function moveSplit(index: number, direction: -1 | 1) {
+  async function moveSplit(from: number, to: number) {
     if (!program) return;
-    const destination = index + direction;
-    if (destination < 0 || destination >= splits.length) return;
+    if (to < 0 || to >= splits.length || to === from) return;
     const previous = [...splits];
     const reordered = [...splits];
-    [reordered[index], reordered[destination]] = [
-      reordered[destination]!,
-      reordered[index]!,
-    ];
+    const [moved] = reordered.splice(from, 1);
+    if (!moved) return;
+    reordered.splice(to, 0, moved);
     setSplits(reordered);
     const result = await reorderSplitsAction(
       program.id,
@@ -152,185 +155,255 @@ export function ProgramForm({ program }: { program?: Program }) {
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <ProgramFormBody
+      program={program}
+      name={name}
+      setName={setName}
+      isCurrent={isCurrent}
+      splits={splits}
+      nextSplitId={nextSplitId}
+      busy={busy}
+      saveState={saveState}
+      error={error}
+      nameError={nameError}
+      onChanged={changed}
+      onSave={() => void save()}
+      onMove={(from, to) => void moveSplit(from, to)}
+      onChooseNext={(splitId, close) => void chooseNext(splitId, close)}
+      onDelete={() => void remove()}
+    />
+  );
+}
+
+function ProgramFormBody({
+  program,
+  name,
+  setName,
+  isCurrent,
+  splits,
+  nextSplitId,
+  busy,
+  saveState,
+  error,
+  nameError,
+  onChanged,
+  onSave,
+  onMove,
+  onChooseNext,
+  onDelete,
+}: {
+  program?: Program;
+  name: string;
+  setName: (value: string) => void;
+  isCurrent: boolean;
+  splits: readonly ProgramSplit[];
+  nextSplitId: string | null;
+  busy: boolean;
+  saveState: "clean" | "unsaved" | "saving" | "failure";
+  error?: string;
+  nameError?: string;
+  onChanged: () => void;
+  onSave: () => void;
+  onMove: (from: number, to: number) => void;
+  onChooseNext: (splitId: string, close: () => void) => void;
+  onDelete: () => void;
+}) {
+  const nextOverlay = useTransientOverlay();
+  const confirmDelete = useTransientOverlay();
+  const reorder = useReorder({ count: splits.length, onMove });
+  const dirty = saveState === "unsaved";
+
+  return (
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
-        title={program ? "Edit Program" : "New Program"}
+        title={program ? "Program" : "New program"}
         backHref="/programs"
         backLabel="Programs"
+        trailing={dirty ? <Badge tone="accent">Unsaved</Badge> : undefined}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
+      <ScreenBody className="gap-2.5">
         {isCurrent ? (
-          <section className="mb-5 flex items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4 font-semibold">
-            <Icon name="calendar-check" size={16} /> Current program
-          </section>
+          <p className="flex items-center gap-2.5 rounded-[var(--pf-r2)] bg-[var(--pf-accent-dim)] px-[18px] py-3.5 text-[13.5px] font-semibold text-[var(--pf-accent)]">
+            <Icon name="calendar-check" size={15} />
+            Current program
+          </p>
         ) : null}
 
-        <div className="space-y-6">
-          <TextField
-            id="program-name"
-            label="Program name"
-            value={name}
-            className="min-h-[var(--pf-size-input-prominent)]"
-            error={nameError}
-            disabled={busy}
-            autoComplete="off"
-            onChange={(event) => {
-              setName(event.target.value);
-              changed();
-            }}
-          />
+        <TextField
+          id="program-name"
+          label="Program name"
+          value={name}
+          error={nameError}
+          disabled={busy}
+          autoComplete="off"
+          onChange={(event) => {
+            setName(event.target.value);
+            onChanged();
+          }}
+        />
 
-          <section aria-labelledby="split-rotation-title">
-            <div className="mb-2 flex min-h-11 items-center justify-between gap-3">
-              <h2
-                id="split-rotation-title"
-                className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-              >
-                Split rotation · {splits.length}
-              </h2>
-            </div>
-
-            {!program ? (
-              <EmptyState
-                title="Save the program first"
-                body="After saving the draft, you can add and order its splits."
-              />
-            ) : splits.length === 0 ? (
-              <EmptyState
-                title="No splits yet"
-                body="Add the first split before activating this program."
-                action={
-                  program ? (
-                    <Link
-                      href={`/programs/${program.id}/splits/new`}
-                      className="min-h-11 rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 py-3 font-semibold text-[var(--pf-on-accent)]"
-                    >
-                      Add Split
-                    </Link>
-                  ) : undefined
-                }
-              />
-            ) : (
-              <div className="space-y-2">
-                {splits.map((split, index) => (
-                  <div
-                    key={split.id}
-                    className="flex min-h-20 items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-2"
-                  >
-                    <Icon
-                      name="grip-vertical"
-                      size={18}
-                      className="text-[var(--pf-text-3-deep)]"
-                    />
-                    <Link
-                      href={`/splits/${split.id}/edit`}
-                      className="min-w-0 flex-1 py-2"
-                    >
-                      <span className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold [overflow-wrap:anywhere]">
-                          {split.name}
-                        </span>
-                        {split.id === nextSplitId ? (
-                          <Badge tone="accent">Next</Badge>
-                        ) : null}
-                      </span>
-                      <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
-                        Position {index + 1}
-                      </span>
-                    </Link>
-                    <div className="flex shrink-0">
-                      <button
-                        type="button"
-                        aria-label={`Move ${split.name} up`}
-                        disabled={busy || index === 0}
-                        onClick={() => void moveSplit(index, -1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
-                      >
-                        <Icon name="arrow-up" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Move ${split.name} down`}
-                        disabled={busy || index === splits.length - 1}
-                        onClick={() => void moveSplit(index, 1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
-                      >
-                        <Icon name="arrow-down" size={18} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            {program && splits.length > 0 ? (
-              <Link
-                href={`/programs/${program.id}/splits/new`}
-                className="mt-3 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)]"
-              >
-                <Icon name="plus" size={18} /> Add Split
-              </Link>
-            ) : null}
-          </section>
+        <div className="mt-1.5 flex min-h-11 items-center justify-between gap-3">
+          <Kicker>Split rotation · {splits.length}</Kicker>
+          {splits.length > 1 ? (
+            <span className="text-[12px] text-[var(--pf-text-3)]">
+              Hold to reorder
+            </span>
+          ) : null}
         </div>
 
-        <StickyActionBar>
-          <SaveStatus
-            state={saveState}
-            validationMessage={error}
-            onRetry={() => void save()}
+        {!program ? (
+          <EmptyState
+            icon="layout-grid"
+            title="Save the program first"
+            body="After saving the draft, you can add and order its splits."
           />
-          <Action disabled={busy} onClick={() => void save()}>
-            {program ? "Save Changes" : "Save Program"}
-          </Action>
-          {program && splits.length > 0 ? (
-            <Sheet
-              title={isCurrent ? "Set next split" : "Choose the first split"}
-              description={
-                isCurrent
-                  ? "This changes the persistent rotation pointer."
-                  : "Making this program current replaces any other current program."
-              }
-              trigger={
-                <Action variant="secondary" disabled={busy}>
-                  {isCurrent ? "Set Next Split" : "Make Current Program"}
-                </Action>
-              }
-            >
-              {(close) => (
-                <div className="space-y-2">
-                  {splits.map((split) => (
-                    <Action
-                      key={split.id}
-                      variant="secondary"
-                      className="w-full justify-between"
-                      disabled={busy}
-                      onClick={() => void chooseNext(split.id, close)}
-                    >
+        ) : splits.length === 0 ? (
+          <EmptyState
+            icon="layout-grid"
+            title="No splits yet"
+            body="Add the first split before making this program current."
+          />
+        ) : (
+          splits.map((split, index) => {
+            const row = reorder.row(index);
+            return (
+              <section
+                key={split.id}
+                {...row}
+                aria-label={split.name}
+                className="relative flex cursor-grab items-center gap-2.5 rounded-[var(--pf-r3)] border border-transparent bg-[var(--pf-bg-surface)] py-3.5 pr-3.5 pl-[18px]"
+              >
+                <Link
+                  href={`/splits/${split.id}/edit`}
+                  className="min-w-0 flex-1"
+                >
+                  <span className="flex flex-wrap items-center gap-2">
+                    <span className="text-[15.5px] font-semibold [text-wrap:pretty]">
                       {split.name}
-                      {split.id === nextSplitId ? (
-                        <Badge tone="accent">Next</Badge>
-                      ) : null}
-                    </Action>
-                  ))}
-                </div>
-              )}
-            </Sheet>
-          ) : null}
-          {program ? (
-            <DestructiveDialog
-              title="Delete program?"
-              description="Its splits are deleted with it. Workouts already recorded keep this program in History."
-              confirmLabel="Delete Program"
-              onConfirm={() => void remove()}
-              trigger={
-                <Action variant="danger" disabled={busy}>
-                  Delete Program
-                </Action>
-              }
+                    </span>
+                    {split.id === nextSplitId ? (
+                      <Badge tone="accent">Next</Badge>
+                    ) : null}
+                  </span>
+                  <span className="pf-numeric mt-1.5 block text-[14px] text-[var(--pf-text-3)]">
+                    Position {index + 1}
+                  </span>
+                </Link>
+                <Icon
+                  name="chevron-right"
+                  size={16}
+                  className="shrink-0 text-[var(--pf-glyph-dim)]"
+                />
+              </section>
+            );
+          })
+        )}
+
+        {program ? (
+          <Link
+            href={`/programs/${program.id}/splits/new`}
+            className="mt-1 flex min-h-[54px] items-center justify-center gap-2 rounded-full bg-[var(--pf-accent-dim)] text-[15px] font-semibold text-[var(--pf-accent)] transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:bg-[var(--pf-accent-dim-hover)]"
+          >
+            <Icon name="plus" size={17} />
+            Add split
+          </Link>
+        ) : null}
+
+        <p className="mt-1.5 text-[12.5px] leading-[1.5] text-[var(--pf-text-4)]">
+          Reordering never moves the rotation pointer. Workouts already recorded
+          keep this program in History.
+        </p>
+      </ScreenBody>
+
+      <StickyActionBar>
+        <SaveStatus
+          state={saveState}
+          validationMessage={error}
+          onRetry={onSave}
+        />
+        <ActionOverlay
+          trigger={
+            <ActionsTrigger
+              label="Program actions"
+              tone={dirty ? "accent" : "muted"}
+              disabled={busy}
             />
-          ) : null}
-        </StickyActionBar>
-      </main>
+          }
+          title={name.trim() === "" ? "New program" : name}
+          meta={`${splits.length} ${splits.length === 1 ? "split" : "splits"}`}
+          actions={[
+            {
+              key: "save",
+              label: program ? "Save changes" : "Save program",
+              icon: "check",
+              onRun: onSave,
+            },
+            ...(program && splits.length > 0
+              ? [
+                  {
+                    key: "next",
+                    label: isCurrent
+                      ? "Set the next split"
+                      : "Make this the current program",
+                    icon: "calendar-check" as const,
+                    onRun: () => nextOverlay.requestOpenChange(true),
+                  },
+                ]
+              : []),
+            ...(program
+              ? [
+                  {
+                    key: "delete",
+                    label: "Delete this program",
+                    icon: "trash-2" as const,
+                    onRun: () => confirmDelete.requestOpenChange(true),
+                  },
+                ]
+              : []),
+          ]}
+        />
+      </StickyActionBar>
+
+      <Overlay
+        open={nextOverlay.open}
+        onOpenChange={nextOverlay.requestOpenChange}
+        title={isCurrent ? "Set next split" : "Choose the first split"}
+        description={
+          isCurrent
+            ? "This changes the persistent rotation pointer."
+            : "Making this program current replaces any other current program."
+        }
+      >
+        {(close) => (
+          <div className="flex flex-col gap-2">
+            {splits.map((split) => (
+              <button
+                key={split.id}
+                type="button"
+                disabled={busy}
+                onClick={() => onChooseNext(split.id, close)}
+                className="flex min-h-[68px] items-center gap-3.5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] px-[18px] py-3.5 text-left transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-border-strong)]"
+              >
+                <span className="min-w-0 flex-1 text-[15.5px] font-semibold [text-wrap:pretty]">
+                  {split.name}
+                </span>
+                {split.id === nextSplitId ? (
+                  <Badge tone="accent">Next</Badge>
+                ) : null}
+              </button>
+            ))}
+          </div>
+        )}
+      </Overlay>
+
+      <DestructiveDialog
+        open={confirmDelete.open}
+        onOpenChange={confirmDelete.requestOpenChange}
+        title="Delete program?"
+        description="Its splits are deleted with it. Workouts already recorded keep this program in History."
+        confirmLabel="Delete program"
+        onConfirm={onDelete}
+      />
     </div>
   );
 }

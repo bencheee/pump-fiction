@@ -97,6 +97,15 @@ const exercises: Exercise[] = split.exercises.map((item) => ({
   splitUsageCount: 1,
 }));
 
+/** The program's own actions live behind the `···` panel and a Continue step. */
+async function saveProgram(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole("button", { name: "Program actions" }));
+  await user.click(
+    screen.getByRole("button", { name: /^Save (program|changes)$/ }),
+  );
+  await user.click(screen.getByRole("button", { name: "Continue" }));
+}
+
 describe("Programs mobile forms", () => {
   beforeEach(() => vi.clearAllMocks());
   afterEach(cleanup);
@@ -105,7 +114,7 @@ describe("Programs mobile forms", () => {
     const user = userEvent.setup();
     renderForm(<ProgramForm />);
 
-    await user.click(screen.getByRole("button", { name: "Save Program" }));
+    await saveProgram(user);
 
     expect(screen.getByText("Enter a name for this program.")).toBeVisible();
     expect(actions.createProgram).not.toHaveBeenCalled();
@@ -119,7 +128,8 @@ describe("Programs mobile forms", () => {
     });
     renderForm(<ProgramForm program={program} />);
 
-    await user.click(screen.getByRole("button", { name: "Move Upper down" }));
+    screen.getByRole("region", { name: "Upper" }).focus();
+    await user.keyboard("{ArrowDown}");
 
     expect(actions.reorderSplits).toHaveBeenCalledWith(programId, [
       splitBId,
@@ -203,7 +213,7 @@ describe("Programs mobile forms", () => {
     renderForm(<ProgramForm />);
 
     await user.type(screen.getByLabelText("Program name"), "Hypertrophy");
-    await user.click(screen.getByRole("button", { name: "Save Program" }));
+    await saveProgram(user);
 
     expect(router.replace).toHaveBeenCalledWith("/programs");
     expect(screen.getByText("Program saved.")).toBeVisible();

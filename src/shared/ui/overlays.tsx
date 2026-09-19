@@ -16,6 +16,7 @@ import { useTransientOverlay } from "./transient-overlay";
  */
 export function Overlay({
   trigger,
+  open,
   title,
   description,
   children,
@@ -23,7 +24,11 @@ export function Overlay({
   footer,
   onOpenChange,
 }: {
-  trigger: ReactElement;
+  /** Omitted when the panel is opened from elsewhere, such as another actions
+   * panel; pass `open`/`onOpenChange` from `useTransientOverlay` then, so Back
+   * still closes it. */
+  trigger?: ReactElement;
+  open?: boolean;
   title: string;
   description?: string;
   children: ReactNode | ((close: () => void) => ReactNode);
@@ -32,15 +37,19 @@ export function Overlay({
   onOpenChange?: (open: boolean) => void;
 }) {
   const overlay = useTransientOverlay();
-  const requestOpenChange = (open: boolean) => {
-    overlay.requestOpenChange(open);
-    onOpenChange?.(open);
+  const controlled = open !== undefined;
+  const requestOpenChange = (next: boolean) => {
+    if (!controlled) overlay.requestOpenChange(next);
+    onOpenChange?.(next);
   };
   const close = () => requestOpenChange(false);
 
   return (
-    <Dialog.Root open={overlay.open} onOpenChange={requestOpenChange}>
-      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+    <Dialog.Root
+      open={controlled ? open : overlay.open}
+      onOpenChange={requestOpenChange}
+    >
+      {trigger ? <Dialog.Trigger asChild>{trigger}</Dialog.Trigger> : null}
       <Dialog.Portal>
         <Dialog.Content className="fixed inset-0 z-50 flex flex-col bg-[var(--pf-bg-overlay)] motion-safe:animate-[pf-overlay-in_var(--pf-mo-slow)_var(--pf-ease)]">
           <div className="flex min-h-[calc(var(--pf-size-overlay-header)+env(safe-area-inset-top))] shrink-0 items-center justify-between gap-3 px-3.5 pt-[env(safe-area-inset-top)]">
