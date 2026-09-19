@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 const overlayStateKey = "__pumpFictionOverlayStack";
 
@@ -17,11 +17,19 @@ export function useTransientOverlay() {
   const reactId = useId();
   const marker = `pf-overlay-${reactId}`;
   const [open, setOpen] = useState(false);
+  // Work queued behind this overlay's own close. `history.back()` settles on a
+  // later task, so anything that opens a second overlay has to wait for it;
+  // otherwise the second one pushes its marker first and the arriving popstate
+  // closes it again.
+  const pending = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const handlePopState = () => {
       if (!currentStack().includes(marker)) {
         setOpen(false);
+        const queued = pending.current;
+        pending.current = null;
+        queued?.();
       }
     };
 
@@ -56,5 +64,23 @@ export function useTransientOverlay() {
     [marker, open],
   );
 
-  return { open, requestOpenChange };
+  /** Close this overlay, then run `action` once the close has settled. */
+  const closeThenRun = useCallback(
+    (action: () => void) => {
+      if (!open) {
+        action();
+        return;
+      }
+      if (currentStack().at(-1) === marker) {
+        pending.current = action;
+        window.history.back();
+        return;
+      }
+      setOpen(false);
+      action();
+    },
+    [marker, open],
+  );
+
+  return { open, requestOpenChange, closeThenRun };
 }

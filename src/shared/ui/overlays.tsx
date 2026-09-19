@@ -8,6 +8,8 @@ import { classNames } from "./class-names";
 import { Icon } from "./icon";
 import { useTransientOverlay } from "./transient-overlay";
 
+export type CloseOverlay = (after?: () => void) => void;
+
 /**
  * Every transient surface in the redesign is a full-viewport opaque panel that
  * rises over the screen, not a bottom sheet behind a scrim. It keeps the Radix
@@ -31,9 +33,9 @@ export function Overlay({
   open?: boolean;
   title: string;
   description?: string;
-  children: ReactNode | ((close: () => void) => ReactNode);
+  children: ReactNode | ((close: CloseOverlay) => ReactNode);
   closeLabel?: string;
-  footer?: ReactNode | ((close: () => void) => ReactNode);
+  footer?: ReactNode | ((close: CloseOverlay) => ReactNode);
   onOpenChange?: (open: boolean) => void;
 }) {
   const overlay = useTransientOverlay();
@@ -42,7 +44,17 @@ export function Overlay({
     if (!controlled) overlay.requestOpenChange(next);
     onOpenChange?.(next);
   };
-  const close = () => requestOpenChange(false);
+  // `close(after)` runs `after` once this panel has finished closing, which is
+  // what an action that opens another overlay needs.
+  const close: CloseOverlay = (after) => {
+    if (after && !controlled) {
+      overlay.closeThenRun(after);
+      onOpenChange?.(false);
+      return;
+    }
+    requestOpenChange(false);
+    after?.();
+  };
 
   return (
     <Dialog.Root

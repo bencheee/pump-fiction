@@ -193,7 +193,7 @@ export function LastTimeOverlay({
       title="Last time"
       trigger={trigger}
       footer={(close) => (
-        <Action variant="secondary" className="h-14" onClick={close}>
+        <Action variant="secondary" className="h-14" onClick={() => close()}>
           Back to set
         </Action>
       )}
@@ -276,7 +276,7 @@ export function NoteOverlay({
             <Icon name="check" size={19} />
             Save note
           </Action>
-          <Action variant="secondary" onClick={close}>
+          <Action variant="secondary" onClick={() => close()}>
             Cancel
           </Action>
         </>
@@ -357,7 +357,7 @@ export function ReviewFinishOverlay({
             <Icon name="check-check" size={19} />
             Complete workout
           </Action>
-          <Action variant="secondary" onClick={close}>
+          <Action variant="secondary" onClick={() => close()}>
             Continue workout
           </Action>
           <button

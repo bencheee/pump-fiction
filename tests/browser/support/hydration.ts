@@ -1,4 +1,4 @@
-import { expect, type Locator } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 // A production page can finish loading before React hydrates it. A value typed
 // into a controlled field before that point never reaches React, which then
@@ -23,4 +23,18 @@ export async function fillHydrated(
 ): Promise<void> {
   await awaitHydration(field);
   await field.fill(value);
+}
+
+/**
+ * Screen-level actions live behind the `···` panel: one is picked there and
+ * Continue commits it. Every definition screen and the workout detail use it.
+ */
+export async function runScreenAction(
+  page: Page,
+  trigger: string,
+  action: string | RegExp,
+): Promise<void> {
+  await page.getByRole("button", { name: trigger }).click();
+  await page.getByRole("button", { name: action }).click();
+  await page.getByRole("button", { name: "Continue" }).click();
 }

@@ -764,11 +764,12 @@ export function ActiveWorkoutQueue({
         clock={clock}
         submitting={finishing}
         onFinish={onFinish}
-        onAskDiscard={() => {
-          finishOverlay.requestOpenChange(false);
-          setConfirmation({ kind: "discard" });
-          confirmOverlay.requestOpenChange(true);
-        }}
+        onAskDiscard={() =>
+          finishOverlay.closeThenRun(() => {
+            setConfirmation({ kind: "discard" });
+            confirmOverlay.requestOpenChange(true);
+          })
+        }
       />
 
       {confirmationDialog()}

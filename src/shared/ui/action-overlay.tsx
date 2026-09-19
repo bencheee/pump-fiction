@@ -76,8 +76,7 @@ export function ActionOverlay({
           onClick={() => {
             if (!chosen) return;
             setPicked(undefined);
-            close();
-            chosen.onRun();
+            close(chosen.onRun);
           }}
           className={classNames(
             "flex h-[var(--pf-size-primary-action)] items-center justify-center gap-2.5 rounded-full text-[17px] font-semibold transition-colors duration-[var(--pf-mo-base)] ease-linear",

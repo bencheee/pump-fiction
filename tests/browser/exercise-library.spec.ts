@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-import { fillHydrated } from "./support/hydration";
+import { fillHydrated, runScreenAction } from "./support/hydration";
 
 test.describe("exercise library", () => {
   test("creates, searches, validates, edits, and deletes a definition", async ({
@@ -24,7 +24,7 @@ test.describe("exercise library", () => {
       .getByRole("button", { name: /Added kilograms and reps/ })
       .click();
     await page.getByLabel("Exercise note").fill("Keep the ribs down.");
-    await page.getByRole("button", { name: "Save Exercise" }).click();
+    await runScreenAction(page, "Exercise actions", "Save exercise");
 
     // Saving returns to the library with a toast.
     await expect(page).toHaveURL(/\/exercises$/);
@@ -41,7 +41,7 @@ test.describe("exercise library", () => {
     // A duplicate name is rejected and the form stays open.
     await page.goto("/exercises/new");
     await fillHydrated(page.getByLabel("Name"), name);
-    await page.getByRole("button", { name: "Save Exercise" }).click();
+    await runScreenAction(page, "Exercise actions", "Save exercise");
     await expect(
       page.getByText("Another exercise already uses this name."),
     ).toBeVisible();
@@ -67,10 +67,10 @@ test.describe("exercise library", () => {
 
     // Deletion replaced archiving under ADR-0024: it asks, names the split
     // count, and removes the definition from the library.
-    await page.getByRole("button", { name: "Delete Exercise" }).click();
+    await runScreenAction(page, "Exercise actions", "Delete this exercise");
     const dialog = page.getByRole("alertdialog", { name: "Delete exercise?" });
     await expect(dialog).toContainText("No split uses it.");
-    await dialog.getByRole("button", { name: "Delete Exercise" }).click();
+    await dialog.getByRole("button", { name: "Delete exercise" }).click();
     await expect(page).toHaveURL(/\/exercises$/);
     await expect(page.getByText("Exercise deleted.")).toBeVisible();
     await expect(
