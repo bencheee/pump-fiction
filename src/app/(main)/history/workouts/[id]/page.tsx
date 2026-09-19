@@ -19,7 +19,7 @@ export default async function HistoryWorkoutPage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         <TopBar
           title="Workout"
           backHref="/history/workouts"

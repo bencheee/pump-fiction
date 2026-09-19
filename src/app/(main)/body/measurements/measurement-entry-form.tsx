@@ -123,13 +123,13 @@ export function MeasurementEntryForm({
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
         title={entry ? "Edit Entry" : "Add Entry"}
         backHref={parent}
         backLabel={type.name}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
+      <main className="pf-scroll flex min-h-0 flex-1 flex-col px-[var(--pf-gutter)] pt-1.5">
         <div className="space-y-6">
           <p className="[overflow-wrap:anywhere] text-[var(--pf-text-2)]">
             {type.name}

@@ -22,7 +22,7 @@ export default async function SplitStatisticsPage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         <TopBar title="Split" backHref="/history/splits" backLabel="Splits" />
         <PageFrame title="Split unavailable" className="pt-5">
           <EmptyState

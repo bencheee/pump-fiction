@@ -18,21 +18,7 @@ import {
   PageFrame,
 } from "@/shared/ui";
 
-import type { TodayMeasurements } from "@/features/history/domain/body";
-
-import { TodayMeasurementsCard } from "./today-measurements";
-import { TodayWeightCard, type TodayWeight } from "./today-weight";
-
-export function TodayExperience({
-  today,
-  weight,
-  measurements,
-}: {
-  today: TodayView;
-  /** Null only when the weigh-in could not be read; Today still works. */
-  weight: TodayWeight | null;
-  measurements: TodayMeasurements | null;
-}) {
+export function TodayExperience({ today }: { today: TodayView }) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
   const [pending, setPending] = useState(false);
@@ -174,11 +160,6 @@ export function TodayExperience({
             One-time workout
           </Link>
         </div>
-      ) : null}
-
-      {weight ? <TodayWeightCard weight={weight} /> : null}
-      {measurements ? (
-        <TodayMeasurementsCard measurements={measurements} />
       ) : null}
 
       {error ? (

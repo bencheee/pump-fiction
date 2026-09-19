@@ -92,7 +92,7 @@ export function OneTimeWorkoutForm({
   );
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
         title="One-Time Workout"
         backHref="/today"

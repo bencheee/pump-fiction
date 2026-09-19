@@ -14,8 +14,9 @@ export type ChartPoint = Readonly<{
 
 function summarize(
   points: readonly ChartPoint[],
-  formatValue: (value: number) => string,
   noun: string,
+  nounPlural: string,
+  formatValue: (value: number) => string,
   lowerIsBetter: boolean,
 ): string {
   const values = points.map((point) => point.value);
@@ -28,7 +29,7 @@ function summarize(
       : improved
         ? "Moving in the better direction."
         : "Below where the range started.";
-  const count = `${points.length} ${noun}${points.length === 1 ? "" : "s"}`;
+  const count = `${points.length} ${points.length === 1 ? noun : nounPlural}`;
   const best = lowerIsBetter ? Math.min(...values) : Math.max(...values);
 
   return `${count} in range: ${formatValue(first)} to ${formatValue(last)}, best ${formatValue(best)}. ${direction}`;
@@ -44,6 +45,7 @@ export function BarChart({
   points,
   formatValue,
   noun = "workout",
+  nounPlural,
   emptyMessage,
   height = 136,
   centred = false,
@@ -53,6 +55,8 @@ export function BarChart({
   points: readonly ChartPoint[];
   formatValue: (value: number) => string;
   noun?: string;
+  /** Given when adding an `s` would be wrong, as in entry and entries. */
+  nounPlural?: string;
   emptyMessage: string;
   height?: number;
   centred?: boolean;
@@ -136,7 +140,13 @@ export function BarChart({
       </div>
 
       <p className="mt-3.5 text-[13px] leading-[1.5] text-[var(--pf-text-3)]">
-        {summarize(points, formatValue, noun, lowerIsBetter)}
+        {summarize(
+          points,
+          noun,
+          nounPlural ?? `${noun}s`,
+          formatValue,
+          lowerIsBetter,
+        )}
       </p>
 
       <div className="mt-1.5">

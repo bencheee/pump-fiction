@@ -18,12 +18,14 @@ export function ProgressChart({
   series,
   formatValue = String,
   noun = "workout",
+  nounPlural,
   emptyMessage = "No workout falls inside this range.",
 }: {
   series: ChartSeries;
   formatValue?: (value: number) => string;
   /** What one point counts, for the summary sentence. */
   noun?: string;
+  nounPlural?: string;
   emptyMessage?: string;
 }) {
   return (
@@ -35,6 +37,7 @@ export function ProgressChart({
       }))}
       formatValue={formatValue}
       noun={noun}
+      nounPlural={nounPlural}
       lowerIsBetter={series.lowerIsBetter}
       emptyMessage={emptyMessage}
     />

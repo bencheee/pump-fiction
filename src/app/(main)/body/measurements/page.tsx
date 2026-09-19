@@ -10,6 +10,9 @@ import { EmptyState, Icon, ListRow, PageFrame } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
+import { BodyCount } from "../body-count";
+import { BodyNavigation } from "../body-navigation";
+
 export const dynamic = "force-dynamic";
 
 export default async function BodyHistoryPage() {
@@ -17,14 +20,15 @@ export default async function BodyHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Body" className="pt-6">
+      <PageFrame title="Body" pinned={<BodyNavigation />}>
         <EmptyState
+          icon="circle-alert"
           title="Measurements couldn't be loaded"
           body={result.error.message}
           action={
             <Link
               href="/body/measurements"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
+              className="mt-1 flex min-h-11 items-center rounded-full bg-[var(--pf-accent-dim)] px-5 font-semibold text-[var(--pf-accent)]"
             >
               Retry
             </Link>
@@ -37,29 +41,34 @@ export default async function BodyHistoryPage() {
   const { measurements } = result.value;
 
   return (
-    <PageFrame title="Body" className="pt-6">
-      {/* The History subsection bar owns the top of the screen, so the add
-          action sits in the flow rather than floating over it. */}
-      <div className="-mt-2 flex justify-end">
+    <PageFrame
+      title="Body"
+      action={<BodyCount count={measurements.length} noun="measurement" />}
+      pinned={<BodyNavigation />}
+      className="gap-3.5 pt-4.5"
+    >
+      <div className="flex justify-end">
         <Link
           href="/body/measurements/types/new"
-          className="flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-accent-strong)]"
+          className="flex min-h-11 items-center gap-2 rounded-full border border-[var(--pf-border)] px-4 text-[14px] font-semibold text-[var(--pf-accent)] transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-accent)]"
         >
-          <Icon name="plus" size={18} />
+          <Icon name="plus" size={16} />
           Add measurement
         </Link>
       </div>
 
       {measurements.length === 0 ? (
         <EmptyState
+          icon="scale"
           title="No measurements yet"
           body="Add a measurement such as waist or upper arm, then record it whenever you like."
         />
       ) : (
         <ul className="flex flex-col gap-2" aria-label="Measurements">
-          {measurements.map((measurement) => (
+          {measurements.map((measurement, index) => (
             <li key={measurement.id}>
               <ListRow
+                index={index}
                 href={`/body/measurements/${measurement.id}`}
                 title={measurement.name}
                 detail={
@@ -81,7 +90,7 @@ export default async function BodyHistoryPage() {
         </ul>
       )}
 
-      <p className="text-[12.5px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+      <p className="mt-1 text-[12.5px] leading-[1.5] text-[var(--pf-text-4)]">
         A rise or a fall is neither good nor bad on its own. What it means
         depends on the measurement and on what you are training for.
       </p>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -170,13 +171,13 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
                     {exercise.workoutNote}
                   </p>
                 ) : null}
-                <a
+                <Link
                   href={`/history/exercises/${exercise.exerciseIdentityId}`}
                   className="mt-3.5 flex min-h-11 items-center gap-2 text-[13.5px] font-semibold text-[var(--pf-accent)]"
                 >
                   <Icon name="trending-up" size={15} />
                   Exercise statistics
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

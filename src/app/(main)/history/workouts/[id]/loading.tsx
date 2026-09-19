@@ -2,7 +2,7 @@ import { LoadingSkeleton, PageFrame, TopBar } from "@/shared/ui";
 
 export default function HistoryWorkoutLoading() {
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
         title="Workout"
         backHref="/history/workouts"

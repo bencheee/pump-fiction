@@ -42,12 +42,9 @@ vi.mock("@/app/actions/body", () => ({
 }));
 
 const router = vi.hoisted(() => ({ refresh: vi.fn(), replace: vi.fn() }));
-vi.mock("next/navigation", () => ({ useRouter: () => router }));
-
-// The chart draws the same series the accessible list shows, and Recharts needs
-// a laid-out container jsdom does not provide; the browser scenario covers it.
-vi.mock("@/features/history/ui/progress-chart", () => ({
-  ProgressChart: () => null,
+vi.mock("next/navigation", () => ({
+  useRouter: () => router,
+  usePathname: () => "/body/measurements",
 }));
 
 const today = "2026-09-06";
@@ -235,7 +232,9 @@ describe("S23 measurement detail", () => {
   afterEach(cleanup);
 
   it("shows the latest value and both changes", () => {
-    render(<MeasurementDetailView progress={progress()} initialRange="all" />);
+    renderWithToast(
+      <MeasurementDetailView progress={progress()} initialRange="all" />,
+    );
 
     expect(card("Latest").getByText("84 cm")).toBeVisible();
     expect(card("Latest change").getByText("−0.5 cm")).toBeVisible();
@@ -243,7 +242,7 @@ describe("S23 measurement detail", () => {
   });
 
   it("leaves both changes unavailable with a single entry", () => {
-    render(
+    renderWithToast(
       <MeasurementDetailView
         progress={progress({
           latest: {
@@ -269,7 +268,7 @@ describe("S23 measurement detail", () => {
   });
 
   it("invites the first entry instead of fabricating a zero", () => {
-    render(
+    renderWithToast(
       <MeasurementDetailView
         progress={progress({ latest: null, totalChangeCm: null, entries: [] })}
         initialRange="all"
@@ -282,7 +281,9 @@ describe("S23 measurement detail", () => {
   it("offers the four body ranges and reloads on a change", async () => {
     const user = userEvent.setup();
     actions.load.mockResolvedValue({ ok: true, value: progress() });
-    render(<MeasurementDetailView progress={progress()} initialRange="all" />);
+    renderWithToast(
+      <MeasurementDetailView progress={progress()} initialRange="all" />,
+    );
 
     const ranges = within(screen.getByRole("group", { name: "Time range" }));
     expect(ranges.getAllByRole("button").map((b) => b.textContent)).toEqual([
@@ -298,10 +299,12 @@ describe("S23 measurement detail", () => {
 
   it("carries the chart in an accessible list beside a sentence", async () => {
     const user = userEvent.setup();
-    render(<MeasurementDetailView progress={progress()} initialRange="all" />);
+    renderWithToast(
+      <MeasurementDetailView progress={progress()} initialRange="all" />,
+    );
 
     expect(
-      screen.getByText(/3 entries from 85 cm to 84 cm, lowest 84 cm/),
+      screen.getByText(/3 entries in range: 85 cm to 84 cm/),
     ).toBeVisible();
 
     // The list sits inside a collapsed disclosure, as it does on S16 and S19.
@@ -312,7 +315,9 @@ describe("S23 measurement detail", () => {
   });
 
   it("lists every entry newest first with its change and edit link", () => {
-    render(<MeasurementDetailView progress={progress()} initialRange="all" />);
+    renderWithToast(
+      <MeasurementDetailView progress={progress()} initialRange="all" />,
+    );
     const links = within(
       screen.getByRole("list", { name: "Entries" }),
     ).getAllByRole("link");
