@@ -137,19 +137,19 @@ describe("Today and workout-start mobile experience", () => {
 
     expect(screen.getByText("Wed 26 Aug")).toBeVisible();
     expect(screen.getByText("Avg 1h 08m · 7 workouts")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Another split" }));
+    const dialog = screen.getByRole("dialog", { name: "Choose another split" });
     await user.click(
-      screen.getByRole("button", { name: "Choose another split" }),
-    );
-    const dialog = screen.getByRole("dialog", { name: "Choose Another Split" });
-    await user.click(
-      within(dialog).getAllByRole("button", {
-        name: "Put on Today, don't start yet",
-      })[1]!,
+      within(dialog).getByRole("button", {
+        name: "Put Upper Push on Today without starting it",
+      }),
     );
     expect(screen.getByText("Today-only split")).toBeVisible();
     expect(screen.getByText("Upper Push")).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Start Workout" }));
+    await user.click(
+      screen.getByRole("button", { name: "Start today's workout" }),
+    );
     expect(actions.startWorkout).toHaveBeenCalledWith(
       expect.objectContaining({
         sourceKind: "alternate_split",
@@ -159,26 +159,24 @@ describe("Today and workout-start mobile experience", () => {
     expect(actions.push).toHaveBeenCalledWith("/workout/current");
   });
 
-  it("previews every exercise in the selected split beneath Start Workout", async () => {
+  it("previews every exercise in the selected split", async () => {
     const user = userEvent.setup();
     renderToday(
       <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
     );
 
     expect(screen.getByText("Back Squat")).toBeVisible();
-    expect(screen.getByText("3 × 5–8 reps")).toBeVisible();
+    expect(screen.getByText("3 × 5–8")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Another split" }));
+    const dialog = screen.getByRole("dialog", { name: "Choose another split" });
     await user.click(
-      screen.getByRole("button", { name: "Choose another split" }),
-    );
-    const dialog = screen.getByRole("dialog", { name: "Choose Another Split" });
-    await user.click(
-      within(dialog).getAllByRole("button", {
-        name: "Put on Today, don't start yet",
-      })[1]!,
+      within(dialog).getByRole("button", {
+        name: "Put Upper Push on Today without starting it",
+      }),
     );
     expect(screen.queryByText("Back Squat")).not.toBeInTheDocument();
     expect(screen.getByText("Overhead Press")).toBeVisible();
-    expect(screen.getByText("4 × 6–10 reps")).toBeVisible();
+    expect(screen.getByText("4 × 6–10")).toBeVisible();
   });
 
   it("offers today's weight only while the day has none", async () => {
@@ -303,9 +301,9 @@ describe("Today and workout-start mobile experience", () => {
     expect(screen.getByLabelText("Restored workout")).toHaveTextContent(
       "Paused · 24:18",
     );
-    expect(screen.getByRole("link", { name: "Resume Workout" })).toBeVisible();
+    expect(screen.getByRole("link", { name: "Resume workout" })).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: "Start Workout" }),
+      screen.queryByRole("button", { name: "Start today's workout" }),
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("link", { name: "One-time workout" }),

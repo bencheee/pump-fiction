@@ -11,12 +11,15 @@ import { Icon } from "./icon";
  */
 export function PageFrame({
   title,
+  titleSuffix,
   action,
   pinned,
   children,
   className,
 }: {
   title: string;
+  /** Rendered inside the heading, for Today's caret. */
+  titleSuffix?: ReactNode;
   action?: ReactNode;
   pinned?: ReactNode;
   children?: ReactNode;
@@ -27,6 +30,7 @@ export function PageFrame({
       <header className="flex shrink-0 items-center justify-between gap-3 px-[var(--pf-gutter)] pt-[calc(var(--pf-s6)+env(safe-area-inset-top))] pb-2.5">
         <h1 className="text-[length:var(--pf-type-screen-title-size)] leading-[1.1] font-bold tracking-[-0.01em] [overflow-wrap:anywhere]">
           {title}
+          {titleSuffix}
         </h1>
         {action}
       </header>

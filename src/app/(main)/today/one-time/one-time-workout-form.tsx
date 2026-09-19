@@ -98,7 +98,7 @@ export function OneTimeWorkoutForm({
         backHref="/today"
         backLabel="Back to Today"
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
+      <main className="pf-scroll flex min-h-0 flex-1 flex-col px-[var(--pf-gutter)] pt-1.5">
         <div className="space-y-6">
           <TextField
             id="one-time-name"
@@ -140,12 +140,12 @@ export function OneTimeWorkoutForm({
                 {selected.map((exercise, index) => (
                   <div
                     key={exercise.id}
-                    className="flex min-h-24 items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-2"
+                    className="flex min-h-24 items-center gap-2 rounded-[var(--pf-r3)] bg-[var(--pf-bg-surface)] p-2"
                   >
                     <Icon
                       name="grip-vertical"
                       size={18}
-                      className="text-[var(--pf-text-3-deep)]"
+                      className="text-[var(--pf-text-3)]"
                     />
                     <span className="min-w-0 flex-1">
                       <span className="block text-[16.5px] font-semibold [overflow-wrap:anywhere]">
@@ -204,7 +204,7 @@ export function OneTimeWorkoutForm({
                     exerciseError ? "one-time-exercises-error" : undefined
                   }
                   disabled={pending}
-                  className="mt-3 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)] disabled:opacity-[var(--pf-opacity-disabled)] data-[invalid=true]:border-[var(--pf-danger)]"
+                  className="mt-3 flex min-h-[54px] w-full items-center justify-center gap-2 rounded-full bg-[var(--pf-accent-dim)] text-[15px] font-semibold text-[var(--pf-accent)] transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:bg-[var(--pf-accent-dim-hover)] disabled:opacity-[var(--pf-opacity-disabled)] data-[invalid=true]:ring-1 data-[invalid=true]:ring-[var(--pf-danger)]"
                 >
                   <Icon name="plus" size={18} /> Add Exercise
                 </button>
@@ -231,7 +231,7 @@ export function OneTimeWorkoutForm({
                       type="button"
                       aria-label={exercise.name}
                       onClick={() => addExercise(exercise)}
-                      className="flex min-h-14 w-full items-center gap-3 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] px-3 py-2.5 text-left"
+                      className="flex min-h-[68px] w-full items-center gap-3.5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] px-[18px] py-3.5 text-left transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-border-strong)]"
                     >
                       <span className="min-w-0 flex-1">
                         <span className="block font-semibold [overflow-wrap:anywhere]">
@@ -244,7 +244,7 @@ export function OneTimeWorkoutForm({
                       <Icon
                         name="plus"
                         size={18}
-                        className="text-[var(--pf-accent-strong)]"
+                        className="text-[var(--pf-accent)]"
                       />
                     </button>
                   ))}
@@ -282,7 +282,7 @@ export function OneTimeWorkoutForm({
                   type="button"
                   disabled={pending}
                   onClick={() => void start()}
-                  className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+                  className="min-h-11 rounded-full border border-[var(--pf-danger)] px-3.5 font-semibold"
                 >
                   Retry
                 </button>

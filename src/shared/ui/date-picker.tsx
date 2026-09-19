@@ -92,7 +92,7 @@ export function MonthCalendar({
             "flex size-11 shrink-0 items-center justify-center rounded-full",
             canGoForward
               ? "bg-[var(--pf-bg-surface)] text-[var(--pf-text-2)]"
-              : "bg-transparent text-[var(--pf-glyph-dim)]",
+              : "bg-[var(--pf-bg-surface-dim)] text-[var(--pf-border-strong)]",
           )}
         >
           <Icon name="chevron-right" size={16} />
@@ -135,12 +135,12 @@ export function MonthCalendar({
               className={classNames(
                 "pf-numeric flex h-[46px] items-center justify-center rounded-[var(--pf-r1)] border text-[17px] transition-[background-color,color] duration-[var(--pf-mo-fast)] ease-linear",
                 selected
-                  ? "border-[var(--pf-accent)] bg-[var(--pf-accent)] font-bold text-[var(--pf-on-accent)]"
+                  ? "border-transparent bg-[var(--pf-accent-dim)] font-bold text-[var(--pf-accent)]"
                   : disabled
-                    ? "border-transparent bg-transparent font-medium text-[var(--pf-glyph-dim)]"
+                    ? "border-transparent bg-transparent font-semibold text-[var(--pf-border-strong)]"
                     : isToday
-                      ? "border-[var(--pf-accent)] bg-[var(--pf-bg-surface)] font-semibold text-[var(--pf-text)]"
-                      : "border-transparent bg-[var(--pf-bg-surface)] font-medium text-[var(--pf-text-2)]",
+                      ? "border-[var(--pf-border-strong)] bg-[var(--pf-bg-surface)] font-semibold text-[var(--pf-text)]"
+                      : "border-transparent bg-[var(--pf-bg-surface)] font-semibold text-[var(--pf-text)]",
               )}
             >
               {Number(date.slice(8, 10))}
