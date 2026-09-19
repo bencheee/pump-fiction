@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Link from "next/link";
 
 import { classNames } from "./class-names";
@@ -69,7 +69,7 @@ export function SaveStatus({
         <button
           type="button"
           onClick={onRetry}
-          className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+          className="min-h-11 rounded-full border border-[var(--pf-danger)] px-3.5 font-semibold"
         >
           Retry
         </button>
@@ -81,11 +81,11 @@ export function SaveStatus({
 type BadgeTone = "neutral" | "accent" | "ok" | "warn" | "danger";
 
 const badgeTones: Record<BadgeTone, string> = {
-  neutral: "border-[var(--pf-border-strong)] text-[var(--pf-text-2)]",
-  accent: "border-[var(--pf-accent-strong)] text-[var(--pf-accent-strong)]",
-  ok: "border-[var(--pf-ok)] text-[var(--pf-ok)]",
-  warn: "border-[var(--pf-warn)] text-[var(--pf-warn)]",
-  danger: "border-[var(--pf-danger)] text-[var(--pf-danger)]",
+  neutral: "border border-[var(--pf-border-strong)] text-[var(--pf-text-3)]",
+  accent: "bg-[var(--pf-accent-dim)] text-[var(--pf-accent)]",
+  ok: "bg-[var(--pf-accent-dim)] text-[var(--pf-ok)]",
+  warn: "border border-[var(--pf-warn)] text-[var(--pf-warn)]",
+  danger: "border border-[var(--pf-danger)] text-[var(--pf-danger)]",
 };
 
 export function Badge({
@@ -98,7 +98,7 @@ export function Badge({
   return (
     <span
       className={classNames(
-        "inline-flex min-h-5 items-center rounded-[var(--pf-r1)] border px-1.5 text-[10px] leading-[1.4] font-semibold tracking-[0.08em] uppercase",
+        "inline-flex items-center rounded-full px-2.5 py-1 text-[length:var(--pf-type-label-size)] leading-[1.2] font-semibold",
         badgeTones[tone],
       )}
     >
@@ -107,19 +107,50 @@ export function Badge({
   );
 }
 
+/** The uppercase section label that separates blocks on every screen. */
+export function Kicker({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <p
+      className={classNames(
+        "text-[length:var(--pf-type-label-size)] font-semibold tracking-[0.1em] text-[var(--pf-text-4)] uppercase",
+        className,
+      )}
+    >
+      {children}
+    </p>
+  );
+}
+
 export function EmptyState({
   title,
   body,
+  icon,
   action,
 }: {
   title: string;
   body: string;
+  icon?: IconName;
   action?: ReactNode;
 }) {
   return (
-    <section className="flex flex-col items-center gap-3 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-6 text-center">
-      <h2 className="text-[16.5px] leading-[1.25] font-semibold">{title}</h2>
-      <p className="max-w-[30ch] text-[var(--pf-text-2)]">{body}</p>
+    <section className="flex flex-col items-center gap-2.5 rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-5 py-6 text-center motion-safe:animate-[pf-rise_var(--pf-mo-slow)_var(--pf-ease)]">
+      {icon ? (
+        <Icon
+          name={icon}
+          size={30}
+          className="text-[var(--pf-border-strong)]"
+        />
+      ) : null}
+      <h2 className="text-[15.5px] leading-[1.25] font-semibold">{title}</h2>
+      <p className="max-w-[32ch] text-[13.5px] leading-[1.5] text-[var(--pf-text-3)]">
+        {body}
+      </p>
       {action}
     </section>
   );
@@ -137,7 +168,7 @@ export function LoadingSkeleton({ label }: { label: string }) {
         <div
           key={width}
           aria-hidden="true"
-          className="h-12 rounded-[var(--pf-r2)] bg-[var(--pf-bg-surface-3)] motion-safe:animate-[pf-pulse_1.4s_infinite]"
+          className="h-[78px] rounded-[var(--pf-r3)] bg-[var(--pf-bg-surface)] motion-safe:animate-[pf-pulse_var(--pf-mo-pulse)_infinite]"
           style={{ width, animationDelay: `${index * 120}ms` }}
         />
       ))}
@@ -145,37 +176,48 @@ export function LoadingSkeleton({ label }: { label: string }) {
   );
 }
 
+/** Rows stagger in by 34ms each, and stop stepping after the tenth. */
+export function rowStagger(index: number): CSSProperties {
+  return { animationDelay: `${Math.min(index, 9) * 34}ms` };
+}
+
 export function ListRow({
   href,
   title,
   detail,
   leading,
+  trailing,
+  index,
 }: {
   href: string;
   title: string;
   detail?: ReactNode;
   leading?: ReactNode;
+  trailing?: ReactNode;
+  index?: number;
 }) {
   return (
     <Link
       href={href}
-      className="flex min-h-14 items-center gap-3 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] px-3 py-2.5"
+      style={index === undefined ? undefined : rowStagger(index)}
+      className="flex min-h-[var(--pf-size-list-row)] items-center gap-2.5 rounded-[var(--pf-r3)] border border-[var(--pf-bg-surface)] bg-[var(--pf-bg-surface)] py-3.5 pr-3 pl-[18px] transition-[border-color,transform] duration-[var(--pf-mo-fast)] ease-[var(--pf-ease)] hover:border-[var(--pf-border-strong)] active:scale-[0.99] motion-safe:animate-[pf-row-in_260ms_var(--pf-ease)_both]"
     >
       {leading}
       <span className="min-w-0 flex-1">
-        <span className="block text-[16.5px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
+        <span className="block text-[length:var(--pf-type-card-title-size)] leading-[1.25] font-semibold [text-wrap:pretty]">
           {title}
         </span>
         {detail ? (
-          <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
+          <span className="pf-numeric mt-1.5 block text-[14px] text-[var(--pf-text-3)]">
             {detail}
           </span>
         ) : null}
       </span>
+      {trailing}
       <Icon
         name="chevron-right"
         size={16}
-        className="text-[var(--pf-text-2)]"
+        className="shrink-0 text-[var(--pf-glyph-dim)]"
       />
     </Link>
   );
@@ -191,15 +233,17 @@ export function StatCard({
   detail?: ReactNode;
 }) {
   return (
-    <section className="min-w-0 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3">
-      <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+    <section className="min-w-0 rounded-[var(--pf-r3)] bg-[var(--pf-bg-surface)] px-3.5 py-4">
+      <h2 className="text-[11px] font-semibold tracking-[0.06em] text-[var(--pf-text-4)] uppercase">
         {label}
       </h2>
-      <p className="pf-numeric mt-2 text-[30px] leading-none font-semibold [overflow-wrap:anywhere]">
+      <p className="pf-numeric mt-2 text-[length:var(--pf-type-metric-size)] leading-none font-bold [overflow-wrap:anywhere]">
         {value}
       </p>
       {detail ? (
-        <p className="mt-2 text-[12.5px] text-[var(--pf-text-2)]">{detail}</p>
+        <p className="mt-1.5 text-[12.5px] leading-[1.4] text-[var(--pf-text-3)]">
+          {detail}
+        </p>
       ) : null}
     </section>
   );

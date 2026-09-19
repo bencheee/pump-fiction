@@ -47,7 +47,9 @@ export type IconName = (typeof iconNames)[number];
 
 type IconProps = {
   name: IconName;
-  size?: 12 | 13 | 14 | 15 | 16 | 18 | 19 | 20;
+  // The redesign draws the same glyph at many sizes, from a 12px inline marker
+  // to the 36px glyph inside the set-logged flash.
+  size?: number;
   className?: string;
 };
 

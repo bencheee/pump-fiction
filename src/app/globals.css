@@ -70,25 +70,45 @@
 
 :root {
   color-scheme: dark;
-  --pf-bg-canvas: #0b0f0d;
-  --pf-bg-surface: #131816;
-  --pf-bg-surface-2: #1b2220;
-  --pf-bg-surface-3: #232b29;
-  --pf-border: #2c3532;
-  --pf-border-strong: #3e4946;
-  --pf-border-control: #6b7874;
-  --pf-text: #edf2f0;
-  --pf-text-2: #a8b4b0;
-  --pf-text-3: #7c8783;
-  --pf-text-3-deep: #9aa5a1;
-  --pf-accent: #8b85d6;
-  --pf-accent-strong: #a29ce8;
-  --pf-accent-dim: #242138;
-  --pf-on-accent: #0b0f0d;
-  --pf-ok: #6fbf8b;
+
+  /* Surfaces */
+  --pf-bg-canvas: #0a0e0c;
+  --pf-bg-overlay: #070a08;
+  --pf-bg-nav: #0e1310;
+  --pf-bg-surface: #141a17;
+  --pf-bg-surface-2: #1a211d;
+  --pf-bg-surface-3: #1e2622;
+  --pf-bg-surface-4: #232d28;
+
+  /* Lines and glyphs */
+  --pf-border: #1e2622;
+  --pf-border-strong: #2a332e;
+  --pf-border-control: #2a332e;
+  --pf-border-nav: #151b18;
+  --pf-glyph-dim: #3a443e;
+
+  /* Text */
+  --pf-text: #f2f7f4;
+  --pf-text-2: #a7b5ae;
+  --pf-text-3: #808e88;
+  --pf-text-3-deep: #a7b5ae;
+  --pf-text-4: #68746e;
+
+  /* Accent */
+  --pf-accent: #35b57e;
+  --pf-accent-strong: #9ed3b6;
+  --pf-accent-soft: #9ed3b6;
+  --pf-accent-dim: #0f2a1d;
+  --pf-accent-dim-hover: #143524;
+  --pf-on-accent: #06170f;
+
+  /* Status */
+  --pf-ok: #35b57e;
   --pf-warn: #e0b15e;
   --pf-danger: #e58273;
-  --pf-focus: #c9c4ff;
+  --pf-focus: #9ed3b6;
+
+  /* Spacing */
   --pf-s1: 4px;
   --pf-s2: 8px;
   --pf-s3: 12px;
@@ -96,60 +116,96 @@
   --pf-s5: 20px;
   --pf-s6: 24px;
   --pf-s7: 32px;
-  --pf-r1: 4px;
-  --pf-r2: 8px;
-  --pf-r3: 12px;
-  --pf-r4: 16px;
+
+  /* Radii */
+  --pf-r1: 14px;
+  --pf-r2: 18px;
+  --pf-r3: 20px;
+  --pf-r4: 22px;
+  --pf-r5: 26px;
   --pf-r-pill: 999px;
-  --pf-type-display-size: 30px;
-  --pf-type-screen-title-size: 26px;
-  --pf-type-metric-size: 30px;
-  --pf-type-title-size: 21px;
-  --pf-type-card-title-size: 16.5px;
+
+  /* Type */
+  --pf-type-display-size: 28px;
+  --pf-type-screen-title-size: 28px;
+  --pf-type-metric-size: 22px;
+  --pf-type-wheel-size: 52px;
+  --pf-type-title-size: 23px;
+  --pf-type-stage-size: 26px;
+  --pf-type-card-title-size: 15.5px;
   --pf-type-body-size: 15px;
-  --pf-type-input-size: 16px;
-  --pf-type-meta-size: 12.5px;
-  --pf-type-label-size: 11px;
-  --pf-type-badge-size: 10px;
+  --pf-type-input-size: 16.5px;
+  --pf-type-meta-size: 13px;
+  --pf-type-label-size: 11.5px;
+  --pf-type-badge-size: 11px;
+
+  /* Control sizing */
   --pf-size-icon-button: 44px;
-  --pf-size-control-chip: 44px;
-  --pf-size-primary-action: 52px;
-  --pf-size-secondary-action: 48px;
-  --pf-size-input: 48px;
-  --pf-size-input-prominent: 56px;
+  --pf-size-control-chip: 40px;
+  --pf-size-primary-action: 60px;
+  --pf-size-hero-action: 66px;
+  --pf-size-secondary-action: 52px;
+  --pf-size-input: 58px;
+  --pf-size-input-prominent: 58px;
+  --pf-size-search: 52px;
   --pf-size-bottom-nav: 56px;
+  --pf-size-overlay-header: 60px;
+  --pf-size-list-row: 78px;
+
+  /* Borders */
   --pf-border-hairline: 1px;
   --pf-border-emphasis: 2px;
   --pf-border-active-marker: 3px;
-  --pf-shadow-sheet: 0 -18px 40px rgb(0 0 0 / 50%);
-  --pf-shadow-toast: 0 10px 30px rgb(0 0 0 / 50%);
+
+  /* Elevation */
+  --pf-shadow-sheet: 0 18px 44px rgb(0 0 0 / 60%);
+  --pf-shadow-toast: 0 12px 34px rgb(0 0 0 / 55%);
+  --pf-shadow-drag: 0 14px 30px rgb(0 0 0 / 45%);
+  --pf-shadow-flash: 0 16px 40px rgb(53 181 126 / 30%);
+
+  /* States */
   --pf-opacity-disabled: 0.45;
-  --pf-opacity-scrim-modal: 0.66;
-  --pf-opacity-scrim-sheet: 0.62;
-  --pf-mo-fast: 120ms;
+  --pf-opacity-scrim-modal: 0.78;
+  --pf-opacity-scrim-sheet: 0.78;
+  --pf-scrim-modal: rgb(3 6 4 / 78%);
+
+  /* Motion */
+  --pf-mo-fast: 160ms;
   --pf-mo-base: 180ms;
   --pf-mo-slow: 240ms;
+  --pf-mo-panel: 320ms;
+  --pf-mo-bar: 380ms;
   --pf-mo-pulse: 1.4s;
   --pf-ease: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --pf-ease-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
   --pf-target-min: 44px;
-  --pf-gutter: 16px;
-  --pf-bottom-buffer: 12px;
+  --pf-gutter: 20px;
+  --pf-bottom-buffer: 18px;
+
   --pf-font-body: "Barlow", system-ui, sans-serif;
   --pf-font-numeric: "Barlow Semi Condensed", system-ui, sans-serif;
 }
 
 @theme inline {
   --color-pf-canvas: var(--pf-bg-canvas);
+  --color-pf-overlay: var(--pf-bg-overlay);
+  --color-pf-nav: var(--pf-bg-nav);
   --color-pf-surface: var(--pf-bg-surface);
   --color-pf-surface-2: var(--pf-bg-surface-2);
   --color-pf-surface-3: var(--pf-bg-surface-3);
   --color-pf-border: var(--pf-border);
   --color-pf-control: var(--pf-border-control);
+  --color-pf-glyph-dim: var(--pf-glyph-dim);
   --color-pf-text: var(--pf-text);
   --color-pf-text-2: var(--pf-text-2);
   --color-pf-text-3: var(--pf-text-3);
+  --color-pf-text-4: var(--pf-text-4);
   --color-pf-accent: var(--pf-accent);
   --color-pf-accent-strong: var(--pf-accent-strong);
+  --color-pf-accent-dim: var(--pf-accent-dim);
+  --color-pf-on-accent: var(--pf-on-accent);
   --color-pf-ok: var(--pf-ok);
   --color-pf-warn: var(--pf-warn);
   --color-pf-danger: var(--pf-danger);
@@ -158,6 +214,7 @@
   --radius-pf-sm: var(--pf-r1);
   --radius-pf: var(--pf-r2);
   --radius-pf-lg: var(--pf-r3);
+  --radius-pf-xl: var(--pf-r4);
 }
 
 *,
@@ -187,6 +244,17 @@ textarea,
 select {
   color: inherit;
   font: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+input {
+  appearance: none;
 }
 
 button,
@@ -226,7 +294,7 @@ select {
 }
 
 .pf-safe-top {
-  padding-top: calc(var(--pf-s4) + env(safe-area-inset-top));
+  padding-top: calc(var(--pf-s6) + env(safe-area-inset-top));
 }
 
 .pf-safe-bottom {
@@ -238,23 +306,14 @@ select {
 }
 
 .pf-scrim-modal {
-  background: rgb(0 0 0 / var(--pf-opacity-scrim-modal));
+  background: var(--pf-scrim-modal);
 }
 
 .pf-scrim-sheet {
-  background: rgb(0 0 0 / var(--pf-opacity-scrim-sheet));
+  background: var(--pf-scrim-modal);
 }
 
-@keyframes pf-rise {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ---------- Motion ---------- */
 
 @keyframes pf-pulse {
   0%,
@@ -266,9 +325,339 @@ select {
   }
 }
 
+@keyframes pf-caret {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pf-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-screen-forward {
+  from {
+    opacity: 0;
+    transform: translateX(26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes pf-screen-back {
+  from {
+    opacity: 0;
+    transform: translateX(-26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes pf-panel-forward {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pf-panel-back {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pf-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-overlay-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pf-bar-in {
+  from {
+    opacity: 0.2;
+    transform: scaleY(0.04);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes pf-readout-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-wheel-up-a {
+  from {
+    opacity: 0.45;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-wheel-up-b {
+  from {
+    opacity: 0.45;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-wheel-down-a {
+  from {
+    opacity: 0.45;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-wheel-down-b {
+  from {
+    opacity: 0.45;
+    transform: translateY(-35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-bump-a {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-bump-b {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-press-a {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pf-press-b {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pf-stage-in-a {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pf-stage-in-b {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pf-picker-fade {
+  0% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0;
+  }
+  87% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pf-flash-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  17% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes pf-flash-ring {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes pf-handoff-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pf-handoff-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.72);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+@keyframes pf-handoff-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pf-handoff-arrow {
+  0% {
+    opacity: 0.35;
+    transform: translateY(-4px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 0.35;
+    transform: translateY(-4px);
+  }
+}
+
 @media (width <= 320px) {
   :root {
-    --pf-gutter: 12px;
+    --pf-gutter: 16px;
   }
 }
 

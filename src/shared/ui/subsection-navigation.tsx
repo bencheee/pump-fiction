@@ -10,8 +10,9 @@ export type Subsection = { href: string; label: string };
 /**
  * The tab bar a destination puts above its own screens. History has carried
  * one since `T-032`; `T-052` gave Body the same bar rather than a second
- * implementation of it, under [ADR-0030]. The current tab is marked by
- * `aria-current` and by a weight and underline change, never by color alone.
+ * implementation of it, under [ADR-0030]. The redesign draws it as a segmented
+ * control: a filled thumb slides under the current tab, which is also marked by
+ * `aria-current` and by a weight change, so the cue is never colour alone.
  */
 export function SubsectionNavigation({
   label,
@@ -21,28 +22,39 @@ export function SubsectionNavigation({
   subsections: readonly Subsection[];
 }) {
   const pathname = usePathname();
+  const currentIndex = Math.max(
+    0,
+    subsections.findIndex(
+      (subsection) =>
+        pathname === subsection.href ||
+        pathname.startsWith(`${subsection.href}/`),
+    ),
+  );
 
   return (
-    <nav
-      aria-label={label}
-      className="pf-safe-top sticky top-0 z-5 border-b border-[var(--pf-border)] bg-[var(--pf-bg-canvas)]"
-    >
-      <ul className="flex gap-1 overflow-x-auto px-[var(--pf-gutter)] pb-1">
-        {subsections.map((subsection) => {
-          const current =
-            pathname === subsection.href ||
-            pathname.startsWith(`${subsection.href}/`);
+    <nav aria-label={label} className="shrink-0">
+      <ul className="relative flex gap-1 rounded-full bg-[var(--pf-bg-surface)] p-1">
+        <li
+          aria-hidden="true"
+          className="absolute top-1 left-1 h-[42px] rounded-full bg-[var(--pf-accent)] transition-transform duration-[var(--pf-mo-panel)] ease-[var(--pf-ease)]"
+          style={{
+            width: `calc((100% - 8px) / ${subsections.length})`,
+            transform: `translateX(${currentIndex * 100}%)`,
+          }}
+        />
+        {subsections.map((subsection, index) => {
+          const current = index === currentIndex;
 
           return (
-            <li key={subsection.href}>
+            <li key={subsection.href} className="relative min-w-0 flex-1">
               <Link
                 href={subsection.href}
                 aria-current={current ? "page" : undefined}
                 className={classNames(
-                  "flex min-h-11 items-center border-b-2 px-3 text-[13px] whitespace-nowrap",
+                  "flex h-[42px] items-center justify-center rounded-full text-[14.5px] transition-colors duration-[240ms] ease-linear",
                   current
-                    ? "border-[var(--pf-accent-strong)] font-semibold text-[var(--pf-accent-strong)]"
-                    : "border-transparent text-[var(--pf-text-2)]",
+                    ? "font-semibold text-[var(--pf-on-accent)]"
+                    : "font-medium text-[var(--pf-text-3)]",
                 )}
               >
                 {subsection.label}
