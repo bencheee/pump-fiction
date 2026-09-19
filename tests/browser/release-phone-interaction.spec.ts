@@ -4,6 +4,8 @@ import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { expect, test, type Page } from "@playwright/test";
 
+import { runScreenAction } from "./support/hydration";
+
 // F-010 owns MVP-UX-001 through MVP-UX-003. Each Feature met them on its own
 // screens; nothing yet checks them across the whole application at once, which
 // is the only way a route that quietly stopped reflowing gets noticed.
@@ -119,59 +121,52 @@ test.describe("Local MVP phone interaction", () => {
     }
   });
 
-  test("offers named reorder controls and saves a completed reorder", async ({
+  test("reorders by hold or arrow key and saves a completed reorder", async ({
     page,
   }, testInfo) => {
     const fixture = await seed(`${testInfo.project.name} ${Date.now()}`);
 
     try {
-      // MVP-UX-002 as T-050 corrected it: every reorderable list carries a
-      // pair of named controls on each row, unavailable at the ends. The
-      // program holds two splits, so both ends are visible at once.
+      // ADR-0032 replaced the paired up/down buttons with holding a row. A
+      // pointer drag cannot be the only way, so each row is focusable, says
+      // what it is, and answers the arrow keys.
       await page.goto(`/programs/${fixture.programId}/edit`);
-      const firstUp = page.getByRole("button", {
-        name: `Move ${fixture.splitA} up`,
-      });
-      const firstDown = page.getByRole("button", {
-        name: `Move ${fixture.splitA} down`,
-      });
-      const lastUp = page.getByRole("button", {
-        name: `Move ${fixture.splitB} up`,
-      });
-      const lastDown = page.getByRole("button", {
-        name: `Move ${fixture.splitB} down`,
-      });
-      await expect(firstUp).toBeDisabled();
-      await expect(firstDown).toBeEnabled();
-      await expect(lastUp).toBeEnabled();
-      await expect(lastDown).toBeDisabled();
+      await expect(page.getByText("Hold to reorder")).toBeVisible();
+      const firstRow = page.getByRole("region", { name: fixture.splitA });
+      await expect(firstRow).toHaveAttribute(
+        "aria-roledescription",
+        /arrow keys/i,
+      );
 
-      // Each control is a real phone target, not an icon a thumb misses.
-      for (const control of [firstDown, lastUp]) {
-        const box = await control.boundingBox();
-        expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
-        expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
-      }
+      // The row is a real phone target rather than a hairline strip.
+      const box = await firstRow.boundingBox();
+      expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
 
-      // The other reorderable lists carry the same controls.
-      for (const [url, name] of [
-        [`/splits/${fixture.splitBId}/edit`, fixture.exercise],
-        ["/workout/current", fixture.exercise],
-        [`/history/workouts/${fixture.workoutId}/edit`, fixture.exercise],
-      ] as const) {
-        await page.goto(url);
-        await expect(
-          page.getByRole("button", { name: `Move ${name} up` }),
-        ).toBeVisible();
-        await expect(
-          page.getByRole("button", { name: `Move ${name} down` }),
-        ).toBeVisible();
-      }
+      // The other reorderable lists carry the same affordance.
+      await page.goto(`/splits/${fixture.splitBId}/edit`);
+      await expect(
+        page.getByRole("region", { name: fixture.exercise }),
+      ).toHaveAttribute("aria-roledescription", /arrow keys/i);
 
-      await page.goto(`/programs/${fixture.programId}/edit`);
+      await page.goto("/workout/current");
+      await page.getByRole("button", { name: "Workout overview" }).click();
+      await expect(
+        page.getByRole("region", { name: fixture.exercise }),
+      ).toHaveAttribute("aria-roledescription", /arrow keys/i);
+
+      // The workout correction screen keeps its moves as named actions.
+      await page.goto(`/history/workouts/${fixture.workoutId}/edit`);
       await page
-        .getByRole("button", { name: `Move ${fixture.splitA} down` })
+        .getByRole("button", { name: `${fixture.exercise} actions` })
         .click();
+      await expect(
+        page.getByRole("button", { name: "Move this exercise down" }),
+      ).toBeVisible();
+      await page.keyboard.press("Escape");
+
+      await page.goto(`/programs/${fixture.programId}/edit`);
+      await page.getByRole("region", { name: fixture.splitA }).focus();
+      await page.keyboard.press("ArrowDown");
       await expect(page.getByText("Order saved.")).toBeVisible();
 
       // No save control appears for the order: it is already saved.
@@ -197,17 +192,19 @@ test.describe("Local MVP phone interaction", () => {
       // MVP-UX-003 names three cases explicitly; ADR-0024 added the
       // definition deletions, which the same rule covers.
       await expectConfirmed(page, `/history/workouts/${fixture.workoutId}`, {
-        name: "Delete workout",
-        exact: true,
+        panel: "Workout actions",
+        action: "Delete this workout",
       });
       await expectConfirmed(page, "/workout/current/finish", {
         name: "Discard Workout",
       });
       await expectConfirmed(page, `/exercises/${fixture.exerciseId}/edit`, {
-        name: "Delete Exercise",
+        panel: "Exercise actions",
+        action: "Delete this exercise",
       });
       await expectConfirmed(page, `/splits/${fixture.splitBId}/edit`, {
-        name: "Delete Split",
+        panel: "Split actions",
+        action: "Delete this split",
       });
       await expectConfirmed(page, `/body/weight/${weighInAt}/edit`, {
         name: "Delete Entry",
@@ -236,19 +233,22 @@ test.describe("Local MVP phone interaction", () => {
 async function expectConfirmed(
   page: Page,
   url: string,
-  control: { name: string; exact?: boolean },
+  control:
+    { name: string; exact?: boolean } | { panel: string; action: string },
 ): Promise<void> {
   await page.goto(url);
-  await page
-    .getByRole("button", { name: control.name, exact: control.exact })
-    .first()
-    .click();
+  if ("panel" in control) {
+    await runScreenAction(page, control.panel, control.action);
+  } else {
+    await page
+      .getByRole("button", { name: control.name, exact: control.exact })
+      .first()
+      .click();
+  }
 
+  const named = "panel" in control ? control.action : control.name;
   const dialog = page.getByRole("alertdialog");
-  await expect(
-    dialog,
-    `${url}: ${control.name} must confirm first`,
-  ).toBeVisible();
+  await expect(dialog, `${url}: ${named} must confirm first`).toBeVisible();
   await dialog.getByRole("button", { name: "Cancel" }).click();
   await expect(dialog).not.toBeVisible();
   await expect(page).toHaveURL(new RegExp(`${escapeRegExp(url)}$`));
