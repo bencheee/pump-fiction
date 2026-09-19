@@ -26,7 +26,12 @@ export {
   optionIndex,
 } from "./wheel-options";
 export { DatePicker, MonthCalendar } from "./date-picker";
-export { DestructiveDialog, Overlay, Sheet } from "./overlays";
+export {
+  DestructiveDialog,
+  Overlay,
+  Sheet,
+  type CloseOverlay,
+} from "./overlays";
 export { PageFrame, ScreenBody, StickyActionBar, TopBar } from "./page-frame";
 export { BottomNavigation, MainShell } from "./shell";
 export {

@@ -7,6 +7,7 @@ import {
   ActionOverlay,
   ActionsTrigger,
   DatePicker,
+  type CloseOverlay,
   normalizeDecimalInput,
   NumericField,
   Overlay,
@@ -35,6 +36,7 @@ export function BodyEntryOverlay({
   hint,
   localDate,
   onSave,
+  onSaved,
   saveLabel,
 }: {
   trigger: ReactElement;
@@ -48,6 +50,8 @@ export function BodyEntryOverlay({
     entryDate: string;
     value: number;
   }) => Promise<EntrySaveResult>;
+  /** Refetches the screen behind the panel, before the panel closes. */
+  onSaved: () => void;
   saveLabel: string;
 }) {
   const { showToast } = useToast();
@@ -62,7 +66,7 @@ export function BodyEntryOverlay({
     setPhase("failure");
   }
 
-  async function save(close: () => void) {
+  async function save(close: CloseOverlay) {
     const typed = value.trim();
     if (typed === "") return refuse("Enter a value.");
     const parsed = Number(normalizeDecimalInput(typed));
@@ -76,8 +80,10 @@ export function BodyEntryOverlay({
     setPhase("editing");
     setValue("");
     setEntryDate(localDate);
-    close();
-    showToast(result.toast);
+    // The close goes back through the overlay history, and a back navigation
+    // restores the router cache; the refetch has to be under way before it.
+    onSaved();
+    close(() => showToast(result.toast));
   }
 
   return (

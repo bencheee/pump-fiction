@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import {
@@ -60,14 +59,13 @@ export function WeightView({
   progress: WeightProgress;
   initialRange: ChartRange;
 }) {
-  const router = useRouter();
   const [view, setView] = useState(progress);
   const [range, setRange] = useState<ChartRange>(initialRange);
   const [pending, startTransition] = useTransition();
   const { overview, series } = view;
   const weekly = series.companion?.points ?? [];
 
-  const reload = (next: ChartRange) => {
+  const reload = (next: ChartRange = range) => {
     setRange(next);
     startTransition(async () => {
       const result = await getWeightProgressAction({ range: next });
@@ -101,9 +99,9 @@ export function WeightView({
           weightKg: value,
         });
         if (!result.ok) return { ok: false, message: result.error.message };
-        router.refresh();
         return { ok: true, toast: "Weigh-in saved." };
       }}
+      onSaved={() => reload()}
     />
   );
 

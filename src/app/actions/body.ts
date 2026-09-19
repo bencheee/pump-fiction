@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import type { ChartRange } from "@/features/history/domain/chart";
 import {
   createMeasurementEntry,
@@ -44,7 +46,10 @@ export async function deleteMeasurementTypeAction(input: unknown) {
 }
 
 export async function createMeasurementEntryAction(input: unknown) {
-  return createMeasurementEntry(input);
+  const result = await createMeasurementEntry(input);
+  // See `createWeightEntryAction`: the recording panel closes through history.
+  if (result.ok) revalidatePath("/body/measurements", "layout");
+  return result;
 }
 
 export async function updateMeasurementEntryAction(input: unknown) {
