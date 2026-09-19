@@ -2,13 +2,13 @@ import { LoadingSkeleton, PageFrame, TopBar } from "@/shared/ui";
 
 export default function ExerciseStatisticsLoading() {
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title="Exercise"
         backHref="/history/exercises"
         backLabel="Exercises"
       />
-      <PageFrame title="Exercise" className="pt-5">
+      <PageFrame title="Exercise">
         <LoadingSkeleton label="Loading exercise progress" />
       </PageFrame>
     </div>

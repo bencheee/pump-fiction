@@ -18,7 +18,7 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
       : history.splits.filter((split) => split.programIdentityId === programId);
 
   return (
-    <PageFrame title="Splits" className="pt-6">
+    <PageFrame title="Splits">
       {history.splits.length === 0 ? (
         <EmptyState
           title="No split history yet"
@@ -27,11 +27,7 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
       ) : (
         <>
           {history.programs.length > 1 ? (
-            <div
-              role="group"
-              aria-label="Program"
-              className="flex flex-wrap gap-2"
-            >
+            <div role="group" aria-label="Program">
               <Chip
                 selected={programId === null}
                 onClick={() => setProgramId(null)}
@@ -55,14 +51,14 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
               body="Complete one of its splits and it appears here."
             />
           ) : (
-            <ul className="flex flex-col gap-2">
+            <ul>
               {shown.map((split) => (
                 <li key={split.splitIdentityId}>
                   <ListRow
                     href={`/history/splits/${split.splitIdentityId}`}
                     title={split.splitName}
                     detail={
-                      <span className="flex flex-wrap items-center gap-2">
+                      <span>
                         <span>
                           {split.programName} ·{" "}
                           {split.completedWorkoutCount === 1

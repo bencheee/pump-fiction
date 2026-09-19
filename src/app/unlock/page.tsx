@@ -54,12 +54,10 @@ export default async function UnlockPage({
   const configured = readAccessPassword() !== undefined;
 
   return (
-    <main className="h-dvh overflow-y-auto bg-[var(--pf-bg-canvas)]">
+    <main>
       <PageFrame title="Locked">
-        <p className="text-[var(--pf-text-2)]">
-          Enter the password to reach your workouts.
-        </p>
-        <form action={unlock} className="flex flex-col gap-5">
+        <p>Enter the password to reach your workouts.</p>
+        <form action={unlock}>
           <TextField
             id="access-password"
             label="Password"

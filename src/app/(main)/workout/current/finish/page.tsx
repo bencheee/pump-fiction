@@ -17,14 +17,7 @@ export default async function FinishWorkoutPage() {
         <EmptyState
           title="The review couldn't be loaded"
           body={workout.error.message}
-          action={
-            <Link
-              href="/workout/current/finish"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href="/workout/current/finish">Retry</Link>}
         />
       </PageFrame>
     );

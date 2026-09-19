@@ -239,13 +239,11 @@ export function WorkoutCorrectionForm({
     });
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar title="Edit workout" backHref={detailHref} backLabel="Workout" />
-      <PageFrame title={workout.name} className="pt-5">
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            When
-          </h2>
+      <PageFrame title={workout.name}>
+        <section>
+          <h2>When</h2>
           <TextField
             id="workout-date"
             label="Date"
@@ -276,16 +274,12 @@ export function WorkoutCorrectionForm({
           />
         </section>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Exercises
-          </h2>
+        <section>
+          <h2>Exercises</h2>
           {dirty ? (
-            <p className="text-[12.5px] text-[var(--pf-text-2)]">
-              Save your changes before adding, removing, or reordering.
-            </p>
+            <p>Save your changes before adding, removing, or reordering.</p>
           ) : null}
-          <ul className="flex flex-col gap-3">
+          <ul>
             {workout.exercises.map((exercise, index) => (
               <li key={exercise.id}>
                 <ExerciseCard
@@ -336,17 +330,14 @@ export function WorkoutCorrectionForm({
             description="It joins this workout only, with the definition as it stands now."
           >
             {(close) => (
-              <ul className="flex flex-col gap-2">
+              <ul>
                 {library.length === 0 ? (
-                  <li className="text-[var(--pf-text-2)]">
-                    Your library has no exercises.
-                  </li>
+                  <li>Your library has no exercises.</li>
                 ) : (
                   library.map((item) => (
                     <li key={item.id}>
                       <Action
                         variant="secondary"
-                        className="w-full"
                         onClick={() => {
                           close();
                           structural({
@@ -417,29 +408,20 @@ function ExerciseCard({
   const optionalMode = optionalModeOf(exercise);
 
   return (
-    <section
-      aria-label={exercise.exerciseName}
-      className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
-    >
-      <div className="flex items-start gap-2">
-        <Icon
-          name="grip-vertical"
-          size={18}
-          className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
-        />
-        <div className="min-w-0 flex-1">
-          <h3 className="text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-            {exercise.exerciseName}
-          </h3>
+    <section aria-label={exercise.exerciseName}>
+      <div>
+        <Icon name="grip-vertical" size={18} />
+        <div>
+          <h3>{exercise.exerciseName}</h3>
           {exercise.stillInLibrary ? null : (
-            <span className="mt-1 inline-block">
+            <span>
               <Badge>No longer in the library</Badge>
             </span>
           )}
         </div>
       </div>
 
-      <ol className="mt-3 flex flex-col gap-3">
+      <ol>
         {exercise.sets.map((set) => {
           const entry = draft.sets[set.id] ?? {
             loadMode: baseMode,
@@ -454,11 +436,9 @@ function ExerciseCard({
             set.reps !== null;
 
           return (
-            <li key={set.id} className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-                  Set {set.position}
-                </span>
+            <li key={set.id}>
+              <div>
+                <span>Set {set.position}</span>
                 <RemoveSetButton
                   set={set.id}
                   label={`Remove set ${set.position} of ${exercise.exerciseName}`}
@@ -468,17 +448,11 @@ function ExerciseCard({
                 />
               </div>
               {optionalMode !== null ? (
-                <div className="flex flex-col gap-1.5">
-                  <span
-                    id={`set-${set.id}-mode-label`}
-                    className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-                  >
-                    Entered as
-                  </span>
+                <div>
+                  <span id={`set-${set.id}-mode-label`}>Entered as</span>
                   <div
                     role="group"
                     aria-labelledby={`set-${set.id}-mode-label`}
-                    className="flex flex-wrap gap-2"
                   >
                     {[baseMode, optionalMode].map((option) => (
                       <Chip
@@ -522,11 +496,8 @@ function ExerciseCard({
                 />
               ) : null}
               {fields.band ? (
-                <div className="flex flex-col gap-1.5">
-                  <span
-                    id={`set-${set.id}-band-label`}
-                    className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-                  >
+                <div>
+                  <span id={`set-${set.id}-band-label`}>
                     {fields.band === "resistance"
                       ? "Resistance band"
                       : "Assistance band"}
@@ -534,7 +505,6 @@ function ExerciseCard({
                   <div
                     role="group"
                     aria-labelledby={`set-${set.id}-band-label`}
-                    className="flex gap-2"
                   >
                     {(["light", "medium", "strong"] as const).map(
                       (strength) => (
@@ -576,7 +546,7 @@ function ExerciseCard({
         })}
       </ol>
 
-      <div className="mt-3 flex flex-wrap justify-end gap-2">
+      <div>
         <Action
           variant="tertiary"
           disabled={disabled}
@@ -591,7 +561,6 @@ function ExerciseCard({
           aria-label={`Move ${exercise.exerciseName} up`}
           disabled={disabled || index === 0}
           onClick={() => onMove(-1)}
-          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
         >
           <Icon name="arrow-up" size={18} />
         </button>
@@ -600,7 +569,6 @@ function ExerciseCard({
           aria-label={`Move ${exercise.exerciseName} down`}
           disabled={disabled || index === count - 1}
           onClick={() => onMove(1)}
-          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
         >
           <Icon name="arrow-down" size={18} />
         </button>
@@ -612,7 +580,7 @@ function ExerciseCard({
         />
       </div>
 
-      <div className="mt-3">
+      <div>
         <TextAreaField
           id={`note-${exercise.id}`}
           label="Workout note"
@@ -651,7 +619,6 @@ function RemoveSetButton({
         aria-label={label}
         disabled={disabled}
         onClick={() => remove(false)}
-        className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)] disabled:opacity-[var(--pf-opacity-disabled)]"
       >
         <Icon name="x" size={16} />
       </button>
@@ -660,12 +627,7 @@ function RemoveSetButton({
   return (
     <DestructiveDialog
       trigger={
-        <button
-          type="button"
-          aria-label={label}
-          disabled={disabled}
-          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)] disabled:opacity-[var(--pf-opacity-disabled)]"
-        >
+        <button type="button" aria-label={label} disabled={disabled}>
           <Icon name="x" size={16} />
         </button>
       }

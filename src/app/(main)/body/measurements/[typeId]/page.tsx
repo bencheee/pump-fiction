@@ -22,13 +22,13 @@ export default async function MeasurementDetailPage({
   if (!result.ok && result.error.code === "not_found") notFound();
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Measurement"
           backHref="/body/measurements"
           backLabel="Body"
         />
-        <PageFrame title="Measurement unavailable" className="pt-5">
+        <PageFrame title="Measurement unavailable">
           <EmptyState
             title="That measurement couldn't be loaded"
             body={result.error.message}

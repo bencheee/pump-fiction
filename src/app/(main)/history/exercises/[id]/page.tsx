@@ -22,13 +22,13 @@ export default async function ExerciseStatisticsPage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Exercise"
           backHref="/history/exercises"
           backLabel="Exercises"
         />
-        <PageFrame title="Exercise unavailable" className="pt-5">
+        <PageFrame title="Exercise unavailable">
           <EmptyState
             title="That exercise couldn't be loaded"
             body={result.error.message}

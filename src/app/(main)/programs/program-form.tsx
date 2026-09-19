@@ -152,25 +152,24 @@ export function ProgramForm({ program }: { program?: Program }) {
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={program ? "Edit Program" : "New Program"}
         backHref="/programs"
         backLabel="Programs"
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
+      <main>
         {isCurrent ? (
-          <section className="mb-5 flex items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4 font-semibold">
+          <section>
             <Icon name="calendar-check" size={16} /> Current program
           </section>
         ) : null}
 
-        <div className="space-y-6">
+        <div>
           <TextField
             id="program-name"
             label="Program name"
             value={name}
-            className="min-h-[var(--pf-size-input-prominent)]"
             error={nameError}
             disabled={busy}
             autoComplete="off"
@@ -181,11 +180,8 @@ export function ProgramForm({ program }: { program?: Program }) {
           />
 
           <section aria-labelledby="split-rotation-title">
-            <div className="mb-2 flex min-h-11 items-center justify-between gap-3">
-              <h2
-                id="split-rotation-title"
-                className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-              >
+            <div>
+              <h2 id="split-rotation-title">
                 Split rotation · {splits.length}
               </h2>
             </div>
@@ -201,50 +197,32 @@ export function ProgramForm({ program }: { program?: Program }) {
                 body="Add the first split before activating this program."
                 action={
                   program ? (
-                    <Link
-                      href={`/programs/${program.id}/splits/new`}
-                      className="min-h-11 rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 py-3 font-semibold text-[var(--pf-on-accent)]"
-                    >
+                    <Link href={`/programs/${program.id}/splits/new`}>
                       Add Split
                     </Link>
                   ) : undefined
                 }
               />
             ) : (
-              <div className="space-y-2">
+              <div>
                 {splits.map((split, index) => (
-                  <div
-                    key={split.id}
-                    className="flex min-h-20 items-center gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-2"
-                  >
-                    <Icon
-                      name="grip-vertical"
-                      size={18}
-                      className="text-[var(--pf-text-3-deep)]"
-                    />
-                    <Link
-                      href={`/splits/${split.id}/edit`}
-                      className="min-w-0 flex-1 py-2"
-                    >
-                      <span className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold [overflow-wrap:anywhere]">
-                          {split.name}
-                        </span>
+                  <div key={split.id}>
+                    <Icon name="grip-vertical" size={18} />
+                    <Link href={`/splits/${split.id}/edit`}>
+                      <span>
+                        <span>{split.name}</span>
                         {split.id === nextSplitId ? (
                           <Badge tone="accent">Next</Badge>
                         ) : null}
                       </span>
-                      <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
-                        Position {index + 1}
-                      </span>
+                      <span>Position {index + 1}</span>
                     </Link>
-                    <div className="flex shrink-0">
+                    <div>
                       <button
                         type="button"
                         aria-label={`Move ${split.name} up`}
                         disabled={busy || index === 0}
                         onClick={() => void moveSplit(index, -1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
                         <Icon name="arrow-up" size={18} />
                       </button>
@@ -253,7 +231,6 @@ export function ProgramForm({ program }: { program?: Program }) {
                         aria-label={`Move ${split.name} down`}
                         disabled={busy || index === splits.length - 1}
                         onClick={() => void moveSplit(index, 1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
                         <Icon name="arrow-down" size={18} />
                       </button>
@@ -263,10 +240,7 @@ export function ProgramForm({ program }: { program?: Program }) {
               </div>
             )}
             {program && splits.length > 0 ? (
-              <Link
-                href={`/programs/${program.id}/splits/new`}
-                className="mt-3 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)]"
-              >
+              <Link href={`/programs/${program.id}/splits/new`}>
                 <Icon name="plus" size={18} /> Add Split
               </Link>
             ) : null}
@@ -297,12 +271,11 @@ export function ProgramForm({ program }: { program?: Program }) {
               }
             >
               {(close) => (
-                <div className="space-y-2">
+                <div>
                   {splits.map((split) => (
                     <Action
                       key={split.id}
                       variant="secondary"
-                      className="w-full justify-between"
                       disabled={busy}
                       onClick={() => void chooseNext(split.id, close)}
                     >

@@ -76,17 +76,15 @@ export function TodayExperience({
   }
 
   return (
-    <PageFrame title="Today" className="gap-5">
-      <div className="absolute top-[calc(env(safe-area-inset-top)+13px)] right-[var(--pf-gutter)] text-[13px] font-medium text-[var(--pf-text-3-deep)]">
-        {formatLocalDate(today.localDate)}
-      </div>
+    <PageFrame title="Today">
+      <div>{formatLocalDate(today.localDate)}</div>
 
       {current ? <RestoreCard current={current} /> : null}
 
       {selectedSplit ? (
-        <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+        <section>
+          <div>
+            <p>
               {selectedSplit.splitId === today.proposedSplit?.splitId
                 ? "Next in your program"
                 : "Today-only split"}
@@ -95,17 +93,14 @@ export function TodayExperience({
               <Badge tone="accent">Rotation unchanged</Badge>
             ) : null}
           </div>
-          <h2 className="mt-3 text-[21px] leading-[1.18] font-semibold [overflow-wrap:anywhere]">
-            {selectedSplit.splitName}
-          </h2>
+          <h2>{selectedSplit.splitName}</h2>
           <SplitHistory split={selectedSplit} />
           {current ? (
-            <p className="mt-4 text-[13px] leading-[1.45] text-[var(--pf-text-3-deep)]">
+            <p>
               Finish or discard the restored workout before starting another.
             </p>
           ) : (
             <Action
-              className="mt-5 w-full"
               disabled={pending}
               onClick={() => startSplit(selectedSplit)}
             >
@@ -115,22 +110,15 @@ export function TodayExperience({
           <SplitExercisePreview exercises={selectedSplit.exercises} />
         </section>
       ) : (
-        <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-5">
-          <h2 className="text-[18px] font-semibold">No proposed workout</h2>
-          <p className="mt-2 text-[var(--pf-text-2)]">
-            Create or activate a program to get a proposed workout.
-          </p>
-          <Link
-            href="/programs"
-            className="mt-5 inline-flex min-h-11 items-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold"
-          >
-            Go to Programs
-          </Link>
+        <section>
+          <h2>No proposed workout</h2>
+          <p>Create or activate a program to get a proposed workout.</p>
+          <Link href="/programs">Go to Programs</Link>
         </section>
       )}
 
       {!current ? (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <div>
           {allSplits.length > 1 ? (
             <AlternateSplitSheet
               splits={allSplits}
@@ -141,17 +129,8 @@ export function TodayExperience({
               onSelect={setSelectedSplit}
             />
           ) : null}
-          {allSplits.length > 1 ? (
-            <span aria-hidden="true" className="text-[var(--pf-text-3-deep)]">
-              ·
-            </span>
-          ) : null}
-          <Link
-            href="/today/one-time"
-            className="flex min-h-11 items-center border-b border-[var(--pf-border-control)] font-medium text-[var(--pf-text-2)]"
-          >
-            One-time workout
-          </Link>
+          {allSplits.length > 1 ? <span aria-hidden="true">·</span> : null}
+          <Link href="/today/one-time">One-time workout</Link>
         </div>
       ) : null}
 
@@ -161,17 +140,13 @@ export function TodayExperience({
       ) : null}
 
       {error ? (
-        <div
-          role="alert"
-          className="rounded-[var(--pf-r2)] border border-[var(--pf-danger)] p-3 text-[13px] text-[var(--pf-danger)]"
-        >
+        <div role="alert">
           <p>{error}</p>
           {retryDefinition ? (
             <button
               type="button"
               disabled={pending}
               onClick={() => void start(retryDefinition)}
-              className="mt-2 min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
             >
               Retry
             </button>
@@ -179,7 +154,7 @@ export function TodayExperience({
         </div>
       ) : null}
 
-      <p className="mt-3 border-t border-[var(--pf-border)] pt-4 text-[12.5px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+      <p>
         Rotation position: {today.proposedSplit?.splitName ?? "No active split"}
         . One-time workouts and today-only alternates never advance it.
       </p>
@@ -194,20 +169,13 @@ function SplitExercisePreview({
   exercises: TodaySplit["exercises"];
 }) {
   return (
-    <div className="mt-4 border-t border-[var(--pf-border)] pt-3">
-      <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-        Exercises
-      </p>
-      <ol className="mt-2 space-y-1.5">
+    <div>
+      <p>Exercises</p>
+      <ol>
         {exercises.map((exercise) => (
-          <li
-            key={exercise.exerciseId}
-            className="flex items-baseline gap-2 text-[13px]"
-          >
-            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
-              {exercise.exerciseName}
-            </span>
-            <span className="pf-numeric shrink-0 text-[12px] text-[var(--pf-text-3-deep)]">
+          <li key={exercise.exerciseId}>
+            <span>{exercise.exerciseName}</span>
+            <span>
               {exercise.plannedSets} × {exercise.minReps}–{exercise.maxReps}
               {exercise.measurementType === "seconds" ? " sec" : " reps"}
             </span>
@@ -238,27 +206,17 @@ function RestoreCard({
       : 0;
 
   return (
-    <section
-      aria-label="Restored workout"
-      className="rounded-[var(--pf-r3)] border-l-[3px] border-[var(--pf-accent)] bg-[var(--pf-accent-dim)] p-4"
-    >
-      <p className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-accent-strong)] uppercase">
+    <section aria-label="Restored workout">
+      <p>
         <Icon name="rotate-ccw" size={18} /> Restored workout
       </p>
-      <h2 className="mt-4 text-[21px] leading-[1.18] font-semibold [overflow-wrap:anywhere]">
-        {current.name}
-      </h2>
-      <p className="pf-numeric mt-2 flex items-center gap-2 text-[var(--pf-text-2)]">
+      <h2>{current.name}</h2>
+      <p>
         <Icon name={current.status === "active" ? "play" : "pause"} size={16} />
         {current.status === "active" ? "Running" : "Paused"} ·{" "}
         {formatClock(current.accumulatedActiveSeconds + segmentSeconds)}
       </p>
-      <Link
-        href="/workout/current"
-        className="mt-5 flex min-h-[var(--pf-size-primary-action)] w-full items-center justify-center rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 font-semibold text-[var(--pf-on-accent)]"
-      >
-        Resume Workout
-      </Link>
+      <Link href="/workout/current">Resume Workout</Link>
     </section>
   );
 }
@@ -300,38 +258,21 @@ function AlternateSplitSheet({
     <Sheet
       title="Choose Another Split"
       description={`Pick a split to train today. This does not change your rotation${rotationNextName ? ` — ${rotationNextName} stays next.` : "."}`}
-      trigger={
-        <button
-          type="button"
-          className="flex min-h-11 items-center border-b border-[var(--pf-border-control)] font-medium text-[var(--pf-text-2)]"
-        >
-          Choose another split
-        </button>
-      }
+      trigger={<button type="button">Choose another split</button>}
     >
       {(close) => (
-        <div className="space-y-3">
-          {setNextError ? (
-            <p role="alert" className="text-[13px] text-[var(--pf-danger)]">
-              {setNextError}
-            </p>
-          ) : null}
+        <div>
+          {setNextError ? <p role="alert">{setNextError}</p> : null}
           {splits.map((split) => {
             const proposed = split.splitId === proposedSplitId;
             return (
-              <section
-                key={split.splitId}
-                className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-[16.5px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-                    {split.splitName}
-                  </h3>
+              <section key={split.splitId}>
+                <div>
+                  <h3>{split.splitName}</h3>
                   {proposed ? <Badge tone="accent">Proposed</Badge> : null}
                 </div>
                 <SplitHistory split={split} />
                 <Action
-                  className="mt-4 w-full"
                   disabled={pending || Boolean(settingNext)}
                   onClick={() => onStart(split)}
                 >
@@ -339,7 +280,6 @@ function AlternateSplitSheet({
                 </Action>
                 <Action
                   variant="secondary"
-                  className="mt-2 w-full"
                   disabled={pending || Boolean(settingNext)}
                   onClick={() => {
                     onSelect(split);
@@ -349,13 +289,12 @@ function AlternateSplitSheet({
                   Put on Today, don&apos;t start yet
                 </Action>
                 {proposed ? (
-                  <Action variant="tertiary" className="mt-2 w-full" disabled>
+                  <Action variant="tertiary" disabled>
                     Already next in rotation
                   </Action>
                 ) : (
                   <Action
                     variant="tertiary"
-                    className="mt-2 w-full"
                     disabled={pending || Boolean(settingNext)}
                     onClick={() => void setNext(split, close)}
                   >
@@ -365,7 +304,7 @@ function AlternateSplitSheet({
               </section>
             );
           })}
-          <p className="text-[12.5px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+          <p>
             Two different actions: Train this today affects one workout and
             leaves rotation alone. Set as next persistently moves the rotation
             pointer.
@@ -379,7 +318,7 @@ function AlternateSplitSheet({
 function SplitHistory({ split }: { split: TodaySplit }) {
   if (split.averageDurationSeconds === null) return null;
   return (
-    <p className="pf-numeric mt-3 text-[13px] text-[var(--pf-text-2)]">
+    <p>
       Avg {formatDuration(split.averageDurationSeconds)} ·{" "}
       {split.completedWorkoutCount}{" "}
       {split.completedWorkoutCount === 1 ? "workout" : "workouts"}

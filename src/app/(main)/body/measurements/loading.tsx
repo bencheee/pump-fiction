@@ -2,7 +2,7 @@ import { LoadingSkeleton, PageFrame } from "@/shared/ui";
 
 export default function BodyHistoryLoading() {
   return (
-    <PageFrame title="Body" className="pt-6">
+    <PageFrame title="Body">
       <LoadingSkeleton label="Loading measurements" />
     </PageFrame>
   );

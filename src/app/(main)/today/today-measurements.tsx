@@ -37,13 +37,8 @@ export function TodayMeasurementsCard({
   const missing = missingToday(measurements);
 
   return (
-    <section
-      aria-label="Today's measurements"
-      className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
-    >
-      <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-        Today&apos;s measurements
-      </p>
+    <section aria-label="Today's measurements">
+      <p>Today&apos;s measurements</p>
       {missing.length === 0 ? (
         <Recorded measurements={measurements} />
       ) : (
@@ -59,29 +54,19 @@ export function TodayMeasurementsCard({
 function Recorded({ measurements }: { measurements: TodayMeasurements }) {
   return (
     <>
-      <ul className="mt-3 flex flex-col gap-1.5">
+      <ul>
         {measurements.measurements.map((measurement) => (
-          <li
-            key={measurement.id}
-            className="flex flex-wrap items-baseline justify-between gap-2"
-          >
-            <span className="[overflow-wrap:anywhere]">{measurement.name}</span>
-            <span className="pf-numeric font-semibold">
-              {formatCm(measurement.valueCm ?? 0)}
-            </span>
+          <li key={measurement.id}>
+            <span>{measurement.name}</span>
+            <span>{formatCm(measurement.valueCm ?? 0)}</span>
           </li>
         ))}
       </ul>
-      <p className="mt-3 text-[12.5px] text-[var(--pf-text-2)]">
+      <p>
         Recorded {formatHistoryDate(measurements.localDate)}. Correct them in
         Body.
       </p>
-      <Link
-        href="/body/measurements"
-        className="mt-3 flex min-h-11 items-center self-start border-b border-[var(--pf-border-control)] font-medium text-[var(--pf-text-2)]"
-      >
-        See Body
-      </Link>
+      <Link href="/body/measurements">See Body</Link>
     </>
   );
 }
@@ -149,13 +134,11 @@ function AddTodayMeasurements({
       title="Add today's measurements"
       description={formatHistoryDate(localDate)}
       trigger={
-        <Action variant="secondary" className="mt-4 w-full">
-          Add today&apos;s measurements
-        </Action>
+        <Action variant="secondary">Add today&apos;s measurements</Action>
       }
     >
       {(close) => (
-        <div className="space-y-4">
+        <div>
           {missing.map((one) => (
             <NumericField
               key={one.id}
@@ -177,11 +160,7 @@ function AddTodayMeasurements({
             state={phase === "editing" ? "clean" : phase}
             onRetry={() => void save(close)}
           />
-          <Action
-            className="w-full"
-            disabled={isSaving}
-            onClick={() => void save(close)}
-          >
+          <Action disabled={isSaving} onClick={() => void save(close)}>
             {isSaving ? "Saving…" : "Save Measurements"}
           </Action>
         </div>

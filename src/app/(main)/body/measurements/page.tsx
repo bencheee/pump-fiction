@@ -17,18 +17,11 @@ export default async function BodyHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Body" className="pt-6">
+      <PageFrame title="Body">
         <EmptyState
           title="Measurements couldn't be loaded"
           body={result.error.message}
-          action={
-            <Link
-              href="/body/measurements"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href="/body/measurements">Retry</Link>}
         />
       </PageFrame>
     );
@@ -37,14 +30,11 @@ export default async function BodyHistoryPage() {
   const { measurements } = result.value;
 
   return (
-    <PageFrame title="Body" className="pt-6">
+    <PageFrame title="Body">
       {/* The History subsection bar owns the top of the screen, so the add
           action sits in the flow rather than floating over it. */}
-      <div className="-mt-2 flex justify-end">
-        <Link
-          href="/body/measurements/types/new"
-          className="flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-accent-strong)]"
-        >
+      <div>
+        <Link href="/body/measurements/types/new">
           <Icon name="plus" size={18} />
           Add measurement
         </Link>
@@ -56,7 +46,7 @@ export default async function BodyHistoryPage() {
           body="Add a measurement such as waist or upper arm, then record it whenever you like."
         />
       ) : (
-        <ul className="flex flex-col gap-2" aria-label="Measurements">
+        <ul aria-label="Measurements">
           {measurements.map((measurement) => (
             <li key={measurement.id}>
               <ListRow
@@ -81,7 +71,7 @@ export default async function BodyHistoryPage() {
         </ul>
       )}
 
-      <p className="text-[12.5px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+      <p>
         A rise or a fall is neither good nor bad on its own. What it means
         depends on the measurement and on what you are training for.
       </p>

@@ -19,13 +19,13 @@ export default async function HistoryWorkoutPage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Workout"
           backHref="/history/workouts"
           backLabel="Workouts"
         />
-        <PageFrame title="Workout unavailable" className="pt-5">
+        <PageFrame title="Workout unavailable">
           <EmptyState
             title="That workout couldn't be loaded"
             body={result.error.message}

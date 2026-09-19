@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
-import { classNames } from "./class-names";
 import { Icon, type IconName } from "./icon";
 import { ToastProvider } from "./toast";
 
@@ -42,10 +41,7 @@ export function BottomNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label="Primary"
-      className="pf-safe-bottom grid shrink-0 grid-cols-5 border-t border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
-    >
+    <nav aria-label="Primary">
       {destinations.map((destination) => {
         const current = isCurrentDestination(pathname, destination);
 
@@ -54,12 +50,6 @@ export function BottomNavigation() {
             key={destination.href}
             href={destination.href}
             aria-current={current ? "page" : undefined}
-            className={classNames(
-              "flex min-h-[var(--pf-size-bottom-nav)] min-w-11 flex-col items-center justify-center gap-1 text-[length:var(--pf-type-badge-size)] font-semibold tracking-[0.08em] uppercase",
-              current
-                ? "text-[var(--pf-accent-strong)]"
-                : "text-[var(--pf-text-3-deep)]",
-            )}
           >
             <Icon name={destination.icon} size={19} />
             <span>{destination.label}</span>
@@ -74,17 +64,9 @@ export function MainShell({ children }: { children: ReactNode }) {
   const keyboardOpen = useKeyboardOpen();
 
   return (
-    <div
-      data-shell="main"
-      className={classNames(
-        "flex h-dvh min-h-0 w-full flex-col bg-[var(--pf-bg-canvas)]",
-        keyboardOpen && "pf-keyboard-open",
-      )}
-    >
+    <div data-shell="main" data-keyboard-open={keyboardOpen}>
       <ToastProvider>
-        <main id="pf-scroll" className="pf-scroll flex-1">
-          {children}
-        </main>
+        <main id="pf-scroll">{children}</main>
       </ToastProvider>
       <BottomNavigation />
     </div>

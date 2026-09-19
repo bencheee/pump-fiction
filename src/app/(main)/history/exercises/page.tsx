@@ -12,18 +12,11 @@ export default async function ExerciseHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Exercises" className="pt-6">
+      <PageFrame title="Exercises">
         <EmptyState
           title="Exercise history couldn't be loaded"
           body={result.error.message}
-          action={
-            <Link
-              href="/history/exercises"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href="/history/exercises">Retry</Link>}
         />
       </PageFrame>
     );

@@ -18,13 +18,13 @@ export default async function EditProgramPage({
   if (!result.ok && result.error.code === "not_found") notFound();
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Edit Program"
           backHref="/programs"
           backLabel="Programs"
         />
-        <PageFrame title="Program unavailable" className="pt-5">
+        <PageFrame title="Program unavailable">
           <EmptyState
             title="Program couldn't be loaded"
             body={result.error.message}

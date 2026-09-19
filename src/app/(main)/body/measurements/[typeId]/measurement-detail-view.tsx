@@ -59,23 +59,18 @@ export function MeasurementDetailView({
   };
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={type.name}
         backHref="/body/measurements"
         backLabel="Body"
       />
-      <PageFrame title={type.name} className="pt-5">
+      <PageFrame title={type.name}>
         {/* The unit is a label under the name rather than a section of its
             own, which ADR-0030 decided. */}
-        <p className="-mt-2 text-[12.5px] text-[var(--pf-text-2)]">
-          Measured in centimetres
-        </p>
-        <div className="flex flex-wrap justify-end gap-2">
-          <Link
-            href={`/body/measurements/types/${type.id}/edit`}
-            className="flex min-h-11 items-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 font-semibold text-[var(--pf-text-2)]"
-          >
+        <p>Measured in centimetres</p>
+        <div>
+          <Link href={`/body/measurements/types/${type.id}/edit`}>
             Edit measurement
           </Link>
         </div>
@@ -87,7 +82,7 @@ export function MeasurementDetailView({
           />
         ) : (
           <>
-            <div className="grid grid-cols-2 gap-2">
+            <div>
               <StatCard
                 label="Latest"
                 value={formatCm(detail.latest.valueCm)}
@@ -121,15 +116,9 @@ export function MeasurementDetailView({
               />
             </div>
 
-            <section className="flex flex-col gap-3">
-              <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-                Trend
-              </h2>
-              <div
-                role="group"
-                aria-label="Time range"
-                className="flex flex-wrap gap-2"
-              >
+            <section>
+              <h2>Trend</h2>
+              <div role="group" aria-label="Time range">
                 {bodyRanges.map((option) => (
                   <Chip
                     key={option}
@@ -141,24 +130,17 @@ export function MeasurementDetailView({
                   </Chip>
                 ))}
               </div>
-              <p className="text-[13px] text-[var(--pf-text-2)]">
-                {trendSentence(series)}
-              </p>
+              <p>{trendSentence(series)}</p>
               <ProgressChart
                 series={series}
                 frame="data"
                 formatValue={(value) => value.toFixed(1)}
               />
               <details>
-                <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
-                  Chart values
-                </summary>
-                <ul
-                  aria-label="Chart values"
-                  className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
-                >
+                <summary>Chart values</summary>
+                <ul aria-label="Chart values">
                   {series.points.map((point) => (
-                    <li key={point.date} className="flex justify-between gap-3">
+                    <li key={point.date}>
                       <span>{formatHistoryDate(point.date)}</span>
                       <span>{formatCm(point.value)}</span>
                     </li>
@@ -167,11 +149,9 @@ export function MeasurementDetailView({
               </details>
             </section>
 
-            <section className="flex flex-col gap-2">
-              <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-                Entries
-              </h2>
-              <ul className="flex flex-col gap-2" aria-label="Entries">
+            <section>
+              <h2>Entries</h2>
+              <ul aria-label="Entries">
                 {detail.entries.map((entry) => (
                   <li key={entry.id}>
                     <ListRow

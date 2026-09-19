@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import type { ChartSeries } from "../domain/chart";
 
@@ -41,38 +34,26 @@ export function ProgressChart({
   return (
     <>
       {companion ? (
-        <ul
-          aria-label="Chart legend"
-          className="flex flex-wrap gap-x-4 gap-y-1 text-[12.5px] text-[var(--pf-text-2)]"
-        >
-          <li className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="h-0 w-6 border-t-2 border-[var(--pf-accent-strong)]"
-            />
+        <ul aria-label="Chart legend">
+          <li>
+            <span aria-hidden="true" />
             <span>{series.label}, solid line</span>
           </li>
-          <li className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="h-0 w-6 border-t-2 border-dashed border-[var(--pf-text-2)]"
-            />
+          <li>
+            <span aria-hidden="true" />
             <span>{companion.label}, dashed line</span>
           </li>
         </ul>
       ) : null}
-      <div aria-hidden="true" className="h-48 w-full">
+      <div aria-hidden="true">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={points}
             margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
           >
-            <CartesianGrid stroke="var(--pf-border)" vertical={false} />
             <XAxis
               dataKey="date"
-              tick={{ fill: "var(--pf-text-3-deep)", fontSize: 11 }}
               tickLine={false}
-              axisLine={{ stroke: "var(--pf-border)" }}
               tickFormatter={(value: string) => value.slice(5)}
               minTickGap={16}
             />
@@ -82,7 +63,6 @@ export function ProgressChart({
               // and the line still climbs towards better.
               reversed={series.lowerIsBetter}
               {...(frame === "data" ? { domain: ["auto", "auto"] } : {})}
-              tick={{ fill: "var(--pf-text-3-deep)", fontSize: 11 }}
               tickLine={false}
               axisLine={false}
               tickFormatter={formatValue}
@@ -90,9 +70,7 @@ export function ProgressChart({
             <Line
               type="monotone"
               dataKey="value"
-              stroke="var(--pf-accent-strong)"
               strokeWidth={2}
-              dot={{ r: 3, fill: "var(--pf-accent-strong)" }}
               isAnimationActive={false}
               connectNulls
             />
@@ -100,10 +78,8 @@ export function ProgressChart({
               <Line
                 type="monotone"
                 dataKey="companion"
-                stroke="var(--pf-text-2)"
                 strokeWidth={2}
                 strokeDasharray="6 4"
-                dot={{ r: 2.5, fill: "var(--pf-text-2)" }}
                 isAnimationActive={false}
                 connectNulls
               />

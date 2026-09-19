@@ -30,7 +30,7 @@ export function ExerciseHistoryList({
   );
 
   return (
-    <PageFrame title="Exercises" className="pt-6">
+    <PageFrame title="Exercises">
       {entries.length === 0 ? (
         <EmptyState
           title="No exercise history yet"
@@ -53,14 +53,14 @@ export function ExerciseHistoryList({
               body="No exercise with a recorded set matches that name."
             />
           ) : (
-            <ul className="flex flex-col gap-2">
+            <ul>
               {matches.map((entry) => (
                 <li key={entry.exerciseIdentityId}>
                   <ListRow
                     href={`/history/exercises/${entry.exerciseIdentityId}`}
                     title={entry.exerciseName}
                     detail={
-                      <span className="flex flex-wrap items-center gap-2">
+                      <span>
                         <span>{latestSummary(entry)}</span>
                         {entry.stillInLibrary ? null : (
                           <Badge>No longer in the library</Badge>

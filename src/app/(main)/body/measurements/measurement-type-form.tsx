@@ -96,14 +96,14 @@ export function MeasurementTypeForm({
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={measurement ? "Edit Measurement" : "New Measurement"}
         backHref={parent}
         backLabel="Body"
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
+      <main>
+        <div>
           <TextField
             id="measurement-name"
             label="Name"
@@ -121,13 +121,13 @@ export function MeasurementTypeForm({
           />
 
           {measurement && !measurement.deletable ? (
-            <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-              <p className="font-semibold">
+            <section>
+              <p>
                 {measurement.entryCount === 1
                   ? "1 measurement recorded"
                   : `${measurement.entryCount} measurements recorded`}
               </p>
-              <p className="mt-2 text-[13px] leading-[1.45] text-[var(--pf-text-2)]">
+              <p>
                 They are the only record of this measurement, so it cannot be
                 deleted while they exist. Renaming it keeps every one of them.
               </p>

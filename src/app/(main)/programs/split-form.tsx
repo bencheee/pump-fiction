@@ -208,14 +208,14 @@ export function SplitForm({
   const successor = split ? successorAfter(program, split.id) : undefined;
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={split ? "Edit Split" : "New Split"}
         backHref={`/programs/${program.id}/edit`}
         backLabel={program.name}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
+      <main>
+        <div>
           <TextField
             id="split-name"
             label="Split name"
@@ -230,11 +230,8 @@ export function SplitForm({
           />
 
           <section aria-labelledby="exercise-prescriptions-title">
-            <div className="mb-2 flex min-h-11 items-center justify-between gap-3">
-              <h2
-                id="exercise-prescriptions-title"
-                className="text-[11px] font-semibold tracking-[0.1em] uppercase"
-              >
+            <div>
+              <h2 id="exercise-prescriptions-title">
                 Prescription · {prescriptions.length}
               </h2>
               {remainingExercises.length > 0 ? (
@@ -242,21 +239,17 @@ export function SplitForm({
                   title="Add exercise"
                   description="Only active Exercise Library definitions are available."
                   trigger={
-                    <button
-                      type="button"
-                      className="inline-flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] px-2 font-semibold text-[var(--pf-accent-strong)]"
-                    >
+                    <button type="button">
                       <Icon name="plus" size={16} /> Add Exercise
                     </button>
                   }
                 >
                   {(close) => (
-                    <div className="space-y-2">
+                    <div>
                       {remainingExercises.map((exercise) => (
                         <Action
                           key={exercise.id}
                           variant="secondary"
-                          className="w-full justify-start"
                           onClick={() => addExercise(exercise, close)}
                         >
                           {exercise.name}
@@ -278,27 +271,17 @@ export function SplitForm({
                 }
               />
             ) : (
-              <div className="space-y-3">
+              <div>
                 {prescriptions.map((item, index) => (
-                  <article
-                    key={item.exerciseId}
-                    className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
-                  >
-                    <div className="flex min-h-11 items-center gap-2">
-                      <Icon
-                        name="grip-vertical"
-                        size={18}
-                        className="text-[var(--pf-text-3-deep)]"
-                      />
-                      <h3 className="min-w-0 flex-1 font-semibold [overflow-wrap:anywhere]">
-                        {item.exerciseName}
-                      </h3>
+                  <article key={item.exerciseId}>
+                    <div>
+                      <Icon name="grip-vertical" size={18} />
+                      <h3>{item.exerciseName}</h3>
                       <button
                         type="button"
                         aria-label={`Move ${item.exerciseName} up`}
                         disabled={busy || index === 0}
                         onClick={() => void moveExercise(index, -1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
                         <Icon name="arrow-up" size={18} />
                       </button>
@@ -307,7 +290,6 @@ export function SplitForm({
                         aria-label={`Move ${item.exerciseName} down`}
                         disabled={busy || index === prescriptions.length - 1}
                         onClick={() => void moveExercise(index, 1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
                         <Icon name="arrow-down" size={18} />
                       </button>
@@ -316,12 +298,11 @@ export function SplitForm({
                         aria-label={`Remove ${item.exerciseName}`}
                         disabled={busy}
                         onClick={() => removeExercise(index)}
-                        className="flex size-11 items-center justify-center text-[var(--pf-danger)] disabled:opacity-[var(--pf-opacity-disabled)]"
                       >
                         <Icon name="x" size={18} />
                       </button>
                     </div>
-                    <div className="mt-3 grid grid-cols-3 gap-2">
+                    <div>
                       <NumericField
                         id={`sets-${index}`}
                         label="Sets"
@@ -391,14 +372,9 @@ export function SplitForm({
               </div>
             )}
             {errors.exercises ? (
-              <p
-                role="alert"
-                className="mt-2 text-[12.5px] font-medium text-[var(--pf-danger)]"
-              >
-                {errors.exercises[0]}
-              </p>
+              <p role="alert">{errors.exercises[0]}</p>
             ) : null}
-            <p className="mt-3 text-[12.5px] text-[var(--pf-text-2)]">
+            <p>
               Prescriptions seed future workouts. Saved workouts keep their
               snapshots.
             </p>
@@ -433,12 +409,10 @@ export function SplitForm({
           ) : null}
           {split && !canDelete ? (
             <div>
-              <Action variant="danger" className="w-full" disabled>
+              <Action variant="danger" disabled>
                 Delete Split
               </Action>
-              <p className="mt-2 text-center text-[12.5px] text-[var(--pf-text-2)]">
-                The current program must keep at least one split.
-              </p>
+              <p>The current program must keep at least one split.</p>
             </div>
           ) : null}
         </StickyActionBar>

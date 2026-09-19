@@ -23,13 +23,13 @@ export default async function EditHistoryWorkoutPage({
 
   if (!workoutResult.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Edit workout"
           backHref={`/history/workouts/${id}`}
           backLabel="Workout"
         />
-        <PageFrame title="Workout unavailable" className="pt-5">
+        <PageFrame title="Workout unavailable">
           <EmptyState
             title="That workout couldn't be loaded"
             body={workoutResult.error.message}

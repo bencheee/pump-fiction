@@ -32,13 +32,8 @@ export type TodayWeight = Readonly<{
  */
 export function TodayWeightCard({ weight }: { weight: TodayWeight }) {
   return (
-    <section
-      aria-label="Today's weight"
-      className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
-    >
-      <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-        Today&apos;s weight
-      </p>
+    <section aria-label="Today's weight">
+      <p>Today&apos;s weight</p>
       {weight.entry ? (
         <RecordedWeight entry={weight.entry} />
       ) : (
@@ -51,18 +46,11 @@ export function TodayWeightCard({ weight }: { weight: TodayWeight }) {
 function RecordedWeight({ entry }: { entry: WeightEntry }) {
   return (
     <>
-      <p className="pf-numeric mt-3 text-[30px] leading-none font-semibold">
-        {formatKg(entry.weightKg)}
-      </p>
-      <p className="mt-2 text-[12.5px] text-[var(--pf-text-2)]">
+      <p>{formatKg(entry.weightKg)}</p>
+      <p>
         Recorded {formatHistoryDate(entry.entryDate)}. Correct it in Weight.
       </p>
-      <Link
-        href="/body/weight"
-        className="mt-4 flex min-h-11 items-center self-start border-b border-[var(--pf-border-control)] font-medium text-[var(--pf-text-2)]"
-      >
-        See Weight
-      </Link>
+      <Link href="/body/weight">See Weight</Link>
     </>
   );
 }
@@ -122,25 +110,21 @@ function AddTodayWeight({ localDate }: { localDate: string }) {
     <Sheet
       title="Add today's weight"
       description={formatHistoryDate(localDate)}
-      trigger={
-        <Action variant="secondary" className="mt-4 w-full">
-          Add today&apos;s weight
-        </Action>
-      }
+      trigger={<Action variant="secondary">Add today&apos;s weight</Action>}
     >
       {(close) =>
         phase === "resolved" ? (
-          <div className="space-y-4">
-            <p role="status" className="text-[var(--pf-text-2)]">
+          <div>
+            <p role="status">
               Today already has a weigh-in. Today now shows it, and Weight is
               where you correct it.
             </p>
-            <Action variant="secondary" className="w-full" onClick={close}>
+            <Action variant="secondary" onClick={close}>
               Close
             </Action>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div>
             <NumericField
               id="today-weight-kg"
               label="Weight (kg)"
@@ -158,11 +142,7 @@ function AddTodayWeight({ localDate }: { localDate: string }) {
               state={formPhase === "editing" ? "clean" : formPhase}
               onRetry={() => void save(close)}
             />
-            <Action
-              className="w-full"
-              disabled={isSaving}
-              onClick={() => void save(close)}
-            >
+            <Action disabled={isSaving} onClick={() => void save(close)}>
               {isSaving ? "Saving…" : "Save Weight"}
             </Action>
           </div>

@@ -14,7 +14,7 @@ export function MobileUiFoundationHarness() {
   const [confirmed, setConfirmed] = useState(false);
 
   return (
-    <main className="h-dvh overflow-y-auto bg-[var(--pf-bg-canvas)]">
+    <main>
       <PageFrame title="UI foundation test support">
         <TextField id="test-name" label="Name" error="Enter a name." />
         <Sheet
@@ -22,9 +22,7 @@ export function MobileUiFoundationHarness() {
           title="Choose an option"
           description="Transient test surface"
         >
-          <button type="button" className="min-h-11 w-full">
-            First option
-          </button>
+          <button type="button">First option</button>
         </Sheet>
         <DestructiveDialog
           trigger={<Action variant="danger">Open destructive dialog</Action>}

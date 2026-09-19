@@ -2,13 +2,13 @@ import { LoadingSkeleton, TopBar } from "@/shared/ui";
 
 export default function OneTimeWorkoutLoading() {
   return (
-    <div className="min-h-full">
+    <div>
       <TopBar
         title="One-Time Workout"
         backHref="/today"
         backLabel="Back to Today"
       />
-      <div className="px-[var(--pf-gutter)] pt-5">
+      <div>
         <LoadingSkeleton label="Loading one-time workout builder" />
       </div>
     </div>

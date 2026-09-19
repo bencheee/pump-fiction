@@ -23,49 +23,29 @@ export default async function ExercisesPage({
 
   return (
     <PageFrame title="Exercises">
-      <Link
-        href="/exercises/new"
-        aria-label="Add exercise"
-        className="absolute top-[calc(env(safe-area-inset-top)+12px)] right-[var(--pf-gutter)] flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-accent-strong)]"
-      >
+      <Link href="/exercises/new" aria-label="Add exercise">
         <Icon name="plus" size={20} />
       </Link>
 
-      <form action="/exercises" method="get" className="relative">
-        <label htmlFor="exercise-search" className="sr-only">
-          Search exercises
-        </label>
-        <Icon
-          name="search"
-          size={18}
-          className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[var(--pf-text-2)]"
-        />
+      <form action="/exercises" method="get">
+        <label htmlFor="exercise-search">Search exercises</label>
+        <Icon name="search" size={18} />
         <input
           id="exercise-search"
           name="q"
           type="search"
           defaultValue={query}
           placeholder="Search exercises"
-          className="min-h-[var(--pf-size-input)] w-full rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] pr-3 pl-10"
         />
       </form>
 
-      <p className="text-[12.5px] leading-[1.45] text-[var(--pf-text-2)]">
-        Definitions only. Personal records and charts live in History.
-      </p>
+      <p>Definitions only. Personal records and charts live in History.</p>
 
       {!result.ok ? (
         <EmptyState
           title="Exercises couldn't be loaded"
           body={result.error.message}
-          action={
-            <Link
-              href={queryHref(query)}
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href={queryHref(query)}>Retry</Link>}
         />
       ) : exercises.length === 0 ? (
         <EmptyState
@@ -76,18 +56,11 @@ export default async function ExercisesPage({
               : "Add your first reusable exercise definition."
           }
           action={
-            !query ? (
-              <Link
-                href="/exercises/new"
-                className="min-h-11 rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 py-3 font-semibold text-[var(--pf-on-accent)]"
-              >
-                Add Exercise
-              </Link>
-            ) : undefined
+            !query ? <Link href="/exercises/new">Add Exercise</Link> : undefined
           }
         />
       ) : (
-        <div className="space-y-2">
+        <div>
           {exercises.map((exercise) => (
             <ListRow
               key={exercise.id}

@@ -164,57 +164,43 @@ export function FinishReview({
   const failure = status.state === "save_failed" ? status : null;
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title="Review & Finish"
         backHref="/workout/current"
         backLabel="Back to active workout"
       />
-      <main className="flex flex-1 flex-col gap-5 px-[var(--pf-gutter)] pt-5">
+      <main>
         <div>
-          <h2 className="text-[24px] leading-[1.15] font-semibold [overflow-wrap:anywhere]">
-            {workout.name}
-          </h2>
-          <p className="mt-2 text-[13px] text-[var(--pf-text-2)]">
-            {sourceLine}
-          </p>
+          <h2>{workout.name}</h2>
+          <p>{sourceLine}</p>
         </div>
 
-        <dl className="divide-y divide-[var(--pf-border)] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)]">
+        <dl>
           <ReviewRow label="Active duration">
-            <span className="pf-numeric text-[21px] font-semibold">
-              {formatWorkoutClock(displaySeconds)}
-            </span>
+            <span>{formatWorkoutClock(displaySeconds)}</span>
           </ReviewRow>
           <ReviewRow label="Exercises">
-            <span className="pf-numeric text-[21px] font-semibold">
-              {workout.exercises.length}
-            </span>
+            <span>{workout.exercises.length}</span>
           </ReviewRow>
           <ReviewRow label="Recorded sets">
-            <span className="pf-numeric text-[21px] font-semibold text-[var(--pf-ok)]">
-              {recordedSets}
-            </span>
+            <span>{recordedSets}</span>
           </ReviewRow>
           {!isOneTime ? (
             <ReviewRow label="Sets left without values">
-              <span
-                className={`pf-numeric text-[21px] font-semibold ${plannedWithoutValues.length > 0 ? "text-[var(--pf-warn)]" : ""}`}
-              >
-                {plannedWithoutValues.length}
-              </span>
+              <span>{plannedWithoutValues.length}</span>
             </ReviewRow>
           ) : null}
         </dl>
 
         {!isOneTime && plannedWithoutValues.length > 0 ? (
-          <div className="text-[13px] leading-[1.5] text-[var(--pf-warn)]">
-            <p className="flex items-start gap-2">
-              <Icon name="triangle-alert" size={14} className="mt-0.5" />
+          <div>
+            <p>
+              <Icon name="triangle-alert" size={14} />
               Planned but left without values. These are not saved as
               performances:
             </p>
-            <ul className="mt-2 list-disc space-y-1 pl-9">
+            <ul>
               {plannedWithoutValues.map((entry) => (
                 <li key={entry}>{entry}</li>
               ))}
@@ -223,17 +209,15 @@ export function FinishReview({
         ) : null}
 
         {isOneTime ? (
-          <p className="text-[13px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+          <p>
             No planned-set metric: this workout has no prescription, so its set
             rows are workout-local rather than planned.
           </p>
         ) : null}
 
-        <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-          <h3 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            What completing does
-          </h3>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-[1.5] text-[var(--pf-text-2)]">
+        <section>
+          <h3>What completing does</h3>
+          <ul>
             <li>
               Recorded sets count toward exercise personal records and charts.
             </li>
@@ -263,22 +247,8 @@ export function FinishReview({
         </section>
       </main>
 
-      <StickyActionBar
-        role="group"
-        aria-label="Finish actions"
-        className="z-10"
-      >
-        <div
-          role="status"
-          aria-live="polite"
-          className={`flex min-h-11 items-center gap-2 text-[13px] font-medium ${
-            failure !== null
-              ? "text-[var(--pf-danger)]"
-              : status.state === "saving"
-                ? "text-[var(--pf-text-2)]"
-                : "text-[var(--pf-ok)]"
-          }`}
-        >
+      <StickyActionBar role="group" aria-label="Finish actions">
+        <div role="status" aria-live="polite">
           <Icon
             name={
               failure !== null
@@ -289,11 +259,11 @@ export function FinishReview({
             }
             size={14}
           />
-          <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+          <span>
             {failure !== null ? (
               <>
                 {failure.message}
-                <span className="block text-[var(--pf-text-2)]">
+                <span>
                   {failure.recovery.kind === "discard_and_replay"
                     ? "That attempt was discarded. Your review is unchanged, so you can finish again."
                     : "Nothing was recorded. Your review is unchanged."}
@@ -307,40 +277,26 @@ export function FinishReview({
           </span>
           {failure !== null ? (
             failure.recovery.kind === "refresh_and_replay" ? (
-              <button
-                type="button"
-                onClick={() => void recoverFromConflict()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
-              >
+              <button type="button" onClick={() => void recoverFromConflict()}>
                 Refresh
               </button>
             ) : failure.recovery.kind === "discard_and_replay" ? null : (
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
               >
                 Retry
               </button>
             )
           ) : null}
         </div>
-        <Action
-          className="w-full"
-          disabled={submitting}
-          onClick={() => finish("completed")}
-        >
+        <Action disabled={submitting} onClick={() => finish("completed")}>
           {submitting ? "Finishing…" : "Complete Workout"}
         </Action>
-        <Link
-          href="/workout/current"
-          className="flex min-h-11 w-full items-center justify-center font-semibold text-[var(--pf-accent-strong)]"
-        >
-          Continue Workout
-        </Link>
+        <Link href="/workout/current">Continue Workout</Link>
         <DestructiveDialog
           trigger={
-            <Action variant="danger" className="w-full" disabled={submitting}>
+            <Action variant="danger" disabled={submitting}>
               Discard Workout
             </Action>
           }
@@ -362,8 +318,8 @@ function ReviewRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-14 items-center justify-between gap-3 px-4 py-2">
-      <dt className="text-[14px] text-[var(--pf-text-2)]">{label}</dt>
+    <div>
+      <dt>{label}</dt>
       <dd>{children}</dd>
     </div>
   );

@@ -55,7 +55,7 @@ export function WeightView({
   };
 
   return (
-    <PageFrame title="Weight" className="pt-6">
+    <PageFrame title="Weight">
       {overview.latest === null ? (
         <EmptyState
           title="No weigh-in yet"
@@ -63,7 +63,7 @@ export function WeightView({
         />
       ) : (
         <>
-          <div className="grid grid-cols-2 gap-2">
+          <div>
             <StatCard
               label="Latest"
               value={formatKg(overview.latest.weightKg)}
@@ -101,15 +101,9 @@ export function WeightView({
             )}
           </div>
 
-          <section className="flex flex-col gap-3">
-            <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-              Trend
-            </h2>
-            <div
-              role="group"
-              aria-label="Time range"
-              className="flex flex-wrap gap-2"
-            >
+          <section>
+            <h2>Trend</h2>
+            <div role="group" aria-label="Time range">
               {weightRanges.map((option) => (
                 <Chip
                   key={option}
@@ -130,11 +124,9 @@ export function WeightView({
             <ChartValues series={series} />
           </section>
 
-          <section className="flex flex-col gap-2">
-            <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-              Weigh-ins
-            </h2>
-            <ul className="flex flex-col gap-2" aria-label="Weigh-ins">
+          <section>
+            <h2>Weigh-ins</h2>
+            <ul aria-label="Weigh-ins">
               {overview.entries.map((entry) => (
                 <li key={entry.id}>
                   <ListRow
@@ -161,16 +153,8 @@ export function WeightView({
 
 function TrendSummary({ series }: { series: ChartSeries }) {
   if (series.points.length === 0)
-    return (
-      <p className="text-[var(--pf-text-2)]">
-        No weigh-in falls inside this range.
-      </p>
-    );
-  return (
-    <p className="text-[13px] text-[var(--pf-text-2)]">
-      {trendSentence(series)}
-    </p>
-  );
+    return <p>No weigh-in falls inside this range.</p>;
+  return <p>{trendSentence(series)}</p>;
 }
 
 /** One string, so the sentence reads the same however JSX would break the line. */
@@ -191,27 +175,19 @@ function ChartValues({ series }: { series: ChartSeries }) {
   const weekly = series.companion?.points ?? [];
   return (
     <details>
-      <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
-        Chart values
-      </summary>
-      <ul
-        aria-label="Chart values"
-        className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
-      >
+      <summary>Chart values</summary>
+      <ul aria-label="Chart values">
         {series.points.map((point) => (
-          <li key={point.date} className="flex justify-between gap-3">
+          <li key={point.date}>
             <span>{formatHistoryDate(point.date)}</span>
             <span>{formatKg(point.value)}</span>
           </li>
         ))}
       </ul>
       {weekly.length > 0 ? (
-        <ul
-          aria-label="Weekly averages"
-          className="pf-numeric mt-3 flex flex-col gap-1 text-[13px]"
-        >
+        <ul aria-label="Weekly averages">
           {weekly.map((point) => (
-            <li key={point.date} className="flex justify-between gap-3">
+            <li key={point.date}>
               <span>
                 Week of {formatHistoryDate(point.span?.start ?? point.date)}
                 {point.span

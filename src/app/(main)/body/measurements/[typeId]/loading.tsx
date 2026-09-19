@@ -2,13 +2,13 @@ import { LoadingSkeleton, PageFrame, TopBar } from "@/shared/ui";
 
 export default function MeasurementDetailLoading() {
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title="Measurement"
         backHref="/body/measurements"
         backLabel="Body"
       />
-      <PageFrame title="Measurement" className="pt-5">
+      <PageFrame title="Measurement">
         <LoadingSkeleton label="Loading measurement" />
       </PageFrame>
     </div>

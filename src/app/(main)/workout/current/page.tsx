@@ -17,14 +17,7 @@ export default async function CurrentWorkoutPage() {
         <EmptyState
           title="The workout couldn't be loaded"
           body={workout.error.message}
-          action={
-            <Link
-              href="/workout/current"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href="/workout/current">Retry</Link>}
         />
       </PageFrame>
     );

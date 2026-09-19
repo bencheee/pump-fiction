@@ -114,14 +114,14 @@ export function WeightForm({
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={entry ? "Edit Weight" : "Add Weight"}
         backHref={parent}
         backLabel="Weight"
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
+      <main>
+        <div>
           <TextField
             id="weight-date"
             label="Date"

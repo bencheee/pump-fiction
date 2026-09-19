@@ -56,29 +56,25 @@ export function ExerciseStatisticsView({
   };
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={view.exerciseName}
         backHref="/history/exercises"
         backLabel="Exercises"
       />
-      <PageFrame title={view.exerciseName} className="pt-5">
+      <PageFrame title={view.exerciseName}>
         {view.stillInLibrary ? null : (
           <p>
             <Badge>No longer in the library</Badge>
           </p>
         )}
 
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Latest performance
-          </h2>
+        <section>
+          <h2>Latest performance</h2>
           {view.latestPerformance === null ? (
-            <p className="text-[var(--pf-text-2)]">
-              Nothing counts yet. Complete a workout with recorded sets.
-            </p>
+            <p>Nothing counts yet. Complete a workout with recorded sets.</p>
           ) : (
-            <p className="pf-numeric">
+            <p>
               {formatHistoryDate(view.latestPerformance.workoutDate)} ·{" "}
               {view.latestPerformance.sets
                 .filter((set) => set.loadMode !== null && set.reps !== null)
@@ -93,40 +89,30 @@ export function ExerciseStatisticsView({
           )}
         </section>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Personal records
-          </h2>
+        <section>
+          <h2>Personal records</h2>
           {view.categories.length === 0 ? (
-            <p className="text-[var(--pf-text-2)]">
-              Records appear once a completed workout holds a recorded set.
-            </p>
+            <p>Records appear once a completed workout holds a recorded set.</p>
           ) : (
             view.categories.map((entry) => (
               <section
                 key={entry.category.key}
                 aria-label={entry.category.label}
-                className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
               >
-                <h3 className="text-[13px] font-semibold">
-                  {entry.category.label}
-                </h3>
-                <dl className="mt-2 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 text-[13px]">
+                <h3>{entry.category.label}</h3>
+                <dl>
                   {entry.records.map((record) => (
                     <RecordRow key={record.key} record={record} />
                   ))}
                 </dl>
                 {entry.repsByLoad.length > 0 ? (
-                  <details className="mt-2">
-                    <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
-                      Highest reps at each load
-                    </summary>
+                  <details>
+                    <summary>Highest reps at each load</summary>
                     <ul
                       aria-label={`Highest reps at each load, ${entry.category.label}`}
-                      className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
                     >
                       {entry.repsByLoad.map((row) => (
-                        <li key={row.load} className="flex justify-between">
+                        <li key={row.load}>
                           <span>{row.load} kg</span>
                           <span>{row.reps} reps</span>
                         </li>
@@ -139,10 +125,8 @@ export function ExerciseStatisticsView({
           )}
         </section>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Progress
-          </h2>
+        <section>
+          <h2>Progress</h2>
           {view.metrics.length === 0 ? (
             <EmptyState
               title="No chart yet"
@@ -150,11 +134,7 @@ export function ExerciseStatisticsView({
             />
           ) : (
             <>
-              <div
-                role="group"
-                aria-label="Metric"
-                className="flex flex-wrap gap-2"
-              >
+              <div role="group" aria-label="Metric">
                 {view.metrics.map((option) => (
                   <Chip
                     key={option}
@@ -166,11 +146,7 @@ export function ExerciseStatisticsView({
                   </Chip>
                 ))}
               </div>
-              <div
-                role="group"
-                aria-label="Time range"
-                className="flex flex-wrap gap-2"
-              >
+              <div role="group" aria-label="Time range">
                 {chartRanges.map((option) => (
                   <Chip
                     key={option}
@@ -185,15 +161,10 @@ export function ExerciseStatisticsView({
               <ChartSummary series={view.series} />
               <ProgressChart series={view.series} />
               <details>
-                <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
-                  Chart values
-                </summary>
-                <ul
-                  aria-label="Chart values"
-                  className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
-                >
+                <summary>Chart values</summary>
+                <ul aria-label="Chart values">
                   {view.series.points.map((point) => (
-                    <li key={point.workoutId} className="flex justify-between">
+                    <li key={point.workoutId}>
                       <span>{formatHistoryDate(point.date)}</span>
                       <span>
                         {point.value} {unitSuffix(view.series)}
@@ -206,11 +177,9 @@ export function ExerciseStatisticsView({
           )}
         </section>
 
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            All performances
-          </h2>
-          <ul className="flex flex-col gap-2">
+        <section>
+          <h2>All performances</h2>
+          <ul>
             {view.performances.map((performance) => (
               <li key={performance.workoutExerciseId}>
                 <PerformanceRow performance={performance} />
@@ -226,13 +195,11 @@ export function ExerciseStatisticsView({
 function RecordRow({ record }: { record: PersonalRecord }) {
   return (
     <>
-      <dt className="text-[var(--pf-text-2)]">
+      <dt>
         {record.label}
-        {record.lowerIsBetter ? (
-          <span className="ml-1 text-[11px]">(less is better)</span>
-        ) : null}
+        {record.lowerIsBetter ? <span>(less is better)</span> : null}
       </dt>
-      <dd className="pf-numeric justify-self-end font-semibold">
+      <dd>
         {record.value}
         {record.unit === "kg"
           ? " kg"
@@ -251,11 +218,7 @@ function RecordRow({ record }: { record: PersonalRecord }) {
 
 function ChartSummary({ series }: { series: ChartSeries }) {
   if (series.points.length === 0)
-    return (
-      <p className="text-[var(--pf-text-2)]">
-        No workout falls inside this range.
-      </p>
-    );
+    return <p>No workout falls inside this range.</p>;
   const values = series.points.map((point) => point.value);
   const first = values[0] ?? 0;
   const last = values[values.length - 1] ?? 0;
@@ -263,7 +226,7 @@ function ChartSummary({ series }: { series: ChartSeries }) {
   const improved = series.lowerIsBetter ? last < first : last > first;
 
   return (
-    <p className="text-[13px] text-[var(--pf-text-2)]">
+    <p>
       {series.label} across {series.points.length}{" "}
       {series.points.length === 1 ? "workout" : "workouts"}: {first} to {last}{" "}
       {unitSuffix(series)}, best {best}.{" "}
@@ -289,23 +252,17 @@ function PerformanceRow({ performance }: { performance: ExercisePerformance }) {
     .map((set) => formatSetSummary(set, performance.measurementType));
 
   return (
-    <article className="rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] p-3">
-      <div className="flex flex-wrap items-center gap-2">
-        <Link
-          href={`/history/workouts/${performance.workoutId}`}
-          className="min-h-11 font-semibold text-[var(--pf-accent-strong)]"
-        >
+    <article>
+      <div>
+        <Link href={`/history/workouts/${performance.workoutId}`}>
           {formatHistoryDate(performance.workoutDate)} ·{" "}
           {performance.workoutName}
         </Link>
       </div>
-      <p className="pf-numeric mt-1 text-[13px]">
-        {sets.length > 0 ? sets.join(", ") : "No recorded set"}
-      </p>
+      <p>{sets.length > 0 ? sets.join(", ") : "No recorded set"}</p>
       {performance.workoutNote ? (
-        <p className="mt-1 text-[13px]">
-          <span className="font-semibold">Workout note:</span>{" "}
-          {performance.workoutNote}
+        <p>
+          <span>Workout note:</span> {performance.workoutNote}
         </p>
       ) : null}
     </article>

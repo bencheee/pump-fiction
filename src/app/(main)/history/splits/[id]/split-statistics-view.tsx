@@ -52,19 +52,19 @@ export function SplitStatisticsView({
   };
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={summary.splitName}
         backHref="/history/splits"
         backLabel="Splits"
       />
-      <PageFrame title={summary.splitName} className="pt-5">
-        <p className="flex flex-wrap items-center gap-2 text-[var(--pf-text-2)]">
+      <PageFrame title={summary.splitName}>
+        <p>
           <span>{summary.programName}</span>
           {summary.stillExists ? null : <Badge>No longer in the program</Badge>}
         </p>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div>
           <StatCard
             label="Completed"
             value={summary.completedWorkoutCount}
@@ -95,15 +95,9 @@ export function SplitStatisticsView({
           />
         </div>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Duration
-          </h2>
-          <div
-            role="group"
-            aria-label="Time range"
-            className="flex flex-wrap gap-2"
-          >
+        <section>
+          <h2>Duration</h2>
+          <div role="group" aria-label="Time range">
             {chartRanges.map((option) => (
               <Chip
                 key={option}
@@ -118,42 +112,30 @@ export function SplitStatisticsView({
           <DurationSummary series={view.series} />
           <ProgressChart series={view.series} formatValue={minutes} />
           <details>
-            <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
-              Chart values
-            </summary>
-            <ul
-              aria-label="Chart values"
-              className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
-            >
+            <summary>Chart values</summary>
+            <ul aria-label="Chart values">
               {view.series.points.map((point) => (
-                <li key={point.workoutId} className="flex justify-between">
+                <li key={point.workoutId}>
                   <span>{formatHistoryDate(point.date)}</span>
                   <span>{formatHistoryDuration(point.value)}</span>
                 </li>
               ))}
             </ul>
           </details>
-          <p className="text-[12.5px] text-[var(--pf-text-2)]">
+          <p>
             Only completed workouts of this split count. One-time workouts are
             excluded.
           </p>
         </section>
 
-        <section className="flex flex-col gap-2">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Workouts
-          </h2>
-          <ul className="flex flex-col gap-2" aria-label="Split workouts">
+        <section>
+          <h2>Workouts</h2>
+          <ul aria-label="Split workouts">
             {view.workouts.map((workout) => (
               <li key={workout.workoutId}>
-                <Link
-                  href={`/history/workouts/${workout.workoutId}`}
-                  className="flex min-h-11 items-center justify-between rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] px-3 py-2 text-[13px]"
-                >
-                  <span className="font-semibold">
-                    {formatHistoryDate(workout.workoutDate)}
-                  </span>
-                  <span className="pf-numeric">
+                <Link href={`/history/workouts/${workout.workoutId}`}>
+                  <span>{formatHistoryDate(workout.workoutDate)}</span>
+                  <span>
                     {formatHistoryDuration(workout.activeDurationSeconds)}
                   </span>
                 </Link>
@@ -168,16 +150,12 @@ export function SplitStatisticsView({
 
 function DurationSummary({ series }: { series: ChartSeries }) {
   if (series.points.length === 0)
-    return (
-      <p className="text-[var(--pf-text-2)]">
-        No workout falls inside this range.
-      </p>
-    );
+    return <p>No workout falls inside this range.</p>;
   const values = series.points.map((point) => point.value);
   const first = values[0] ?? 0;
   const last = values[values.length - 1] ?? 0;
   return (
-    <p className="text-[13px] text-[var(--pf-text-2)]">
+    <p>
       Active duration across {series.points.length}{" "}
       {series.points.length === 1 ? "workout" : "workouts"}:{" "}
       {formatHistoryDuration(first)} to {formatHistoryDuration(last)}, longest{" "}

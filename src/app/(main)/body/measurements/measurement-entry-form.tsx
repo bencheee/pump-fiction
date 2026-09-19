@@ -123,17 +123,15 @@ export function MeasurementEntryForm({
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={entry ? "Edit Entry" : "Add Entry"}
         backHref={parent}
         backLabel={type.name}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
-          <p className="[overflow-wrap:anywhere] text-[var(--pf-text-2)]">
-            {type.name}
-          </p>
+      <main>
+        <div>
+          <p>{type.name}</p>
 
           <TextField
             id="measurement-date"

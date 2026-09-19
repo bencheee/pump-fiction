@@ -13,18 +13,11 @@ export default async function WeightHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Weight" className="pt-6">
+      <PageFrame title="Weight">
         <EmptyState
           title="Weight couldn't be loaded"
           body={result.error.message}
-          action={
-            <Link
-              href="/body/weight"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
-            >
-              Retry
-            </Link>
-          }
+          action={<Link href="/body/weight">Retry</Link>}
         />
       </PageFrame>
     );

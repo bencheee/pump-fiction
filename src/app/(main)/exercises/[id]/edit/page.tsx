@@ -19,13 +19,13 @@ export default async function EditExercisePage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Edit Exercise"
           backHref="/exercises"
           backLabel="Exercises"
         />
-        <PageFrame title="Exercise unavailable" className="pt-5">
+        <PageFrame title="Exercise unavailable">
           <EmptyState
             title="Exercise couldn't be loaded"
             body={result.error.message}

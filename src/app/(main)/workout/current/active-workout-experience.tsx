@@ -388,12 +388,10 @@ export function ActiveWorkoutExperience({
         : { kind: "saved" as const, message: "All changes saved" };
 
   return (
-    <div className="flex min-h-full flex-col">
-      <header className="sticky top-0 z-5 flex h-[calc(40px+env(safe-area-inset-top))] items-end border-b border-[var(--pf-border)] bg-[var(--pf-bg-canvas)] px-[var(--pf-gutter)] pt-[env(safe-area-inset-top)]">
-        <div className="flex h-10 w-full min-w-0 items-center gap-2">
-          <h1 className="min-w-0 flex-1 truncate text-[14px] leading-none font-semibold">
-            {workout.name}
-          </h1>
+    <div>
+      <header>
+        <div>
+          <h1>{workout.name}</h1>
           <button
             type="button"
             onClick={() =>
@@ -401,37 +399,27 @@ export function ActiveWorkoutExperience({
                 transitionedAt: new Date().toISOString(),
               })
             }
-            className="relative h-10 shrink-0 text-[11px] leading-none font-semibold text-[var(--pf-accent-strong)] after:absolute after:inset-x-0 after:-inset-y-0.5"
           >
             {paused ? "Resume" : "Continue Later"}
           </button>
-          <span
-            aria-label="Active duration"
-            className={`pf-numeric shrink-0 text-[16px] leading-none font-semibold ${paused ? "text-[var(--pf-warn)]" : ""}`}
-          >
+          <span aria-label="Active duration">
             {formatWorkoutClock(displaySeconds)}
           </span>
         </div>
       </header>
 
       {paused ? (
-        <p
-          role="status"
-          className="flex min-h-11 items-center gap-2 border-b border-[var(--pf-border)] px-[var(--pf-gutter)] text-[13px] font-medium text-[var(--pf-warn)]"
-        >
+        <p role="status">
           <Icon name="pause" size={14} /> Paused — active duration is not
           counting.
         </p>
       ) : null}
 
-      <main className="flex flex-1 flex-col gap-4 px-[var(--pf-gutter)] pt-4">
+      <main>
         {discardedChange !== null ? (
-          <div
-            role="alert"
-            className="flex items-start gap-2 rounded-[var(--pf-r2)] border border-[var(--pf-warn)] bg-[var(--pf-bg-surface)] p-3 text-[13px] leading-[1.5]"
-          >
-            <Icon name="triangle-alert" size={14} className="mt-0.5 shrink-0" />
-            <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">
+          <div role="alert">
+            <Icon name="triangle-alert" size={14} />
+            <span>
               One change could not be saved and was undone: {discardedChange}.
               Everything else is saved and the workout continues.
             </span>
@@ -439,7 +427,6 @@ export function ActiveWorkoutExperience({
               type="button"
               aria-label="Dismiss the undone change notice"
               onClick={() => setDiscardedChange(null)}
-              className="min-h-11 min-w-11 shrink-0 text-[var(--pf-accent-strong)]"
             >
               <Icon name="x" size={16} />
             </button>
@@ -510,18 +497,8 @@ export function ActiveWorkoutExperience({
         />
       </main>
 
-      <div className="sticky bottom-0 z-10 mt-auto flex items-center justify-end gap-2 bg-[linear-gradient(to_bottom,transparent_0,var(--pf-bg-canvas)_18px)] px-[var(--pf-gutter)] pt-7 pb-3">
-        <div
-          role="status"
-          aria-live="polite"
-          className={`mr-auto flex min-h-10 min-w-0 items-center gap-2 rounded-[var(--pf-r-pill)] bg-[var(--pf-bg-canvas)] px-3 text-[12px] font-medium ${
-            cue.kind === "validation" || cue.kind === "failure"
-              ? "text-[var(--pf-danger)]"
-              : cue.kind === "saved"
-                ? "sr-only"
-                : "text-[var(--pf-text-2)]"
-          }`}
-        >
+      <div>
+        <div role="status" aria-live="polite">
           <Icon
             name={
               cue.kind === "validation"
@@ -533,25 +510,17 @@ export function ActiveWorkoutExperience({
                     : "circle-check"
             }
             size={14}
-            className={cue.kind === "saving" ? "animate-spin" : undefined}
           />
-          <span className="min-w-0 [overflow-wrap:anywhere]">
-            {cue.message}
-          </span>
+          <span>{cue.message}</span>
           {cue.kind === "failure" ? (
             cue.recovery === "refresh_and_replay" ? (
-              <button
-                type="button"
-                onClick={() => void recoverFromConflict()}
-                className="min-h-10 font-semibold underline underline-offset-4"
-              >
+              <button type="button" onClick={() => void recoverFromConflict()}>
                 Refresh
               </button>
             ) : cue.recovery === "discard_and_replay" ? null : (
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}
-                className="min-h-10 font-semibold underline underline-offset-4"
               >
                 Retry
               </button>
@@ -605,18 +574,14 @@ function FinishWorkoutSheet({
       title="Review & Finish"
       description={workout.name}
       trigger={
-        <button
-          type="button"
-          aria-label="Review and finish workout"
-          className="flex size-13 shrink-0 items-center justify-center rounded-full bg-[var(--pf-accent)] text-[var(--pf-on-accent)] shadow-[var(--pf-shadow-toast)]"
-        >
+        <button type="button" aria-label="Review and finish workout">
           <Icon name="check" size={20} />
         </button>
       }
     >
       {(close) => (
-        <div className="space-y-4">
-          <dl className="grid grid-cols-3 gap-2 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3 text-center">
+        <div>
+          <dl>
             <FinishMetric
               label="Duration"
               value={formatWorkoutClock(displaySeconds)}
@@ -629,14 +594,14 @@ function FinishWorkoutSheet({
           </dl>
 
           {!isOneTime && plannedWithoutValues.length > 0 ? (
-            <div className="text-[13px] leading-[1.45] text-[var(--pf-warn)]">
-              <p className="flex items-start gap-2 font-medium">
-                <Icon name="triangle-alert" size={14} className="mt-0.5" />
+            <div>
+              <p>
+                <Icon name="triangle-alert" size={14} />
                 {plannedWithoutValues.length} planned set
                 {plannedWithoutValues.length === 1 ? "" : "s"} left without
                 values
               </p>
-              <ul className="mt-2 list-disc space-y-1 pl-8">
+              <ul>
                 {plannedWithoutValues.map((entry) => (
                   <li key={entry}>{entry}</li>
                 ))}
@@ -645,34 +610,22 @@ function FinishWorkoutSheet({
           ) : null}
 
           {isOneTime ? (
-            <p className="text-[13px] leading-[1.45] text-[var(--pf-text-3-deep)]">
+            <p>
               No planned-set metric: this workout has no prescription, so its
               set rows are workout-local rather than planned.
             </p>
           ) : null}
 
-          <div role="group" aria-label="Finish actions" className="space-y-2">
-            <Action
-              className="w-full"
-              disabled={submitting}
-              onClick={() => onFinish("completed")}
-            >
+          <div role="group" aria-label="Finish actions">
+            <Action disabled={submitting} onClick={() => onFinish("completed")}>
               Complete Workout
             </Action>
-            <button
-              type="button"
-              onClick={close}
-              className="flex min-h-11 w-full items-center justify-center font-semibold text-[var(--pf-accent-strong)]"
-            >
+            <button type="button" onClick={close}>
               Continue Workout
             </button>
             <DestructiveDialog
               trigger={
-                <Action
-                  variant="danger"
-                  className="w-full"
-                  disabled={submitting}
-                >
+                <Action variant="danger" disabled={submitting}>
                   Discard Workout
                 </Action>
               }
@@ -690,27 +643,18 @@ function FinishWorkoutSheet({
 
 function FinishMetric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0">
-      <dt className="text-[10px] font-semibold tracking-[0.05em] text-[var(--pf-text-2)] uppercase">
-        {label}
-      </dt>
-      <dd className="pf-numeric mt-1 truncate text-[16px] font-semibold">
-        {value}
-      </dd>
+    <div>
+      <dt>{label}</dt>
+      <dd>{value}</dd>
     </div>
   );
 }
 
 function PlaceholderExerciseCard({ name }: { name: string }) {
   return (
-    <section className="rounded-[var(--pf-r3)] border border-dashed border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-      <h2 className="text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-        {name}
-      </h2>
-      <p
-        role="status"
-        className="mt-2 flex items-center gap-2 text-[13px] text-[var(--pf-text-2)]"
-      >
+    <section>
+      <h2>{name}</h2>
+      <p role="status">
         <Icon name="loader-circle" size={14} /> Adding to this workout…
       </p>
     </section>
@@ -779,11 +723,7 @@ function ExerciseCard({
       : `Workout-local, no prescription · ${recordedCount} of ${exercise.sets.length} recorded`;
 
   const removeTrigger = (
-    <button
-      type="button"
-      aria-label={`Remove ${exercise.exerciseName}`}
-      className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
-    >
+    <button type="button" aria-label={`Remove ${exercise.exerciseName}`}>
       <Icon name="x" size={14} />
     </button>
   );
@@ -820,33 +760,26 @@ function ExerciseCard({
           return;
         onToggle();
       }}
-      className="scroll-mt-[calc(40px+env(safe-area-inset-top))] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
     >
-      <div className="flex items-start gap-1">
+      <div>
         <button
           type="button"
           aria-label={`${expanded ? "Collapse" : "Expand"} ${exercise.exerciseName}`}
           aria-expanded={expanded}
           aria-controls={contentId}
           onClick={onToggle}
-          className="flex min-h-11 min-w-0 flex-1 items-start text-left"
         >
-          <span className="min-w-0 flex-1">
-            <span className="block text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-              {exercise.exerciseName}
-            </span>
-            <span className="mt-1 block text-[12.5px] text-[var(--pf-text-2)]">
-              {meta}
-            </span>
+          <span>
+            <span>{exercise.exerciseName}</span>
+            <span>{meta}</span>
           </span>
         </button>
-        <div className="flex shrink-0 items-start">
+        <div>
           <button
             type="button"
             aria-label={`Move ${exercise.exerciseName} up`}
             disabled={index === 0}
             onClick={() => onMove(index, -1)}
-            className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
           >
             <Icon name="arrow-up" size={14} />
           </button>
@@ -855,7 +788,6 @@ function ExerciseCard({
             aria-label={`Move ${exercise.exerciseName} down`}
             disabled={index === count - 1}
             onClick={() => onMove(index, 1)}
-            className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
           >
             <Icon name="arrow-down" size={14} />
           </button>
@@ -872,7 +804,6 @@ function ExerciseCard({
               type="button"
               aria-label={`Remove ${exercise.exerciseName}`}
               onClick={() => onRemoveExercise(false)}
-              className="flex size-11 items-center justify-center text-[var(--pf-text-2)]"
             >
               <Icon name="x" size={14} />
             </button>
@@ -882,39 +813,33 @@ function ExerciseCard({
 
       <div id={contentId} hidden={!expanded}>
         {exercise.persistentNote ? (
-          <div className="mt-3 border-l-2 border-[var(--pf-warn)] pl-3 text-[var(--pf-warn)]">
-            <p className="text-[11px] font-semibold tracking-[0.1em] uppercase">
-              Exercise note
-            </p>
-            <p className="mt-1 text-[13px] leading-[1.4] [overflow-wrap:anywhere]">
-              {exercise.persistentNote}
-            </p>
+          <div>
+            <p>Exercise note</p>
+            <p>{exercise.persistentNote}</p>
           </div>
         ) : null}
 
         {exercise.previousWorkoutNote ? (
-          <div className="mt-3 border-l-2 border-[var(--pf-accent-strong)] pl-3">
-            <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+          <div>
+            <p>
               Note from last workout ·{" "}
               {formatLastPerformanceDate(
                 exercise.previousWorkoutNote.workoutDate,
               )}
             </p>
-            <p className="mt-1 text-[13px] leading-[1.4] [overflow-wrap:anywhere]">
-              {exercise.previousWorkoutNote.note}
-            </p>
+            <p>{exercise.previousWorkoutNote.note}</p>
           </div>
         ) : null}
 
-        <div className="mt-3 border-t border-[var(--pf-border)] pt-3">
-          <p className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+        <div>
+          <p>
             Last time
             {exercise.lastPerformance !== null
               ? ` · ${formatLastPerformanceDate(exercise.lastPerformance.workoutDate)}`
               : ""}
           </p>
           {exercise.lastPerformance !== null ? (
-            <ul className="pf-numeric mt-1 space-y-0.5 text-[13px] [overflow-wrap:anywhere]">
+            <ul>
               {exercise.lastPerformance.sets.map((set) => (
                 <li key={set.id}>
                   {formatWorkoutSetLine(
@@ -925,18 +850,14 @@ function ExerciseCard({
               ))}
             </ul>
           ) : (
-            <p className="mt-1 text-[13px]">No completed performance yet.</p>
+            <p>No completed performance yet.</p>
           )}
         </div>
 
-        <div className="mt-2 divide-y divide-[var(--pf-border)]">
+        <div>
           {exercise.sets.map((set) =>
             placeholderIds.has(set.id) ? (
-              <p
-                key={set.id}
-                role="status"
-                className="flex min-h-11 items-center gap-2 py-3 text-[13px] text-[var(--pf-text-2)]"
-              >
+              <p key={set.id} role="status">
                 <Icon name="loader-circle" size={14} /> Adding set…
               </p>
             ) : (
@@ -954,15 +875,11 @@ function ExerciseCard({
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={onAddSet}
-          className="ml-auto flex min-h-11 items-center justify-end gap-1.5 font-semibold text-[var(--pf-ok)]"
-        >
+        <button type="button" onClick={onAddSet}>
           <Icon name="plus" size={14} /> Add Set
         </button>
 
-        <div className="mt-4">
+        <div>
           <TextAreaField
             id={`workout-note-${exercise.id}`}
             label="Today's note · saved with this workout"
@@ -1048,42 +965,29 @@ function SetRow({
         : exerciseOptionalModeLabels[optionalMode];
 
   return (
-    <div className="py-2 first:pt-1 last:pb-1">
-      <div className="flex min-w-0 items-center gap-1.5">
-        <span
-          aria-label={`Set ${set.position}`}
-          className="pf-numeric w-4 shrink-0 text-center text-[13px] font-semibold text-[var(--pf-text-2)]"
-        >
-          {set.position}
-        </span>
+    <div>
+      <div>
+        <span aria-label={`Set ${set.position}`}>{set.position}</span>
         {loadLabel !== null ? (
-          <div className="relative min-w-0 flex-1">
-            <label className="sr-only" htmlFor={`set-${set.id}-load`}>
-              {loadLabel}
-            </label>
+          <div>
+            <label htmlFor={`set-${set.id}-load`}>{loadLabel}</label>
             <input
               id={`set-${set.id}-load`}
               inputMode="decimal"
               value={loadDraft}
               autoComplete="off"
-              className="pf-numeric h-8 w-full min-w-0 rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-8 text-[16px]"
               onChange={(event) => {
                 setLoadDraft(event.target.value);
                 if (feedback?.kind === "error") onClearFeedback(set.id);
               }}
               onBlur={commitLoad}
             />
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[9px] font-semibold text-[var(--pf-text-3-deep)] uppercase"
-            >
-              {loadLabel}
-            </span>
+            <span aria-hidden="true">{loadLabel}</span>
           </div>
         ) : null}
         {fields.band !== null ? (
-          <div className="relative min-w-0 flex-1">
-            <label className="sr-only" htmlFor={`set-${set.id}-band`}>
+          <div>
+            <label htmlFor={`set-${set.id}-band`}>
               {fields.band === "resistance"
                 ? "Resistance band"
                 : "Assistance band"}
@@ -1091,7 +995,6 @@ function SetRow({
             <select
               id={`set-${set.id}-band`}
               value={set.bandStrength ?? ""}
-              className="h-8 w-full min-w-0 appearance-none rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-5 text-[13px] capitalize"
               onChange={(event) => {
                 if (event.target.value === "") return;
                 onUpdate(set, mode, {
@@ -1109,15 +1012,11 @@ function SetRow({
               <option value="medium">Medium</option>
               <option value="strong">Strong</option>
             </select>
-            <Icon
-              name="chevron-down"
-              size={12}
-              className="pointer-events-none absolute top-1/2 right-1.5 -translate-y-1/2 text-[var(--pf-text-3-deep)]"
-            />
+            <Icon name="chevron-down" size={12} />
           </div>
         ) : null}
-        <div className="relative min-w-0 flex-1">
-          <label className="sr-only" htmlFor={`set-${set.id}-reps`}>
+        <div>
+          <label htmlFor={`set-${set.id}-reps`}>
             {exercise.measurementType === "seconds" ? "Seconds" : "Reps"}
           </label>
           <input
@@ -1125,17 +1024,13 @@ function SetRow({
             inputMode="numeric"
             value={repsDraft}
             autoComplete="off"
-            className="pf-numeric h-8 w-full min-w-0 rounded-[var(--pf-r1)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface-2)] px-2 pr-9 text-[16px]"
             onChange={(event) => {
               setRepsDraft(event.target.value);
               if (feedback?.kind === "error") onClearFeedback(set.id);
             }}
             onBlur={commitReps}
           />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[9px] font-semibold text-[var(--pf-text-3-deep)] uppercase"
-          >
+          <span aria-hidden="true">
             {exercise.measurementType === "seconds" ? "Sec" : "Reps"}
           </span>
         </div>
@@ -1147,7 +1042,6 @@ function SetRow({
             onClick={() =>
               onChangeMode(set, mode === optionalMode ? baseMode : optionalMode)
             }
-            className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-accent-strong)]"
           >
             <Icon name={mode === optionalMode ? "minus" : "plus"} size={13} />
           </button>
@@ -1158,7 +1052,6 @@ function SetRow({
               <button
                 type="button"
                 aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
-                className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-text-2)]"
               >
                 <Icon name="x" size={14} />
               </button>
@@ -1173,7 +1066,6 @@ function SetRow({
             type="button"
             aria-label={`Remove set ${set.position} of ${exercise.exerciseName}`}
             onClick={() => onRemove(set, false)}
-            className="flex size-8 shrink-0 items-center justify-center text-[var(--pf-text-2)]"
           >
             <Icon name="x" size={14} />
           </button>
@@ -1181,18 +1073,12 @@ function SetRow({
       </div>
 
       {feedback?.kind === "error" ? (
-        <p
-          role="alert"
-          className="mt-2 flex items-center gap-1 text-[12.5px] font-medium text-[var(--pf-danger)]"
-        >
+        <p role="alert">
           <Icon name="triangle-alert" size={14} /> {feedback.message}
         </p>
       ) : null}
       {feedback?.kind === "notice" ? (
-        <p
-          role="status"
-          className="mt-2 flex items-center gap-1 text-[12.5px] font-medium text-[var(--pf-text-2)]"
-        >
+        <p role="status">
           <Icon name="info" size={14} /> {feedback.message}
         </p>
       ) : null}
@@ -1243,16 +1129,13 @@ function AddExerciseSheet({
         if (open) void loadExercises();
       }}
       trigger={
-        <button
-          type="button"
-          className="mb-2 flex min-h-[58px] w-full items-center justify-center gap-2 rounded-[var(--pf-r2)] border border-dashed border-[var(--pf-border-control)] font-semibold text-[var(--pf-accent-strong)]"
-        >
+        <button type="button">
           <Icon name="plus" size={18} /> Add Exercise
         </button>
       }
     >
       {(close) => (
-        <div className="space-y-3">
+        <div>
           <TextField
             id="add-exercise-search"
             label="Search active library"
@@ -1261,35 +1144,22 @@ function AddExerciseSheet({
             autoComplete="off"
             onChange={(event) => setQuery(event.target.value)}
           />
-          <p className="text-[12.5px] text-[var(--pf-text-3-deep)]">
-            Archived exercises are not listed.
-          </p>
+          <p>Archived exercises are not listed.</p>
           {loading ? (
-            <p
-              role="status"
-              className="flex min-h-20 items-center justify-center gap-2 text-[var(--pf-text-2)]"
-            >
+            <p role="status">
               <Icon name="loader-circle" size={16} /> Loading exercises…
             </p>
           ) : error ? (
-            <div className="py-3 text-center">
-              <p role="alert" className="text-[var(--pf-danger)]">
-                {error}
-              </p>
-              <button
-                type="button"
-                className="mt-2 min-h-11 font-semibold text-[var(--pf-accent-strong)]"
-                onClick={() => void loadExercises()}
-              >
+            <div>
+              <p role="alert">{error}</p>
+              <button type="button" onClick={() => void loadExercises()}>
                 Retry
               </button>
             </div>
           ) : filtered.length === 0 ? (
-            <p className="py-4 text-center text-[var(--pf-text-2)]">
-              No active exercise matches this search.
-            </p>
+            <p>No active exercise matches this search.</p>
           ) : (
-            <div className="space-y-2">
+            <div>
               {filtered.map((exercise) => {
                 const isSelected = selected.includes(exercise.id);
                 return (
@@ -1299,27 +1169,13 @@ function AddExerciseSheet({
                     aria-pressed={isSelected}
                     aria-label={exercise.name}
                     onClick={() => toggle(exercise.id)}
-                    className={`flex min-h-14 w-full items-center gap-3 rounded-[var(--pf-r2)] border px-3 py-2.5 text-left ${
-                      isSelected
-                        ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)]"
-                        : "border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)]"
-                    }`}
                   >
-                    <span
-                      aria-hidden="true"
-                      className={`flex size-6 shrink-0 items-center justify-center rounded-[var(--pf-r1)] border ${
-                        isSelected
-                          ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-strong)] text-[var(--pf-on-accent)]"
-                          : "border-[var(--pf-border-control)] text-transparent"
-                      }`}
-                    >
+                    <span aria-hidden="true">
                       <Icon name="check" size={13} />
                     </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-semibold [overflow-wrap:anywhere]">
-                        {exercise.name}
-                      </span>
-                      <span className="mt-0.5 block text-[12.5px] text-[var(--pf-text-2)]">
+                    <span>
+                      <span>{exercise.name}</span>
+                      <span>
                         {exerciseTypeLabels[exercise.baseType]} ·{" "}
                         {exercise.allowedLoadModes.length}{" "}
                         {exercise.allowedLoadModes.length === 1
@@ -1333,7 +1189,6 @@ function AddExerciseSheet({
             </div>
           )}
           <Action
-            className="w-full"
             disabled={selected.length === 0 || exercises === null}
             onClick={() => {
               onAdd(

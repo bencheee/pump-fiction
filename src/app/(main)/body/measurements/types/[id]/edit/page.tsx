@@ -20,13 +20,13 @@ export default async function EditMeasurementTypePage({
 
   if (!result.ok) {
     return (
-      <div className="flex min-h-full flex-col">
+      <div>
         <TopBar
           title="Edit Measurement"
           backHref="/body/measurements"
           backLabel="Body"
         />
-        <PageFrame title="Measurement unavailable" className="pt-5">
+        <PageFrame title="Measurement unavailable">
           <EmptyState
             title="That measurement couldn't be loaded"
             body={result.error.message}

@@ -54,19 +54,19 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
   };
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div>
       <TopBar
         title={workout.name}
         backHref="/history/workouts"
         backLabel="Workouts"
       />
-      <PageFrame title={workout.name} className="pt-5">
-        <p className="text-[var(--pf-text-2)]">
+      <PageFrame title={workout.name}>
+        <p>
           {formatHistoryDate(workout.workoutDate)}
           {workout.programName ? ` · ${workout.programName}` : null}
         </p>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div>
           <StatCard
             label="Active duration"
             value={formatHistoryDuration(workout.activeDurationSeconds)}
@@ -77,63 +77,48 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
           />
         </div>
 
-        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-[13px]">
-          <dt className="text-[var(--pf-text-2)]">Started</dt>
+        <dl>
+          <dt>Started</dt>
           <dd>{new Date(workout.startedAt).toLocaleString()}</dd>
-          <dt className="text-[var(--pf-text-2)]">Finished</dt>
+          <dt>Finished</dt>
           <dd>{new Date(workout.finishedAt).toLocaleString()}</dd>
           {workout.splitName ? (
             <>
-              <dt className="text-[var(--pf-text-2)]">Split</dt>
+              <dt>Split</dt>
               <dd>{workout.splitName}</dd>
             </>
           ) : null}
         </dl>
 
-        <section className="flex flex-col gap-3">
-          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
-            Exercises
-          </h2>
+        <section>
+          <h2>Exercises</h2>
           {workout.exercises.length === 0 ? (
-            <p className="text-[var(--pf-text-2)]">
-              This workout has no exercises.
-            </p>
+            <p>This workout has no exercises.</p>
           ) : (
-            <ul className="flex flex-col gap-3">
+            <ul>
               {workout.exercises.map((exercise) => (
-                <li
-                  key={exercise.id}
-                  className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-[16.5px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
-                      {exercise.exerciseName}
-                    </h3>
+                <li key={exercise.id}>
+                  <div>
+                    <h3>{exercise.exerciseName}</h3>
                     {exercise.stillInLibrary ? null : (
                       <Badge>No longer in the library</Badge>
                     )}
                   </div>
                   {exercise.plannedSets !== null ? (
-                    <p className="mt-1 text-[12.5px] text-[var(--pf-text-2)]">
+                    <p>
                       Planned {exercise.plannedSets} × {exercise.minReps ?? "?"}
                       –{exercise.maxReps ?? "?"}
                     </p>
                   ) : null}
                   {exercise.persistentNote ? (
-                    <p className="mt-2 text-[13px] text-[var(--pf-text-2)]">
-                      <span className="font-semibold">Exercise note:</span>{" "}
-                      {exercise.persistentNote}
+                    <p>
+                      <span>Exercise note:</span> {exercise.persistentNote}
                     </p>
                   ) : null}
-                  <ol className="mt-2 flex flex-col gap-1">
+                  <ol>
                     {exercise.sets.map((set) => (
-                      <li
-                        key={set.id}
-                        className="pf-numeric flex justify-between gap-3 text-[13px]"
-                      >
-                        <span className="text-[var(--pf-text-2)]">
-                          Set {set.position}
-                        </span>
+                      <li key={set.id}>
+                        <span>Set {set.position}</span>
                         <span>
                           {formatSetSummary(set, exercise.measurementType)}
                         </span>
@@ -141,9 +126,8 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
                     ))}
                   </ol>
                   {exercise.workoutNote ? (
-                    <p className="mt-2 text-[13px]">
-                      <span className="font-semibold">Workout note:</span>{" "}
-                      {exercise.workoutNote}
+                    <p>
+                      <span>Workout note:</span> {exercise.workoutNote}
                     </p>
                   ) : null}
                 </li>
@@ -152,20 +136,11 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
           )}
         </section>
 
-        {failure ? (
-          <p role="alert" className="text-[13px] text-[var(--pf-danger)]">
-            {failure}
-          </p>
-        ) : null}
+        {failure ? <p role="alert">{failure}</p> : null}
       </PageFrame>
 
       <StickyActionBar>
-        <Link
-          href={`/history/workouts/${workout.id}/edit`}
-          className="inline-flex min-h-[var(--pf-size-primary-action)] items-center justify-center rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 font-semibold text-[var(--pf-on-accent)]"
-        >
-          Edit workout
-        </Link>
+        <Link href={`/history/workouts/${workout.id}/edit`}>Edit workout</Link>
         <DestructiveDialog
           trigger={
             <Action variant="danger" disabled={pending}>
