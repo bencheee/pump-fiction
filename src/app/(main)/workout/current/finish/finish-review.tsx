@@ -170,17 +170,17 @@ export function FinishReview({
         backHref="/workout/current"
         backLabel="Back to active workout"
       />
-      <main className="flex flex-1 flex-col gap-5 px-[var(--pf-gutter)] pt-5">
+      <main className="pf-scroll flex min-h-0 flex-1 flex-col gap-5 px-[var(--pf-gutter)] pt-1.5">
         <div>
           <h2 className="text-[24px] leading-[1.15] font-semibold [overflow-wrap:anywhere]">
             {workout.name}
           </h2>
-          <p className="mt-2 text-[13px] text-[var(--pf-text-2)]">
+          <p className="pf-numeric mt-2 text-[16px] text-[var(--pf-text-3)]">
             {sourceLine}
           </p>
         </div>
 
-        <dl className="divide-y divide-[var(--pf-border)] rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)]">
+        <dl className="divide-y divide-[var(--pf-border)] rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)]">
           <ReviewRow label="Active duration">
             <span className="pf-numeric text-[21px] font-semibold">
               {formatWorkoutClock(displaySeconds)}
@@ -223,14 +223,14 @@ export function FinishReview({
         ) : null}
 
         {isOneTime ? (
-          <p className="text-[13px] leading-[1.5] text-[var(--pf-text-3-deep)]">
+          <p className="text-[13px] leading-[1.5] text-[var(--pf-text-3)]">
             No planned-set metric: this workout has no prescription, so its set
             rows are workout-local rather than planned.
           </p>
         ) : null}
 
-        <section className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4">
-          <h3 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+        <section className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-[18px] py-4">
+          <h3 className="text-[length:var(--pf-type-label-size)] font-semibold tracking-[0.1em] text-[var(--pf-text-4)] uppercase">
             What completing does
           </h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-[13px] leading-[1.5] text-[var(--pf-text-2)]">
@@ -310,7 +310,7 @@ export function FinishReview({
               <button
                 type="button"
                 onClick={() => void recoverFromConflict()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+                className="min-h-11 rounded-full border border-[var(--pf-danger)] px-3.5 font-semibold"
               >
                 Refresh
               </button>
@@ -318,7 +318,7 @@ export function FinishReview({
               <button
                 type="button"
                 onClick={() => void delivery.controller.flush()}
-                className="min-h-11 rounded-[var(--pf-r-pill)] border border-[var(--pf-danger)] px-3 font-semibold"
+                className="min-h-11 rounded-full border border-[var(--pf-danger)] px-3.5 font-semibold"
               >
                 Retry
               </button>
@@ -334,7 +334,7 @@ export function FinishReview({
         </Action>
         <Link
           href="/workout/current"
-          className="flex min-h-11 w-full items-center justify-center font-semibold text-[var(--pf-accent-strong)]"
+          className="flex min-h-11 w-full items-center justify-center font-semibold text-[var(--pf-accent)]"
         >
           Continue Workout
         </Link>
