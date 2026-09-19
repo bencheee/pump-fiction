@@ -22,11 +22,13 @@ export function useTransientOverlay() {
   // otherwise the second one pushes its marker first and the arriving popstate
   // closes it again.
   const pending = useRef<(() => void) | null>(null);
+  const fallback = useRef<number>(undefined);
 
   useEffect(() => {
     const handlePopState = () => {
       if (!currentStack().includes(marker)) {
         setOpen(false);
+        window.clearTimeout(fallback.current);
         const queued = pending.current;
         pending.current = null;
         queued?.();
@@ -34,7 +36,12 @@ export function useTransientOverlay() {
     };
 
     window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      // Nothing queued behind a close should run after the overlay is gone.
+      window.clearTimeout(fallback.current);
+      pending.current = null;
+    };
   }, [marker]);
 
   const requestOpenChange = useCallback(
@@ -77,7 +84,8 @@ export function useTransientOverlay() {
         // A popstate normally arrives and drains this. When the browser does
         // not report one — the entry was replaced, or the stack no longer
         // matches — the follow-up must still happen rather than be lost.
-        window.setTimeout(() => {
+        window.clearTimeout(fallback.current);
+        fallback.current = window.setTimeout(() => {
           const queued = pending.current;
           pending.current = null;
           queued?.();

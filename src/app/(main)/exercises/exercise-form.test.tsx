@@ -2,7 +2,13 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -108,13 +114,15 @@ describe("ExerciseForm", () => {
 
     await saveExercise(user);
 
-    expect(actions.create).toHaveBeenCalledWith({
-      name: "Pull-up",
-      baseType: "bodyweight",
-      measurementType: "reps",
-      allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
-      persistentNote: "",
-    });
+    await waitFor(() =>
+      expect(actions.create).toHaveBeenCalledWith({
+        name: "Pull-up",
+        baseType: "bodyweight",
+        measurementType: "reps",
+        allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
+        persistentNote: "",
+      }),
+    );
   });
 
   it("defaults to reps and can save a seconds override", async () => {
@@ -134,8 +142,10 @@ describe("ExerciseForm", () => {
     await user.type(screen.getByLabelText("Name"), "Side plank");
     await saveExercise(user);
 
-    expect(actions.create).toHaveBeenCalledWith(
-      expect.objectContaining({ measurementType: "seconds" }),
+    await waitFor(() =>
+      expect(actions.create).toHaveBeenCalledWith(
+        expect.objectContaining({ measurementType: "seconds" }),
+      ),
     );
   });
 
@@ -161,7 +171,7 @@ describe("ExerciseForm", () => {
     await user.type(screen.getByLabelText("Name"), "Bench press");
     await saveExercise(user);
 
-    expect(actions.create).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(actions.create).toHaveBeenCalledTimes(1));
     expect(router.replace).toHaveBeenCalledWith("/exercises");
     expect(await screen.findByText("Exercise saved.")).toBeVisible();
   });
@@ -181,10 +191,14 @@ describe("ExerciseForm", () => {
     await user.type(screen.getByLabelText("Name"), "Bench press");
     await saveExercise(user);
 
+    // The save runs once the actions panel has closed, so the refusal lands a
+    // tick after the click.
+    await waitFor(() =>
+      expect(
+        screen.getAllByText("Another active exercise already uses this name."),
+      ).toHaveLength(2),
+    );
     expect(router.replace).not.toHaveBeenCalled();
-    expect(
-      screen.getAllByText("Another active exercise already uses this name."),
-    ).toHaveLength(2);
   });
 
   it("keeps one assistance mode selected and reports name validation", async () => {
@@ -217,7 +231,9 @@ describe("ExerciseForm", () => {
 
     await saveExercise(user);
 
-    expect(screen.getByText("Enter a name for this exercise.")).toBeVisible();
+    expect(
+      await screen.findByText("Enter a name for this exercise."),
+    ).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
   });
 
