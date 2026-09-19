@@ -141,16 +141,17 @@ export function BarChart({
 
       <div className="mt-1.5">
         <Collapsible label={valuesLabel}>
-          <div className="flex flex-col">
+          <ul aria-label={valuesLabel} className="flex flex-col">
             {[...points].reverse().map((point, index) => (
-              <DataRow
-                key={`${point.date}-value-${index}`}
-                first={index === 0}
-                label={point.dateLabel}
-                value={formatValue(point.value)}
-              />
+              <li key={`${point.date}-value-${index}`}>
+                <DataRow
+                  first={index === 0}
+                  label={point.dateLabel}
+                  value={formatValue(point.value)}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </Collapsible>
       </div>
     </div>

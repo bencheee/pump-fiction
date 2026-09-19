@@ -19,11 +19,6 @@ const actions = vi.hoisted(() => ({ load: vi.fn() }));
 vi.mock("@/app/actions/workout-history", () => ({
   getSplitStatisticsAction: actions.load,
 }));
-// The chart draws the same series the accessible list shows, and Recharts needs
-// a laid-out container jsdom does not provide; the browser scenario covers it.
-vi.mock("@/features/history/ui/progress-chart", () => ({
-  ProgressChart: () => null,
-}));
 
 const planA = "36000000-0000-4000-8000-0000000000a0";
 const planB = "36000000-0000-4000-8000-0000000000b0";
@@ -153,7 +148,7 @@ describe("split progress detail", () => {
     );
 
     expect(
-      screen.getByText(/Active duration across 2 workouts: 1 h 10 min to 1 h/),
+      screen.getByText(/2 workouts in range: 1 h 10 min to 1 h/),
     ).toBeInTheDocument();
     await user.click(screen.getByText("Chart values"));
     const values = screen.getByRole("list", { name: "Chart values" });
