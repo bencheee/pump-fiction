@@ -8,18 +8,14 @@ import { correctHistoryWorkoutAction } from "@/app/actions/workout-history";
 import { formatSetSummary } from "@/features/active-workout/ui/workout-presentation";
 import type { HistoryWorkout } from "@/features/history/domain/workout-history";
 import {
-  ActionOverlay,
-  ActionsTrigger,
+  Action,
   Badge,
   DestructiveDialog,
-  Icon,
-  Kicker,
-  ScreenBody,
+  PageFrame,
   StatCard,
   StickyActionBar,
   TopBar,
   useToast,
-  useTransientOverlay,
 } from "@/shared/ui";
 
 import {
@@ -33,56 +29,42 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
   const { showToast } = useToast();
   const [pending, startTransition] = useTransition();
   const [failure, setFailure] = useState<string>();
-  const confirmDelete = useTransientOverlay();
 
   const performedExercises = workout.exercises.filter((exercise) =>
     exercise.sets.some((set) => set.loadMode !== null && set.reps !== null),
   ).length;
 
-  const facts = [
-    { label: "Started", value: new Date(workout.startedAt).toLocaleString() },
-    { label: "Finished", value: new Date(workout.finishedAt).toLocaleString() },
-    // The program already reads in the line under the title.
-    ...(workout.splitName
-      ? [{ label: "Split", value: workout.splitName }]
-      : []),
-  ];
-
-  function deleteWorkout() {
+  const apply = (
+    input: Parameters<typeof correctHistoryWorkoutAction>[0],
+    success: string,
+    destination?: string,
+  ) => {
     setFailure(undefined);
     startTransition(async () => {
-      const result = await correctHistoryWorkoutAction({
-        kind: "delete",
-        workoutId: workout.id,
-      });
+      const result = await correctHistoryWorkoutAction(input);
       if (!result.ok) {
         setFailure(result.error.message);
         showToast(result.error.message);
         return;
       }
-      showToast("Workout deleted. Affected statistics were recalculated.");
-      router.push("/history/workouts");
+      showToast(success);
+      if (destination) router.push(destination);
       router.refresh();
     });
-  }
+  };
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar
         title={workout.name}
         backHref="/history/workouts"
         backLabel="Workouts"
       />
-      <ScreenBody>
-        <div>
-          <h2 className="text-[length:var(--pf-type-title-size)] leading-[1.16] font-semibold tracking-[-0.01em] [text-wrap:pretty]">
-            {workout.name}
-          </h2>
-          <p className="pf-numeric mt-2 text-[16px] text-[var(--pf-text-3)]">
-            {formatHistoryDate(workout.workoutDate)}
-            {workout.programName ? ` · ${workout.programName}` : null}
-          </p>
-        </div>
+      <PageFrame title={workout.name} className="pt-5">
+        <p className="text-[var(--pf-text-2)]">
+          {formatHistoryDate(workout.workoutDate)}
+          {workout.programName ? ` · ${workout.programName}` : null}
+        </p>
 
         <div className="grid grid-cols-2 gap-2">
           <StatCard
@@ -95,132 +77,113 @@ export function WorkoutDetail({ workout }: { workout: HistoryWorkout }) {
           />
         </div>
 
-        <dl className="rounded-[var(--pf-r3)] bg-[var(--pf-bg-surface)] px-[18px] py-1.5">
-          {facts.map((fact, index) => (
-            <div
-              key={fact.label}
-              className={
-                index === 0
-                  ? "flex min-h-11 items-baseline justify-between gap-3.5 py-2"
-                  : "flex min-h-11 items-baseline justify-between gap-3.5 border-t border-[var(--pf-border)] py-2"
-              }
-            >
-              <dt className="shrink-0 text-[13px] text-[var(--pf-text-4)]">
-                {fact.label}
-              </dt>
-              <dd className="pf-numeric min-w-0 flex-1 text-right text-[15px] [text-wrap:pretty]">
-                {fact.value}
-              </dd>
-            </div>
-          ))}
+        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-[13px]">
+          <dt className="text-[var(--pf-text-2)]">Started</dt>
+          <dd>{new Date(workout.startedAt).toLocaleString()}</dd>
+          <dt className="text-[var(--pf-text-2)]">Finished</dt>
+          <dd>{new Date(workout.finishedAt).toLocaleString()}</dd>
+          {workout.splitName ? (
+            <>
+              <dt className="text-[var(--pf-text-2)]">Split</dt>
+              <dd>{workout.splitName}</dd>
+            </>
+          ) : null}
         </dl>
 
-        <Kicker className="mt-1.5">Exercises</Kicker>
-        {workout.exercises.length === 0 ? (
-          <p className="text-[13.5px] text-[var(--pf-text-3)]">
-            This workout has no exercises.
-          </p>
-        ) : (
-          <ul className="flex flex-col gap-3.5">
-            {workout.exercises.map((exercise) => (
-              <li
-                key={exercise.id}
-                className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-[18px] py-4"
-              >
-                <h3 className="text-[length:var(--pf-type-card-title-size)] leading-[1.25] font-semibold [text-wrap:pretty]">
-                  {exercise.exerciseName}
-                </h3>
-                {exercise.plannedSets !== null ? (
-                  <p className="pf-numeric mt-1.5 text-[14px] text-[var(--pf-text-3)]">
-                    Planned {exercise.plannedSets} × {exercise.minReps ?? "?"}–
-                    {exercise.maxReps ?? "?"}
-                  </p>
-                ) : null}
-                {exercise.stillInLibrary ? null : (
-                  <p className="mt-2.5">
-                    <Badge>No longer in the library</Badge>
-                  </p>
-                )}
-                <ol className="mt-3.5 flex flex-col">
-                  {exercise.sets.map((set, index) => (
-                    <li
-                      key={set.id}
-                      className={
-                        index === 0
-                          ? "flex min-h-[34px] items-center justify-between gap-3"
-                          : "flex min-h-[34px] items-center justify-between gap-3 border-t border-[var(--pf-border)]"
-                      }
-                    >
-                      <span className="text-[13px] text-[var(--pf-text-4)]">
-                        Set {set.position}
-                      </span>
-                      <span className="pf-numeric text-[17px] font-semibold">
-                        {formatSetSummary(set, exercise.measurementType)}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-                {exercise.persistentNote ? (
-                  <p className="mt-3.5 rounded-[var(--pf-r2)] bg-[var(--pf-bg-surface-2)] px-3.5 py-3 text-[13.5px] leading-[1.5] text-[var(--pf-text-2)]">
-                    {exercise.persistentNote}
-                  </p>
-                ) : null}
-                {exercise.workoutNote ? (
-                  <p className="mt-2 rounded-[var(--pf-r2)] bg-[var(--pf-bg-surface-2)] px-3.5 py-3 text-[13.5px] leading-[1.5] text-[var(--pf-text-2)]">
-                    <span className="font-semibold">Workout note:</span>{" "}
-                    {exercise.workoutNote}
-                  </p>
-                ) : null}
-                <Link
-                  href={`/history/exercises/${exercise.exerciseIdentityId}`}
-                  className="mt-3.5 flex min-h-11 items-center gap-2 text-[13.5px] font-semibold text-[var(--pf-accent)]"
+        <section className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            Exercises
+          </h2>
+          {workout.exercises.length === 0 ? (
+            <p className="text-[var(--pf-text-2)]">
+              This workout has no exercises.
+            </p>
+          ) : (
+            <ul className="flex flex-col gap-3">
+              {workout.exercises.map((exercise) => (
+                <li
+                  key={exercise.id}
+                  className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
                 >
-                  <Icon name="trending-up" size={15} />
-                  Exercise statistics
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-[16.5px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
+                      {exercise.exerciseName}
+                    </h3>
+                    {exercise.stillInLibrary ? null : (
+                      <Badge>No longer in the library</Badge>
+                    )}
+                  </div>
+                  {exercise.plannedSets !== null ? (
+                    <p className="mt-1 text-[12.5px] text-[var(--pf-text-2)]">
+                      Planned {exercise.plannedSets} × {exercise.minReps ?? "?"}
+                      –{exercise.maxReps ?? "?"}
+                    </p>
+                  ) : null}
+                  {exercise.persistentNote ? (
+                    <p className="mt-2 text-[13px] text-[var(--pf-text-2)]">
+                      <span className="font-semibold">Exercise note:</span>{" "}
+                      {exercise.persistentNote}
+                    </p>
+                  ) : null}
+                  <ol className="mt-2 flex flex-col gap-1">
+                    {exercise.sets.map((set) => (
+                      <li
+                        key={set.id}
+                        className="pf-numeric flex justify-between gap-3 text-[13px]"
+                      >
+                        <span className="text-[var(--pf-text-2)]">
+                          Set {set.position}
+                        </span>
+                        <span>
+                          {formatSetSummary(set, exercise.measurementType)}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                  {exercise.workoutNote ? (
+                    <p className="mt-2 text-[13px]">
+                      <span className="font-semibold">Workout note:</span>{" "}
+                      {exercise.workoutNote}
+                    </p>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
 
         {failure ? (
           <p role="alert" className="text-[13px] text-[var(--pf-danger)]">
             {failure}
           </p>
         ) : null}
-      </ScreenBody>
+      </PageFrame>
 
       <StickyActionBar>
-        <ActionOverlay
-          trigger={<ActionsTrigger label="Workout actions" />}
-          title={workout.name}
-          meta={`${formatHistoryDate(workout.workoutDate)} · ${formatHistoryDuration(workout.activeDurationSeconds)}`}
-          actions={[
-            {
-              key: "edit",
-              label: "Correct this workout",
-              icon: "pencil",
-              onRun: () => router.push(`/history/workouts/${workout.id}/edit`),
-            },
-            {
-              key: "delete",
-              label: "Delete this workout",
-              icon: "trash-2",
-              disabled: pending,
-              onRun: () => confirmDelete.requestOpenChange(true),
-            },
-          ]}
+        <Link
+          href={`/history/workouts/${workout.id}/edit`}
+          className="inline-flex min-h-[var(--pf-size-primary-action)] items-center justify-center rounded-[var(--pf-r2)] bg-[var(--pf-accent)] px-4 font-semibold text-[var(--pf-on-accent)]"
+        >
+          Edit workout
+        </Link>
+        <DestructiveDialog
+          trigger={
+            <Action variant="danger" disabled={pending}>
+              Delete workout
+            </Action>
+          }
+          title="Delete this workout?"
+          description="It leaves History permanently and every statistic it fed is recalculated. Rotation is not affected."
+          confirmLabel="Delete workout"
+          onConfirm={() =>
+            apply(
+              { kind: "delete", workoutId: workout.id },
+              "Workout deleted. Affected statistics were recalculated.",
+              "/history/workouts",
+            )
+          }
         />
       </StickyActionBar>
-
-      <DestructiveDialog
-        open={confirmDelete.open}
-        onOpenChange={confirmDelete.requestOpenChange}
-        title="Delete this workout?"
-        description="It leaves History permanently and every statistic it fed is recalculated. Rotation is not affected."
-        confirmLabel="Delete workout"
-        onConfirm={deleteWorkout}
-      />
     </div>
   );
 }

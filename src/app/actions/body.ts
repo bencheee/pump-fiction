@@ -1,10 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-
 import type { ChartRange } from "@/features/history/domain/chart";
 import {
   createMeasurementEntry,
+  createTodayMeasurementEntries,
   createMeasurementType,
   deleteMeasurementEntry,
   deleteMeasurementType,
@@ -45,11 +44,12 @@ export async function deleteMeasurementTypeAction(input: unknown) {
   return deleteMeasurementType(input);
 }
 
+export async function createTodayMeasurementEntriesAction(input: unknown) {
+  return createTodayMeasurementEntries(input);
+}
+
 export async function createMeasurementEntryAction(input: unknown) {
-  const result = await createMeasurementEntry(input);
-  // See `createWeightEntryAction`: the recording panel closes through history.
-  if (result.ok) revalidatePath("/body/measurements", "layout");
-  return result;
+  return createMeasurementEntry(input);
 }
 
 export async function updateMeasurementEntryAction(input: unknown) {

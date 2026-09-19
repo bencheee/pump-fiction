@@ -2,8 +2,6 @@ import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
-import { runScreenAction } from "./support/hydration";
-
 test.describe("Workout History experience", () => {
   test("covers the subsection shell, S13, S14 correction, deletion, and reflow", async ({
     page,
@@ -48,19 +46,12 @@ test.describe("Workout History experience", () => {
       await expect(page.getByText("No values")).toBeVisible();
 
       // Correcting a set value returns to the detail and shows the new value.
-      await runScreenAction(page, "Workout actions", "Correct this workout");
+      await page.getByRole("link", { name: "Edit workout" }).click();
       await expect(page).toHaveURL(/\/edit$/);
-
-      // A set is corrected in its own panel: the wheels start from the set
-      // before it, and Apply writes the value back into the draft.
-      await page
-        .getByRole("button", { name: /^Correct set 2 of / })
-        .first()
-        .click();
-      const setPanel = page.getByRole("dialog", { name: "Correct set" });
-      await setPanel.getByRole("button", { name: "Kilograms 65" }).click();
-      await setPanel.getByRole("button", { name: "Reps 6" }).click();
-      await setPanel.getByRole("button", { name: "Apply to set" }).click();
+      const repsFields = page.getByLabel("Reps");
+      await repsFields.nth(1).fill("6");
+      const kilogramFields = page.getByLabel("Kilograms");
+      await kilogramFields.nth(1).fill("65");
       await expect(page.getByText("Unsaved changes")).toBeVisible();
       await page.getByRole("button", { name: "Save corrections" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
@@ -80,7 +71,10 @@ test.describe("Workout History experience", () => {
 
       // Deleting requires confirmation and returns to the list.
       await page.goto(`/history/workouts/${fixture.workoutId}`);
-      await runScreenAction(page, "Workout actions", "Delete this workout");
+      await page
+        .getByRole("button", { name: "Delete workout", exact: true })
+        .first()
+        .click();
       const dialog = page.getByRole("alertdialog");
       await expect(dialog).toContainText("Rotation is not affected");
       await dialog

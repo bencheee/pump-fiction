@@ -43,7 +43,7 @@ export default async function EditMeasurementEntryPage({
 
 function Unavailable({ message }: { message: string }) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar
         title="Edit Entry"
         backHref="/body/measurements"

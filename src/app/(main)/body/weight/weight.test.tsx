@@ -35,9 +35,12 @@ vi.mock("@/app/actions/weight", () => ({
 }));
 
 const router = vi.hoisted(() => ({ refresh: vi.fn(), replace: vi.fn() }));
-vi.mock("next/navigation", () => ({
-  useRouter: () => router,
-  usePathname: () => "/body/weight",
+vi.mock("next/navigation", () => ({ useRouter: () => router }));
+
+// The chart draws the same series the accessible list shows, and Recharts needs
+// a laid-out container jsdom does not provide; the browser scenario covers it.
+vi.mock("@/features/history/ui/progress-chart", () => ({
+  ProgressChart: () => null,
 }));
 
 const today = "2026-09-06";
@@ -121,7 +124,7 @@ describe("S19 Weight", () => {
   afterEach(cleanup);
 
   it("shows the latest weigh-in, its change, and this week", () => {
-    renderWithToast(<WeightView progress={progress()} initialRange="month" />);
+    render(<WeightView progress={progress()} initialRange="month" />);
 
     const latest = card("Latest");
     expect(latest.getByText("81.5 kg")).toBeVisible();
@@ -138,7 +141,7 @@ describe("S19 Weight", () => {
 
   it("says the weekly change is unavailable rather than zero", () => {
     const view = progress();
-    renderWithToast(
+    render(
       <WeightView
         progress={{
           ...view,
@@ -157,7 +160,7 @@ describe("S19 Weight", () => {
 
   it("marks the current week provisional before its Sunday", () => {
     const view = progress();
-    renderWithToast(
+    render(
       <WeightView
         progress={{
           ...view,
@@ -175,7 +178,7 @@ describe("S19 Weight", () => {
   });
 
   it("lists every weigh-in newest first with its change and edit link", () => {
-    renderWithToast(<WeightView progress={progress()} initialRange="month" />);
+    render(<WeightView progress={progress()} initialRange="month" />);
     const rows = within(screen.getByRole("list", { name: "Weigh-ins" }));
     const links = rows.getAllByRole("link");
     expect(links).toHaveLength(2);
@@ -188,7 +191,7 @@ describe("S19 Weight", () => {
   it("offers the four weight ranges and reloads on a change", async () => {
     const user = userEvent.setup();
     actions.load.mockResolvedValue({ ok: true, value: progress() });
-    renderWithToast(<WeightView progress={progress()} initialRange="month" />);
+    render(<WeightView progress={progress()} initialRange="month" />);
 
     const ranges = within(screen.getByRole("group", { name: "Time range" }));
     expect(ranges.getAllByRole("button").map((b) => b.textContent)).toEqual([
@@ -204,10 +207,10 @@ describe("S19 Weight", () => {
 
   it("carries the chart in an accessible list, weekly averages included", async () => {
     const user = userEvent.setup();
-    renderWithToast(<WeightView progress={progress()} initialRange="month" />);
+    render(<WeightView progress={progress()} initialRange="month" />);
 
     expect(
-      screen.getByText(/2 weigh-ins in range: 82.5 kg to 81.5 kg/),
+      screen.getByText(/2 weigh-ins from 82.5 kg to 81.5 kg/),
     ).toBeVisible();
 
     // The lists sit inside a collapsed disclosure, as they do on S16 and S18.
@@ -225,7 +228,7 @@ describe("S19 Weight", () => {
 
   it("invites the first weigh-in instead of fabricating a zero", () => {
     const view = progress();
-    renderWithToast(
+    render(
       <WeightView
         progress={{
           ...view,

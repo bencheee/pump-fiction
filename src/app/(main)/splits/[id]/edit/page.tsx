@@ -48,7 +48,7 @@ export default async function EditSplitPage({
 
 function LoadFailure({ message }: { message: string }) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar title="Edit Split" backHref="/programs" backLabel="Programs" />
       <PageFrame title="Split unavailable" className="pt-5">
         <EmptyState title="Split couldn't be loaded" body={message} />

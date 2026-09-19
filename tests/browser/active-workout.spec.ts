@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
-import { fillHydrated, runScreenAction } from "./support/hydration";
+import { fillHydrated } from "./support/hydration";
 
 test.describe("Active workout experience", () => {
   test("covers set entry, local edits, timer, restore, finish outcomes, and rotation", async ({
@@ -20,18 +20,14 @@ test.describe("Active workout experience", () => {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
         await fillHydrated(page.getByLabel("Name"), exercise);
-        await runScreenAction(page, "Exercise actions", "Save exercise");
+        await page.getByRole("button", { name: "Save Exercise" }).click();
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
 
       await page.goto("/programs/new");
       await fillHydrated(page.getByLabel("Program name"), program);
-      await runScreenAction(
-        page,
-        "Program actions",
-        /^Save (program|changes)$/,
-      );
+      await page.getByRole("button", { name: "Save Program" }).click();
       await expect(page).toHaveURL(/\/programs$/);
       await page.getByRole("link", { name: new RegExp(program) }).click();
       await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
@@ -42,20 +38,16 @@ test.describe("Active workout experience", () => {
       ]) {
         await page.getByRole("link", { name: "Add Split" }).click();
         await page.getByLabel("Split name").fill(split);
-        await page.getByRole("button", { name: "Add exercise" }).click();
+        await page.getByRole("button", { name: "Add Exercise" }).click();
         await page
           .getByRole("dialog")
           .getByRole("button", { name: exercise })
           .click();
-        await runScreenAction(page, "Split actions", /^Save (split|changes)$/);
+        await page.getByRole("button", { name: "Save Split" }).click();
         await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
       }
 
-      await runScreenAction(
-        page,
-        "Program actions",
-        "Make this the current program",
-      );
+      await page.getByRole("button", { name: "Make Current Program" }).click();
       await page
         .getByRole("dialog")
         .getByRole("button", { name: splitA })
@@ -63,70 +55,98 @@ test.describe("Active workout experience", () => {
       await expect(page.getByText("Program is now current.")).toBeVisible();
 
       await page.goto("/today");
-      await page.getByRole("button", { name: "Start today's workout" }).click();
+      await page.getByRole("button", { name: "Start Workout" }).click();
       await expect(page).toHaveURL(/\/workout\/current$/);
 
-      // A set is recorded by its values alone; nothing confirms it. The queue
-      // opens on the first set without values.
+      // A set is recorded by its values alone; nothing confirms it.
+      const squat = page.getByRole("region", { name: exerciseA });
+      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
       await expect(
-        page.getByRole("heading", { name: exerciseA }),
+        squat.getByText("3 planned × 8–12 reps · 0 of 3 recorded"),
       ).toBeVisible();
-      await expect(page.getByText("Set 1 of 3")).toBeVisible();
-      // With no previous performance the load wheel starts at zero, so the
-      // value is turned up from there; reps start at the lowest planned count.
-      await page.getByRole("button", { name: "Kilograms 5" }).click();
-      await page.getByRole("button", { name: "Reps 10" }).click();
-      await page.getByRole("button", { name: "Log this set" }).click();
+      await expect(
+        squat.getByText("No completed performance yet."),
+      ).toBeVisible();
 
-      // The banked-set flash runs before the next set arrives.
-      await expect(page.getByText("Set 2 of 3")).toBeVisible({
-        timeout: 10_000,
-      });
+      await squat.getByLabel("kg", { exact: true }).nth(0).fill("82.5");
+      await squat.getByLabel("Reps").nth(0).fill("6");
+      await squat.getByLabel("Reps").nth(0).blur();
+      await expect(
+        squat.getByText("3 planned × 8–12 reps · 1 of 3 recorded"),
+      ).toBeVisible();
+      await expect(page.getByText("All changes saved")).toBeAttached();
 
-      // The overview shows the whole workout and what it has recorded.
-      await page.getByRole("button", { name: "Workout overview" }).click();
-      const overviewRow = page.getByRole("region", { name: exerciseA });
-      await expect(overviewRow).toContainText("1 of 3 recorded");
-      await testInfo.attach(`workout-overview-${testInfo.project.name}.png`, {
-        body: await page.screenshot({ fullPage: true }),
-        contentType: "image/png",
-      });
-
-      // A second exercise joins this workout only.
-      await page.getByRole("button", { name: "Add exercise" }).click();
-      const library = page.getByRole("dialog", { name: "Add exercise" });
-      await library.getByLabel("Search active library").fill(exerciseB);
-      await library.getByRole("button", { name: exerciseB }).click();
-      await library.getByRole("button", { name: /Add 1 selected/ }).click();
-      await expect(page.getByRole("region", { name: exerciseB })).toBeVisible();
-      await page
-        .getByRole("button", { name: "Back to the current set" })
+      // Removing a set that holds data asks; removing an empty one does not.
+      await squat.getByLabel("kg", { exact: true }).nth(1).fill("80");
+      await squat.getByLabel("kg", { exact: true }).nth(1).blur();
+      await squat
+        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
         .click();
-
-      // The timer says in words that it is not counting.
       await page
-        .getByRole("button", { name: "Pause — continue later" })
+        .getByRole("alertdialog", { name: `Remove set 2 of ${exerciseA}?` })
+        .getByRole("button", { name: "Remove Set" })
         .click();
+      await expect(
+        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
+      ).toBeVisible();
+      await squat
+        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
+        .click();
+      await expect(
+        squat.getByText("3 planned × 8–12 reps · 1 of 1 recorded"),
+      ).toBeVisible();
+
+      await squat.getByRole("button", { name: "Add Set" }).click();
+      await expect(
+        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
+      ).toBeVisible();
+      await expect(squat.getByLabel("Set 2", { exact: true })).toBeVisible();
+
+      const noteField = squat.getByLabel(
+        "Today's note · saved with this workout",
+      );
+      await noteField.fill("Felt strong");
+      await noteField.blur();
+      await expect(page.getByText("All changes saved")).toBeAttached();
+
+      await page.getByRole("button", { name: "Add Exercise" }).click();
+      const librarySheet = page.getByRole("dialog", { name: "Add Exercise" });
+      await librarySheet.getByLabel("Search active library").fill(exerciseB);
+      await librarySheet.getByRole("button", { name: exerciseB }).click();
+      await librarySheet.getByRole("button", { name: "Add Selected" }).click();
+      const row = page.getByRole("region", { name: exerciseB });
+      await expect(
+        row.getByText("Workout-local, no prescription · 0 of 0 recorded"),
+      ).toBeVisible();
+
+      await page.getByRole("button", { name: `Move ${exerciseB} up` }).click();
+      await expect(
+        page.getByRole("button", { name: `Move ${exerciseB} up` }),
+      ).toBeDisabled();
+
+      await page.getByRole("button", { name: "Continue Later" }).click();
       await expect(
         page.getByText("Paused — active duration is not counting."),
       ).toBeVisible();
-      await page.getByRole("button", { name: "Resume timer" }).click();
+      await page.getByRole("button", { name: "Resume" }).click();
       await expect(
         page.getByText("Paused — active duration is not counting."),
       ).not.toBeAttached();
 
-      // Reloading restores the recorded value in place; there is no banner.
+      // Reloading restores sets, notes, order, and duration in place; the
+      // restored-session banner was removed in T-023, so the values prove it.
       await page.reload();
-      await expect(page.getByText("Set 2 of 3")).toBeVisible();
-      await page.getByRole("button", { name: `${exerciseA} set 1` }).click();
-      await expect(page.getByText("Set 1 of 3")).toBeVisible();
-      // The wheel sits on the recorded value, so its neighbours frame it.
+      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
+      await expect(squat.getByLabel("kg", { exact: true }).nth(0)).toHaveValue(
+        "82.5",
+      );
       await expect(
-        page.getByRole("button", { name: "Kilograms 2.5" }),
+        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
       ).toBeVisible();
+      await expect(noteField).toHaveValue("Felt strong");
       await expect(
-        page.getByRole("button", { name: "Kilograms 7.5" }),
-      ).toBeVisible();
+        page.getByRole("button", { name: `Move ${exerciseB} up` }),
+      ).toBeDisabled();
 
       const geometry = await page.evaluate(() => ({
         clientWidth: document.documentElement.clientWidth,
@@ -141,11 +161,12 @@ test.describe("Active workout experience", () => {
       await page
         .getByRole("button", { name: "Review and finish workout" })
         .click();
+      await expect(page).toHaveURL(/\/workout\/current$/);
       const finishReview = page.getByRole("dialog", {
-        name: "Review & finish",
+        name: "Review & Finish",
       });
       await expect(
-        finishReview.getByText(/planned sets left without values/),
+        finishReview.getByText("Recorded sets", { exact: true }),
       ).toBeVisible();
       await expect(finishReview.getByText(`${exerciseA} set 2`)).toBeVisible();
       await testInfo.attach(`finish-review-${testInfo.project.name}.png`, {
@@ -154,7 +175,7 @@ test.describe("Active workout experience", () => {
       });
 
       await finishReview
-        .getByRole("button", { name: "Complete workout" })
+        .getByRole("button", { name: "Complete Workout" })
         .click();
       await expect(page).toHaveURL(/\/today$/);
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
@@ -170,27 +191,30 @@ test.describe("Active workout experience", () => {
       await page.getByRole("button", { name: "Start Workout" }).click();
       await expect(page).toHaveURL(/\/workout\/current$/);
       discardedWorkoutId = await currentWorkoutId();
+      await expect(
+        page.getByText("Workout-local, no prescription · 0 of 1 recorded"),
+      ).toBeVisible();
 
       await page
         .getByRole("button", { name: "Review and finish workout" })
         .click();
       const oneTimeReview = page.getByRole("dialog", {
-        name: "Review & finish",
+        name: "Review & Finish",
       });
       await expect(
         oneTimeReview.getByText(/planned set.*left without values/),
       ).not.toBeAttached();
 
       await oneTimeReview
-        .getByRole("button", { name: "Discard workout" })
+        .getByRole("button", { name: "Discard Workout" })
         .click();
       await page
         .getByRole("alertdialog", { name: "Discard this workout?" })
-        .getByRole("button", { name: "Discard" })
+        .getByRole("button", { name: "Discard Workout" })
         .click();
       await expect(page).toHaveURL(/\/today$/);
       await expect(
-        page.getByRole("button", { name: "Start today's workout" }),
+        page.getByRole("button", { name: "Start Workout" }),
       ).toBeVisible();
     } finally {
       await cleanUp({

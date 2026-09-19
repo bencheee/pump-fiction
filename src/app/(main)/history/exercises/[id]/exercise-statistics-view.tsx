@@ -17,21 +17,10 @@ import type {
   ExercisePerformance,
   PersonalRecord,
 } from "@/features/history/domain/exercise-statistics";
-import { ProgressChart } from "@/features/history/ui/progress-chart";
-import {
-  Badge,
-  Chip,
-  Collapsible,
-  DataRow,
-  EmptyState,
-  Icon,
-  Kicker,
-  rowStagger,
-  ScreenBody,
-  TopBar,
-} from "@/shared/ui";
+import { Badge, Chip, EmptyState, PageFrame, TopBar } from "@/shared/ui";
 
 import { formatHistoryDate } from "../../history-presentation";
+import { ProgressChart } from "@/features/history/ui/progress-chart";
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",
@@ -67,188 +56,183 @@ export function ExerciseStatisticsView({
   };
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar
         title={view.exerciseName}
         backHref="/history/exercises"
         backLabel="Exercises"
       />
-      <ScreenBody>
-        <div>
-          <h2 className="text-[length:var(--pf-type-title-size)] leading-[1.16] font-semibold tracking-[-0.01em] [text-wrap:pretty]">
-            {view.exerciseName}
-          </h2>
-          {view.stillInLibrary ? null : (
-            <p className="mt-2.5">
-              <Badge>No longer in the library</Badge>
-            </p>
-          )}
-        </div>
+      <PageFrame title={view.exerciseName} className="pt-5">
+        {view.stillInLibrary ? null : (
+          <p>
+            <Badge>No longer in the library</Badge>
+          </p>
+        )}
 
-        <section className="rounded-[var(--pf-r4)] bg-[var(--pf-accent-dim)] p-[18px]">
-          <h3 className="flex items-center gap-2 text-[11.5px] font-semibold tracking-[0.08em] text-[var(--pf-accent)] uppercase">
-            <Icon name="circle-check" size={14} />
+        <section className="flex flex-col gap-2">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
             Latest performance
-          </h3>
+          </h2>
           {view.latestPerformance === null ? (
-            <p className="mt-3 text-[14px] text-[var(--pf-text-2)]">
+            <p className="text-[var(--pf-text-2)]">
               Nothing counts yet. Complete a workout with recorded sets.
             </p>
           ) : (
+            <p className="pf-numeric">
+              {formatHistoryDate(view.latestPerformance.workoutDate)} ·{" "}
+              {view.latestPerformance.sets
+                .filter((set) => set.loadMode !== null && set.reps !== null)
+                .map((set) =>
+                  formatSetSummary(
+                    set,
+                    view.latestPerformance?.measurementType,
+                  ),
+                )
+                .join(", ")}
+            </p>
+          )}
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            Personal records
+          </h2>
+          {view.categories.length === 0 ? (
+            <p className="text-[var(--pf-text-2)]">
+              Records appear once a completed workout holds a recorded set.
+            </p>
+          ) : (
+            view.categories.map((entry) => (
+              <section
+                key={entry.category.key}
+                aria-label={entry.category.label}
+                className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
+              >
+                <h3 className="text-[13px] font-semibold">
+                  {entry.category.label}
+                </h3>
+                <dl className="mt-2 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 text-[13px]">
+                  {entry.records.map((record) => (
+                    <RecordRow key={record.key} record={record} />
+                  ))}
+                </dl>
+                {entry.repsByLoad.length > 0 ? (
+                  <details className="mt-2">
+                    <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
+                      Highest reps at each load
+                    </summary>
+                    <ul
+                      aria-label={`Highest reps at each load, ${entry.category.label}`}
+                      className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
+                    >
+                      {entry.repsByLoad.map((row) => (
+                        <li key={row.load} className="flex justify-between">
+                          <span>{row.load} kg</span>
+                          <span>{row.reps} reps</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : null}
+              </section>
+            ))
+          )}
+        </section>
+
+        <section className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            Progress
+          </h2>
+          {view.metrics.length === 0 ? (
+            <EmptyState
+              title="No chart yet"
+              body="A completed workout with recorded sets starts the chart."
+            />
+          ) : (
             <>
-              <p className="pf-numeric mt-3 text-[19px] font-semibold text-[var(--pf-accent-soft)]">
-                {formatHistoryDate(view.latestPerformance.workoutDate)}
-              </p>
-              <p className="pf-numeric mt-1.5 text-[16px] text-[var(--pf-text-2)]">
-                {view.latestPerformance.sets
-                  .filter((set) => set.loadMode !== null && set.reps !== null)
-                  .map((set) =>
-                    formatSetSummary(
-                      set,
-                      view.latestPerformance?.measurementType,
-                    ),
-                  )
-                  .join(", ")}
-              </p>
+              <div
+                role="group"
+                aria-label="Metric"
+                className="flex flex-wrap gap-2"
+              >
+                {view.metrics.map((option) => (
+                  <Chip
+                    key={option}
+                    selected={metric === option}
+                    disabled={pending}
+                    onClick={() => reload({ metric: option })}
+                  >
+                    {metricLabels[option]}
+                  </Chip>
+                ))}
+              </div>
+              <div
+                role="group"
+                aria-label="Time range"
+                className="flex flex-wrap gap-2"
+              >
+                {chartRanges.map((option) => (
+                  <Chip
+                    key={option}
+                    selected={range === option}
+                    disabled={pending}
+                    onClick={() => reload({ range: option })}
+                  >
+                    {rangeLabels[option]}
+                  </Chip>
+                ))}
+              </div>
+              <ChartSummary series={view.series} />
+              <ProgressChart series={view.series} />
+              <details>
+                <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
+                  Chart values
+                </summary>
+                <ul
+                  aria-label="Chart values"
+                  className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
+                >
+                  {view.series.points.map((point) => (
+                    <li key={point.workoutId} className="flex justify-between">
+                      <span>{formatHistoryDate(point.date)}</span>
+                      <span>
+                        {point.value} {unitSuffix(view.series)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </>
           )}
         </section>
 
-        <Kicker className="mt-1">Personal records</Kicker>
-        {view.categories.length === 0 ? (
-          <p className="text-[13.5px] text-[var(--pf-text-3)]">
-            Records appear once a completed workout holds a recorded set.
-          </p>
-        ) : (
-          view.categories.map((entry) => (
-            <section
-              key={entry.category.key}
-              aria-label={entry.category.label}
-              className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-[18px] py-4"
-            >
-              <h3 className="text-[14px] font-semibold">
-                {entry.category.label}
-              </h3>
-              <dl className="mt-2.5 flex flex-col">
-                {entry.records.map((record, index) => (
-                  <RecordRow
-                    key={record.key}
-                    record={record}
-                    first={index === 0}
-                  />
-                ))}
-              </dl>
-              {entry.repsByLoad.length > 0 ? (
-                <div className="mt-2">
-                  <Collapsible label="Highest reps at each load">
-                    <ul
-                      aria-label={`Highest reps at each load, ${entry.category.label}`}
-                      className="flex flex-col pt-1"
-                    >
-                      {entry.repsByLoad.map((row, index) => (
-                        <li key={row.load}>
-                          <DataRow
-                            first={index === 0}
-                            label={`${row.load} kg`}
-                            value={`${row.reps} reps`}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </Collapsible>
-                </div>
-              ) : null}
-            </section>
-          ))
-        )}
-
-        <Kicker className="mt-1">Progress</Kicker>
-        {view.metrics.length === 0 ? (
-          <EmptyState
-            icon="trending-up"
-            title="No chart yet"
-            body="A completed workout with recorded sets starts the chart."
-          />
-        ) : (
-          <>
-            <div
-              role="group"
-              aria-label="Metric"
-              className="flex flex-wrap gap-2"
-            >
-              {view.metrics.map((option) => (
-                <Chip
-                  key={option}
-                  selected={metric === option}
-                  disabled={pending}
-                  onClick={() => reload({ metric: option })}
-                >
-                  {metricLabels[option]}
-                </Chip>
-              ))}
-            </div>
-            <div
-              role="group"
-              aria-label="Time range"
-              className="flex flex-wrap gap-2"
-            >
-              {chartRanges.map((option) => (
-                <Chip
-                  key={option}
-                  selected={range === option}
-                  disabled={pending}
-                  onClick={() => reload({ range: option })}
-                >
-                  {rangeLabels[option]}
-                </Chip>
-              ))}
-            </div>
-            <section className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] p-[18px]">
-              <ProgressChart
-                series={view.series}
-                formatValue={(value) =>
-                  `${value} ${unitSuffix(view.series)}`.trim()
-                }
-              />
-            </section>
-          </>
-        )}
-
-        <Kicker className="mt-1">All performances</Kicker>
-        <ul className="flex flex-col gap-2">
-          {view.performances.map((performance, index) => (
-            <li key={performance.workoutExerciseId}>
-              <PerformanceRow performance={performance} index={index} />
-            </li>
-          ))}
-        </ul>
-      </ScreenBody>
+        <section className="flex flex-col gap-2">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            All performances
+          </h2>
+          <ul className="flex flex-col gap-2">
+            {view.performances.map((performance) => (
+              <li key={performance.workoutExerciseId}>
+                <PerformanceRow performance={performance} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      </PageFrame>
     </div>
   );
 }
 
-function RecordRow({
-  record,
-  first,
-}: {
-  record: PersonalRecord;
-  first: boolean;
-}) {
+function RecordRow({ record }: { record: PersonalRecord }) {
   return (
-    <div
-      className={
-        first
-          ? "flex min-h-10 items-baseline justify-between gap-3.5 py-1.5"
-          : "flex min-h-10 items-baseline justify-between gap-3.5 border-t border-[var(--pf-border)] py-1.5"
-      }
-    >
-      <dt className="min-w-0 flex-1 text-[13.5px] text-[var(--pf-text-3)]">
+    <>
+      <dt className="text-[var(--pf-text-2)]">
         {record.label}
         {record.lowerIsBetter ? (
           <span className="ml-1 text-[11px]">(less is better)</span>
         ) : null}
       </dt>
-      <dd className="pf-numeric shrink-0 text-[17px] font-semibold">
+      <dd className="pf-numeric justify-self-end font-semibold">
         {record.value}
         {record.unit === "kg"
           ? " kg"
@@ -261,7 +245,34 @@ function RecordRow({
           ? ` × ${record.reps}`
           : ""}
       </dd>
-    </div>
+    </>
+  );
+}
+
+function ChartSummary({ series }: { series: ChartSeries }) {
+  if (series.points.length === 0)
+    return (
+      <p className="text-[var(--pf-text-2)]">
+        No workout falls inside this range.
+      </p>
+    );
+  const values = series.points.map((point) => point.value);
+  const first = values[0] ?? 0;
+  const last = values[values.length - 1] ?? 0;
+  const best = series.lowerIsBetter ? Math.min(...values) : Math.max(...values);
+  const improved = series.lowerIsBetter ? last < first : last > first;
+
+  return (
+    <p className="text-[13px] text-[var(--pf-text-2)]">
+      {series.label} across {series.points.length}{" "}
+      {series.points.length === 1 ? "workout" : "workouts"}: {first} to {last}{" "}
+      {unitSuffix(series)}, best {best}.{" "}
+      {last === first
+        ? "Unchanged over this range."
+        : improved
+          ? "Moving in the better direction."
+          : "Moving in the worse direction."}
+    </p>
   );
 }
 
@@ -272,46 +283,31 @@ function unitSuffix(series: ChartSeries): string {
   return "kg·reps";
 }
 
-function PerformanceRow({
-  performance,
-  index,
-}: {
-  performance: ExercisePerformance;
-  index: number;
-}) {
+function PerformanceRow({ performance }: { performance: ExercisePerformance }) {
   const sets = performance.sets
     .filter((set) => set.loadMode !== null && set.reps !== null)
     .map((set) => formatSetSummary(set, performance.measurementType));
 
   return (
-    <Link
-      href={`/history/workouts/${performance.workoutId}`}
-      style={rowStagger(index)}
-      className="flex items-center gap-2.5 rounded-[var(--pf-r3)] border border-[var(--pf-bg-surface)] bg-[var(--pf-bg-surface)] py-3.5 pr-3 pl-[18px] transition-[border-color,transform] duration-[var(--pf-mo-fast)] ease-[var(--pf-ease)] hover:border-[var(--pf-border-strong)] active:scale-[0.99] motion-safe:animate-[pf-row-in_260ms_var(--pf-ease)_both]"
-    >
-      <span className="min-w-0 flex-1">
-        <span className="flex items-baseline gap-2">
-          <span className="pf-numeric shrink-0 text-[15px] font-semibold text-[var(--pf-accent)]">
-            {formatHistoryDate(performance.workoutDate)}
-          </span>
-          <span className="min-w-0 flex-1 truncate text-[13px] text-[var(--pf-text-4)]">
-            {performance.workoutName}
-          </span>
-        </span>
-        <span className="pf-numeric mt-1.5 block text-[15px] text-[var(--pf-text-2)]">
-          {sets.length > 0 ? sets.join(", ") : "No recorded set"}
-        </span>
-        {performance.workoutNote ? (
-          <span className="mt-2 block text-[13px] leading-[1.5] text-[var(--pf-text-3)]">
-            Workout note: {performance.workoutNote}
-          </span>
-        ) : null}
-      </span>
-      <Icon
-        name="chevron-right"
-        size={16}
-        className="shrink-0 text-[var(--pf-glyph-dim)]"
-      />
-    </Link>
+    <article className="rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)] p-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <Link
+          href={`/history/workouts/${performance.workoutId}`}
+          className="min-h-11 font-semibold text-[var(--pf-accent-strong)]"
+        >
+          {formatHistoryDate(performance.workoutDate)} ·{" "}
+          {performance.workoutName}
+        </Link>
+      </div>
+      <p className="pf-numeric mt-1 text-[13px]">
+        {sets.length > 0 ? sets.join(", ") : "No recorded set"}
+      </p>
+      {performance.workoutNote ? (
+        <p className="mt-1 text-[13px]">
+          <span className="font-semibold">Workout note:</span>{" "}
+          {performance.workoutNote}
+        </p>
+      ) : null}
+    </article>
   );
 }

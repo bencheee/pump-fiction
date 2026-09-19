@@ -52,7 +52,7 @@ function LoadFailure({
   message: string;
 }) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar title={title} backHref={backHref} backLabel="Program" />
       <PageFrame title="Split unavailable" className="pt-5">
         <EmptyState title="Split couldn't be opened" body={message} />

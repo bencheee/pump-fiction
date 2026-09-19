@@ -96,13 +96,13 @@ export function MeasurementTypeForm({
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-full flex-col">
       <TopBar
         title={measurement ? "Edit Measurement" : "New Measurement"}
         backHref={parent}
         backLabel="Body"
       />
-      <main className="pf-scroll flex min-h-0 flex-1 flex-col px-[var(--pf-gutter)] pt-1.5">
+      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
         <div className="space-y-6">
           <TextField
             id="measurement-name"

@@ -40,8 +40,10 @@ test.describe("Split History experience", () => {
       ).toBeVisible();
 
       // The chart is never the only representation of its data.
-      await expect(page.getByText(/1 workout in range/)).toBeVisible();
-      await page.getByRole("button", { name: "Chart values" }).click();
+      await expect(
+        page.getByText(/Active duration across 1 workout/),
+      ).toBeVisible();
+      await page.getByText("Chart values").click();
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("1 h"),
       ).toBeVisible();
@@ -52,7 +54,9 @@ test.describe("Split History experience", () => {
         page.getByText(/No workout falls inside this range/),
       ).toBeVisible();
       await page.getByRole("button", { name: "All" }).click();
-      await expect(page.getByText(/1 workout in range/)).toBeVisible();
+      await expect(
+        page.getByText(/Active duration across 1 workout/),
+      ).toBeVisible();
       await testInfo.attach(`history-split-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
@@ -69,9 +73,7 @@ test.describe("Split History experience", () => {
       // The detail reflows to the narrow end of the supported phone range.
       await page.goBack();
       await page.setViewportSize({ width: 320, height: 720 });
-      await expect(
-        page.getByText("Active duration", { exact: true }),
-      ).toBeVisible();
+      await expect(page.getByText("Duration", { exact: true })).toBeVisible();
       const overflow = await page.evaluate(
         () =>
           document.documentElement.scrollWidth -

@@ -5,7 +5,6 @@ import { useMemo, useState, useTransition } from "react";
 
 import { correctHistoryWorkoutAction } from "@/app/actions/workout-history";
 import { setModeFields } from "@/features/active-workout/domain/set-entry";
-import { formatSetSummary } from "@/features/active-workout/ui/workout-presentation";
 import {
   baseLoadModeByBaseType,
   type Exercise,
@@ -18,15 +17,15 @@ import type {
 } from "@/features/history/domain/workout-history";
 import {
   Action,
-  ActionOverlay,
   Badge,
+  Chip,
   DestructiveDialog,
   Icon,
-  Kicker,
   normalizeDecimalInput,
-  Overlay,
+  NumericField,
+  PageFrame,
   SaveStatus,
-  ScreenBody,
+  Sheet,
   StickyActionBar,
   TextAreaField,
   TextField,
@@ -41,7 +40,27 @@ import {
   toDateTimeLocalValue,
 } from "../../../history-presentation";
 
-import { SetCorrectionOverlay, type SetDraft } from "./set-correction-overlay";
+type SetDraft = Readonly<{
+  /**
+   * The mode this set is entered in. A set that was never given values has no
+   * mode of its own, so it starts from the one the exercise definition implies;
+   * the stored column is never the source, exactly as in the active workout.
+   */
+  loadMode: ExerciseLoadMode;
+  loadKg: string;
+  bandStrength: string;
+  reps: string;
+}>;
+
+const loadModeNouns: Readonly<Record<ExerciseLoadMode, string>> = {
+  weight: "Weight",
+  weight_resistance_band: "Resistance band",
+  bodyweight: "Bodyweight",
+  bodyweight_added_weight: "Added weight",
+  bodyweight_resistance_band: "Resistance band",
+  assistance_weight: "Assistance weight",
+  assistance_band: "Assistance band",
+};
 
 function baseModeOf(exercise: HistoryWorkoutExercise): ExerciseLoadMode {
   const implied = baseLoadModeByBaseType[exercise.exerciseBaseType];
@@ -107,12 +126,6 @@ export function WorkoutCorrectionForm({
     setDraft(initial);
   }
   const [phase, setPhase] = useState<SavePhase>("editing");
-  // One dialog serves every populated removal on the screen.
-  const [removal, setRemoval] = useState<{
-    kind: "exercise" | "set";
-    id: string;
-    name: string;
-  }>();
   const [validation, setValidation] = useState<string>();
   const [pending, startTransition] = useTransition();
   const { savedSnapshot, acceptAsSaved } = useSavedSnapshot(
@@ -225,37 +238,14 @@ export function WorkoutCorrectionForm({
       router.refresh();
     });
 
-  const move = (index: number, direction: number) => {
-    const ids = workout.exercises.map((item) => item.id);
-    const target = index + direction;
-    if (target < 0 || target >= ids.length) return;
-    const moved = ids[index];
-    const other = ids[target];
-    if (moved === undefined || other === undefined) return;
-    ids[index] = other;
-    ids[target] = moved;
-    structural({
-      kind: "reorder_exercises",
-      workoutId: workout.id,
-      workoutExerciseIds: ids,
-    });
-  };
-
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <TopBar
-        title="Correct workout"
-        backHref={detailHref}
-        backLabel="Workout"
-        trailing={dirty ? <Badge tone="accent">Unsaved</Badge> : undefined}
-      />
-      <ScreenBody className="gap-3">
-        <p className="text-[13.5px] leading-[1.5] text-[var(--pf-text-3)]">
-          {workout.name} · corrections recalculate every statistic this workout
-          feeds.
-        </p>
-
-        <section className="flex flex-col gap-3.5 rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-[18px] py-4">
+    <div className="flex min-h-full flex-col">
+      <TopBar title="Edit workout" backHref={detailHref} backLabel="Workout" />
+      <PageFrame title={workout.name} className="pt-5">
+        <section className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            When
+          </h2>
           <TextField
             id="workout-date"
             label="Date"
@@ -286,258 +276,96 @@ export function WorkoutCorrectionForm({
           />
         </section>
 
-        <Kicker className="mt-1.5">Recorded sets</Kicker>
-        {dirty ? (
-          <p className="text-[12.5px] leading-[1.5] text-[var(--pf-text-4)]">
-            Save your changes before adding, removing, or reordering.
-          </p>
-        ) : null}
-
-        {workout.exercises.map((exercise, index) => {
-          const baseMode = baseModeOf(exercise);
-          const optionalMode = optionalModeOf(exercise);
-          const populated =
-            exercise.sets.some(
-              (set) =>
-                set.loadKg !== null ||
-                set.bandStrength !== null ||
-                set.reps !== null,
-            ) || exercise.workoutNote.trim() !== "";
-
-          return (
-            <section
-              key={exercise.id}
-              aria-label={exercise.exerciseName}
-              className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] px-[18px] py-4"
-            >
-              <div className="flex items-start gap-2">
-                <h3 className="min-w-0 flex-1 text-[16px] leading-[1.25] font-semibold [text-wrap:pretty]">
-                  {exercise.exerciseName}
-                </h3>
-                <ActionOverlay
-                  trigger={
-                    <button
-                      type="button"
-                      aria-label={`${exercise.exerciseName} actions`}
-                      disabled={pending || dirty}
-                      className="-mt-1 flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--pf-text-3)] disabled:opacity-[var(--pf-opacity-disabled)]"
-                    >
-                      <Icon name="ellipsis-vertical" size={16} />
-                    </button>
-                  }
-                  title={exercise.exerciseName}
-                  meta={`${exercise.sets.length} recorded ${exercise.sets.length === 1 ? "set" : "sets"}`}
-                  actions={[
-                    {
-                      key: "add-set",
-                      label: "Add a set to this exercise",
-                      icon: "plus",
-                      onRun: () =>
-                        structural({
-                          kind: "add_set",
-                          workoutExerciseId: exercise.id,
-                        }),
-                    },
-                    {
-                      key: "up",
-                      label: "Move this exercise up",
-                      icon: "arrow-up",
-                      disabled: index === 0,
-                      onRun: () => move(index, -1),
-                    },
-                    {
-                      key: "down",
-                      label: "Move this exercise down",
-                      icon: "arrow-down",
-                      disabled: index === workout.exercises.length - 1,
-                      onRun: () => move(index, 1),
-                    },
-                    {
-                      key: "remove",
-                      label: "Remove this exercise",
-                      icon: "trash-2",
-                      onRun: () => {
-                        if (!populated) {
-                          structural({
-                            kind: "remove_exercise",
-                            workoutExerciseId: exercise.id,
-                            confirmedPopulatedRemoval: false,
-                          });
-                          return;
-                        }
-                        setRemoval({
-                          kind: "exercise",
-                          id: exercise.id,
-                          name: exercise.exerciseName,
-                        });
-                      },
-                    },
-                  ]}
-                />
-              </div>
-              {exercise.stillInLibrary ? null : (
-                <p className="mt-2">
-                  <Badge>No longer in the library</Badge>
-                </p>
-              )}
-
-              <div className="mt-3 flex flex-col gap-2">
-                {exercise.sets.map((set, setIndex) => {
-                  const entry = draft.sets[set.id] ?? {
-                    loadMode: baseMode,
-                    loadKg: "",
-                    bandStrength: "",
-                    reps: "",
-                  };
-                  const summary = describeDraft(
-                    entry,
-                    exercise.measurementType,
-                  );
-                  const setPopulated =
-                    set.loadKg !== null ||
-                    set.bandStrength !== null ||
-                    set.reps !== null;
-                  // An untouched set starts its wheels where the set before it
-                  // sits, falling back to the lowest planned repetition count.
-                  const previous =
-                    setIndex === 0
-                      ? undefined
-                      : draft.sets[exercise.sets[setIndex - 1]?.id ?? ""];
-
-                  return (
-                    <SetCorrectionOverlay
-                      key={set.id}
-                      trigger={
-                        <button
-                          type="button"
-                          aria-label={`Correct set ${set.position} of ${exercise.exerciseName}`}
-                          className="flex min-h-[52px] items-center gap-3 rounded-[var(--pf-r2)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface-2)] px-3.5 text-left transition-[border-color,transform] duration-[var(--pf-mo-fast)] ease-[var(--pf-ease)] active:scale-[0.985]"
-                        >
-                          <span className="shrink-0 text-[12.5px] text-[var(--pf-text-4)]">
-                            Set {set.position}
-                          </span>
-                          <span className="pf-numeric flex-1 text-right text-[18px] font-semibold">
-                            {summary}
-                          </span>
-                          <Icon
-                            name="pencil"
-                            size={14}
-                            className="shrink-0 text-[var(--pf-glyph-dim)]"
-                          />
-                        </button>
-                      }
-                      exerciseName={exercise.exerciseName}
-                      measurementType={exercise.measurementType}
-                      position={set.position}
-                      setCount={exercise.sets.length}
-                      entry={entry}
-                      baseMode={baseMode}
-                      optionalMode={optionalMode}
-                      recordedSummary={formatSetSummary(
-                        set,
-                        exercise.measurementType,
-                      )}
-                      canRemove={!pending && !dirty}
-                      loadFallback={
-                        previous?.loadKg ? Number(previous.loadKg) : null
-                      }
-                      countFallback={
-                        previous?.reps
-                          ? Number(previous.reps)
-                          : (exercise.minReps ?? null)
-                      }
-                      onApply={(next) =>
-                        setDraft((current) => ({
-                          ...current,
-                          sets: { ...current.sets, [set.id]: next },
-                        }))
-                      }
-                      onRemove={() => {
-                        if (!setPopulated) {
-                          structural({
-                            kind: "remove_set",
-                            workoutSetId: set.id,
-                            confirmedPopulatedRemoval: false,
-                          });
-                          return;
-                        }
-                        setRemoval({
-                          kind: "set",
-                          id: set.id,
-                          name: `set ${set.position} of ${exercise.exerciseName}`,
-                        });
-                      }}
-                    />
-                  );
-                })}
-              </div>
-
-              <div className="mt-3.5">
-                <TextAreaField
-                  id={`note-${exercise.id}`}
-                  label="Workout note"
-                  value={draft.notes[exercise.id] ?? ""}
-                  onChange={(event) =>
+        <section className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+            Exercises
+          </h2>
+          {dirty ? (
+            <p className="text-[12.5px] text-[var(--pf-text-2)]">
+              Save your changes before adding, removing, or reordering.
+            </p>
+          ) : null}
+          <ul className="flex flex-col gap-3">
+            {workout.exercises.map((exercise, index) => (
+              <li key={exercise.id}>
+                <ExerciseCard
+                  exercise={exercise}
+                  index={index}
+                  count={workout.exercises.length}
+                  draft={draft}
+                  disabled={pending || dirty}
+                  onNote={(note) =>
                     setDraft({
                       ...draft,
-                      notes: {
-                        ...draft.notes,
-                        [exercise.id]: event.target.value,
-                      },
+                      notes: { ...draft.notes, [exercise.id]: note },
                     })
                   }
+                  onSet={(setId, value) =>
+                    setDraft({
+                      ...draft,
+                      sets: { ...draft.sets, [setId]: value },
+                    })
+                  }
+                  onStructural={structural}
+                  onMove={(direction) => {
+                    const ids = workout.exercises.map((item) => item.id);
+                    const target = index + direction;
+                    if (target < 0 || target >= ids.length) return;
+                    const moved = ids[index];
+                    const other = ids[target];
+                    if (moved === undefined || other === undefined) return;
+                    ids[index] = other;
+                    ids[target] = moved;
+                    structural({
+                      kind: "reorder_exercises",
+                      workoutId: workout.id,
+                      workoutExerciseIds: ids,
+                    });
+                  }}
                 />
-              </div>
-            </section>
-          );
-        })}
-
-        <Overlay
-          title="Add exercise"
-          description="It joins this workout only, with the definition as it stands now."
-          trigger={
-            <Action variant="accent" disabled={pending || dirty}>
-              <Icon name="plus" size={17} />
-              Add exercise
-            </Action>
-          }
-        >
-          {(close) => (
-            <div className="flex flex-col gap-2">
-              {library.length === 0 ? (
-                <p className="text-[14px] text-[var(--pf-text-3)]">
-                  Your library has no exercises.
-                </p>
-              ) : (
-                library.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      close();
-                      structural({
-                        kind: "add_exercise",
-                        workoutId: workout.id,
-                        exerciseId: item.id,
-                      });
-                    }}
-                    className="flex min-h-[68px] items-center gap-3.5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] px-[18px] py-3.5 text-left text-[15.5px] font-semibold transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-border-strong)]"
-                  >
-                    <span className="min-w-0 flex-1 [text-wrap:pretty]">
-                      {item.name}
-                    </span>
-                    <Icon
-                      name="plus"
-                      size={16}
-                      className="shrink-0 text-[var(--pf-accent)]"
-                    />
-                  </button>
-                ))
-              )}
-            </div>
-          )}
-        </Overlay>
-      </ScreenBody>
+              </li>
+            ))}
+          </ul>
+          <Sheet
+            trigger={
+              <Action variant="secondary" disabled={pending || dirty}>
+                Add exercise
+              </Action>
+            }
+            title="Add an exercise"
+            description="It joins this workout only, with the definition as it stands now."
+          >
+            {(close) => (
+              <ul className="flex flex-col gap-2">
+                {library.length === 0 ? (
+                  <li className="text-[var(--pf-text-2)]">
+                    Your library has no exercises.
+                  </li>
+                ) : (
+                  library.map((item) => (
+                    <li key={item.id}>
+                      <Action
+                        variant="secondary"
+                        className="w-full"
+                        onClick={() => {
+                          close();
+                          structural({
+                            kind: "add_exercise",
+                            workoutId: workout.id,
+                            exerciseId: item.id,
+                          });
+                        }}
+                      >
+                        {item.name}
+                      </Action>
+                    </li>
+                  ))
+                )}
+              </ul>
+            )}
+          </Sheet>
+        </section>
+      </PageFrame>
 
       <StickyActionBar>
         <SaveStatus
@@ -553,86 +381,343 @@ export function WorkoutCorrectionForm({
           validationMessage={phase === "failure" ? validation : undefined}
         />
         <Action onClick={save} disabled={pending}>
-          <Icon name="check" size={18} />
           Save corrections
         </Action>
-        <Action
-          variant="secondary"
-          disabled={pending}
-          onClick={() => router.push(detailHref)}
-        >
-          Discard changes
-        </Action>
       </StickyActionBar>
-
-      <DestructiveDialog
-        open={removal !== undefined}
-        onOpenChange={(open) => {
-          if (!open) setRemoval(undefined);
-        }}
-        title={
-          removal?.kind === "exercise"
-            ? `Remove ${removal.name}?`
-            : "Remove this set?"
-        }
-        description={
-          removal?.kind === "exercise"
-            ? "It holds recorded data. Removing it recalculates every statistic that used it."
-            : "It holds recorded values. Removing it recalculates every statistic that used them."
-        }
-        confirmLabel={
-          removal?.kind === "exercise" ? "Remove exercise" : "Remove set"
-        }
-        onConfirm={() => {
-          if (!removal) return;
-          const target = removal;
-          setRemoval(undefined);
-          structural(
-            target.kind === "exercise"
-              ? {
-                  kind: "remove_exercise",
-                  workoutExerciseId: target.id,
-                  confirmedPopulatedRemoval: true,
-                }
-              : {
-                  kind: "remove_set",
-                  workoutSetId: target.id,
-                  confirmedPopulatedRemoval: true,
-                },
-          );
-        }}
-      />
     </div>
   );
 }
 
-/** What a set button shows: the draft's own values, not the saved snapshot. */
-function describeDraft(
-  entry: SetDraft,
-  measurementType: "reps" | "seconds" = "reps",
-): string {
-  const fields = setModeFields[entry.loadMode];
-  const parts: string[] = [];
-  if (fields.load && entry.loadKg !== "") {
-    const prefix =
-      fields.load === "added_kg"
-        ? "+"
-        : fields.load === "assistance_kg"
-          ? "−"
-          : "";
-    parts.push(`${prefix}${entry.loadKg} kg`);
-  } else if (fields.load === null && fields.band === null) {
-    parts.push("BW");
-  }
-  if (fields.band && entry.bandStrength !== "") {
-    parts.push(
-      entry.bandStrength.charAt(0).toUpperCase() + entry.bandStrength.slice(1),
+function ExerciseCard({
+  exercise,
+  index,
+  count,
+  draft,
+  disabled,
+  onNote,
+  onSet,
+  onStructural,
+  onMove,
+}: {
+  exercise: HistoryWorkoutExercise;
+  index: number;
+  count: number;
+  draft: Draft;
+  disabled: boolean;
+  onNote: (note: string) => void;
+  onSet: (setId: string, value: SetDraft) => void;
+  onStructural: (correction: HistoryCorrection) => void;
+  onMove: (direction: number) => void;
+}) {
+  const populated = exercise.sets.some(
+    (set) =>
+      set.loadKg !== null || set.bandStrength !== null || set.reps !== null,
+  );
+  const baseMode = baseModeOf(exercise);
+  const optionalMode = optionalModeOf(exercise);
+
+  return (
+    <section
+      aria-label={exercise.exerciseName}
+      className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-4"
+    >
+      <div className="flex items-start gap-2">
+        <Icon
+          name="grip-vertical"
+          size={18}
+          className="mt-1 shrink-0 text-[var(--pf-text-3-deep)]"
+        />
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[18px] leading-[1.25] font-semibold [overflow-wrap:anywhere]">
+            {exercise.exerciseName}
+          </h3>
+          {exercise.stillInLibrary ? null : (
+            <span className="mt-1 inline-block">
+              <Badge>No longer in the library</Badge>
+            </span>
+          )}
+        </div>
+      </div>
+
+      <ol className="mt-3 flex flex-col gap-3">
+        {exercise.sets.map((set) => {
+          const entry = draft.sets[set.id] ?? {
+            loadMode: baseMode,
+            loadKg: "",
+            bandStrength: "",
+            reps: "",
+          };
+          const fields = setModeFields[entry.loadMode];
+          const setPopulated =
+            set.loadKg !== null ||
+            set.bandStrength !== null ||
+            set.reps !== null;
+
+          return (
+            <li key={set.id} className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+                  Set {set.position}
+                </span>
+                <RemoveSetButton
+                  set={set.id}
+                  label={`Remove set ${set.position} of ${exercise.exerciseName}`}
+                  populated={setPopulated}
+                  disabled={disabled}
+                  onStructural={onStructural}
+                />
+              </div>
+              {optionalMode !== null ? (
+                <div className="flex flex-col gap-1.5">
+                  <span
+                    id={`set-${set.id}-mode-label`}
+                    className="text-[11px] font-semibold tracking-[0.1em] uppercase"
+                  >
+                    Entered as
+                  </span>
+                  <div
+                    role="group"
+                    aria-labelledby={`set-${set.id}-mode-label`}
+                    className="flex flex-wrap gap-2"
+                  >
+                    {[baseMode, optionalMode].map((option) => (
+                      <Chip
+                        key={option}
+                        selected={entry.loadMode === option}
+                        onClick={() =>
+                          onSet(set.id, {
+                            loadMode: option,
+                            loadKg:
+                              setModeFields[option].load === null
+                                ? ""
+                                : entry.loadKg,
+                            bandStrength:
+                              setModeFields[option].band === null
+                                ? ""
+                                : entry.bandStrength,
+                            reps: entry.reps,
+                          })
+                        }
+                      >
+                        {loadModeNouns[option]}
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {fields.load ? (
+                <NumericField
+                  id={`set-${set.id}-load`}
+                  label={
+                    fields.load === "kg"
+                      ? "Kilograms"
+                      : fields.load === "added_kg"
+                        ? "Added kilograms"
+                        : "Assistance kilograms"
+                  }
+                  value={entry.loadKg}
+                  onChange={(event) =>
+                    onSet(set.id, { ...entry, loadKg: event.target.value })
+                  }
+                />
+              ) : null}
+              {fields.band ? (
+                <div className="flex flex-col gap-1.5">
+                  <span
+                    id={`set-${set.id}-band-label`}
+                    className="text-[11px] font-semibold tracking-[0.1em] uppercase"
+                  >
+                    {fields.band === "resistance"
+                      ? "Resistance band"
+                      : "Assistance band"}
+                  </span>
+                  <div
+                    role="group"
+                    aria-labelledby={`set-${set.id}-band-label`}
+                    className="flex gap-2"
+                  >
+                    {(["light", "medium", "strong"] as const).map(
+                      (strength) => (
+                        <Chip
+                          key={strength}
+                          selected={entry.bandStrength === strength}
+                          onClick={() =>
+                            onSet(set.id, {
+                              ...entry,
+                              bandStrength:
+                                entry.bandStrength === strength ? "" : strength,
+                            })
+                          }
+                        >
+                          {strength === "light"
+                            ? "Light"
+                            : strength === "medium"
+                              ? "Medium"
+                              : "Strong"}
+                        </Chip>
+                      ),
+                    )}
+                  </div>
+                </div>
+              ) : null}
+              <NumericField
+                id={`set-${set.id}-reps`}
+                label={
+                  exercise.measurementType === "seconds" ? "Seconds" : "Reps"
+                }
+                inputMode="numeric"
+                value={entry.reps}
+                onChange={(event) =>
+                  onSet(set.id, { ...entry, reps: event.target.value })
+                }
+              />
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="mt-3 flex flex-wrap justify-end gap-2">
+        <Action
+          variant="tertiary"
+          disabled={disabled}
+          onClick={() =>
+            onStructural({ kind: "add_set", workoutExerciseId: exercise.id })
+          }
+        >
+          Add set
+        </Action>
+        <button
+          type="button"
+          aria-label={`Move ${exercise.exerciseName} up`}
+          disabled={disabled || index === 0}
+          onClick={() => onMove(-1)}
+          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
+        >
+          <Icon name="arrow-up" size={18} />
+        </button>
+        <button
+          type="button"
+          aria-label={`Move ${exercise.exerciseName} down`}
+          disabled={disabled || index === count - 1}
+          onClick={() => onMove(1)}
+          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] disabled:opacity-[var(--pf-opacity-disabled)]"
+        >
+          <Icon name="arrow-down" size={18} />
+        </button>
+        <RemoveExerciseButton
+          exercise={exercise}
+          populated={populated || exercise.workoutNote.trim() !== ""}
+          disabled={disabled}
+          onStructural={onStructural}
+        />
+      </div>
+
+      <div className="mt-3">
+        <TextAreaField
+          id={`note-${exercise.id}`}
+          label="Workout note"
+          value={draft.notes[exercise.id] ?? ""}
+          onChange={(event) => onNote(event.target.value)}
+        />
+      </div>
+    </section>
+  );
+}
+
+function RemoveSetButton({
+  set,
+  label,
+  populated,
+  disabled,
+  onStructural,
+}: {
+  set: string;
+  label: string;
+  populated: boolean;
+  disabled: boolean;
+  onStructural: (correction: HistoryCorrection) => void;
+}) {
+  const remove = (confirmed: boolean) =>
+    onStructural({
+      kind: "remove_set",
+      workoutSetId: set,
+      confirmedPopulatedRemoval: confirmed,
+    });
+
+  if (!populated)
+    return (
+      <button
+        type="button"
+        aria-label={label}
+        disabled={disabled}
+        onClick={() => remove(false)}
+        className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)] disabled:opacity-[var(--pf-opacity-disabled)]"
+      >
+        <Icon name="x" size={16} />
+      </button>
     );
-  }
-  if (entry.reps !== "") {
-    parts.push(
-      measurementType === "seconds" ? `${entry.reps} sec` : `${entry.reps}`,
+
+  return (
+    <DestructiveDialog
+      trigger={
+        <button
+          type="button"
+          aria-label={label}
+          disabled={disabled}
+          className="flex size-11 items-center justify-center rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] text-[var(--pf-text-2)] disabled:opacity-[var(--pf-opacity-disabled)]"
+        >
+          <Icon name="x" size={16} />
+        </button>
+      }
+      title="Remove this set?"
+      description="It holds recorded values. Removing it recalculates every statistic that used them."
+      confirmLabel="Remove set"
+      onConfirm={() => remove(true)}
+    />
+  );
+}
+
+function RemoveExerciseButton({
+  exercise,
+  populated,
+  disabled,
+  onStructural,
+}: {
+  exercise: HistoryWorkoutExercise;
+  populated: boolean;
+  disabled: boolean;
+  onStructural: (correction: HistoryCorrection) => void;
+}) {
+  const remove = (confirmed: boolean) =>
+    onStructural({
+      kind: "remove_exercise",
+      workoutExerciseId: exercise.id,
+      confirmedPopulatedRemoval: confirmed,
+    });
+  const label = `Remove ${exercise.exerciseName}`;
+
+  if (!populated)
+    return (
+      <Action
+        variant="danger"
+        disabled={disabled}
+        onClick={() => remove(false)}
+      >
+        Remove
+      </Action>
     );
-  }
-  return parts.length === 0 ? "No values" : parts.join(" × ");
+
+  return (
+    <DestructiveDialog
+      trigger={
+        <Action variant="danger" disabled={disabled} aria-label={label}>
+          Remove
+        </Action>
+      }
+      title={`Remove ${exercise.exerciseName}?`}
+      description="It holds recorded data. Removing it recalculates every statistic that used it."
+      confirmLabel="Remove exercise"
+      onConfirm={() => remove(true)}
+    />
+  );
 }

@@ -1,26 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useTransition } from "react";
 
-import {
-  createWeightEntryAction,
-  getWeightProgressAction,
-} from "@/app/actions/weight";
+import { getWeightProgressAction } from "@/app/actions/weight";
 import type { WeightProgress } from "@/features/history/application/weight-operations";
 import type { ChartRange, ChartSeries } from "@/features/history/domain/chart";
 import { ProgressChart } from "@/features/history/ui/progress-chart";
-import {
-  Chip,
-  Collapsible,
-  DataRow,
-  EmptyState,
-  Icon,
-  Kicker,
-  PageFrame,
-  rowStagger,
-  StatCard,
-} from "@/shared/ui";
+import { Chip, EmptyState, ListRow, PageFrame, StatCard } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 import {
@@ -31,10 +17,6 @@ import {
   noPreviousWeek,
   weekStatusLabel,
 } from "@/features/history/ui/weight-presentation";
-
-import { BodyEntryOverlay } from "../body-entry-overlay";
-import { BodyCount } from "../body-count";
-import { BodyNavigation } from "../body-navigation";
 
 /** Weight offers no `all` range; `weight-and-body.md` names these four. */
 const weightRanges: readonly ChartRange[] = [
@@ -63,9 +45,8 @@ export function WeightView({
   const [range, setRange] = useState<ChartRange>(initialRange);
   const [pending, startTransition] = useTransition();
   const { overview, series } = view;
-  const weekly = series.companion?.points ?? [];
 
-  const reload = (next: ChartRange = range) => {
+  const reload = (next: ChartRange) => {
     setRange(next);
     startTransition(async () => {
       const result = await getWeightProgressAction({ range: next });
@@ -73,54 +54,13 @@ export function WeightView({
     });
   };
 
-  const addTrigger = (
-    <button
-      type="button"
-      aria-label="Add weigh-in"
-      className="flex min-h-10 shrink-0 items-center gap-1.5 rounded-full border border-[var(--pf-border)] px-3.5 text-[13.5px] font-semibold text-[var(--pf-accent)] transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-accent)]"
-    >
-      <Icon name="plus" size={14} />
-      Add
-    </button>
-  );
-
-  const addOverlay = (
-    <BodyEntryOverlay
-      trigger={addTrigger}
-      title="Add weigh-in"
-      valueLabel="Weight (kg)"
-      placeholder="81.0"
-      hint="Up to two decimals."
-      localDate={overview.localDate}
-      saveLabel="Save weigh-in"
-      onSave={async ({ entryDate, value }) => {
-        const result = await createWeightEntryAction({
-          entryDate,
-          weightKg: value,
-        });
-        if (!result.ok) return { ok: false, message: result.error.message };
-        return { ok: true, toast: "Weigh-in saved." };
-      }}
-      onSaved={() => reload()}
-    />
-  );
-
   return (
-    <PageFrame
-      title="Body"
-      action={<BodyCount count={overview.entries.length} noun="weigh-in" />}
-      pinned={<BodyNavigation />}
-      className="gap-3.5 pt-4.5"
-    >
+    <PageFrame title="Weight" className="pt-6">
       {overview.latest === null ? (
-        <>
-          <EmptyState
-            icon="scale"
-            title="No weigh-in yet"
-            body="Record a weigh-in and this screen starts tracking your weekly average."
-          />
-          <div className="flex justify-center">{addOverlay}</div>
-        </>
+        <EmptyState
+          title="No weigh-in yet"
+          body="Record today's weight on Today and this screen starts tracking your weekly average."
+        />
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2">
@@ -161,89 +101,128 @@ export function WeightView({
             )}
           </div>
 
-          <Kicker className="mt-1">Trend</Kicker>
-          <div
-            role="group"
-            aria-label="Time range"
-            className="flex flex-wrap gap-2"
-          >
-            {weightRanges.map((option) => (
-              <Chip
-                key={option}
-                selected={range === option}
-                disabled={pending}
-                onClick={() => reload(option)}
-              >
-                {rangeLabels[option]}
-              </Chip>
-            ))}
-          </div>
-
-          <section className="rounded-[var(--pf-r4)] bg-[var(--pf-bg-surface)] p-[18px]">
+          <section className="flex flex-col gap-3">
+            <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+              Trend
+            </h2>
+            <div
+              role="group"
+              aria-label="Time range"
+              className="flex flex-wrap gap-2"
+            >
+              {weightRanges.map((option) => (
+                <Chip
+                  key={option}
+                  selected={range === option}
+                  disabled={pending}
+                  onClick={() => reload(option)}
+                >
+                  {rangeLabels[option]}
+                </Chip>
+              ))}
+            </div>
+            <TrendSummary series={series} />
             <ProgressChart
               series={series}
-              noun="weigh-in"
-              emptyMessage="No weigh-in falls inside this range."
-              formatValue={formatKg}
+              frame="data"
+              formatValue={(value) => value.toFixed(1)}
             />
-            {weekly.length > 0 ? (
-              <div className="mt-1.5">
-                <Collapsible label="Weekly averages">
-                  <ul aria-label="Weekly averages" className="flex flex-col">
-                    {weekly.map((point, index) => (
-                      <li key={point.date}>
-                        <DataRow
-                          first={index === 0}
-                          label={weeklyLabel(point)}
-                          value={formatAverageKg(point.value)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </Collapsible>
-              </div>
-            ) : null}
+            <ChartValues series={series} />
           </section>
 
-          <div className="mt-1 flex min-h-11 items-center justify-between gap-3">
-            <Kicker>Weigh-ins</Kicker>
-            {addOverlay}
-          </div>
-          <ul className="flex flex-col gap-2" aria-label="Weigh-ins">
-            {overview.entries.map((entry, index) => (
-              <li key={entry.id}>
-                <Link
-                  href={`/body/weight/${entry.entryDate}/edit`}
-                  style={rowStagger(index)}
-                  className="flex min-h-[62px] items-center gap-3 rounded-[var(--pf-r2)] border border-[var(--pf-bg-surface)] bg-[var(--pf-bg-surface)] pr-3 pl-[18px] transition-[border-color,transform] duration-[var(--pf-mo-fast)] ease-[var(--pf-ease)] hover:border-[var(--pf-border-strong)] active:scale-[0.99] motion-safe:animate-[pf-row-in_260ms_var(--pf-ease)_both]"
-                >
-                  <span className="pf-numeric shrink-0 text-[19px] font-semibold">
-                    {formatKg(entry.weightKg)}
-                  </span>
-                  <span className="min-w-0 flex-1 text-[13px] text-[var(--pf-text-3)]">
-                    {formatHistoryDate(entry.entryDate)}
-                    {entry.changeKg === null
-                      ? null
-                      : ` · ${formatChangeKg(entry.changeKg)}`}
-                  </span>
-                  <Icon
-                    name="pencil"
-                    size={15}
-                    className="shrink-0 text-[var(--pf-glyph-dim)]"
+          <section className="flex flex-col gap-2">
+            <h2 className="text-[11px] font-semibold tracking-[0.1em] text-[var(--pf-text-2)] uppercase">
+              Weigh-ins
+            </h2>
+            <ul className="flex flex-col gap-2" aria-label="Weigh-ins">
+              {overview.entries.map((entry) => (
+                <li key={entry.id}>
+                  <ListRow
+                    href={`/body/weight/${entry.entryDate}/edit`}
+                    title={formatKg(entry.weightKg)}
+                    detail={
+                      <>
+                        {formatHistoryDate(entry.entryDate)}
+                        {entry.changeKg === null
+                          ? null
+                          : ` · ${formatChangeKg(entry.changeKg)}`}
+                      </>
+                    }
                   />
-                </Link>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          </section>
         </>
       )}
     </PageFrame>
   );
 }
 
-function weeklyLabel(point: ChartSeries["points"][number]): string {
-  const start = formatHistoryDate(point.span?.start ?? point.date);
-  if (!point.span) return `Week of ${start}`;
-  const recorded = formatRecordedDays(point.span.recordedDays);
-  return `Week of ${start} · ${recorded}${point.span.provisional ? " · provisional" : ""}`;
+function TrendSummary({ series }: { series: ChartSeries }) {
+  if (series.points.length === 0)
+    return (
+      <p className="text-[var(--pf-text-2)]">
+        No weigh-in falls inside this range.
+      </p>
+    );
+  return (
+    <p className="text-[13px] text-[var(--pf-text-2)]">
+      {trendSentence(series)}
+    </p>
+  );
+}
+
+/** One string, so the sentence reads the same however JSX would break the line. */
+function trendSentence(series: ChartSeries): string {
+  const values = series.points.map((point) => point.value);
+  const count = series.points.length;
+  const weeks = series.companion?.points.length ?? 0;
+  const span = `${count} ${count === 1 ? "weigh-in" : "weigh-ins"} from ${formatKg(values[0] ?? 0)} to ${formatKg(values[values.length - 1] ?? 0)}`;
+  const bounds = `lowest ${formatKg(Math.min(...values))}, highest ${formatKg(Math.max(...values))}`;
+  const averages =
+    weeks === 0
+      ? ""
+      : `, across ${weeks} ${weeks === 1 ? "week" : "weeks"} of averages`;
+  return `${span}, ${bounds}${averages}.`;
+}
+
+function ChartValues({ series }: { series: ChartSeries }) {
+  const weekly = series.companion?.points ?? [];
+  return (
+    <details>
+      <summary className="min-h-11 text-[13px] font-semibold text-[var(--pf-accent-strong)]">
+        Chart values
+      </summary>
+      <ul
+        aria-label="Chart values"
+        className="pf-numeric mt-1 flex flex-col gap-1 text-[13px]"
+      >
+        {series.points.map((point) => (
+          <li key={point.date} className="flex justify-between gap-3">
+            <span>{formatHistoryDate(point.date)}</span>
+            <span>{formatKg(point.value)}</span>
+          </li>
+        ))}
+      </ul>
+      {weekly.length > 0 ? (
+        <ul
+          aria-label="Weekly averages"
+          className="pf-numeric mt-3 flex flex-col gap-1 text-[13px]"
+        >
+          {weekly.map((point) => (
+            <li key={point.date} className="flex justify-between gap-3">
+              <span>
+                Week of {formatHistoryDate(point.span?.start ?? point.date)}
+                {point.span
+                  ? ` · ${formatRecordedDays(point.span.recordedDays)}${point.span.provisional ? " · provisional" : ""}`
+                  : null}
+              </span>
+              <span>{formatAverageKg(point.value)}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </details>
+  );
 }

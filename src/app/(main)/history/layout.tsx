@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 
-/**
- * Each History screen owns its own frame, because the count beside the title
- * belongs to the tab being shown. The layout only keeps the column.
- */
+import { HistoryNavigation } from "./history-navigation";
+
 export default function HistoryLayout({ children }: { children: ReactNode }) {
-  return <div className="flex min-h-0 flex-1 flex-col">{children}</div>;
+  return (
+    <div className="flex min-h-full flex-col">
+      <HistoryNavigation />
+      <div className="flex-1">{children}</div>
+    </div>
+  );
 }

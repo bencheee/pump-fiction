@@ -10,8 +10,6 @@ import {
   useState,
 } from "react";
 
-import { Icon } from "./icon";
-
 export function Toast({
   message,
   visible,
@@ -35,18 +33,9 @@ export function Toast({
     <div
       role="status"
       aria-live="polite"
-      className="fixed right-[var(--pf-gutter)] bottom-[calc(98px+env(safe-area-inset-bottom))] left-[var(--pf-gutter)] z-60 flex items-center gap-2.5 rounded-[var(--pf-r2)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] px-3.5 py-3 text-[13.5px] text-[var(--pf-text)] shadow-[var(--pf-shadow-toast)] motion-safe:animate-[pf-rise_200ms_var(--pf-ease)]"
+      className="fixed right-4 bottom-[calc(72px+env(safe-area-inset-bottom))] left-4 z-60 rounded-[var(--pf-r3)] bg-[var(--pf-bg-surface-3)] px-4 py-3 text-center font-medium text-[var(--pf-text)] shadow-[var(--pf-shadow-toast)] motion-safe:animate-[pf-rise_var(--pf-mo-base)_var(--pf-ease)]"
     >
-      <Icon name="circle-check" size={15} className="text-[var(--pf-accent)]" />
-      <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{message}</span>
-      <button
-        type="button"
-        onClick={onDismiss}
-        aria-label="Dismiss"
-        className="flex size-8 shrink-0 items-center justify-center rounded-full text-[var(--pf-text-3)]"
-      >
-        <Icon name="x" size={14} />
-      </button>
+      {message}
     </div>
   );
 }

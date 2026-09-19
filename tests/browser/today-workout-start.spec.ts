@@ -1,11 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
-import {
-  awaitHydration,
-  fillHydrated,
-  runScreenAction,
-} from "./support/hydration";
+import { awaitHydration, fillHydrated } from "./support/hydration";
 
 test.describe("Today workout-start experience", () => {
   test("covers no-program, proposed, alternate, one-time, restore, and phone reflow", async ({
@@ -30,18 +26,14 @@ test.describe("Today workout-start experience", () => {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
         await fillHydrated(page.getByLabel("Name"), exercise);
-        await runScreenAction(page, "Exercise actions", "Save exercise");
+        await page.getByRole("button", { name: "Save Exercise" }).click();
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
 
       await page.goto("/programs/new");
       await fillHydrated(page.getByLabel("Program name"), program);
-      await runScreenAction(
-        page,
-        "Program actions",
-        /^Save (program|changes)$/,
-      );
+      await page.getByRole("button", { name: "Save Program" }).click();
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program saved.")).toBeVisible();
       await page.getByRole("link", { name: new RegExp(program) }).click();
@@ -58,17 +50,13 @@ test.describe("Today workout-start experience", () => {
           .getByRole("dialog")
           .getByRole("button", { name: exercise })
           .click();
-        await runScreenAction(page, "Split actions", /^Save (split|changes)$/);
+        await page.getByRole("button", { name: "Save Split" }).click();
         await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
         await expect(page.getByText("Split saved.")).toBeVisible();
       }
 
       // Making the program current chooses the first split of its rotation.
-      await runScreenAction(
-        page,
-        "Program actions",
-        "Make this the current program",
-      );
+      await page.getByRole("button", { name: "Make Current Program" }).click();
       await page
         .getByRole("dialog")
         .getByRole("button", { name: splitA })
@@ -78,21 +66,25 @@ test.describe("Today workout-start experience", () => {
       await page.goto("/today");
       await expect(page.getByRole("heading", { name: splitA })).toBeVisible();
       await expect(page.getByText(exerciseA, { exact: true })).toBeVisible();
-      await page.getByRole("button", { name: "Another split" }).click();
+      await page.getByRole("button", { name: "Choose another split" }).click();
       await expect(
-        page.getByRole("dialog", { name: "Choose another split" }),
+        page.getByRole("dialog", { name: "Choose Another Split" }),
       ).toBeVisible();
       await page.goBack();
       await expect(
-        page.getByRole("dialog", { name: "Choose another split" }),
+        page.getByRole("dialog", { name: "Choose Another Split" }),
       ).not.toBeAttached();
 
-      await page.getByRole("button", { name: "Another split" }).click();
-      await page
-        .getByRole("button", { name: `Put ${splitB} on Today without` })
+      await page.getByRole("button", { name: "Choose another split" }).click();
+      const splitCard = page
+        .getByRole("dialog")
+        .locator("section")
+        .filter({ hasText: splitB });
+      await splitCard
+        .getByRole("button", { name: "Put on Today, don't start yet" })
         .click();
       await expect(page.getByText("Today-only split")).toBeVisible();
-      await page.getByRole("button", { name: "Start today's workout" }).click();
+      await page.getByRole("button", { name: "Start Workout" }).click();
       await expect(page).toHaveURL(/\/workout\/current$/);
       await clearCurrentWorkout();
 
@@ -133,7 +125,7 @@ test.describe("Today workout-start experience", () => {
         `Hotel ${stamp}`,
       );
       await expect(
-        page.getByRole("link", { name: "Resume workout" }),
+        page.getByRole("link", { name: "Resume Workout" }),
       ).toBeVisible();
       await expect(
         page.getByRole("link", { name: "One-time workout" }),
@@ -151,52 +143,64 @@ test.describe("Today workout-start experience", () => {
     }
   });
 
-  test("records a weigh-in from Body with its date picker", async ({
+  test("covers the MVP-TOD-004 weight prompt, its sheet, and Weight", async ({
     page,
   }, testInfo) => {
-    // ADR-0032 moved recording out of Today and into Body. The scenario writes
-    // today's weigh-in and deletes exactly the row it created; it never removes
-    // one it found, so a real weigh-in taken today is left alone.
+    // The prompt is about the local date, so this scenario writes today's
+    // weigh-in and deletes exactly the row it created. It never removes one it
+    // found: if today already had a weigh-in the card would show that value and
+    // this test would fail rather than destroy it.
     let createdToday = false;
 
     try {
-      await page.goto("/body/weight");
-      await page.getByRole("button", { name: "Add weigh-in" }).first().click();
-      const panel = page.getByRole("dialog", { name: "Add weigh-in" });
-      await expect(panel).toBeVisible();
+      await page.goto("/today");
+      const card = page.getByRole("region", { name: "Today's weight" });
+      await expect(card).toBeVisible();
+      const add = card.getByRole("button", { name: "Add today's weight" });
+      await expect(add).toBeVisible();
 
-      // The day is chosen on a month grid, and no future day is offered.
-      await panel.getByRole("button", { name: /^Date:/ }).click();
-      const picker = page.getByRole("dialog", { name: "Choose date" });
-      await expect(picker).toBeVisible();
-      await expect(
-        picker.getByRole("button", { name: "Next month" }),
-      ).toBeDisabled();
-      await testInfo.attach(`body-date-picker-${testInfo.project.name}.png`, {
+      // S04 is a sheet fixed to today, dismissible like every other overlay.
+      await add.click();
+      const sheet = page.getByRole("dialog", { name: "Add today's weight" });
+      await expect(sheet).toBeVisible();
+      await testInfo.attach(`today-weight-sheet-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
       });
       await page.keyboard.press("Escape");
-      await expect(picker).toBeHidden();
+      await expect(sheet).toBeHidden();
 
-      await fillHydrated(panel.getByLabel("Weight (kg)"), "82.4");
-      await runScreenAction(page, "Add weigh-in actions", "Save weigh-in");
+      await add.click();
+      await fillHydrated(sheet.getByLabel("Weight (kg)"), "82.4");
+      await sheet.getByRole("button", { name: "Save Weight" }).click();
       createdToday = true;
 
-      await expect(panel).toBeHidden();
+      // The prompt is gone for the day and the recorded value stands in its
+      // place, with no second create path.
+      await expect(sheet).toBeHidden();
+      await expect(card.getByText("82.4 kg")).toBeVisible();
       await expect(
-        page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
-      ).toContainText("82.4 kg");
-      await testInfo.attach(`body-weigh-in-${testInfo.project.name}.png`, {
+        card.getByRole("button", { name: "Add today's weight" }),
+      ).toHaveCount(0);
+      await testInfo.attach(`today-weight-saved-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
       });
 
-      // Today says nothing about weight any more.
+      // The same weigh-in is what Weight shows, and correcting it lives there.
+      await card.getByRole("link", { name: "See Weight" }).click();
+      await expect(page).toHaveURL(/\/body\/weight$/);
+      await expect(
+        page.getByRole("list", { name: "Weigh-ins" }).getByRole("link").first(),
+      ).toContainText("82.4 kg");
+
+      // Reloading Today keeps the recorded state; the prompt never returns.
       await page.goto("/today");
       await expect(
-        page.getByRole("region", { name: "Today's weight" }),
-      ).toHaveCount(0);
+        page
+          .getByRole("region", { name: "Today's weight" })
+          .getByText("82.4 kg"),
+      ).toBeVisible();
     } finally {
       if (createdToday) await removeTodaysWeighIn();
     }

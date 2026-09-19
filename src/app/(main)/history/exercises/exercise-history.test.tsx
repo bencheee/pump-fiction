@@ -17,6 +17,13 @@ const actions = vi.hoisted(() => ({ load: vi.fn() }));
 vi.mock("@/app/actions/workout-history", () => ({
   getExerciseStatisticsAction: actions.load,
 }));
+// The chart is presentation over the same series the accessible list shows, and
+// Recharts needs a laid-out container that jsdom does not provide. The browser
+// scenario covers it; here the data beside it is what matters.
+vi.mock("@/features/history/ui/progress-chart", () => ({
+  ProgressChart: () => null,
+}));
+
 const pressId = "34000000-0000-4000-8000-000000000001";
 const ghostId = "34000000-0000-4000-8000-000000000002";
 const workoutId = "34000000-0000-4000-8000-000000000010";
@@ -165,7 +172,7 @@ describe("exercise history list", () => {
     expect(screen.getByText("No longer in the library")).toBeInTheDocument();
     expect(screen.getByText(/Sun 9 Aug · 60 kg × 8/)).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText("Filter exercises by name"), "cable");
+    await user.type(screen.getByLabelText("Search"), "cable");
     expect(
       screen.queryByRole("link", { name: /Bench press/ }),
     ).not.toBeInTheDocument();
@@ -176,10 +183,7 @@ describe("exercise history list", () => {
     const user = userEvent.setup();
     render(<ExerciseHistoryList entries={entries} />);
 
-    await user.type(
-      screen.getByLabelText("Filter exercises by name"),
-      "deadlift",
-    );
+    await user.type(screen.getByLabelText("Search"), "deadlift");
     expect(screen.getByText("No matching exercise")).toBeInTheDocument();
   });
 
@@ -227,7 +231,7 @@ describe("exercise progress detail", () => {
     );
 
     expect(
-      screen.getByText(/2 workouts in range: 60 kg to 80 kg, best 80 kg/),
+      screen.getByText(/Highest load across 2 workouts: 60 to 80 kg, best 80/),
     ).toBeInTheDocument();
     await user.click(screen.getByText("Chart values"));
     const values = screen.getByRole("list", { name: "Chart values" });
@@ -261,9 +265,8 @@ describe("exercise progress detail", () => {
       <ExerciseStatisticsView statistics={statistics} localDate="2026-09-05" />,
     );
 
-    expect(screen.getByRole("link", { name: /Sun 9 Aug/ })).toHaveAttribute(
-      "href",
-      `/history/workouts/${workoutId}`,
-    );
+    expect(
+      screen.getByRole("link", { name: /Sun 9 Aug · Push/ }),
+    ).toHaveAttribute("href", `/history/workouts/${workoutId}`);
   });
 });

@@ -2,13 +2,7 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import {
-  cleanup,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -35,15 +29,6 @@ vi.mock("next/navigation", () => ({ useRouter: () => router }));
 
 function renderForm(ui: ReactNode) {
   return render(<ToastProvider>{ui}</ToastProvider>);
-}
-
-/** Saving is picked in the `···` panel and committed with Continue. */
-async function saveExercise(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole("button", { name: "Exercise actions" }));
-  await user.click(
-    screen.getByRole("button", { name: /^Save (exercise|changes)$/ }),
-  );
-  await user.click(screen.getByRole("button", { name: "Continue" }));
 }
 
 describe("ExerciseForm", () => {
@@ -112,17 +97,15 @@ describe("ExerciseForm", () => {
     expect(addWeight).toHaveAttribute("aria-pressed", "false");
     expect(addBand).toHaveAttribute("aria-pressed", "true");
 
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
-    await waitFor(() =>
-      expect(actions.create).toHaveBeenCalledWith({
-        name: "Pull-up",
-        baseType: "bodyweight",
-        measurementType: "reps",
-        allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
-        persistentNote: "",
-      }),
-    );
+    expect(actions.create).toHaveBeenCalledWith({
+      name: "Pull-up",
+      baseType: "bodyweight",
+      measurementType: "reps",
+      allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
+      persistentNote: "",
+    });
   });
 
   it("defaults to reps and can save a seconds override", async () => {
@@ -140,12 +123,10 @@ describe("ExerciseForm", () => {
       within(measurement).getByRole("button", { name: "Seconds" }),
     );
     await user.type(screen.getByLabelText("Name"), "Side plank");
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
-    await waitFor(() =>
-      expect(actions.create).toHaveBeenCalledWith(
-        expect.objectContaining({ measurementType: "seconds" }),
-      ),
+    expect(actions.create).toHaveBeenCalledWith(
+      expect.objectContaining({ measurementType: "seconds" }),
     );
   });
 
@@ -169,11 +150,11 @@ describe("ExerciseForm", () => {
     renderForm(<ExerciseForm />);
 
     await user.type(screen.getByLabelText("Name"), "Bench press");
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
-    await waitFor(() => expect(actions.create).toHaveBeenCalledTimes(1));
+    expect(actions.create).toHaveBeenCalledTimes(1);
     expect(router.replace).toHaveBeenCalledWith("/exercises");
-    expect(await screen.findByText("Exercise saved.")).toBeVisible();
+    expect(screen.getByText("Exercise saved.")).toBeVisible();
   });
 
   it("keeps the form open and reports a failed save", async () => {
@@ -189,16 +170,12 @@ describe("ExerciseForm", () => {
     renderForm(<ExerciseForm />);
 
     await user.type(screen.getByLabelText("Name"), "Bench press");
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
-    // The save runs once the actions panel has closed, so the refusal lands a
-    // tick after the click.
-    await waitFor(() =>
-      expect(
-        screen.getAllByText("Another active exercise already uses this name."),
-      ).toHaveLength(2),
-    );
     expect(router.replace).not.toHaveBeenCalled();
+    expect(
+      screen.getAllByText("Another active exercise already uses this name."),
+    ).toHaveLength(2);
   });
 
   it("keeps one assistance mode selected and reports name validation", async () => {
@@ -229,11 +206,9 @@ describe("ExerciseForm", () => {
     expect(assistWithWeight).toHaveAttribute("aria-pressed", "false");
     expect(assistWithBand).toHaveAttribute("aria-pressed", "true");
 
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
-    expect(
-      await screen.findByText("Enter a name for this exercise."),
-    ).toBeVisible();
+    expect(screen.getByText("Enter a name for this exercise.")).toBeVisible();
     expect(actions.create).not.toHaveBeenCalled();
   });
 
@@ -252,7 +227,7 @@ describe("ExerciseForm", () => {
     await user.click(
       screen.getByRole("button", { name: /Assist with weight/ }),
     );
-    await saveExercise(user);
+    await user.click(screen.getByRole("button", { name: "Save Exercise" }));
 
     expect(actions.create).toHaveBeenCalledWith({
       name: "Assisted dip",
@@ -279,11 +254,7 @@ describe("ExerciseForm", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Exercise actions" }));
-    await user.click(
-      screen.getByRole("button", { name: "Delete this exercise" }),
-    );
-    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await user.click(screen.getByRole("button", { name: "Delete Exercise" }));
     const dialog = await screen.findByRole("alertdialog", {
       name: "Delete exercise?",
     });
@@ -294,7 +265,7 @@ describe("ExerciseForm", () => {
     ).toBeVisible();
 
     await user.click(
-      within(dialog).getByRole("button", { name: "Delete exercise" }),
+      within(dialog).getByRole("button", { name: "Delete Exercise" }),
     );
 
     expect(actions.delete).toHaveBeenCalledWith(

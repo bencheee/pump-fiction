@@ -22,28 +22,11 @@ Do not adopt a complete styled component kit or CSS-in-JS runtime for the MVP. E
 
 ### Charting
 
-Draw charts with application-owned markup rather than a charting library. The
-2026-09-19 redesign specifies a bar chart whose reading follows the selected
-bar, and a library brought a dependency, a runtime and a laid-out container
-requirement for a drawing the design no longer uses. `BarChart` in
-`src/shared/ui` is the one implementation; `ProgressChart` adapts a chart series
-to it so feature screens keep passing the series they always passed. Recharts
-and its `react-is` alignment are removed.
+Use Recharts stable `3.x`, with `react-is` aligned to React `19.x` as required by Recharts. Render charts inside feature-owned Client Components and load chart code only on routes that need it.
 
-Application query/domain services calculate ranges, aggregates, PR eligibility,
-assisted-weight direction, and other product semantics. They return neutral
-serializable chart series. The chart component handles only presentation,
-formatting, interaction, and accessible labeling; it does not become a
-business-calculation layer.
+Application query/domain services calculate ranges, aggregates, PR eligibility, assisted-weight direction, and other product semantics. They return neutral serializable chart series. Chart components handle only presentation, responsive sizing, formatting, interaction, and accessible labeling; Recharts does not become a business-calculation layer.
 
-Charts must fit phone widths without horizontal table scrolling. A chart is
-never the sole representation of important progress information: the reading
-above the bars, the textual summary under them and the collapsible value list
-carry the same numbers, and every bar is a button labelled with its date and
-value, so nothing depends on hover or on seeing the drawing. Bars start at zero,
-so a series that sits far from zero is framed by its own values rather than by
-an axis option. A series that improves downwards says so rather than assuming
-larger is better. Respect reduced-motion preferences.
+Charts must fit phone widths without horizontal table scrolling. A chart is never the sole representation of important progress information: provide the accepted textual summary and/or accessible data list alongside it. Respect reduced-motion preferences and do not require hover-only interaction.
 
 ### Static checks
 

@@ -272,240 +272,393 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-describe("Active-workout queue", () => {
-  it("opens on the first set without values and names what it belongs to", async () => {
-    renderExperience();
-
-    // Squat set 1 already holds values, so the queue starts on set 2.
-    expect(await screen.findByRole("heading", { name: "Squat" })).toBeVisible();
-    expect(screen.getByText(/Set 2 of 3/)).toBeVisible();
-    expect(screen.getByText(/3 × 5–8 planned/)).toBeVisible();
-    // The wheels start from the set before this one.
-    expect(screen.getByText("82.5")).toBeVisible();
-    expect(screen.getByLabelText("Active duration")).toHaveTextContent("5:00");
-    expect(
-      screen.getByText("Squat · set 3 of 3", { exact: false }),
-    ).toBeVisible();
-  });
-
-  it("carries the snapshotted note and the previous performance", async () => {
+describe("Active-workout mobile experience", () => {
+  it("renders the canonical S10 state with snapshots, Last time, and mode fields", async () => {
     const user = userEvent.setup();
     renderExperience();
 
-    await user.click(screen.getByRole("button", { name: /Note/ }));
+    expect(
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
+    ).toBeVisible();
+    expect(
+      screen.getByText("2 planned × 6–10 reps · 1 of 2 recorded"),
+    ).toBeVisible();
+    const squat = screen.getByRole("region", { name: "Squat" });
+    const squatToggle = within(squat).getByRole("button", {
+      name: "Expand Squat",
+    });
+    expect(squat.querySelector('[style*="chevron"]')).toBeNull();
+    expect(squatToggle).toHaveAttribute("aria-expanded", "false");
+    await user.click(squatToggle);
+    await waitFor(() => {
+      expect(scrollIntoView).toHaveBeenCalledWith({
+        block: "start",
+        behavior: "smooth",
+      });
+    });
     expect(screen.getByText("Brace before unracking.")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(screen.getByText("Knee hurt near the bottom.")).toBeVisible();
+    expect(screen.getByText(/Note from last workout · 22 Aug/)).toBeVisible();
+    expect(screen.getByText("Last time · 22 Aug")).toBeVisible();
+    expect(screen.getByText("6 x 85 kg")).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: /Confirm set/ }),
+    ).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /Last/ }));
-    expect(screen.getByText(/6 x 85 kg/)).toBeVisible();
+    expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
+    const pullUp = screen.getByRole("region", { name: "Pull-Up" });
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
+    expect(screen.getByText("No completed performance yet.")).toBeVisible();
+    expect(within(pullUp).getByLabelText("added kg")).toBeVisible();
+    expect(
+      within(pullUp).getAllByRole("button", { name: /Add weight/ }),
+    ).toHaveLength(1);
+    expect(
+      within(pullUp).getByRole("button", { name: "Remove added weight" }),
+    ).toBeVisible();
+    expect(
+      within(squat).queryByLabelText("Resistance band"),
+    ).not.toBeInTheDocument();
+    expect(screen.getAllByLabelText("Reps")).toHaveLength(5);
+    expect(await screen.findByText("All changes saved")).toBeInTheDocument();
+
+    expect(squatToggle).toHaveAttribute("aria-expanded", "false");
+    expect(within(squat).getAllByLabelText("kg")[0]).not.toBeVisible();
+    expect(screen.queryByText("Set 1")).not.toBeInTheDocument();
   });
 
   it("keeps primary navigation available during the workout", () => {
+    const outbox = new FakeOutbox();
+    const transport = new FakeTransport();
     render(
       <MainShell>
         <ActiveWorkoutExperience
           initial={makeWorkout()}
           exercises={library}
-          outbox={new FakeOutbox()}
-          transport={new FakeTransport()}
+          outbox={outbox}
+          transport={transport}
         />
       </MainShell>,
     );
 
-    const nav = within(screen.getByRole("navigation", { name: "Primary" }));
-    expect(nav.getByRole("link", { name: "Today" })).toBeVisible();
-    expect(nav.getByRole("link", { name: "History" })).toBeVisible();
+    const navigation = within(
+      screen.getByRole("navigation", { name: "Primary" }),
+    );
+    for (const destination of ["Today", "History", "Programs", "Exercises"]) {
+      expect(navigation.getByRole("link", { name: destination })).toBeVisible();
+    }
+    expect(screen.getByLabelText("Active duration")).toBeVisible();
+    expect(screen.getByRole("banner")).toHaveClass(
+      "h-[calc(40px+env(safe-area-inset-top))]",
+    );
+    expect(screen.getByRole("button", { name: "Continue Later" })).toHaveClass(
+      "text-[var(--pf-accent-strong)]",
+    );
   });
 
-  it("loads the exercise library only when Add exercise opens", async () => {
+  it("loads the exercise library only when Add Exercise opens", async () => {
     const user = userEvent.setup();
-    renderExperience(makeWorkout({ exercises: [] }));
-
-    expect(actions.listExercises).not.toHaveBeenCalled();
-    await user.click(screen.getByRole("button", { name: "Add exercise" }));
-    expect(
-      await screen.findByRole("button", { name: /Face Pull/ }),
-    ).toBeVisible();
-  });
-
-  it("records a set from the wheels with no confirmation step", async () => {
-    const user = userEvent.setup();
-    const { transport } = renderExperience();
-
-    // Turning the reps wheel one notch up from the seeded 6.
-    await user.click(screen.getByRole("button", { name: "Reps 7" }));
-    await user.click(screen.getByRole("button", { name: "Log this set" }));
-
-    const command = transport.last("update_set");
-    expect(command.payload).toMatchObject({
-      workoutSetId: "00000000-0000-4000-8000-0000000000d2",
-      loadMode: "weight",
-      loadKg: 82.5,
-      reps: 7,
-    });
-  });
-
-  it("refuses to log a set the mode cannot complete", async () => {
-    const user = userEvent.setup();
-    const { transport } = renderExperience(
-      makeWorkout({
-        exercises: [
-          {
-            ...makeWorkout().exercises[0]!,
-            sets: [
-              makeSet({
-                id: "00000000-0000-4000-8000-0000000000d2",
-                position: 1,
-                loadMode: "weight_resistance_band",
-              }),
-            ],
-            lastPerformance: null,
-          },
-        ],
-      }),
+    render(
+      <ActiveWorkoutExperience
+        initial={makeWorkout()}
+        outbox={new FakeOutbox()}
+        transport={new FakeTransport()}
+      />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Log this set" }));
-    expect(screen.getByRole("status")).toHaveTextContent(/band strength/);
-    expect(transport.commands).toHaveLength(0);
-  });
-
-  it("applies and removes the definition's addition from the current set", async () => {
-    const user = userEvent.setup();
-    const { transport } = renderExperience();
-
-    await user.click(screen.getByRole("button", { name: "More actions" }));
-    await user.click(screen.getByRole("button", { name: /resistance band/i }));
-    await user.click(screen.getByRole("button", { name: "Continue" }));
-
-    expect(transport.last("update_set").payload).toMatchObject({
-      workoutSetId: "00000000-0000-4000-8000-0000000000d2",
-      loadMode: "weight_resistance_band",
-      bandDirection: "resistance",
-    });
-  });
-
-  it("jumps to any set through the progress segments", async () => {
-    const user = userEvent.setup();
-    renderExperience();
-
-    await user.click(screen.getByRole("button", { name: "Pull-Up set 1" }));
+    expect(actions.listExercises).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Add Exercise" }));
+    await waitFor(() => expect(actions.listExercises).toHaveBeenCalledOnce());
     expect(
-      await screen.findByRole("heading", { name: "Pull-Up" }),
+      within(screen.getByRole("dialog", { name: "Add Exercise" })).getByRole(
+        "button",
+        { name: "Face Pull" },
+      ),
     ).toBeVisible();
-    expect(screen.getByText(/Set 1 of 2/)).toBeVisible();
   });
 
   it("opens the finish review locally from the round check action", async () => {
     const user = userEvent.setup();
-    renderExperience();
+    actions.getCurrent.mockResolvedValue({
+      ok: true,
+      value: makeWorkout({ revision: 7 }),
+    });
+    const { transport } = renderExperience();
 
     await user.click(
       screen.getByRole("button", { name: "Review and finish workout" }),
     );
-    const panel = screen.getByRole("dialog", { name: "Review & finish" });
-    expect(within(panel).getByText("Sets")).toBeVisible();
-    expect(
-      within(panel).getByText(/3 planned sets left without values/),
-    ).toBeVisible();
+    const review = screen.getByRole("dialog", { name: "Review & Finish" });
+    expect(within(review).getByText("Duration")).toBeVisible();
+    expect(within(review).getByText("Recorded sets")).toBeVisible();
     expect(actions.getCurrent).not.toHaveBeenCalled();
+
+    await user.click(
+      within(review).getByRole("button", { name: "Complete Workout" }),
+    );
+    await waitFor(() => {
+      expect(transport.last("finish_workout").payload).toMatchObject({
+        outcome: "completed",
+      });
+      expect(transport.last("finish_workout").expectedRevision).toBe(7);
+    });
+    await waitFor(() => expect(actions.replace).toHaveBeenCalledWith("/today"));
+  });
+
+  it("records a set from its entered values with no confirmation step", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+    const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
+
+    expect(
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
+    ).toBeVisible();
+
+    await user.type(within(squat).getAllByLabelText("kg")[1]!, "90");
+    await user.tab();
+    await user.type(within(squat).getAllByLabelText("Reps")[1]!, "5");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        loadKg: 90,
+        reps: 5,
+      });
+    });
+    expect(transport.last("update_set").payload).not.toHaveProperty(
+      "isConfirmed",
+    );
+    expect(
+      await screen.findByText("3 planned × 5–8 reps · 2 of 3 recorded"),
+    ).toBeVisible();
+  });
+
+  it("removes the definition's addition from a set and keeps its reps", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+    const pullUp = screen.getByRole("region", { name: "Pull-Up" });
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
+
+    expect(
+      within(pullUp).queryByRole("button", { name: /Change load mode/ }),
+    ).not.toBeInTheDocument();
+
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Remove added weight" }),
+    );
+
+    expect(await screen.findByText("Cleared added kg.")).toBeVisible();
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        loadMode: "bodyweight",
+        loadKg: null,
+        reps: 8,
+      });
+    });
+  });
+
+  it("applies the definition's single addition to one set only", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+    const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
+
+    expect(
+      within(squat).queryByLabelText("Resistance band"),
+    ).not.toBeInTheDocument();
+
+    await user.click(
+      within(squat).getAllByRole("button", {
+        name: "Add resistance band",
+      })[1]!,
+    );
+
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        workoutSetId: "00000000-0000-4000-8000-0000000000d2",
+        loadMode: "weight_resistance_band",
+      });
+    });
+    expect(within(squat).getByLabelText("Resistance band")).toBeVisible();
+    expect(within(squat).getAllByLabelText("kg")).toHaveLength(3);
+  });
+
+  it("keeps a recorded set recorded when one of its values changes", async () => {
+    const user = userEvent.setup();
+    const { transport } = renderExperience();
+    const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
+
+    const firstLoad = within(squat).getAllByLabelText("kg")[0]!;
+    await user.clear(firstLoad);
+    await user.type(firstLoad, "80");
+    await user.tab();
+
+    expect(
+      screen.getByText("3 planned × 5–8 reps · 1 of 3 recorded"),
+    ).toBeVisible();
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        loadKg: 80,
+      });
+    });
+  });
+
+  it("undoes a permanently rejected change and keeps the workout usable", async () => {
+    const user = userEvent.setup();
+    const workout = makeWorkout();
+    actions.getCurrent.mockResolvedValue({ ok: true, value: workout });
+    const transport = new FakeTransport();
+    transport.rejectOnce = (command) => command.operation === "update_set";
+    const { outbox } = renderExperience(workout, transport);
+    const squat = screen.getByRole("region", { name: "Squat" });
+    await user.click(
+      within(squat).getByRole("button", { name: "Expand Squat" }),
+    );
+
+    await user.type(within(squat).getAllByLabelText("kg")[1]!, "90");
+    await user.tab();
+
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent(
+      "One change could not be saved and was undone: set 2 of Squat.",
+    );
+    // The refused command left the outbox instead of blocking what follows.
+    await waitFor(async () => {
+      expect(await outbox.list()).toHaveLength(0);
+    });
+
+    await user.type(within(squat).getAllByLabelText("Reps")[2]!, "6");
+    await user.tab();
+
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({ reps: 6 });
+    });
+    expect(screen.queryByRole("button", { name: "Retry" })).toBeNull();
   });
 
   it("gates populated removals behind confirmation and removes empty rows directly", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
 
-    // Set 2 holds nothing, so it goes without a question.
-    await user.click(screen.getByRole("button", { name: "More actions" }));
-    await user.click(screen.getByRole("button", { name: "Remove this set" }));
-    await user.click(screen.getByRole("button", { name: "Continue" }));
-    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
-    expect(transport.last("remove_set").payload).toMatchObject({
-      confirmedPopulatedRemoval: false,
+    const pullUp = screen.getByRole("region", { name: "Pull-Up" });
+    await user.click(
+      within(pullUp).getByRole("button", { name: "Expand Pull-Up" }),
+    );
+    await user.click(
+      within(pullUp).getByRole("button", {
+        name: "Remove set 1 of Pull-Up",
+      }),
+    );
+    const dialog = await screen.findByRole("alertdialog", {
+      name: "Remove set 1 of Pull-Up?",
+    });
+    await user.click(
+      within(dialog).getByRole("button", { name: "Remove Set" }),
+    );
+    await waitFor(() => {
+      expect(transport.last("remove_set").payload).toMatchObject({
+        confirmedPopulatedRemoval: true,
+      });
     });
 
-    // The exercise holds a recorded set, so removing it asks first.
-    await user.click(screen.getByRole("button", { name: "More actions" }));
+    const squat = screen.getByRole("region", { name: "Squat" });
     await user.click(
-      screen.getByRole("button", { name: "Remove this exercise" }),
+      within(squat).getByRole("button", { name: "Expand Squat" }),
     );
-    await user.click(screen.getByRole("button", { name: "Continue" }));
-    const dialog = await screen.findByRole("alertdialog");
-    await user.click(within(dialog).getByRole("button", { name: "Remove" }));
-    expect(transport.last("remove_exercise").payload).toMatchObject({
-      confirmedPopulatedRemoval: true,
+    await user.click(
+      within(squat).getByRole("button", { name: "Remove set 3 of Squat" }),
+    );
+    await waitFor(() => {
+      expect(transport.last("remove_set").payload).toMatchObject({
+        confirmedPopulatedRemoval: false,
+      });
     });
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
   });
 
   it("pauses and resumes the timer with non-color state cues", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
 
-    await user.click(
-      screen.getByRole("button", { name: "Pause — continue later" }),
-    );
-    expect(transport.last("pause_timer")).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "Continue Later" }));
     expect(
-      await screen.findByText(/active duration is not counting/),
+      await screen.findByText("Paused — active duration is not counting."),
     ).toBeVisible();
-    expect(screen.getByRole("button", { name: "Resume timer" })).toBeVisible();
+    await waitFor(() => {
+      expect(transport.last("pause_timer")).toBeDefined();
+    });
+
+    await user.click(screen.getByRole("button", { name: "Resume" }));
+    await waitFor(() => {
+      expect(transport.last("resume_timer")).toBeDefined();
+    });
+    expect(
+      screen.queryByText("Paused — active duration is not counting."),
+    ).not.toBeInTheDocument();
   });
 
-  it("reorders exercises by holding a card and enqueues the full order", async () => {
+  it("reorders exercises through explicit buttons and enqueues the full order", async () => {
     const user = userEvent.setup();
     const { transport } = renderExperience();
 
-    await user.click(screen.getByRole("button", { name: "Workout overview" }));
-    screen.getByRole("region", { name: "Squat" }).focus();
-    await user.keyboard("{ArrowDown}");
-
-    expect(transport.last("reorder_exercises").payload).toEqual({
-      workoutExerciseIds: [pullUpOccurrence, squatOccurrence],
+    await user.click(screen.getByRole("button", { name: "Move Pull-Up up" }));
+    await waitFor(() => {
+      expect(transport.last("reorder_exercises").payload).toEqual({
+        workoutExerciseIds: [pullUpOccurrence, squatOccurrence],
+      });
     });
-  });
-
-  it("undoes a permanently rejected change and keeps the workout usable", async () => {
-    const user = userEvent.setup();
-    const transport = new FakeTransport();
-    transport.rejectOnce = (command) => command.operation === "update_set";
-    actions.getCurrent.mockResolvedValue({ ok: true, value: makeWorkout() });
-    renderExperience(makeWorkout(), transport);
-
-    await user.click(screen.getByRole("button", { name: "Log this set" }));
-
-    await waitFor(() => expect(actions.getCurrent).toHaveBeenCalled());
-    expect(await screen.findByRole("heading", { name: "Squat" })).toBeVisible();
+    const regions = screen.getAllByRole("region");
+    expect(regions[0]).toHaveAccessibleName("Pull-Up");
   });
 
   it("replays pending outbox commands into the restored state", async () => {
     const outbox = new FakeOutbox();
+    const transport = new FakeTransport();
     await outbox.enqueue({
-      commandId: "00000000-0000-4000-8000-0000000000c1",
+      commandId: "00000000-0000-4000-8000-000000000c11",
       workoutId,
       expectedRevision: 4,
-      operation: "update_set",
-      payload: {
-        workoutSetId: "00000000-0000-4000-8000-0000000000d2",
-        loadMode: "weight",
-        loadKg: 90,
-        bandDirection: null,
-        bandStrength: null,
-        reps: 5,
-      },
-      clientCreatedAt: "2026-09-04T10:05:00.000Z",
-    } as ActiveWorkoutCommand);
+      operation: "set_workout_exercise_note",
+      payload: { workoutExerciseId: squatOccurrence, note: "Pending note" },
+      clientCreatedAt: "2026-09-04T10:20:00.000Z",
+    });
 
     render(
       <ActiveWorkoutExperience
         initial={makeWorkout()}
         exercises={library}
         outbox={outbox}
-        transport={new FakeTransport()}
+        transport={transport}
       />,
     );
 
-    // The replayed command completes set 2, so the queue moves to set 3.
-    expect(await screen.findByText(/Set 3 of 3/)).toBeVisible();
+    await userEvent
+      .setup()
+      .click(
+        within(screen.getByRole("region", { name: "Squat" })).getByRole(
+          "button",
+          { name: "Expand Squat" },
+        ),
+      );
+    expect(await screen.findByDisplayValue("Pending note")).toBeVisible();
+    expect(screen.queryByLabelText("Restored workout")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(transport.last("set_workout_exercise_note").payload).toMatchObject(
+        { note: "Pending note" },
+      );
+    });
   });
 });
 

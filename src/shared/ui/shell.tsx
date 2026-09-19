@@ -44,7 +44,7 @@ export function BottomNavigation() {
   return (
     <nav
       aria-label="Primary"
-      className="grid shrink-0 grid-cols-5 gap-1 border-t border-[var(--pf-border-nav)] bg-[var(--pf-bg-nav)] px-3 pt-2 pb-[calc(var(--pf-bottom-buffer)+env(safe-area-inset-bottom))]"
+      className="pf-safe-bottom grid shrink-0 grid-cols-5 border-t border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
     >
       {destinations.map((destination) => {
         const current = isCurrentDestination(pathname, destination);
@@ -55,13 +55,13 @@ export function BottomNavigation() {
             href={destination.href}
             aria-current={current ? "page" : undefined}
             className={classNames(
-              "flex min-h-[var(--pf-size-bottom-nav)] min-w-11 flex-col items-center justify-center gap-1 rounded-2xl text-[10.5px] font-semibold transition-[background-color,color] duration-[var(--pf-mo-base)] ease-linear",
+              "flex min-h-[var(--pf-size-bottom-nav)] min-w-11 flex-col items-center justify-center gap-1 text-[length:var(--pf-type-badge-size)] font-semibold tracking-[0.08em] uppercase",
               current
-                ? "bg-[var(--pf-accent)] text-[var(--pf-on-accent)]"
-                : "text-[var(--pf-text-4)]",
+                ? "text-[var(--pf-accent-strong)]"
+                : "text-[var(--pf-text-3-deep)]",
             )}
           >
-            <Icon name={destination.icon} size={20} />
+            <Icon name={destination.icon} size={19} />
             <span>{destination.label}</span>
           </Link>
         );
@@ -82,7 +82,7 @@ export function MainShell({ children }: { children: ReactNode }) {
       )}
     >
       <ToastProvider>
-        <main id="pf-scroll" className="pf-scroll flex min-h-0 flex-1 flex-col">
+        <main id="pf-scroll" className="pf-scroll flex-1">
           {children}
         </main>
       </ToastProvider>

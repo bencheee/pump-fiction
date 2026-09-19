@@ -18,9 +18,8 @@ ADRs preserve important cross-cutting product and technical decisions. Removed n
 | [0026](0026-two-exercise-types-with-assistance-under-bodyweight.md) | Accepted | Two exercise types; assistance becomes a bodyweight option and supersedes the ADR-0023 type table |
 | [0027](0027-a-set-is-recorded-by-its-values.md) | Accepted | Explicit set confirmation is removed; a set counts once its values are complete |
 | [0029](0029-one-visibility-rule-for-test-support-routes.md) | Accepted | Both test-support routes are hidden unless `PF_ENABLE_TEST_SUPPORT` is set, so one production server runs the whole browser suite |
-| [0030](0030-body-is-its-own-destination.md) | Superseded in part | Body is the fifth destination; ADR-0032 reverses the rule that it never creates |
+| [0030](0030-body-is-its-own-destination.md) | Accepted | Weight and body measurements become a fifth destination that reads and corrects; today's values are entered on Today |
 | [0031](0031-shared-password-protects-the-hosted-application.md) | Accepted | One shared password gates the hosted application; the database stays closed by grant rather than by Row Level Security |
-| [0032](0032-redesigned-mobile-visual-language.md) | Accepted | The 2026-09-19 redesign governs the visual language, the workout queue, full-screen panels, picked-then-committed actions, and recording in Body |
 
 ## Lifecycle
 

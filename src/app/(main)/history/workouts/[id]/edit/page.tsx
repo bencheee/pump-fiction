@@ -23,7 +23,7 @@ export default async function EditHistoryWorkoutPage({
 
   if (!workoutResult.ok) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-full flex-col">
         <TopBar
           title="Edit workout"
           backHref={`/history/workouts/${id}`}

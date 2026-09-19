@@ -4,16 +4,8 @@ import { useMemo, useState } from "react";
 
 import { formatSetSummary } from "@/features/active-workout/ui/workout-presentation";
 import type { ExerciseHistoryEntry } from "@/features/history/domain/exercise-statistics";
-import {
-  Badge,
-  EmptyState,
-  ListRow,
-  PageFrame,
-  SearchField,
-} from "@/shared/ui";
+import { Badge, EmptyState, ListRow, PageFrame, TextField } from "@/shared/ui";
 
-import { HistoryCount } from "../history-count";
-import { HistoryNavigation } from "../history-navigation";
 import { formatHistoryDate } from "../history-presentation";
 
 /**
@@ -38,29 +30,22 @@ export function ExerciseHistoryList({
   );
 
   return (
-    <PageFrame
-      title="History"
-      action={<HistoryCount count={entries.length} noun="exercise" />}
-      pinned={<HistoryNavigation />}
-      className="gap-3 pt-4.5"
-    >
+    <PageFrame title="Exercises" className="pt-6">
       {entries.length === 0 ? (
         <EmptyState
-          icon="dumbbell"
           title="No exercise history yet"
           body="Record a set in a workout and that exercise appears here."
         />
       ) : (
         <>
-          <SearchField
+          <TextField
             id="exercise-search"
-            label="Filter exercises by name"
+            label="Search"
             type="search"
             autoComplete="off"
             placeholder="Filter by name"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            onClear={() => setQuery("")}
           />
           {matches.length === 0 ? (
             <EmptyState
@@ -69,10 +54,9 @@ export function ExerciseHistoryList({
             />
           ) : (
             <ul className="flex flex-col gap-2">
-              {matches.map((entry, index) => (
+              {matches.map((entry) => (
                 <li key={entry.exerciseIdentityId}>
                   <ListRow
-                    index={index}
                     href={`/history/exercises/${entry.exerciseIdentityId}`}
                     title={entry.exerciseName}
                     detail={
