@@ -22,7 +22,9 @@ import {
 } from "@/features/exercises/domain/exercise";
 import { validateExerciseDefinition } from "@/features/exercises/domain/exercise-validation";
 import {
-  Action,
+  ActionOverlay,
+  ActionsTrigger,
+  Badge,
   DestructiveDialog,
   Icon,
   SaveStatus,
@@ -32,6 +34,7 @@ import {
   TopBar,
   useSaveOutcome,
   useSavedSnapshot,
+  useTransientOverlay,
   type SavePhase,
 } from "@/shared/ui";
 
@@ -162,15 +165,19 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     returnToParent("Exercise deleted.");
   }
 
+  const confirmDelete = useTransientOverlay();
+  const dirty = saveState === "unsaved";
+
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
-        title={exercise ? "Edit Exercise" : "New Exercise"}
+        title={exercise ? "Exercise" : "New exercise"}
         backHref="/exercises"
         backLabel="Exercises"
+        trailing={dirty ? <Badge tone="accent">Unsaved</Badge> : undefined}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
+      <main className="pf-scroll flex min-h-0 flex-1 flex-col px-[var(--pf-gutter)] pt-1.5">
+        <div className="space-y-5.5">
           <TextField
             id="exercise-name"
             label="Name"
@@ -185,7 +192,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
           />
 
           <fieldset disabled={isSaving}>
-            <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
+            <legend className="mb-2.5 text-[length:var(--pf-type-label-size)] font-semibold tracking-[0.1em] text-[var(--pf-text-4)] uppercase">
               Type
             </legend>
             <div
@@ -199,10 +206,10 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
                   type="button"
                   aria-pressed={baseType === type}
                   onClick={() => chooseType(type)}
-                  className={`min-h-14 rounded-[var(--pf-r2)] border px-3 font-semibold ${
+                  className={`min-h-14 rounded-[var(--pf-r2)] border px-3 text-[15.5px] font-semibold transition-[background-color,border-color,color] duration-[var(--pf-mo-base)] ease-linear ${
                     baseType === type
-                      ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent-strong)]"
-                      : "border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)]"
+                      ? "border-[var(--pf-accent)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent)]"
+                      : "border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
                   }`}
                 >
                   {exerciseTypeLabels[type]}
@@ -212,7 +219,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
           </fieldset>
 
           <fieldset disabled={isSaving}>
-            <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
+            <legend className="mb-2.5 text-[length:var(--pf-type-label-size)] font-semibold tracking-[0.1em] text-[var(--pf-text-4)] uppercase">
               Set measurement
             </legend>
             <div
@@ -229,10 +236,10 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
                     setMeasurementType(type);
                     markChanged("measurementType");
                   }}
-                  className={`min-h-14 rounded-[var(--pf-r2)] border px-3 font-semibold ${
+                  className={`min-h-14 rounded-[var(--pf-r2)] border px-3 text-[15.5px] font-semibold transition-[background-color,border-color,color] duration-[var(--pf-mo-base)] ease-linear ${
                     measurementType === type
-                      ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent-strong)]"
-                      : "border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)]"
+                      ? "border-[var(--pf-accent)] bg-[var(--pf-accent-dim)] text-[var(--pf-accent)]"
+                      : "border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
                   }`}
                 >
                   {type === "reps" ? "Reps" : "Seconds"}
@@ -247,7 +254,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
           </fieldset>
 
           <fieldset disabled={isSaving}>
-            <legend className="mb-2 text-[11px] font-semibold tracking-[0.1em] uppercase">
+            <legend className="mb-2.5 text-[length:var(--pf-type-label-size)] font-semibold tracking-[0.1em] text-[var(--pf-text-4)] uppercase">
               Optional per-set additions
             </legend>
             <p className="mb-2 text-[12.5px] text-[var(--pf-text-2)]">
@@ -269,18 +276,18 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
                         : undefined
                     }
                     onClick={() => toggleMode(mode)}
-                    className={`flex min-h-16 w-full items-center gap-3 rounded-[var(--pf-r2)] border p-3 text-left ${
+                    className={`flex min-h-[66px] w-full items-center gap-3.5 rounded-[var(--pf-r3)] border px-[18px] py-3 text-left transition-[background-color,border-color] duration-[var(--pf-mo-fast)] ease-linear ${
                       selected
-                        ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent-dim)]"
-                        : "border-[var(--pf-border-control)] bg-[var(--pf-bg-surface)]"
+                        ? "border-[var(--pf-accent)] bg-[var(--pf-accent-dim)]"
+                        : "border-[var(--pf-border)] bg-[var(--pf-bg-surface)]"
                     }`}
                   >
                     <span
                       aria-hidden="true"
-                      className={`flex size-5 shrink-0 items-center justify-center rounded border ${
+                      className={`flex size-[26px] shrink-0 items-center justify-center rounded-full border ${
                         selected
-                          ? "border-[var(--pf-accent-strong)] bg-[var(--pf-accent)] text-[var(--pf-on-accent)]"
-                          : "border-[var(--pf-border-control)]"
+                          ? "border-[var(--pf-accent)] bg-[var(--pf-accent)] text-[var(--pf-on-accent)]"
+                          : "border-[var(--pf-border-strong)]"
                       }`}
                     >
                       {selected ? <Icon name="check" size={14} /> : null}
@@ -349,23 +356,51 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
             validationMessage={saveMessage}
             onRetry={() => void save()}
           />
-          <Action disabled={isSaving} onClick={() => void save()}>
-            Save Exercise
-          </Action>
-          {exercise ? (
-            <DestructiveDialog
-              title="Delete exercise?"
-              description={deleteDescription(exercise.splitUsageCount)}
-              confirmLabel="Delete Exercise"
-              onConfirm={() => void remove()}
-              trigger={
-                <Action variant="danger" disabled={isSaving}>
-                  Delete Exercise
-                </Action>
-              }
-            />
-          ) : null}
+          <ActionOverlay
+            trigger={
+              <ActionsTrigger
+                label="Exercise actions"
+                tone={dirty ? "accent" : "muted"}
+                disabled={isSaving}
+              />
+            }
+            title={name.trim() === "" ? "New exercise" : name}
+            meta={
+              exercise
+                ? `Used in ${exercise.splitUsageCount} ${exercise.splitUsageCount === 1 ? "split" : "splits"}`
+                : undefined
+            }
+            actions={[
+              {
+                key: "save",
+                label: exercise ? "Save changes" : "Save exercise",
+                icon: "check",
+                onRun: () => void save(),
+              },
+              ...(exercise
+                ? [
+                    {
+                      key: "delete",
+                      label: "Delete this exercise",
+                      icon: "trash-2" as const,
+                      onRun: () => confirmDelete.requestOpenChange(true),
+                    },
+                  ]
+                : []),
+            ]}
+          />
         </StickyActionBar>
+
+        <DestructiveDialog
+          open={confirmDelete.open}
+          onOpenChange={confirmDelete.requestOpenChange}
+          title="Delete exercise?"
+          description={
+            exercise ? deleteDescription(exercise.splitUsageCount) : ""
+          }
+          confirmLabel="Delete exercise"
+          onConfirm={() => void remove()}
+        />
       </main>
     </div>
   );

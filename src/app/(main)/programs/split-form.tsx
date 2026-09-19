@@ -17,22 +17,30 @@ import type {
 import { validateSplitDefinition } from "@/features/programs/domain/program-validation";
 import {
   Action,
+  ActionOverlay,
+  ActionsTrigger,
+  Badge,
+  CompactStepper,
   DestructiveDialog,
   EmptyState,
   Icon,
-  NumericField,
+  Kicker,
+  Overlay,
   SaveStatus,
-  Sheet,
+  ScreenBody,
   StickyActionBar,
   TextField,
   TopBar,
+  useReorder,
   useSaveOutcome,
   useSavedSnapshot,
   useToast,
+  useTransientOverlay,
   type SavePhase,
 } from "@/shared/ui";
 
 type FieldErrors = Readonly<Record<string, readonly string[]>>;
+type PrescriptionField = "plannedSets" | "minReps" | "maxReps";
 type DraftPrescription = Omit<
   SplitExercisePrescription,
   "position" | "plannedSets" | "minReps" | "maxReps"
@@ -108,7 +116,7 @@ export function SplitForm({
 
   function updatePrescription(
     index: number,
-    field: "plannedSets" | "minReps" | "maxReps",
+    field: PrescriptionField,
     value: string,
   ) {
     setPrescriptions((current) =>
@@ -126,15 +134,13 @@ export function SplitForm({
     changed("exercises");
   }
 
-  async function moveExercise(index: number, direction: -1 | 1) {
-    const destination = index + direction;
-    if (destination < 0 || destination >= prescriptions.length) return;
+  async function moveExerciseTo(from: number, to: number) {
+    if (to < 0 || to >= prescriptions.length || to === from) return;
     const previous = [...prescriptions];
     const reordered = [...prescriptions];
-    [reordered[index], reordered[destination]] = [
-      reordered[destination]!,
-      reordered[index]!,
-    ];
+    const [moved] = reordered.splice(from, 1);
+    if (!moved) return;
+    reordered.splice(to, 0, moved);
     setPrescriptions(reordered);
     if (!split) {
       showToast("Order updated. Save the split to keep it.");
@@ -208,243 +214,319 @@ export function SplitForm({
   const successor = split ? successorAfter(program, split.id) : undefined;
 
   return (
-    <div className="flex min-h-full flex-col">
+    <SplitFormBody
+      split={split}
+      program={program}
+      name={name}
+      setName={setName}
+      prescriptions={prescriptions}
+      remainingExercises={remainingExercises}
+      exerciseLibrary={exerciseLibrary}
+      errors={errors}
+      busy={busy}
+      saveState={saveState}
+      message={message}
+      canDelete={canDelete}
+      successorName={successor?.name}
+      onChanged={changed}
+      onSave={() => void save()}
+      onDelete={() => void remove()}
+      onAdd={addExercise}
+      onRemove={removeExercise}
+      onMove={(from, to) => void moveExerciseTo(from, to)}
+      onUpdate={updatePrescription}
+    />
+  );
+}
+
+function SplitFormBody({
+  split,
+  program,
+  name,
+  setName,
+  prescriptions,
+  remainingExercises,
+  exerciseLibrary,
+  errors,
+  busy,
+  saveState,
+  message,
+  canDelete,
+  successorName,
+  onChanged,
+  onSave,
+  onDelete,
+  onAdd,
+  onRemove,
+  onMove,
+  onUpdate,
+}: {
+  split?: Split;
+  program: Program;
+  name: string;
+  setName: (value: string) => void;
+  prescriptions: readonly DraftPrescription[];
+  remainingExercises: readonly Exercise[];
+  exerciseLibrary: readonly Exercise[];
+  errors: Readonly<Record<string, readonly string[] | undefined>>;
+  busy: boolean;
+  saveState: "clean" | "unsaved" | "saving" | "failure";
+  message?: string;
+  canDelete: boolean;
+  successorName?: string;
+  onChanged: (field: string) => void;
+  onSave: () => void;
+  onDelete: () => void;
+  onAdd: (exercise: Exercise, close: () => void) => void;
+  onRemove: (index: number) => void;
+  onMove: (from: number, to: number) => void;
+  onUpdate: (index: number, field: PrescriptionField, value: string) => void;
+}) {
+  const confirmDelete = useTransientOverlay();
+  const reorder = useReorder({ count: prescriptions.length, onMove });
+  const dirty = saveState === "unsaved";
+
+  const countLabel = (exerciseId: string) =>
+    exerciseLibrary.find((exercise) => exercise.id === exerciseId)
+      ?.measurementType === "seconds"
+      ? "sec"
+      : "reps";
+
+  const step = (
+    index: number,
+    field: PrescriptionField,
+    value: string,
+    delta: number,
+  ) => {
+    const next = Math.max(1, (Number(value) || 0) + delta);
+    onUpdate(index, field, String(next));
+  };
+
+  return (
+    <div className="flex min-h-0 flex-1 flex-col">
       <TopBar
-        title={split ? "Edit Split" : "New Split"}
+        title={split ? "Split" : "New split"}
         backHref={`/programs/${program.id}/edit`}
         backLabel={program.name}
+        trailing={dirty ? <Badge tone="accent">Unsaved</Badge> : undefined}
       />
-      <main className="flex flex-1 flex-col px-[var(--pf-gutter)] pt-5">
-        <div className="space-y-6">
-          <TextField
-            id="split-name"
-            label="Split name"
-            value={name}
-            error={errors.name?.[0]}
-            disabled={busy}
-            autoComplete="off"
-            onChange={(event) => {
-              setName(event.target.value);
-              changed("name");
-            }}
+      <ScreenBody className="gap-2.5">
+        <TextField
+          id="split-name"
+          label="Split name"
+          value={name}
+          error={errors.name?.[0]}
+          disabled={busy}
+          autoComplete="off"
+          onChange={(event) => {
+            setName(event.target.value);
+            onChanged("name");
+          }}
+        />
+
+        <div className="mt-1.5 flex min-h-11 items-center justify-between gap-3">
+          <Kicker>Prescription · {prescriptions.length}</Kicker>
+          {prescriptions.length > 1 ? (
+            <span className="text-[12px] text-[var(--pf-text-3)]">
+              Hold to reorder
+            </span>
+          ) : null}
+        </div>
+
+        {prescriptions.length === 0 ? (
+          <EmptyState
+            icon="dumbbell"
+            title="No exercises yet"
+            body={
+              exerciseLibrary.length === 0
+                ? "Add an active Exercise Library definition first."
+                : "Add exercises, then set the planned sets and rep range for each."
+            }
           />
+        ) : (
+          prescriptions.map((item, index) => {
+            const row = reorder.row(index);
+            const unit = countLabel(item.exerciseId);
 
-          <section aria-labelledby="exercise-prescriptions-title">
-            <div className="mb-2 flex min-h-11 items-center justify-between gap-3">
-              <h2
-                id="exercise-prescriptions-title"
-                className="text-[11px] font-semibold tracking-[0.1em] uppercase"
+            return (
+              <section
+                key={item.exerciseId}
+                {...row}
+                aria-label={item.exerciseName}
+                className="relative cursor-grab rounded-[var(--pf-r4)] border border-transparent bg-[var(--pf-bg-surface)] pt-3.5 pr-3 pb-4 pl-[18px]"
               >
-                Prescription · {prescriptions.length}
-              </h2>
-              {remainingExercises.length > 0 ? (
-                <Sheet
-                  title="Add exercise"
-                  description="Only active Exercise Library definitions are available."
-                  trigger={
-                    <button
-                      type="button"
-                      className="inline-flex min-h-11 items-center gap-2 rounded-[var(--pf-r2)] px-2 font-semibold text-[var(--pf-accent-strong)]"
-                    >
-                      <Icon name="plus" size={16} /> Add Exercise
-                    </button>
-                  }
-                >
-                  {(close) => (
-                    <div className="space-y-2">
-                      {remainingExercises.map((exercise) => (
-                        <Action
-                          key={exercise.id}
-                          variant="secondary"
-                          className="w-full justify-start"
-                          onClick={() => addExercise(exercise, close)}
-                        >
-                          {exercise.name}
-                        </Action>
-                      ))}
-                    </div>
-                  )}
-                </Sheet>
-              ) : null}
-            </div>
-
-            {prescriptions.length === 0 ? (
-              <EmptyState
-                title="No exercises yet"
-                body={
-                  exerciseLibrary.length === 0
-                    ? "Add an active Exercise Library definition first."
-                    : "Add exercises and define sets and rep ranges."
-                }
-              />
-            ) : (
-              <div className="space-y-3">
-                {prescriptions.map((item, index) => (
-                  <article
-                    key={item.exerciseId}
-                    className="rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] p-3"
+                <div className="flex items-center gap-2">
+                  <h3 className="min-w-0 flex-1 text-[15.5px] leading-[1.25] font-semibold [text-wrap:pretty]">
+                    {item.exerciseName}
+                  </h3>
+                  <button
+                    type="button"
+                    aria-label={`Remove ${item.exerciseName}`}
+                    disabled={busy}
+                    onClick={() => onRemove(index)}
+                    className="flex size-11 shrink-0 items-center justify-center rounded-full text-[var(--pf-text-4)] transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:text-[var(--pf-text-2)] disabled:opacity-[var(--pf-opacity-disabled)]"
                   >
-                    <div className="flex min-h-11 items-center gap-2">
-                      <Icon
-                        name="grip-vertical"
-                        size={18}
-                        className="text-[var(--pf-text-3-deep)]"
-                      />
-                      <h3 className="min-w-0 flex-1 font-semibold [overflow-wrap:anywhere]">
-                        {item.exerciseName}
-                      </h3>
-                      <button
-                        type="button"
-                        aria-label={`Move ${item.exerciseName} up`}
-                        disabled={busy || index === 0}
-                        onClick={() => void moveExercise(index, -1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
-                      >
-                        <Icon name="arrow-up" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Move ${item.exerciseName} down`}
-                        disabled={busy || index === prescriptions.length - 1}
-                        onClick={() => void moveExercise(index, 1)}
-                        className="flex size-11 items-center justify-center disabled:opacity-[var(--pf-opacity-disabled)]"
-                      >
-                        <Icon name="arrow-down" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Remove ${item.exerciseName}`}
-                        disabled={busy}
-                        onClick={() => removeExercise(index)}
-                        className="flex size-11 items-center justify-center text-[var(--pf-danger)] disabled:opacity-[var(--pf-opacity-disabled)]"
-                      >
-                        <Icon name="x" size={18} />
-                      </button>
-                    </div>
-                    <div className="mt-3 grid grid-cols-3 gap-2">
-                      <NumericField
-                        id={`sets-${index}`}
-                        label="Sets"
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.plannedSets}
-                        error={errors[`exercises.${index}.plannedSets`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "plannedSets",
-                            event.target.value,
-                          )
-                        }
-                      />
-                      <NumericField
-                        id={`min-reps-${index}`}
-                        label={
-                          exerciseLibrary.find(
-                            (exercise) => exercise.id === item.exerciseId,
-                          )?.measurementType === "seconds"
-                            ? "Min seconds"
-                            : "Min reps"
-                        }
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.minReps}
-                        error={errors[`exercises.${index}.minReps`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "minReps",
-                            event.target.value,
-                          )
-                        }
-                      />
-                      <NumericField
-                        id={`max-reps-${index}`}
-                        label={
-                          exerciseLibrary.find(
-                            (exercise) => exercise.id === item.exerciseId,
-                          )?.measurementType === "seconds"
-                            ? "Max seconds"
-                            : "Max reps"
-                        }
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.maxReps}
-                        error={errors[`exercises.${index}.maxReps`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "maxReps",
-                            event.target.value,
-                          )
-                        }
-                      />
-                    </div>
-                  </article>
+                    <Icon name="x" size={15} />
+                  </button>
+                </div>
+                <div className="mt-1.5 grid grid-cols-3 gap-2">
+                  <CompactStepper
+                    label="Sets"
+                    value={item.plannedSets}
+                    decrementLabel={`One set fewer for ${item.exerciseName}`}
+                    incrementLabel={`One set more for ${item.exerciseName}`}
+                    onDecrement={() =>
+                      step(index, "plannedSets", item.plannedSets, -1)
+                    }
+                    onIncrement={() =>
+                      step(index, "plannedSets", item.plannedSets, 1)
+                    }
+                  />
+                  <CompactStepper
+                    label={`Min ${unit}`}
+                    value={item.minReps}
+                    decrementLabel={`Fewer minimum ${unit} for ${item.exerciseName}`}
+                    incrementLabel={`More minimum ${unit} for ${item.exerciseName}`}
+                    onDecrement={() => step(index, "minReps", item.minReps, -1)}
+                    onIncrement={() => step(index, "minReps", item.minReps, 1)}
+                  />
+                  <CompactStepper
+                    label={`Max ${unit}`}
+                    value={item.maxReps}
+                    decrementLabel={`Fewer maximum ${unit} for ${item.exerciseName}`}
+                    incrementLabel={`More maximum ${unit} for ${item.exerciseName}`}
+                    onDecrement={() => step(index, "maxReps", item.maxReps, -1)}
+                    onIncrement={() => step(index, "maxReps", item.maxReps, 1)}
+                  />
+                </div>
+                {prescriptionErrors(errors, index).map((text) => (
+                  <p
+                    key={text}
+                    role="alert"
+                    className="mt-2 text-[12.5px] font-medium text-[var(--pf-danger)]"
+                  >
+                    {text}
+                  </p>
+                ))}
+              </section>
+            );
+          })
+        )}
+
+        {errors.exercises ? (
+          <p
+            role="alert"
+            className="text-[12.5px] font-medium text-[var(--pf-danger)]"
+          >
+            {errors.exercises[0]}
+          </p>
+        ) : null}
+
+        {remainingExercises.length > 0 ? (
+          <Overlay
+            title="Add exercise"
+            description="Only active Exercise Library definitions are available."
+            trigger={
+              <Action variant="accent" className="mt-1" disabled={busy}>
+                <Icon name="plus" size={17} />
+                Add exercise
+              </Action>
+            }
+          >
+            {(close) => (
+              <div className="flex flex-col gap-2">
+                {remainingExercises.map((exercise) => (
+                  <button
+                    key={exercise.id}
+                    type="button"
+                    onClick={() => onAdd(exercise, close)}
+                    className="flex min-h-[68px] items-center gap-3.5 rounded-[var(--pf-r3)] border border-[var(--pf-border)] bg-[var(--pf-bg-surface)] px-[18px] py-3.5 text-left transition-colors duration-[var(--pf-mo-fast)] ease-linear hover:border-[var(--pf-border-strong)]"
+                  >
+                    <span className="min-w-0 flex-1 text-[15.5px] font-semibold [text-wrap:pretty]">
+                      {exercise.name}
+                    </span>
+                    <Icon
+                      name="plus"
+                      size={16}
+                      className="shrink-0 text-[var(--pf-accent)]"
+                    />
+                  </button>
                 ))}
               </div>
             )}
-            {errors.exercises ? (
-              <p
-                role="alert"
-                className="mt-2 text-[12.5px] font-medium text-[var(--pf-danger)]"
-              >
-                {errors.exercises[0]}
-              </p>
-            ) : null}
-            <p className="mt-3 text-[12.5px] text-[var(--pf-text-2)]">
-              Prescriptions seed future workouts. Saved workouts keep their
-              snapshots.
-            </p>
-          </section>
-        </div>
+          </Overlay>
+        ) : null}
 
-        <StickyActionBar>
-          <SaveStatus
-            state={saveState}
-            validationMessage={message}
-            onRetry={() => void save()}
-          />
-          <Action disabled={busy} onClick={() => void save()}>
-            Save Split
-          </Action>
-          {split && canDelete ? (
-            <DestructiveDialog
-              title="Delete split?"
-              description={
-                program.nextSplitId === split.id && successor
-                  ? `The next split moves to ${successor.name}. Workouts already recorded keep this split in History.`
-                  : "Workouts already recorded keep this split in History."
-              }
-              confirmLabel="Delete Split"
-              onConfirm={() => void remove()}
-              trigger={
-                <Action variant="danger" disabled={busy}>
-                  Delete Split
-                </Action>
-              }
+        <p className="mt-1.5 text-[12.5px] leading-[1.5] text-[var(--pf-text-4)]">
+          Prescriptions seed future workouts. Saved workouts keep their
+          snapshots.
+        </p>
+      </ScreenBody>
+
+      <StickyActionBar>
+        <SaveStatus
+          state={saveState}
+          validationMessage={message}
+          onRetry={onSave}
+        />
+        <ActionOverlay
+          trigger={
+            <ActionsTrigger
+              label="Split actions"
+              tone={dirty ? "accent" : "muted"}
+              disabled={busy}
             />
-          ) : null}
-          {split && !canDelete ? (
-            <div>
-              <Action variant="danger" className="w-full" disabled>
-                Delete Split
-              </Action>
-              <p className="mt-2 text-center text-[12.5px] text-[var(--pf-text-2)]">
-                The current program must keep at least one split.
-              </p>
-            </div>
-          ) : null}
-        </StickyActionBar>
-      </main>
+          }
+          title={name.trim() === "" ? "New split" : name}
+          meta={`${prescriptions.length} ${prescriptions.length === 1 ? "exercise" : "exercises"}`}
+          actions={[
+            {
+              key: "save",
+              label: split ? "Save changes" : "Save split",
+              icon: "check",
+              onRun: onSave,
+            },
+            ...(split
+              ? [
+                  {
+                    key: "delete",
+                    label: canDelete
+                      ? "Delete this split"
+                      : "Delete — the current program must keep at least one split",
+                    icon: "trash-2" as const,
+                    disabled: !canDelete,
+                    onRun: () => confirmDelete.requestOpenChange(true),
+                  },
+                ]
+              : []),
+          ]}
+        />
+      </StickyActionBar>
+
+      <DestructiveDialog
+        open={confirmDelete.open}
+        onOpenChange={confirmDelete.requestOpenChange}
+        title="Delete split?"
+        description={
+          split && program.nextSplitId === split.id && successorName
+            ? `The next split moves to ${successorName}. Workouts already recorded keep this split in History.`
+            : "Workouts already recorded keep this split in History."
+        }
+        confirmLabel="Delete split"
+        onConfirm={onDelete}
+      />
     </div>
   );
+}
+
+/** Every message the prescription's own fields produced, in field order. */
+function prescriptionErrors(
+  errors: Readonly<Record<string, readonly string[] | undefined>>,
+  index: number,
+): string[] {
+  return (["plannedSets", "minReps", "maxReps"] as const)
+    .map((field) => errors[`exercises.${index}.${field}`]?.[0])
+    .filter((text): text is string => text !== undefined);
 }
 
 const validationMessage = "Check the highlighted fields.";

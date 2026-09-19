@@ -97,6 +97,15 @@ const exercises: Exercise[] = split.exercises.map((item) => ({
   splitUsageCount: 1,
 }));
 
+/** A split's actions live behind the same `···` panel. */
+async function saveSplit(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole("button", { name: "Split actions" }));
+  await user.click(
+    screen.getByRole("button", { name: /^Save (split|changes)$/ }),
+  );
+  await user.click(screen.getByRole("button", { name: "Continue" }));
+}
+
 /** The program's own actions live behind the `···` panel and a Continue step. */
 async function saveProgram(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole("button", { name: "Program actions" }));
@@ -147,12 +156,12 @@ describe("Programs mobile forms", () => {
       <SplitForm program={program} split={split} exerciseLibrary={exercises} />,
     );
 
-    const maxReps = screen.getAllByLabelText("Max reps", {
-      selector: "input",
+    // 12 down to 7, which is below the minimum of 8.
+    const fewer = screen.getAllByRole("button", {
+      name: "Fewer maximum reps for Press",
     })[0]!;
-    await user.clear(maxReps);
-    await user.type(maxReps, "4");
-    await user.click(screen.getByRole("button", { name: "Save Split" }));
+    for (let step = 0; step < 5; step += 1) await user.click(fewer);
+    await saveSplit(user);
 
     expect(
       screen.getByText("Maximum reps must be at least the minimum reps."),
@@ -171,17 +180,20 @@ describe("Programs mobile forms", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Move Press down" }));
+    screen.getByRole("region", { name: "Press" }).focus();
+    await user.keyboard("{ArrowDown}");
 
     expect(actions.reorderExercises).toHaveBeenCalledWith(splitAId, [
       exerciseBId,
       exerciseAId,
     ]);
     expect(screen.getByText("Order saved.")).toBeVisible();
-    expect(screen.getByRole("button", { name: "Delete Split" })).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Split actions" }));
     expect(
-      screen.getByText("The current program must keep at least one split."),
-    ).toBeVisible();
+      screen.getByRole("button", {
+        name: "Delete — the current program must keep at least one split",
+      }),
+    ).toBeDisabled();
   });
 
   it("deletes a split of a program that keeps another one", async () => {
@@ -191,12 +203,14 @@ describe("Programs mobile forms", () => {
       <SplitForm program={program} split={split} exerciseLibrary={exercises} />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Delete Split" }));
+    await user.click(screen.getByRole("button", { name: "Split actions" }));
+    await user.click(screen.getByRole("button", { name: "Delete this split" }));
+    await user.click(screen.getByRole("button", { name: "Continue" }));
     const dialog = await screen.findByRole("alertdialog", {
       name: "Delete split?",
     });
     await user.click(
-      within(dialog).getByRole("button", { name: "Delete Split" }),
+      within(dialog).getByRole("button", { name: "Delete split" }),
     );
 
     expect(actions.deleteSplit).toHaveBeenCalledWith(splitAId);
@@ -232,7 +246,7 @@ describe("Programs mobile forms", () => {
 
     expect(screen.getByText("Unsaved changes")).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Save Split" }));
+    await saveSplit(user);
 
     expect(router.replace).toHaveBeenCalledWith(`/programs/${programId}/edit`);
     expect(screen.getByText("Split saved.")).toBeVisible();
