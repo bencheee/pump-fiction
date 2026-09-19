@@ -163,7 +163,7 @@ describe("ExerciseForm", () => {
 
     expect(actions.create).toHaveBeenCalledTimes(1);
     expect(router.replace).toHaveBeenCalledWith("/exercises");
-    expect(screen.getByText("Exercise saved.")).toBeVisible();
+    expect(await screen.findByText("Exercise saved.")).toBeVisible();
   });
 
   it("keeps the form open and reports a failed save", async () => {

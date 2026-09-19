@@ -230,7 +230,7 @@ describe("Programs mobile forms", () => {
     await saveProgram(user);
 
     expect(router.replace).toHaveBeenCalledWith("/programs");
-    expect(screen.getByText("Program saved.")).toBeVisible();
+    expect(await screen.findByText("Program saved.")).toBeVisible();
   });
 
   it("returns to its program with a toast after saving a split", async () => {
@@ -249,6 +249,6 @@ describe("Programs mobile forms", () => {
     await saveSplit(user);
 
     expect(router.replace).toHaveBeenCalledWith(`/programs/${programId}/edit`);
-    expect(screen.getByText("Split saved.")).toBeVisible();
+    expect(await screen.findByText("Split saved.")).toBeVisible();
   });
 });
