@@ -42,8 +42,8 @@ test.describe("Body experience", () => {
       await expect(page).toHaveURL(/\/body\/measurements\/[0-9a-f-]+$/);
       for (const label of ["Latest", "Latest change", "Total change"])
         await expect(page.getByText(label, { exact: true })).toBeVisible();
-      await expect(page.getByText(/3 entries/)).toBeVisible();
-      await page.getByText("Chart values").click();
+      await expect(page.getByText(/3 entries in range/)).toBeVisible();
+      await page.getByRole("button", { name: "Chart values" }).click();
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("85 cm"),
       ).toBeVisible();
@@ -59,12 +59,15 @@ test.describe("Body experience", () => {
       ).toBeVisible();
       await page.getByRole("button", { name: "All" }).click();
 
-      // Body reads and corrects; it never creates. ADR-0030 moved creation to
-      // Today, and per-type-and-date uniqueness stays in the database, covered
-      // by its own pgTAP suite.
-      await expect(page.getByRole("link", { name: "Add entry" })).toHaveCount(
-        0,
-      );
+      // ADR-0032 gave Body its entry panel and date picker. Per-type-and-date
+      // uniqueness stays in the database, covered by its own pgTAP suite.
+      await page.getByRole("button", { name: "Record measurement" }).click();
+      const entryPanel = page.getByRole("dialog", { name: /^Record / });
+      await expect(entryPanel.getByLabel("Measurement (cm)")).toBeVisible();
+      await expect(
+        entryPanel.getByRole("button", { name: "Choose date" }),
+      ).toHaveCount(0);
+      await page.keyboard.press("Escape");
 
       // The unit is a label under the name, not a section of its own.
       await expect(page.getByText("Measured in centimetres")).toBeVisible();
@@ -98,7 +101,7 @@ test.describe("Body experience", () => {
 
       // S22 renames the measurement and keeps everything recorded for it, and
       // refuses to delete it while those entries exist.
-      await page.getByRole("link", { name: "Edit measurement" }).click();
+      await page.getByRole("link", { name: /^Edit / }).click();
       await expect(page).toHaveURL(
         /\/body\/measurements\/types\/[0-9a-f-]+\/edit$/,
       );
@@ -119,7 +122,7 @@ test.describe("Body experience", () => {
 
       // A measurement with nothing recorded can be deleted.
       await page.getByRole("link", { name: new RegExp(spare) }).click();
-      await page.getByRole("link", { name: "Edit measurement" }).click();
+      await page.getByRole("link", { name: /^Edit / }).click();
       await page.getByRole("button", { name: "Delete Measurement" }).click();
       await page
         .getByRole("alertdialog")

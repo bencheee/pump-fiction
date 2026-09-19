@@ -25,21 +25,16 @@ test.describe("Weight experience", () => {
       const newest = entries.getByRole("link").first();
       await expect(newest).toContainText("80.5 kg");
 
-      // The chart is never the only representation of its data, and its two
-      // series are named rather than distinguished by color alone.
+      // The chart is never the only representation of its data: the sentence
+      // under the bars and the value list carry the same numbers.
       await page.getByRole("button", { name: "Year" }).click();
-      await expect(page.getByText(/3 weigh-ins/)).toBeVisible();
-      const legend = page.getByRole("list", { name: "Chart legend" });
-      await expect(legend.getByText("Weight, solid line")).toBeVisible();
-      await expect(
-        legend.getByText("Weekly average, dashed line"),
-      ).toBeVisible();
-      await page.getByText("Chart values").click();
+      await expect(page.getByText(/3 weigh-ins in range/)).toBeVisible();
+      await page.getByRole("button", { name: "Chart values" }).click();
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("83 kg"),
       ).toBeVisible();
-      // Three weigh-ins now span two calendar weeks, so the list carries two
-      // rows rather than one.
+      // A bar series has one axis, so the weekly averages keep their own list.
+      await page.getByRole("button", { name: "Weekly averages" }).click();
       await expect(
         page
           .getByRole("list", { name: "Weekly averages" })
@@ -52,18 +47,21 @@ test.describe("Weight experience", () => {
       });
 
       // A range that excludes them says so instead of drawing an empty chart.
-      await page.getByRole("button", { name: "Week" }).click();
+      await page.getByRole("button", { name: "Week", exact: true }).click();
       await expect(
         page.getByText(/No weigh-in falls inside this range/),
       ).toBeVisible();
 
-      // Body reads and corrects; it never creates. ADR-0030 moved creation to
-      // Today, and per-date uniqueness stays where it always was, in the
-      // database, covered by its own pgTAP suite.
+      // ADR-0032 gave Body the add control and its date picker back, so a
+      // weigh-in can be recorded here on any past day.
+      await page.getByRole("button", { name: "Week", exact: true }).click();
+      await page.getByRole("button", { name: "Add weigh-in" }).first().click();
+      const entryPanel = page.getByRole("dialog", { name: "Add weigh-in" });
       await expect(
-        page.getByRole("link", { name: "Add weigh-in" }),
+        entryPanel.getByRole("button", { name: "Choose date" }),
       ).toHaveCount(0);
-      await expect(page.getByRole("link", { name: /add/i })).toHaveCount(0);
+      await expect(entryPanel.getByLabel("Weight (kg)")).toBeVisible();
+      await page.keyboard.press("Escape");
 
       // A correction recalculates the change the next weigh-in carries.
       await page.goto(`/body/weight/${created}/edit`);
@@ -117,9 +115,8 @@ function adminClient() {
 async function seedWeighIns() {
   const client = adminClient();
   await removeFixtures();
-  // Three, because Body creates none: ADR-0030 moved creation to Today, so
-  // the correction and deletion this scenario exercises need a third row that
-  // the screen itself can no longer add.
+  // Three rows, so the correction and the deletion this scenario exercises
+  // still leave a list behind them.
   for (const [entryDate, weightKg] of [
     [seeded.first, 82],
     [seeded.second, 83],

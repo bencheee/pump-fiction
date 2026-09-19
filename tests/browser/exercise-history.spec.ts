@@ -17,10 +17,14 @@ test.describe("Exercise History experience", () => {
       ).toBeVisible();
       // WebKit does not filter on Playwright's programmatic fill of a search
       // field, so the scenario types the way a person does.
-      await page.getByLabel("Search").pressSequentially("zzz-no-such-exercise");
+      await page
+        .getByLabel("Filter exercises by name")
+        .pressSequentially("zzz-no-such-exercise");
       await expect(page.getByText("No matching exercise")).toBeVisible();
-      await page.getByLabel("Search").clear();
-      await page.getByLabel("Search").pressSequentially(fixture.exercise);
+      await page.getByLabel("Filter exercises by name").clear();
+      await page
+        .getByLabel("Filter exercises by name")
+        .pressSequentially(fixture.exercise);
       await testInfo.attach(`history-exercises-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
@@ -38,8 +42,8 @@ test.describe("Exercise History experience", () => {
       await expect(page.getByText(/Highest reps in a set/)).toBeVisible();
 
       // The chart is never the only representation of its data.
-      await expect(page.getByText(/across 1 workout/)).toBeVisible();
-      await page.getByText("Chart values").click();
+      await expect(page.getByText(/1 workout in range/)).toBeVisible();
+      await page.getByRole("button", { name: "Chart values" }).click();
       // The same load also reads "80 kg" in the reps-per-load list, so the
       // assertion names the list it means.
       await expect(
@@ -50,15 +54,13 @@ test.describe("Exercise History experience", () => {
 
       // The metric and range selectors reload the series.
       await page.getByRole("button", { name: "Workout volume" }).click();
-      await expect(page.getByText(/Workout volume across/)).toBeVisible();
+      await expect(page.getByText(/workout in range/)).toBeVisible();
       await page.getByRole("button", { name: "Week" }).click();
       await expect(
         page.getByText(/No workout falls inside this range/),
       ).toBeVisible();
       await page.getByRole("button", { name: "All" }).click();
-      await expect(
-        page.getByText(/Workout volume across 1 workout/),
-      ).toBeVisible();
+      await expect(page.getByText(/1 workout in range/)).toBeVisible();
       await testInfo.attach(`history-exercise-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",

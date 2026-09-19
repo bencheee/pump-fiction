@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
 
-import { fillHydrated } from "./support/hydration";
+import { fillHydrated, runScreenAction } from "./support/hydration";
 
 test.describe("programs mobile experience", () => {
   test("creates, validates, makes current, reorders, advances on deletion, and deletes", async ({
@@ -19,7 +19,7 @@ test.describe("programs mobile experience", () => {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
         await fillHydrated(page.getByLabel("Name"), exercise);
-        await page.getByRole("button", { name: "Save Exercise" }).click();
+        await runScreenAction(page, "Exercise actions", "Save exercise");
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
@@ -30,7 +30,11 @@ test.describe("programs mobile experience", () => {
         .getByRole("link", { name: "Add program", exact: true })
         .click();
       await fillHydrated(page.getByLabel("Program name"), program);
-      await page.getByRole("button", { name: "Save Program" }).click();
+      await runScreenAction(
+        page,
+        "Program actions",
+        /^Save (program|changes)$/,
+      );
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program saved.")).toBeVisible();
       await page.getByRole("link", { name: new RegExp(program) }).click();
@@ -40,33 +44,45 @@ test.describe("programs mobile experience", () => {
       // Split validation keeps the form open; a valid save returns to the program.
       await page.getByRole("link", { name: "Add Split" }).click();
       await page.getByLabel("Split name").fill(splitA);
-      await page.getByRole("button", { name: "Add Exercise" }).click();
+      await page.getByRole("button", { name: "Add exercise" }).click();
       await page
         .getByRole("dialog")
         .getByRole("button", { name: exerciseA })
         .click();
-      await page.getByLabel("Max reps").fill("4");
-      await page.getByRole("button", { name: "Save Split" }).click();
+      // A new prescription starts at 3 x 8-12; five steps down put the maximum
+      // below the minimum.
+      const fewerMax = page.getByRole("button", {
+        name: `Fewer maximum reps for ${exerciseA}`,
+      });
+      for (let step = 0; step < 5; step += 1) await fewerMax.click();
+      await runScreenAction(page, "Split actions", /^Save (split|changes)$/);
       await expect(
         page.getByText("Maximum reps must be at least the minimum reps."),
       ).toBeVisible();
-      await page.getByLabel("Max reps").fill("12");
-      await page.getByRole("button", { name: "Save Split" }).click();
+      const moreMax = page.getByRole("button", {
+        name: `More maximum reps for ${exerciseA}`,
+      });
+      for (let step = 0; step < 5; step += 1) await moreMax.click();
+      await runScreenAction(page, "Split actions", /^Save (split|changes)$/);
       await expect(page).toHaveURL(programEditUrl);
       await expect(page.getByText("Split saved.")).toBeVisible();
 
       await page.getByRole("link", { name: "Add Split" }).click();
       await page.getByLabel("Split name").fill(splitB);
-      await page.getByRole("button", { name: "Add Exercise" }).click();
+      await page.getByRole("button", { name: "Add exercise" }).click();
       await page
         .getByRole("dialog")
         .getByRole("button", { name: exerciseB })
         .click();
-      await page.getByRole("button", { name: "Save Split" }).click();
+      await runScreenAction(page, "Split actions", /^Save (split|changes)$/);
       await expect(page).toHaveURL(programEditUrl);
 
       // Making the program current chooses the first split of its rotation.
-      await page.getByRole("button", { name: "Make Current Program" }).click();
+      await runScreenAction(
+        page,
+        "Program actions",
+        "Make this the current program",
+      );
       await page
         .getByRole("dialog")
         .getByRole("button", { name: splitB })
@@ -75,9 +91,10 @@ test.describe("programs mobile experience", () => {
       await expect(page.getByText("Current program")).toBeVisible();
       await expect(page.getByText("Next", { exact: true })).toBeVisible();
 
-      await page.getByRole("button", { name: `Move ${splitA} down` }).click();
+      await page.getByRole("region", { name: splitA }).focus();
+      await page.keyboard.press("ArrowDown");
       await expect(page.getByText("Order saved.")).toBeVisible();
-      await page.getByRole("button", { name: "Set Next Split" }).click();
+      await runScreenAction(page, "Program actions", "Set the next split");
       await page
         .getByRole("dialog")
         .getByRole("button", { name: splitA })
@@ -86,11 +103,11 @@ test.describe("programs mobile experience", () => {
 
       // Deleting the next split moves the pointer to its successor.
       await page.getByRole("link", { name: new RegExp(splitA) }).click();
-      await page.getByRole("button", { name: "Delete Split" }).click();
+      await runScreenAction(page, "Split actions", "Delete this split");
       await expect(page.getByRole("alertdialog")).toContainText(splitB);
       await page
         .getByRole("alertdialog")
-        .getByRole("button", { name: "Delete Split" })
+        .getByRole("button", { name: "Delete split" })
         .click();
       await expect(page).toHaveURL(programEditUrl);
       await expect(page.getByText("Split deleted.")).toBeVisible();
@@ -98,12 +115,12 @@ test.describe("programs mobile experience", () => {
 
       // The last split of the current program cannot be deleted.
       await page.getByRole("link", { name: new RegExp(splitB) }).click();
+      await page.getByRole("button", { name: "Split actions" }).click();
       await expect(
-        page.getByRole("button", { name: "Delete Split" }),
+        page.getByRole("button", {
+          name: "Delete — the current program must keep at least one split",
+        }),
       ).toBeDisabled();
-      await expect(
-        page.getByText("The current program must keep at least one split."),
-      ).toBeVisible();
       await page.goto(programEditUrl);
 
       const geometry = await page.evaluate(() => ({
@@ -117,10 +134,10 @@ test.describe("programs mobile experience", () => {
       });
 
       // Deleting the current program leaves no current program.
-      await page.getByRole("button", { name: "Delete Program" }).click();
+      await runScreenAction(page, "Program actions", "Delete this program");
       await page
         .getByRole("alertdialog")
-        .getByRole("button", { name: "Delete Program" })
+        .getByRole("button", { name: "Delete program" })
         .click();
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program deleted.")).toBeVisible();

@@ -74,6 +74,14 @@ export function useTransientOverlay() {
       if (currentStack().at(-1) === marker) {
         pending.current = action;
         window.history.back();
+        // A popstate normally arrives and drains this. When the browser does
+        // not report one — the entry was replaced, or the stack no longer
+        // matches — the follow-up must still happen rather than be lost.
+        window.setTimeout(() => {
+          const queued = pending.current;
+          pending.current = null;
+          queued?.();
+        }, 150);
         return;
       }
       setOpen(false);

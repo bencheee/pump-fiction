@@ -11,6 +11,9 @@ const webkit = { ...devices["iPhone 13"], deviceScaleFactor: 3 };
 
 export default defineConfig({
   testDir: "./tests/browser",
+  // Each of these specs walks a whole journey, and every screen-level action is
+  // now three interactions: open the panel, pick the action, commit it.
+  timeout: 60_000,
   fullyParallel: false,
   reporter: [["line"], ["html", { open: "never" }]],
   use: {
