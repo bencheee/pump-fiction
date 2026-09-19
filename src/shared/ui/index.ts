@@ -19,6 +19,12 @@ export { useSaveOutcome, useSavedSnapshot, type SavePhase } from "./form-state";
 export { Icon, iconNames, type IconName } from "./icon";
 export { CompactStepper, StepperRow } from "./stepper";
 export { ValueWheel, WheelSeparator } from "./value-wheel";
+export {
+  countOptions,
+  formatWheelNumber,
+  loadOptions,
+  optionIndex,
+} from "./wheel-options";
 export { DatePicker, MonthCalendar } from "./date-picker";
 export { DestructiveDialog, Overlay, Sheet } from "./overlays";
 export { PageFrame, ScreenBody, StickyActionBar, TopBar } from "./page-frame";

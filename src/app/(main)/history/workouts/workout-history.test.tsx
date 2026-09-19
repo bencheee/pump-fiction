@@ -160,15 +160,34 @@ describe("workout History detail", () => {
   });
 });
 
+/**
+ * The second set holds no values, so its wheels start from the set before it:
+ * 60 kg and 8 reps. Turning one is a tap on the neighbour showing the wanted
+ * value, then Apply writes it back into the form's draft.
+ */
+async function correctSecondSet(
+  user: ReturnType<typeof userEvent.setup>,
+  turns: { load?: string; reps?: string },
+) {
+  await user.click(
+    screen.getByRole("button", { name: "Correct set 2 of Bench press" }),
+  );
+  if (turns.load) {
+    await user.click(screen.getByRole("button", { name: turns.load }));
+  }
+  if (turns.reps) {
+    await user.click(screen.getByRole("button", { name: turns.reps }));
+  }
+  await user.click(screen.getByRole("button", { name: "Apply to set" }));
+}
+
 describe("workout History correction form", () => {
   it("reports unsaved changes only after the form differs", async () => {
     const user = userEvent.setup();
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
     expect(screen.queryByText("Unsaved changes")).not.toBeInTheDocument();
-    const emptyReps = screen.getAllByLabelText("Reps")[1];
-    if (!emptyReps) throw new Error("Expected a second set");
-    await user.type(emptyReps, "6");
+    await correctSecondSet(user, { reps: "Reps 6" });
     expect(screen.getByText("Unsaved changes")).toBeInTheDocument();
   });
 
@@ -176,10 +195,7 @@ describe("workout History correction form", () => {
     const user = userEvent.setup();
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
-    const repsFields = screen.getAllByLabelText("Reps");
-    const secondReps = repsFields[1];
-    if (!secondReps) throw new Error("Expected a second set");
-    await user.type(secondReps, "6");
+    await correctSecondSet(user, { reps: "Reps 6" });
     await user.click(screen.getByRole("button", { name: "Save corrections" }));
 
     const sent = actions.correct.mock.calls.map(([correction]) => correction);
@@ -226,8 +242,9 @@ describe("workout History correction form", () => {
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
     await user.click(
-      screen.getByRole("button", { name: "Remove set 1 of Bench press" }),
+      screen.getByRole("button", { name: "Correct set 1 of Bench press" }),
     );
+    await user.click(screen.getByRole("button", { name: "Remove this set" }));
     const dialog = screen.getByRole("alertdialog");
     await user.click(
       within(dialog).getByRole("button", { name: "Remove set" }),
@@ -245,8 +262,9 @@ describe("workout History correction form", () => {
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
     await user.click(
-      screen.getByRole("button", { name: "Remove set 2 of Bench press" }),
+      screen.getByRole("button", { name: "Correct set 2 of Bench press" }),
     );
+    await user.click(screen.getByRole("button", { name: "Remove this set" }));
 
     expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
     expect(actions.correct).toHaveBeenCalledWith({
@@ -260,16 +278,9 @@ describe("workout History correction form", () => {
     const user = userEvent.setup();
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
-    // The second set has no stored mode. Its fields come from the exercise
-    // definition, so it can still be completed afterwards.
-    const kilogramFields = screen.getAllByLabelText("Kilograms");
-    expect(kilogramFields).toHaveLength(2);
-    const emptyLoad = kilogramFields[1];
-    const emptyReps = screen.getAllByLabelText("Reps")[1];
-    if (!emptyLoad || !emptyReps) throw new Error("Expected a second set");
-
-    await user.type(emptyLoad, "65");
-    await user.type(emptyReps, "6");
+    // The second set has no stored mode. Its wheels come from the exercise
+    // definition and the set before it, so it can still be completed.
+    await correctSecondSet(user, { load: "Kilograms 65", reps: "Reps 6" });
     await user.click(screen.getByRole("button", { name: "Save corrections" }));
 
     expect(actions.correct).toHaveBeenCalledWith(
@@ -287,11 +298,11 @@ describe("workout History correction form", () => {
     const user = userEvent.setup();
     render(<WorkoutCorrectionForm workout={completed} library={[]} />);
 
-    const secondReps = screen.getAllByLabelText("Reps")[1];
-    if (!secondReps) throw new Error("Expected a second set");
-    await user.type(secondReps, "6");
+    await correctSecondSet(user, { reps: "Reps 6" });
 
-    expect(screen.getByRole("button", { name: "Add set" })).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Bench press actions" }),
+    ).toBeDisabled();
     expect(
       screen.getByText(/Save your changes before adding/),
     ).toBeInTheDocument();

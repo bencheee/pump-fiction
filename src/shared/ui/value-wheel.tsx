@@ -23,6 +23,7 @@ export function ValueWheel({
   width = 112,
   format = String,
   emptyDisplay = "—",
+  fallbackIndex = 0,
 }: {
   label: string;
   options: readonly number[];
@@ -33,22 +34,31 @@ export function ValueWheel({
   width?: number;
   format?: (value: number) => string;
   emptyDisplay?: string;
+  /**
+   * Where the column sits before the set has a value — the previous set's
+   * value, or the exercise's lowest planned one. Without it an empty set would
+   * show no neighbours at all and could not be turned.
+   */
+  fallbackIndex?: number;
 }) {
   const [motion, setMotion] = useState<Motion>();
   const drag = useRef<{ y: number } | null>(null);
   const tick = useRef(0);
 
+  const base =
+    index ?? Math.min(Math.max(0, fallbackIndex), options.length - 1);
+
   const move = useCallback(
     (delta: number) => {
       if (delta === 0) return;
-      const from = index ?? 0;
+      const from = index ?? base;
       const next = Math.min(options.length - 1, Math.max(0, from + delta));
       if (next === index) return;
       tick.current += 1;
       setMotion({ direction: delta > 0 ? "down" : "up", tick: tick.current });
       onIndexChange(next);
     },
-    [index, onIndexChange, options.length],
+    [base, index, onIndexChange, options.length],
   );
 
   const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -66,8 +76,7 @@ export function ValueWheel({
     drag.current = null;
   };
 
-  const at = (offset: number) =>
-    index === undefined ? undefined : options[index + offset];
+  const at = (offset: number) => options[base + offset];
 
   const neighbour = (offset: number, size: number, colour: string) => {
     const value = at(offset);
@@ -111,12 +120,26 @@ export function ValueWheel({
       >
         {neighbour(-2, 18, "text-[var(--pf-glyph-dim)]")}
         {neighbour(-1, 21, "text-[var(--pf-text-4)]")}
-        <span className="pf-numeric flex h-20 items-baseline justify-center gap-1 text-[length:var(--pf-type-wheel-size)] leading-none font-bold">
-          {current === undefined ? emptyDisplay : format(current)}
-          <span className="text-[14px] font-semibold text-[var(--pf-text-3)]">
-            {unit}
+        {index === undefined ? (
+          <button
+            type="button"
+            onClick={() => onIndexChange(base)}
+            aria-label={`${label} ${format(options[base] ?? 0)}`}
+            className="pf-numeric flex h-20 items-baseline justify-center gap-1 text-[length:var(--pf-type-wheel-size)] leading-none font-bold text-[var(--pf-text-4)]"
+          >
+            {emptyDisplay}
+            <span className="text-[14px] font-semibold text-[var(--pf-text-3)]">
+              {unit}
+            </span>
+          </button>
+        ) : (
+          <span className="pf-numeric flex h-20 items-baseline justify-center gap-1 text-[length:var(--pf-type-wheel-size)] leading-none font-bold">
+            {format(current ?? 0)}
+            <span className="text-[14px] font-semibold text-[var(--pf-text-3)]">
+              {unit}
+            </span>
           </span>
-        </span>
+        )}
         {neighbour(1, 21, "text-[var(--pf-text-4)]")}
         {neighbour(2, 18, "text-[var(--pf-glyph-dim)]")}
       </div>
