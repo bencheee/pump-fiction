@@ -5,6 +5,8 @@ import { useState } from "react";
 import type { SplitHistory } from "@/features/history/application/split-statistics-operations";
 import { Badge, Chip, EmptyState, ListRow, PageFrame } from "@/shared/ui";
 
+import { HistoryCount } from "../history-count";
+import { HistoryNavigation } from "../history-navigation";
 import {
   formatHistoryDate,
   formatHistoryDuration,
@@ -18,9 +20,15 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
       : history.splits.filter((split) => split.programIdentityId === programId);
 
   return (
-    <PageFrame title="Splits" className="pt-6">
+    <PageFrame
+      title="History"
+      action={<HistoryCount count={history.splits.length} noun="split" />}
+      pinned={<HistoryNavigation />}
+      className="gap-3 pt-4.5"
+    >
       {history.splits.length === 0 ? (
         <EmptyState
+          icon="layout-grid"
           title="No split history yet"
           body="Complete a split workout and that split appears here with its durations."
         />
@@ -56,9 +64,10 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
             />
           ) : (
             <ul className="flex flex-col gap-2">
-              {shown.map((split) => (
+              {shown.map((split, index) => (
                 <li key={split.splitIdentityId}>
                   <ListRow
+                    index={index}
                     href={`/history/splits/${split.splitIdentityId}`}
                     title={split.splitName}
                     detail={

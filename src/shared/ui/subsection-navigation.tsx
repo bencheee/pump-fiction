@@ -21,7 +21,9 @@ export function SubsectionNavigation({
   label: string;
   subsections: readonly Subsection[];
 }) {
-  const pathname = usePathname();
+  // Outside a router — a component test, or the very first paint of a route
+  // transition — there is no pathname yet, and the first tab reads as current.
+  const pathname = usePathname() ?? "";
   const currentIndex = Math.max(
     0,
     subsections.findIndex(

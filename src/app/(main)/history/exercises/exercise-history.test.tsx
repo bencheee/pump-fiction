@@ -172,7 +172,7 @@ describe("exercise history list", () => {
     expect(screen.getByText("No longer in the library")).toBeInTheDocument();
     expect(screen.getByText(/Sun 9 Aug · 60 kg × 8/)).toBeInTheDocument();
 
-    await user.type(screen.getByLabelText("Search"), "cable");
+    await user.type(screen.getByLabelText("Filter exercises by name"), "cable");
     expect(
       screen.queryByRole("link", { name: /Bench press/ }),
     ).not.toBeInTheDocument();
@@ -183,7 +183,10 @@ describe("exercise history list", () => {
     const user = userEvent.setup();
     render(<ExerciseHistoryList entries={entries} />);
 
-    await user.type(screen.getByLabelText("Search"), "deadlift");
+    await user.type(
+      screen.getByLabelText("Filter exercises by name"),
+      "deadlift",
+    );
     expect(screen.getByText("No matching exercise")).toBeInTheDocument();
   });
 

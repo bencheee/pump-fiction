@@ -146,7 +146,8 @@ export function MeasurementDetailView({
               </p>
               <ProgressChart
                 series={series}
-                frame="data"
+                noun="entry"
+                emptyMessage="No entry falls inside this range."
                 formatValue={(value) => value.toFixed(1)}
               />
               <details>

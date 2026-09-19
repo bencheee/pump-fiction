@@ -16,19 +16,22 @@ function summarize(
   points: readonly ChartPoint[],
   formatValue: (value: number) => string,
   noun: string,
+  lowerIsBetter: boolean,
 ): string {
   const values = points.map((point) => point.value);
   const first = values[0] ?? 0;
   const last = values.at(-1) ?? 0;
+  const improved = lowerIsBetter ? last < first : last > first;
   const direction =
     last === first
       ? "Unchanged over this range."
-      : last > first
+      : improved
         ? "Moving in the better direction."
         : "Below where the range started.";
   const count = `${points.length} ${noun}${points.length === 1 ? "" : "s"}`;
+  const best = lowerIsBetter ? Math.min(...values) : Math.max(...values);
 
-  return `${count} in range: ${formatValue(first)} to ${formatValue(last)}, best ${formatValue(Math.max(...values))}. ${direction}`;
+  return `${count} in range: ${formatValue(first)} to ${formatValue(last)}, best ${formatValue(best)}. ${direction}`;
 }
 
 /**
@@ -44,6 +47,7 @@ export function BarChart({
   emptyMessage,
   height = 136,
   centred = false,
+  lowerIsBetter = false,
   valuesLabel = "Chart values",
 }: {
   points: readonly ChartPoint[];
@@ -52,6 +56,8 @@ export function BarChart({
   emptyMessage: string;
   height?: number;
   centred?: boolean;
+  /** An assistance series improves downwards, so the summary must not guess. */
+  lowerIsBetter?: boolean;
   valuesLabel?: string;
 }) {
   const [selected, setSelected] = useState<number>();
@@ -130,7 +136,7 @@ export function BarChart({
       </div>
 
       <p className="mt-3.5 text-[13px] leading-[1.5] text-[var(--pf-text-3)]">
-        {summarize(points, formatValue, noun)}
+        {summarize(points, formatValue, noun, lowerIsBetter)}
       </p>
 
       <div className="mt-1.5">

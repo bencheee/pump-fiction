@@ -3,6 +3,8 @@ import Link from "next/link";
 import { listExerciseHistory } from "@/server/application/workout-history";
 import { EmptyState, PageFrame } from "@/shared/ui";
 
+import { HistoryNavigation } from "../history-navigation";
+
 import { ExerciseHistoryList } from "./exercise-history-list";
 
 export const dynamic = "force-dynamic";
@@ -12,14 +14,15 @@ export default async function ExerciseHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Exercises" className="pt-6">
+      <PageFrame title="History" pinned={<HistoryNavigation />}>
         <EmptyState
+          icon="circle-alert"
           title="Exercise history couldn't be loaded"
           body={result.error.message}
           action={
             <Link
               href="/history/exercises"
-              className="min-h-11 rounded-[var(--pf-r2)] border border-[var(--pf-border-control)] px-4 py-3 font-semibold"
+              className="mt-1 flex min-h-11 items-center rounded-full bg-[var(--pf-accent-dim)] px-5 font-semibold text-[var(--pf-accent)]"
             >
               Retry
             </Link>

@@ -124,7 +124,8 @@ export function WeightView({
             <TrendSummary series={series} />
             <ProgressChart
               series={series}
-              frame="data"
+              noun="weigh-in"
+              emptyMessage="No weigh-in falls inside this range."
               formatValue={(value) => value.toFixed(1)}
             />
             <ChartValues series={series} />
