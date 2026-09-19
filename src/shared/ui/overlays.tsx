@@ -78,6 +78,8 @@ export const Sheet = Overlay;
 
 export function DestructiveDialog({
   trigger,
+  open,
+  onOpenChange,
   title,
   description,
   cancelLabel = "Cancel",
@@ -85,7 +87,12 @@ export function DestructiveDialog({
   confirmLabel,
   onConfirm,
 }: {
-  trigger: ReactElement;
+  /** Omitted when the dialog is opened from somewhere else, such as an
+   * actions overlay; pass `open`/`onOpenChange` from `useTransientOverlay`
+   * then, so Back still closes it. */
+  trigger?: ReactElement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   title: string;
   description: string;
   cancelLabel?: string;
@@ -95,13 +102,16 @@ export function DestructiveDialog({
 }) {
   const overlay = useTransientOverlay();
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const controlled = open !== undefined;
 
   return (
     <AlertDialog.Root
-      open={overlay.open}
-      onOpenChange={overlay.requestOpenChange}
+      open={controlled ? open : overlay.open}
+      onOpenChange={controlled ? onOpenChange : overlay.requestOpenChange}
     >
-      <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
+      {trigger ? (
+        <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
+      ) : null}
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="pf-scrim-modal fixed inset-0 z-40 motion-safe:animate-[pf-fade-in_var(--pf-mo-fast)_linear]" />
         <AlertDialog.Content

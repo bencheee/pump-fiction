@@ -35,3 +35,4 @@ export {
 } from "./status";
 export { useReorder, type ReorderRow } from "./reorder";
 export { Toast, ToastProvider, useToast } from "./toast";
+export { useTransientOverlay } from "./transient-overlay";

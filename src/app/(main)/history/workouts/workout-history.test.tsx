@@ -142,7 +142,11 @@ describe("workout History detail", () => {
     const user = userEvent.setup();
     render(<WorkoutDetail workout={completed} />);
 
-    await user.click(screen.getByRole("button", { name: "Delete workout" }));
+    await user.click(screen.getByRole("button", { name: "Workout actions" }));
+    await user.click(
+      screen.getByRole("button", { name: "Delete this workout" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Continue" }));
     const dialog = screen.getByRole("alertdialog");
     expect(
       within(dialog).getByText(/Rotation is not affected/),
