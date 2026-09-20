@@ -1,7 +1,684 @@
 /*
- * Intentionally empty.
+ * Tokens and motion for the redesign — phase 0 of docs/design/redesign-v2/PLAN.md.
  *
- * The 2026-09-20 second attempt at the redesign starts from unstyled markup:
- * no tokens, no utilities, no resets, no fonts, no motion. Styling returns one
- * screen at a time, against the prototype, rather than all at once.
+ * Ported from `Workout App - Prototype.dc.html` in the Claude Design project
+ * `Pump Fiction` (3609 lines, etag 1789817275172843): the style block at lines
+ * 12-62 verbatim, plus the literals the rest of the prototype repeats. Every
+ * token below was earned by a count over the whole file — the `Nx` in each
+ * comment — never by inference. A value the prototype uses once is not here; it
+ * stays a literal on the screen that uses it.
+ *
+ * Tokens and motion only. No component styling lives in this file.
  */
+
+/* Fonts — the seven faces the prototype declares. Paths are the only change:
+   the prototype resolves `assets/fonts/` relative to itself, Next serves the
+   same files from `public/`. */
+@font-face {
+  font-family: "Barlow";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-400-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-500-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-600-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-700-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-400-latin.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-600-latin.woff2")
+    format("woff2");
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/barlow-semi-condensed-700-latin.woff2")
+    format("woff2");
+}
+
+:root {
+  /* ----- Type ------------------------------------------------------------ */
+
+  --font-sans:
+    "Barlow", system-ui, sans-serif; /* body copy; 8x + the body rule */
+  --font-display:
+    "Barlow Semi Condensed", "Barlow", sans-serif; /* numerals, headings, labels; 99x */
+
+  --fw-regular: 400; /* 2x */
+  --fw-medium: 500; /* 6x */
+  --fw-semibold: 600; /* 206x — the default weight of this design */
+  --fw-bold: 700; /* 34x */
+
+  --fs-52: 52px; /* 4x */
+  --fs-28: 28px; /* 5x */
+  --fs-26: 26px; /* 2x */
+  --fs-25: 25px; /* 3x */
+  --fs-24: 24px; /* 16x */
+  --fs-23: 23px; /* 4x */
+  --fs-22: 22px; /* 12x */
+  --fs-21: 21px; /* 12x */
+  --fs-20: 20px; /* 3x */
+  --fs-19: 19px; /* 6x */
+  --fs-18: 18px; /* 11x */
+  --fs-17: 17px; /* 16x */
+  --fs-16-5: 16.5px; /* 10x */
+  --fs-16: 16px; /* 41x */
+  --fs-15-5: 15.5px; /* 24x */
+  --fs-15: 15px; /* 28x, and the body size */
+  --fs-14-5: 14.5px; /* 6x */
+  --fs-14: 14px; /* 30x */
+  --fs-13-5: 13.5px; /* 35x */
+  --fs-13: 13px; /* 23x */
+  --fs-12-5: 12.5px; /* 27x */
+  --fs-12: 12px; /* 12x */
+  --fs-11-5: 11.5px; /* 40x — the uppercase eyebrow */
+  --fs-11: 11px; /* 9x */
+  --fs-10-5: 10.5px; /* 2x */
+
+  --ls-tight: -0.01em; /* 21x — large numerals and headings */
+  --ls-04: 0.04em; /* 6x */
+  --ls-06: 0.06em; /* 11x */
+  --ls-08: 0.08em; /* 3x */
+  --ls-10: 0.1em; /* 25x — the uppercase eyebrow */
+  --ls-12: 0.12em; /* 5x */
+  --ls-14: 0.14em; /* 6x */
+
+  --lh-1: 1; /* 9x */
+  --lh-1-14: 1.14; /* 6x */
+  --lh-1-16: 1.16; /* 10x */
+  --lh-1-2: 1.2; /* 3x */
+  --lh-1-25: 1.25; /* 3x */
+  --lh-1-4: 1.4; /* 2x */
+  --lh-1-45: 1.45; /* 7x */
+  --lh-1-5: 1.5; /* 30x — paragraph copy */
+
+  /* ----- Palette --------------------------------------------------------- */
+
+  /* Surfaces */
+  --bg: #0a0e0c; /* the page; 11x + the body rule */
+  --bg-sunken: #070a08; /* the base a full-bleed panel or overlay sits on; 13x */
+  --surface: #141a17; /* cards, rows, fields; 123x */
+  --surface-hover: #232d28; /* hover fill on a surface; 2x */
+  --surface-tile: #1a211d; /* neutral tile, and the "unchanged" state fill; 3x */
+
+  /* Lines */
+  --line: #1e2622; /* the hairline border; 32x, and a raised fill 3x */
+  --line-strong: #2a332e; /* hover and focus border, chip outline; 39x */
+
+  /* Text, brightest to faintest */
+  --text: #f2f7f4; /* 29x */
+  --text-secondary: #a7b5ae; /* body text and icons; 59x */
+  --text-muted: #808e88; /* meta and supporting copy; 97x */
+  --text-dim: #68746e; /* uppercase eyebrows, resting numerals; 91x */
+  --text-faint: #3a443e; /* inactive icons and numerals; 30x */
+
+  /* Accent */
+  --accent: #35b57e; /* 112x */
+  --accent-hi: #9ed3b6; /* link hover; 5x */
+  --accent-surface: #0f2a1d; /* tinted chip and pill fill; 37x */
+  --accent-surface-hover: #143524; /* its hover; 4x */
+  --on-accent: #06170f; /* text and icons on an accent fill; 36x (2 of them as a fill) */
+  --on-accent-dim: rgba(
+    6,
+    23,
+    15,
+    0.66
+  ); /* the secondary label on an accent fill; 2x */
+
+  /* ----- Radii ----------------------------------------------------------- */
+
+  --radius-pill: 999px; /* 127x */
+  --radius-26: 26px; /* 3x */
+  --radius-24: 24px; /* 3x */
+  --radius-22: 22px; /* 20x */
+  --radius-20: 20px; /* 37x — the card */
+  --radius-18: 18px; /* 10x */
+  --radius-16: 16px; /* 3x */
+  --radius-14: 14px; /* 2x */
+  --radius-11: 11px; /* 2x */
+
+  /* ----- Control sizing --------------------------------------------------- */
+
+  /* Heights the prototype gives to something you can press. 44px is the touch
+     target the browser suite asserts. */
+  --control-84: 84px; /* 3x */
+  --control-66: 66px; /* 3x */
+  --control-60: 60px; /* 32x — the primary action */
+  --control-58: 58px; /* 14x */
+  --control-56: 56px; /* 3x */
+  --control-54: 54px; /* 3x */
+  --control-52: 52px; /* 8x */
+  --control-50: 50px; /* 6x */
+  --control-48: 48px; /* 3x */
+  --control-44: 44px; /* 31x, plus 11 as a min-height */
+  --control-42: 42px; /* 4x */
+  --control-40: 40px; /* 12x */
+  --control-29: 29px; /* 16x — the stepper button */
+  --control-26: 26px; /* 2x */
+
+  /* Icon box; `.ic` masks the glyph and takes its colour from the text. */
+  --icon-30: 30px; /* 3x */
+  --icon-28: 28px; /* 2x */
+  --icon-20: 20px; /* 4x */
+  --icon-19: 19px; /* 3x */
+  --icon-18: 18px; /* 23x */
+  --icon-17: 17px; /* 11x */
+  --icon-16: 16px; /* 30x — the default */
+  --icon-15: 15px; /* 16x */
+  --icon-14: 14px; /* 9x */
+  --icon-13: 13px; /* 2x */
+  --icon-12: 12px; /* 4x */
+
+  /* ----- Elevation -------------------------------------------------------- */
+
+  /* The only shadow the prototype uses on more than one surface: the row that
+     lifts under a drag, in the workout queue and in a program's split list. */
+  --shadow-drag: 0 14px 30px rgba(0, 0, 0, 0.6);
+
+  /* The other three shadows belong to a single surface each and stay with the
+     component that owns it, not here:
+       dialog        0 18px 44px rgba(0,0,0,.6)      over scrim rgba(3,6,4,.78)
+       toast         0 12px 34px rgba(0,0,0,.55)
+       handoff badge 0 16px 40px rgba(53,181,126,.3) */
+
+  /* ----- Motion ----------------------------------------------------------- */
+
+  --ease: cubic-bezier(0.2, 0.8, 0.3, 1); /* 97x — every considered movement */
+  --ease-overshoot: cubic-bezier(
+    0.34,
+    1.56,
+    0.64,
+    1
+  ); /* 3x — the handoff badge pop */
+  /* Colour and opacity cross-fades run `linear` (124x). */
+
+  --dur-140: 140ms; /* 2x */
+  --dur-150: 150ms; /* 7x */
+  --dur-160: 160ms; /* 72x — the default state change */
+  --dur-170: 170ms; /* 4x */
+  --dur-180: 180ms; /* 59x */
+  --dur-190: 190ms; /* 2x */
+  --dur-200: 200ms; /* 15x */
+  --dur-220: 220ms; /* 3x */
+  --dur-240: 240ms; /* 22x — a panel arriving */
+  --dur-260: 260ms; /* 6x */
+  --dur-280: 280ms; /* 4x */
+  --dur-300: 300ms; /* 7x */
+  --dur-320: 320ms; /* 16x */
+  --dur-340: 340ms; /* 2x */
+  --dur-360: 360ms; /* 2x */
+  --dur-380: 380ms; /* 4x */
+  --dur-400: 400ms; /* 2x */
+  --dur-420: 420ms; /* 2x */
+  --dur-440: 440ms; /* 2x */
+  --dur-460: 460ms; /* 2x */
+  --dur-1300: 1300ms; /* 2x */
+
+  --stagger-row: 34ms; /* the per-row delay of a list entrance, capped at the 10th row; rowAnim() */
+}
+
+/* ----- Document --------------------------------------------------------- */
+
+/* The prototype's own base rules. `html` carries the background as well, which
+   the prototype has no need of inside its 390x844 frame. */
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-15);
+  line-height: 1.3;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hi);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+input {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ----- Keyframes -------------------------------------------------------- */
+
+/* All 37 the prototype declares, verbatim. The `A`/`B` pairs are not
+   duplicates: `seq()` alternates the two names so an animation restarts on a
+   node that stays mounted. */
+@keyframes caret {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scFwdA {
+  from {
+    opacity: 0;
+    transform: translateX(26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes scFwdB {
+  from {
+    opacity: 0;
+    transform: translateX(26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes scBackA {
+  from {
+    opacity: 0;
+    transform: translateX(-26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes scBackB {
+  from {
+    opacity: 0;
+    transform: translateX(-26px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes panFwdA {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes panFwdB {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes panBackA {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes panBackB {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes ovRowA {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ovRowB {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ovRow {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ovIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes hoDim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes barInA {
+  from {
+    transform: scaleY(0.04);
+    opacity: 0.2;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes barInB {
+  from {
+    transform: scaleY(0.04);
+    opacity: 0.2;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes readA {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes readB {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes wheelUpA {
+  from {
+    transform: translateY(35px);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes wheelUpB {
+  from {
+    transform: translateY(35px);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes wheelDownA {
+  from {
+    transform: translateY(-35px);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes wheelDownB {
+  from {
+    transform: translateY(-35px);
+    opacity: 0.45;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes bumpA {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes bumpB {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes pressA {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes pressB {
+  0% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes stageInA {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes stageInB {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes pickerFadeA {
+  0% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0;
+  }
+  87% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pickerFadeB {
+  0% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0;
+  }
+  87% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes flashIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  17% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+@keyframes flashRing {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes hoPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes hoRing {
+  0% {
+    transform: scale(0.72);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+@keyframes hoIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes hoArrow {
+  0% {
+    transform: translateY(-4px);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-4px);
+    opacity: 0.35;
+  }
+}

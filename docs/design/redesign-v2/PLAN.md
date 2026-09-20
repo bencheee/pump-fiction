@@ -202,6 +202,6 @@ reuses the listed component or changes it for everyone.
 
 | Step | State | Approved | Commit |
 | --- | --- | --- | --- |
-| Phase 0 | not started | — | — |
+| Phase 0 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.
