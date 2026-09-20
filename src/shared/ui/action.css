@@ -1,0 +1,70 @@
+/*
+ * The primary and the secondary action, ported from the prototype for step 2 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP. The pill is a shared
+ * surface, not one screen's: the 60px primary is written eight times — Today
+ * (line 100), screen actions (1205), set next split (1346), body entry (1407),
+ * add exercise (1441), review and finish (1496), exercise handoff (1528) and
+ * workout complete (1554) — with the same seven declarations each time and only
+ * its two colours swapped. The 48px secondary is written twice, both on Today
+ * (lines 122-123).
+ *
+ * The attribute is the whole hook, so anything can carry it and not only the
+ * `Action` button: Today's One-time workout is a link to `/today/one-time` and
+ * has to render as the same pill as the button beside it.
+ */
+
+/* ----- Primary ---------------------------------------------------------- */
+
+[data-variant="primary"],
+[data-variant="on-accent"] {
+  height: var(--control-60);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+/* The fill it takes on the page background — four of the eight. */
+[data-variant="primary"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* And the fill it takes on an accent surface, where the two colours swap:
+   Today's start button (line 100) and the workout-complete button (1554). */
+[data-variant="on-accent"] {
+  background: var(--on-accent);
+  color: var(--accent);
+}
+
+/* ----- Secondary -------------------------------------------------------- */
+
+[data-variant="secondary"] {
+  /* The prototype's is a `<button>`, whose 48px includes its border because
+     the UA stylesheet gives form controls `border-box`. Today's One-time
+     workout is a link to `/today/one-time` and has to resolve to the same 48. */
+  box-sizing: border-box;
+  height: var(--control-48);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-14-5);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+/* `style-hover="border-color:#2a332e"` on both, with no transition. The colour
+   repeats here only so `a:hover` from the base layer cannot take the link's. */
+[data-variant="secondary"]:hover {
+  border-color: var(--line-strong);
+  color: var(--text-secondary);
+}

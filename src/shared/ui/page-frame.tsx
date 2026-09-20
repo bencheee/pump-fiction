@@ -5,16 +5,23 @@ import { Icon } from "./icon";
 import "./page-frame.css";
 
 export function PageFrame({
+  screen = "",
   title,
+  trailing,
   children,
 }: {
-  title: string;
+  /** Names the screen, so its own stylesheet can reach the shared frame. */
+  screen?: string;
+  title: ReactNode;
+  /** The optional trailing item of the title bar — Today's date chip. */
+  trailing?: ReactNode;
   children?: ReactNode;
 }) {
   return (
-    <section data-screen-frame="">
+    <section data-screen-frame={screen}>
       <div data-screen-heading="">
         <h1>{title}</h1>
+        {trailing}
       </div>
       <div data-screen-body="">{children}</div>
     </section>

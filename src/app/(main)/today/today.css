@@ -1,0 +1,283 @@
+/*
+ * The Today screen, ported from the prototype for step 2 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup         lines 70-130, `data-screen-label="Today"`
+ *   bound values   lines 3316-3332 — `greeting`, `todayDate`, `splitKicker`,
+ *                  `splitName`, `splitStats`, `splitPreview`, `canStart`,
+ *                  `hasRestore`, `restoreState`, `rotationName`
+ *   the greeting   `componentDidMount`, lines 1812-1819
+ *   the clock      `formatClock()`, lines 1960-1964
+ *
+ * The two pills are not here. The 60px primary under `Start today's workout`
+ * and the 48px outline under the two choices are shared surfaces and live in
+ * `shared/ui/action.css`; this file holds what the prototype writes on this
+ * screen alone, including the one margin each pill takes here.
+ */
+
+/* ----- Title bar -------------------------------------------------------- */
+
+/* The one title in the prototype that never wraps: the caret has to stay on the
+   line with the greeting (line 73). */
+[data-screen-frame="today"] [data-screen-heading] h1 {
+  white-space: nowrap;
+}
+
+/* Today's bar is the one the prototype writes without a gap: Programs (750) and
+   Exercises (900) carry `gap:12px` and gave it to the shared bar in step 1,
+   Today (72) does not. */
+[data-screen-frame="today"] [data-screen-heading] {
+  gap: normal;
+}
+
+/* The caret blinks on for half of every 900ms and never stops, whether or not
+   the greeting is still being typed. */
+[data-today-caret] {
+  display: inline-block;
+  width: 2px;
+  height: 24px;
+  margin-left: 3px;
+  vertical-align: -3px;
+  background: var(--accent);
+  animation: caret 900ms steps(1, end) infinite;
+}
+
+[data-today-date] {
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+}
+
+/* ----- Scroll region ---------------------------------------------------- */
+
+/* `[data-screen-body]` already carries the prototype's `.sx` and its
+   `6px 20px 20px`; the 12px between the cards is Today's own (line 76). */
+[data-screen-frame="today"] [data-screen-body] {
+  gap: 12px;
+}
+
+/* ----- Restored workout ------------------------------------------------- */
+
+[data-today-restore] {
+  border-radius: var(--radius-24);
+  background: var(--accent-surface);
+  padding: 20px;
+  animation: rise var(--dur-220) var(--ease);
+}
+
+[data-today-eyebrow] {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-04);
+  color: var(--accent);
+}
+
+[data-today-restore] h2 {
+  margin: 14px 0 0;
+  font-size: var(--fs-22);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+}
+
+[data-today-restore-meta] {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-16);
+  color: var(--accent-hi);
+}
+
+/* The prototype writes this pill once (line 91), so it stays with the card
+   rather than joining the two shared ones in `action.css`. */
+[data-today-resume] {
+  margin-top: 18px;
+  width: 100%;
+  height: var(--control-56);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-16-5);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+[data-today-resume]:hover {
+  color: var(--on-accent);
+}
+
+/* ----- The split ---------------------------------------------------------- */
+
+[data-today-split] {
+  border-radius: var(--radius-24);
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: 22px;
+}
+
+[data-today-kicker] {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-14);
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+[data-today-split] h2 {
+  margin: 14px 0 0;
+  font-size: var(--fs-25);
+  line-height: var(--lh-1-14);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+[data-today-split-meta] {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  opacity: 0.82;
+}
+
+[data-today-start] {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* What the card says in place of the button while a workout is restored. */
+[data-today-blocked] {
+  margin: 16px 0 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-45);
+  font-weight: var(--fw-semibold);
+  opacity: 0.78;
+}
+
+/* ----- The split's exercises -------------------------------------------- */
+
+[data-today-exercises] {
+  border-radius: var(--radius-24);
+  background: var(--surface);
+  padding: 18px 20px;
+}
+
+[data-today-exercises] > p {
+  margin: 0;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-04);
+  color: var(--text-muted);
+}
+
+[data-today-exercises] ol {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+[data-today-exercises] li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+[data-today-exercise-name] {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-14-5);
+}
+
+[data-today-exercise-scheme] {
+  flex: none;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+/* ----- The two other ways to start -------------------------------------- */
+
+[data-today-choices] {
+  display: flex;
+  gap: 10px;
+}
+
+[data-today-choices] > * {
+  flex: 1;
+}
+
+/* ----- Rotation --------------------------------------------------------- */
+
+[data-today-rotation] {
+  margin: 4px 0 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* ----- Two states the prototype has no screen for ----------------------- */
+
+/* Its state machine always holds a split and never fails to start one, so the
+   day with no program and the refused start are built from this screen's own
+   surfaces: the exercises card, its label, and the accent text action the
+   saved-workout card uses for `Open in History` (line 82). */
+[data-today-empty],
+[data-today-error] {
+  border-radius: var(--radius-24);
+  background: var(--surface);
+  padding: 18px 20px;
+}
+
+[data-today-empty] h2 {
+  margin: 0;
+  font-size: var(--fs-22);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+}
+
+[data-today-empty] p,
+[data-today-error] p {
+  margin: 10px 0 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-45);
+  color: var(--text-muted);
+}
+
+[data-today-error] p {
+  margin: 0;
+  color: var(--text);
+}
+
+[data-today-text-action] {
+  margin-top: 12px;
+  min-height: var(--control-44);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+[data-today-text-action]:hover {
+  color: var(--accent);
+}

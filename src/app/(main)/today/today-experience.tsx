@@ -20,21 +20,9 @@ import {
   Sheet,
 } from "@/shared/ui";
 
-import type { TodayMeasurements } from "@/features/history/domain/body";
+import "./today.css";
 
-import { TodayMeasurementsCard } from "./today-measurements";
-import { TodayWeightCard, type TodayWeight } from "./today-weight";
-
-export function TodayExperience({
-  today,
-  weight,
-  measurements,
-}: {
-  today: TodayView;
-  /** Null only when the weigh-in could not be read; Today still works. */
-  weight: TodayWeight | null;
-  measurements: TodayMeasurements | null;
-}) {
+export function TodayExperience({ today }: { today: TodayView }) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
   const [pending, setPending] = useState(false);
@@ -76,49 +64,74 @@ export function TodayExperience({
   }
 
   return (
-    <PageFrame title="Today">
-      <div>{formatLocalDate(today.localDate)}</div>
-
+    <PageFrame
+      screen="today"
+      title={<Greeting />}
+      trailing={
+        <span data-today-date="">{formatLocalDate(today.localDate)}</span>
+      }
+    >
       {current ? <RestoreCard current={current} /> : null}
 
       {selectedSplit ? (
-        <section>
-          <div>
-            <p>
+        <>
+          <section data-today-split="">
+            <p data-today-kicker="">
               {selectedSplit.splitId === today.proposedSplit?.splitId
                 ? "Next in your program"
                 : "Today-only split"}
             </p>
-            {selectedSplit.splitId !== today.proposedSplit?.splitId ? (
-              <Badge tone="accent">Rotation unchanged</Badge>
-            ) : null}
-          </div>
-          <h2>{selectedSplit.splitName}</h2>
-          <SplitHistory split={selectedSplit} />
-          {current ? (
-            <p>
-              Finish or discard the restored workout before starting another.
-            </p>
-          ) : (
-            <Action
-              disabled={pending}
-              onClick={() => startSplit(selectedSplit)}
-            >
-              {pending ? "Starting…" : "Start Workout"}
-            </Action>
-          )}
-          <SplitExercisePreview exercises={selectedSplit.exercises} />
-        </section>
+            <h2>{selectedSplit.splitName}</h2>
+            <SplitStats split={selectedSplit} />
+            {current ? (
+              <p data-today-blocked="">
+                Finish or discard the restored workout before starting another.
+              </p>
+            ) : (
+              <Action
+                variant="on-accent"
+                data-today-start=""
+                aria-label="Start today's workout"
+                disabled={pending}
+                onClick={() => startSplit(selectedSplit)}
+              >
+                <Icon name="play" size={18} />
+                {pending ? "Starting…" : "Start today's workout"}
+              </Action>
+            )}
+          </section>
+
+          <section data-today-exercises="">
+            <p>Exercises</p>
+            <ol>
+              {selectedSplit.exercises.map((exercise) => (
+                <li key={exercise.exerciseId}>
+                  <span data-today-exercise-name="">
+                    {exercise.exerciseName}
+                  </span>
+                  <span data-today-exercise-scheme="">
+                    {exercise.plannedSets} × {exercise.minReps}–
+                    {exercise.maxReps}
+                    {exercise.measurementType === "seconds" ? " sec" : ""}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </>
       ) : (
-        <section>
+        <section data-today-empty="">
           <h2>No proposed workout</h2>
           <p>Create or activate a program to get a proposed workout.</p>
-          <Link href="/programs">Go to Programs</Link>
+          <Link href="/programs" data-today-text-action="">
+            <Icon name="layout-grid" size={15} />
+            Go to Programs
+          </Link>
         </section>
       )}
 
       {!current ? (
-        <div>
+        <div data-today-choices="">
           {allSplits.length > 1 ? (
             <AlternateSplitSheet
               splits={allSplits}
@@ -129,32 +142,30 @@ export function TodayExperience({
               onSelect={setSelectedSplit}
             />
           ) : null}
-          {allSplits.length > 1 ? <span aria-hidden="true">·</span> : null}
-          <Link href="/today/one-time">One-time workout</Link>
+          <Link href="/today/one-time" data-variant="secondary">
+            One-time workout
+          </Link>
         </div>
       ) : null}
 
-      {weight ? <TodayWeightCard weight={weight} /> : null}
-      {measurements ? (
-        <TodayMeasurementsCard measurements={measurements} />
-      ) : null}
-
       {error ? (
-        <div role="alert">
+        <div data-today-error="" role="alert">
           <p>{error}</p>
           {retryDefinition ? (
             <button
               type="button"
+              data-today-text-action=""
               disabled={pending}
               onClick={() => void start(retryDefinition)}
             >
+              <Icon name="rotate-ccw" size={15} />
               Retry
             </button>
           ) : null}
         </div>
       ) : null}
 
-      <p>
+      <p data-today-rotation="">
         Rotation position: {today.proposedSplit?.splitName ?? "No active split"}
         . One-time workouts and today-only alternates never advance it.
       </p>
@@ -163,26 +174,28 @@ export function TodayExperience({
   );
 }
 
-function SplitExercisePreview({
-  exercises,
-}: {
-  exercises: TodaySplit["exercises"];
-}) {
+// `componentDidMount` (line 1812) types `Hello Sandro!` into the title one
+// character every 85ms and leaves it there; the caret beside it is CSS and
+// blinks from the first frame, before and after the typing.
+const greeting = "Hello Sandro!";
+
+function Greeting() {
+  const [typed, setTyped] = useState("");
+
+  useEffect(() => {
+    if (typed.length >= greeting.length) return;
+    const timer = window.setTimeout(
+      () => setTyped(greeting.slice(0, typed.length + 1)),
+      85,
+    );
+    return () => window.clearTimeout(timer);
+  }, [typed]);
+
   return (
-    <div>
-      <p>Exercises</p>
-      <ol>
-        {exercises.map((exercise) => (
-          <li key={exercise.exerciseId}>
-            <span>{exercise.exerciseName}</span>
-            <span>
-              {exercise.plannedSets} × {exercise.minReps}–{exercise.maxReps}
-              {exercise.measurementType === "seconds" ? " sec" : " reps"}
-            </span>
-          </li>
-        ))}
-      </ol>
-    </div>
+    <>
+      {typed}
+      <span data-today-caret="" aria-hidden="true" />
+    </>
   );
 }
 
@@ -206,17 +219,24 @@ function RestoreCard({
       : 0;
 
   return (
-    <section aria-label="Restored workout">
-      <p>
-        <Icon name="rotate-ccw" size={18} /> Restored workout
+    <section data-today-restore="" aria-label="Restored workout">
+      <p data-today-eyebrow="">
+        <Icon name="rotate-ccw" size={16} />
+        Restored workout
       </p>
       <h2>{current.name}</h2>
-      <p>
-        <Icon name={current.status === "active" ? "play" : "pause"} size={16} />
+      <p data-today-restore-meta="">
         {current.status === "active" ? "Running" : "Paused"} ·{" "}
         {formatClock(current.accumulatedActiveSeconds + segmentSeconds)}
       </p>
-      <Link href="/workout/current">Resume Workout</Link>
+      <Link
+        href="/workout/current"
+        data-today-resume=""
+        aria-label="Resume workout"
+      >
+        <Icon name="play" size={18} />
+        Resume workout
+      </Link>
     </section>
   );
 }
@@ -258,7 +278,7 @@ function AlternateSplitSheet({
     <Sheet
       title="Choose Another Split"
       description={`Pick a split to train today. This does not change your rotation${rotationNextName ? ` — ${rotationNextName} stays next.` : "."}`}
-      trigger={<button type="button">Choose another split</button>}
+      trigger={<Action variant="secondary">Another split</Action>}
     >
       {(close) => (
         <div>
@@ -271,7 +291,7 @@ function AlternateSplitSheet({
                   <h3>{split.splitName}</h3>
                   {proposed ? <Badge tone="accent">Proposed</Badge> : null}
                 </div>
-                <SplitHistory split={split} />
+                <SplitStats split={split} />
                 <Action
                   disabled={pending || Boolean(settingNext)}
                   onClick={() => onStart(split)}
@@ -315,10 +335,13 @@ function AlternateSplitSheet({
   );
 }
 
-function SplitHistory({ split }: { split: TodaySplit }) {
+// `splitStats` is the split's own line in the prototype (`SPLITS[].meta`,
+// line 1727): `Avg 1h 08m · 7 workouts`. A split with no completed workout has
+// no average, and then the card carries no line at all.
+function SplitStats({ split }: { split: TodaySplit }) {
   if (split.averageDurationSeconds === null) return null;
   return (
-    <p>
+    <p data-today-split-meta="">
       Avg {formatDuration(split.averageDurationSeconds)} ·{" "}
       {split.completedWorkoutCount}{" "}
       {split.completedWorkoutCount === 1 ? "workout" : "workouts"}

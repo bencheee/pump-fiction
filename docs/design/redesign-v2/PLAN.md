@@ -191,7 +191,7 @@ reuses the listed component or changes it for everyone.
 | Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
 | Icon | `shared/ui/icon.{tsx,css}` | 1 | all |
 | Full-screen panel | — | 3 | every panel |
-| Primary and secondary action | — | 2 | all |
+| Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | List row | — | 8 | lists |
 | Chip | — | 11 | statistics, Body |
 | Value wheel | — | 4 | 4, 10 |
@@ -200,13 +200,45 @@ reuses the listed component or changes it for everyone.
 | Stepper | — | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
 | Actions panel | — | 9 | definition screens |
-| Toast | — | 2 | all |
+| Toast | — | 6 | all |
 | Confirm dialog | — | 9 | destructive actions |
 
 Component styling lives in a CSS file beside its component, keyed on the same
 data attributes the markup already carries, and is imported by it. `globals.css`
 stays what phase 0 made it: tokens and motion, nothing else. Step 1 is where
 that split was set (Owner, 2026-09-20).
+
+Step 2 departs from the prototype in six places, all of them the application
+knowing something the prototype does not:
+
+- The **weight and measurement cards leave Today**. The prototype's Today ends
+  at the rotation line; `MVP-TOD-004` and `MVP-TOD-005` put both cards there.
+  The Owner chose the prototype (2026-09-20), so the two criteria need their
+  own amendment and the day's entry is reached from Body.
+- **Prototype copy wins over the existing test assertions** (Owner,
+  2026-09-20). No test file is touched until every screen is approved, so the
+  assertions that name the old copy stay red until that pass.
+- The **exercise scheme keeps a unit only when it is measured in seconds**
+  (`3 × 30–60 sec`). The prototype writes `3 × 5–8` and has no exercise
+  measured in seconds to distinguish.
+- The **saved-workout card is not built**. It is the one part of this screen
+  with no data behind it: the prototype fills it in `finish()` (line 1950), and
+  the application has no signal on Today until step 7 builds that flow.
+- **Two states the prototype has no screen for**: the day with no program, and
+  a start the server refuses. Both are built from this screen's own surfaces —
+  the exercises card and the accent text action the saved card uses for `Open
+  in History` — and neither invents a colour, a radius or a size.
+- The 48px outline pill carries `box-sizing: border-box`, which the prototype
+  gets from the user-agent stylesheet because its pill is a `<button>`. Today's
+  One-time workout is a link and needs it written down to resolve to the same
+  48px. There is no global reset: the prototype has none either, and its `body`
+  is `content-box`.
+
+`PageFrame` grew two things this step, both the prototype's: a `screen` name so
+a screen's own stylesheet can reach the shared frame, and the `trailing` slot
+the title bar has always had `space-between` for — Today's date chip is the
+first thing to sit in it. The toast moved to step 6 in the register above: the
+two cards that raised one on Today are the two that left it.
 
 Step 1 departs from the prototype in three places, all of them the prototype
 having no notion of a real device rather than a choice about how it looks:
@@ -229,5 +261,6 @@ prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 | --- | --- | --- | --- |
 | Phase 0 | done | 2026-09-20 | — |
 | 1 | done | 2026-09-20 | — |
+| 2 | done, awaiting approval | — | — |
 
 Update this table in the same change that delivers a step.
