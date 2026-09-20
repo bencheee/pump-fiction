@@ -22,6 +22,7 @@ Use this file as a router. Read only the documents needed for the current task a
 | Active-workout commands, transaction, IndexedDB outbox, delivery, and recovery | [`architecture/active-workout-durability.md`](architecture/active-workout-durability.md) |
 | Outbound mobile-design brief as sent on 2026-08-26, with its supersessions | [`design/T-003-v1/README.md`](design/T-003-v1/README.md) |
 | Accepted external mobile-design handoff and its fidelity limits | [`design/T-004-v0.4-frozen/README.md`](design/T-004-v0.4-frozen/README.md) |
+| Screen-by-screen plan for the second redesign attempt | [`design/redesign-v2/PLAN.md`](design/redesign-v2/PLAN.md) |
 | Accepted architectural/product decisions | [`decisions/README.md`](decisions/README.md) |
 
 ## Context budget
