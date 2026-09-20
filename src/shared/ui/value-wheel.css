@@ -1,0 +1,132 @@
+/*
+ * The value wheel, ported from the prototype for step 4 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   Active set queue   lines 181-207
+ *   Correct set        lines 709-733
+ *
+ * The two are the same declarations twice over, which is why the wheel is a
+ * component and not a screen's markup. Four numbers below stay literals rather
+ * than tokens because they belong to this one surface and the prototype writes
+ * them nowhere else: the 132/112px boxes, the 196px height, the 58px top of the
+ * window and its 80px height, and the 34px a drag spends per step.
+ */
+
+/* ----- The wheel -------------------------------------------------------- */
+
+[data-wheel] {
+  position: relative;
+  height: 196px;
+  overflow: hidden;
+  touch-action: none;
+}
+
+[data-wheel="load"] {
+  width: 132px;
+}
+
+[data-wheel="reps"] {
+  width: 112px;
+}
+
+/* The lit window the value sits in. */
+[data-wheel-window] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 58px;
+  height: 80px;
+  border-radius: var(--radius-22);
+  background: var(--surface);
+}
+
+[data-wheel-column] {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* `wheel{Up,Down}{A,B}` — the A/B pair alternates so a second move in the same
+   direction restarts the slide. */
+[data-wheel-anim="wheelUpA"] {
+  animation: wheelUpA var(--dur-170) var(--ease);
+}
+[data-wheel-anim="wheelUpB"] {
+  animation: wheelUpB var(--dur-170) var(--ease);
+}
+[data-wheel-anim="wheelDownA"] {
+  animation: wheelDownA var(--dur-170) var(--ease);
+}
+[data-wheel-anim="wheelDownB"] {
+  animation: wheelDownB var(--dur-170) var(--ease);
+}
+
+/* ----- The candidates --------------------------------------------------- */
+
+[data-wheel-step] {
+  height: var(--control-29);
+  display: flex;
+  align-items: center;
+  font-family: var(--font-display);
+}
+
+[data-wheel-step="near"] {
+  font-size: var(--fs-21);
+  color: var(--text-dim);
+}
+
+[data-wheel-step="far"] {
+  font-size: var(--fs-18);
+  color: var(--text-faint);
+}
+
+/* ----- The value -------------------------------------------------------- */
+
+[data-wheel-value] {
+  height: 80px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-52);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-1);
+}
+
+[data-wheel-unit] {
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}
+
+/* ----- The pair --------------------------------------------------------- */
+
+[data-wheels] {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+[data-wheels-times] {
+  font-family: var(--font-display);
+  font-size: var(--fs-24);
+  color: var(--text-faint);
+}
+
+/* What stands in the load's place when the set carries none. */
+[data-wheels-bodyweight] {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

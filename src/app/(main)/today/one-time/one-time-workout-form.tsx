@@ -84,7 +84,8 @@ export function OneTimeWorkoutForm({
       setPending(false);
       return;
     }
-    router.push("/workout/current");
+    // `startOneTime` (line 3326) lands on the overview, as a split start does.
+    router.push("/workout/current?view=overview");
   }
 
   const available = exercises.filter(

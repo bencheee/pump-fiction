@@ -48,7 +48,10 @@ export function TodayExperience({ today }: { today: TodayView }) {
       setPending(false);
       return;
     }
-    router.push("/workout/current");
+    // `startSplit` (line 3301) and `startOneTime` (3326) both land on the
+    // prototype's overview; only the restored-workout card below goes straight
+    // to the set queue.
+    router.push("/workout/current?view=overview");
   }
 
   function startSplit(split: TodaySplit) {

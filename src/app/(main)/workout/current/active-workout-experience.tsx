@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { getCurrentWorkoutAction } from "@/app/actions/workouts";
-import { listExercisesAction } from "@/app/actions/exercises";
 import { applyCommandToWorkout } from "@/features/active-workout/domain/apply-command-to-workout";
 import { describeCommandTarget } from "@/features/active-workout/domain/describe-command-target";
 import type { ActiveWorkoutCommand } from "@/features/active-workout/domain/active-workout-command";
@@ -38,10 +37,7 @@ import {
   type Exercise,
   type ExerciseLoadMode,
 } from "@/features/exercises/domain/exercise";
-import {
-  exerciseOptionalModeLabels,
-  exerciseTypeLabels,
-} from "@/features/exercises/ui/exercise-presentation";
+import { exerciseOptionalModeLabels } from "@/features/exercises/ui/exercise-presentation";
 import {
   Action,
   BlockingProgress,
@@ -50,14 +46,20 @@ import {
   normalizeDecimalInput,
   Sheet,
   TextAreaField,
-  TextField,
 } from "@/shared/ui";
 
+import {
+  flattenSets,
+  nextInQueue,
+} from "@/features/active-workout/ui/set-queue-presentation";
 import {
   formatLastPerformanceDate,
   formatWorkoutSetLine,
   formatWorkoutClock,
 } from "@/features/active-workout/ui/workout-presentation";
+
+import { AddExerciseSheet } from "./add-exercise-sheet";
+import { baseModeOf, SetQueue } from "./set-queue";
 
 const optionalModeNoun: Readonly<Record<ExerciseLoadMode, string>> = {
   weight: "weight",
@@ -79,11 +81,14 @@ type FinishOutcome = "completed" | "discarded";
 
 export function ActiveWorkoutExperience({
   initial,
+  initialView = "queue",
   exercises,
   outbox,
   transport,
 }: {
   initial: CurrentWorkout;
+  /** Which screen the action that brought us here lands on; see `page.tsx`. */
+  initialView?: "queue" | "overview";
   /** Optional eager data for isolated consumers; the routed screen loads lazily. */
   exercises?: readonly Exercise[];
   outbox?: ActiveWorkoutOutbox;
@@ -122,6 +127,12 @@ export function ActiveWorkoutExperience({
   const requestedFinishRef = useRef<FinishOutcome | null>(null);
   const [finishing, setFinishing] = useState(false);
   const recoveringRef = useRef(false);
+  // The prototype keeps `screen` and the `ei`/`si` pointer on the same state
+  // machine as the workout (line 1791). Starting a workout lands on the
+  // overview and resuming one lands on the queue, which is what `initialView`
+  // carries; from then on the two buttons move between them.
+  const [view, setView] = useState<"queue" | "overview">(initialView);
+  const [cursorSetId, setCursorSetId] = useState<string | null>(null);
 
   const adoptWorkout = useCallback((next: CurrentWorkout) => {
     workoutRef.current = next;
@@ -276,6 +287,27 @@ export function ActiveWorkoutExperience({
   const displaySeconds =
     workout.accumulatedActiveSeconds + activeSegmentSeconds;
 
+  // Every set of the workout in order, with the queue's pointer resolved
+  // against it. The prototype points with two indices and clamps them whenever
+  // a set or an exercise goes; the pointer here is the set's own id, so a
+  // removal elsewhere cannot silently move it, and it falls back to the first
+  // set still without values — which is where `advance()` would have left it.
+  const flat = useMemo(
+    () => flattenSets(workout.exercises, baseModeOf),
+    [workout.exercises],
+  );
+  const current =
+    flat.find((entry) => entry.set.id === cursorSetId) ??
+    flat.find((entry) => !entry.recorded) ??
+    flat[0];
+  // Pin the pointer as soon as it resolves, the way `useScreenAnimation`
+  // settles its own during render. Left on the fallback it would follow it, and
+  // entering the last value a set needs — which is all the application means by
+  // recorded — would move the screen off that set before the press that is
+  // meant to.
+  const resolvedSetId = current?.set.id ?? null;
+  if (resolvedSetId !== cursorSetId) setCursorSetId(resolvedSetId);
+
   const firstError = useMemo(() => {
     for (const exercise of workout.exercises)
       for (const set of exercise.sets) {
@@ -342,6 +374,16 @@ export function ActiveWorkoutExperience({
     send("reorder_exercises", { workoutExerciseIds: ids });
   }
 
+  function addExercises(selectedExercises: readonly Exercise[]) {
+    for (const exercise of selectedExercises) {
+      const commandId = send("add_exercise", { exerciseId: exercise.id });
+      setPlaceholderNames((names) => ({
+        ...names,
+        [commandId]: exercise.name,
+      }));
+    }
+  }
+
   async function finishWorkout(outcome: FinishOutcome) {
     if (finishing) return;
     setFinishing(true);
@@ -387,19 +429,108 @@ export function ActiveWorkoutExperience({
           }
         : { kind: "saved" as const, message: "All changes saved" };
 
+  const deliveryCue = (
+    <>
+      <div data-queue-status="" role="status" aria-live="polite">
+        {cue.message}
+      </div>
+      {cue.kind === "failure" ? (
+        <div role="alert">
+          <span>{cue.message}</span>
+          {cue.recovery === "refresh_and_replay" ? (
+            <button type="button" onClick={() => void recoverFromConflict()}>
+              Refresh
+            </button>
+          ) : cue.recovery === "discard_and_replay" ? null : (
+            <button
+              type="button"
+              onClick={() => void delivery.controller.flush()}
+            >
+              Retry
+            </button>
+          )}
+        </div>
+      ) : null}
+      {discardedChange !== null ? (
+        <div role="alert">
+          <span>
+            One change could not be saved and was undone: {discardedChange}.
+            Everything else is saved and the workout continues.
+          </span>
+          <button
+            type="button"
+            aria-label="Dismiss the undone change notice"
+            onClick={() => setDiscardedChange(null)}
+          >
+            <Icon name="x" size={16} />
+          </button>
+        </div>
+      ) : null}
+    </>
+  );
+
+  function togglePause() {
+    send(paused ? "resume_timer" : "pause_timer", {
+      transitionedAt: new Date().toISOString(),
+    });
+  }
+
+  if (view === "queue")
+    return (
+      <>
+        <SetQueue
+          workout={workout}
+          flat={flat}
+          current={current}
+          paused={paused}
+          displaySeconds={displaySeconds}
+          initialExercises={exercises}
+          onTogglePause={togglePause}
+          onOpenOverview={() => setView("overview")}
+          onJump={(entry) => setCursorSetId(entry.set.id)}
+          onAdvance={() => {
+            const next = nextInQueue(flat, current);
+            if (next !== undefined) setCursorSetId(next.set.id);
+          }}
+          onUpdateSet={updateSet}
+          onChangeMode={changeMode}
+          onAddSet={(exercise) =>
+            send("add_set", { workoutExerciseId: exercise.id })
+          }
+          onRemoveSet={(set, confirmed) =>
+            send("remove_set", {
+              workoutSetId: set.id,
+              confirmedPopulatedRemoval: confirmed,
+            })
+          }
+          onRemoveExercise={(exercise, confirmed) =>
+            send("remove_exercise", {
+              workoutExerciseId: exercise.id,
+              confirmedPopulatedRemoval: confirmed,
+            })
+          }
+          onNoteCommit={(exercise, note) =>
+            send("set_workout_exercise_note", {
+              workoutExerciseId: exercise.id,
+              note,
+            })
+          }
+          onAddExercises={addExercises}
+        />
+        {deliveryCue}
+        {finishing ? <BlockingProgress label="Finishing workout…" /> : null}
+      </>
+    );
+
   return (
     <div>
       <header>
         <div>
+          <button type="button" onClick={() => setView("queue")}>
+            Back to set
+          </button>
           <h1>{workout.name}</h1>
-          <button
-            type="button"
-            onClick={() =>
-              send(paused ? "resume_timer" : "pause_timer", {
-                transitionedAt: new Date().toISOString(),
-              })
-            }
-          >
+          <button type="button" onClick={togglePause}>
             {paused ? "Resume" : "Continue Later"}
           </button>
           <span aria-label="Active duration">
@@ -481,20 +612,7 @@ export function ActiveWorkoutExperience({
           ),
         )}
 
-        <AddExerciseSheet
-          initialExercises={exercises}
-          onAdd={(selectedExercises) => {
-            for (const exercise of selectedExercises) {
-              const commandId = send("add_exercise", {
-                exerciseId: exercise.id,
-              });
-              setPlaceholderNames((current) => ({
-                ...current,
-                [commandId]: exercise.name,
-              }));
-            }
-          }}
-        />
+        <AddExerciseSheet initialExercises={exercises} onAdd={addExercises} />
       </main>
 
       <div>
@@ -1083,128 +1201,6 @@ function SetRow({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function AddExerciseSheet({
-  initialExercises,
-  onAdd,
-}: {
-  initialExercises?: readonly Exercise[];
-  onAdd: (exercises: readonly Exercise[]) => void;
-}) {
-  const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<readonly string[]>([]);
-  const [exercises, setExercises] = useState<readonly Exercise[] | null>(
-    initialExercises ?? null,
-  );
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string>();
-  async function loadExercises() {
-    if (exercises !== null || loading) return;
-    setLoading(true);
-    setError(undefined);
-    const result = await listExercisesAction();
-    if (result.ok) setExercises(result.value);
-    else setError(result.error.message);
-    setLoading(false);
-  }
-  const filtered = (exercises ?? []).filter((exercise) =>
-    exercise.name.toLowerCase().includes(query.trim().toLowerCase()),
-  );
-
-  function toggle(id: string) {
-    setSelected((current) =>
-      current.includes(id)
-        ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
-  }
-
-  return (
-    <Sheet
-      title="Add Exercise"
-      description="Choose from your active library. This workout only."
-      onOpenChange={(open) => {
-        if (open) void loadExercises();
-      }}
-      trigger={
-        <button type="button">
-          <Icon name="plus" size={18} /> Add Exercise
-        </button>
-      }
-    >
-      {(close) => (
-        <div>
-          <TextField
-            id="add-exercise-search"
-            label="Search active library"
-            placeholder="Search active library"
-            value={query}
-            autoComplete="off"
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          <p>Archived exercises are not listed.</p>
-          {loading ? (
-            <p role="status">
-              <Icon name="loader-circle" size={16} /> Loading exercises…
-            </p>
-          ) : error ? (
-            <div>
-              <p role="alert">{error}</p>
-              <button type="button" onClick={() => void loadExercises()}>
-                Retry
-              </button>
-            </div>
-          ) : filtered.length === 0 ? (
-            <p>No active exercise matches this search.</p>
-          ) : (
-            <div>
-              {filtered.map((exercise) => {
-                const isSelected = selected.includes(exercise.id);
-                return (
-                  <button
-                    key={exercise.id}
-                    type="button"
-                    aria-pressed={isSelected}
-                    aria-label={exercise.name}
-                    onClick={() => toggle(exercise.id)}
-                  >
-                    <span aria-hidden="true">
-                      <Icon name="check" size={13} />
-                    </span>
-                    <span>
-                      <span>{exercise.name}</span>
-                      <span>
-                        {exerciseTypeLabels[exercise.baseType]} ·{" "}
-                        {exercise.allowedLoadModes.length}{" "}
-                        {exercise.allowedLoadModes.length === 1
-                          ? "mode"
-                          : "modes"}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-          <Action
-            disabled={selected.length === 0 || exercises === null}
-            onClick={() => {
-              onAdd(
-                (exercises ?? []).filter((exercise) =>
-                  selected.includes(exercise.id),
-                ),
-              );
-              setSelected([]);
-              close();
-            }}
-          >
-            Add Selected
-          </Action>
-        </div>
-      )}
-    </Sheet>
   );
 }
 

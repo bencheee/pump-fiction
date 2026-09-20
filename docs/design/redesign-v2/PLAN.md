@@ -194,7 +194,7 @@ reuses the listed component or changes it for everyone.
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | List row | — | 8 | lists |
 | Chip | — | 11 | statistics, Body |
-| Value wheel | — | 4 | 4, 10 |
+| Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4 | 4, 10 |
 | Bar chart | — | 11 | 11, 12, 18, 19 |
 | Segmented tabs | — | 8 | 8, 18 |
 | Stepper | — | 10 | 10, 15 |
@@ -292,6 +292,88 @@ attribute for an icon (Owner, 2026-09-20). Its `size` prop has to grow — the
 prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 `public/assets/icons`, byte-identical to the design project's copies.
 
+Step 4 is the first step whose screen the application already had, and it
+departs from the prototype wherever the application knows something the
+prototype does not. The value wheel is the shared surface this step was the
+first to need: the Correct set overlay (screen 9, step 10) writes the same
+declarations, so it is a component from the start.
+
+- **A set is recorded by its values, not by a press.** `logSet()` flips a
+  `done` flag; the application derives the same state from what is entered
+  (`isSetRecorded`, and `workout_set_is_recorded` in the database). So the
+  wheels write the set and `Log set` is what `advance()` (line 1871) always
+  was: the move to the next set. A set left untouched stays unrecorded, its
+  segment stays unlit, and the finish review counts it — the safety net the
+  application already had.
+- **The wheel commits when the finger lifts.** `adjust()` mutates on every
+  step; here every step would be a command in the outbox and a request of its
+  own, so one drag is one `update_set`. The wheel captures the pointer, which
+  the prototype does for its row drag and not for the wheel, so a drag that
+  leaves the 196px box still writes the value it is showing.
+- **Zero on the load column is the application's null.** The prototype's `KG`
+  starts at 0 and `setLoadText` (line 1966) reads a 0 as no load; the
+  application refuses a zero kilogram, so the column's 0 is stored as null and
+  the numeral reads `—`, which is `kg0`'s own answer for a set without one.
+- **The columns take in what the application holds.** `REPS` stops at 40
+  because nothing the prototype prescribes goes further; some exercises here
+  are measured in seconds and prescribe 30–60, so the reps column runs to
+  whichever is higher — 40, the exercise's own maximum, or the value already
+  entered — and the load column takes in a value off its 2.5 grid.
+- **The unit follows the set's load mode.** `loadUnit` is `kg` or `+kg`; the
+  application also has assistance modes, which take `−kg`, the sign
+  `formatSetSummary` already writes for one, and `reps` becomes `sec` for a
+  seconds-measured exercise.
+- **A second empty state.** `addPicked` (line 3444) gives a new exercise as
+  many sets as it plans; `add_exercise` gives it none, so a workout can hold
+  exercises and still have no set to show — and the queue's own Add exercise
+  would otherwise dead-end on it. It is built from this screen's own surfaces
+  and points at the overview, where a set is added.
+- **The pointer is a set id.** The prototype clamps `ei`/`si` whenever
+  something is removed; the pointer here is the set's own id, resolved against
+  the workout and re-pinned when that set goes.
+- **A candidate at the end of a column is a box, not a button.** The prototype
+  draws an empty `<button>`; the same empty box here carries no control, so
+  nothing focusable is nameless. Each wheel is also a named `role="group"`,
+  which the prototype has no notion of.
+- **The bottom navigation keeps Today lit through a workout**, which is the
+  prototype's own — `s.page` stays `"today"` while `screen` walks to `overview`
+  and `workout` — and which `isCurrentDestination` did not know. A step 1
+  surface changed for everyone, not forked.
+- **Delivery signals.** The prototype has no notion of a command that has not
+  reached the server. The saved cue stays in the accessibility tree and out of
+  the picture; a failure and an undone change stay visible and unstyled until
+  step 6 gives every screen the toast.
+
+**Which screen `/workout/current` opens with follows the action, not the
+route.** `startSplit` (line 3301) and `startOneTime` (3326) both set
+`screen: "overview"`, and only `resumeWorkout` (3331) — Today's restored-workout
+card — goes straight to the set queue, where the overview's own primary reads
+`Start workout` until something is recorded. One route holds both screens, so
+the two start paths carry `?view=overview` and a reload or a Back press can
+still read it. Step 4 first shipped without this and opened the queue on a
+start; the Owner caught it on 2026-09-20 and it was corrected the same day.
+Until step 5 ports screen 3, a start therefore lands on the unstyled exercise
+list.
+
+Four things this screen reaches are other steps' and are left reachable rather
+than built twice: `Last`, `Note` and `More` are screens 25, 26 and 24 (step 6)
+and open the shared panel with the content the application already holds,
+unstyled; `Review & finish` and the completed primary land on the review screen
+the application already has until step 6 ports screen 30; `goOverview` switches
+to the exercise list the application already has, with a plain Back control,
+until step 5 ports screen 3; and the flash, the handoff and the complete screen
+are step 7's, so the press advances at once and `stageAnim`'s flash branch is
+not wired. The button and its state on this screen are ported in every case —
+`historyColor`, `noteColor` and the press bounce are all the prototype's.
+
+Two things could not be matched. The prototype's own completed primary — solid
+accent, `Review & finish` — cannot be driven to in the prototype: logging the
+last set sends it to the Workout complete screen instead, so only its two
+values (line 3411) and the geometry of the other state are evidence. And the
+clock can raise a React hydration mismatch when the second turns between the
+server render and hydration; that is not this step's — Today's restore card
+does the same — but it is on this screen too and wants a decision.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -300,5 +382,6 @@ prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 | 1 | done | 2026-09-20 | — |
 | 2 | done | 2026-09-20 | — |
 | 3 | done | 2026-09-20 | — |
+| 4 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.

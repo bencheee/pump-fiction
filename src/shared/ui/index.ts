@@ -16,3 +16,8 @@ export {
   StatCard,
 } from "./status";
 export { Toast, ToastProvider, useToast } from "./toast";
+export {
+  SetValueWheels,
+  ValueWheel,
+  type ValueWheelProps,
+} from "./value-wheel";

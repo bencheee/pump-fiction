@@ -37,6 +37,11 @@ function isCurrentDestination(
   destination: { href: string; root?: string },
 ): boolean {
   const root = destination.root ?? destination.href;
+  // The workout screens are part of Today in the prototype — `s.page` stays
+  // `"today"` while `screen` walks to `overview` and `workout` — so its Today
+  // destination stays lit through a workout. `/workout/*` is the same place
+  // here, and `useScreenAnimation` below already reads it that way.
+  if (root === "/today" && pathname.startsWith("/workout")) return true;
   return pathname === destination.href || pathname.startsWith(`${root}/`);
 }
 
