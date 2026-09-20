@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { HTMLAttributes, ReactNode } from "react";
 
 import { Icon } from "./icon";
+import "./page-frame.css";
 
 export function PageFrame({
   title,
@@ -11,9 +12,11 @@ export function PageFrame({
   children?: ReactNode;
 }) {
   return (
-    <section>
-      <h1>{title}</h1>
-      {children}
+    <section data-screen-frame="">
+      <div data-screen-heading="">
+        <h1>{title}</h1>
+      </div>
+      <div data-screen-body="">{children}</div>
     </section>
   );
 }
@@ -28,12 +31,11 @@ export function TopBar({
   backLabel: string;
 }) {
   return (
-    <header>
-      <Link href={backHref} aria-label={backLabel}>
-        <Icon name="chevron-left" size={18} />
+    <header data-top-bar="">
+      <Link href={backHref} aria-label={backLabel} data-top-bar-back="">
+        <Icon name="arrow-left" size={18} />
       </Link>
       <h1>{title}</h1>
-      <span aria-hidden="true" />
     </header>
   );
 }

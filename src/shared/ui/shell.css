@@ -1,0 +1,123 @@
+/*
+ * The shell and the bottom navigation, ported from the prototype for step 1 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   frame and stage  lines 66-67
+ *   bottom nav       lines 1578-1584
+ *   navItems         lines 3293-3302
+ *   navAll()         lines 2453-2481
+ *
+ * Every value below is the prototype's own. Two are literals rather than
+ * tokens because the prototype writes them exactly once, which is the rule
+ * phase 0 set: `#0e1310` (the bar) and `#151b18` (its top hairline).
+ */
+
+/* ----- Frame ------------------------------------------------------------ */
+
+/* The prototype frames itself at a fixed `width:390px;height:844px`. A real
+   phone supplies both, so the frame takes the viewport instead; everything
+   else on this rule is the prototype's. */
+[data-shell="main"] {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ----- Stage ------------------------------------------------------------ */
+
+/* Holds one screen at a time and clips the one sliding out of it. */
+[data-stage] {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* The screen. The prototype's own screens each carry their scroll region
+   inside them (its `.sx` helper); until a screen is ported it scrolls here, on
+   the same terms, so nothing is unreachable mid-port. A ported screen puts a
+   `flex:1;min-height:0` child in the way and this scroller never engages. */
+[data-screen] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+/* `navAll()` returns one of five values, and alternates the A/B pair so that
+   moving the same direction twice changes the animation name and restarts it
+   on a node that never unmounted. */
+[data-screen-anim="scFwdA"] {
+  animation: scFwdA var(--dur-320) var(--ease);
+}
+[data-screen-anim="scFwdB"] {
+  animation: scFwdB var(--dur-320) var(--ease);
+}
+[data-screen-anim="scBackA"] {
+  animation: scBackA var(--dur-320) var(--ease);
+}
+[data-screen-anim="scBackB"] {
+  animation: scBackB var(--dur-320) var(--ease);
+}
+
+/* ----- Bottom navigation ------------------------------------------------ */
+
+[data-nav="primary"] {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 8px 12px 18px;
+  /* The prototype's 18px is all the room its 390x844 frame needs. A phone in
+     standalone adds a home indicator under it, which `viewportFit: "cover"`
+     reports here and the prototype has no notion of. */
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  background: #0e1310;
+  border-top: 1px solid #151b18;
+}
+
+/* The prototype's destinations are buttons on its own state machine; the app
+   routes, so they are links. `text-decoration` and the `a` colour from the
+   base layer are the only two things that costs. */
+[data-nav="primary"] a {
+  min-height: var(--control-56);
+  border-radius: var(--radius-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: var(--fs-10-5);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  transition:
+    background var(--dur-180) linear,
+    color var(--dur-180) linear;
+}
+
+[data-nav="primary"] a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* The prototype's destinations have no hover state — the transition is there
+   for the change of which one is current. These two rules exist only to hold
+   off `a:hover` from the base layer, which is the same specificity. */
+[data-nav="primary"] a:hover {
+  color: var(--text-dim);
+}
+
+[data-nav="primary"] a[aria-current="page"]:hover {
+  color: var(--on-accent);
+}

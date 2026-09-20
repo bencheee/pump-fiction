@@ -1,0 +1,99 @@
+/*
+ * The screen frame and the top bar, ported from the prototype for step 1 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP. Both bars below are
+ * shared surfaces, not one screen's: the back bar is byte-identical on Workout
+ * detail (line 364) and Program (line 777) and seven screens besides, and the
+ * title bar is byte-identical on Programs (line 750) and Exercises (line 900).
+ */
+
+/* ----- Screen frame ----------------------------------------------------- */
+
+/* Every screen in the prototype opens with the same three declarations, under
+   the stage and above its own content. */
+[data-screen-frame] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----- Title bar -------------------------------------------------------- */
+
+/* The bar a root screen opens with. `justify-content: space-between` is the
+   prototype's: it holds the title against an optional trailing action, which
+   each screen supplies in its own step. */
+[data-screen-heading] {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 20px 10px;
+}
+
+[data-screen-heading] h1 {
+  margin: 0;
+  font-size: var(--fs-28);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+/* ----- Top bar ---------------------------------------------------------- */
+
+/* The bar a screen reached from another one opens with. */
+[data-top-bar] {
+  height: var(--control-60);
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px 0 8px;
+}
+
+[data-top-bar-back] {
+  width: var(--control-44);
+  height: var(--control-44);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: background var(--dur-160) linear;
+}
+
+[data-top-bar-back]:hover {
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+/* A `<span>` in the prototype; the app's screens have always titled themselves
+   with a heading, and the two render identically once the margin is off. */
+[data-top-bar] h1 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+}
+
+/* ----- Scroll region ---------------------------------------------------- */
+
+/* The prototype's `.sx` helper, which every screen puts under its bar:
+     .sx{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+   The gap and the bottom padding differ per screen, so they stay with the
+   screen; `6px 20px` is the inset all of them share. */
+[data-screen-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: 6px 20px 20px;
+}

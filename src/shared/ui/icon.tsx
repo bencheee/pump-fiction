@@ -1,3 +1,5 @@
+import "./icon.css";
+
 export const iconNames = [
   "archive-restore",
   "archive",
@@ -41,12 +43,26 @@ export const iconNames = [
 
 export type IconName = (typeof iconNames)[number];
 
+/** The eleven boxes the prototype draws an icon at. */
+export type IconSize = 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 28 | 30;
+
 type IconProps = {
   name: IconName;
-  size?: 12 | 13 | 14 | 15 | 16 | 18 | 19 | 20;
+  size?: IconSize;
   className?: string;
 };
 
-export function Icon({ name }: IconProps) {
-  return <span aria-hidden="true" data-icon={name} />;
+// The glyph, the box and the colour all come from `icon.css`, keyed on these
+// two attributes: nothing here carries a style. 16px is the default box, so a
+// call that omits `size` leaves `data-icon-size` off and takes it from the
+// `[data-icon]` rule.
+export function Icon({ name, size, className }: IconProps) {
+  return (
+    <span
+      aria-hidden="true"
+      data-icon={name}
+      data-icon-size={size}
+      className={className}
+    />
+  );
 }

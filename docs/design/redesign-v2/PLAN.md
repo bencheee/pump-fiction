@@ -183,9 +183,13 @@ reuses the listed component or changes it for everyone.
 | Surface | Component | Born in step | Reused by |
 | --- | --- | --- | --- |
 | Tokens and keyframes | `src/app/globals.css` | Phase 0 | all |
-| Bottom navigation | `shared/ui/shell.tsx` | 1 | all |
-| Screen frame and top bar | `shared/ui/page-frame.tsx` | 1 | all |
-| Icon | `shared/ui/icon.tsx` | 1 | all |
+| Shell frame and stage | `shared/ui/shell.{tsx,css}` | 1 | all |
+| Bottom navigation | `shared/ui/shell.{tsx,css}` | 1 | all |
+| Screen transition | `useScreenAnimation` in `shared/ui/shell.tsx` | 1 | all |
+| Screen frame and title bar | `shared/ui/page-frame.{tsx,css}` | 1 | root screens |
+| Top bar | `shared/ui/page-frame.{tsx,css}` | 1 | 5, 6, 7, 8, 11, 12, 14, 15, 17, 19 |
+| Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
+| Icon | `shared/ui/icon.{tsx,css}` | 1 | all |
 | Full-screen panel | — | 3 | every panel |
 | Primary and secondary action | — | 2 | all |
 | List row | — | 8 | lists |
@@ -199,6 +203,19 @@ reuses the listed component or changes it for everyone.
 | Toast | — | 2 | all |
 | Confirm dialog | — | 9 | destructive actions |
 
+Component styling lives in a CSS file beside its component, keyed on the same
+data attributes the markup already carries, and is imported by it. `globals.css`
+stays what phase 0 made it: tokens and motion, nothing else. Step 1 is where
+that split was set (Owner, 2026-09-20).
+
+Step 1 departs from the prototype in three places, all of them the prototype
+having no notion of a real device rather than a choice about how it looks:
+the frame takes the viewport instead of `390x844`; the bottom bar adds
+`env(safe-area-inset-bottom)` under its 18px so a home indicator does not sit on
+the destinations; and the screen element keeps the `.sx` scroll behaviour itself
+so a screen that has not been ported yet is still reachable. A ported screen
+puts its own scroll region in front of that one and it never engages.
+
 The icon is reached through the `data-icon` attribute the strip left on
 `shared/ui/icon.tsx`, not through the prototype's `.ic` class: the mask, the
 colour and the box all come from CSS, so no component carries a style
@@ -211,5 +228,6 @@ prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 | Step | State | Approved | Commit |
 | --- | --- | --- | --- |
 | Phase 0 | done | 2026-09-20 | — |
+| 1 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.

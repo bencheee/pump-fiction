@@ -1,0 +1,276 @@
+/*
+ * The icon, ported from the prototype for step 1 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * The prototype draws every icon with its `.ic` helper:
+ *
+ *   .ic{display:inline-block;flex:none;background:currentColor;mask-size:contain;
+ *       mask-repeat:no-repeat;mask-position:center;...}
+ *
+ * and gives each one its glyph, box and colour in a style attribute. The Owner
+ * settled on 2026-09-20 that the app reaches the same picture through the
+ * `data-icon` name the strip left behind, so the mask, the box and the colour
+ * all live here and no component carries a style attribute for an icon.
+ *
+ * The SVGs are Lucide outlines with `stroke="currentColor"`; used as a mask
+ * only their alpha matters, and the colour comes from `currentColor` on this
+ * element — exactly as in the prototype.
+ */
+
+[data-icon] {
+  display: inline-block;
+  flex: none;
+  width: var(--icon-16);
+  height: var(--icon-16);
+  background: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+/* Boxes. 16px is the default above; these are the other ten the prototype
+   draws at, each already a token from phase 0. */
+[data-icon-size="12"] {
+  width: var(--icon-12);
+  height: var(--icon-12);
+}
+
+[data-icon-size="13"] {
+  width: var(--icon-13);
+  height: var(--icon-13);
+}
+
+[data-icon-size="14"] {
+  width: var(--icon-14);
+  height: var(--icon-14);
+}
+
+[data-icon-size="15"] {
+  width: var(--icon-15);
+  height: var(--icon-15);
+}
+
+[data-icon-size="17"] {
+  width: var(--icon-17);
+  height: var(--icon-17);
+}
+
+[data-icon-size="18"] {
+  width: var(--icon-18);
+  height: var(--icon-18);
+}
+
+[data-icon-size="19"] {
+  width: var(--icon-19);
+  height: var(--icon-19);
+}
+
+[data-icon-size="20"] {
+  width: var(--icon-20);
+  height: var(--icon-20);
+}
+
+[data-icon-size="28"] {
+  width: var(--icon-28);
+  height: var(--icon-28);
+}
+
+[data-icon-size="30"] {
+  width: var(--icon-30);
+  height: var(--icon-30);
+}
+
+/* Glyphs. One rule per name in `iconNames`; the prototype references 25 of
+   them, the rest are the app's own and would otherwise draw an empty box. */
+[data-icon="archive-restore"] {
+  mask-image: url("/assets/icons/archive-restore.svg");
+  -webkit-mask-image: url("/assets/icons/archive-restore.svg");
+}
+
+[data-icon="archive"] {
+  mask-image: url("/assets/icons/archive.svg");
+  -webkit-mask-image: url("/assets/icons/archive.svg");
+}
+
+[data-icon="arrow-down"] {
+  mask-image: url("/assets/icons/arrow-down.svg");
+  -webkit-mask-image: url("/assets/icons/arrow-down.svg");
+}
+
+[data-icon="arrow-left"] {
+  mask-image: url("/assets/icons/arrow-left.svg");
+  -webkit-mask-image: url("/assets/icons/arrow-left.svg");
+}
+
+[data-icon="arrow-up"] {
+  mask-image: url("/assets/icons/arrow-up.svg");
+  -webkit-mask-image: url("/assets/icons/arrow-up.svg");
+}
+
+[data-icon="calendar-check"] {
+  mask-image: url("/assets/icons/calendar-check.svg");
+  -webkit-mask-image: url("/assets/icons/calendar-check.svg");
+}
+
+[data-icon="calendar"] {
+  mask-image: url("/assets/icons/calendar.svg");
+  -webkit-mask-image: url("/assets/icons/calendar.svg");
+}
+
+[data-icon="check-check"] {
+  mask-image: url("/assets/icons/check-check.svg");
+  -webkit-mask-image: url("/assets/icons/check-check.svg");
+}
+
+[data-icon="check"] {
+  mask-image: url("/assets/icons/check.svg");
+  -webkit-mask-image: url("/assets/icons/check.svg");
+}
+
+[data-icon="chevron-down"] {
+  mask-image: url("/assets/icons/chevron-down.svg");
+  -webkit-mask-image: url("/assets/icons/chevron-down.svg");
+}
+
+[data-icon="chevron-left"] {
+  mask-image: url("/assets/icons/chevron-left.svg");
+  -webkit-mask-image: url("/assets/icons/chevron-left.svg");
+}
+
+[data-icon="chevron-right"] {
+  mask-image: url("/assets/icons/chevron-right.svg");
+  -webkit-mask-image: url("/assets/icons/chevron-right.svg");
+}
+
+[data-icon="circle-alert"] {
+  mask-image: url("/assets/icons/circle-alert.svg");
+  -webkit-mask-image: url("/assets/icons/circle-alert.svg");
+}
+
+[data-icon="circle-check"] {
+  mask-image: url("/assets/icons/circle-check.svg");
+  -webkit-mask-image: url("/assets/icons/circle-check.svg");
+}
+
+[data-icon="circle-x"] {
+  mask-image: url("/assets/icons/circle-x.svg");
+  -webkit-mask-image: url("/assets/icons/circle-x.svg");
+}
+
+[data-icon="dot"] {
+  mask-image: url("/assets/icons/dot.svg");
+  -webkit-mask-image: url("/assets/icons/dot.svg");
+}
+
+[data-icon="dumbbell"] {
+  mask-image: url("/assets/icons/dumbbell.svg");
+  -webkit-mask-image: url("/assets/icons/dumbbell.svg");
+}
+
+[data-icon="ellipsis-vertical"] {
+  mask-image: url("/assets/icons/ellipsis-vertical.svg");
+  -webkit-mask-image: url("/assets/icons/ellipsis-vertical.svg");
+}
+
+[data-icon="equal"] {
+  mask-image: url("/assets/icons/equal.svg");
+  -webkit-mask-image: url("/assets/icons/equal.svg");
+}
+
+[data-icon="grip-vertical"] {
+  mask-image: url("/assets/icons/grip-vertical.svg");
+  -webkit-mask-image: url("/assets/icons/grip-vertical.svg");
+}
+
+[data-icon="history"] {
+  mask-image: url("/assets/icons/history.svg");
+  -webkit-mask-image: url("/assets/icons/history.svg");
+}
+
+[data-icon="info"] {
+  mask-image: url("/assets/icons/info.svg");
+  -webkit-mask-image: url("/assets/icons/info.svg");
+}
+
+[data-icon="layout-grid"] {
+  mask-image: url("/assets/icons/layout-grid.svg");
+  -webkit-mask-image: url("/assets/icons/layout-grid.svg");
+}
+
+[data-icon="loader-circle"] {
+  mask-image: url("/assets/icons/loader-circle.svg");
+  -webkit-mask-image: url("/assets/icons/loader-circle.svg");
+}
+
+[data-icon="minus"] {
+  mask-image: url("/assets/icons/minus.svg");
+  -webkit-mask-image: url("/assets/icons/minus.svg");
+}
+
+[data-icon="pause"] {
+  mask-image: url("/assets/icons/pause.svg");
+  -webkit-mask-image: url("/assets/icons/pause.svg");
+}
+
+[data-icon="pencil"] {
+  mask-image: url("/assets/icons/pencil.svg");
+  -webkit-mask-image: url("/assets/icons/pencil.svg");
+}
+
+[data-icon="play"] {
+  mask-image: url("/assets/icons/play.svg");
+  -webkit-mask-image: url("/assets/icons/play.svg");
+}
+
+[data-icon="plus"] {
+  mask-image: url("/assets/icons/plus.svg");
+  -webkit-mask-image: url("/assets/icons/plus.svg");
+}
+
+[data-icon="rotate-ccw"] {
+  mask-image: url("/assets/icons/rotate-ccw.svg");
+  -webkit-mask-image: url("/assets/icons/rotate-ccw.svg");
+}
+
+[data-icon="ruler"] {
+  mask-image: url("/assets/icons/ruler.svg");
+  -webkit-mask-image: url("/assets/icons/ruler.svg");
+}
+
+[data-icon="scale"] {
+  mask-image: url("/assets/icons/scale.svg");
+  -webkit-mask-image: url("/assets/icons/scale.svg");
+}
+
+[data-icon="search"] {
+  mask-image: url("/assets/icons/search.svg");
+  -webkit-mask-image: url("/assets/icons/search.svg");
+}
+
+[data-icon="trash-2"] {
+  mask-image: url("/assets/icons/trash-2.svg");
+  -webkit-mask-image: url("/assets/icons/trash-2.svg");
+}
+
+[data-icon="trending-down"] {
+  mask-image: url("/assets/icons/trending-down.svg");
+  -webkit-mask-image: url("/assets/icons/trending-down.svg");
+}
+
+[data-icon="trending-up"] {
+  mask-image: url("/assets/icons/trending-up.svg");
+  -webkit-mask-image: url("/assets/icons/trending-up.svg");
+}
+
+[data-icon="triangle-alert"] {
+  mask-image: url("/assets/icons/triangle-alert.svg");
+  -webkit-mask-image: url("/assets/icons/triangle-alert.svg");
+}
+
+[data-icon="x"] {
+  mask-image: url("/assets/icons/x.svg");
+  -webkit-mask-image: url("/assets/icons/x.svg");
+}
