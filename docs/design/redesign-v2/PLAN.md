@@ -190,7 +190,7 @@ reuses the listed component or changes it for everyone.
 | Top bar | `shared/ui/page-frame.{tsx,css}` | 1 | 5, 6, 7, 8, 11, 12, 14, 15, 17, 19 |
 | Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
 | Icon | `shared/ui/icon.{tsx,css}` | 1 | all |
-| Full-screen panel | — | 3 | every panel |
+| Full-screen panel | `Sheet` in `shared/ui/overlays.{tsx,css}` | 3 | every panel |
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | List row | — | 8 | lists |
 | Chip | — | 11 | statistics, Body |
@@ -240,6 +240,43 @@ the title bar has always had `space-between` for — Today's date chip is the
 first thing to sit in it. The toast moved to step 6 in the register above: the
 two cards that raised one on Today are the two that left it.
 
+Step 3 departs from the prototype in five places, four of them the application
+knowing something the prototype does not:
+
+- **Set as Next leaves this panel.** The prototype's Choose split has two
+  actions per card and no third; the application's sheet had one. Both the
+  prototype (screen 18, `OVERLAY: SET NEXT SPLIT`, step 14) and
+  `docs/product/programs-and-splits.md` put Set as Next on program editing, and
+  `programs/program-form.tsx` already calls `setNextSplitAction`, so
+  `MVP-PRG-004` keeps a screen and nothing became unreachable.
+- **No `Proposed` badge.** `sp.bg` (line 3335) tints the split that is on Today
+  now, which is the proposal until an alternate replaces it, and the prototype
+  marks nothing else. Today's own kicker still says which of the two it is
+  showing.
+- **Prototype copy wins over the existing test assertions**, as in step 2:
+  `Choose Another Split` becomes `Choose another split`, the lead paragraph
+  loses the `— <split> stays next.` tail the application appended, `Train This
+  Today` becomes `Train today` — the aria-label stays `Train this today` — and
+  the paragraph contrasting the two actions goes, the prototype having none.
+  Today's rotation line already says alternates never advance it.
+- **The splits are sorted by `position`.** `splitOptions` is `SPLITS` itself,
+  the program's own order; the view model hands over the proposal and then the
+  alternates.
+- **The panel is modal.** The prototype leaves the bottom navigation live under
+  its overlays; `Sheet` portals into the stage so the bar stays drawn in the
+  same place, but a Radix dialog holds it inert while the panel is open. That
+  keeps Escape, Back and the focus return the application has always had and
+  the browser suite asserts.
+
+Both actions close the panel before they act, which is the prototype's own
+(`startSplit` and `select` each clear `sheet`): a start that the server refuses
+then raises its error on Today, where step 2 put it.
+
+`Sheet` grew a `panel` name this step, the same hook `PageFrame` has, and lost
+three things that were not the prototype's: the scrim behind it — the panel is
+opaque — the spacer in its bar, and an 18px close icon where the prototype
+draws 16.
+
 Step 1 departs from the prototype in three places, all of them the prototype
 having no notion of a real device rather than a choice about how it looks:
 the frame takes the viewport instead of `390x844`; the bottom bar adds
@@ -262,5 +299,6 @@ prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 | Phase 0 | done | 2026-09-20 | — |
 | 1 | done | 2026-09-20 | — |
 | 2 | done | 2026-09-20 | — |
+| 3 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.

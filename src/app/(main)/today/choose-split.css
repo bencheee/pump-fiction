@@ -1,0 +1,102 @@
+/*
+ * Choose another split, ported from the prototype for step 3 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup         lines 1446-1466, `data-screen-label="Choose split"`
+ *   bound values   lines 3332-3337 — `openSplits`, and `splitOptions` with
+ *                  `sp.name`, `sp.meta`, `sp.bg`, `sp.start`, `sp.select`
+ *   `closeSheet`   line 3459
+ *   `SPLITS[].meta` line 1718
+ *
+ * The panel's frame — the sheet, the 60px bar and its close button — is the
+ * shared surface this step was the first to need and lives in
+ * `shared/ui/overlays.css`. This file is what the prototype writes inside that
+ * frame on this screen alone.
+ */
+
+/* ----- Scroll region ---------------------------------------------------- */
+
+/* The shared body already carries the prototype's `.sx` and its `12px 20px 0`;
+   the 10px between the cards and the 16px under the last one are this panel's
+   (line 1453). */
+[data-panel="choose-split"] [data-panel-body] {
+  gap: 10px;
+  padding-bottom: 16px;
+}
+
+[data-panel="choose-split"] [data-panel-lead] {
+  margin: 0 0 4px;
+  line-height: var(--lh-1-45);
+}
+
+/* ----- Split card ------------------------------------------------------- */
+
+[data-split-card] {
+  border-radius: var(--radius-20);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 18px;
+}
+
+/* `sp.bg` tints the split that is on Today now — the proposed one until an
+   alternate replaces it. */
+[data-split-card="current"] {
+  background: var(--accent-surface);
+}
+
+/* A `<p>` in the prototype too: the card names the split, it does not head a
+   section of the document. 1.22 is the only line height in the file at that
+   value, so it stays a literal here. */
+[data-split-name] {
+  margin: 0;
+  font-size: var(--fs-17);
+  line-height: 1.22;
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+[data-split-meta] {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14-5);
+  color: var(--text-muted);
+}
+
+/* ----- Actions ---------------------------------------------------------- */
+
+[data-split-actions] {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+/* Neither pill is the shared 60px action of `shared/ui/action.css`: the
+   prototype writes a 52px pair here and nowhere else, one filling the row and
+   one square enough for a single icon. */
+[data-split-start] {
+  flex: 1;
+  height: var(--control-52);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+}
+
+[data-split-select] {
+  flex: none;
+  width: var(--control-56);
+  height: var(--control-52);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}

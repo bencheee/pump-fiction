@@ -1,0 +1,90 @@
+/*
+ * The full-screen panel, ported from the prototype for step 3 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP. The panel is a shared
+ * surface, not one screen's: Today's note (line 1397), Add exercise (1415),
+ * Choose split (1447) and Review & finish (1470) open with the same root and
+ * the same 60px bar, declaration for declaration. What changes below the bar —
+ * the gap, the bottom padding, whether the body scrolls at all — belongs to the
+ * screen and stays in the screen's own stylesheet.
+ *
+ * The confirm dialog also lives in this file's component; it is born in step 9
+ * and has no styling here yet.
+ */
+
+/* ----- Panel ------------------------------------------------------------ */
+
+/* The prototype's overlays are children of the stage, so `inset:0` stops at the
+   top of the bottom navigation and leaves it drawn. `Sheet` portals into the
+   same node. */
+[data-panel] {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: var(--bg-sunken);
+  display: flex;
+  flex-direction: column;
+  animation: ovIn var(--dur-240) var(--ease);
+}
+
+/* Rendered outside the shell — the test-support harness — there is no stage to
+   fill and the panel takes the viewport instead. */
+body > [data-panel] {
+  position: fixed;
+}
+
+/* ----- Bar -------------------------------------------------------------- */
+
+[data-panel-bar] {
+  height: var(--control-60);
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+/* A `<span>` in the prototype. Radix titles the dialog with an `h2`, and the
+   two render identically once the margin is off. */
+[data-panel-bar] h2 {
+  margin: 0;
+  padding: 0 6px;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+}
+
+[data-panel-close] {
+  width: var(--control-44);
+  height: var(--control-44);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+/* ----- Body ------------------------------------------------------------- */
+
+/* The prototype's `.sx` plus the `12px 20px` inset all four panels share. The
+   bottom padding is the screen's: three of the four write 0 and let a pinned
+   action block carry it, and Choose split writes 16. */
+[data-panel-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: 12px 20px 0;
+}
+
+/* The line under the bar that says what the panel is for: 13.5px in the muted
+   grey on all three panels that carry one. Its margins are the screen's. */
+[data-panel-lead] {
+  margin: 0;
+  font-size: var(--fs-13-5);
+  color: var(--text-muted);
+}

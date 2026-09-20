@@ -4,22 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { setNextSplitAction } from "@/app/actions/programs";
 import { startWorkoutAction } from "@/app/actions/workouts";
 import type {
   StartWorkoutDefinition,
   TodaySplit,
   TodayView,
 } from "@/features/active-workout/domain/workout";
-import {
-  Action,
-  Badge,
-  BlockingProgress,
-  Icon,
-  PageFrame,
-  Sheet,
-} from "@/shared/ui";
+import { Action, BlockingProgress, Icon, PageFrame } from "@/shared/ui";
 
+import { ChooseSplitPanel } from "./choose-split";
+import { splitStatsText } from "./split-stats";
 import "./today.css";
 
 export function TodayExperience({ today }: { today: TodayView }) {
@@ -30,11 +24,17 @@ export function TodayExperience({ today }: { today: TodayView }) {
   const [retryDefinition, setRetryDefinition] =
     useState<StartWorkoutDefinition>();
   const current = today.currentWorkout;
+  // The prototype's `splitOptions` is `SPLITS` itself — the program's splits in
+  // the program's own order, with the one on Today tinted rather than moved to
+  // the front. `position` is that order here.
   const allSplits = useMemo(
     () =>
-      today.proposedSplit
+      (today.proposedSplit
         ? [today.proposedSplit, ...today.alternateSplits]
-        : today.alternateSplits,
+        : today.alternateSplits
+      )
+        .slice()
+        .sort((a, b) => a.position - b.position),
     [today.alternateSplits, today.proposedSplit],
   );
 
@@ -133,10 +133,9 @@ export function TodayExperience({ today }: { today: TodayView }) {
       {!current ? (
         <div data-today-choices="">
           {allSplits.length > 1 ? (
-            <AlternateSplitSheet
+            <ChooseSplitPanel
               splits={allSplits}
-              proposedSplitId={today.proposedSplit?.splitId}
-              rotationNextName={today.proposedSplit?.splitName}
+              selectedSplitId={selectedSplit?.splitId}
               pending={pending}
               onStart={startSplit}
               onSelect={setSelectedSplit}
@@ -241,112 +240,13 @@ function RestoreCard({
   );
 }
 
-function AlternateSplitSheet({
-  splits,
-  proposedSplitId,
-  rotationNextName,
-  pending,
-  onStart,
-  onSelect,
-}: {
-  splits: readonly TodaySplit[];
-  proposedSplitId?: string;
-  rotationNextName?: string;
-  pending: boolean;
-  onStart: (split: TodaySplit) => void;
-  onSelect: (split: TodaySplit) => void;
-}) {
-  const router = useRouter();
-  const [setNextError, setSetNextError] = useState<string>();
-  const [settingNext, setSettingNext] = useState<string>();
-
-  async function setNext(split: TodaySplit, close: () => void) {
-    setSettingNext(split.splitId);
-    setSetNextError(undefined);
-    const result = await setNextSplitAction(split.programId, split.splitId);
-    if (!result.ok) {
-      setSetNextError(result.error.message);
-      setSettingNext(undefined);
-      return;
-    }
-    onSelect(split);
-    close();
-    router.refresh();
-  }
-
-  return (
-    <Sheet
-      title="Choose Another Split"
-      description={`Pick a split to train today. This does not change your rotation${rotationNextName ? ` — ${rotationNextName} stays next.` : "."}`}
-      trigger={<Action variant="secondary">Another split</Action>}
-    >
-      {(close) => (
-        <div>
-          {setNextError ? <p role="alert">{setNextError}</p> : null}
-          {splits.map((split) => {
-            const proposed = split.splitId === proposedSplitId;
-            return (
-              <section key={split.splitId}>
-                <div>
-                  <h3>{split.splitName}</h3>
-                  {proposed ? <Badge tone="accent">Proposed</Badge> : null}
-                </div>
-                <SplitStats split={split} />
-                <Action
-                  disabled={pending || Boolean(settingNext)}
-                  onClick={() => onStart(split)}
-                >
-                  {proposed ? "Start Proposed Split" : "Train This Today"}
-                </Action>
-                <Action
-                  variant="secondary"
-                  disabled={pending || Boolean(settingNext)}
-                  onClick={() => {
-                    onSelect(split);
-                    close();
-                  }}
-                >
-                  Put on Today, don&apos;t start yet
-                </Action>
-                {proposed ? (
-                  <Action variant="tertiary" disabled>
-                    Already next in rotation
-                  </Action>
-                ) : (
-                  <Action
-                    variant="tertiary"
-                    disabled={pending || Boolean(settingNext)}
-                    onClick={() => void setNext(split, close)}
-                  >
-                    {settingNext === split.splitId ? "Setting…" : "Set as Next"}
-                  </Action>
-                )}
-              </section>
-            );
-          })}
-          <p>
-            Two different actions: Train this today affects one workout and
-            leaves rotation alone. Set as next persistently moves the rotation
-            pointer.
-          </p>
-        </div>
-      )}
-    </Sheet>
-  );
-}
-
-// `splitStats` is the split's own line in the prototype (`SPLITS[].meta`,
-// line 1727): `Avg 1h 08m · 7 workouts`. A split with no completed workout has
-// no average, and then the card carries no line at all.
+// `splitStats`, the line the Choose split panel writes on every card and Today
+// writes on the one it is showing. The text is the same on both; only its type
+// differs, so the two share the sentence and not the element.
 function SplitStats({ split }: { split: TodaySplit }) {
-  if (split.averageDurationSeconds === null) return null;
-  return (
-    <p data-today-split-meta="">
-      Avg {formatDuration(split.averageDurationSeconds)} ·{" "}
-      {split.completedWorkoutCount}{" "}
-      {split.completedWorkoutCount === 1 ? "workout" : "workouts"}
-    </p>
-  );
+  const stats = splitStatsText(split);
+  if (stats === null) return null;
+  return <p data-today-split-meta="">{stats}</p>;
 }
 
 function formatLocalDate(value: string): string {
@@ -358,15 +258,6 @@ function formatLocalDate(value: string): string {
   })
     .format(new Date(`${value}T00:00:00Z`))
     .replace(",", "");
-}
-
-function formatDuration(seconds: number): string {
-  const minutes = Math.round(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const remainder = minutes % 60;
-  return hours > 0
-    ? `${hours}h ${String(remainder).padStart(2, "0")}m`
-    : `${minutes}m`;
 }
 
 function formatClock(seconds: number): string {

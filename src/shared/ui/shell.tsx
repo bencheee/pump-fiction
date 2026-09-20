@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 import { Icon, type IconName } from "./icon";
+import { PanelContainerContext } from "./panel-container";
 import "./shell.css";
 import { ToastProvider } from "./toast";
 
@@ -65,14 +66,20 @@ export function BottomNavigation() {
 export function MainShell({ children }: { children: ReactNode }) {
   const keyboardOpen = useKeyboardOpen();
   const screenAnim = useScreenAnimation();
+  // The prototype's overlays are children of the stage, one level above the
+  // screen and one below the bottom navigation. A panel opened anywhere in the
+  // tree portals back here so it lands in the same place.
+  const [stage, setStage] = useState<HTMLElement | null>(null);
 
   return (
     <div data-shell="main" data-keyboard-open={keyboardOpen}>
       <ToastProvider>
-        <div data-stage="">
-          <main id="pf-scroll" data-screen="" data-screen-anim={screenAnim}>
-            {children}
-          </main>
+        <div data-stage="" ref={setStage}>
+          <PanelContainerContext.Provider value={stage}>
+            <main id="pf-scroll" data-screen="" data-screen-anim={screenAnim}>
+              {children}
+            </main>
+          </PanelContainerContext.Provider>
         </div>
       </ToastProvider>
       <BottomNavigation />
