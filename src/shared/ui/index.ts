@@ -6,7 +6,12 @@ export { useSaveOutcome, useSavedSnapshot, type SavePhase } from "./form-state";
 export { Icon, iconNames, type IconName, type IconSize } from "./icon";
 export { DestructiveDialog, Sheet } from "./overlays";
 export { PageFrame, StickyActionBar, TopBar } from "./page-frame";
-export { BottomNavigation, MainShell } from "./shell";
+export {
+  BottomNavigation,
+  MainShell,
+  useStageAnimation,
+  type ScreenAnim,
+} from "./shell";
 export {
   Badge,
   EmptyState,

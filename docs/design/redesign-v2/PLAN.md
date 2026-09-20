@@ -35,9 +35,16 @@ this file first and needs nothing else to start.
 ```text
 project_id : b1b0f09a-7426-48c3-b1cf-0be515a07a28
 path       : Workout App - Prototype.dc.html
-total      : 3609 lines
-etag       : 1789817275172843   (re-read the head if this has changed)
+total      : 3613 lines
+etag       : 1789919597314229   (re-read the head if this has changed)
 ```
+
+The head was re-read at step 5, the etag having moved from `1789817275172843`
+(3609 lines). All 37 keyframes but four are byte-identical to what phase 0 wrote
+down; `wheelUpA`, `wheelUpB`, `wheelDownA` and `wheelDownB` were rewritten in the
+prototype after phase 0 and now travel 54.5px through four stops with a blur,
+where `globals.css` still carries the two-stop 35px pair. That is step 4's
+surface, so it is the Owner's call, not step 5's.
 
 Use `mcp__claude-design__read_file` with `offset` and `limit`. The file is
 HTML-entity-escaped: `&lt;` `&gt;` `&amp;` stand for `<` `>` `&`.
@@ -185,13 +192,15 @@ reuses the listed component or changes it for everyone.
 | Tokens and keyframes | `src/app/globals.css` | Phase 0 | all |
 | Shell frame and stage | `shared/ui/shell.{tsx,css}` | 1 | all |
 | Bottom navigation | `shared/ui/shell.{tsx,css}` | 1 | all |
-| Screen transition | `useScreenAnimation` in `shared/ui/shell.tsx` | 1 | all |
+| Screen transition | `useStageAnimation` in `shared/ui/shell.tsx` | 1 | all |
 | Screen frame and title bar | `shared/ui/page-frame.{tsx,css}` | 1 | root screens |
 | Top bar | `shared/ui/page-frame.{tsx,css}` | 1 | 5, 6, 7, 8, 11, 12, 14, 15, 17, 19 |
 | Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
 | Icon | `shared/ui/icon.{tsx,css}` | 1 | all |
 | Full-screen panel | `Sheet` in `shared/ui/overlays.{tsx,css}` | 3 | every panel |
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
+| Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
+| Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
 | List row | — | 8 | lists |
 | Chip | — | 11 | statistics, Body |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4 | 4, 10 |
@@ -374,6 +383,69 @@ clock can raise a React hydration mismatch when the second turns between the
 server render and hydration; that is not this step's — Today's restore card
 does the same — but it is on this screen too and wants a decision.
 
+Step 5 replaces the exercise list `/workout/current` opened on before step 4, so
+the accordion card, its set rows and the finish panel they carried are gone from
+`active-workout-experience.tsx`; the review lives on `/workout/current/finish`,
+which has always had its own delivery of the terminal command. The screen
+departs from the prototype in six places, five of them the application knowing
+something the prototype does not:
+
+- **A row with no sets carries an Add set.** `addPicked` (line 3444) gives a new
+  exercise as many sets as it plans; `add_exercise` gives it none, and the set
+  queue's own empty state (step 4) points at this screen for one. The prototype
+  computes `ex.addSet` on this very row (line 3208) and draws it nowhere — the
+  set chips it once fed are gone from the markup, along with `ex.sets` and
+  `ex.jump`. The control is the row's own 44px icon button and appears only on
+  the row that would otherwise dead-end.
+- **Reordering keeps a keyboard path.** The drag is the prototype's, hold for
+  hold (180ms, an 8px slip cancels it, the pointer is captured, the passed rows
+  move one row height). Its `<section>` is not focusable and has no other way in;
+  the screen this one replaces had a named Move control on every row, so the row
+  here is focusable and Alt with an arrow moves it. It draws nothing, and the
+  `Move X up` buttons `tests/browser/active-workout.spec.ts:122` names are gone.
+- **The pointer is a set id** and **a set is recorded by its values**, both
+  step 4's. `ex.bg` and `ex.metaColor` mark the exercise the pointer's set is
+  in, and `x.sets.filter(done)` reads `isSetRecorded` instead.
+- **The prescription tail drops when there is none** — a one-time workout, or an
+  exercise added to this one, has no `plannedSets` — and a seconds-measured
+  exercise keeps its unit, as step 2 settled. The prototype has neither.
+- **An exercise whose `add_exercise` has not been acknowledged** is the row it is
+  about to become, under the name it was added with, with no control on it and
+  no drag: neither its id nor its position exists anywhere but here yet.
+- **`Remove <name>`, not `Remove exercise`.** Line 247 is the only place the
+  prototype leaves this button unnamed; its own second copy, the split editor's
+  (line 861), writes `aria-label="Remove {{ ex.name }}"`, and six rows of the
+  same control need it.
+
+`goBack` (line 3345) returns to `prevScreenName`, which is the queue when the
+overview was opened from it and Today when a start landed here; the two screens
+live in one route, so the component carries that rather than the history stack.
+`useScreenAnimation` became `useStageAnimation` for the same reason: `navAll()`
+gives the prototype's Today page three screens at depths 0, 1 and 2, and the
+queue (step 4) now takes the transition too — a step 1 surface changed for
+everyone rather than forked.
+
+The 54px Add pill and the 44px row icon button are shared surfaces from the
+start, as the register above records: the prototype writes each of them
+identically on screens this plan reaches at steps 14 and 15.
+
+Two things are reachable but not ported, as in step 4: `Add exercise` opens the
+picker the application already has until step 6 ports screen 28, and the confirm
+dialog behind a populated removal is the unported one every destructive action
+still uses. One hole the prototype shares: a workout with no exercises can be
+neither finished nor discarded from either screen — the prototype's empty queue
+offers only `Add exercise` too — and step 6's review panel is where that lands.
+
+Two defects found while verifying, neither this step's:
+
+- **The value wheel's candidate buttons cannot be tapped.** `ValueWheel` captures
+  the pointer on `pointerdown` (step 4, `shared/ui/value-wheel.tsx`), which sends
+  the following `click` to the wheel instead of the button under the finger, so
+  the prototype's `kgUp1`/`repsDown1` steppers (lines 3361-3364) do nothing on a
+  press. The same buttons work from the keyboard, and dragging the wheel works.
+- **The clock still raises a React hydration mismatch** when the second turns
+  between the server render and hydration, which step 4 already flagged.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -383,5 +455,6 @@ does the same — but it is on this screen too and wants a decision.
 | 2 | done | 2026-09-20 | — |
 | 3 | done | 2026-09-20 | — |
 | 4 | done | 2026-09-20 | — |
+| 5 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.

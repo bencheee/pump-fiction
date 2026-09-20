@@ -33,6 +33,7 @@ import {
 import {
   DestructiveDialog,
   Icon,
+  type ScreenAnim,
   SetValueWheels,
   Sheet,
   type ValueWheelProps,
@@ -67,6 +68,9 @@ export type SetQueueProps = {
   initialExercises?: readonly Exercise[];
   onTogglePause: () => void;
   onOpenOverview: () => void;
+  /** `screenAnim` (line 3317): the queue and the overview are two screens of
+      one route, so the transition between them is this screen's own. */
+  screenAnim: ScreenAnim;
   onJump: (entry: FlatSet) => void;
   onAdvance: () => void;
   onUpdateSet: (
@@ -101,6 +105,7 @@ export function SetQueue({
   initialExercises,
   onTogglePause,
   onOpenOverview,
+  screenAnim,
   onJump,
   onAdvance,
   onUpdateSet,
@@ -139,7 +144,7 @@ export function SetQueue({
   }
 
   return (
-    <div data-queue="">
+    <div data-queue="" data-screen-anim={screenAnim}>
       <div data-queue-bar="">
         <button
           type="button"

@@ -29,20 +29,45 @@ export function PageFrame({
 }
 
 export function TopBar({
+  screen = "",
   title,
   backHref,
+  onBack,
   backLabel,
+  trailing,
 }: {
+  /** Names the screen, so its own stylesheet can reach the shared bar. */
+  screen?: string;
   title: string;
-  backHref: string;
+  /** Where Back goes. A screen that is a view rather than a route passes
+      `onBack` instead: the workout overview returns to where it was opened
+      from, as the prototype's `goBack` does through `prevScreenName`. */
+  backHref?: string;
+  onBack?: () => void;
   backLabel: string;
+  /** The trailing item of the bar, which the prototype gives to two of its
+      nine: the overview's clock (line 236) and a program's Unsaved chip (781). */
+  trailing?: ReactNode;
 }) {
   return (
-    <header data-top-bar="">
-      <Link href={backHref} aria-label={backLabel} data-top-bar-back="">
-        <Icon name="arrow-left" size={18} />
-      </Link>
+    <header data-top-bar={screen}>
+      {backHref === undefined ? (
+        <button
+          type="button"
+          aria-label={backLabel}
+          title={backLabel}
+          data-top-bar-back=""
+          onClick={onBack}
+        >
+          <Icon name="arrow-left" size={18} />
+        </button>
+      ) : (
+        <Link href={backHref} aria-label={backLabel} data-top-bar-back="">
+          <Icon name="arrow-left" size={18} />
+        </Link>
+      )}
       <h1>{title}</h1>
+      {trailing}
     </header>
   );
 }

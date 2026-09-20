@@ -129,7 +129,7 @@ const pageOrder: Record<string, number> = {
   body: 4,
 };
 
-type ScreenAnim = "none" | "scFwdA" | "scFwdB" | "scBackA" | "scBackB";
+export type ScreenAnim = "none" | "scFwdA" | "scFwdB" | "scBackA" | "scBackB";
 
 type NavMemory = {
   key: string;
@@ -143,14 +143,29 @@ function useScreenAnimation(): ScreenAnim {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const page = segments[0] === "workout" ? "today" : (segments[0] ?? "");
-  const depth = segments.length;
+  return useStageAnimation(pathname, page, segments.length);
+}
 
+/*
+ * `navAll()` itself, for the two screens the application holds inside one
+ * route. The prototype's Today page walks three screens on its own state
+ * machine — `today` at depth 0, `overview` at 1, `workout` at 2 — and takes the
+ * same transition between them as between two routes. `/workout/current` holds
+ * the last two, so they ask for it by name instead of by pathname. The shell's
+ * own `<main>` carries the transition into the route; the screen inside it
+ * starts at "none" and animates only when the view changes under it.
+ */
+export function useStageAnimation(
+  key: string,
+  page: string,
+  depth: number,
+): ScreenAnim {
   // The prototype keeps this on the instance and compares during render; the
   // same shape here is state adjusted during render, so the rule that a ref is
   // not read while rendering still holds. The first route on screen animates
   // with nothing, as `navAll()` returns "none" until it has a previous key.
   const [memory, setMemory] = useState<NavMemory>(() => ({
-    key: pathname,
+    key,
     page,
     depth,
     n: 0,
@@ -160,14 +175,14 @@ function useScreenAnimation(): ScreenAnim {
   // Recomputing for a route already on screen returns what it returned before,
   // exactly as the prototype's `if (prev.key !== key)` guard does, so a render
   // for any other reason does not replay the transition.
-  if (memory.key !== pathname) {
+  if (memory.key !== key) {
     const forward =
       memory.page !== page
         ? (pageOrder[page] ?? 0) >= (pageOrder[memory.page] ?? 0)
         : depth >= memory.depth;
     const n = memory.n + 1;
     setMemory({
-      key: pathname,
+      key,
       page,
       depth,
       n,

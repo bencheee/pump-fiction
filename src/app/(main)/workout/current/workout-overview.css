@@ -1,0 +1,208 @@
+/*
+ * The Start workout overview, ported from the prototype for step 5 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup         lines 231-261, `data-screen-label="Start workout"`
+ *   bound values   lines 3187-3221 (`ex.bg`, `ex.metaColor`, `ex.transform`,
+ *                  `ex.transition`, `ex.z`, `ex.shadow`, `ex.touch`), 3319
+ *                  (`clockColor`)
+ *
+ * Two of this screen's surfaces are not here: the 54px Add exercise pill and
+ * the 44px row icon button are written twice and three times over the
+ * prototype, so they are `[data-variant="add"]` and `[data-variant="row-icon"]`
+ * in `shared/ui/action.css`. What is here is what this screen writes alone,
+ * including the one clock chip the prototype draws exactly once (line 236).
+ */
+
+/* ----- Screen frame ----------------------------------------------------- */
+
+/* The three declarations every screen in the prototype opens with (line 233).
+   The entrance animation is the shell's `[data-screen-anim]`: this screen and
+   the set queue are two screens inside one route, and the prototype takes the
+   same transition between them as between two routes. */
+[data-overview] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----- Top bar ---------------------------------------------------------- */
+
+/* The one bar in the prototype written with a 10px gap; the eight others carry
+   6px and gave it to the shared bar in step 1. */
+[data-top-bar="workout-overview"] {
+  gap: 10px;
+}
+
+[data-overview-clock] {
+  flex: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+  color: var(--text);
+}
+
+/* `clockColor` (line 3319), as on the queue's own clock. */
+[data-overview-clock][data-paused="true"] {
+  color: var(--text-muted);
+}
+
+/* ----- Scroll region ---------------------------------------------------- */
+
+/* The prototype's `.sx`, with this screen's own gap and padding (line 239). */
+[data-overview-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 20px 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-overview-kicker] {
+  margin: 0 0 2px;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-04);
+  color: var(--text-muted);
+}
+
+/* ----- Exercise rows ---------------------------------------------------- */
+
+[data-overview-row] {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px 12px 18px;
+  cursor: grab;
+  /* `ex.touch` (line 3196): the list scrolls until a row lifts, and the rule
+     below takes the gesture away while one is held. */
+  touch-action: pan-y;
+  z-index: 1;
+  /* `ex.transition` (3194). `ex.transform` is "none" until a row moves, so the
+     rule below carries it and a row at rest has no transform at all — one that
+     resolved to `translateY(0)` would still make the row a containing block
+     the prototype's has not got. The shift is the only value the screen
+     computes, so the declaration itself stays here. */
+  transition: transform var(--dur-190) var(--ease);
+}
+
+/* `ex.transform` (3192-3193): the rows between the lifted one and where it
+   would land move one row height out of its way. */
+[data-overview-row][data-shifted] {
+  transform: translateY(var(--row-shift, 0px));
+}
+
+/* `ex.bg` (3202): the row the pointer is in, and the row under a drag. */
+[data-overview-row][data-current="true"],
+[data-overview-row][data-drag="lifted"] {
+  background: var(--accent-surface);
+}
+
+/* `ex.transform` (3191), and the three values the lifted row alone takes. */
+[data-overview-row][data-drag="lifted"] {
+  transform: translateY(var(--row-shift, 0px)) scale(1.02);
+  transition: none;
+  z-index: 5;
+  box-shadow: var(--shadow-drag);
+  touch-action: none;
+}
+
+/* An `add_exercise` that has not been acknowledged. The row is the row it is
+   about to become, without a control on it and without the grab it could not
+   honour — the prototype has no notion of either. */
+[data-overview-row][data-arriving] {
+  cursor: default;
+}
+
+/* The row is focusable here, which the prototype's `<section>` is not: it is
+   how the keyboard reorders the list. The ring is the browser's own. */
+[data-overview-row]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[data-overview-row-text] {
+  flex: 1;
+  min-width: 0;
+}
+
+[data-overview-row-name] {
+  display: block;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+[data-overview-row-meta] {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+/* `ex.metaColor` (3201). */
+[data-overview-row][data-current="true"] [data-overview-row-meta] {
+  color: var(--accent);
+}
+
+/* ----- Footer ----------------------------------------------------------- */
+
+[data-overview-footer] {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 20px 18px;
+}
+
+[data-overview-summary] {
+  text-align: center;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+  color: var(--text-dim);
+}
+
+/* The shared 60px primary, which this screen widens and clips (line 257). */
+[data-overview-resume] {
+  width: 100%;
+}
+
+[data-overview-resume-label] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ----- Reorder hint and its announcement -------------------------------- */
+
+/* Neither is drawn. The prototype reorders by drag alone and says nothing; the
+   application keeps a keyboard path to the same move and has to name it. */
+[data-overview-hint] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

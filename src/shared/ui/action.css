@@ -68,3 +68,44 @@
   border-color: var(--line-strong);
   color: var(--text-secondary);
 }
+
+/* ----- Add -------------------------------------------------------------- */
+
+/* The tinted pill that closes a list you can add to, added in step 5. The
+   prototype writes it three times with the same eleven declarations and the
+   same 17px plus: the workout overview (line 250), a program's splits (824)
+   and a split's exercises (886). */
+[data-variant="add"] {
+  min-height: var(--control-54);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--accent-surface);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+  transition: background var(--dur-160) linear;
+}
+
+[data-variant="add"]:hover {
+  background: var(--accent-surface-hover);
+}
+
+/* ----- Row icon --------------------------------------------------------- */
+
+/* The icon button a row carries at its end, added in step 5. The prototype
+   writes it twice, identically: the workout overview's remove (line 247) and
+   the split editor's (861). */
+[data-variant="row-icon"] {
+  flex: none;
+  width: var(--control-44);
+  height: var(--control-44);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+}
