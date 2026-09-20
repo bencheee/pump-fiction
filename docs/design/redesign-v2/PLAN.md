@@ -185,6 +185,7 @@ reuses the listed component or changes it for everyone.
 | Tokens and keyframes | `src/app/globals.css` | Phase 0 | all |
 | Bottom navigation | `shared/ui/shell.tsx` | 1 | all |
 | Screen frame and top bar | `shared/ui/page-frame.tsx` | 1 | all |
+| Icon | `shared/ui/icon.tsx` | 1 | all |
 | Full-screen panel | — | 3 | every panel |
 | Primary and secondary action | — | 2 | all |
 | List row | — | 8 | lists |
@@ -197,6 +198,13 @@ reuses the listed component or changes it for everyone.
 | Actions panel | — | 9 | definition screens |
 | Toast | — | 2 | all |
 | Confirm dialog | — | 9 | destructive actions |
+
+The icon is reached through the `data-icon` attribute the strip left on
+`shared/ui/icon.tsx`, not through the prototype's `.ic` class: the mask, the
+colour and the box all come from CSS, so no component carries a style
+attribute for an icon (Owner, 2026-09-20). Its `size` prop has to grow — the
+prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
+`public/assets/icons`, byte-identical to the design project's copies.
 
 ## Progress
 
