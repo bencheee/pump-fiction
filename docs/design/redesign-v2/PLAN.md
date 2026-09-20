@@ -261,6 +261,6 @@ prototype also draws icons at 17, 28 and 30px. The 25 icons it uses are all in
 | --- | --- | --- | --- |
 | Phase 0 | done | 2026-09-20 | — |
 | 1 | done | 2026-09-20 | — |
-| 2 | done, awaiting approval | — | — |
+| 2 | done | 2026-09-20 | — |
 
 Update this table in the same change that delivers a step.
