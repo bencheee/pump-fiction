@@ -113,6 +113,7 @@ const summary: HistoryWorkoutSummary = {
   status: "completed",
   activeDurationSeconds: 3600,
   performedExerciseCount: 1,
+  volumeKgReps: 480,
 };
 
 beforeEach(() => {

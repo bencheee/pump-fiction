@@ -41,7 +41,28 @@ as $$
                 workout_set.reps
               )
           )
-      ) as performed_exercise_count
+      ) as performed_exercise_count,
+      (
+        -- The work the workout moved, for the trend a History row carries
+        -- against the previous workout of the same name. Assistance
+        -- kilograms are not work done and seconds are not repetitions, so
+        -- neither counts; a workout holding only those has no volume and
+        -- therefore no trend, which is what the design already does with a
+        -- bodyweight-only workout.
+        select coalesce(sum(workout_set.load_kg * workout_set.reps), 0)::double precision
+        from public.workout_exercises as occurrence
+        join public.workout_sets as workout_set
+          on workout_set.workout_exercise_id = occurrence.id
+        where occurrence.workout_id = workout.id
+          and occurrence.measurement_type_snapshot = 'reps'
+          and workout_set.load_mode not in ('assistance_weight', 'assistance_band')
+          and public.workout_set_is_recorded(
+            workout_set.load_mode,
+            workout_set.load_kg,
+            workout_set.band_strength,
+            workout_set.reps
+          )
+      ) as volume_kg_reps
     from public.workouts as workout
     where workout.status = 'completed'
   ), months as (
@@ -56,7 +77,8 @@ as $$
           'sourceKind', entry.source_kind,
           'status', entry.status,
           'activeDurationSeconds', entry.accumulated_active_seconds,
-          'performedExerciseCount', entry.performed_exercise_count
+          'performedExerciseCount', entry.performed_exercise_count,
+          'volumeKgReps', entry.volume_kg_reps
         )
         order by entry.workout_date desc, entry.started_at desc
       ) as workouts

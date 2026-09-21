@@ -1,9 +1,11 @@
-import { LoadingSkeleton, PageFrame } from "@/shared/ui";
+import { LoadingSkeleton } from "@/shared/ui";
+
+import { HistoryPanel } from "../history-frame";
 
 export default function ExerciseHistoryLoading() {
   return (
-    <PageFrame title="Exercises">
+    <HistoryPanel>
       <LoadingSkeleton label="Loading exercise history" />
-    </PageFrame>
+    </HistoryPanel>
   );
 }

@@ -43,6 +43,8 @@ export type ExerciseHistoryEntry = Readonly<{
   exerciseBaseType: ExerciseBaseType;
   measurementType?: ExerciseMeasurementType;
   stillInLibrary: boolean;
+  /** Eligible performances behind this entry, the latest one included. */
+  performanceCount: number;
   latestPerformance: ExercisePerformance | null;
 }>;
 

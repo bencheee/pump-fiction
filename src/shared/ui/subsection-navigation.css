@@ -1,0 +1,57 @@
+/*
+ * The segmented tab bar, ported from the prototype for step 8 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 270-275, `data-screen-label="History list"`
+ *   bound values  lines 2181-2182 (`tabs`, `tabX`)
+ *
+ * The prototype writes three tabs and divides by 3; Body has two, so the
+ * count comes down as `--tab-count` and the arithmetic is the prototype's
+ * with that in place of the literal.
+ */
+
+[data-tabs] {
+  flex: none;
+  position: relative;
+  display: flex;
+  gap: 4px;
+  margin: 0 20px;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+
+/* `tabX` is `${tab * 100}%` of the pill's own width. */
+[data-tabs-pill] {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: var(--control-42);
+  width: calc((100% - 8px) / var(--tab-count));
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  transform: translateX(calc(var(--tab-index) * 100%));
+  transition: transform var(--dur-320) var(--ease);
+}
+
+[data-tabs] a {
+  position: relative;
+  flex: 1;
+  height: var(--control-42);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-14-5);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--dur-240) linear;
+}
+
+/* `t.color`: the tab under the pill, and every other tab. The prototype gives
+   this bar no hover state, and this is a phone-only application. */
+[data-tabs] a[aria-current="page"] {
+  color: var(--on-accent);
+}

@@ -14,9 +14,11 @@ Weight and Body calculations are canonical in [`weight-and-body.md`](weight-and-
 
 ## Workout history
 
-Completed workouts are ordered newest first and grouped by month. Each item shows date, split or one-time-workout name, active duration, and performed exercise count.
+Completed workouts are ordered newest first and grouped by month. Each item shows date, split or one-time-workout name, active duration, and performed exercise count, and the trend below.
 
 Months group by the workout's local date, which is already stored in the configured time zone. The performed exercise count counts the exercises holding at least one recorded set, so an exercise the user opened but left empty is not counted as performed.
+
+A workout also carries the whole-percent change in the volume it moved against the last workout of the same name — the previous time that split was trained, or the previous one-time workout. Volume sums load by reps over the recorded sets, counting neither assistance kilograms, which are not work done, nor seconds-measured exercises, whose value is not a repetition count. A workout with no earlier workout of its name, one whose predecessor moved no volume, and one that lands on the same whole percent carry no trend at all.
 
 A workout detail renders its saved snapshot:
 
@@ -39,7 +41,7 @@ Any historical edit recalculates all affected derived statistics. It does not up
 
 ## Exercise history
 
-The exercise list contains every exercise with at least one historical performance, including exercises whose definition was later deleted; the workout snapshot keeps their name and type, and a persistent identity snapshot keeps their performances combined as one exercise. Deletion is therefore visible as a marker on the exercise rather than as a lost record; see the identity amendment in [ADR-0024](../decisions/0024-deletion-with-preserved-history.md). An exercise detail shows:
+The exercise list shows, for each exercise, the date of its latest eligible performance, the heaviest set of that performance by volume, and how many eligible performances stand behind the row. It contains every exercise with at least one historical performance, including exercises whose definition was later deleted; the workout snapshot keeps their name and type, and a persistent identity snapshot keeps their performances combined as one exercise. Deletion is therefore visible as a marker on the exercise rather than as a lost record; see the identity amendment in [ADR-0024](../decisions/0024-deletion-with-preserved-history.md). An exercise detail shows:
 
 - latest eligible performance;
 - personal records;

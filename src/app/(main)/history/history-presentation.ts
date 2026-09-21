@@ -34,8 +34,13 @@ export function formatHistoryDuration(seconds: number): string {
   return remainder === 0 ? `${hours} h` : `${hours} h ${remainder} min`;
 }
 
+/** `countText` (prototype line 1679): `1 workout`, `4 workouts`. */
+export function formatCount(count: number, word: string): string {
+  return `${count} ${word}${count === 1 ? "" : "s"}`;
+}
+
 export function formatExerciseCount(count: number): string {
-  return count === 1 ? "1 exercise" : `${count} exercises`;
+  return formatCount(count, "exercise");
 }
 
 export function summaryDetail(summary: HistoryWorkoutSummary): string {

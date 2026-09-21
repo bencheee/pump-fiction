@@ -1,0 +1,232 @@
+/*
+ * The History list screen, ported from the prototype for step 8 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 262-386, `data-screen-label="History list"`
+ *   bound values  lines 1983-2110, 2175-2200 (`historyVals()`)
+ *
+ * The row, the tab bar, the filter field and the chip are shared surfaces and
+ * live in `src/shared/ui`. What is here is this screen's own.
+ */
+
+/* ----- Frame ------------------------------------------------------------- */
+
+/*
+ * The prototype's screen is a column of title bar, tab bar and scroll region.
+ * Here the title and the tab bar come from the layout and the count and the
+ * region come from the page, so the four arrive in two pieces and a grid puts
+ * them back in the order the prototype draws them. Nothing about the result
+ * differs: row 1 is the title bar, `1fr auto` holding the title against the
+ * count exactly as `space-between` does.
+ */
+[data-screen-frame="history"] {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+[data-history-title] {
+  grid-area: 1 / 1 / 2 / 2;
+  align-self: center;
+  margin: 24px 0 12px 20px;
+  font-size: var(--fs-28);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+[data-history-count] {
+  grid-area: 1 / 2 / 2 / 3;
+  align-self: center;
+  margin: 24px 20px 12px 0;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}
+
+[data-screen-frame="history"] > [data-tabs] {
+  grid-area: 2 / 1 / 3 / 3;
+}
+
+/* ----- Panel ------------------------------------------------------------- */
+
+/* The prototype's `.sx` (line 277), with this screen's own gap and inset. */
+[data-history-panel] {
+  grid-area: 3 / 1 / 4 / 3;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px 22px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-history-panel]::-webkit-scrollbar {
+  display: none;
+}
+
+[data-history-panel][data-panel-anim="panFwdA"] {
+  animation: panFwdA var(--dur-280) var(--ease);
+}
+[data-history-panel][data-panel-anim="panFwdB"] {
+  animation: panFwdB var(--dur-280) var(--ease);
+}
+[data-history-panel][data-panel-anim="panBackA"] {
+  animation: panBackA var(--dur-280) var(--ease);
+}
+[data-history-panel][data-panel-anim="panBackB"] {
+  animation: panBackB var(--dur-280) var(--ease);
+}
+
+/* ----- Lists ------------------------------------------------------------- */
+
+/* A month of saved workouts. */
+[data-history-month] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-history-month] > h2 {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* The prototype's rows are the children of the panel and of a month section
+   with no list around them; the list is what carries their number here, and
+   it must not add a box of its own. */
+[data-history-list] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* `rowAnim()` (line 2331): 34ms apart, the tenth row and every row after it
+   together. The stagger is set per row by `--row-index`. */
+[data-history-list] > li {
+  animation: ovRowA var(--dur-300) var(--ease)
+    calc(var(--row-index) * var(--stagger-row)) both;
+}
+
+/* The exercises tab re-runs the entrance as the filter narrows, and the
+   splits tab as the program changes — both are signature changes in
+   `rowAnim()`, and both alternate the pair so the animation restarts. */
+[data-history-list][data-row-anim="B"] > li {
+  animation-name: ovRowB;
+}
+
+/* The program filter. */
+[data-history-programs] {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ----- Nothing to show --------------------------------------------------- */
+
+/* The workouts tab's own empty state (line 298), which is a card. */
+[data-history-empty] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 26px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: rise var(--dur-240) var(--ease);
+}
+
+/* 32px is drawn here and nowhere else, so it stays a literal on this screen
+   rather than becoming an icon token. */
+[data-history-empty] > [data-icon] {
+  width: 32px;
+  height: 32px;
+  color: var(--line-strong);
+}
+
+[data-history-empty] h2 {
+  margin: 0;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+}
+
+[data-history-empty] p {
+  margin: 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* The note the other two tabs answer with (lines 322, 341), and the two
+   states the prototype has no notion of: a read that failed. */
+[data-history-note] {
+  margin: 12px 0;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 20px;
+  font-size: var(--fs-14);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+  text-align: center;
+  animation: rise var(--dur-200) var(--ease);
+}
+
+[data-history-note] a {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: var(--fw-semibold);
+}
+
+/* ----- Trend ------------------------------------------------------------- */
+
+/* `w.trend` (lines 2027-2030): the volume this workout moved against the last
+   one of the same name. Rising takes the accent and its tinted fill; falling
+   is stated in the same muted grey as the detail beside it. */
+[data-history-trend] {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+}
+
+[data-history-trend="rising"] {
+  background: var(--accent-surface);
+  color: var(--accent);
+}
+
+/* What the percentage measures, for anything that cannot see the badge. It
+   draws nothing, as the wheel's `suggested` does. */
+[data-history-trend-meaning] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

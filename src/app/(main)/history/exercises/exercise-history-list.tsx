@@ -1,16 +1,28 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 
 import { formatSetSummary } from "@/features/active-workout/ui/workout-presentation";
+import type { WorkoutSet } from "@/features/active-workout/domain/workout";
+import { isRecordedSet } from "@/features/history/domain/exercise-statistics";
 import type { ExerciseHistoryEntry } from "@/features/history/domain/exercise-statistics";
-import { Badge, EmptyState, ListRow, PageFrame, TextField } from "@/shared/ui";
+import { ListRow, SearchField } from "@/shared/ui";
 
-import { formatHistoryDate } from "../history-presentation";
+import { HistoryPanel } from "../history-frame";
+import { formatCount, formatHistoryDate } from "../history-presentation";
 
-/**
- * Search filters the loaded list in the browser. One person's library stays
- * small enough that a round trip per keystroke would cost more than it saves.
+/*
+ * The History list's Exercises tab — the prototype's screen 4, second tab —
+ * ported for step 8 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 304-325, `data-screen-label="History list"`
+ *   bound values  lines 2040-2054 (`exerciseRows`), 2187-2196
+ *
+ * Search filters the loaded list in the browser, as it always has: one
+ * person's library stays small enough that a round trip per keystroke would
+ * cost more than it saves. The prototype filters the same way.
  */
 export function ExerciseHistoryList({
   entries,
@@ -28,63 +40,77 @@ export function ExerciseHistoryList({
           ),
     [entries, trimmed],
   );
+  // `rowAnim("xrows", `${tab}|${q}|${exKeys.length}`, i)` (line 2051): the
+  // entrance runs again each time the filter narrows, and the `A`/`B` pair
+  // alternates so it restarts on the rows that stayed.
+  const rowAnim = useRowAnimation(trimmed);
 
   return (
-    <PageFrame title="Exercises">
-      {entries.length === 0 ? (
-        <EmptyState
-          title="No exercise history yet"
-          body="Record a set in a workout and that exercise appears here."
-        />
+    <HistoryPanel>
+      <SearchField
+        label="Filter exercises by name"
+        placeholder="Filter by name"
+        value={query}
+        onChange={setQuery}
+      />
+      {matches.length === 0 ? (
+        <p data-history-note="">
+          {entries.length === 0
+            ? "No exercise history yet. Record a set in a workout and that exercise appears here."
+            : "No exercise with a recorded set matches that name."}
+        </p>
       ) : (
-        <>
-          <TextField
-            id="exercise-search"
-            label="Search"
-            type="search"
-            autoComplete="off"
-            placeholder="Filter by name"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-          {matches.length === 0 ? (
-            <EmptyState
-              title="No matching exercise"
-              body="No exercise with a recorded set matches that name."
-            />
-          ) : (
-            <ul>
-              {matches.map((entry) => (
-                <li key={entry.exerciseIdentityId}>
-                  <ListRow
-                    href={`/history/exercises/${entry.exerciseIdentityId}`}
-                    title={entry.exerciseName}
-                    detail={
-                      <span>
-                        <span>{latestSummary(entry)}</span>
-                        {entry.stillInLibrary ? null : (
-                          <Badge>No longer in the library</Badge>
-                        )}
-                      </span>
-                    }
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
+        <ul data-history-list="" data-row-anim={rowAnim}>
+          {matches.map((entry, index) => (
+            <li
+              key={entry.exerciseIdentityId}
+              style={{ "--row-index": Math.min(index, 9) } as CSSProperties}
+            >
+              <ListRow
+                href={`/history/exercises/${entry.exerciseIdentityId}`}
+                title={entry.exerciseName}
+                detail={latestSummary(entry)}
+                badge={
+                  entry.stillInLibrary ? undefined : "No longer in the library"
+                }
+              />
+            </li>
+          ))}
+        </ul>
       )}
-    </PageFrame>
+    </HistoryPanel>
   );
 }
 
+/**
+ * `x.detail` (line 2049): the latest performance, its best set, and how many
+ * performances stand behind the row. The best set is the heaviest by volume,
+ * which is the prototype's own sort, read through the application's own load
+ * vocabulary — a band, an assistance mode and a seconds-measured set all
+ * carry their own words.
+ */
 function latestSummary(entry: ExerciseHistoryEntry): string {
   const latest = entry.latestPerformance;
   if (latest === null) return "No eligible performance yet";
   const best = latest.sets
-    .filter((set) => set.loadMode !== null && set.reps !== null)
-    .map((set) => formatSetSummary(set, latest.measurementType));
-  return [formatHistoryDate(latest.workoutDate), best.at(0) ?? "Recorded"].join(
-    " · ",
-  );
+    .filter(isRecordedSet)
+    .reduce<WorkoutSet | null>(
+      (top, set) => (top === null || volumeOf(set) > volumeOf(top) ? set : top),
+      null,
+    );
+  return [
+    formatHistoryDate(latest.workoutDate),
+    best === null ? "Recorded" : formatSetSummary(best, latest.measurementType),
+    formatCount(entry.performanceCount, "performance"),
+  ].join(" · ");
+}
+
+function volumeOf(set: WorkoutSet): number {
+  return (set.loadKg ?? 0) * (set.reps ?? 0);
+}
+
+function useRowAnimation(signature: string): "A" | "B" {
+  const [memory, setMemory] = useState(() => ({ signature, n: 0 }));
+  if (memory.signature !== signature) setMemory({ signature, n: memory.n + 1 });
+  return memory.n % 2 ? "B" : "A";
 }

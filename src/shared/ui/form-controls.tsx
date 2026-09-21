@@ -1,8 +1,4 @@
-import type {
-  InputHTMLAttributes,
-  ReactNode,
-  TextareaHTMLAttributes,
-} from "react";
+import type { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 import { Icon } from "./icon";
 
@@ -86,20 +82,5 @@ export function TextAreaField({
       />
       <FieldMessage id={id} hint={hint} error={error} />
     </div>
-  );
-}
-
-export function Chip({
-  selected,
-  children,
-  ...props
-}: { selected: boolean; children: ReactNode } & Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "aria-pressed"
->) {
-  return (
-    <button type="button" aria-pressed={selected} {...props}>
-      {children}
-    </button>
   );
 }

@@ -1,0 +1,63 @@
+/*
+ * The list filter field, ported from the prototype for step 8 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 302-307 (History list), 906-912 (Exercise library)
+ *   bound values  lines 2189-2192
+ */
+
+[data-search-field] {
+  position: relative;
+  flex: none;
+}
+
+[data-search-field] input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--control-52);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16);
+  padding: 0 46px;
+  transition: border-color var(--dur-180) linear;
+}
+
+/* `hSearchBorder`: the field answers that it is holding something. */
+[data-search-field] input[data-search-filled] {
+  border-color: var(--line-strong);
+}
+
+/* `type="search"` is what this field is; the engine's own clear control is
+   not, and the prototype draws its own beside it. */
+[data-search-field] input::-webkit-search-cancel-button,
+[data-search-field] input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+[data-search-field] > [data-icon] {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+[data-search-field] button {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--control-40);
+  height: var(--control-40);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  animation: hoDim var(--dur-160) linear;
+}

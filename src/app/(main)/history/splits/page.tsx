@@ -1,8 +1,9 @@
 import Link from "next/link";
 
 import { listSplitHistory } from "@/server/application/workout-history";
-import { EmptyState, PageFrame } from "@/shared/ui";
 
+import { HistoryCount, HistoryPanel } from "../history-frame";
+import { formatCount } from "../history-presentation";
 import { SplitHistoryList } from "./split-history-list";
 
 export const dynamic = "force-dynamic";
@@ -12,15 +13,23 @@ export default async function SplitHistoryPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Splits">
-        <EmptyState
-          title="Split history couldn't be loaded"
-          body={result.error.message}
-          action={<Link href="/history/splits">Retry</Link>}
-        />
-      </PageFrame>
+      <HistoryPanel>
+        <p data-history-note="">
+          {result.error.message}
+          <Link href="/history/splits">Try again</Link>
+        </p>
+      </HistoryPanel>
     );
   }
 
-  return <SplitHistoryList history={result.value} />;
+  return (
+    <>
+      {/* `tabCount` (line 2183) counts every split with history, not the
+          ones the program filter leaves on screen. */}
+      <HistoryCount>
+        {formatCount(result.value.splits.length, "split")}
+      </HistoryCount>
+      <SplitHistoryList history={result.value} />
+    </>
+  );
 }

@@ -147,7 +147,14 @@ function useScreenAnimation(): ScreenAnim {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const page = segments[0] === "workout" ? "today" : (segments[0] ?? "");
-  return useStageAnimation(pathname, page, segments.length);
+  /* History's three tabs — every two-segment route under `/history` — are one
+     screen in the prototype: `tabs[i].go` (line 2181) moves `s.tab` and never
+     touches the stack, so moving between them is not a push and takes no
+     screen transition. They answer to one key here and the panel's own
+     `panFwd`/`panBack` is the whole of the movement. Step 8. */
+  const key =
+    page === "history" && segments.length === 2 ? "/history" : pathname;
+  return useStageAnimation(key, page, segments.length);
 }
 
 /*

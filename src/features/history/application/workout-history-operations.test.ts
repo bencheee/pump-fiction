@@ -49,6 +49,7 @@ const months: readonly HistoryMonthGroup[] = [
         status: "completed",
         activeDurationSeconds: 3000,
         performedExerciseCount: 2,
+        volumeKgReps: 1200,
       },
     ],
   },

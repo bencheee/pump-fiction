@@ -1,0 +1,89 @@
+/*
+ * The list row, ported from the prototype for step 8 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup  lines 284-296 (saved workout), 308-320 (exercise),
+ *           327-339 (split), `data-screen-label="History list"`
+ *
+ * The three are one declaration but for the padding and the program line, so
+ * the split's two differences are the only thing keyed on the variant.
+ */
+
+[data-list-row] {
+  min-height: 78px;
+  box-sizing: border-box;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 12px 14px 18px;
+  text-align: left;
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    border-color var(--dur-160) linear,
+    transform var(--dur-160) var(--ease);
+}
+
+/* The split row is taller by its padding and declares no minimum at all. */
+[data-list-row="split"] {
+  min-height: auto;
+  padding: 16px 12px 16px 18px;
+}
+
+[data-list-row]:hover {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+[data-list-row]:active {
+  transform: scale(0.99);
+}
+
+[data-list-row-text] {
+  flex: 1;
+  min-width: 0;
+}
+
+[data-list-row-title] {
+  display: block;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* The split row's program. */
+[data-list-row-meta] {
+  display: block;
+  margin-top: 5px;
+  font-size: var(--fs-13);
+  color: var(--text-dim);
+}
+
+[data-list-row-detail] {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+[data-list-row-badge] {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}
+
+[data-list-row] > [data-icon] {
+  flex: none;
+  color: var(--text-faint);
+}

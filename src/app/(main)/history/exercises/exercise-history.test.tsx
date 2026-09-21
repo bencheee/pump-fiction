@@ -34,6 +34,7 @@ const entries: readonly ExerciseHistoryEntry[] = [
     exerciseName: "Bench press",
     exerciseBaseType: "weights",
     stillInLibrary: true,
+    performanceCount: 1,
     latestPerformance: {
       workoutId,
       workoutExerciseId: "34000000-0000-4000-8000-000000000020",
@@ -60,6 +61,7 @@ const entries: readonly ExerciseHistoryEntry[] = [
     exerciseName: "Cable row",
     exerciseBaseType: "weights",
     stillInLibrary: false,
+    performanceCount: 0,
     latestPerformance: null,
   },
 ];

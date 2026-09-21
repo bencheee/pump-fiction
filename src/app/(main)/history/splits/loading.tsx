@@ -1,9 +1,11 @@
-import { LoadingSkeleton, PageFrame } from "@/shared/ui";
+import { LoadingSkeleton } from "@/shared/ui";
+
+import { HistoryPanel } from "../history-frame";
 
 export default function SplitHistoryLoading() {
   return (
-    <PageFrame title="Splits">
+    <HistoryPanel>
       <LoadingSkeleton label="Loading split history" />
-    </PageFrame>
+    </HistoryPanel>
   );
 }

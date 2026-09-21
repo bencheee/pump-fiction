@@ -24,6 +24,12 @@ export type HistoryWorkoutSummary = Readonly<{
   activeDurationSeconds: number;
   /** Occurrences holding at least one recorded set. */
   performedExerciseCount: number;
+  /**
+   * The work this workout moved, summed over its recorded resistance sets.
+   * Assistance kilograms and seconds-measured exercises are left out, so a
+   * workout made of them alone reads 0 and carries no trend.
+   */
+  volumeKgReps: number;
 }>;
 
 /** Calendar months, newest first, each holding its workouts newest first. */
@@ -32,6 +38,46 @@ export type HistoryMonthGroup = Readonly<{
   month: string;
   workouts: readonly HistoryWorkoutSummary[];
 }>;
+
+/** How a workout's volume compares with the last one of the same name. */
+export type HistoryWorkoutTrend = Readonly<{
+  /** Whole percent, signed. Never 0: an unchanged workout has no trend. */
+  percent: number;
+  rising: boolean;
+}>;
+
+/**
+ * The trend each row carries, keyed by workout id. A workout is compared with
+ * the most recent earlier one of the same name — the previous time that split
+ * was trained, or the previous one-time workout — and only when that one moved
+ * some volume to compare against. A workout with no such predecessor, or one
+ * that lands on the same whole percent, has no trend and no badge.
+ */
+export function workoutVolumeTrends(
+  months: readonly HistoryMonthGroup[],
+): ReadonlyMap<string, HistoryWorkoutTrend> {
+  const ordered = months.flatMap((group) => group.workouts);
+  const trends = new Map<string, HistoryWorkoutTrend>();
+
+  ordered.forEach((workout, index) => {
+    const previous = ordered
+      .slice(index + 1)
+      .find(
+        (earlier) =>
+          earlier.workoutDate < workout.workoutDate &&
+          earlier.name === workout.name,
+      );
+    if (previous === undefined || previous.volumeKgReps <= 0) return;
+    const percent = Math.round(
+      ((workout.volumeKgReps - previous.volumeKgReps) / previous.volumeKgReps) *
+        100,
+    );
+    if (percent === 0) return;
+    trends.set(workout.id, { percent, rising: percent > 0 });
+  });
+
+  return trends;
+}
 
 export type HistoryWorkoutExercise = Readonly<{
   id: string;

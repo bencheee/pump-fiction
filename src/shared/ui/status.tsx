@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 
 import { Icon, type IconName } from "./icon";
 
@@ -100,29 +99,6 @@ export function LoadingSkeleton({ label }: { label: string }) {
         <div key={width} aria-hidden="true" />
       ))}
     </div>
-  );
-}
-
-export function ListRow({
-  href,
-  title,
-  detail,
-  leading,
-}: {
-  href: string;
-  title: string;
-  detail?: ReactNode;
-  leading?: ReactNode;
-}) {
-  return (
-    <Link href={href}>
-      {leading}
-      <span>
-        <span>{title}</span>
-        {detail ? <span>{detail}</span> : null}
-      </span>
-      <Icon name="chevron-right" size={16} />
-    </Link>
   );
 }
 

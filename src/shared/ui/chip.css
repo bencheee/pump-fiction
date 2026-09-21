@@ -1,0 +1,29 @@
+/*
+ * The filter chip, ported from the prototype for step 8 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        line 325, `data-screen-label="History list"`
+ *   bound values  lines 2062-2068 (`programChips`)
+ */
+
+[data-chip] {
+  min-height: var(--control-40);
+  padding: 0 15px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  transition:
+    background var(--dur-180) linear,
+    border-color var(--dur-180) linear,
+    color var(--dur-180) linear;
+}
+
+[data-chip][aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}

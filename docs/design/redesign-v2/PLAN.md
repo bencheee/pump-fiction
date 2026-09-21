@@ -222,11 +222,12 @@ reuses the listed component or changes it for everyone.
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
-| List row | — | 8 | lists |
-| Chip | — | 11 | statistics, Body |
+| List row | `shared/ui/list-row.{tsx,css}` | 8 | lists |
+| Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 11, 12, 18, 19 |
+| List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4 | 4, 10 |
 | Bar chart | — | 11 | 11, 12, 18, 19 |
-| Segmented tabs | — | 8 | 8, 18 |
+| Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
 | Stepper | — | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
 | Actions panel | — | 9 | definition screens |
@@ -668,6 +669,121 @@ which is what step 4 recorded it could not drive to there either. It is still
 reached by entering the last set's values on the wheels, or by jumping back to
 a recorded set from the segment bar, neither of which the prototype can do.
 
+Step 8 ports the History list and the four shared surfaces it is the first to
+need: the list row, the segmented tab bar, the 52px filter field and the chip.
+The row is written three times on this screen alone — a saved workout (284), an
+exercise (308) and a split (327) — and the three are one declaration but for
+the split's vertical padding and its program line, so it is a component from
+the start. The filter field is byte-identical to the Exercise library's (906,
+step 16). The chip is the same three-value triple the statistics screens' metric
+and range chips write (2266, 2401).
+
+The prototype holds one screen and three tabs in `s.tab`; the application holds
+three routes, and it keeps them: each tab is a separate read, each has been its
+own URL since `T-032`, and six back links on the screens steps 9, 11 and 12
+will port point at them. What the prototype gets for free from one screen is
+therefore arranged rather than given up:
+
+- **The tab bar and the sliding pill live in the layout.** A pill rendered by
+  the page would remount on every tab move and have nothing to slide from;
+  `history/layout.tsx` stays mounted while the page under it changes, so the
+  pill slides the prototype's own 320ms. `SubsectionNavigation` is where it
+  went — the bar Body already shares, changed for everyone rather than forked,
+  which gives Body the same control at step 18.
+- **The count and the scroll region come up from the page**, because the count
+  is the tab's own read (`tabCount`, line 2183) and the region is what changes.
+  The title bar is therefore split across the layout boundary, and a grid on
+  the frame puts the four pieces back in the order the prototype draws them:
+  `1fr auto` holding the title against the count is what `space-between` does,
+  and the two diffed at 0 pixels.
+- **The panel's direction is handed down by context.** `panelAnimStr`
+  (1992-1998) is computed in the layout, where the previous tab index still
+  exists, and read by the page's own region. A screen that is not a tab leaves
+  the direction exactly as it was, which is the prototype's own: `tab` does not
+  move while the stack grows, and the panel replays its last direction when the
+  stack pops back to the list.
+- **A tab move is not a screen transition.** `tabs[i].go` (2181) moves `s.tab`
+  and never touches the stack, so `useScreenAnimation` answers for the three
+  list routes under one key and only `panFwd`/`panBack` plays. A step 1 surface
+  changed for everyone, as `/workout/*` folding into Today already was.
+- **Every other route under `/history` keeps its own bar.** The frame renders
+  its children bare when the path is not one of the three, so a workout, an
+  exercise or a split is the screen of its own that the prototype's stack makes
+  it. The layout used to draw the subsection bar over those screens too.
+
+Two values the prototype draws had no data behind them, and the Owner chose to
+build both (2026-09-21). One additive migration extends two read functions;
+no table, constraint or write path moves.
+
+- **The trend badge** (`w.trend`, 2027-2030) compares the volume a workout
+  moved against the last workout of the same name. `list_workout_history` now
+  returns `volumeKgReps` per workout and `workoutVolumeTrends` in the History
+  domain does the comparison. The prototype sums load by reps over every set;
+  the application knows two kinds of set the prototype has none of, so neither
+  counts — assistance kilograms are not work done, and a seconds-measured
+  exercise's value is not a repetition count. A workout of those alone reads 0
+  and carries no trend, which is what the prototype already does with a
+  bodyweight-only workout.
+- **`· N performances`** (`x.detail`, 2049) needed a count the exercise list
+  did not carry; `list_exercise_history` now returns `performanceCount`,
+  counting what `isEligiblePerformance` counts. The row's best set is the
+  heaviest by volume, which is the prototype's own sort — the application had
+  been showing the first recorded set under that name.
+
+The screen departs from the prototype in five more places, all of them the
+application knowing something the prototype does not:
+
+- **The row reads its own contents.** The prototype names each row
+  `aria-label="{{ w.name }}"`, which hides the detail and the trend from
+  anything that cannot see them; the row here has always read its full text. A
+  bare `+12%` does not say what it measures, so a visually-hidden `workout
+  volume` follows it — the application's own metric label, hidden the way step
+  6's `suggested` is.
+- **The program chip row is hidden when there is one program.**
+  `showProgramChips` (2196) is `programs.length > 1`, which is what the
+  application already did, and the prototype's markup never reads the value it
+  computes. The Owner settled on the value (2026-09-21): with one program the
+  row would hold `All programs` and that program, which says nothing.
+- **An empty Splits tab says so.** `noSplits` (2198) is only the filtered
+  emptiness — the prototype draws nothing at all when there is no split history
+  and leaves the tab blank. The application's own sentence goes in the
+  prototype's own card.
+- **A read can fail.** Three `force-dynamic` reads, so each tab also has the
+  failure the prototype has no notion of: the note card the other two tabs
+  answer an emptiness with, carrying the message and a retry link.
+- **The rows are a list.** The prototype's rows are children of the panel and
+  of a month section with no list element around them; `<ul>`/`<li>` is what
+  carries their number here, so the list adds no box of its own and the
+  entrance animation sits on the item.
+
+Everything else is the prototype's, including the two things that look like
+mistakes and are not: the pill is 2.7px wider than a tab and therefore drifts
+about 1.3px against the tab it covers, because `calc((100% - 8px) / 3)` divides
+the padding box while the tabs divide the content box; and the exercise rows
+replay their staggered entrance on every keystroke, because `rowAnim`'s
+signature (2051) holds the query.
+
+Verification. The tab bar (350x50 at 3x), the title and the empty-workouts card
+diff at **0 pixels** against the prototype, the program chips and the no-match
+note are identical on every property read off both rendered pages, and the
+remaining differences in a 21-element computed-style sweep are all data or the
+grid's own margins. The entrance stagger runs 0, 34 … 306ms and stops there;
+the panel plays `panFwdA`, `panFwdB`, `panBackA`, `panFwdB`, `panBackA` across
+five tab moves with the stage animation staying `none`; Today → History gives
+`scFwdA` and History → Programs `scFwdB`; the panel is the scroll region and the
+tab bar does not move with it; 320x720 raises no horizontal scroll. The two
+database suites that read the changed functions fail the same two and four
+count assertions before and after the change — the Owner's own local rows
+inflate them, and `supabase test db` cannot run here at all while a current
+workout exists.
+
+Two things could not be driven. The workouts tab's empty card needs a History
+with no workouts, which neither side can reach without deleting the Owner's
+own; the prototype's markup for it was rendered inside the prototype beside the
+port and compared property by property instead. And the program chip row needs
+a second program, which this database does not have, so the same was done with
+its markup.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -680,5 +796,6 @@ a recorded set from the segment bar, neither of which the prototype can do.
 | 5 | done | 2026-09-20 | — |
 | 6 | done | 2026-09-21 | — |
 | 7 | done | 2026-09-21 | — |
+| 8 | done | 2026-09-21 | — |
 
 Update this table in the same change that delivers a step.

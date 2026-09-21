@@ -80,6 +80,16 @@ as $$
           select 1 from public.exercises as definition
           where definition.id = identity.exercise_identity_id
         ),
+        -- The eligible performances behind the row, which the list names
+        -- beside the latest one. It counts what `isEligiblePerformance`
+        -- counts: a completed workout holding at least one recorded set.
+        'performanceCount', (
+          select count(*)::integer
+          from occurrences as counted
+          where counted.exercise_identity_id = identity.exercise_identity_id
+            and counted.status = 'completed'
+            and counted.has_recorded_set
+        ),
         'latestPerformance', (
           select jsonb_build_object(
             'workoutId', latest.workout_id,
