@@ -1,5 +1,6 @@
-import { isSetRecorded } from "../domain/set-entry";
+import { isSetRecorded, setModeFields } from "../domain/set-entry";
 import type { WorkoutExercise, WorkoutSet } from "../domain/workout";
+import type { ExerciseLoadMode } from "@/features/exercises/domain/exercise";
 
 /*
  * The values the Active set queue binds, ported from the prototype for step 4
@@ -30,9 +31,17 @@ const repsColumnTop = 40;
  * a workout restored with 1.25 kg on it must still show that value and be able
  * to return to it, and the prototype's grid has no such value on it.
  */
-export function loadColumnFor(value: number | null): readonly number[] {
-  if (value === null || loadColumnBase.includes(value)) return loadColumnBase;
-  return [...loadColumnBase, value].sort((left, right) => left - right);
+export function loadColumnFor(
+  ...values: readonly (number | null)[]
+): readonly number[] {
+  const extra = values.filter(
+    (value): value is number =>
+      value !== null && !loadColumnBase.includes(value),
+  );
+  if (extra.length === 0) return loadColumnBase;
+  return [...new Set([...loadColumnBase, ...extra])].sort(
+    (left, right) => left - right,
+  );
 }
 
 /**
@@ -43,9 +52,13 @@ export function loadColumnFor(value: number | null): readonly number[] {
  */
 export function repsColumnFor(
   maxReps: number | null,
-  value: number | null,
+  ...values: readonly (number | null)[]
 ): readonly number[] {
-  const top = Math.max(repsColumnTop, maxReps ?? 0, value ?? 0);
+  const top = Math.max(
+    repsColumnTop,
+    maxReps ?? 0,
+    ...values.map((v) => v ?? 0),
+  );
   return Array.from({ length: top }, (_unused, index) => index + 1);
 }
 
@@ -71,6 +84,65 @@ export function setChipText(
     return position;
   const unit = exercise.measurementType === "seconds" ? " sec" : "";
   return `${position} · ${exercise.plannedSets} × ${exercise.minReps}–${exercise.maxReps}${unit} planned`;
+}
+
+export type SuggestedSetValues = Readonly<{
+  loadKg: number | null;
+  reps: number | null;
+}>;
+
+const noSuggestion: SuggestedSetValues = { loadKg: null, reps: null };
+
+function carriesValues(set: WorkoutSet): boolean {
+  return set.loadKg !== null || set.reps !== null;
+}
+
+/*
+ * What the wheels offer on a set that holds nothing yet (Owner, 2026-09-21).
+ *
+ * The prototype never needs this: its seed fixtures and `addPicked` (line
+ * 3444) give every set a kilogram and a repetition count the moment it exists,
+ * so a set always arrives with numbers on it. `add_exercise` and `add_set` give
+ * a set none, and the application knows where the numbers would have come
+ * from — the last set that carried any, which is the one before this one in
+ * this workout, or failing that the last set of the exercise's previous
+ * performance.
+ *
+ * The load only carries when it still means the same thing: kilograms on the
+ * bar are not kilograms hung from a belt, so the source set's load field has
+ * to match this set's. Repetitions always carry.
+ */
+export function suggestedValuesFor(
+  exercise: WorkoutExercise,
+  setIndex: number,
+  mode: ExerciseLoadMode,
+): SuggestedSetValues {
+  const field = setModeFields[mode].load;
+  const take = (set: WorkoutSet): SuggestedSetValues => ({
+    loadKg:
+      field !== null &&
+      set.loadMode !== null &&
+      setModeFields[set.loadMode].load === field
+        ? set.loadKg
+        : null,
+    reps: set.reps,
+  });
+
+  for (let index = setIndex - 1; index >= 0; index -= 1) {
+    const candidate = exercise.sets[index];
+    if (candidate !== undefined && carriesValues(candidate))
+      return take(candidate);
+  }
+
+  const previous = exercise.lastPerformance;
+  if (previous !== null)
+    for (let index = previous.sets.length - 1; index >= 0; index -= 1) {
+      const candidate = previous.sets[index];
+      if (candidate !== undefined && carriesValues(candidate))
+        return take(candidate);
+    }
+
+  return noSuggestion;
 }
 
 export type FlatSet = Readonly<{

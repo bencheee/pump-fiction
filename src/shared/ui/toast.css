@@ -1,0 +1,56 @@
+/*
+ * The toast, ported from the prototype for step 6 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup     lines 1319-1327, the `TOAST` banner
+ *   notify()   lines 1831-1836 — one toast at a time, replaced by the next,
+ *              cleared after 2600ms
+ *
+ * It is a child of the stage, above every panel (z-index 26 against their 20),
+ * so a message raised from inside a panel is still read. The shadow is one of
+ * the three phase 0 left with the component that owns it.
+ */
+
+[data-toast] {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  z-index: 26;
+  border-radius: var(--radius-18);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+  animation: rise var(--dur-200) var(--ease);
+}
+
+/* Rendered outside the shell — a test harness, or a screen mounted on its own
+   — there is no stage to sit in and the toast takes the viewport instead. */
+body > [data-toast] {
+  position: fixed;
+}
+
+[data-toast] > [data-icon] {
+  color: var(--accent);
+}
+
+[data-toast-message] {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-13-5);
+}
+
+[data-toast-dismiss] {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}

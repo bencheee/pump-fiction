@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 
 const overlayStateKey = "__pumpFictionOverlayStack";
 
@@ -13,7 +13,12 @@ function currentStack(): string[] {
   return Array.isArray(state?.[overlayStateKey]) ? state[overlayStateKey] : [];
 }
 
-export function useTransientOverlay() {
+export type TransientOverlay = Readonly<{
+  open: boolean;
+  requestOpenChange: (open: boolean) => void;
+}>;
+
+export function useTransientOverlay(): TransientOverlay {
   const reactId = useId();
   const marker = `pf-overlay-${reactId}`;
   const [open, setOpen] = useState(false);
@@ -56,5 +61,10 @@ export function useTransientOverlay() {
     [marker, open],
   );
 
-  return { open, requestOpenChange };
+  // One stable object per state, so a caller that owns an overlay can put it
+  // in an effect's dependencies without the effect running every render.
+  return useMemo(
+    () => ({ open, requestOpenChange }),
+    [open, requestOpenChange],
+  );
 }

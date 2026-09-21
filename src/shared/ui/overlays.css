@@ -88,3 +88,16 @@ body > [data-panel] {
   font-size: var(--fs-13-5);
   color: var(--text-muted);
 }
+
+/* The heading a panel opens its body with: the exercise or the workout it is
+   about. The prototype writes it identically on four panels — Last time (line
+   1360), Note (1390), Today's note (1405) and Review & finish (1477) — and the
+   Actions panel writes a larger one of its own, which stays on that screen. */
+[data-panel-heading] {
+  margin: 0;
+  font-size: var(--fs-22);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  text-wrap: pretty;
+}

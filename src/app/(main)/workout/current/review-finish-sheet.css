@@ -1,0 +1,153 @@
+/*
+ * The Review & finish panel, ported from the prototype for step 6 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 1469-1503, `data-screen-label="Review and finish"`
+ *   bound values  lines 3484-3490 (`exerciseCount`, `recordedCount`,
+ *                 `outstanding`, `outstandingLabel`, `completeWorkout`,
+ *                 `askDiscard`), `finish()` 1940-1958
+ *
+ * The frame, the bar and the close button are the shared panel's
+ * (`shared/ui/overlays.css`, step 3).
+ */
+
+/* The workout's name is the panel heading every panel writes; it lives on
+   `[data-panel-heading]` in `shared/ui/overlays.css`. */
+
+/* ----- The three tiles --------------------------------------------------- */
+
+/* A `<dl>` here, three plain divs in the prototype; the UA's block margin goes
+   so the 18px above is the only gap. */
+[data-review-stats] {
+  margin: 18px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+[data-review-stat] {
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 16px 12px;
+  text-align: center;
+}
+
+[data-review-stat] dt {
+  margin: 0;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-06);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-review-stat] dd {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-bold);
+}
+
+/* ----- Outstanding sets -------------------------------------------------- */
+
+/* `hasOutstanding` (line 1495). MVP-WRK-011 asks the review to name the sets
+   left without values, which the prototype's count does not; they are listed
+   inside the same card, in the 13px muted meta this design gives a second
+   line. */
+[data-review-outstanding] {
+  margin: 12px 0 0;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 14px 18px;
+}
+
+[data-review-outstanding] p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+[data-review-outstanding] p > [data-icon] {
+  color: var(--text-muted);
+}
+
+[data-review-outstanding] ul {
+  margin: 8px 0 0;
+  padding: 0 0 0 24px;
+  list-style: none;
+  font-size: var(--fs-13);
+  color: var(--text-muted);
+}
+
+[data-review-outstanding] li + li {
+  margin-top: 3px;
+}
+
+/* ----- What a one-time workout has instead ------------------------------- */
+
+/* The prototype has no one-time workout, so it never draws a review without a
+   prescription behind it. The same card carries the sentence. */
+[data-review-note] {
+  margin: 12px 0 0;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 14px 18px;
+  font-size: var(--fs-13-5);
+  color: var(--text-muted);
+}
+
+/* ----- Actions ----------------------------------------------------------- */
+
+[data-review-actions] {
+  margin-top: auto;
+  margin-bottom: 16px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+[data-review-complete] {
+  height: var(--control-60);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+}
+
+[data-review-continue],
+[data-review-discard] {
+  height: var(--control-52);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+}
+
+[data-review-continue] {
+  border: 1px solid var(--line);
+  color: var(--text-secondary);
+}
+
+[data-review-discard] {
+  color: var(--text-muted);
+}
+
+[data-review-complete]:disabled,
+[data-review-discard]:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

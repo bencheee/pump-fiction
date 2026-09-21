@@ -36,6 +36,13 @@ export type ValueWheelProps = {
    * puts the load column at index 0 and the reps column at 8.
    */
   fallbackIndex: number;
+  /**
+   * What the wheel offers while the set holds no value of its own: the number
+   * is shown rather than the em dash, and the column rests on it, so the
+   * primary action can take it as it stands (Owner, 2026-09-21). Null when
+   * there is nothing to offer, and the wheel falls back to `fallbackIndex`.
+   */
+  suggested?: number | null;
   /** The small word beside the numeral: `kg`, `+kg`, `reps`, `sec`. */
   unit: string;
   format?: (value: number) => string;
@@ -51,6 +58,7 @@ export function ValueWheel({
   column,
   value,
   fallbackIndex,
+  suggested = null,
   unit,
   format = String,
   onChange,
@@ -64,8 +72,14 @@ export function ValueWheel({
   const [dragged, setDragged] = useState(0);
   const drag = useRef<{ y: number }>(null);
 
+  const suggestedIndex = suggested === null ? -1 : column.indexOf(suggested);
+  const offering = value === null && suggestedIndex >= 0;
   const committedIndex =
-    value === null ? fallbackIndex : Math.max(0, column.indexOf(value));
+    value !== null
+      ? Math.max(0, column.indexOf(value))
+      : offering
+        ? suggestedIndex
+        : fallbackIndex;
   const index = clamp(committedIndex + dragged, column.length);
   const at = (offset: number): number | undefined => column[index + offset];
 
@@ -142,10 +156,19 @@ export function ValueWheel({
           onPress={() => press(-1)}
         />
         <span data-wheel-value="">
-          {/* `kg0` (line 3356) writes an em dash while the set holds no value.
-              A drag in progress is showing a candidate, not the absence. */}
-          {value === null && dragged === 0 ? "—" : format(column[index] ?? 0)}
+          {/* `kg0` (line 3356) writes an em dash while the set holds no
+              value. A drag in progress is showing a candidate, not the
+              absence, and so is an offer. */}
+          {value === null && dragged === 0 && !offering
+            ? "—"
+            : format(column[index] ?? 0)}
           <span data-wheel-unit="">{unit}</span>
+          {/* The offer looks exactly like an entered value, because it is the
+              one the primary action will write. Say which it is to anything
+              that cannot see the segment bar. */}
+          {offering && dragged === 0 ? (
+            <span data-wheel-offer="">, suggested</span>
+          ) : null}
         </span>
         <Candidate
           distance="near"

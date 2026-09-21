@@ -1,0 +1,63 @@
+/*
+ * The two delivery signals the active workout raises, given their look in step
+ * 6 of docs/design/redesign-v2/PLAN.md.
+ *
+ * The prototype has no notion of a command that has not reached the server, so
+ * neither has a screen of its own. Both take the card the Review & finish panel
+ * draws its outstanding-sets line in (prototype line 1495) — the surface fill
+ * at the card radius, a `circle-alert` in the muted grey, 13.5px of secondary
+ * text — and sit where the toast sits, so nothing on the screen moves when one
+ * appears. Unlike the toast they stay until they are answered.
+ */
+
+[data-workout-alerts] {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-workout-alert] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55);
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+[data-workout-alert] > [data-icon] {
+  color: var(--text-muted);
+}
+
+[data-workout-alert-text] {
+  flex: 1;
+  min-width: 0;
+}
+
+[data-workout-alert-action] {
+  flex: none;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+[data-workout-alert-dismiss] {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}

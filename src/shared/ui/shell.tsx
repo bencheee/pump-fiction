@@ -78,15 +78,19 @@ export function MainShell({ children }: { children: ReactNode }) {
 
   return (
     <div data-shell="main" data-keyboard-open={keyboardOpen}>
-      <ToastProvider>
-        <div data-stage="" ref={setStage}>
-          <PanelContainerContext.Provider value={stage}>
+      <div data-stage="" ref={setStage}>
+        <PanelContainerContext.Provider value={stage}>
+          {/* The toast is a child of the stage in the prototype (line 1320),
+              a sibling of the screen and above the panels. It stays outside
+              `<main>` so a message raised just before a navigation is still
+              shown on the screen that arrives. */}
+          <ToastProvider>
             <main id="pf-scroll" data-screen="" data-screen-anim={screenAnim}>
               {children}
             </main>
-          </PanelContainerContext.Provider>
-        </div>
-      </ToastProvider>
+          </ToastProvider>
+        </PanelContainerContext.Provider>
+      </div>
       <BottomNavigation />
     </div>
   );

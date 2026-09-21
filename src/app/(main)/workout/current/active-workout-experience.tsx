@@ -33,13 +33,14 @@ import type {
   Exercise,
   ExerciseLoadMode,
 } from "@/features/exercises/domain/exercise";
-import { Icon, useStageAnimation } from "@/shared/ui";
+import { Icon, useStageAnimation, useToast } from "@/shared/ui";
 
 import {
   flattenSets,
   nextInQueue,
 } from "@/features/active-workout/ui/set-queue-presentation";
 
+import "./delivery-cue.css";
 import { baseModeOf, SetQueue } from "./set-queue";
 import { WorkoutOverview } from "./workout-overview";
 
@@ -48,6 +49,7 @@ type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
 export function ActiveWorkoutExperience({
   initial,
   initialView = "queue",
+  initialPanel,
   exercises,
   outbox,
   transport,
@@ -55,12 +57,16 @@ export function ActiveWorkoutExperience({
   initial: CurrentWorkout;
   /** Which screen the action that brought us here lands on; see `page.tsx`. */
   initialView?: "queue" | "overview";
+  /** `?panel=finish`, which `/workout/current/finish` redirects to: the review
+      is a panel over the queue since step 6, not a screen of its own. */
+  initialPanel?: "finish";
   /** Optional eager data for isolated consumers; the routed screen loads lazily. */
   exercises?: readonly Exercise[];
   outbox?: ActiveWorkoutOutbox;
   transport?: ActiveWorkoutCommandTransport;
 }) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [delivery] = useState(() => {
     const commandOutbox = outbox ?? new IndexedDbActiveWorkoutOutbox();
     return {
@@ -84,6 +90,8 @@ export function ActiveWorkoutExperience({
   >({});
   const [now, setNow] = useState(() => Date.now());
   const [discardedChange, setDiscardedChange] = useState<string | null>(null);
+  const [finishing, setFinishing] = useState(false);
+  const finishedRef = useRef<null | (() => void)>(null);
   const [placeholderNames, setPlaceholderNames] = useState<
     Readonly<Record<string, string>>
   >({});
@@ -218,6 +226,16 @@ export function ActiveWorkoutExperience({
       void refreshAuthoritative();
   }, [placeholderIds.size, refreshAuthoritative, status]);
 
+  // The terminal command has drained: the workout is over and Today is where
+  // `finish()` (line 1958) leaves the prototype too.
+  useEffect(() => {
+    if (status.state !== "saved" || finishedRef.current === null) return;
+    const announce = finishedRef.current;
+    finishedRef.current = null;
+    announce();
+    router.replace("/today");
+  }, [router, status]);
+
   // A refused command is already out of the outbox, so recovery runs without a
   // gesture: the workout must never sit stranded behind a change it cannot save.
   useEffect(() => {
@@ -331,6 +349,11 @@ export function ActiveWorkoutExperience({
   }
 
   function addExercises(selectedExercises: readonly Exercise[]) {
+    if (selectedExercises.length === 0) return;
+    // `addPicked` (line 3480): a workout that had nothing in it lands on the
+    // overview, where the new exercises are, rather than on a queue that still
+    // has no set to show — `add_exercise` gives an exercise none.
+    const wasEmpty = workoutRef.current.exercises.length === 0;
     for (const exercise of selectedExercises) {
       const commandId = send("add_exercise", { exerciseId: exercise.id });
       setPlaceholderNames((names) => ({
@@ -338,6 +361,50 @@ export function ActiveWorkoutExperience({
         [commandId]: exercise.name,
       }));
     }
+    if (wasEmpty) {
+      setCameFromQueue(view === "queue");
+      setView("overview");
+    }
+    showToast(
+      `${selectedExercises.length} exercise${
+        selectedExercises.length === 1 ? "" : "s"
+      } added to this workout.`,
+    );
+  }
+
+  /*
+   * `finish()` (line 1940). The prototype's is done the moment it is called;
+   * here it is the workout's terminal command and Today is reached once the
+   * outbox has drained, which is what `finishing` holds the screen for. The
+   * toast is raised with the press, as `notify` (1957) does.
+   */
+  function finishWorkout(outcome: "completed" | "discarded") {
+    if (finishing) return;
+    const current = workoutRef.current;
+    const command: ActiveWorkoutCommand = {
+      commandId: newCommandId(),
+      workoutId: current.id,
+      expectedRevision: current.revision,
+      operation: "finish_workout",
+      payload: { outcome, finishedAt: new Date().toISOString() },
+      clientCreatedAt: new Date().toISOString(),
+    };
+    const message =
+      outcome === "discarded"
+        ? "Workout discarded. No History record created."
+        : current.sourceKind === "proposed_split"
+          ? "Workout saved to History. Rotation advanced."
+          : "Workout saved to History. Rotation unchanged.";
+    setFinishing(true);
+    adoptWorkout(applyCommandToWorkout(current, command));
+    // Armed only once the controller has moved off "saved", so the effect
+    // above cannot read the status it already had and leave at once. The
+    // prototype notifies with the press, `finish()` being done the moment it
+    // is called; here the sentence is only true once the command has drained,
+    // and a toast raised earlier would cover the failure notice if it did not.
+    void delivery.controller.enqueue(command).then(() => {
+      finishedRef.current = () => showToast(message);
+    });
   }
 
   const cue = firstError
@@ -352,41 +419,61 @@ export function ActiveWorkoutExperience({
           }
         : { kind: "saved" as const, message: "All changes saved" };
 
+  /*
+   * The prototype has no notion of a command that has not reached the server,
+   * so neither of the two signals below has a screen of its own. The saved cue
+   * stays where step 4 left it — in the accessibility tree and out of the
+   * picture — and both alerts take the card the Review & finish panel draws
+   * its outstanding-sets line in (line 1495): a `circle-alert` against the
+   * 13.5px secondary text, on the surface fill at the card radius.
+   */
   const deliveryCue = (
     <>
       <div data-queue-status="" role="status" aria-live="polite">
         {cue.message}
       </div>
-      {cue.kind === "failure" ? (
-        <div role="alert">
-          <span>{cue.message}</span>
-          {cue.recovery === "refresh_and_replay" ? (
-            <button type="button" onClick={() => void recoverFromConflict()}>
-              Refresh
-            </button>
-          ) : cue.recovery === "discard_and_replay" ? null : (
-            <button
-              type="button"
-              onClick={() => void delivery.controller.flush()}
-            >
-              Retry
-            </button>
-          )}
-        </div>
-      ) : null}
-      {discardedChange !== null ? (
-        <div role="alert">
-          <span>
-            One change could not be saved and was undone: {discardedChange}.
-            Everything else is saved and the workout continues.
-          </span>
-          <button
-            type="button"
-            aria-label="Dismiss the undone change notice"
-            onClick={() => setDiscardedChange(null)}
-          >
-            <Icon name="x" size={16} />
-          </button>
+      {cue.kind === "failure" || discardedChange !== null ? (
+        <div data-workout-alerts="">
+          {cue.kind === "failure" ? (
+            <div data-workout-alert="" role="alert">
+              <Icon name="circle-alert" size={15} />
+              <span data-workout-alert-text="">{cue.message}</span>
+              {cue.recovery === "refresh_and_replay" ? (
+                <button
+                  type="button"
+                  data-workout-alert-action=""
+                  onClick={() => void recoverFromConflict()}
+                >
+                  Refresh
+                </button>
+              ) : cue.recovery === "discard_and_replay" ? null : (
+                <button
+                  type="button"
+                  data-workout-alert-action=""
+                  onClick={() => void delivery.controller.flush()}
+                >
+                  Retry
+                </button>
+              )}
+            </div>
+          ) : null}
+          {discardedChange !== null ? (
+            <div data-workout-alert="" role="alert">
+              <Icon name="circle-alert" size={15} />
+              <span data-workout-alert-text="">
+                One change could not be saved and was undone: {discardedChange}.
+                Everything else is saved and the workout continues.
+              </span>
+              <button
+                type="button"
+                data-workout-alert-dismiss=""
+                aria-label="Dismiss the undone change notice"
+                onClick={() => setDiscardedChange(null)}
+              >
+                <Icon name="x" size={14} />
+              </button>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </>
@@ -443,6 +530,10 @@ export function ActiveWorkoutExperience({
             })
           }
           onAddExercises={addExercises}
+          initialReviewOpen={initialPanel === "finish"}
+          finishing={finishing}
+          onCompleteWorkout={() => finishWorkout("completed")}
+          onDiscardWorkout={() => finishWorkout("discarded")}
         />
         {deliveryCue}
       </>

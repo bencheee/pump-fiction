@@ -37,3 +37,20 @@ export const exerciseOptionalModeLabels: Readonly<
   assistance_weight: "Assist with weight",
   assistance_band: "Assist with band",
 };
+
+/*
+ * And the labels for taking the same addition off a set again. The prototype's
+ * set menu (line 3263) writes two of these itself — "Remove added weight" and
+ * "Remove resistance band" — and has no assistance mode to name.
+ */
+export const exerciseOptionalModeRemoveLabels: Readonly<
+  Record<ExerciseLoadMode, string>
+> = {
+  weight: "Remove weight",
+  weight_resistance_band: "Remove resistance band",
+  bodyweight: "Remove bodyweight",
+  bodyweight_added_weight: "Remove added weight",
+  bodyweight_resistance_band: "Remove resistance band",
+  assistance_weight: "Remove weight assistance",
+  assistance_band: "Remove band assistance",
+};

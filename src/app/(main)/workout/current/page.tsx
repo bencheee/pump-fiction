@@ -16,18 +16,24 @@ export const dynamic = "force-dynamic";
  * holds both screens here, so the action carries it in the URL, where a reload
  * and the Back button can still read it.
  */
-type SearchParams = Promise<{ view?: string | string[] }>;
+type SearchParams = Promise<{
+  view?: string | string[];
+  panel?: string | string[];
+}>;
 
 export default async function CurrentWorkoutPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const view = (await searchParams).view;
+  const params = await searchParams;
+  const view = Array.isArray(params.view) ? params.view[0] : params.view;
+  const panel = Array.isArray(params.panel) ? params.panel[0] : params.panel;
+  // `?panel=finish` is where `/workout/current/finish` lands. The review is a
+  // panel over the set queue, so it brings its screen with it.
+  const initialPanel = panel === "finish" ? ("finish" as const) : undefined;
   const initialView =
-    (Array.isArray(view) ? view[0] : view) === "overview"
-      ? "overview"
-      : "queue";
+    initialPanel === undefined && view === "overview" ? "overview" : "queue";
   const workout = await getCurrentWorkout();
 
   if (!workout.ok) {
@@ -48,6 +54,7 @@ export default async function CurrentWorkoutPage({
     <ActiveWorkoutExperience
       initial={workout.value}
       initialView={initialView}
+      initialPanel={initialPanel}
     />
   );
 }

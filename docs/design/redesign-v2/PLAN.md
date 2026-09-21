@@ -35,9 +35,18 @@ this file first and needs nothing else to start.
 ```text
 project_id : b1b0f09a-7426-48c3-b1cf-0be515a07a28
 path       : Workout App - Prototype.dc.html
-total      : 3613 lines
-etag       : 1789919597314229   (re-read the head if this has changed)
+total      : 3611 lines
+etag       : 1789974108549442   (re-read the head if this has changed)
 ```
+
+The etag moved again during step 6, from `1789919597314229` (3613 lines): the
+Owner made both of that step's follow-up changes in the prototype as well, so
+the file and the application agree. A whole-file diff of the two versions shows
+exactly three edits — `rawMenu`'s m9 removed (two lines), and `continueBg` /
+`continueColor` and `actContinueBg` / `actContinueColor` changed from the
+accent pair to `#f2f7f4` on `#0a0e0c`. Nothing else in the file moved, so every
+line number below the Actions panel is two lower than it was and no earlier
+step's reading is stale.
 
 The head was re-read at step 5, the etag having moved from `1789817275172843`
 (3609 lines). All 37 keyframes but four are byte-identical to what phase 0 wrote
@@ -198,6 +207,11 @@ reuses the listed component or changes it for everyone.
 | Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
 | Icon | `shared/ui/icon.{tsx,css}` | 1 | all |
 | Full-screen panel | `Sheet` in `shared/ui/overlays.{tsx,css}` | 3 | every panel |
+| Panel heading (22px) | `[data-panel-heading]` in `shared/ui/overlays.css` | 6 | 6, 9, 20 |
+| Back to set pill (56px) | `[data-panel-back]` in `.../set-queue.css` | 6 | 6 |
+| Add exercise picker | `.../add-exercise-sheet.{tsx,css}` | 6 | 4, 5 |
+| Review and finish panel | `.../review-finish-sheet.{tsx,css}` | 6 | 4, 7 |
+| Delivery alert card | `.../delivery-cue.css` | 6 | 4, 5 |
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
@@ -209,7 +223,7 @@ reuses the listed component or changes it for everyone.
 | Stepper | — | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
 | Actions panel | — | 9 | definition screens |
-| Toast | — | 6 | all |
+| Toast | `shared/ui/toast.{tsx,css}` | 6 | all |
 | Confirm dialog | — | 9 | destructive actions |
 
 Component styling lives in a CSS file beside its component, keyed on the same
@@ -446,6 +460,118 @@ Two defects found while verifying, neither this step's:
 - **The clock still raises a React hydration mismatch** when the second turns
   between the server render and hydration, which step 4 already flagged.
 
+Step 6 ports the five panels the active workout opens and the toast every
+screen raises. The review is the one surface the application drew twice: the
+prototype opens it over the workout (`openFinish`, line 3484) and
+`docs/product/workouts.md` already called it "an in-place sheet from the current
+client workout snapshot", so `/workout/current/finish` and its `FinishReview`
+are gone and the URL redirects to `/workout/current?panel=finish`, which opens
+the panel over the queue. The deep link is still the recovery path
+`docs/architecture/mobile-ui-foundation.md` describes.
+
+The Actions panel is a two-step control, not a menu of buttons: a press picks an
+entry and `Continue` runs it (`menuRun`, line 3428), a press on the panel away
+from any control gives the pick back (`menuBlur`, 3427), and the entries arrive
+`ovRow`-staggered 45ms apart after a 40ms head start. The only entry that can be
+refused is `Remove this set` on an exercise down to one, and it takes the faint
+colour the prototype gives it.
+
+The screen departs from the prototype in eight places, seven of them the
+application knowing something the prototype does not:
+
+- **The panels are five `Sheet`s, not one slot.** The prototype holds one
+  `s.sheet` and writes another name into it to move between panels; each panel
+  here carries its own history entry, so Back closes it and focus returns. An
+  entry that opens another panel therefore waits for the Actions panel to give
+  its entry back before taking one — that is `pendingRef` in `set-queue.tsx`.
+  `Sheet` grew `overlay` for a panel the screen opens itself, `returnFocusRef`
+  for one with no trigger to hand focus back to, and `onBodyClick` for
+  `menuBlur`; `DestructiveDialog` grew the same `overlay`, which is the
+  prototype's single `s.dialog` (line 3491).
+- **The optional load is the exercise's own.** `rawMenu`'s m3 (line 3263) knows
+  one addition — weight on a bodyweight exercise, a band on any other. The
+  application reads `allowedLoadModes`, so the row also names an assistance
+  mode, and `exerciseOptionalModeRemoveLabels` carries the prototype's own
+  "Remove added weight" and "Remove resistance band" beside the two it has no
+  word for.
+- **The review names the sets it counts.** `outstandingLabel` (3487) gives a
+  count; `MVP-WRK-011` asks the review to name the planned sets left without
+  values, so they are listed inside the same card in its 13px muted meta.
+- **A one-time workout has no prescription**, so it has no outstanding count at
+  all and the same card says so. The prototype has no such workout.
+- **The finish is a command.** `finish()` (1940) is done the moment it is
+  called; here the terminal command has to drain before Today is reached, which
+  is what the disabled `Finishing…` holds. `notify` (1957) fires with the press;
+  the sentence is only true once the command has saved, and a toast raised
+  earlier would sit over the failure notice, so it is raised with the
+  navigation instead.
+- **The empty queue can reach the review.** The prototype's empty queue offers
+  only `Add exercise`, so a workout with no exercises can be neither finished
+  nor discarded from either screen — the hole step 5 recorded. The control is
+  the 48px outline pill step 2 was the first to need; it invents nothing.
+- **`addPicked` lands on the overview** when the workout had nothing in it
+  (line 3480), which the application needs more than the prototype does:
+  `add_exercise` gives an exercise no sets, so the queue would still have none
+  to show.
+- **The delivery signals take the review's alert card.** The prototype has no
+  notion of a command that has not reached the server. The saved cue stays in
+  the accessibility tree; a failure and an undone change take the card the
+  review draws its outstanding line in (line 1495) and sit where the toast sits,
+  so nothing on the screen moves when one appears.
+
+Three changes the Owner asked for on 2026-09-21, after seeing the panels, and
+made in the prototype at the same time:
+
+- **Review & finish leaves the Actions panel.** `rawMenu`'s m9 is gone from the
+  prototype too. The round accent button beside More opens the review, and so
+  do the completed primary, the empty queue's pill and the deep link, so
+  nothing became unreachable.
+- **The button that runs a pick does not take the accent.** With the picked
+  entry already filled accent, a second accent fill read as a second choice.
+  `continueBg` / `continueColor` are now `#f2f7f4` on `#0a0e0c` — the plain
+  text colour over the page's own black — and the Owner made the same edit to
+  `actContinueBg` (line 2902), so **the rule is the panel's, not this
+  screen's**: wherever picking an option fills it with the accent, the control
+  that runs it does not. Step 21 inherits it with screen 17.
+- **The wheels offer the last set's numbers.** The prototype never needs this:
+  its fixtures and `addPicked` (3442) give every set a kilogram and a
+  repetition count the moment it exists, so a set always arrives with numbers.
+  `add_exercise` and `add_set` give a set none, and the application knows where
+  the numbers would have come from — `suggestedValuesFor` takes the nearest
+  earlier set of that exercise in this workout, and failing that the last set
+  of its previous performance. The load only carries when it still means the
+  same thing (kilograms on the bar are not kilograms on a belt); repetitions
+  always carry.
+
+  That change reaches the primary action. An offer you cannot accept is
+  decorative, so `Log set` now writes the numbers it was showing into the set
+  and then does what `advance()` (1869) always did — which is `logSet()` (1858)
+  restored, and it softens step 4's "a set is recorded by its values, not by a
+  press" to "by its values, or by pressing Log set on the values it is
+  offering". A set with nothing to offer is left exactly as it was, so the
+  review's outstanding count and the finish safety net are unchanged, and a set
+  you never press Log on still counts as outstanding. The offer looks like an
+  entered value because it is the one the press will write; the segment bar
+  still says the set is not recorded, and a visually-hidden "suggested" on the
+  numeral says the same to anything that cannot see the bar.
+
+Two things could not be matched. The prototype's own preview does not paint the
+`circle-alert` on the review's outstanding card — the element is there, 15px and
+`#808e88`, and the served SVG is 8KB where the file is 364 bytes, so the mask
+resolves to nothing; the markup declares the icon and the port draws it from the
+byte-identical copy in `public/assets/icons`. And the empty-queue review pill is
+built but was not driven: reaching that state means removing every exercise from
+the live local workout, which a second session may be verifying against.
+
+Four things step 6 leaves for later steps, as step 4 and 5 did: the set flash,
+the handoff and the Workout complete screen are step 7's, so the completed
+primary opens the review directly; the confirm dialog behind a populated
+removal and behind `Discard workout` is the unported one every destructive
+action still uses (step 9); screen 17, the Screen actions overlay, is a
+different surface from screen 24 and stays step 21's; and the already-approved
+screens do not get their notices rerouted through the toast beyond the active
+workout's own.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -456,5 +582,6 @@ Two defects found while verifying, neither this step's:
 | 3 | done | 2026-09-20 | — |
 | 4 | done | 2026-09-20 | — |
 | 5 | done | 2026-09-20 | — |
+| 6 | done | 2026-09-21 | — |
 
 Update this table in the same change that delivers a step.

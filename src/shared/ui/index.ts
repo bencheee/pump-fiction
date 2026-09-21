@@ -22,6 +22,10 @@ export {
 } from "./status";
 export { Toast, ToastProvider, useToast } from "./toast";
 export {
+  useTransientOverlay,
+  type TransientOverlay,
+} from "./transient-overlay";
+export {
   SetValueWheels,
   ValueWheel,
   type ValueWheelProps,

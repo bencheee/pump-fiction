@@ -130,3 +130,16 @@
   text-transform: uppercase;
   color: var(--text-muted);
 }
+
+/* The word that tells assistive technology an offered value is not yet an
+   entered one (Owner, 2026-09-21). It draws nothing. */
+[data-wheel-offer] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

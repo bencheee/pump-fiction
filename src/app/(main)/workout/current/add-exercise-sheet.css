@@ -1,0 +1,178 @@
+/*
+ * The Add exercise panel, ported from the prototype for step 6 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 1414-1445, `data-screen-label="Add exercise"`
+ *   bound values  lines 3225-3235 (`library`), 3468-3483 (`query`,
+ *                 `libraryEmpty`, `addCount`, `addBg`, `addColor`, `addPicked`)
+ *
+ * The frame, the bar and the close button are the shared panel's
+ * (`shared/ui/overlays.css`, step 3). What is here is this panel's own.
+ */
+
+/* This is the one panel whose body does not scroll: the prototype leaves the
+   `sx` class off it (line 1422) and puts the scroll region on the list, so the
+   search field and the add button stay in place while the library moves. */
+[data-panel="add-exercise"] [data-panel-body] {
+  overflow: visible;
+}
+
+[data-panel="add-exercise"] [data-panel-lead] {
+  margin: 0 0 12px;
+}
+
+/* ----- Search ------------------------------------------------------------ */
+
+[data-add-search] {
+  position: relative;
+  flex: none;
+}
+
+[data-add-search] input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--control-54);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16);
+  padding: 0 18px 0 46px;
+}
+
+[data-add-search] > [data-icon] {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+/* ----- Library ----------------------------------------------------------- */
+
+/* The prototype's `.sx`, on the list rather than on the body. */
+[data-add-library] {
+  flex: 1;
+  min-height: 0;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-add-library]::-webkit-scrollbar {
+  display: none;
+}
+
+[data-add-row] {
+  min-height: 68px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--radius-20);
+  border: 1px solid transparent;
+  background: var(--surface);
+  padding: 14px 18px;
+  text-align: left;
+  transition:
+    background var(--dur-160) linear,
+    border-color var(--dur-160) linear;
+}
+
+/* `lib.bg` (line 3231): the picked row takes the tinted fill. */
+[data-add-row][aria-pressed="true"] {
+  background: var(--accent-surface);
+}
+
+[data-add-check] {
+  width: var(--control-26);
+  height: var(--control-26);
+  flex: none;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* `lib.boxColor` is `transparent` until the row is picked: the tick is drawn
+     either way and only its colour changes. */
+  color: transparent;
+}
+
+[data-add-row][aria-pressed="true"] [data-add-check] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+[data-add-text] {
+  flex: 1;
+  min-width: 0;
+}
+
+[data-add-name] {
+  display: block;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+}
+
+[data-add-meta] {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-13);
+  color: var(--text-muted);
+}
+
+/* `libraryEmpty` (line 3469), and the two states the prototype has no notion
+   of: the library is fetched when the panel opens, so it can be loading or
+   have failed. Both are this paragraph. */
+[data-add-note] {
+  margin: 16px 0;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+[data-add-note] [data-icon] {
+  vertical-align: -2px;
+  margin-right: 6px;
+}
+
+[data-add-retry] {
+  display: block;
+  margin: 10px auto 0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+/* ----- Add --------------------------------------------------------------- */
+
+/* `addBg` / `addColor` (3471-3472): the pill is inert until something is
+   picked. The prototype leaves it pressable and `addPicked` returns early;
+   here it is disabled, so nothing focusable lies about what it will do. */
+[data-add-submit] {
+  flex: none;
+  margin: 12px 0 16px;
+  height: var(--control-60);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+  transition: background var(--dur-160) linear;
+}
+
+[data-add-submit]:disabled {
+  background: var(--surface);
+  color: var(--text-dim);
+  cursor: default;
+}

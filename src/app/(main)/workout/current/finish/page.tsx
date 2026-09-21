@@ -1,29 +1,16 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { getCurrentWorkout } from "@/server/application/active-workout";
-import { EmptyState, PageFrame } from "@/shared/ui";
-
-import { FinishReview } from "./finish-review";
-
-export const dynamic = "force-dynamic";
-
-export default async function FinishWorkoutPage() {
-  const workout = await getCurrentWorkout();
-
-  if (!workout.ok) {
-    return (
-      <PageFrame title="Review & Finish">
-        <EmptyState
-          title="The review couldn't be loaded"
-          body={workout.error.message}
-          action={<Link href="/workout/current/finish">Retry</Link>}
-        />
-      </PageFrame>
-    );
-  }
-
-  if (workout.value === null) redirect("/today");
-
-  return <FinishReview initial={workout.value} />;
+/*
+ * The review is a panel over the active workout since step 6 of
+ * docs/design/redesign-v2/PLAN.md — the prototype's screen 30, opened from
+ * `openFinish` (line 3484) without leaving the workout — and
+ * `docs/product/workouts.md` already called it "an in-place sheet from the
+ * current client workout snapshot".
+ *
+ * The URL stays as the recovery and deep-link path
+ * `docs/architecture/mobile-ui-foundation.md` describes, and hands over to the
+ * one screen that draws the review.
+ */
+export default function FinishWorkoutPage() {
+  redirect("/workout/current?panel=finish");
 }
