@@ -226,6 +226,26 @@
   animation: stageInB var(--dur-300) var(--ease);
 }
 
+/* The flash branch of the same value (line 3392): the stage is out of the
+   picture for the three seconds the flash owns, and the set that arrives under
+   it comes back on this animation's tail rather than on a `stageIn` of its
+   own. The prototype keeps the string it last returned, so the attribute stays
+   `pickerFade` after the flash has cleared — which is why what makes the stage
+   unpressable below is the flash itself and not this attribute. */
+[data-stage-anim="pickerFadeA"] {
+  animation: pickerFadeA 3000ms ease both;
+}
+[data-stage-anim="pickerFadeB"] {
+  animation: pickerFadeB 3000ms ease both;
+}
+
+/* The prototype leaves the faded stage pressable, which is a press at a button
+   nobody can see — a second `Log set` on the set the flash is acknowledging.
+   Here the stage takes no pointer for as long as it is out of the picture. */
+[data-queue-stage][data-flashing] {
+  pointer-events: none;
+}
+
 /* ----- Resistance band -------------------------------------------------- */
 
 [data-queue-band] {

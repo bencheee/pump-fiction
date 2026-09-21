@@ -20,18 +20,22 @@ import {
   exerciseOptionalModeRemoveLabels,
 } from "@/features/exercises/ui/exercise-presentation";
 import {
+  handoffViewFor,
   loadColumnFor,
   loadFallbackIndex,
+  outcomeAfterLog,
   repsColumnFor,
   repsFallbackIndex,
   setChipText,
   suggestedValuesFor,
   upNextFor,
   type FlatSet,
+  type HandoffView,
   type SuggestedSetValues,
 } from "@/features/active-workout/ui/set-queue-presentation";
 import {
   formatLastPerformanceDate,
+  formatSetChip,
   formatSetLoad,
   formatSetReps,
   formatWorkoutClock,
@@ -52,6 +56,11 @@ import {
 import { AddExerciseSheet } from "./add-exercise-sheet";
 import { ReviewFinishSheet } from "./review-finish-sheet";
 import "./set-queue.css";
+import {
+  ExerciseHandoff,
+  SetLoggedFlash,
+  WorkoutComplete,
+} from "./workout-interstitials";
 
 /*
  * The Active set queue, ported from the prototype for step 4 of
@@ -66,6 +75,12 @@ import "./set-queue.css";
  *                 3262-3292 (`rawMenu`, `menuItems`), 3333-3500
  *   behaviour     `adjust` 1855-1870, `advance` 1871-1884, `notify` 1831-1836,
  *                 `formatClock` 1960-1964, `setLoadText` 1966-1970
+ *
+ * Step 7 adds the set-logging flow the primary action runs — the flash, the
+ * exercise handoff and the workout complete screen (`flashSet` 1837-1842,
+ * `primaryAction` 3411-3417, `afterLog` 1898-1907, `startHandoff` 1909-1926,
+ * `finishHandoff` 1928-1931). The three surfaces themselves are in
+ * `workout-interstitials.tsx`.
  *
  * Six things the application knows that the prototype does not are written
  * down in the plan beside step 4, and step 6 adds its own; the comments below
@@ -194,14 +209,64 @@ export function SetQueue({
   const allRecorded = flat.length > 0 && recorded === flat.length;
   const upNext = upNextFor(flat, workout.exercises.length, current);
 
-  // `stageAnim` (lines 3390-3403): the stage replays its entrance whenever the
-  // set under it changes, alternating the A/B pair. The flash branch of that
-  // same value belongs to the set-logging flow and arrives in step 7.
+  /*
+   * ----- The set-logging flow (step 7) -----------------------------------
+   *
+   * `flashSet()` (1837) numbers each flash so the A/B pair alternates and
+   * clears it 3000ms later; `primaryAction` (3411) starts it and does the rest
+   * of the work 2300ms in. Everything the press needs at that moment — the
+   * workout as it stands after the values were written — is read from
+   * `liveRef` rather than from the closure, which holds the workout as it was
+   * before the press.
+   */
+  const [flash, setFlash] = useState<number | null>(null);
+  const [handoff, setHandoff] = useState<HandoffView | null>(null);
+  // `afterLog` stops the prototype's clock (`running: false`, line 1902); the
+  // application's keeps accruing until `finish_workout` is delivered, so what
+  // is frozen here is the number the chip shows, not the workout's duration.
+  const [completeSeconds, setCompleteSeconds] = useState<number | null>(null);
+  const flashSeqRef = useRef(0);
+  const flashTimerRef = useRef<number | null>(null);
+  const afterLogTimerRef = useRef<number | null>(null);
+  const liveRef = useRef({ flat, current, displaySeconds, onJump, onAdvance });
+  useEffect(() => {
+    liveRef.current = { flat, current, displaySeconds, onJump, onAdvance };
+  });
+  useEffect(
+    () => () => {
+      if (flashTimerRef.current !== null)
+        window.clearTimeout(flashTimerRef.current);
+      if (afterLogTimerRef.current !== null)
+        window.clearTimeout(afterLogTimerRef.current);
+    },
+    [],
+  );
+
+  /*
+   * `stageAnim` (lines 3390-3403). The stage replays its entrance whenever the
+   * set under it changes, alternating the A/B pair — except while a flash is
+   * running, when it takes `pickerFade` instead and the key is followed
+   * without a new entrance. The prototype keeps the last string it returned,
+   * so a pointer that moves under a flash, and the flash clearing afterwards,
+   * both leave `pickerFade` in place and the next set arrives on its tail
+   * rather than on a `stageIn` of its own.
+   */
   const stageKey = current
     ? `${current.exerciseIndex}-${current.setIndex}`
     : "";
-  const [stage, setStage] = useState(() => ({ key: stageKey, n: 1 }));
-  if (stage.key !== stageKey) setStage({ key: stageKey, n: stage.n + 1 });
+  const [stage, setStage] = useState(() => ({
+    key: stageKey,
+    n: 1,
+    anim: "stageInA",
+  }));
+  if (flash !== null) {
+    const anim = `pickerFade${flash % 2 ? "A" : "B"}`;
+    if (stage.key !== stageKey || stage.anim !== anim)
+      setStage({ key: stageKey, n: stage.n, anim });
+  } else if (stage.key !== stageKey) {
+    const n = stage.n + 1;
+    setStage({ key: stageKey, n, anim: `stageIn${n % 2 ? "A" : "B"}` });
+  }
 
   /*
    * What the wheels offer on the set under the pointer, and what `Log set`
@@ -220,6 +285,18 @@ export function SetQueue({
       ? { loadKg: null, reps: null }
       : suggestedValuesFor(current.exercise, current.setIndex, currentMode);
 
+  /*
+   * `primaryAction`'s log branch (line 3415): the flash runs, and 2300ms later
+   * `logSet()` (1888) hands over to `afterLog()` (1898).
+   *
+   * The values are written with the press rather than at the end of the flash,
+   * which is the one place this differs from the prototype's order. There a
+   * set is marked done by a flag, and nothing is lost if the flag waits; here
+   * the write is a command in the outbox, and a press whose command waits 2.3
+   * seconds is a press a navigation can lose. The segment under the flash
+   * therefore lights at once — as it already did before step 7 for every set
+   * whose values were entered on the wheels.
+   */
   function logSet() {
     if (current !== undefined && currentMode !== null) {
       const { set } = current;
@@ -233,7 +310,56 @@ export function SetQueue({
       };
       if (Object.keys(fill).length > 0) onUpdateSet(set, currentMode, fill);
     }
-    onAdvance();
+
+    flashSeqRef.current += 1;
+    setFlash(flashSeqRef.current);
+    if (flashTimerRef.current !== null)
+      window.clearTimeout(flashTimerRef.current);
+    flashTimerRef.current = window.setTimeout(() => setFlash(null), 3000);
+
+    if (afterLogTimerRef.current !== null)
+      window.clearTimeout(afterLogTimerRef.current);
+    afterLogTimerRef.current = window.setTimeout(afterLog, 2300);
+  }
+
+  /*
+   * `afterLog()` (1898), against the workout as it stands once the press has
+   * written what it had to write.
+   */
+  function afterLog() {
+    afterLogTimerRef.current = null;
+    const live = liveRef.current;
+    const outcome = outcomeAfterLog(live.flat, live.current);
+
+    if (outcome.kind === "complete") {
+      // The prototype leaves its flash running behind this screen and only
+      // clears `bubble` and `sheet` (line 1902); the panels here are closed by
+      // their own history entries and none can be open under a press.
+      setCompleteSeconds(live.displaySeconds);
+      return;
+    }
+
+    if (outcome.kind === "handoff") {
+      // `startHandoff` clears the flash as it opens (line 1913).
+      if (flashTimerRef.current !== null)
+        window.clearTimeout(flashTimerRef.current);
+      flashTimerRef.current = null;
+      setFlash(null);
+      setHandoff(
+        handoffViewFor(live.flat, outcome.done, outcome.next, (entry) =>
+          formatSetChip(entry.set, entry.exercise.measurementType),
+        ),
+      );
+      return;
+    }
+
+    live.onAdvance();
+  }
+
+  /** `finishHandoff()` (1928): the pointer moves to the set it was holding. */
+  function finishHandoff(view: HandoffView) {
+    setHandoff(null);
+    liveRef.current.onJump(view.next);
   }
 
   function openReview(event: MouseEvent<HTMLElement>) {
@@ -391,7 +517,8 @@ export function SetQueue({
           <>
             <div
               data-queue-stage=""
-              data-stage-anim={`stageIn${stage.n % 2 ? "A" : "B"}`}
+              data-stage-anim={stage.anim}
+              data-flashing={flash === null ? undefined : ""}
             >
               <SetStage
                 key={current.set.id}
@@ -504,6 +631,48 @@ export function SetQueue({
           description={confirm.description}
           confirmLabel={confirm.confirmLabel}
           onConfirm={confirm.onConfirm}
+        />
+      )}
+
+      {/* The three surfaces the press raises, in the order the prototype
+          stacks them: the flash at z-index 25, the two screens at 30. */}
+      {flash === null ? null : <SetLoggedFlash />}
+
+      {handoff === null ? null : (
+        <ExerciseHandoff
+          view={handoff}
+          onContinue={() => finishHandoff(handoff)}
+        />
+      )}
+
+      {completeSeconds === null ? null : (
+        <WorkoutComplete
+          workoutName={workout.name}
+          chips={[
+            { key: "duration", text: formatWorkoutClock(completeSeconds) },
+            {
+              key: "exercises",
+              text: `${workout.exercises.length} exercise${
+                workout.exercises.length === 1 ? "" : "s"
+              }`,
+            },
+            {
+              key: "sets",
+              text: `${recorded} set${recorded === 1 ? "" : "s"}`,
+            },
+          ]}
+          meta={`Every planned set of ${workout.name} is recorded`}
+          /* `Rotation advanced to the next split.` is written on the card
+             whatever the workout was; the application knows which of its three
+             kinds advances the rotation and says the same sentence the
+             finishing toast says. */
+          rotation={
+            workout.sourceKind === "proposed_split"
+              ? "Rotation advanced to the next split."
+              : "Rotation unchanged."
+          }
+          finishing={finishing}
+          onBackToToday={onCompleteWorkout}
         />
       )}
     </div>

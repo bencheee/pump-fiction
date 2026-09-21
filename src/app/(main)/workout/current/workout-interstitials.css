@@ -1,0 +1,294 @@
+/*
+ * The set-logged flash, the exercise handoff and the workout complete screen,
+ * ported from the prototype for step 7 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 1308-1316, 1503-1532 (`data-screen-label="Exercise
+ *                 handoff"`), 1533-1560 (`"Workout complete"`)
+ *   bound values  3413, 3442-3449, 3451-3458
+ *
+ * Every keyframe below — `flashIn`, `flashRing`, `hoDim`, `hoRing`, `hoPop`,
+ * `hoIn`, `hoArrow` — is phase 0's, declared once in `globals.css`. What is
+ * here is only what these three surfaces write: the 104px flash box and its
+ * 36px check, the 1100ms / 2150ms / 1200ms / 700ms timings the prototype uses
+ * once each, and the shadow phase 0 left with the surface that owns it.
+ */
+
+/* ----- Set logged flash (screen 22) ------------------------------------- */
+
+[data-set-flash] {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+[data-set-flash-badge] {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: flashIn 2150ms ease-out var(--dur-400) both;
+}
+
+[data-set-flash-ring] {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--accent);
+  animation: flashRing 1100ms var(--ease) 700ms;
+}
+
+[data-set-flash-disc] {
+  width: var(--control-84);
+  height: var(--control-84);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The one shadow this surface owns; phase 0 left it here rather than in the
+     token file, the prototype drawing it exactly once. */
+  box-shadow: 0 16px 40px rgba(53, 181, 126, 0.3);
+}
+
+/* The one 36px icon in the prototype (line 1314). */
+[data-set-flash-disc] [data-icon] {
+  width: 36px;
+  height: 36px;
+}
+
+/* ----- The frame both interstitials carry (screens 31 and 32) ----------- */
+
+[data-interstitial] {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: hoDim var(--dur-180) linear;
+}
+
+[data-interstitial-body] {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px 0;
+}
+
+[data-interstitial-badge] {
+  flex: none;
+  position: relative;
+  width: var(--control-84);
+  height: var(--control-84);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-interstitial-ring] {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--accent);
+  animation: hoRing var(--dur-1300) var(--ease) var(--dur-160) 2;
+}
+
+[data-interstitial-disc] {
+  width: var(--control-66);
+  height: var(--control-66);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hoPop var(--dur-440) var(--ease-overshoot);
+}
+
+/* The four staggered entrances the prototype gives the body: 140ms, 200ms,
+   280ms and 340ms behind the badge. */
+[data-interstitial-kicker] {
+  flex: none;
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-14);
+  text-transform: uppercase;
+  color: var(--accent);
+  animation: hoIn var(--dur-320) var(--ease) var(--dur-140) both;
+}
+
+[data-interstitial-name] {
+  flex: none;
+  margin: 0;
+  font-size: var(--fs-25);
+  line-height: var(--lh-1-14);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  text-align: center;
+  text-wrap: pretty;
+  animation: hoIn var(--dur-320) var(--ease) var(--dur-200) both;
+}
+
+[data-interstitial-chips] {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  animation: hoIn var(--dur-320) var(--ease) var(--dur-280) both;
+}
+
+[data-interstitial-chip] {
+  padding: 7px 13px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+  color: var(--text-secondary);
+}
+
+[data-interstitial-meta] {
+  flex: none;
+  margin: 0;
+  font-size: var(--fs-12-5);
+  color: var(--text-dim);
+  text-align: center;
+  animation: hoIn var(--dur-320) var(--ease) var(--dur-340) both;
+}
+
+/* ----- The card at the foot --------------------------------------------- */
+
+[data-interstitial-card] {
+  flex: none;
+  margin: 0 16px 18px;
+  border-radius: var(--radius-26);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  animation: hoIn var(--dur-360) var(--ease) var(--dur-420) both;
+}
+
+[data-interstitial-card][data-tone="surface"] {
+  gap: 12px;
+  background: var(--surface);
+}
+
+[data-interstitial-card][data-tone="accent"] {
+  gap: 10px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+[data-interstitial-card-kicker] {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  letter-spacing: var(--ls-14);
+  text-transform: uppercase;
+}
+
+[data-tone="surface"] [data-interstitial-card-kicker] {
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+/* On the accent fill the card writes its own colour at 72%, not a text token. */
+[data-tone="accent"] [data-interstitial-card-kicker] {
+  font-weight: var(--fw-bold);
+  opacity: 0.72;
+}
+
+[data-interstitial-card-title] {
+  margin: 0;
+  font-size: var(--fs-21);
+  line-height: var(--lh-1-2);
+}
+
+[data-tone="surface"] [data-interstitial-card-title] {
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+[data-tone="accent"] [data-interstitial-card-title] {
+  font-weight: var(--fw-bold);
+}
+
+[data-interstitial-card-meta] {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+}
+
+[data-tone="surface"] [data-interstitial-card-meta] {
+  color: var(--text-muted);
+}
+
+[data-tone="accent"] [data-interstitial-card-meta] {
+  font-weight: var(--fw-semibold);
+  opacity: 0.8;
+}
+
+[data-interstitial-card-action] {
+  width: 100%;
+  height: var(--control-60);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+}
+
+[data-tone="surface"] [data-interstitial-card-action] {
+  margin-top: 4px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+[data-tone="accent"] [data-interstitial-card-action] {
+  margin-top: 6px;
+  background: var(--on-accent);
+  color: var(--accent);
+}
+
+/* The wait for the terminal command to drain, which the review panel's own
+   Complete workout takes the same way. */
+[data-interstitial-card-action]:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ----- The arrow between the two halves of the handoff ------------------ */
+
+[data-handoff-arrow] {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
+}
+
+/* The prototype turns `arrow-left` a quarter turn to point at the card and
+   bounces it. `hoArrow` writes `transform` itself, so the rotation holds only
+   until the animation's 400ms delay is up and the glyph then points left for
+   as long as it bounces — the prototype's own picture, not a difference. */
+[data-handoff-arrow] [data-icon] {
+  color: var(--line-strong);
+  transform: rotate(-90deg);
+  animation: hoArrow 1200ms ease-in-out var(--dur-400) infinite;
+}

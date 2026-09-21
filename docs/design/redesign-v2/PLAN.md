@@ -115,16 +115,20 @@ Ranges are approximate to about twenty lines; the banner text and the
 | Lines | Holds | Read in v1? |
 | --- | --- | --- |
 | 1625–1800 | helpers, `METRICS`, `KG`/`REPS` columns, seed fixtures | partly |
-| 1800–2209 | `historyVals()` — History list, workout detail, correction | **no** |
+| 1800–1830 | the workout clock and its interval | partly |
+| 1831–1958 | `notify`, `flashSet`, `adjust`, `advance`, `logSet`, `nextTarget`, `afterLog`, `startHandoff`, `finishHandoff`, `finish` | step 7 |
+| 1959–2209 | `formatClock`, `setLoadText`, `goPage`, `historyVals()` — History list, workout detail, correction | **no** |
 | 2210–2419 | set editor, exercise and split statistics, `chart()` | yes |
-| 2420–3099 | `pagesVals()` — Programs, Exercises, Body; `logSet`, `advance`, `flashSet`, `finishHandoff` | **no** |
+| 2420–3099 | `pagesVals()` — Programs, Exercises, Body | **no** |
 | 3100–3180 | body entry panel, date-picker cells | yes |
 | 3180–3330 | overview rows, library picker, up next, exercise menu, nav items | yes |
 | 3330–3609 | Today and workout values, wheels, bands, stage animation, primary action, handoff, finish, drag | yes |
 
-The two rows marked **no** are why the first attempt drifted: the bound values
-for Programs, Exercises, Body and for the set-logging flow were inferred from
-patterns instead of read. Read them.
+The rows marked **no** are why the first attempt drifted: the bound values for
+Programs, Exercises, Body and for the set-logging flow were inferred from
+patterns instead of read. Read them. The set-logging flow is the one the table
+placed wrongly — it was listed with `pagesVals()` and is in fact at 1831–1958,
+where step 7 read it; the row above now says so.
 
 ## Working order
 
@@ -151,7 +155,7 @@ it stays a literal on that screen.
 | 4 | Active set (queue) | `/workout/current` | 2, 3180–3609 |
 | 5 | Start workout (overview) | `/workout/current` | 3, 3180–3330 |
 | 6 | Workout panels | active workout | 24, 25, 26, 27, 28, 30 |
-| 7 | Set flash, handoff, complete | active workout | 22, 31, 32, **2420–3099** |
+| 7 | Set flash, handoff, complete | active workout | 22, 31, 32, **1831–1958** |
 | 8 | History list | `/history/*` | 4, **1800–2209** |
 | 9 | Workout detail | `/history/workouts/[id]` | 5, **1800–2209** |
 | 10 | Workout correction and set panel | `.../[id]/edit` | 6, 9, 2210–2419 |
@@ -211,6 +215,9 @@ reuses the listed component or changes it for everyone.
 | Back to set pill (56px) | `[data-panel-back]` in `.../set-queue.css` | 6 | 6 |
 | Add exercise picker | `.../add-exercise-sheet.{tsx,css}` | 6 | 4, 5 |
 | Review and finish panel | `.../review-finish-sheet.{tsx,css}` | 6 | 4, 7 |
+| Stage portal (where a full-screen surface renders) | `usePanelContainer` in `shared/ui/panel-container.tsx` | 1 | 3, 6, 7 |
+| Set logged flash | `SetLoggedFlash` in `.../workout-interstitials.{tsx,css}` | 7 | 7 |
+| Interstitial screen (badge, kicker, chips, card) | `Interstitial` in `.../workout-interstitials.{tsx,css}` | 7 | 7 |
 | Delivery alert card | `.../delivery-cue.css` | 6 | 4, 5 |
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
@@ -572,6 +579,82 @@ different surface from screen 24 and stays step 21's; and the already-approved
 screens do not get their notices rerouted through the toast beyond the active
 workout's own.
 
+Step 7 ports the three surfaces the queue's primary action raises — the set
+logged flash, the exercise handoff and the Workout complete screen — and the
+flow that decides which of them a press leads to: `primaryAction` (3411),
+`flashSet` (1837), `logSet` (1888), `nextTarget` (1886), `afterLog` (1898),
+`startHandoff` (1909), `finishHandoff` (1928). The handoff and the complete
+screen are one frame with two tones, which is what the prototype writes twice.
+
+The screen departs from the prototype in seven places, six of them the
+application knowing something the prototype does not:
+
+- **The values are written with the press, not at the end of the flash.**
+  `primaryAction` flashes and calls `logSet()` 2300ms later, and nothing is
+  lost by a `done` flag that waits. Here the write is a command in the outbox,
+  and a press whose command waits 2.3 seconds is a press a navigation can lose,
+  so the fill goes out with the press and only `afterLog`'s move waits. The
+  segment under the flash therefore lights at once — as it already did before
+  this step for every set whose values were entered on the wheels.
+- **A set is recorded by its values**, step 4's, so `afterLog` runs against the
+  workout as it stands after the press. A set the press could not fill — one
+  with nothing to offer — is still not recorded, and the outcome is the plain
+  advance step 6 shipped rather than a handoff or the complete screen.
+- **The handoff chip carries the application's own load vocabulary.**
+  `setLoadText` (1966) knows a bar, a bodyweight and a band letter;
+  `formatSetLoad` knows the assistance modes too, and a seconds-measured
+  exercise keeps its unit — `60 kg × 12`, `BW + 20 kg × 8`, `BW × 30 sec`.
+- **The prescription tail drops when there is none**, as on every screen since
+  step 2: a one-time workout and an exercise added to this one have no
+  `plannedSets`, so the handoff's meta reads `1 set recorded` with no
+  `· planned …` after it, and the Up next line is `Set 1 of 1` with no
+  `· … planned`.
+- **The complete screen's rotation line is the workout's own.** The prototype
+  writes `Rotation advanced to the next split.` whatever the workout was; the
+  application knows that only a proposed split advances the rotation and writes
+  the sentence its own finishing toast writes.
+- **The clock on the complete screen is frozen at the number it was showing.**
+  `afterLog` stops the prototype's clock (`running: false`, 1902); the
+  application's active duration keeps accruing until `finish_workout` is
+  delivered and the server computes it, so what is frozen is the chip, not the
+  workout's duration.
+- **The finish is a command**, step 6's. `doneDone` (3458) is
+  `finish("completed")` (1933), which the prototype is done with the moment it
+  is called; `Back to Today` holds the screen with the same disabled
+  `Finishing…` the review panel's `Complete workout` holds, and the toast is
+  raised with the navigation.
+
+And one that is the prototype's own defect rather than something the
+application knows better: **the faded stage takes no pointer.** `pickerFade`
+carries the stage to opacity 0 for the three seconds the flash owns and leaves
+it pressable, so a second press there lands on a `Log set` nobody can see and
+flashes the same set again. Here the stage takes no pointer for as long as it
+cannot be seen. It is the flash that makes it so and not the animation name:
+`stageAnim` keeps the string it last returned, so `pickerFade` is still on the
+stage after the flash has cleared.
+
+Three things the port keeps exactly as the prototype has them, each of which
+reads like a defect and is not:
+
+- **The arrow points left while it bounces.** The markup turns `arrow-left` a
+  quarter turn in its style attribute (1521) and `hoArrow` writes `transform`
+  itself, so the rotation holds only until the animation's 400ms delay is up.
+  The prototype's own preview does the same.
+- **After a flash the next set arrives without a `stageIn`.** The pointer
+  moving under a flash, and the flash clearing afterwards, both leave
+  `pickerFade` on the stage, and the new set comes back on its tail.
+- **Neither interstitial can be dismissed.** They carry no close control, no
+  Escape and no history entry of their own, exactly as `handoffOn` and `doneOn`
+  are cleared only by the screen's own action. Back still leaves the route,
+  which the prototype has no notion of, and the workout is resumable from
+  Today — so the application is not the dead end the prototype is.
+
+The completed primary (`Review & finish`) is now as unreachable by logging as
+it is in the prototype — the last set's press ends on the complete screen —
+which is what step 4 recorded it could not drive to there either. It is still
+reached by entering the last set's values on the wheels, or by jumping back to
+a recorded set from the segment bar, neither of which the prototype can do.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -583,5 +666,6 @@ workout's own.
 | 4 | done | 2026-09-20 | — |
 | 5 | done | 2026-09-20 | — |
 | 6 | done | 2026-09-21 | — |
+| 7 | done | 2026-09-21 | — |
 
 Update this table in the same change that delivers a step.

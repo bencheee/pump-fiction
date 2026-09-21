@@ -79,6 +79,20 @@ export function formatSetLoad(set: WorkoutSet): string {
   }
 }
 
+/*
+ * The chip the exercise handoff draws a recorded set in (prototype line 1921):
+ * `${setLoadText(e, x)} × ${x.reps}`. The load is the application's own
+ * vocabulary, which knows the band and assistance modes `setLoadText` (1966)
+ * has no word for, and a seconds-measured exercise keeps its unit.
+ */
+export function formatSetChip(
+  set: WorkoutSet,
+  measurementType: ExerciseMeasurementType = "reps",
+): string {
+  const reps = set.reps ?? "—";
+  return `${formatSetLoad(set)} × ${measurementType === "seconds" ? `${reps} sec` : reps}`;
+}
+
 export function formatSetReps(
   set: WorkoutSet,
   measurementType: ExerciseMeasurementType = "reps",

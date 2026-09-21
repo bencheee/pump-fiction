@@ -6,6 +6,10 @@ export { useSaveOutcome, useSavedSnapshot, type SavePhase } from "./form-state";
 export { Icon, iconNames, type IconName, type IconSize } from "./icon";
 export { DestructiveDialog, Sheet } from "./overlays";
 export { PageFrame, StickyActionBar, TopBar } from "./page-frame";
+// Where a full-screen surface renders: the stage, so the bottom navigation
+// stays drawn under it. `Sheet` uses it for a panel; the active workout's two
+// interstitials use it for a screen that has no way to dismiss it.
+export { usePanelContainer } from "./panel-container";
 export {
   BottomNavigation,
   MainShell,

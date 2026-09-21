@@ -70,20 +70,33 @@ export function repsFallbackIndex(column: readonly number[]): number {
   return Math.max(0, column.indexOf(8));
 }
 
+/**
+ * `${planned} × ${min}–${max}` — what the exercise prescribes, or null when it
+ * prescribes nothing: a one-time workout and an exercise added to this one have
+ * no prescription, which the prototype has no notion of. A seconds-measured
+ * exercise keeps its unit, as step 2 settled.
+ */
+export function prescriptionText(exercise: WorkoutExercise): string | null {
+  if (
+    exercise.plannedSets === null ||
+    exercise.minReps === null ||
+    exercise.maxReps === null
+  )
+    return null;
+  const unit = exercise.measurementType === "seconds" ? " sec" : "";
+  return `${exercise.plannedSets} × ${exercise.minReps}–${exercise.maxReps}${unit}`;
+}
+
 /** `setChip` (line 3347). The prescription tail is dropped when there is none. */
 export function setChipText(
   exercise: WorkoutExercise,
   set: WorkoutSet,
 ): string {
   const position = `Set ${set.position} of ${exercise.sets.length}`;
-  if (
-    exercise.plannedSets === null ||
-    exercise.minReps === null ||
-    exercise.maxReps === null
-  )
-    return position;
-  const unit = exercise.measurementType === "seconds" ? " sec" : "";
-  return `${position} · ${exercise.plannedSets} × ${exercise.minReps}–${exercise.maxReps}${unit} planned`;
+  const prescription = prescriptionText(exercise);
+  return prescription === null
+    ? position
+    : `${position} · ${prescription} planned`;
 }
 
 export type SuggestedSetValues = Readonly<{
@@ -219,4 +232,102 @@ export function nextInQueue(
       (entry) => entry.exerciseIndex > current.exerciseIndex && !entry.recorded,
     ) ?? flat.find((entry) => !entry.recorded)
   );
+}
+
+/*
+ * ----- The set-logging flow, step 7 -------------------------------------
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   `afterLog`      lines 1898-1907
+ *   `nextTarget`    lines 1886-1896
+ *   `startHandoff`  lines 1909-1926
+ *
+ * `done` is read as `recorded` throughout, as everywhere else on this screen.
+ */
+
+/**
+ * `nextTarget()` (1886): the first set still without values in an exercise
+ * after this one, wrapping to the start when there is none. It is undefined
+ * only when every set of the workout is recorded.
+ */
+export function nextTargetFor(
+  flat: readonly FlatSet[],
+  current: FlatSet,
+): FlatSet | undefined {
+  return (
+    flat.find(
+      (entry) => entry.exerciseIndex > current.exerciseIndex && !entry.recorded,
+    ) ?? flat.find((entry) => !entry.recorded)
+  );
+}
+
+/** What `afterLog()` does with the press, once the set has taken its values. */
+export type LoggedOutcome =
+  /** No set is left without values: the Workout complete screen. */
+  | Readonly<{ kind: "complete" }>
+  /** This exercise is finished and the next set is in another one. */
+  | Readonly<{ kind: "handoff"; done: FlatSet; next: FlatSet }>
+  /** Everything else: the pointer moves, as `advance()` (1871) moves it. */
+  | Readonly<{ kind: "advance" }>;
+
+/**
+ * `afterLog()` (1898). `flat` is the workout as it stands *after* the press has
+ * written whatever the wheels were offering, so a set the press could not fill
+ * — one with nothing to offer — is still not recorded and the outcome is the
+ * plain advance step 6 shipped.
+ */
+export function outcomeAfterLog(
+  flat: readonly FlatSet[],
+  current: FlatSet | undefined,
+): LoggedOutcome {
+  if (current === undefined) return { kind: "advance" };
+  const target = nextTargetFor(flat, current);
+  if (target === undefined) return { kind: "complete" };
+  const exerciseComplete = flat
+    .filter((entry) => entry.exerciseIndex === current.exerciseIndex)
+    .every((entry) => entry.recorded);
+  return exerciseComplete && target.exerciseIndex !== current.exerciseIndex
+    ? { kind: "handoff", done: current, next: target }
+    : { kind: "advance" };
+}
+
+/** What the Exercise handoff screen holds, the way `s.handoff` (1912) holds it. */
+export type HandoffView = Readonly<{
+  doneName: string;
+  doneMeta: string;
+  chips: readonly Readonly<{ key: string; text: string }>[];
+  nextName: string;
+  nextSet: string;
+  /** Null for an exercise with no prescription; the prototype has no such one. */
+  nextMeta: string | null;
+  /** Where `finishHandoff()` (1928) puts the pointer. */
+  next: FlatSet;
+}>;
+
+/** `startHandoff(doneEx, target)` (1909). */
+export function handoffViewFor(
+  flat: readonly FlatSet[],
+  done: FlatSet,
+  next: FlatSet,
+  chipText: (entry: FlatSet) => string,
+): HandoffView {
+  const chips = flat
+    .filter(
+      (entry) => entry.exerciseIndex === done.exerciseIndex && entry.recorded,
+    )
+    .map((entry) => ({ key: entry.set.id, text: chipText(entry) }));
+  const donePrescription = prescriptionText(done.exercise);
+  const nextPrescription = prescriptionText(next.exercise);
+
+  return {
+    doneName: done.exercise.exerciseName,
+    doneMeta: `${chips.length} set${chips.length === 1 ? "" : "s"} recorded${
+      donePrescription === null ? "" : ` · planned ${donePrescription}`
+    }`,
+    chips,
+    nextName: next.exercise.exerciseName,
+    nextSet: `Set ${next.setIndex + 1} of ${next.exercise.sets.length}`,
+    nextMeta: nextPrescription === null ? null : `${nextPrescription} planned`,
+    next,
+  };
 }
