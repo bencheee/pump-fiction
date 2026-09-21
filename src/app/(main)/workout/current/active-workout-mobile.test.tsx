@@ -247,6 +247,7 @@ function renderExperience(
   render(
     <ActiveWorkoutExperience
       initial={workout}
+      serverNow={Date.now()}
       exercises={library}
       outbox={outbox}
       transport={transport}
@@ -336,6 +337,7 @@ describe("Active-workout mobile experience", () => {
       <MainShell>
         <ActiveWorkoutExperience
           initial={makeWorkout()}
+          serverNow={Date.now()}
           exercises={library}
           outbox={outbox}
           transport={transport}
@@ -364,6 +366,7 @@ describe("Active-workout mobile experience", () => {
     render(
       <ActiveWorkoutExperience
         initial={makeWorkout()}
+        serverNow={Date.now()}
         outbox={new FakeOutbox()}
         transport={new FakeTransport()}
       />,
@@ -639,6 +642,7 @@ describe("Active-workout mobile experience", () => {
     render(
       <ActiveWorkoutExperience
         initial={makeWorkout()}
+        serverNow={Date.now()}
         exercises={library}
         outbox={outbox}
         transport={transport}

@@ -402,7 +402,8 @@ last set sends it to the Workout complete screen instead, so only its two
 values (line 3411) and the geometry of the other state are evidence. And the
 clock can raise a React hydration mismatch when the second turns between the
 server render and hydration; that is not this step's — Today's restore card
-does the same — but it is on this screen too and wants a decision.
+does the same — but it is on this screen too and wants a decision. That
+decision came after step 7; the step 5 defect list below records it.
 
 Step 5 replaces the exercise list `/workout/current` opened on before step 4, so
 the accordion card, its set rows and the finish panel they carried are gone from
@@ -466,6 +467,18 @@ Two defects found while verifying, neither this step's:
   press. The same buttons work from the keyboard, and dragging the wheel works.
 - **The clock still raises a React hydration mismatch** when the second turns
   between the server render and hydration, which step 4 already flagged.
+  Fixed after step 7. `Date.now()` in the client render is read twice — once in
+  the server render, once at hydration — and the two are apart by however long
+  the HTML took to arrive, so React reports a text mismatch and pays for it by
+  regenerating the tree. Both routes are `force-dynamic`, so the server's own
+  reading comes down as a `serverNow` prop
+  (`src/server/application/rendered-at.ts`) and the two renders format the same
+  second; the one-second interval each clock already runs moves it to the
+  device's own on its first tick, which is the whole of the behaviour given up.
+  The active workout's clock and Today's restore card are baselined alike.
+  Verified against the dev server with every script held back three seconds, so
+  hydration lands well after the HTML: no mismatch on `/workout/current`,
+  `?view=overview` or `/today`.
 
 Step 6 ports the five panels the active workout opens and the toast every
 screen raises. The review is the one surface the application drew twice: the

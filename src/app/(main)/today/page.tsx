@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { getToday } from "@/server/application/active-workout";
+import { renderedAt } from "@/server/application/rendered-at";
 import { EmptyState, PageFrame } from "@/shared/ui";
 
 import { TodayExperience } from "./today-experience";
@@ -22,5 +23,9 @@ export default async function TodayPage() {
     );
   }
 
-  return <TodayExperience today={result.value} />;
+  // The baseline the restore card's clock has to agree with on its first
+  // client render.
+  return (
+    <TodayExperience today={result.value} serverNow={await renderedAt()} />
+  );
 }

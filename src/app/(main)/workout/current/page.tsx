@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { getCurrentWorkout } from "@/server/application/active-workout";
+import { renderedAt } from "@/server/application/rendered-at";
 import { EmptyState, PageFrame } from "@/shared/ui";
 
 import { ActiveWorkoutExperience } from "./active-workout-experience";
@@ -50,9 +51,11 @@ export default async function CurrentWorkoutPage({
 
   if (workout.value === null) redirect("/today");
 
+  // The baseline the workout clock's first client render has to agree with.
   return (
     <ActiveWorkoutExperience
       initial={workout.value}
+      serverNow={await renderedAt()}
       initialView={initialView}
       initialPanel={initialPanel}
     />

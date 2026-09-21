@@ -48,6 +48,7 @@ type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
 
 export function ActiveWorkoutExperience({
   initial,
+  serverNow,
   initialView = "queue",
   initialPanel,
   exercises,
@@ -55,6 +56,8 @@ export function ActiveWorkoutExperience({
   transport,
 }: {
   initial: CurrentWorkout;
+  /** The server's clock at the moment it rendered; see the `now` state. */
+  serverNow: number;
   /** Which screen the action that brought us here lands on; see `page.tsx`. */
   initialView?: "queue" | "overview";
   /** `?panel=finish`, which `/workout/current/finish` redirects to: the review
@@ -88,7 +91,15 @@ export function ActiveWorkoutExperience({
   const [feedback, setFeedback] = useState<
     Readonly<Record<string, RowFeedback>>
   >({});
-  const [now, setNow] = useState(() => Date.now());
+  // The clock's baseline, and the one value on this screen that may not be
+  // read from the device. `Date.now()` here runs twice — once in the server
+  // render, once at hydration — and the two are apart by however long the HTML
+  // took to arrive, so the second turns between them often enough that React
+  // reports a text mismatch and pays for it by regenerating this whole tree on
+  // the client. The server's own reading comes down as a prop instead, so both
+  // renders format the same second, and the interval below moves to the
+  // device's clock on its first tick, within a second of hydration.
+  const [now, setNow] = useState(serverNow);
   const [discardedChange, setDiscardedChange] = useState<string | null>(null);
   const [finishing, setFinishing] = useState(false);
   const finishedRef = useRef<null | (() => void)>(null);
@@ -217,6 +228,7 @@ export function ActiveWorkoutExperience({
   }, [adoptWorkout, delivery, initial]);
 
   useEffect(() => {
+    // The first tick replaces the server's baseline with the device's clock.
     const interval = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(interval);
   }, []);

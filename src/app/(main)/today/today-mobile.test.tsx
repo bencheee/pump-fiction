@@ -132,7 +132,12 @@ describe("Today and workout-start mobile experience", () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
     renderToday(
-      <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
+      <TodayExperience
+        today={today}
+        serverNow={Date.now()}
+        weight={noWeighIn}
+        measurements={null}
+      />,
     );
 
     expect(screen.getByText("Wed 26 Aug")).toBeVisible();
@@ -162,7 +167,12 @@ describe("Today and workout-start mobile experience", () => {
   it("previews every exercise in the selected split beneath Start Workout", async () => {
     const user = userEvent.setup();
     renderToday(
-      <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
+      <TodayExperience
+        today={today}
+        serverNow={Date.now()}
+        weight={noWeighIn}
+        measurements={null}
+      />,
     );
 
     expect(screen.getByText("Back Squat")).toBeVisible();
@@ -185,7 +195,12 @@ describe("Today and workout-start mobile experience", () => {
     const user = userEvent.setup();
     actions.createWeight.mockResolvedValue({ ok: true, value: recorded.entry });
     renderToday(
-      <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
+      <TodayExperience
+        today={today}
+        serverNow={Date.now()}
+        weight={noWeighIn}
+        measurements={null}
+      />,
     );
 
     const card = within(screen.getByRole("region", { name: "Today's weight" }));
@@ -205,7 +220,12 @@ describe("Today and workout-start mobile experience", () => {
 
   it("shows the recorded weight instead of a second-entry prompt", () => {
     renderToday(
-      <TodayExperience today={today} weight={recorded} measurements={null} />,
+      <TodayExperience
+        today={today}
+        serverNow={Date.now()}
+        weight={recorded}
+        measurements={null}
+      />,
     );
 
     const card = within(screen.getByRole("region", { name: "Today's weight" }));
@@ -231,7 +251,12 @@ describe("Today and workout-start mobile experience", () => {
       },
     });
     renderToday(
-      <TodayExperience today={today} weight={noWeighIn} measurements={null} />,
+      <TodayExperience
+        today={today}
+        serverNow={Date.now()}
+        weight={noWeighIn}
+        measurements={null}
+      />,
     );
 
     await user.click(
@@ -252,6 +277,7 @@ describe("Today and workout-start mobile experience", () => {
     renderToday(
       <TodayExperience
         today={{ ...today, proposedSplit: null, alternateSplits: [] }}
+        serverNow={Date.now()}
         weight={noWeighIn}
         measurements={null}
       />,
@@ -273,6 +299,7 @@ describe("Today and workout-start mobile experience", () => {
             activeSegmentStartedAt: null,
           },
         }}
+        serverNow={Date.now()}
         weight={noWeighIn}
         measurements={null}
       />,
@@ -295,6 +322,7 @@ describe("Today and workout-start mobile experience", () => {
             activeSegmentStartedAt: null,
           },
         }}
+        serverNow={Date.now()}
         weight={noWeighIn}
         measurements={null}
       />,
@@ -365,6 +393,7 @@ describe("MVP-TOD-005 today's measurements", () => {
     renderToday(
       <TodayExperience
         today={today}
+        serverNow={Date.now()}
         weight={recorded}
         measurements={measurements([])}
       />,
@@ -379,6 +408,7 @@ describe("MVP-TOD-005 today's measurements", () => {
     renderToday(
       <TodayExperience
         today={today}
+        serverNow={Date.now()}
         weight={recorded}
         measurements={measurements([
           { ...waist, valueCm: null },
@@ -412,6 +442,7 @@ describe("MVP-TOD-005 today's measurements", () => {
     renderToday(
       <TodayExperience
         today={today}
+        serverNow={Date.now()}
         weight={recorded}
         measurements={measurements([
           { ...waist, valueCm: null },
@@ -439,6 +470,7 @@ describe("MVP-TOD-005 today's measurements", () => {
     renderToday(
       <TodayExperience
         today={today}
+        serverNow={Date.now()}
         weight={recorded}
         measurements={measurements([
           { ...waist, valueCm: 84 },

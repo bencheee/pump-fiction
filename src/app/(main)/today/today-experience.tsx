@@ -16,7 +16,14 @@ import { ChooseSplitPanel } from "./choose-split";
 import { splitStatsText } from "./split-stats";
 import "./today.css";
 
-export function TodayExperience({ today }: { today: TodayView }) {
+export function TodayExperience({
+  today,
+  serverNow,
+}: {
+  today: TodayView;
+  /** The server's clock at the moment it rendered; see `RestoreCard`. */
+  serverNow: number;
+}) {
   const router = useRouter();
   const [selectedSplit, setSelectedSplit] = useState(today.proposedSplit);
   const [pending, setPending] = useState(false);
@@ -74,7 +81,7 @@ export function TodayExperience({ today }: { today: TodayView }) {
         <span data-today-date="">{formatLocalDate(today.localDate)}</span>
       }
     >
-      {current ? <RestoreCard current={current} /> : null}
+      {current ? <RestoreCard current={current} serverNow={serverNow} /> : null}
 
       {selectedSplit ? (
         <>
@@ -203,10 +210,17 @@ function Greeting() {
 
 function RestoreCard({
   current,
+  serverNow,
 }: {
   current: NonNullable<TodayView["currentWorkout"]>;
+  serverNow: number;
 }) {
-  const [now, setNow] = useState(() => Date.now());
+  // The running card's clock, on the server's reading until the first tick.
+  // Read from the device instead, the server render and the hydration render
+  // would be apart by however long the HTML took to arrive, and React would
+  // report the mismatch and regenerate this tree; the active workout's own
+  // clock is baselined the same way.
+  const [now, setNow] = useState(serverNow);
   useEffect(() => {
     if (current.status !== "active") return;
     const interval = window.setInterval(() => setNow(Date.now()), 1000);
