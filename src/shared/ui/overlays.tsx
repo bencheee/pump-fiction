@@ -24,6 +24,7 @@ import {
  */
 export function Sheet({
   panel = "",
+  layer,
   trigger,
   overlay: controlled,
   returnFocusRef,
@@ -36,6 +37,10 @@ export function Sheet({
 }: {
   /** Names the panel, so its screen's stylesheet can reach the shared frame. */
   panel?: string;
+  /** Which layer the panel takes. The prototype draws all but one of its
+      panels at z-index 20, under the toast; the Screen actions overlay (line
+      1189) it lifts to 27, over it. */
+  layer?: "above-toast";
   /** Omitted when the panel is opened by its controller rather than a press. */
   trigger?: ReactElement;
   /*
@@ -77,6 +82,7 @@ export function Sheet({
       <Dialog.Portal container={container ?? undefined}>
         <Dialog.Content
           data-panel={panel}
+          data-panel-layer={layer}
           onCloseAutoFocus={
             trigger === undefined && returnFocusRef !== undefined
               ? (event) => {
@@ -112,12 +118,24 @@ export function Sheet({
   );
 }
 
+/*
+ * The confirm dialog — the prototype's screen 33 (lines 1560-1575), with
+ * `dialogTitle`, `dialogBody`, `dialogConfirm`, `closeDialog` and
+ * `confirmDialog` at lines 2302-2308 and 3490-3500.
+ *
+ * One dialog for every destructive action, as the prototype's single
+ * `s.dialog` slot is: deleting a workout, a program, a split or an exercise,
+ * removing a set or an exercise from a workout, discarding one. It sits over
+ * the stage, so the bottom navigation stays drawn under its scrim exactly as
+ * it does under a panel.
+ */
 export function DestructiveDialog({
   trigger,
   overlay: controlled,
   title,
   description,
   cancelLabel = "Cancel",
+  closeLabel = "Close",
   confirmLabel,
   onConfirm,
 }: {
@@ -128,9 +146,11 @@ export function DestructiveDialog({
   title: string;
   description: string;
   cancelLabel?: string;
+  closeLabel?: string;
   confirmLabel: string;
   onConfirm: () => void;
 }) {
+  const container = usePanelContainer();
   const own = useTransientOverlay();
   const overlay = controlled ?? own;
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -143,23 +163,49 @@ export function DestructiveDialog({
       {trigger === undefined ? null : (
         <AlertDialog.Trigger asChild>{trigger}</AlertDialog.Trigger>
       )}
-      <AlertDialog.Portal>
-        <AlertDialog.Overlay />
+      <AlertDialog.Portal container={container ?? undefined}>
+        <AlertDialog.Overlay data-dialog-scrim="" />
+        {/* The prototype centres the card inside a padded scrim; Radix draws
+            the scrim beside the content rather than around it, so the content
+            is the centring box and the card is the element inside it. */}
         <AlertDialog.Content
+          data-dialog-frame=""
           onOpenAutoFocus={(event) => {
             event.preventDefault();
             cancelRef.current?.focus();
           }}
         >
-          <AlertDialog.Title>{title}</AlertDialog.Title>
-          <AlertDialog.Description>{description}</AlertDialog.Description>
-          <div>
-            <AlertDialog.Cancel ref={cancelRef}>
-              {cancelLabel}
-            </AlertDialog.Cancel>
-            <AlertDialog.Action onClick={onConfirm}>
-              {confirmLabel}
-            </AlertDialog.Action>
+          <div data-dialog="">
+            <div data-dialog-head="">
+              <AlertDialog.Title data-dialog-title="">
+                {title}
+              </AlertDialog.Title>
+              {/* The prototype draws the same `closeDialog` twice: the round x
+                  in the corner and Cancel at the bottom. */}
+              <AlertDialog.Cancel
+                data-dialog-close=""
+                aria-label={closeLabel}
+                title={closeLabel}
+              >
+                <Icon name="x" size={15} />
+              </AlertDialog.Cancel>
+            </div>
+            <AlertDialog.Description data-dialog-body="">
+              {description}
+            </AlertDialog.Description>
+            <div data-dialog-actions="">
+              <AlertDialog.Action
+                data-dialog-confirm=""
+                aria-label={confirmLabel}
+                title={confirmLabel}
+                onClick={onConfirm}
+              >
+                {confirmLabel}
+              </AlertDialog.Action>
+              <AlertDialog.Cancel ref={cancelRef} data-dialog-cancel="">
+                {cancelLabel}
+              </AlertDialog.Cancel>
+            </div>
           </div>
         </AlertDialog.Content>
       </AlertDialog.Portal>

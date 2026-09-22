@@ -1,4 +1,5 @@
 export { Action, type ActionProps } from "./action";
+export { ActionsPanel, type ActionEntry } from "./actions-panel";
 export { BlockingProgress } from "./blocking-progress";
 export { normalizeDecimalInput } from "./decimal-input";
 export { Chip } from "./chip";

@@ -458,7 +458,9 @@
 /* The panels the queue opens — step 6 of docs/design/redesign-v2/PLAN.md.  */
 /*                                                                          */
 /* Prototype sources, read through the Claude Design MCP:                   */
-/*   Actions      markup 1328-1350, values 3262-3292 and 3427-3430          */
+/*   Actions      markup 1328-1350, values 3262-3292 and 3427-3430 — its own  */
+/*                rules left for `shared/ui/actions-panel.css` in step 9,    */
+/*                where the Workout detail's copy of the panel joined it     */
 /*   Last time    markup 1351-1379, ledger 3172-3180, label 3371            */
 /*   Note         markup 1380-1394, `noteTextColor` 3379                    */
 /*   Today's note markup 1395-1413, `saveNote` 3466                         */
@@ -628,122 +630,4 @@
   font-size: var(--fs-15-5);
   font-weight: var(--fw-semibold);
   color: var(--text-secondary);
-}
-
-/* ----- Actions ---------------------------------------------------------- */
-
-/* The one 24px heading in the prototype's panels (line 1336). */
-[data-menu-name] {
-  margin: 0;
-  font-size: var(--fs-24);
-  line-height: var(--lh-1-14);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-tight);
-  text-wrap: pretty;
-}
-
-/* `menuMeta` (line 3350). */
-[data-menu-meta] {
-  margin: 8px 0 0;
-  font-family: var(--font-display);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--fs-16);
-  color: var(--text-muted);
-}
-
-[data-menu-list] {
-  margin-top: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* `menuItems` (lines 3280-3291). The entries arrive one after another, 45ms
-   apart after a 40ms head start — a stagger of this panel's own, not the 34ms
-   `rowAnim()` every list uses, so the delay is the only thing the markup
-   carries. */
-[data-menu-item] {
-  min-height: 68px;
-  box-sizing: border-box;
-  border-radius: var(--radius-20);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-align: left;
-  transform: scale(1);
-  animation: ovRow var(--dur-260) var(--ease) var(--menu-row-delay) both;
-  transition:
-    background var(--dur-180) var(--ease),
-    color var(--dur-180) linear,
-    border-color var(--dur-180) linear,
-    transform var(--dur-180) var(--ease);
-}
-
-/* `Icon` renders a span of its own, so the label is named rather than reached
-   as a child — a `> span` rule would give the icon `flex:1` as well. */
-[data-menu-label] {
-  flex: 1;
-  min-width: 0;
-  font-size: var(--fs-15-5);
-  font-weight: var(--fw-semibold);
-  text-wrap: pretty;
-}
-
-/* `m.bg`, `m.border`, `m.color`, `m.scale` (3284-3289): the picked entry takes
-   the accent fill and settles a hair smaller under the finger. */
-[data-menu-item][aria-pressed="true"] {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
-  transform: scale(0.985);
-}
-
-/* `m.disabled` (3272) — the only entry that can be refused is Remove this set,
-   on an exercise down to one. */
-[data-menu-item]:disabled {
-  color: var(--text-faint);
-  cursor: default;
-}
-
-/*
- * The button that runs the pick.
- *
- * `continueBg` / `continueColor` (now lines 3427-3428) filled it with the
- * accent once something was picked, which put two accent fills on one screen —
- * the picked entry and the button — and read as two choices. The Owner took
- * the accent off it on 2026-09-21 and changed the prototype to match: the
- * armed fill is the plain text colour over the page's own black. **The rule is
- * the panel's, not this screen's**: wherever picking an option fills that
- * option with the accent, the control that runs it does not fill with the
- * accent too. The Owner made the same edit to `actContinueBg` (line 2902), the
- * Screen actions overlay, so step 21 inherits it.
- */
-[data-menu-continue] {
-  margin: 16px 0;
-  height: var(--control-60);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-  color: var(--text-faint);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  font-size: var(--fs-17);
-  font-weight: var(--fw-semibold);
-  transition:
-    background var(--dur-180) linear,
-    color var(--dur-180) linear;
-}
-
-[data-menu-continue][data-armed="true"] {
-  background: var(--text);
-  color: var(--bg);
-}
-
-[data-menu-continue]:disabled {
-  cursor: default;
 }

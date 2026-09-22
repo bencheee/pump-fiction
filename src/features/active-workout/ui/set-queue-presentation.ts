@@ -75,8 +75,17 @@ export function repsFallbackIndex(column: readonly number[]): number {
  * prescribes nothing: a one-time workout and an exercise added to this one have
  * no prescription, which the prototype has no notion of. A seconds-measured
  * exercise keeps its unit, as step 2 settled.
+ *
+ * It asks for the four values rather than for a current workout's exercise, so
+ * a saved one answers it too: the Workout detail writes the same prescription
+ * (step 9).
  */
-export function prescriptionText(exercise: WorkoutExercise): string | null {
+export function prescriptionText(
+  exercise: Pick<
+    WorkoutExercise,
+    "plannedSets" | "minReps" | "maxReps" | "measurementType"
+  >,
+): string | null {
   if (
     exercise.plannedSets === null ||
     exercise.minReps === null ||

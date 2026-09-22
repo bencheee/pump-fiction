@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, MouseEvent, RefObject } from "react";
+import type { MouseEvent, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 
 import type { BandStrength } from "@/features/active-workout/domain/active-workout-command";
@@ -41,9 +41,10 @@ import {
   formatWorkoutClock,
 } from "@/features/active-workout/ui/workout-presentation";
 import {
+  ActionsPanel,
+  type ActionEntry,
   DestructiveDialog,
   Icon,
-  type IconName,
   type ScreenAnim,
   SetValueWheels,
   Sheet,
@@ -1019,14 +1020,6 @@ function TodaysNoteSheet({
   );
 }
 
-type MenuItem = Readonly<{
-  key: string;
-  label: string;
-  icon: IconName;
-  disabled?: boolean;
-  run: () => void;
-}>;
-
 /*
  * The Actions panel — the prototype's screen 24 (lines 1328-1350), with
  * `rawMenu` and `menuItems` at lines 3262-3292.
@@ -1062,7 +1055,6 @@ function ActionsSheet({
   onConfirm: (request: ConfirmRequest) => void;
   onOpenNoteDraft: () => void;
 }) {
-  const [pick, setPick] = useState<string | null>(null);
   const baseMode = baseModeOf(exercise);
   const optionalMode =
     exercise.allowedLoadModes.find((allowed) => allowed !== baseMode) ?? null;
@@ -1077,7 +1069,7 @@ function ActionsSheet({
       entry.reps !== null,
   );
 
-  const items: MenuItem[] = [];
+  const items: ActionEntry[] = [];
   // m3 (line 3263). The prototype's one optional addition is weight on a
   // bodyweight exercise or a band on any other; the application reads the
   // exercise's own allowed modes, which is the same question of its data.
@@ -1156,23 +1148,16 @@ function ActionsSheet({
    * became unreachable.
    */
 
-  const picked = items.find((item) => item.key === pick) ?? null;
-
   return (
-    <Sheet
+    <ActionsPanel
       panel="queue-actions"
-      title="Actions"
+      heading={exercise.exerciseName}
+      meta={`Set ${setIndex + 1} of ${exercise.sets.length} · ${formatSetLoad(set)} × ${set.reps ?? "—"}${
+        exercise.measurementType === "seconds" ? " sec" : ""
+      }`}
+      kind="set"
+      items={items}
       overlay={overlay}
-      onOpenChange={(open) => {
-        // `closeSheet` (line 3461) gives the pick back with the panel.
-        if (!open) setPick(null);
-      }}
-      onBodyClick={(event) => {
-        // `menuBlur` (3427). The prototype hangs this on the panel root; the
-        // 60px bar above the body holds nothing but the title and Close.
-        if ((event.target as HTMLElement).closest("button") !== null) return;
-        setPick(null);
-      }}
       trigger={
         <button
           ref={triggerRef}
@@ -1186,55 +1171,6 @@ function ActionsSheet({
           <span data-queue-action-label="">More</span>
         </button>
       }
-    >
-      {(close) => (
-        <>
-          <h2 data-menu-name="">{exercise.exerciseName}</h2>
-          <p data-menu-meta="">
-            {`Set ${setIndex + 1} of ${exercise.sets.length} · ${formatSetLoad(set)} × ${set.reps ?? "—"}${
-              exercise.measurementType === "seconds" ? " sec" : ""
-            }`}
-          </p>
-          <div data-menu-list="">
-            {items.map((item, index) => (
-              <button
-                key={item.key}
-                type="button"
-                data-menu-item=""
-                aria-pressed={pick === item.key}
-                aria-label={item.label}
-                disabled={item.disabled}
-                style={
-                  {
-                    "--menu-row-delay": `${40 + index * 45}ms`,
-                  } as CSSProperties
-                }
-                onClick={() => setPick(item.key)}
-              >
-                <Icon name={item.icon} size={20} />
-                <span data-menu-label="">{item.label}</span>
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            data-menu-continue=""
-            data-armed={picked !== null}
-            aria-label="Continue"
-            title="Continue"
-            disabled={picked === null}
-            onClick={() => {
-              if (picked === null) return;
-              setPick(null);
-              close();
-              picked.run();
-            }}
-          >
-            <Icon name="chevron-right" size={18} />
-            Continue
-          </button>
-        </>
-      )}
-    </Sheet>
+    />
   );
 }

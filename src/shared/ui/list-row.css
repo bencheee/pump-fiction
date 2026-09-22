@@ -72,15 +72,11 @@
   color: var(--text-muted);
 }
 
+/* The pill itself is the shared badge in `status.css`, which step 9 lifted out
+   of here when the Workout detail's exercise card needed the same one. The
+   margin above it is the row's. */
 [data-list-row-badge] {
-  display: inline-block;
   margin-top: 8px;
-  padding: 4px 10px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line-strong);
-  font-size: var(--fs-11-5);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
 }
 
 [data-list-row] > [data-icon] {

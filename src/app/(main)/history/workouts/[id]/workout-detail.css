@@ -1,0 +1,291 @@
+/*
+ * The Workout detail screen, ported from the prototype for step 9 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP:
+ *   markup        lines 361-425, `data-screen-label="Workout detail"`
+ *   bound values  lines 2062-2080, 2196-2205 (`historyVals()`)
+ *
+ * The top bar, the badge, the Actions pill, the Actions panel and the confirm
+ * dialog are shared surfaces and live in `src/shared/ui`. What is here is this
+ * screen's own.
+ */
+
+[data-workout-detail] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 368), with this screen's own gap and inset. */
+[data-workout-detail-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-workout-detail-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----- Heading ----------------------------------------------------------- */
+
+/* `wdName` (line 371). The bar above carries the same name — the prototype
+   writes it in both, a `<span>` up there and this heading down here. */
+[data-workout-detail-name] {
+  margin: 0;
+  font-size: var(--fs-23);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  text-wrap: pretty;
+}
+
+/* `wdSub` (2197). */
+[data-workout-detail-sub] {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-16);
+  color: var(--text-muted);
+}
+
+/* ----- The two numbers --------------------------------------------------- */
+
+/*
+ * `wdDuration` and `wdPerformed` (line 375-386). The statistics screens draw a
+ * grid of tiles that looks like this pair and is not it — theirs states its
+ * value at 21px, carries a detail line under it and binds all three of its
+ * colours (line 622) — so these two stay this screen's until step 12 can say
+ * whether the two are one surface.
+ */
+[data-workout-detail-stats] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+[data-workout-detail-stat] {
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 16px 14px;
+}
+
+[data-workout-detail-stat] > p:first-child {
+  margin: 0;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-06);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-workout-detail-stat] > p + p {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-bold);
+}
+
+/* ----- What the workout was ---------------------------------------------- */
+
+/* `wdFacts` (2073-2078): four labelled lines in one card, each ruled off from
+   the one above. */
+[data-workout-detail-facts] {
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 6px 18px;
+}
+
+[data-workout-detail-fact] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: var(--control-44);
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+/* `f.line`: the first row of the card is not ruled off from the padding. */
+[data-workout-detail-fact]:first-child {
+  border-top-color: transparent;
+}
+
+[data-workout-detail-fact] > span:first-child {
+  flex: none;
+  font-size: var(--fs-13);
+  color: var(--text-dim);
+}
+
+[data-workout-detail-fact] > span + span {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+  text-align: right;
+  text-wrap: pretty;
+}
+
+/* ----- Exercises ---------------------------------------------------------- */
+
+[data-workout-detail-eyebrow] {
+  margin: 6px 0 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* `ex.anim` (2067) is `rowAnim("wdex", …)`: 34ms apart, the tenth card and
+   every card after it together. */
+[data-workout-detail-exercise] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 16px 18px;
+  animation: ovRowA var(--dur-300) var(--ease)
+    calc(var(--row-index) * var(--stagger-row)) both;
+}
+
+[data-workout-detail-exercise] > h3 {
+  margin: 0;
+  font-size: var(--fs-16-5);
+  line-height: var(--lh-1-25);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* `ex.planned` (2065). */
+[data-workout-detail-planned] {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+/* The badge is the shared one in `status.css`; the 10px above it is the
+   card's. The prototype hangs the badge straight off the card, which a
+   paragraph does here so the margin cannot collapse into the list below. */
+[data-workout-detail-retired] {
+  margin: 0;
+  line-height: var(--lh-1);
+}
+
+[data-workout-detail-retired] > [data-badge] {
+  margin-top: 10px;
+}
+
+/* `ex.sets` (2068). */
+[data-workout-detail-sets] {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+[data-workout-detail-sets] > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  border-top: 1px solid var(--line);
+}
+
+/* `st.line`: the first set is not ruled off from the name above it. */
+[data-workout-detail-sets] > li:first-child {
+  border-top-color: transparent;
+}
+
+[data-workout-detail-sets] span:first-child {
+  font-size: var(--fs-13);
+  color: var(--text-dim);
+}
+
+[data-workout-detail-sets] span + span {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+}
+
+/* `ex.note` (2066). */
+[data-workout-detail-note] {
+  margin: 14px 0 0;
+  border-radius: var(--radius-16);
+  background: var(--surface-tile);
+  padding: 12px 14px;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-secondary);
+}
+
+/* `ex.openStats` (2069). */
+[data-workout-detail-stats-link] {
+  /* The prototype's is a `<button>`, which shrink-wraps its content; a link
+     is not a form control and would take the whole card's width, and with it
+     a press anywhere along the line. */
+  width: fit-content;
+  /* Both of the prototype's own defaults for a `<button>`, which a link does
+     not get: it shrink-wraps its content, and a label long enough to wrap
+     centres its lines. */
+  text-align: center;
+  margin-top: 14px;
+  min-height: var(--control-44);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+[data-workout-detail-stats-link]:hover {
+  color: var(--accent);
+}
+
+/* ----- Footer ------------------------------------------------------------- */
+
+/* The block the Actions pill is pinned in (line 418). The prototype repeats
+   its own background here, over a page that already carries it. */
+[data-workout-detail-footer] {
+  flex: none;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}
+
+/* The card the Review & finish panel draws its outstanding line in (line
+   1495), which step 6 gave the active workout's delivery signals. A failed
+   delete is the same kind of thing: something the command did not do. */
+[data-workout-detail-alert] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 10px;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+[data-workout-detail-alert] > [data-icon] {
+  flex: none;
+  color: var(--text-muted);
+}

@@ -109,3 +109,41 @@
   justify-content: center;
   color: var(--text-dim);
 }
+
+/* ----- Actions ---------------------------------------------------------- */
+
+/*
+ * The pill that opens the Screen actions panel, added in step 9. The prototype
+ * writes it five times with the same thirteen declarations — Workout detail
+ * (line 420), Program (830), Split editor (892), Exercise definition (1001)
+ * and Set next split (1278) — and only its two colours are bound on three of
+ * them, where the screen has unsaved changes to signal. Its label is three
+ * middle dots, spaced and dropped onto the optical centre by the 8px of
+ * padding under them.
+ */
+[data-variant="actions"] {
+  /* The prototype's 58px includes the border, which the UA stylesheet gives a
+     `<button>`; written down so a link would resolve to the same 58. */
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--control-58);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--accent-surface);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-12);
+  line-height: var(--lh-1);
+  padding-bottom: 8px;
+  transition:
+    background var(--dur-180) linear,
+    transform var(--dur-160) var(--ease);
+}
+
+[data-variant="actions"]:active {
+  transform: scale(0.99);
+}

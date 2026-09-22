@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { Icon, type IconName } from "./icon";
+import "./status.css";
 
 type SaveState = "clean" | "unsaved" | "saving" | "failure";
 
@@ -71,7 +72,11 @@ export function Badge({
   children: ReactNode;
   tone?: BadgeTone;
 }) {
-  return <span data-tone={tone}>{children}</span>;
+  return (
+    <span data-badge="" data-tone={tone}>
+      {children}
+    </span>
+  );
 }
 
 export function EmptyState({

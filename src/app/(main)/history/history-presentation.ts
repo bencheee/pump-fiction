@@ -25,6 +25,45 @@ export function formatHistoryDate(localDate: string): string {
     : localDate;
 }
 
+/**
+ * `hhmm` (prototype line 1665): the 24-hour clock a saved timestamp shows.
+ *
+ * The zone is the configured one, read on the server and handed down, so the
+ * server render and the hydration format the same minute. Formatting in the
+ * device's own zone would put the two apart wherever the device disagrees
+ * with the configured zone, and React would report the mismatch.
+ */
+export function formatHistoryTime(timestamp: string, timeZone: string): string {
+  const parsed = new Date(timestamp);
+  if (!Number.isFinite(parsed.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }).format(parsed);
+  } catch {
+    return parsed.toISOString().slice(11, 16);
+  }
+}
+
+/** Which local day a timestamp falls on, in the configured zone. */
+export function localDateOf(timestamp: string, timeZone: string): string {
+  const parsed = new Date(timestamp);
+  if (!Number.isFinite(parsed.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(parsed);
+  } catch {
+    return parsed.toISOString().slice(0, 10);
+  }
+}
+
 /** A duration in words, because History reads durations rather than counts them. */
 export function formatHistoryDuration(seconds: number): string {
   const minutes = Math.max(0, Math.round(seconds / 60));

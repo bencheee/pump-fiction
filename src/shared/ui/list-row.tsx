@@ -45,7 +45,11 @@ export function ListRow({
         <span data-list-row-title="">{title}</span>
         {meta ? <span data-list-row-meta="">{meta}</span> : null}
         {detail ? <span data-list-row-detail="">{detail}</span> : null}
-        {badge ? <span data-list-row-badge="">{badge}</span> : null}
+        {badge ? (
+          <span data-badge="" data-tone="neutral" data-list-row-badge="">
+            {badge}
+          </span>
+        ) : null}
       </span>
       {trailing}
       <Icon name="chevron-right" size={16} />

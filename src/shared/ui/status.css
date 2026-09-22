@@ -1,0 +1,29 @@
+/*
+ * The outline badge, ported from the prototype for step 9 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read through the Claude Design MCP. The badge is a shared
+ * surface, not one screen's: the prototype writes it five times and always to
+ * say the same kind of thing — the History list's exercise row (line 322) and
+ * split row (346), the Workout detail's exercise card (401), and the two
+ * statistics screens (486, 616). The first three are one declaration; the two
+ * statistics screens pad it a hair wider (5px 11px), which is theirs to add at
+ * steps 11 and 12.
+ *
+ * The margin above it belongs to the context, not to the badge: the row writes
+ * 8px and the card 10px. Step 8 wrote the row's copy inside `list-row.css`;
+ * this lifts it out so the two are one surface rather than two.
+ *
+ * Only the neutral tone is the prototype's. `accent` is the `Current` and
+ * `Next` marker on Programs, which steps 13 and 14 port.
+ */
+
+[data-badge][data-tone="neutral"] {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  color: var(--text-muted);
+}

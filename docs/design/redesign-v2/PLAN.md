@@ -230,9 +230,11 @@ reuses the listed component or changes it for everyone.
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
 | Stepper | — | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
-| Actions panel | — | 9 | definition screens |
+| Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, definition screens |
+| Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9 | 9, 14, 15, 17 |
 | Toast | `shared/ui/toast.{tsx,css}` | 6 | all |
-| Confirm dialog | — | 9 | destructive actions |
+| Confirm dialog | `DestructiveDialog` in `shared/ui/overlays.{tsx,css}` | 9 | 6, 7, 9, destructive actions |
+| Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9 | 8, 9, 11, 12 |
 
 Component styling lives in a CSS file beside its component, keyed on the same
 data attributes the markup already carries, and is imported by it. `globals.css`
@@ -784,6 +786,121 @@ port and compared property by property instead. And the program chip row needs
 a second program, which this database does not have, so the same was done with
 its markup.
 
+Step 9 ports the Workout detail and the two surfaces its one action button
+reaches: the Screen actions panel (17) and the confirm dialog (33). Both are
+shared, and the step is as much a lift as a port — the panel already existed
+inside the set queue, where step 6 built it, and the badge inside the list row,
+where step 8 wrote it. Neither was forked:
+
+- **The Actions panel left `set-queue`** for `shared/ui/actions-panel.{tsx,css}`,
+  rules and markup unchanged. The prototype writes it twice — a screen's own
+  actions (1188) and the set under the finger in a workout (1330) — and the two
+  are one declaration but for the meta line's font and the layer the panel
+  takes, which is the whole of the component's `kind`. A screen's own sits at
+  z-index 27, over the toast, because a message must not cover the entries it is
+  asking you to choose between; every other panel, the queue's among them, stays
+  at 20. `Sheet` grew `layer` for that one difference.
+- **The badge left `list-row.css`** for `status.{tsx,css}`. The prototype writes
+  it five times to say the same kind of thing; the three that are one
+  declaration are now one, and the statistics screens' hair-wider padding is
+  theirs to add at steps 11 and 12. The margin above it stays the context's —
+  the row writes 8px, the card 10px.
+- **`prescriptionText` asks for the four values** rather than for a current
+  workout's exercise, so a saved workout answers it too and `Planned 4 × 5–8`
+  is written once.
+
+The confirm dialog is the step's own: one surface for every destructive action,
+as the prototype's single `s.dialog` slot is. It portals into the stage, so the
+bottom navigation stays drawn under its scrim exactly as it does under a panel,
+and Radix draws the scrim beside the content rather than around it, so the
+centring the prototype writes on its scrim is written on the frame.
+
+The screen departs from the prototype in nine places, all of them the
+application knowing something the prototype does not:
+
+- **`Finished` is the saved timestamp**, not `start + duration` (2198). A
+  workout that was paused finished later than its active time says, and the
+  application knows when. When it ended on another day the date leads the time,
+  which the prototype's fixture never needs.
+- **`Performed` counts the exercises that hold a recorded set**, where
+  `wdPerformed` (2199) counts every exercise in the workout. It is the count the
+  row this screen was opened from already shows, and what the tile is labelled.
+- **`N sets recorded` counts the sets that were given values.** A saved workout
+  here can hold a set that never was; the prototype's cannot.
+- **Two kinds of note.** `ex.note` (2066) is the workout's own; the application
+  also keeps the note that belongs to the definition. Both take the prototype's
+  one card, each named.
+- **Exercise statistics is a link**, because it is a route, and it names its
+  exercise. The prototype labels all six of them `Open exercise statistics`,
+  which does not say which one — the same reason step 5 named the overview's
+  remove button.
+- **Three states the prototype has no screen for**: a saved workout with no
+  exercises, a read that failed, and a delete the server refused. The first two
+  take the note card the History list answers an emptiness with; the third takes
+  the card step 6 gave the active workout's delivery signals, and stays until
+  the press is repeated.
+- **An entry's work waits for the panel to close.** The prototype writes into
+  `s.dialog` from the panel it has just closed (2204); each panel here carries
+  its own history entry, so what an entry runs is held until the Actions panel
+  has given its entry back — `pendingRef`, step 6's mechanism.
+- **The panel and the dialog are modal**, as step 3 settled: Escape, Back and the
+  focus return the application has always had, over the prototype's own drawing.
+- **The zone is read on the server** and handed to the screen, so the server
+  render and the hydration format the same minute. `toLocaleString()` would put
+  the two apart wherever the device disagrees with the configured zone, which is
+  the trap the workout clock fell into before step 5 baselined it.
+
+Verification. The Claude Design MCP could not be reached in the session that
+finished this step, so the prototype could not be rendered and driven beside the
+port. Two things were done instead, and a later step should re-render it:
+
+- **Every declaration the prototype writes was compared to the app's own
+  `getComputedStyle`**, read from the byte-exact local copy at the etag above:
+  **680 declarations across the screen, both copies of the panel, the picked
+  state, the dialog and the badge, and one differs** — `a.scale` (2894), which
+  neither side renders, because the same element's `ovRow … both` fills
+  `transform` and outranks the declaration. Removing the animation in the page
+  gives `scale(0.985)`, which is what the prototype declares.
+- **Where both sides write the same words, the pixels were diffed** against the
+  prototype's own renders of this etag: the confirm dialog's card, from above
+  its title to below Cancel, is **0 of 555,300 pixels different**, and the
+  armed `Continue` differs in **39 of 184,800**, all of them in the eleven rows
+  of its top antialiased edge — the prototype's heading wraps to two lines, so
+  the pill inherits a quarter-pixel offset from the line above it.
+
+The flows were driven on a workout seeded and deleted for the purpose: the panel
+opens and closes on Escape and on Back with focus returning to the pill, a press
+away from the entries gives the pick back (`actBlur`), `Continue` runs the pick,
+Cancel leaves the workout in place, `Edit workout` lands on `.../edit`, and
+`Delete workout` deletes it, raises the prototype's own toast and returns to the
+list. The transitions are `navAll()`'s own: list → detail `scFwdA`, detail →
+exercise statistics `scFwdB`, detail → list `scBackB`, detail → Today `scBackB`,
+and the exercise cards arrive 0, 34, 68, 102, 136, 170ms apart. 320x720 raises
+no horizontal scroll on the screen or the panel. The queue's own Actions panel
+was re-driven after the lift — 127 declarations, none differing, layer 20, the
+set's meta in the numerals, `Add today's note` still opening its panel over it —
+and the workout it needed was discarded, leaving `app_settings` untouched.
+
+Three things could not be driven:
+
+- **A workout whose exercise left the library**, which this database has none of
+  and the test-support harness was off for. The app's own badge markup was
+  inserted into the rendered page and measured there: 25 declarations, none
+  differing, 10px above it as the card writes.
+- **An equal-depth pop takes the forward transition.** Going back from Exercise
+  statistics to this screen plays `scFwdA` where the prototype plays a back
+  animation: `navAll()` (2476) reads its own stack depth, and the application
+  reads path segments, which are equal for `/history/workouts/[id]` and
+  `/history/exercises/[id]`. It is step 1's surface and the first step whose
+  screen can reach a sibling at its own depth, so it is the Owner's call:
+  keeping the visited keys in `useStageAnimation` would answer it for everyone.
+- **The two assertions in `workout-history.test.tsx`** fail, as steps 2, 3 and 8
+  left theirs: both render this screen and reach for a `Delete workout` button
+  on it, which the prototype replaces with the Actions panel. No test file is
+  touched until every screen is approved. Seventeen of the 245 tests in the unit
+  suite fail — these two and the fifteen earlier steps left — and the shared
+  component suite passes, 10 of 10.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -797,5 +914,6 @@ its markup.
 | 6 | done | 2026-09-21 | — |
 | 7 | done | 2026-09-21 | — |
 | 8 | done | 2026-09-21 | — |
+| 9 | done | 2026-09-22 | — |
 
 Update this table in the same change that delivers a step.
