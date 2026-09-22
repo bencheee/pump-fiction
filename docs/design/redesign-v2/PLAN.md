@@ -226,7 +226,8 @@ reuses the listed component or changes it for everyone.
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10 | 4, 10 |
-| Bar chart | — | 11 | 11, 12, 18, 19 |
+| Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11 | 11, 12, 18, 19 |
+| Disclosure row (44px, chevron) | `shared/ui/disclosure.{tsx,css}` | 11 | 11, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
 | Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
@@ -1063,6 +1064,133 @@ stands:
 Step 5 raised (3) and left it as the Owner's call; (1), (2), (4) and (5) are
 this step's finding. They are one decision, and the work is small.
 
+Step 11 is the first step the Claude Design MCP could not be reached for from
+the start, so the prototype was read from the byte-exact local copy of
+`Workout App - Prototype.dc.html` — 3611 lines, 283,529 bytes, which is the
+etag this file records. Nothing was read from memory or from another context's
+summary; where a line is cited below it is a line of that file.
+
+Two shared surfaces are born here. The **chart card** is byte for byte the same
+on Exercise statistics (line 541) and Split statistics (639), so it is one
+component and step 12 takes it; the Body pair (1044) writes three declarations
+of its own — the bars are centred, 4px apart and capped at 46px wide, and their
+corners are 6px — which steps 18 and 19 add as a variant rather than a second
+card. The **disclosure row** is the same button and the same 0fr-to-1fr grid on
+both of this screen's lists and on Body's chart values. Neither owns what it
+draws: the caller hands over the formatted value and the height a bar stands
+at, as ADR-0020 requires, and the summary sentence and the values list under
+the bars are the caller's words, so the chart is never the only representation.
+
+The screen departs from the prototype in eleven places, all but two of them the
+application knowing something the prototype does not:
+
+- **One records card per comparison category.** The prototype's exercise is
+  Weights or Bodyweight and has exactly one card (`xdCategory`, 2261); the
+  application compares a band direction and strength only against themselves —
+  `MVP-HIS-009` — so an exercise carries one card per category it was performed
+  in, each the prototype's card, and the heading names which.
+- **A record a smaller number wins says so.** `Least assistance` carries
+  `(less is better)` after its label, in the grey one step quieter than the
+  label. `MVP-HIS-010` asks that lower kilogram assistance read as progress and
+  the prototype has no record of that kind.
+- **The chart is measured the other way up for such a series.** `b.h` (2371) is
+  the value against the tallest in range; for a series a smaller number wins the
+  values are reflected across the range first, so the best result is the tallest
+  bar. It is the reversed axis the Recharts line carried, drawn in bars, and the
+  reading over them always states the value itself.
+- **The trend sentence has a fourth ending.** The prototype's three are
+  `Unchanged over this range.`, `Moving in the better direction.` and `Below
+  where the range started.` (2388); a series a smaller number wins that rose
+  says `Above where the range started.`, which is the same sentence the other
+  way up.
+- **A volume record states the product alone.** The prototype's `Best set` is
+  `82.5 kg × 6` and a kilogram record here reads the same way, because the
+  record carries the reps behind it; a volume already has those reps inside the
+  product it is measured in, and saying them again beside it counts them twice.
+- **The chips answer in the same frame.** The screen used to ask the server for
+  a new series on every chip press. Every performance is already on the screen
+  and `chartSeries` is the same pure function the server called for the first
+  paint, so the chips compute it there: no round trip, and the bars move under
+  the 380ms transition rather than redrawing. The server still computes what
+  arrives with the page.
+- **Three states the prototype has no screen for**: an exercise whose
+  performances hold no recorded set, an exercise with no saved performance at
+  all, and a read that failed. All three take the note card the History list
+  answers an emptiness with, the third inside the screen's own frame as step 9's
+  Workout detail does.
+- **The unit vocabulary is the application's.** `sec` for a seconds-measured
+  exercise, `kg·reps` for a volume, and a set stated through `formatSetSummary`,
+  where the prototype's set is kilograms or bodyweight and nothing else.
+- **The badge keeps the register's padding.** The prototype writes `5px 11px` on
+  the two statistics screens (486, 616) and `4px 10px` on the History list (322,
+  346) and Workout detail (401). One implementation per surface is the rule, so
+  the badge stays the one step 8 built and this screen is 1px tighter than the
+  prototype draws it. Moving all four is the Owner's call.
+- **Back is a route, not a pop.** `pop()` returns to whatever pushed the screen;
+  `Back` here goes to `/history/exercises`, as every ported screen's bar goes to
+  its own list. It is visible now that step 9 links here from a workout, and it
+  is the same choice steps 9 and 10 made.
+- **Recharts stays** until it has no consumer. Body and Split statistics still
+  draw the old line, so `ProgressChart` and the dependency remain and ADR-0020
+  still names them; steps 12, 18 and 19 take this card, and the ADR is updated
+  when the last one goes.
+
+Verification. The MCP could not be reached, so the prototype could not be
+rendered and driven beside the port. What was done instead:
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each one applied to a probe of the prototype's
+  own element inside the target's parent so that `em`, `currentColor`,
+  percentages and every shorthand resolve on both sides alike: **557 to 562
+  declarations per exercise across six shapes — weights, one performance only,
+  seconds-measured, resistance band, added weight, pure bodyweight — and
+  assistance, and none differs.** The one surface that could not be reached from
+  this database is the retired badge, which no exercise here carries; the app's
+  own markup was inserted into the rendered page and measured there, as step 9
+  did: **25 declarations, and the four padding longhands differ by 1px**, which
+  is the single-surface decision above.
+- **The flows were driven** at 390x844 and 320x720, neither raising a horizontal
+  scroll on the screen. Both disclosures open and close, the collapsed region is
+  `inert` so nothing inside a closed list answers the tab key or a reader, and
+  the chevron turns 180 degrees. A bar press moves the reading and the accent,
+  and replays `read{A,B}`; a metric or a range press recomputes the series in
+  place, replays `barIn{A,B}`, and drops the selection back to the most recent
+  point, as `barSel: null` does (2270, 2400). The bars arrive 26ms apart and the
+  performance cards 34ms, both capped at the tenth. `Week` on an exercise last
+  performed a fortnight ago raises the prototype's own `No workout falls inside
+  this range.`
+- **The assistance series was created and taken away again.** This database
+  holds no assistance-mode set, and the four branches `least_load` reaches are
+  exactly what `MVP-HIS-010` asks for, so `Dip` was added to two saved workouts
+  through step 10's own correction screen, its set recorded as assistance, and
+  the exercise removed from both afterwards — the two workouts are as they were
+  found and the exercise history list no longer lists `Dip`. With 20 kg on 31
+  Aug and 12.5 kg on 21 Sept the record read `Least assistance (less is better)
+  · 12.5 kg × 10`, the summary `best 12.5 kg. Moving in the better direction.`,
+  and the bars 85px and 136px of the 136px track — the better result the taller.
+  Raising the later set to 25 kg turned the summary into `best 20 kg. Above
+  where the range started.` and the heights into 136px and 108.8px.
+- **The transitions are `navAll()`'s own**, re-driven end to end: Today to
+  History `scFwd`, the Exercises tab moving the panel alone, list to statistics
+  `scFwd`, a performance card to the workout `scFwd`, `Back` to the list
+  `scBack`, and a return to a screen already on the page's stack drawn as the
+  pop step 9 made it.
+
+Three things for the Owner:
+
+1. **The load chart is nearly flat, and faithfully so.** `b.h` scales from zero,
+   and a lifter's loads sit far from zero: ten bench sessions between 70 and
+   75 kg draw ten bars between 92% and 100% of the track. The Body chart floats
+   its base instead (`min - max(0.4, (max - min) * 0.9)`, line 2601). The
+   prototype writes both, each on its own screen, and this is the one it writes
+   here; whether the exercise chart should float its base too is a design
+   decision, not a port decision.
+2. **Nothing in the redesign honours `prefers-reduced-motion`.** The prototype
+   declares none and no ported screen has added any, so this is not step 11's;
+   ADR-0020 asks for it, and step 21 is where one rule can cover every screen.
+3. **The wheel question from step 10 is still open**, and this step did not
+   touch it.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1078,5 +1206,6 @@ this step's finding. They are one decision, and the work is small.
 | 8 | done | 2026-09-21 | — |
 | 9 | done | 2026-09-22 | — |
 | 10 | done | 2026-09-22 | — |
+| 11 | done | 2026-09-22 | — |
 
 Update this table in the same change that delivers a step.

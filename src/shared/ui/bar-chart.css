@@ -1,0 +1,137 @@
+/*
+ * The chart card, ported from the prototype for step 11 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 541-581, and byte for byte the same at 639-679
+ *   bound values  lines 2361-2402 (`chart()`)
+ */
+
+[data-bar-chart] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 18px;
+}
+
+/* ----- The reading ------------------------------------------------------- */
+
+/* `chartReadDate` and `chartReadValue` (lines 544-547): what the selected bar
+   is worth, stated above the chart rather than on a hover the phone has no
+   way to ask for. `chartReadAnim` (2386) brings the new value down into
+   place each time the selection moves. */
+[data-bar-chart-reading] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  animation: readA var(--dur-260) var(--ease);
+}
+
+[data-bar-chart-reading][data-read-anim="B"] {
+  animation-name: readB;
+}
+
+[data-bar-chart-reading] > span:first-child {
+  font-size: var(--fs-13);
+  color: var(--text-muted);
+}
+
+[data-bar-chart-reading] > span + span {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  color: var(--accent);
+}
+
+/* ----- The bars ---------------------------------------------------------- */
+
+[data-bar-chart-bars] {
+  margin-top: 14px;
+  height: 136px;
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+/* The press target is the whole column, not the bar: a short bar is a small
+   target, and the prototype gives every column the full 136px. */
+[data-bar-chart-bars] > button {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* `b.h`, `b.bg` and `b.anim` (2369-2373). The entrance is staggered 26ms a
+   bar, the tenth and everything after it together, as `rowAnim()` caps its
+   own; `height` is transitioned as well, so a change of range moves the bars
+   that stayed rather than redrawing them. */
+[data-bar-chart-bars] > button > span {
+  width: 100%;
+  height: var(--bar-height);
+  border-radius: 7px 7px 4px 4px;
+  /* The same `#232d28` phase 0 named `--surface-hover` off the split editor's
+     stepper buttons (line 868). It is bound in the state machine here, not
+     written in the markup, so the census that named it counted two of its
+     four uses. */
+  background: var(--surface-hover);
+  transform-origin: bottom;
+  animation: barInA var(--dur-460) var(--ease) calc(var(--bar-index) * 26ms)
+    both;
+  transition:
+    background var(--dur-200) linear,
+    height var(--dur-380) var(--ease);
+}
+
+[data-bar-chart-bars][data-bar-anim="B"] > button > span {
+  animation-name: barInB;
+}
+
+[data-bar-chart-bars] > button[aria-pressed="true"] > span {
+  background: var(--accent);
+}
+
+/* `chartFirstDate` and `chartLastDate` (lines 555-558): the two ends of what
+   is drawn, which is the whole of the axis the prototype writes. */
+[data-bar-chart-axis] {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+[data-bar-chart-axis] > span {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-12-5);
+  color: var(--text-dim);
+}
+
+/* ----- What the bars say -------------------------------------------------- */
+
+/* `chartSummary` (2388-2390). */
+[data-bar-chart-summary] {
+  margin: 14px 0 0;
+  font-size: var(--fs-13);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+}
+
+/* The 6px above the row is the card's, not the row's own (line 560). */
+[data-bar-chart] > [data-disclosure-toggle] {
+  margin-top: 6px;
+}
+
+/* `chartEmpty` (line 579): the card keeps its place and answers in words. */
+[data-bar-chart-empty] {
+  margin: 0;
+  font-size: var(--fs-14);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+  text-align: center;
+  animation: hoDim var(--dur-200) linear;
+}

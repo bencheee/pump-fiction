@@ -1,8 +1,10 @@
 export { Action, type ActionProps } from "./action";
 export { ActionsPanel, type ActionEntry } from "./actions-panel";
+export { BarChart, type BarChartPoint } from "./bar-chart";
 export { BlockingProgress } from "./blocking-progress";
 export { normalizeDecimalInput } from "./decimal-input";
 export { Chip } from "./chip";
+export { Disclosure } from "./disclosure";
 export { NumericField, TextAreaField, TextField } from "./form-controls";
 export { useSaveOutcome, useSavedSnapshot, type SavePhase } from "./form-state";
 export { Icon, iconNames, type IconName, type IconSize } from "./icon";

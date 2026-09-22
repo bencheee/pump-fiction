@@ -122,7 +122,7 @@
   --bg: #0a0e0c; /* the page; 11x + the body rule */
   --bg-sunken: #070a08; /* the base a full-bleed panel or overlay sits on; 13x */
   --surface: #141a17; /* cards, rows, fields; 123x */
-  --surface-hover: #232d28; /* hover fill on a surface; 2x */
+  --surface-hover: #232d28; /* a raised fill: the stepper button, and the resting chart bar that binds it; 4x */
   --surface-tile: #1a211d; /* neutral tile, and the "unchanged" state fill; 3x */
 
   /* Lines */

@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 
-import { getExerciseStatisticsAction } from "@/app/actions/workout-history";
 import { formatSetSummary } from "@/features/active-workout/ui/workout-presentation";
 import type { ExerciseStatistics } from "@/features/history/application/exercise-statistics-operations";
 import {
@@ -13,14 +12,35 @@ import {
   type ChartRange,
   type ChartSeries,
 } from "@/features/history/domain/chart";
-import type {
-  ExercisePerformance,
-  PersonalRecord,
+import {
+  chartSeries,
+  type CategoryRecords,
+  type ExercisePerformance,
+  type PersonalRecord,
 } from "@/features/history/domain/exercise-statistics";
-import { Badge, Chip, EmptyState, PageFrame, TopBar } from "@/shared/ui";
+import { Badge, BarChart, Chip, Disclosure, Icon, TopBar } from "@/shared/ui";
+import type { BarChartPoint } from "@/shared/ui";
 
-import { formatHistoryDate } from "../../history-presentation";
-import { ProgressChart } from "@/features/history/ui/progress-chart";
+import { formatCount, formatHistoryDate } from "../../history-presentation";
+import "./exercise-statistics-view.css";
+
+/*
+ * The Exercise statistics screen — the prototype's screen 7 — ported for step
+ * 11 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy of
+ * `Workout App - Prototype.dc.html` at the etag the plan records (the Claude
+ * Design MCP would not connect for this session; see the plan's verification
+ * note):
+ *   markup        lines 476-600, `data-screen-label="Exercise statistics"`
+ *   bound values  lines 2113-2141 (`xdRecords`, `xdRepsByLoad`), 2156-2163
+ *                 (which series the chart is given), 2256-2277 (`xdName`,
+ *                 `xdLatestDate`, `xdLatestSets`, `xdCategory`, `metricChips`,
+ *                 `xdPerformances`), 2361-2402 (`chart()`)
+ *
+ * The chart card and the disclosure row are shared surfaces and live in
+ * `src/shared/ui`; the register in the plan records both as born here.
+ */
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",
@@ -35,236 +55,323 @@ export function ExerciseStatisticsView({
   localDate,
 }: {
   statistics: ExerciseStatistics;
+  /** Today in the configured zone, read on the server: where a range ends. */
   localDate: string;
 }) {
-  const [view, setView] = useState(statistics);
+  const [metric, setMetric] = useState<ChartMetric>(statistics.series.metric);
   const [range, setRange] = useState<ChartRange>("all");
-  const [pending, startTransition] = useTransition();
-  const metric = view.series.metric;
-
-  const reload = (next: { metric?: ChartMetric; range?: ChartRange }) => {
-    const chosenMetric = next.metric ?? metric;
-    const chosenRange = next.range ?? range;
-    setRange(chosenRange);
-    startTransition(async () => {
-      const result = await getExerciseStatisticsAction(
-        statistics.exerciseIdentityId,
-        { metric: chosenMetric, range: chosenRange, localDate },
-      );
-      if (result.ok) setView(result.value);
-    });
-  };
+  /*
+   * The prototype answers a chip in the same frame, and so does this: every
+   * performance the exercise has is already on the screen, and `chartSeries`
+   * is the same pure function the server called for the first paint. Asking
+   * the server again would spend a round trip to be told what is in hand, and
+   * the bars would redraw rather than move.
+   */
+  const series = useMemo(
+    () =>
+      metric === statistics.series.metric && range === "all"
+        ? statistics.series
+        : chartSeries(statistics.performances, metric, range, localDate),
+    [statistics.series, statistics.performances, metric, range, localDate],
+  );
 
   return (
-    <div>
+    <div data-exercise-statistics="">
       <TopBar
-        title={view.exerciseName}
+        screen="exercise-statistics"
+        title={statistics.exerciseName}
         backHref="/history/exercises"
-        backLabel="Exercises"
+        backLabel="Back"
       />
-      <PageFrame title={view.exerciseName}>
-        {view.stillInLibrary ? null : (
-          <p>
-            <Badge>No longer in the library</Badge>
-          </p>
-        )}
 
-        <section>
-          <h2>Latest performance</h2>
-          {view.latestPerformance === null ? (
-            <p>Nothing counts yet. Complete a workout with recorded sets.</p>
-          ) : (
-            <p>
-              {formatHistoryDate(view.latestPerformance.workoutDate)} ·{" "}
-              {view.latestPerformance.sets
-                .filter((set) => set.loadMode !== null && set.reps !== null)
-                .map((set) =>
-                  formatSetSummary(
-                    set,
-                    view.latestPerformance?.measurementType,
-                  ),
-                )
-                .join(", ")}
+      <div data-exercise-statistics-body="">
+        <div>
+          <h2 data-exercise-statistics-name="">{statistics.exerciseName}</h2>
+          {statistics.stillInLibrary ? null : (
+            <p data-exercise-statistics-retired="">
+              <Badge>No longer in the library</Badge>
             </p>
           )}
-        </section>
+        </div>
 
-        <section>
-          <h2>Personal records</h2>
-          {view.categories.length === 0 ? (
-            <p>Records appear once a completed workout holds a recorded set.</p>
-          ) : (
-            view.categories.map((entry) => (
-              <section
-                key={entry.category.key}
-                aria-label={entry.category.label}
-              >
-                <h3>{entry.category.label}</h3>
-                <dl>
-                  {entry.records.map((record) => (
-                    <RecordRow key={record.key} record={record} />
-                  ))}
-                </dl>
-                {entry.repsByLoad.length > 0 ? (
-                  <details>
-                    <summary>Highest reps at each load</summary>
-                    <ul
-                      aria-label={`Highest reps at each load, ${entry.category.label}`}
-                    >
-                      {entry.repsByLoad.map((row) => (
-                        <li key={row.load}>
-                          <span>{row.load} kg</span>
-                          <span>{row.reps} reps</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                ) : null}
-              </section>
-            ))
-          )}
-        </section>
+        <LatestPerformance performance={statistics.latestPerformance} />
 
-        <section>
-          <h2>Progress</h2>
-          {view.metrics.length === 0 ? (
-            <EmptyState
-              title="No chart yet"
-              body="A completed workout with recorded sets starts the chart."
+        <p data-exercise-statistics-eyebrow="">Personal records</p>
+        {statistics.categories.length === 0 ? (
+          // An exercise whose performances hold no recorded set, which the
+          // prototype has no screen for: the note card the History list
+          // answers an emptiness with, as steps 9 and 10 use it.
+          <p data-history-note="">
+            Records appear once a completed workout holds a recorded set.
+          </p>
+        ) : (
+          statistics.categories.map((entry) => (
+            <RecordsCard key={entry.category.key} entry={entry} />
+          ))
+        )}
+
+        <p data-exercise-statistics-eyebrow="">Progress</p>
+        {statistics.metrics.length === 0 ? (
+          <p data-history-note="">
+            A completed workout with recorded sets starts the chart.
+          </p>
+        ) : (
+          <>
+            {/* `metricChips` (lines 530-534, values at 2265-2271) and
+                `rangeChips` (535-539, values at 2396-2401): two rows of the
+                same chip, the metric above the range. */}
+            <div
+              data-exercise-statistics-chips=""
+              role="group"
+              aria-label="Metric"
+            >
+              {statistics.metrics.map((option) => (
+                <Chip
+                  key={option}
+                  selected={metric === option}
+                  onClick={() => setMetric(option)}
+                >
+                  {metricLabels[option]}
+                </Chip>
+              ))}
+            </div>
+            <div
+              data-exercise-statistics-chips=""
+              role="group"
+              aria-label="Time range"
+            >
+              {chartRanges.map((option) => (
+                <Chip
+                  key={option}
+                  selected={range === option}
+                  onClick={() => setRange(option)}
+                >
+                  {rangeLabels[option]}
+                </Chip>
+              ))}
+            </div>
+            <BarChart
+              points={barPoints(series)}
+              summary={chartSummary(series)}
+              emptyMessage="No workout falls inside this range."
+              signature={`${metric}|${range}|${series.points.length}`}
             />
-          ) : (
-            <>
-              <div role="group" aria-label="Metric">
-                {view.metrics.map((option) => (
-                  <Chip
-                    key={option}
-                    selected={metric === option}
-                    disabled={pending}
-                    onClick={() => reload({ metric: option })}
-                  >
-                    {metricLabels[option]}
-                  </Chip>
-                ))}
-              </div>
-              <div role="group" aria-label="Time range">
-                {chartRanges.map((option) => (
-                  <Chip
-                    key={option}
-                    selected={range === option}
-                    disabled={pending}
-                    onClick={() => reload({ range: option })}
-                  >
-                    {rangeLabels[option]}
-                  </Chip>
-                ))}
-              </div>
-              <ChartSummary series={view.series} />
-              <ProgressChart series={view.series} />
-              <details>
-                <summary>Chart values</summary>
-                <ul aria-label="Chart values">
-                  {view.series.points.map((point) => (
-                    <li key={point.workoutId}>
-                      <span>{formatHistoryDate(point.date)}</span>
-                      <span>
-                        {point.value} {unitSuffix(view.series)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            </>
-          )}
-        </section>
+          </>
+        )}
 
-        <section>
-          <h2>All performances</h2>
-          <ul>
-            {view.performances.map((performance) => (
-              <li key={performance.workoutExerciseId}>
-                <PerformanceRow performance={performance} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      </PageFrame>
+        <p data-exercise-statistics-eyebrow="">All performances</p>
+        {statistics.performances.length === 0 ? (
+          <p data-history-note="">
+            This exercise has no saved performance yet.
+          </p>
+        ) : (
+          statistics.performances.map((performance, index) => (
+            <PerformanceCard
+              key={performance.workoutExerciseId}
+              performance={performance}
+              index={index}
+            />
+          ))
+        )}
+      </div>
     </div>
   );
 }
 
-function RecordRow({ record }: { record: PersonalRecord }) {
+/** `xdLatestDate` and `xdLatestSets` (lines 490-493, values at 2258-2259). */
+function LatestPerformance({
+  performance,
+}: {
+  performance: ExercisePerformance | null;
+}) {
   return (
-    <>
-      <dt>
-        {record.label}
-        {record.lowerIsBetter ? <span>(less is better)</span> : null}
-      </dt>
-      <dd>
-        {record.value}
-        {record.unit === "kg"
-          ? " kg"
-          : record.unit === "reps"
-            ? " reps"
-            : record.unit === "seconds"
-              ? " sec"
-              : ""}
-        {record.reps !== null && record.unit !== "reps"
-          ? ` × ${record.reps}`
-          : ""}
-      </dd>
-    </>
+    <section data-exercise-latest="">
+      <p>
+        <Icon name="circle-check" size={14} />
+        Latest performance
+      </p>
+      <p>
+        {performance === null
+          ? "Nothing counts yet"
+          : `${formatHistoryDate(performance.workoutDate)} · ${performance.workoutName}`}
+      </p>
+      <p>
+        {performance === null
+          ? "Complete a workout with recorded sets."
+          : setsText(performance)}
+      </p>
+    </section>
   );
 }
 
-function ChartSummary({ series }: { series: ChartSeries }) {
-  if (series.points.length === 0)
-    return <p>No workout falls inside this range.</p>;
-  const values = series.points.map((point) => point.value);
-  const first = values[0] ?? 0;
-  const last = values[values.length - 1] ?? 0;
-  const best = series.lowerIsBetter ? Math.min(...values) : Math.max(...values);
-  const improved = series.lowerIsBetter ? last < first : last > first;
-
+/*
+ * `xdCategory` and `xdRecords` (lines 497-527, values at 2119-2141 and
+ * 2261-2264). The prototype's
+ * exercise is weights or bodyweight and has exactly one card; the application
+ * compares a band direction and strength on its own terms — `MVP-HIS-009` —
+ * so an exercise has one card per category it was performed in, each the same
+ * card, and the heading names which.
+ */
+function RecordsCard({ entry }: { entry: CategoryRecords }) {
   return (
-    <p>
-      {series.label} across {series.points.length}{" "}
-      {series.points.length === 1 ? "workout" : "workouts"}: {first} to {last}{" "}
-      {unitSuffix(series)}, best {best}.{" "}
-      {last === first
-        ? "Unchanged over this range."
-        : improved
-          ? "Moving in the better direction."
-          : "Moving in the worse direction."}
-    </p>
+    <section data-exercise-records="" aria-label={entry.category.label}>
+      <h3>{entry.category.label}</h3>
+      <div data-exercise-record-rows="">
+        {entry.records.map((record) => (
+          <div key={record.key} data-exercise-record="">
+            <span>
+              {record.label}
+              {/* `least_load` is the one record a smaller number wins, which
+                  the prototype has no notion of and `MVP-HIS-010` asks be
+                  said rather than left to the reader. */}
+              {record.lowerIsBetter ? <span> (less is better)</span> : null}
+            </span>
+            <span>{recordValue(record)}</span>
+          </div>
+        ))}
+      </div>
+      {entry.repsByLoad.length === 0 ? null : (
+        <Disclosure
+          label="Highest reps at each load"
+          listLabel={`Highest reps at each load, ${entry.category.label}`}
+        >
+          {entry.repsByLoad.map((row) => (
+            <li key={row.load}>
+              <span>{row.load} kg</span>
+              <span>{formatCount(row.reps, "rep")}</span>
+            </li>
+          ))}
+        </Disclosure>
+      )}
+    </section>
   );
 }
 
-function unitSuffix(series: ChartSeries): string {
-  if (series.unit === "kg") return "kg";
-  if (series.unit === "reps") return "reps";
-  if (series.unit === "seconds") return "s";
-  return "kg·reps";
+/** `xdPerformances` (lines 585-598, values at 2272-2277). A route, so it is a link. */
+function PerformanceCard({
+  performance,
+  index,
+}: {
+  performance: ExercisePerformance;
+  index: number;
+}) {
+  const date = formatHistoryDate(performance.workoutDate);
+
+  return (
+    <Link
+      data-exercise-performance=""
+      href={`/history/workouts/${performance.workoutId}`}
+      aria-label={`${date} · ${performance.workoutName}`}
+      style={{ "--row-index": Math.min(index, 9) } as CSSProperties}
+    >
+      <span>
+        <span data-exercise-performance-head="">
+          <span>{date}</span>
+          <span>{performance.workoutName}</span>
+        </span>
+        <span data-exercise-performance-sets="">{setsText(performance)}</span>
+        {performance.workoutNote ? (
+          <span data-exercise-performance-note="">
+            Workout note: {performance.workoutNote}
+          </span>
+        ) : null}
+      </span>
+      <Icon name="chevron-right" size={16} />
+    </Link>
+  );
 }
 
-function PerformanceRow({ performance }: { performance: ExercisePerformance }) {
+/**
+ * `setText` (prototype line 1666), read through the application's own load
+ * vocabulary: a band, an assistance mode and a seconds-measured set each carry
+ * their own words, where the prototype's set is kilograms or bodyweight.
+ */
+function setsText(performance: ExercisePerformance): string {
   const sets = performance.sets
     .filter((set) => set.loadMode !== null && set.reps !== null)
     .map((set) => formatSetSummary(set, performance.measurementType));
+  return sets.length > 0 ? sets.join(", ") : "No recorded set";
+}
 
-  return (
-    <article>
-      <div>
-        <Link href={`/history/workouts/${performance.workoutId}`}>
-          {formatHistoryDate(performance.workoutDate)} ·{" "}
-          {performance.workoutName}
-        </Link>
-      </div>
-      <p>{sets.length > 0 ? sets.join(", ") : "No recorded set"}</p>
-      {performance.workoutNote ? (
-        <p>
-          <span>Workout note:</span> {performance.workoutNote}
-        </p>
-      ) : null}
-    </article>
+/**
+ * `r.value` (2126-2136). The prototype states a load record as the set that
+ * set it — `82.5 kg × 6` — and the application's record carries the same reps,
+ * so it reads the same way. A volume already has the reps inside the product
+ * it is measured in, and saying them again beside it would count them twice.
+ */
+function recordValue(record: PersonalRecord): string {
+  const value = `${formatNumber(record.value)} ${unitWord(record.unit)}`;
+  return record.reps === null || record.unit !== "kg"
+    ? value
+    : `${value} × ${record.reps}`;
+}
+
+function unitWord(unit: ChartSeries["unit"]): string {
+  if (unit === "volume") return "kg·reps";
+  if (unit === "seconds") return "sec";
+  if (unit === "reps") return "reps";
+  return unit;
+}
+
+/** `toLocaleString("en-GB")` (2129): a session volume runs into the thousands. */
+function formatNumber(value: number): string {
+  return new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 }).format(
+    value,
   );
+}
+
+/**
+ * `b.h` (2371): a bar is its value against the tallest in range, and never
+ * shorter than 5% so that a small value is still a bar. A series a smaller
+ * number wins is measured the other way up, so its best result is its tallest
+ * bar — `MVP-HIS-010`, which the reversed axis of the Recharts line used to
+ * carry. The reading over the bars always states the value itself.
+ */
+function barPoints(series: ChartSeries): readonly BarChartPoint[] {
+  const values = series.points.map((point) => point.value);
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const min = values.length > 0 ? Math.min(...values) : 0;
+
+  return series.points.map((point, index) => ({
+    key: point.workoutId ?? `${point.date}-${index}`,
+    date: formatHistoryDate(point.date),
+    value: seriesValue(series, point.value),
+    height:
+      max <= 0
+        ? 5
+        : Math.max(
+            5,
+            ((series.lowerIsBetter ? max + min - point.value : point.value) /
+              max) *
+              100,
+          ),
+  }));
+}
+
+/** `chartSummary` (2388-2390). */
+function chartSummary(series: ChartSeries): string {
+  const values = series.points.map((point) => point.value);
+  if (values.length === 0) return "";
+  const first = values[0];
+  const last = values[values.length - 1];
+  const best = series.lowerIsBetter ? Math.min(...values) : Math.max(...values);
+  const improved = series.lowerIsBetter ? last < first : last > first;
+  // The prototype's third sentence names the direction of a bigger number;
+  // for the one series a smaller number wins, it is the same sentence the
+  // other way up.
+  const trend =
+    last === first
+      ? "Unchanged over this range."
+      : improved
+        ? "Moving in the better direction."
+        : series.lowerIsBetter
+          ? "Above where the range started."
+          : "Below where the range started.";
+
+  return `${formatCount(values.length, "workout")} in range: ${seriesValue(series, first)} to ${seriesValue(series, last)}, best ${seriesValue(series, best)}. ${trend}`;
+}
+
+/** `formatValue` (2161): one decimal place, then the metric's own unit. */
+function seriesValue(series: ChartSeries, value: number): string {
+  return `${formatNumber(Math.round(value * 10) / 10)} ${unitWord(series.unit)}`;
 }

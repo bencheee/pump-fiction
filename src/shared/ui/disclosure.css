@@ -1,0 +1,81 @@
+/*
+ * The disclosure row, ported from the prototype for step 11 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 509-523 and 560-575, `data-screen-label="Exercise statistics"`
+ *   bound values  lines 2262-2264, 2393-2395
+ *
+ * The space above the row belongs to whoever opens it — 8px under the records
+ * card's rows (line 507), 6px under the chart's summary (560) — so it is not
+ * written here.
+ */
+
+[data-disclosure-toggle] {
+  min-height: var(--control-44);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+/* `repsByLoadDeg` / `chartValuesDeg`: the chevron turns over rather than
+   swapping for another glyph. */
+[data-disclosure-toggle] [data-icon] {
+  transform: rotate(0deg);
+  transition: transform var(--dur-300) var(--ease);
+}
+
+[data-disclosure-toggle][aria-expanded="true"] [data-icon] {
+  transform: rotate(180deg);
+}
+
+/* `repsByLoadRows` / `chartValuesRows`: the row grows from nothing to its
+   content, which is the one way a list of unknown height can be animated
+   without measuring it. */
+[data-disclosure-region] {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-320) var(--ease);
+}
+
+[data-disclosure-toggle][aria-expanded="true"] + [data-disclosure-region] {
+  grid-template-rows: 1fr;
+}
+
+[data-disclosure-region] > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+[data-disclosure-rows] {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The ruled value row both lists are made of (lines 517-519, 568-570). */
+[data-disclosure-rows] > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 34px;
+  border-top: 1px solid var(--line);
+}
+
+[data-disclosure-rows] > li > span {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+}
+
+[data-disclosure-rows] > li > span:first-child {
+  color: var(--text-muted);
+}
