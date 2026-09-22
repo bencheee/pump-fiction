@@ -122,9 +122,9 @@ function useKeyboardOpen(): boolean {
      enters from the left.
 
    The prototype reads its own state machine for the page and the stack depth;
-   the app reads the route, which carries both. The workout screens are part of
-   Today in the prototype — `s.page === "today"` with `screen` at depth 1 and 2
-   — and `/workout/*` is the same place here. */
+   the app reads the route for the page and keeps the stack itself. The workout
+   screens are part of Today in the prototype — `s.page === "today"` with
+   `screen` at depth 1 and 2 — and `/workout/*` is the same place here. */
 const pageOrder: Record<string, number> = {
   today: 0,
   history: 1,
@@ -141,6 +141,10 @@ type NavMemory = {
   depth: number;
   n: number;
   anim: ScreenAnim;
+  /* The prototype's `s.stack`, `s.pStack`, `s.xStack` and `s.bStack`: one stack
+     per page, each surviving a move to another page, which is what lets a pop
+     be told from a push. Step 9. */
+  stacks: Readonly<Record<string, readonly string[]>>;
 };
 
 function useScreenAnimation(): ScreenAnim {
@@ -154,7 +158,7 @@ function useScreenAnimation(): ScreenAnim {
      `panFwd`/`panBack` is the whole of the movement. Step 8. */
   const key =
     page === "history" && segments.length === 2 ? "/history" : pathname;
-  return useStageAnimation(key, page, segments.length);
+  return useStageAnimation(key, page);
 }
 
 /*
@@ -169,7 +173,13 @@ function useScreenAnimation(): ScreenAnim {
 export function useStageAnimation(
   key: string,
   page: string,
-  depth: number,
+  /* A caller whose screens have a depth of their own says what it is, and the
+     stack below is not consulted: the workout pair is one route holding the
+     prototype's `overview` at 1 and `workout` at 2, so the overview is the
+     shallower of the two however the route was opened. A route tree cannot say
+     it — a sibling one level down is the same number of segments — and leaves
+     this out. */
+  depth?: number,
 ): ScreenAnim {
   // The prototype keeps this on the instance and compares during render; the
   // same shape here is state adjusted during render, so the rule that a ref is
@@ -178,26 +188,39 @@ export function useStageAnimation(
   const [memory, setMemory] = useState<NavMemory>(() => ({
     key,
     page,
-    depth,
+    depth: depth ?? 1,
     n: 0,
     anim: "none",
+    stacks: { [page]: [key] },
   }));
 
   // Recomputing for a route already on screen returns what it returned before,
   // exactly as the prototype's `if (prev.key !== key)` guard does, so a render
   // for any other reason does not replay the transition.
   if (memory.key !== key) {
+    /* The move, told the way the prototype tells it: a screen already on this
+       page's stack is a pop back to it — `stack.slice(0, -1)` in `pop()` —
+       and anything else is a push. Reading the route's own depth instead
+       cannot tell the two apart where a screen reaches a sibling at its own
+       depth: `/history/workouts/[id]` and `/history/exercises/[id]` are both
+       three segments, and going back from the second to the first used to
+       take the forward transition. Step 9. */
+    const previous = memory.stacks[page] ?? [];
+    const at = previous.indexOf(key);
+    const stack = at === -1 ? [...previous, key] : previous.slice(0, at + 1);
+    const next = depth ?? stack.length;
     const forward =
       memory.page !== page
         ? (pageOrder[page] ?? 0) >= (pageOrder[memory.page] ?? 0)
-        : depth >= memory.depth;
+        : next >= memory.depth;
     const n = memory.n + 1;
     setMemory({
       key,
       page,
-      depth,
+      depth: next,
       n,
       anim: `sc${forward ? "Fwd" : "Back"}${n % 2 ? "A" : "B"}`,
+      stacks: { ...memory.stacks, [page]: stack },
     });
   }
 

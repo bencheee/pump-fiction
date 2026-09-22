@@ -205,7 +205,7 @@ reuses the listed component or changes it for everyone.
 | Tokens and keyframes | `src/app/globals.css` | Phase 0 | all |
 | Shell frame and stage | `shared/ui/shell.{tsx,css}` | 1 | all |
 | Bottom navigation | `shared/ui/shell.{tsx,css}` | 1 | all |
-| Screen transition | `useStageAnimation` in `shared/ui/shell.tsx` | 1 | all |
+| Screen transition | `useStageAnimation` in `shared/ui/shell.tsx` | 1, changed in 9 | all |
 | Screen frame and title bar | `shared/ui/page-frame.{tsx,css}` | 1 | root screens |
 | Top bar | `shared/ui/page-frame.{tsx,css}` | 1 | 5, 6, 7, 8, 11, 12, 14, 15, 17, 19 |
 | Scroll region (the prototype's `.sx`) | `shared/ui/page-frame.css` | 1 | all |
@@ -808,6 +808,17 @@ where step 8 wrote it. Neither was forked:
 - **`prescriptionText` asks for the four values** rather than for a current
   workout's exercise, so a saved workout answers it too and `Planned 4 × 5–8`
   is written once.
+- **`useStageAnimation` keeps the stack** instead of counting path segments
+  (Owner, 2026-09-22). This is the first screen that can reach a sibling at its
+  own depth — `/history/exercises/[id]` is three segments, exactly as
+  `/history/workouts/[id]` is — and going back from it took the forward
+  transition, where `navAll()` (2476) compares its own stack depth and plays
+  the back one. One stack per page now, as the prototype keeps `s.stack`,
+  `s.pStack`, `s.xStack` and `s.bStack`: a key already on it is a pop back to
+  it, anything else a push. A caller whose screens have a depth of their own
+  still says so, which is the workout pair — one route holding `overview` at 1
+  and `workout` at 2, whichever of the two it opens on. Step 1's surface,
+  changed for everyone rather than for this screen.
 
 The confirm dialog is the step's own: one surface for every destructive action,
 as the prototype's single `s.dialog` slot is. It portals into the stage, so the
@@ -873,27 +884,24 @@ opens and closes on Escape and on Back with focus returning to the pill, a press
 away from the entries gives the pick back (`actBlur`), `Continue` runs the pick,
 Cancel leaves the workout in place, `Edit workout` lands on `.../edit`, and
 `Delete workout` deletes it, raises the prototype's own toast and returns to the
-list. The transitions are `navAll()`'s own: list → detail `scFwdA`, detail →
-exercise statistics `scFwdB`, detail → list `scBackB`, detail → Today `scBackB`,
-and the exercise cards arrive 0, 34, 68, 102, 136, 170ms apart. 320x720 raises
+list. The transitions are `navAll()`'s own, re-driven after the stack
+change: list → detail `scFwdA`, detail → exercise statistics `scFwdB`, back from
+it `scBackA`, detail → list `scBackB`, a second detail after that `scFwdB`,
+Today → History `scFwdA`, Programs → Today `scBackB`, the three tabs moving the
+panel alone while the stage holds, and the workout pair still `scFwdA` into the
+queue and `scBackB` back to the overview. The exercise cards arrive 0, 34, 68,
+102, 136, 170ms apart. 320x720 raises
 no horizontal scroll on the screen or the panel. The queue's own Actions panel
 was re-driven after the lift — 127 declarations, none differing, layer 20, the
 set's meta in the numerals, `Add today's note` still opening its panel over it —
 and the workout it needed was discarded, leaving `app_settings` untouched.
 
-Three things could not be driven:
+Two things could not be driven:
 
 - **A workout whose exercise left the library**, which this database has none of
   and the test-support harness was off for. The app's own badge markup was
   inserted into the rendered page and measured there: 25 declarations, none
   differing, 10px above it as the card writes.
-- **An equal-depth pop takes the forward transition.** Going back from Exercise
-  statistics to this screen plays `scFwdA` where the prototype plays a back
-  animation: `navAll()` (2476) reads its own stack depth, and the application
-  reads path segments, which are equal for `/history/workouts/[id]` and
-  `/history/exercises/[id]`. It is step 1's surface and the first step whose
-  screen can reach a sibling at its own depth, so it is the Owner's call:
-  keeping the visited keys in `useStageAnimation` would answer it for everyone.
 - **The two assertions in `workout-history.test.tsx`** fail, as steps 2, 3 and 8
   left theirs: both render this screen and reach for a `Delete workout` button
   on it, which the prototype replaces with the Actions panel. No test file is

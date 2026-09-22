@@ -117,7 +117,9 @@ export function ActiveWorkoutExperience({
   // overview was opened from it, and Today when a start landed here.
   const [cameFromQueue, setCameFromQueue] = useState(initialView === "queue");
   // `screenAnim` (3317) for the two screens this route holds, at the depths the
-  // prototype gives them on its Today page.
+  // prototype gives them on its Today page. They are the caller that knows its
+  // own depth: whichever of the two the route opens on, the overview is the
+  // shallower, so reaching it from the queue is a move back even on the first.
   const screenAnim = useStageAnimation(view, "today", view === "queue" ? 2 : 1);
 
   const adoptWorkout = useCallback((next: CurrentWorkout) => {
