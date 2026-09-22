@@ -27,3 +27,68 @@
   font-weight: var(--fw-semibold);
   color: var(--text-muted);
 }
+
+/* ----- Unsaved chip ------------------------------------------------------ */
+
+/*
+ * The chip a screen holding an edited draft puts in its top bar, added in step
+ * 10. The prototype writes it four times, identically — Correct workout (line
+ * 432), Program (781), Split editor (842) and Exercise definition (943) — and
+ * each copy arrives with the same 180ms fade.
+ */
+[data-unsaved-chip] {
+  flex: none;
+  padding: 6px 11px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-surface);
+  color: var(--accent);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  animation: hoDim var(--dur-180) linear;
+}
+
+/* ----- Set chip ---------------------------------------------------------- */
+
+/*
+ * The chip that names the set being entered: the Active set queue (line 151)
+ * and the Correct set overlay (703), one declaration written twice. Step 4
+ * wrote the queue's; step 10 lifts it out. The queue's own copy adds a line
+ * this one does not — see `set-queue.css`.
+ */
+[data-set-chip] {
+  flex: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-surface);
+  color: var(--accent);
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-04);
+}
+
+/* ----- Alert card -------------------------------------------------------- */
+
+/*
+ * What a screen says when the server refused a command — the card the Review &
+ * finish panel draws its outstanding-sets line in (line 1495). Step 9 wrote
+ * this on the Workout detail; step 10 lifts it out so the correction screen
+ * carries the same one. The margin around it belongs to the screen.
+ */
+[data-alert-card] {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+[data-alert-card] > [data-icon] {
+  flex: none;
+  color: var(--text-muted);
+}

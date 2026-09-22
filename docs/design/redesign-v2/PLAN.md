@@ -213,7 +213,7 @@ reuses the listed component or changes it for everyone.
 | Full-screen panel | `Sheet` in `shared/ui/overlays.{tsx,css}` | 3 | every panel |
 | Panel heading (22px) | `[data-panel-heading]` in `shared/ui/overlays.css` | 6 | 6, 9, 20 |
 | Back to set pill (56px) | `[data-panel-back]` in `.../set-queue.css` | 6 | 6 |
-| Add exercise picker | `.../add-exercise-sheet.{tsx,css}` | 6 | 4, 5 |
+| Add exercise picker | `src/app/(main)/add-exercise-sheet.{tsx,css}` | 6, moved in 10 | 4, 5, 10 |
 | Review and finish panel | `.../review-finish-sheet.{tsx,css}` | 6 | 4, 7 |
 | Stage portal (where a full-screen surface renders) | `usePanelContainer` in `shared/ui/panel-container.tsx` | 1 | 3, 6, 7 |
 | Set logged flash | `SetLoggedFlash` in `.../workout-interstitials.{tsx,css}` | 7 | 7 |
@@ -223,18 +223,24 @@ reuses the listed component or changes it for everyone.
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
 | List row | `shared/ui/list-row.{tsx,css}` | 8 | lists |
-| Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 11, 12, 18, 19 |
+| Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
-| Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4 | 4, 10 |
+| Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10 | 4, 10 |
 | Bar chart | — | 11 | 11, 12, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
-| Stepper | — | 10 | 10, 15 |
+| Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
-| Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, definition screens |
+| Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, 10, definition screens |
 | Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9 | 9, 14, 15, 17 |
+| Note editor panel | `NoteEditorSheet` in `shared/ui/note-sheet.{tsx,css}` | 6, lifted in 10 | 6, 10 |
+| Set chip (tinted) | `SetChip` in `shared/ui/status.{tsx,css}` | 4, lifted in 10 | 4, 10 |
+| Unsaved chip | `UnsavedChip` in `shared/ui/status.{tsx,css}` | 10 | 10, 14, 15, 17 |
+| Commit pill (58px) | `[data-variant="commit"]` in `shared/ui/action.css` | 10 | 10, 19 |
+| Quiet pill (50px) | `[data-variant="quiet"]` in `shared/ui/action.css` | 10 | 10 |
+| Failed-command card | `AlertCard` in `shared/ui/status.{tsx,css}` | 9, lifted in 10 | 9, 10 |
 | Toast | `shared/ui/toast.{tsx,css}` | 6 | all |
-| Confirm dialog | `DestructiveDialog` in `shared/ui/overlays.{tsx,css}` | 9 | 6, 7, 9, destructive actions |
-| Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9 | 8, 9, 11, 12 |
+| Confirm dialog | `DestructiveDialog` in `shared/ui/overlays.{tsx,css}` | 9 | 6, 7, 9, 10, destructive actions |
+| Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9 | 8, 9, 10, 11, 12 |
 
 Component styling lives in a CSS file beside its component, keyed on the same
 data attributes the markup already carries, and is imported by it. `globals.css`
@@ -909,6 +915,154 @@ Two things could not be driven:
   suite fail — these two and the fifteen earlier steps left — and the shared
   component suite passes, 10 of 10.
 
+Step 10 ports the Workout correction screen and the Correct set overlay it
+opens, and is the first step whose reading was not made through the Claude
+Design MCP: it would not connect (`FIRST_PARTY_AUTH_REJECTED`, and a
+non-interactive session cannot run `/design-login`), so both halves were read
+from a byte-exact local copy of the prototype at the etag above — 3611 lines,
+283,529 bytes, no injected preview harness. Nothing was taken from memory or
+from another context's summary.
+
+Seven surfaces are the step's own, three of them lifts:
+
+- **The stepper** (`shared/ui/stepper.{tsx,css}`), the row the prototype writes
+  three of inside the correction card. The card around them stays the screen's,
+  because the split editor writes three of the same rows in a grid with no card
+  at all (line 858); step 15 adds that shape to this component rather than
+  forking it.
+- **The commit pill and the quiet pill** (`[data-variant="commit"]` and
+  `[data-variant="quiet"]`). The prototype writes the 58px commit three times —
+  Save corrections (468), Apply to set (740) and Record measurement (1182) —
+  and the 50px outline twice, both on this step's two screens (469, 741). Only
+  the copies whose colour is bound carry the fade between the two: `data-armed`
+  for the save that has nothing to save, and the screen's own rule for the
+  remove that cannot run.
+- **The Unsaved chip** (`UnsavedChip`), written four times identically (432,
+  781, 842, 943), so steps 14, 15 and 17 take this one.
+- **The set chip left `set-queue.css`** for `status.{tsx,css}`: the prototype
+  writes it on the two screens a set is entered from (151, 703) and the two are
+  one declaration but for the line the queue's own copy adds, which stays in
+  the queue's stylesheet.
+- **The note editor left `set-queue.tsx`** for `shared/ui/note-sheet.{tsx,css}`,
+  rules and markup unchanged. It is the prototype's screen 27 and it edits the
+  note that belongs to an occurrence of an exercise; the queue writes today's,
+  this screen writes a saved workout's, and what differs is only the two words
+  the callers name it with.
+- **The alert card left `workout-detail.css`** for `status.{tsx,css}`, where
+  step 9's copy and this one are the same card.
+- **The Add exercise picker moved** from `workout/current` to
+  `src/app/(main)/add-exercise-sheet.{tsx,css}`. It is the register's shared
+  surface and now has a third consumer outside the active workout; it cannot
+  live in `shared/ui`, which may not import a route adapter's action.
+
+The wheel was fixed rather than ported. **Its five candidate buttons could
+never be pressed.** Step 4 captured the pointer on `pointerdown` so a drag that
+leaves the 196px box still writes its value; a capture retargets the pointer up,
+and with it the click the browser derives from the pair, so every press on a
+candidate landed on the wheel instead of the button. The capture now waits for
+the first step of an actual drag, which leaves both behaviours whole: a press
+moves one row, and a drag that leaves the box still reports. The queue was
+re-driven after the change.
+
+The screen departs from the prototype in eight places, all but one of them the
+application knowing something the prototype does not:
+
+- **The third stepper is the finish, not the duration.** The prototype corrects
+  `date`, `start` and `dur`; the application's active duration is measured and
+  deliberately not recalculated from the timestamps, because paused wall-clock
+  time cannot be reconstructed. The third row moves `finishedAt` by the five
+  minutes the prototype gives its start, neither time may cross the other — the
+  clamp `dur` has at a minute (2094) — and the lead paragraph says the duration
+  stays as measured. A workout that crossed midnight says so in the row's label,
+  which start-plus-duration never has to.
+- **The card carries the exercise's own actions.** MVP-HIS-003 has the user
+  correcting exercise order and content and the workout's notes; the prototype's
+  correction screen has no control for any of them. All four are entries in the
+  Actions panel the queue opens on a set, reached from a 44px round button in
+  the head the split editor gives its card (860): add a set, the note, move up,
+  move down, remove the exercise. The list ends with the add pill and the
+  picker, as the overview and the split editor end theirs.
+- **A correction that changes the shape of the workout is a command of its
+  own**, not a line in the draft: the shape lives on the server, so adding,
+  removing and reordering run at once and reload the workout. They are refused
+  while the draft holds an edit that the reload would discard, which the
+  footnote the split editor closes its list with (888) says in words, and the
+  note — which is part of the draft — stays available.
+- **The set editor carries the mode and the band.** The prototype's set is
+  kilograms or bodyweight; the application's has seven load modes, and a set
+  entered in the wrong one is exactly the kind of thing this screen exists to
+  correct. Both take the chip step 8 built, under the heading.
+- **`Recorded` states the saved value**, where `se.original` (2107) states what
+  the draft held when the panel opened — which is what the wheels already show.
+  The saved value is what the word means and what the tint on the button is
+  measured against, and a set that was never given values reads `Not recorded
+  yet`.
+- **Removing a set asks first when it holds values**, as every destructive
+  action in the application does, and the confirm dialog is step 9's. The
+  prototype removes from its draft and says `Save to apply`; here it is a
+  command, so the toast says what happened.
+- **Three states the prototype has no screen for**: a workout with no exercises,
+  an exercise with no sets, and a correction the server refused. The first takes
+  the note card the History list answers an emptiness with, the second a line in
+  the card, and the third the alert card lifted from step 9, which stays until
+  the press is repeated.
+- **The stepper says its value out loud.** A press moves it without moving
+  focus, so nothing would tell a screen reader what it now reads; the value is
+  a polite live region and the two time steppers name which of them each button
+  moves, as step 5's remove button names its exercise.
+
+Verification. The Claude Design MCP could not be reached, so the prototype could
+not be rendered and driven beside the port, and the pixel diffs step 9 could
+still fall back on were not available either — this step's two screens share no
+wording with a render from an earlier session. What was done instead:
+
+- **Every declaration the prototype writes on both screens was compared to the
+  app's own `getComputedStyle`**, read from the byte-exact local copy:
+  **294 declarations across the screen clean, the screen dirty and the panel,
+  and one differs** — the load wheel's `width`, which the prototype now writes
+  at 146px and the application at 132. That is the shared wheel's, not this
+  screen's; see the open question below.
+- **The flows were driven** on `/history/workouts/{id}/edit` at 390x844 and
+  320x720, neither raising a horizontal scroll on the screen or on the panel.
+  A stepper arms the save and the Unsaved chip and disarms them again; pressing
+  the save with nothing to correct raises the prototype's own `Nothing to
+  correct yet.`; a set opens the editor, a candidate press and a drag both move
+  the wheel, `Apply to set` tints the button and states the value in the accent,
+  and `Save corrections` lands on the Workout detail with the prototype's toast
+  and the corrected value on it. Add a set, remove it, add an exercise, remove
+  it, move an exercise down and back up, the confirm dialog on a populated
+  exercise and on a populated set, the note panel written and saved into the
+  draft, and the duplicate the server refuses — which is what put the alert card
+  on the screen — were all driven, and the workout was left exactly as it was
+  found. Escape and Back close both panels with focus returning to the control
+  that opened them; the cards arrive 0, 34, 68, 102, 136 and 170ms apart; and
+  the transitions are `navAll()`'s own — detail to correction `scFwd`, and
+  `scBack` back from it whether the save, the bar's Back or `Discard changes`
+  made the move.
+- **The queue was re-driven** after the three lifts and the wheel fix: its chip
+  draws the same seven declarations it always did, its candidate buttons now
+  answer a press, and `Add today's note` still opens the same panel. The workout
+  it needed was discarded rather than finished, so History and the rotation
+  pointer are as they were.
+
+One question for the Owner, which is the shared wheel's and not this screen's.
+**The prototype's wheel has moved on since step 4** and five declarations now
+differ; changing them changes the Active set queue, which was approved as it
+stands:
+
+1. the load wheel is 146px wide, not 132;
+2. its value sits in a `100%`-wide box with `0 8px` of padding and shrinks from
+   52px to 46px and then 40px as the numeral grows, so a long load stays inside
+   the window;
+3. `wheel{Up,Down}{A,B}` travel 54.5px through four stops with a 1.4px blur,
+   where `globals.css` still carries phase 0's two-stop 35px pair;
+4. the slide runs 340ms on `cubic-bezier(.22,.9,.26,1)`, not 170ms on the
+   default ease;
+5. a drag spends 30px per step, not 34.
+
+Step 5 raised (3) and left it as the Owner's call; (1), (2), (4) and (5) are
+this step's finding. They are one decision, and the work is small.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -923,5 +1077,6 @@ Two things could not be driven:
 | 7 | done | 2026-09-21 | — |
 | 8 | done | 2026-09-21 | — |
 | 9 | done | 2026-09-22 | — |
+| 10 | done | 2026-09-22 | — |
 
 Update this table in the same change that delivers a step.

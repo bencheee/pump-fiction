@@ -15,6 +15,7 @@ import type {
 import {
   Action,
   ActionsPanel,
+  AlertCard,
   Badge,
   DestructiveDialog,
   Icon,
@@ -200,10 +201,7 @@ export function WorkoutDetail({
           // no notion of. It takes the card the Review & finish panel draws
           // its outstanding line in (line 1495), as step 6's delivery signals
           // do, and stays until the press is repeated.
-          <p data-workout-detail-alert="" role="alert">
-            <Icon name="circle-alert" size={15} />
-            {failure}
-          </p>
+          <AlertCard>{failure}</AlertCard>
         ) : null}
 
         <ActionsPanel

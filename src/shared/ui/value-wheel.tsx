@@ -1,5 +1,6 @@
 "use client";
 
+import type { PointerEvent } from "react";
 import { useRef, useState } from "react";
 
 import "./value-wheel.css";
@@ -70,7 +71,7 @@ export function ValueWheel({
   // step; here the value is committed when the finger lifts, so one drag is one
   // command rather than one per 34px.
   const [dragged, setDragged] = useState(0);
-  const drag = useRef<{ y: number }>(null);
+  const drag = useRef<{ y: number; captured: boolean }>(null);
 
   const suggestedIndex = suggested === null ? -1 : column.indexOf(suggested);
   const offering = value === null && suggestedIndex >= 0;
@@ -96,11 +97,28 @@ export function ValueWheel({
     if (next !== undefined && next !== value) onChange(next);
   }
 
-  function dragMove(clientY: number) {
+  function dragMove(event: PointerEvent<HTMLDivElement>) {
     const from = drag.current;
     if (from === null) return;
-    const steps = Math.trunc((clientY - from.y) / dragStepPx);
+    const steps = Math.trunc((event.clientY - from.y) / dragStepPx);
     if (steps === 0) return;
+    /*
+     * The prototype captures the pointer for its row drag and not for the
+     * wheel, because the wheel commits on every step and losing the pointer up
+     * costs it nothing. This one commits when the finger lifts, and a wheel is
+     * 196px tall, so a drag that leaves the box has to keep reporting to it or
+     * the value it is showing is never written down.
+     *
+     * The capture waits for the first step rather than taking the pointer down
+     * with it: a capture retargets the pointer up, and with it the click the
+     * browser derives from the pair, so a wheel that captures on the press
+     * swallows every press on a candidate above or below the value — step 10
+     * found the five buttons of each wheel unpressable.
+     */
+    if (!from.captured) {
+      from.captured = true;
+      event.currentTarget.setPointerCapture?.(event.pointerId);
+    }
     from.y += steps * dragStepPx;
     slide(-steps);
     setDragged(
@@ -124,15 +142,9 @@ export function ValueWheel({
       aria-label={label}
       data-wheel={kind}
       onPointerDown={(event) => {
-        drag.current = { y: event.clientY };
-        // The prototype captures the pointer for its row drag and not for the
-        // wheel, because the wheel commits on every step and losing the
-        // pointer up costs it nothing. This one commits when the finger lifts,
-        // and a wheel is 196px tall, so a drag that leaves the box has to keep
-        // reporting to it or the value it is showing is never written down.
-        event.currentTarget.setPointerCapture?.(event.pointerId);
+        drag.current = { y: event.clientY, captured: false };
       }}
-      onPointerMove={(event) => dragMove(event.clientY)}
+      onPointerMove={dragMove}
       onPointerUp={dragEnd}
       onPointerCancel={dragEnd}
     >

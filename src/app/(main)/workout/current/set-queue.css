@@ -139,15 +139,11 @@
 
 /* ----- Set chip and exercise name --------------------------------------- */
 
-[data-queue-chip] {
-  flex: none;
-  padding: 6px 14px;
-  border-radius: var(--radius-pill);
-  background: var(--accent-surface);
-  color: var(--accent);
-  font-size: var(--fs-12);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-04);
+/* The chip itself is the shared one in `status.css`, lifted there in step 10.
+   The queue's copy adds one line the Correct set overlay's does not (line
+   151): its chip carries a prescription as well as a position, so its text can
+   wrap, and the second line centres under the first. */
+[data-queue-body] [data-set-chip] {
   text-align: center;
 }
 
@@ -578,56 +574,5 @@
 
 /* ----- Today's note ----------------------------------------------------- */
 
-[data-note-lead] {
-  margin: 8px 0 16px;
-  font-size: var(--fs-13-5);
-  color: var(--text-muted);
-}
-
-[data-note-field] {
-  width: 100%;
-  box-sizing: border-box;
-  height: 140px;
-  border-radius: var(--radius-20);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-size: var(--fs-16);
-  line-height: var(--lh-1-45);
-  padding: 16px 18px;
-  resize: none;
-}
-
-[data-note-actions] {
-  margin-top: auto;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-[data-note-save] {
-  height: var(--control-60);
-  border-radius: var(--radius-pill);
-  background: var(--accent);
-  color: var(--on-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  font-size: var(--fs-17);
-  font-weight: var(--fw-semibold);
-}
-
-[data-note-cancel] {
-  height: var(--control-52);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-15-5);
-  font-weight: var(--fw-semibold);
-  color: var(--text-secondary);
-}
+/* The note editor lives in `shared/ui/note-sheet.{tsx,css}` from step 10: the
+   correction screen writes the same panel for a saved workout's note. */

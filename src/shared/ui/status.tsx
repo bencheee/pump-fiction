@@ -79,6 +79,43 @@ export function Badge({
   );
 }
 
+/*
+ * The `Unsaved` chip a screen with an edited draft puts in its top bar, added
+ * in step 10 of docs/design/redesign-v2/PLAN.md. The prototype writes it four
+ * times with the same six declarations and the same word — Correct workout
+ * (line 432), Program (781), Split editor (842) and Exercise definition (943)
+ * — so it is one surface from here on; steps 14, 15 and 17 take this one.
+ */
+export function UnsavedChip() {
+  return <span data-unsaved-chip="">Unsaved</span>;
+}
+
+/*
+ * The tinted chip that names the set being worked on. The prototype writes it
+ * twice, on the two screens a set is entered from: the Active set queue (line
+ * 151) and the Correct set overlay (703). Step 4 wrote the queue's inside
+ * `set-queue.css`; step 10 lifts it out so the two are one surface.
+ */
+export function SetChip({ children }: { children: ReactNode }) {
+  return <span data-set-chip="">{children}</span>;
+}
+
+/*
+ * The card a screen answers a command the server refused with, added in step 9
+ * and lifted here in step 10. The prototype has no notion of one, so no screen
+ * of its own; it takes the card the Review & finish panel draws its
+ * outstanding line in (line 1495). It stays until the press is repeated, which
+ * is what separates it from the toast. The margin around it is the screen's.
+ */
+export function AlertCard({ children }: { children: ReactNode }) {
+  return (
+    <p data-alert-card="" role="alert">
+      <Icon name="circle-alert" size={15} />
+      {children}
+    </p>
+  );
+}
+
 export function EmptyState({
   title,
   body,

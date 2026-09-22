@@ -1,0 +1,286 @@
+/*
+ * Correct workout and Correct set, ported from the prototype for step 10 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy at the etag the plan
+ * records (the Claude Design MCP would not connect this session):
+ *   markup        lines 425-473 and 695-747
+ *   bound values  lines 2079-2110 and 2206-2253
+ *
+ * The top bar, the Unsaved chip, the stepper, the panel frame, the set chip,
+ * the wheels, the chip, the Actions panel, the note editor, the commit and
+ * quiet pills, the badge, the alert card and the confirm dialog are shared
+ * surfaces and live in `src/shared/ui`. What is here is these two screens'
+ * own.
+ */
+
+[data-correction] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 436), with this screen's own gap and inset. */
+[data-correction-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-correction-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* `edName` (line 437). */
+[data-correction-lead] {
+  margin: 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+}
+
+/* ----- The three steppers ------------------------------------------------ */
+
+/* The card the rows sit in (line 439). The rows themselves are the shared
+   stepper; the split editor writes three of them with no card at all. */
+[data-correction-steppers] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 8px 14px;
+}
+
+/* ----- Exercises --------------------------------------------------------- */
+
+[data-correction-eyebrow] {
+  margin: 6px 0 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* `ex.anim` (2101) is `rowAnim("eded", …)`: 34ms apart, the tenth card and
+   every card after it together. */
+[data-correction-exercise] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 16px 18px;
+  animation: ovRowA var(--dur-300) var(--ease)
+    calc(var(--row-index) * var(--stagger-row)) both;
+}
+
+/* The prototype's card opens with the name alone (line 453). The application's
+   carries the exercise's own actions beside it, in the head the split editor
+   gives its card (line 860) — the same 8px gap, holding a 44px round button
+   against a heading that takes the rest. */
+[data-correction-exercise-head] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-correction-exercise-head] > h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-16);
+  line-height: var(--lh-1-25);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* The badge is the shared one; the 10px above it is the card's, as on the
+   Workout detail. */
+[data-correction-retired] {
+  margin: 0;
+  line-height: var(--lh-1);
+}
+
+[data-correction-retired] > [data-badge] {
+  margin-top: 10px;
+}
+
+/* ----- The sets ---------------------------------------------------------- */
+
+/* `ex.sets` (line 454). */
+[data-correction-sets] {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* An exercise whose sets have all been removed, which the prototype has no
+   notion of: its own is a set short of nothing. It takes the quiet line the
+   card's copy is set in. */
+[data-correction-empty] {
+  margin: 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+}
+
+/* `st.edit` (line 456). `st.border` is transparent on every set; the border is
+   drawn so the 52px is the same whether or not a later state paints one. */
+[data-correction-set] {
+  min-height: var(--control-52);
+  box-sizing: border-box;
+  border-radius: var(--radius-16);
+  border: 1px solid transparent;
+  background: var(--surface-tile);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  text-align: left;
+  transition:
+    border-color var(--dur-160) linear,
+    background var(--dur-160) linear,
+    transform var(--dur-150) var(--ease);
+}
+
+[data-correction-set]:active {
+  transform: scale(0.985);
+}
+
+/* `st.bg` and `st.color` (2105-2106): a set the draft has moved is tinted and
+   stated in the accent; one still as it was recorded is neither. */
+[data-correction-set][data-changed="true"] {
+  background: var(--accent-surface);
+}
+
+[data-correction-set-label] {
+  flex: none;
+  font-size: var(--fs-12-5);
+  color: var(--text-dim);
+}
+
+[data-correction-set-value] {
+  flex: 1;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-semibold);
+  text-align: right;
+  color: var(--text);
+}
+
+[data-correction-set][data-changed="true"] [data-correction-set-value] {
+  color: var(--accent);
+}
+
+[data-correction-set] > [data-icon] {
+  flex: none;
+  color: var(--text-faint);
+}
+
+/* The line the split editor closes its list with (line 888), carrying what the
+   application has to say about a correction that reloads the workout. */
+[data-correction-footnote] {
+  margin: 6px 0 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* ----- Footer ------------------------------------------------------------ */
+
+/* Line 466. The prototype repeats its own background here, over a page that
+   already carries it. */
+[data-correction-footer] {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}
+
+/* ----- Correct set ------------------------------------------------------- */
+
+/* The layer the prototype gives this one panel (line 697). Nothing else is
+   open under it, so it changes nothing about what covers what — the toast at
+   26 still draws over it — and it is written down because the prototype
+   writes it. */
+[data-panel="correct-set"] {
+  z-index: 24;
+}
+
+/* Line 702: the body centres its column, which no other panel does. */
+[data-panel="correct-set"] [data-panel-body] {
+  align-items: center;
+}
+
+/* `seName` (line 704). Larger than the 22px heading the four panels of step 6
+   share, and centred, so it stays this screen's. */
+[data-correct-set-name] {
+  flex: none;
+  margin: 12px 0 0;
+  font-size: var(--fs-24);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* The mode and the band, which the prototype's set editor has no notion of.
+   The chips are the shared ones; the row is the gap the panel's own controls
+   keep. */
+[data-correct-set-options] {
+  flex: none;
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Line 707: the wheels and the line under them take whatever is left between
+   the heading and the two actions, and centre in it. */
+[data-correct-set-main] {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+/* `seOriginal` (line 737). */
+[data-correct-set-original] {
+  flex: none;
+  margin: 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-15);
+  color: var(--text-dim);
+}
+
+/* `seRemoveColor` (2225): this copy of the quiet pill fades its text as well
+   as its border, because the last set of an exercise cannot be removed. */
+[data-correct-set-actions] [data-variant="quiet"] {
+  transition:
+    border-color var(--dur-160) linear,
+    color var(--dur-160) linear;
+}
+
+/* Line 739. */
+[data-correct-set-actions] {
+  flex: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 0 16px;
+}

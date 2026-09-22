@@ -147,3 +147,85 @@
 [data-variant="actions"]:active {
   transform: scale(0.99);
 }
+
+/* ----- Commit ----------------------------------------------------------- */
+
+/*
+ * The 58px pill a screen commits its work with, added in step 10. The
+ * prototype writes it three times with the same nine declarations: Save
+ * corrections (line 468), Apply to set (740) and Record measurement (1182).
+ * Only the first binds its two colours, because only it can be pressed with
+ * nothing to commit; `data-armed` carries that pair and the 180ms fade
+ * between them, which the other two have no need of.
+ */
+[data-variant="commit"] {
+  height: var(--control-58);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: var(--fs-16-5);
+  font-weight: var(--fw-semibold);
+  transition: transform var(--dur-160) var(--ease);
+}
+
+[data-variant="commit"]:active {
+  transform: scale(0.99);
+}
+
+[data-variant="commit"][data-armed] {
+  transition:
+    background var(--dur-180) linear,
+    color var(--dur-180) linear,
+    transform var(--dur-160) var(--ease);
+}
+
+/* `edSaveBg` / `edSaveColor` (line 2209) with nothing to save. */
+[data-variant="commit"][data-armed="false"] {
+  background: var(--surface);
+  color: var(--text-faint);
+}
+
+/* ----- Quiet ------------------------------------------------------------ */
+
+/*
+ * The 50px outline pill that stands beside a commit, added in step 10. The
+ * prototype writes it twice, both on this step's two screens: Discard changes
+ * (line 469) and Remove this set (741). The second binds its text colour —
+ * the last set of an exercise cannot be removed — which `:disabled` carries
+ * here, because a refusal by colour alone is not one a screen reader hears.
+ */
+[data-variant="quiet"] {
+  /* The prototype's 50px includes the border, which the UA stylesheet gives a
+     `<button>`; written down so a link would resolve to the same 50. */
+  box-sizing: border-box;
+  height: var(--control-50);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+  /* The prototype's are both `<button>`s; Discard changes is a link here,
+     because it goes back to the workout as the bar's own Back does. */
+  text-decoration: none;
+  /* Discard changes transitions its border alone (line 469); a copy whose text
+     colour is bound adds that to this one, as Remove this set does (741). */
+  transition: border-color var(--dur-160) linear;
+}
+
+[data-variant="quiet"]:hover {
+  border-color: var(--line-strong);
+  /* Repeated only so `a:hover` from the base layer cannot take the link's. */
+  color: var(--text-secondary);
+}
+
+[data-variant="quiet"]:disabled {
+  color: var(--text-faint);
+}

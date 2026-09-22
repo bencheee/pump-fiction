@@ -1,0 +1,72 @@
+/*
+ * The stepper, ported from the prototype for step 10 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype source: markup lines 440-447, values at 2080-2097.
+ *
+ * The 92px the value is given is this surface's own number and stays a
+ * literal: it is what keeps the two buttons still while the value under them
+ * changes width.
+ */
+
+[data-stepper] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--control-60);
+  border-top: 1px solid var(--line);
+}
+
+/* `f.line`: the first row of the card is not ruled off from the padding. */
+[data-stepper]:first-child {
+  border-top-color: transparent;
+}
+
+[data-stepper-label] {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
+}
+
+[data-stepper-step] {
+  width: var(--control-40);
+  height: var(--control-40);
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: background var(--dur-150) linear;
+}
+
+[data-stepper-step]:hover {
+  background: var(--line-strong);
+}
+
+/* The prototype has no notion of a stepper that cannot be pressed; a screen
+   that holds unsaved work does, and says it in the colour a refused control
+   takes everywhere else in this design. */
+[data-stepper-step]:disabled {
+  color: var(--text-faint);
+}
+
+[data-stepper-value] {
+  width: 92px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-19);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+}
+
+/* `f.anim` (2082): the A/B pair alternates so a second press in the same
+   direction restarts the hop. */
+[data-stepper-value][data-bump="A"] {
+  animation: bumpA var(--dur-240) var(--ease);
+}
+
+[data-stepper-value][data-bump="B"] {
+  animation: bumpB var(--dur-240) var(--ease);
+}

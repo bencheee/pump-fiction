@@ -268,24 +268,9 @@
   background: var(--bg);
 }
 
-/* The card the Review & finish panel draws its outstanding line in (line
-   1495), which step 6 gave the active workout's delivery signals. A failed
-   delete is the same kind of thing: something the command did not do. */
-[data-workout-detail-alert] {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  margin: 0 0 10px;
-  border-radius: var(--radius-20);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: 14px 18px;
-  font-size: var(--fs-13-5);
-  font-weight: var(--fw-medium);
-  color: var(--text-secondary);
-}
-
-[data-workout-detail-alert] > [data-icon] {
-  flex: none;
-  color: var(--text-muted);
+/* The alert card itself is the shared one in `status.css`, lifted there in
+   step 10 so the correction screen carries the same one; the space under it is
+   this footer's. */
+[data-workout-detail-footer] [data-alert-card] {
+  margin-bottom: 10px;
 }

@@ -24,7 +24,7 @@ import {
   type ScreenAnim,
 } from "@/shared/ui";
 
-import { AddExerciseSheet } from "./add-exercise-sheet";
+import { AddExerciseSheet } from "../../add-exercise-sheet";
 import "./workout-overview.css";
 
 /*

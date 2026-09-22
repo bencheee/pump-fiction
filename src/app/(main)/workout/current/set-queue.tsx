@@ -45,7 +45,9 @@ import {
   type ActionEntry,
   DestructiveDialog,
   Icon,
+  NoteEditorSheet,
   type ScreenAnim,
+  SetChip,
   SetValueWheels,
   Sheet,
   type TransientOverlay,
@@ -54,7 +56,7 @@ import {
   type ValueWheelProps,
 } from "@/shared/ui";
 
-import { AddExerciseSheet } from "./add-exercise-sheet";
+import { AddExerciseSheet } from "../../add-exercise-sheet";
 import { ReviewFinishSheet } from "./review-finish-sheet";
 import "./set-queue.css";
 import {
@@ -437,13 +439,13 @@ export function SetQueue({
       ) : null}
 
       <div data-queue-body="">
-        <span data-queue-chip="">
+        <SetChip>
           {current
             ? setChipText(current.exercise, current.set)
             : empty
               ? "No exercises yet"
               : "No sets yet"}
-        </span>
+        </SetChip>
         <h2 data-queue-exercise="">
           {current
             ? current.exercise.exerciseName
@@ -603,8 +605,18 @@ export function SetQueue({
       </div>
 
       {current === undefined ? null : (
-        <TodaysNoteSheet
-          exercise={current.exercise}
+        /* Today's note — the prototype's screen 27 (lines 1396-1412). It has
+           no trigger: `rawMenu`'s m4 (line 3269) opens it from the Actions
+           panel, seeding the draft from the exercise's own note. The panel
+           itself was lifted to `shared/ui/note-sheet.tsx` in step 10. */
+        <NoteEditorSheet
+          panel="queue-note-draft"
+          title="Today's note"
+          heading={current.exercise.exerciseName}
+          lead="Saved with this workout only."
+          value={current.exercise.workoutNote}
+          placeholder="Optional note for this occurrence"
+          fieldLabel="Today's note"
           overlay={noteDraftOverlay}
           returnFocusRef={openerRef}
           onCommit={(note) => {
@@ -943,77 +955,6 @@ function NoteSheet({ exercise }: { exercise: WorkoutExercise }) {
           >
             Back to set
           </button>
-        </>
-      )}
-    </Sheet>
-  );
-}
-
-/*
- * Today's note — the prototype's screen 27 (lines 1395-1413). It has no
- * trigger: `rawMenu`'s m4 (line 3269) opens it from the Actions panel, seeding
- * the draft from the exercise's own note.
- */
-function TodaysNoteSheet({
-  exercise,
-  overlay,
-  returnFocusRef,
-  onCommit,
-}: {
-  exercise: WorkoutExercise;
-  overlay: TransientOverlay;
-  returnFocusRef: RefObject<HTMLElement | null>;
-  onCommit: (note: string) => void;
-}) {
-  const [draft, setDraft] = useState(exercise.workoutNote);
-  const fieldId = `queue-note-${exercise.id}`;
-
-  return (
-    <Sheet
-      panel="queue-note-draft"
-      title="Today's note"
-      overlay={overlay}
-      returnFocusRef={returnFocusRef}
-      onOpenChange={(open) => {
-        if (open) setDraft(exercise.workoutNote);
-      }}
-    >
-      {(close) => (
-        <>
-          <h2 data-panel-heading="">{exercise.exerciseName}</h2>
-          <p data-note-lead="">Saved with this workout only.</p>
-          <textarea
-            id={fieldId}
-            data-note-field=""
-            aria-label="Today's note"
-            value={draft}
-            placeholder="Optional note for this occurrence"
-            onChange={(event) => setDraft(event.target.value)}
-          />
-          <div data-note-actions="">
-            <button
-              type="button"
-              data-note-save=""
-              aria-label="Save note"
-              title="Save note"
-              onClick={() => {
-                onCommit(draft);
-                close();
-              }}
-            >
-              <Icon name="check" size={19} />
-              Save note
-            </button>
-            <button
-              type="button"
-              data-note-cancel=""
-              aria-label="Cancel"
-              title="Cancel"
-              onClick={close}
-            >
-              Cancel
-            </button>
-          </div>
         </>
       )}
     </Sheet>
