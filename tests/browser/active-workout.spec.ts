@@ -1,7 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
-import { fillHydrated } from "./support/hydration";
+import { runScreenAction } from "./support/actions";
+import { awaitHydration, fillHydrated } from "./support/hydration";
+import { expect, test } from "./support/test";
 
 test.describe("Active workout experience", () => {
   test("covers set entry, local edits, timer, restore, finish outcomes, and rotation", async ({
@@ -19,15 +21,15 @@ test.describe("Active workout experience", () => {
     try {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
-        await fillHydrated(page.getByLabel("Name"), exercise);
-        await page.getByRole("button", { name: "Save Exercise" }).click();
+        await fillHydrated(page.getByLabel("Exercise name"), exercise);
+        await runScreenAction(page, "Save exercise");
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
 
       await page.goto("/programs/new");
       await fillHydrated(page.getByLabel("Program name"), program);
-      await page.getByRole("button", { name: "Save Program" }).click();
+      await runScreenAction(page, "Save program");
       await expect(page).toHaveURL(/\/programs$/);
       await page.getByRole("link", { name: new RegExp(program) }).click();
       await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
@@ -36,117 +38,167 @@ test.describe("Active workout experience", () => {
         [splitA, exerciseA],
         [splitB, exerciseB],
       ]) {
-        await page.getByRole("link", { name: "Add Split" }).click();
-        await page.getByLabel("Split name").fill(split);
-        await page.getByRole("button", { name: "Add Exercise" }).click();
+        await page.getByRole("link", { name: "Add split" }).click();
+        await fillHydrated(page.getByLabel("Split name"), split);
+        await page.getByRole("button", { name: "Add exercise" }).click();
         await page
-          .getByRole("dialog")
+          .getByRole("dialog", { name: "Add exercise" })
           .getByRole("button", { name: exercise })
           .click();
-        await page.getByRole("button", { name: "Save Split" }).click();
+        await runScreenAction(page, "Save split");
         await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
       }
 
-      await page.getByRole("button", { name: "Make Current Program" }).click();
+      await runScreenAction(page, "Make current program");
       await page
-        .getByRole("dialog")
+        .getByRole("dialog", { name: "Choose the first split" })
         .getByRole("button", { name: splitA })
         .click();
       await expect(page.getByText("Program is now current.")).toBeVisible();
 
+      // A start lands on the workout overview (step 5); resuming it opens the
+      // set queue (step 4) on the first set still without values.
       await page.goto("/today");
-      await page.getByRole("button", { name: "Start Workout" }).click();
-      await expect(page).toHaveURL(/\/workout\/current$/);
+      const start = page.getByRole("button", { name: "Start today's workout" });
+      await awaitHydration(start);
+      await start.click();
+      await expect(page).toHaveURL(/\/workout\/current\?view=overview$/);
+      await expect(
+        page.getByRole("region", { name: `${exerciseA}, position 1 of 1` }),
+      ).toContainText("3 × 8–12 · 0 of 3 recorded");
+      await page.getByRole("button", { name: "Resume current set" }).click();
+      const current = page.getByRole("heading", { level: 2 });
+      await expect(current).toHaveText(exerciseA);
+      await expect(
+        page.getByText("Set 1 of 3 · 3 × 8–12 planned"),
+      ).toBeVisible();
 
-      // A set is recorded by its values alone; nothing confirms it.
-      const squat = page.getByRole("region", { name: exerciseA });
-      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
+      // MVP-WRK-006: an exercise never performed says so in Last time.
+      await page
+        .getByRole("button", { name: "No previous performance" })
+        .click();
+      const last = page.getByRole("dialog", { name: "Last time" });
       await expect(
-        squat.getByText("3 planned × 8–12 reps · 0 of 3 recorded"),
+        last.getByText("No previous sets recorded for this exercise."),
       ).toBeVisible();
-      await expect(
-        squat.getByText("No completed performance yet."),
-      ).toBeVisible();
+      await last.getByRole("button", { name: "Back to set" }).click();
+      await expect(last).not.toBeAttached();
 
-      await squat.getByLabel("kg", { exact: true }).nth(0).fill("82.5");
-      await squat.getByLabel("Reps").nth(0).fill("6");
-      await squat.getByLabel("Reps").nth(0).blur();
-      await expect(
-        squat.getByText("3 planned × 8–12 reps · 1 of 3 recorded"),
-      ).toBeVisible();
+      // A set is recorded by its values alone; nothing confirms it (ADR-0027).
+      // The values are entered on the wheels (step 4): a press on a candidate
+      // moves the column to it.
+      const segment = (position: number) =>
+        page.getByRole("button", { name: `${exerciseA} set ${position}` });
+      await page
+        .getByRole("group", { name: "Load" })
+        .getByRole("button", { name: "5", exact: true })
+        .click();
+      await expect(segment(1)).toHaveAttribute("data-state", "current");
+      await page
+        .getByRole("group", { name: "Reps" })
+        .getByRole("button", { name: "10", exact: true })
+        .click();
+      await expect(segment(1)).toHaveAttribute("data-state", "recorded");
       await expect(page.getByText("All changes saved")).toBeAttached();
+
+      // The next set offers the values before it, and Log this set writes
+      // them and moves on to the set after (step 7).
+      await segment(2).click();
+      await page.getByRole("button", { name: "Log this set" }).click();
+      await expect(segment(2)).toHaveAttribute("data-state", "recorded");
+      await expect(
+        page.getByText("Set 3 of 3 · 3 × 8–12 planned"),
+      ).toBeVisible();
 
       // Removing a set that holds data asks; removing an empty one does not.
-      await squat.getByLabel("kg", { exact: true }).nth(1).fill("80");
-      await squat.getByLabel("kg", { exact: true }).nth(1).blur();
-      await squat
-        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
-        .click();
+      await runSetAction(page, "Remove this set");
+      await expect(page.getByRole("alertdialog")).toHaveCount(0);
+      await expect(segment(3)).toHaveCount(0);
+      await segment(2).click();
+      await runSetAction(page, "Remove this set");
       await page
         .getByRole("alertdialog", { name: `Remove set 2 of ${exerciseA}?` })
-        .getByRole("button", { name: "Remove Set" })
+        .getByRole("button", { name: "Remove" })
         .click();
-      await expect(
-        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
-      ).toBeVisible();
-      await squat
-        .getByRole("button", { name: `Remove set 2 of ${exerciseA}` })
-        .click();
-      await expect(
-        squat.getByText("3 planned × 8–12 reps · 1 of 1 recorded"),
-      ).toBeVisible();
+      await expect(segment(2)).toHaveCount(0);
 
-      await squat.getByRole("button", { name: "Add Set" }).click();
-      await expect(
-        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
-      ).toBeVisible();
-      await expect(squat.getByLabel("Set 2", { exact: true })).toBeVisible();
+      // A set is added from the exercise's last set.
+      await runSetAction(page, "Add a set to this exercise");
+      await expect(page.getByText("Set added.")).toBeVisible();
+      await expect(segment(2)).toHaveAttribute("data-state", "pending");
 
-      const noteField = squat.getByLabel(
-        "Today's note · saved with this workout",
+      // Today's note is saved with this occurrence only (MVP-WRK-007).
+      await runSetAction(page, "Add today's note");
+      const draft = page.getByRole("dialog", { name: "Today's note" });
+      await fillHydrated(
+        draft.getByRole("textbox", { name: "Today's note" }),
+        "Felt strong",
       );
-      await noteField.fill("Felt strong");
-      await noteField.blur();
-      await expect(page.getByText("All changes saved")).toBeAttached();
-
-      await page.getByRole("button", { name: "Add Exercise" }).click();
-      const librarySheet = page.getByRole("dialog", { name: "Add Exercise" });
-      await librarySheet.getByLabel("Search active library").fill(exerciseB);
-      await librarySheet.getByRole("button", { name: exerciseB }).click();
-      await librarySheet.getByRole("button", { name: "Add Selected" }).click();
-      const row = page.getByRole("region", { name: exerciseB });
+      await draft.getByRole("button", { name: "Save note" }).click();
       await expect(
-        row.getByText("Workout-local, no prescription · 0 of 0 recorded"),
+        page.getByText("Note saved with this workout."),
       ).toBeVisible();
+      await expect(draft).not.toBeAttached();
 
-      await page.getByRole("button", { name: `Move ${exerciseB} up` }).click();
-      await expect(
-        page.getByRole("button", { name: `Move ${exerciseB} up` }),
-      ).toBeDisabled();
-
-      await page.getByRole("button", { name: "Continue Later" }).click();
+      // The timer pauses and resumes with a non-colour cue.
+      await page
+        .getByRole("button", { name: "Pause — continue later" })
+        .click();
       await expect(
         page.getByText("Paused — active duration is not counting."),
       ).toBeVisible();
-      await page.getByRole("button", { name: "Resume" }).click();
+      await page.getByRole("button", { name: "Resume timer" }).click();
       await expect(
         page.getByText("Paused — active duration is not counting."),
       ).not.toBeAttached();
 
+      // An exercise is added from the overview, and a focused row moves with
+      // Alt and an arrow where the old screen had Move buttons (step 5).
+      await page.getByRole("button", { name: "Workout overview" }).click();
+      await page.getByRole("button", { name: "Add exercise" }).click();
+      const librarySheet = page.getByRole("dialog", { name: "Add exercise" });
+      await librarySheet
+        .getByRole("searchbox", { name: "Search active library" })
+        .pressSequentially(exerciseB);
+      await librarySheet.getByRole("button", { name: exerciseB }).click();
+      await librarySheet.getByRole("button", { name: "Add selected" }).click();
+      await expect(
+        page.getByText("1 exercise added to this workout."),
+      ).toBeVisible();
+      const row = page.getByRole("region", {
+        name: `${exerciseB}, position 2 of 2`,
+      });
+      await expect(row).toContainText("0 of 0 recorded");
+      await row.focus();
+      await page.keyboard.press("Alt+ArrowUp");
+      await expect(
+        page.getByText(`${exerciseB} moved to position 1 of 2.`),
+      ).toBeAttached();
+      await expect(
+        page.getByRole("region", { name: `${exerciseB}, position 1 of 2` }),
+      ).toBeVisible();
+      await expect(page.getByText("All changes saved")).toBeAttached();
+
       // Reloading restores sets, notes, order, and duration in place; the
       // restored-session banner was removed in T-023, so the values prove it.
       await page.reload();
-      await squat.getByRole("button", { name: `Expand ${exerciseA}` }).click();
-      await expect(squat.getByLabel("kg", { exact: true }).nth(0)).toHaveValue(
-        "82.5",
-      );
       await expect(
-        squat.getByText("3 planned × 8–12 reps · 1 of 2 recorded"),
+        page.getByRole("region", { name: `${exerciseB}, position 1 of 2` }),
       ).toBeVisible();
-      await expect(noteField).toHaveValue("Felt strong");
       await expect(
-        page.getByRole("button", { name: `Move ${exerciseB} up` }),
-      ).toBeDisabled();
+        page.getByRole("region", { name: `${exerciseA}, position 2 of 2` }),
+      ).toContainText("3 × 8–12 · 1 of 2 recorded");
+      await page.getByRole("button", { name: "Resume current set" }).click();
+      await expect(current).toHaveText(exerciseA);
+      await segment(1).click();
+      await expect(
+        page.getByRole("group", { name: "Load" }).locator("[data-wheel-value]"),
+      ).toHaveText(/^5kg/);
+      await page.getByRole("button", { name: "Exercise note" }).click();
+      const note = page.getByRole("dialog", { name: "Note" });
+      await expect(note.getByText(/Today: Felt strong/)).toBeVisible();
+      await note.getByRole("button", { name: "Back to set" }).click();
+      await expect(note).not.toBeAttached();
 
       const geometry = await page.evaluate(() => ({
         clientWidth: document.documentElement.clientWidth,
@@ -158,64 +210,88 @@ test.describe("Active workout experience", () => {
         contentType: "image/png",
       });
 
+      // The review names the set still without values (MVP-WRK-011).
       await page
         .getByRole("button", { name: "Review and finish workout" })
+        .first()
         .click();
-      await expect(page).toHaveURL(/\/workout\/current$/);
       const finishReview = page.getByRole("dialog", {
-        name: "Review & Finish",
+        name: "Review & finish",
       });
       await expect(
-        finishReview.getByText("Recorded sets", { exact: true }),
+        finishReview.getByText(/planned set.*left without values/),
       ).toBeVisible();
-      await expect(finishReview.getByText(`${exerciseA} set 2`)).toBeVisible();
+      await expect(
+        finishReview.getByRole("listitem").filter({
+          hasText: `${exerciseA} set 2`,
+        }),
+      ).toBeVisible();
       await testInfo.attach(`finish-review-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
       });
 
+      // Completing saves it to History and advances the rotation.
       await finishReview
-        .getByRole("button", { name: "Complete Workout" })
+        .getByRole("button", { name: "Complete workout" })
         .click();
       await expect(page).toHaveURL(/\/today$/);
+      await expect(
+        page.getByText("Workout saved to History. Rotation advanced."),
+      ).toBeVisible();
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
 
-      await page.goto("/today/one-time");
-      await fillHydrated(page.getByLabel("Workout name"), `Hotel ${stamp}`);
-      await page.getByRole("button", { name: "Add Exercise" }).click();
-      await page
-        .getByRole("dialog")
-        .getByRole("button", { name: exerciseA })
-        .click();
-      await page.keyboard.press("Escape");
-      await page.getByRole("button", { name: "Start Workout" }).click();
-      await expect(page).toHaveURL(/\/workout\/current$/);
+      // A one-time workout starts from Today's Add exercise panel (PLAN,
+      // Owner decision 1 after step 21), where it used to be a named form.
+      const oneTime = page.getByRole("button", { name: "One-time workout" });
+      await awaitHydration(oneTime);
+      await oneTime.click();
+      const picker = page.getByRole("dialog", { name: "Add exercise" });
+      await picker
+        .getByRole("searchbox", { name: "Search active library" })
+        .pressSequentially(exerciseA);
+      await picker.getByRole("button", { name: exerciseA }).click();
+      await picker.getByRole("button", { name: "Add selected" }).click();
+      await expect(page).toHaveURL(/\/workout\/current\?view=overview$/);
       discardedWorkoutId = await currentWorkoutId();
       await expect(
-        page.getByText("Workout-local, no prescription · 0 of 1 recorded"),
-      ).toBeVisible();
+        page.getByRole("region", { name: `${exerciseA}, position 1 of 1` }),
+      ).toContainText("0 of 1 recorded");
+      await page.getByRole("button", { name: "Resume current set" }).click();
 
       await page
         .getByRole("button", { name: "Review and finish workout" })
+        .first()
         .click();
       const oneTimeReview = page.getByRole("dialog", {
-        name: "Review & Finish",
+        name: "Review & finish",
       });
+      await expect(
+        oneTimeReview.getByText(
+          "A one-time workout has no prescription, so none of its sets can be left planned without values.",
+        ),
+      ).toBeVisible();
       await expect(
         oneTimeReview.getByText(/planned set.*left without values/),
       ).not.toBeAttached();
 
+      // Discarding asks first, creates no History record and leaves the
+      // rotation where it was.
       await oneTimeReview
-        .getByRole("button", { name: "Discard Workout" })
+        .getByRole("button", { name: "Discard workout" })
         .click();
       await page
         .getByRole("alertdialog", { name: "Discard this workout?" })
-        .getByRole("button", { name: "Discard Workout" })
+        .getByRole("button", { name: "Discard" })
         .click();
       await expect(page).toHaveURL(/\/today$/);
       await expect(
-        page.getByRole("button", { name: "Start Workout" }),
+        page.getByText("Workout discarded. No History record created."),
       ).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: "Start today's workout" }),
+      ).toBeVisible();
+      await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
     } finally {
       await cleanUp({
         program,
@@ -226,6 +302,18 @@ test.describe("Active workout experience", () => {
     }
   });
 });
+
+/*
+ * The set under the finger has its own Actions panel, opened from the queue's
+ * `More actions` (steps 6 and 9): pick an entry, then Continue.
+ */
+async function runSetAction(page: Page, entry: string) {
+  await page.getByRole("button", { name: "More actions" }).click();
+  const panel = page.getByRole("dialog", { name: "Actions" });
+  await panel.getByRole("button", { name: entry, exact: true }).click();
+  await panel.getByRole("button", { name: "Continue" }).click();
+  await expect(panel).not.toBeAttached();
+}
 
 function adminClient() {
   const url = process.env.SUPABASE_URL?.trim();

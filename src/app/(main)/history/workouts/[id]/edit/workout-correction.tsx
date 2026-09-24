@@ -20,6 +20,10 @@ import {
 } from "@/features/active-workout/ui/set-queue-presentation";
 import { formatSetChip } from "@/features/active-workout/ui/workout-presentation";
 import {
+  hasSetValues,
+  isRecordedSet,
+} from "@/features/history/domain/exercise-statistics";
+import {
   baseLoadModeByBaseType,
   type Exercise,
   type ExerciseLoadMode,
@@ -156,7 +160,7 @@ function setValueText(
   set: WorkoutSet,
   exercise: HistoryWorkoutExercise,
 ): string {
-  return set.loadMode === null && set.reps === null
+  return !hasSetValues(set)
     ? "No values"
     : formatSetChip(set, exercise.measurementType);
 }
@@ -555,15 +559,14 @@ function ExerciseCard({
   }, [actionsOverlay.open]);
 
   const note = draft.notes[exercise.id] ?? "";
-  // What the Workout detail's card counts: the sets that were given values.
-  const recorded = exercise.sets.filter((set) => {
-    const held = draft.sets[set.id] ?? set;
-    return held.loadMode !== null || held.reps !== null;
-  }).length;
+  // What the Workout detail's card counts: the sets that are recorded, which
+  // is every value their mode requires (ADR-0027).
+  const recorded = exercise.sets.filter((set) =>
+    isRecordedSet(draft.sets[set.id] ?? set),
+  ).length;
   const prescription = prescriptionText(exercise);
   const populated =
-    exercise.sets.some((set) => set.loadMode !== null || set.reps !== null) ||
-    exercise.workoutNote.trim() !== "";
+    exercise.sets.some(hasSetValues) || exercise.workoutNote.trim() !== "";
 
   const items: ActionEntry[] = [
     {

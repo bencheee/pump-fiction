@@ -1,12 +1,19 @@
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
+
+import { awaitHydration } from "./support/hydration";
+import {
+  rememberCurrentProgram,
+  restoreCurrentProgram,
+} from "./support/current-program";
+import { expect, test } from "./support/test";
 
 test.describe("Exercise History experience", () => {
   test("covers S15 search, S16 records, chart, and the workout link", async ({
     page,
   }, testInfo) => {
     const stamp = `${testInfo.project.name} ${Date.now()}`;
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seedCompletedWorkout(stamp);
 
     try {
@@ -17,10 +24,19 @@ test.describe("Exercise History experience", () => {
       ).toBeVisible();
       // WebKit does not filter on Playwright's programmatic fill of a search
       // field, so the scenario types the way a person does.
-      await page.getByLabel("Search").pressSequentially("zzz-no-such-exercise");
-      await expect(page.getByText("No matching exercise")).toBeVisible();
-      await page.getByLabel("Search").clear();
-      await page.getByLabel("Search").pressSequentially(fixture.exercise);
+      const search = page.getByRole("searchbox", {
+        name: "Filter exercises by name",
+      });
+      await awaitHydration(search);
+      await search.pressSequentially("zzz-no-such-exercise");
+      await expect(
+        page.getByText("No exercise with a recorded set matches that name."),
+      ).toBeVisible();
+      await search.clear();
+      await search.pressSequentially(fixture.exercise);
+      await expect(
+        page.getByRole("link", { name: new RegExp(fixture.exercise) }),
+      ).toHaveCount(1);
       await testInfo.attach(`history-exercises-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
@@ -35,11 +51,14 @@ test.describe("Exercise History experience", () => {
       const weight = page.getByRole("region", { name: "Weight" });
       await expect(weight.getByText("Highest load")).toBeVisible();
       await expect(weight.getByText("80 kg × 3")).toBeVisible();
-      await expect(page.getByText(/Highest reps in a set/)).toBeVisible();
+      await expect(weight.getByText(/Highest reps in a set/)).toBeVisible();
 
-      // The chart is never the only representation of its data.
-      await expect(page.getByText(/across 1 workout/)).toBeVisible();
-      await page.getByText("Chart values").click();
+      // The chart is never the only representation of its data: its summary
+      // sentence and its values list carry it (ADR-0033).
+      await expect(
+        page.getByText(/^1 workout in range: 80 kg to 80 kg, best 80 kg\./),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Chart values" }).click();
       // The same load also reads "80 kg" in the reps-per-load list, so the
       // assertion names the list it means.
       await expect(
@@ -48,16 +67,23 @@ test.describe("Exercise History experience", () => {
           .getByText("80 kg", { exact: true }),
       ).toBeVisible();
 
-      // The metric and range selectors reload the series.
-      await page.getByRole("button", { name: "Workout volume" }).click();
-      await expect(page.getByText(/Workout volume across/)).toBeVisible();
-      await page.getByRole("button", { name: "Week" }).click();
+      // The metric and range selectors redraw the series. Step 11 recomputes
+      // it in the browser from the performances already on the screen.
+      await page
+        .getByRole("group", { name: "Metric" })
+        .getByRole("button", { name: "Workout volume" })
+        .click();
+      await expect(
+        page.getByText(/^1 workout in range: 720 kg·reps/),
+      ).toBeVisible();
+      const range = page.getByRole("group", { name: "Time range" });
+      await range.getByRole("button", { name: "Week" }).click();
       await expect(
         page.getByText(/No workout falls inside this range/),
       ).toBeVisible();
-      await page.getByRole("button", { name: "All" }).click();
+      await range.getByRole("button", { name: "All" }).click();
       await expect(
-        page.getByText(/Workout volume across 1 workout/),
+        page.getByText(/^1 workout in range: 720 kg·reps/),
       ).toBeVisible();
       await testInfo.attach(`history-exercise-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
@@ -83,6 +109,7 @@ test.describe("Exercise History experience", () => {
       expect(overflow).toBeLessThanOrEqual(1);
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 });

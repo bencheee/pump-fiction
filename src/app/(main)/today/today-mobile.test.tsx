@@ -2,24 +2,30 @@
 
 import "@testing-library/jest-dom/vitest";
 
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { TodayView } from "@/features/active-workout/domain/workout";
 import type { Exercise } from "@/features/exercises/domain/exercise";
-import { ToastProvider } from "@/shared/ui";
 
-import { OneTimeWorkoutForm } from "./one-time/one-time-workout-form";
 import { TodayExperience } from "./today-experience";
 
+// ADR-0032 withdrew MVP-TOD-004 and MVP-TOD-005: Today no longer carries the
+// weight or measurement card, so neither their actions nor the toast that
+// `MainShell` owns for them are part of this screen any more.
 const actions = vi.hoisted(() => ({
   push: vi.fn(),
   refresh: vi.fn(),
   setNext: vi.fn(),
   startWorkout: vi.fn(),
-  createWeight: vi.fn(),
-  createMeasurements: vi.fn(),
+  listExercises: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
@@ -31,12 +37,8 @@ vi.mock("@/app/actions/programs", () => ({
 vi.mock("@/app/actions/workouts", () => ({
   startWorkoutAction: actions.startWorkout,
 }));
-vi.mock("@/app/actions/weight", () => ({
-  createWeightEntryAction: actions.createWeight,
-}));
-
-vi.mock("@/app/actions/body", () => ({
-  createTodayMeasurementEntriesAction: actions.createMeasurements,
+vi.mock("@/app/actions/exercises", () => ({
+  listExercisesAction: actions.listExercises,
 }));
 
 const programId = "11111111-1111-4111-8111-111111111111";
@@ -44,16 +46,6 @@ const proposedId = "22222222-2222-4222-8222-222222222222";
 const alternateId = "33333333-3333-4333-8333-333333333333";
 const exerciseAId = "44444444-4444-4444-8444-444444444444";
 const exerciseBId = "55555555-5555-4555-8555-555555555555";
-
-const noWeighIn = { localDate: "2026-08-26", entry: null } as const;
-const recorded = {
-  localDate: "2026-08-26",
-  entry: {
-    id: "77777777-7777-4777-8777-777777777777",
-    entryDate: "2026-08-26",
-    weightKg: 82.4,
-  },
-} as const;
 
 const today: TodayView = {
   localDate: "2026-08-26",
@@ -119,372 +111,418 @@ const exercises: Exercise[] = [
   },
 ];
 
-/** `MainShell` owns the one toast in the application; the tests stand in for it. */
-function renderToday(ui: Parameters<typeof render>[0]) {
-  return render(<ToastProvider>{ui}</ToastProvider>);
+const restoredWorkout = {
+  id: "66666666-6666-4666-8666-666666666666",
+  name: "Lower Body",
+  status: "paused",
+  accumulatedActiveSeconds: 1458,
+  activeSegmentStartedAt: null,
+} as const;
+
+function renderToday(view: TodayView = today) {
+  return render(<TodayExperience today={view} serverNow={Date.now()} />);
+}
+
+async function openChooseSplit(user: ReturnType<typeof userEvent.setup>) {
+  // Step 3 of the redesign plan: prototype copy, `Another split` opens the
+  // `Choose another split` panel.
+  await user.click(screen.getByRole("button", { name: "Another split" }));
+  return screen.getByRole("dialog", { name: "Choose another split" });
 }
 
 describe("Today and workout-start mobile experience", () => {
-  beforeEach(() => vi.clearAllMocks());
+  beforeEach(() => {
+    vi.clearAllMocks();
+    window.history.replaceState(null, "");
+  });
   afterEach(cleanup);
 
-  it("starts the proposal and can place an alternate on Today without moving rotation", async () => {
+  it("starts the proposal on the overview", async () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
+    renderToday();
 
     expect(screen.getByText("Wed 26 Aug")).toBeVisible();
+    expect(screen.getByText("Next in your program")).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Lower Body" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Avg 1h 08m · 7 workouts")).toBeVisible();
-    await user.click(
-      screen.getByRole("button", { name: "Choose another split" }),
-    );
-    const dialog = screen.getByRole("dialog", { name: "Choose Another Split" });
-    await user.click(
-      within(dialog).getAllByRole("button", {
-        name: "Put on Today, don't start yet",
-      })[1]!,
-    );
-    expect(screen.getByText("Today-only split")).toBeVisible();
-    expect(screen.getByText("Upper Push")).toBeVisible();
 
-    await user.click(screen.getByRole("button", { name: "Start Workout" }));
+    await user.click(
+      screen.getByRole("button", { name: "Start today's workout" }),
+    );
+    expect(actions.startWorkout).toHaveBeenCalledWith(
+      expect.objectContaining({
+        sourceKind: "proposed_split",
+        splitId: proposedId,
+      }),
+    );
+    // Starts land on the prototype's overview (redesign plan, step 5).
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
+  });
+
+  it("can place an alternate on Today without moving rotation", async () => {
+    const user = userEvent.setup();
+    actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
+    renderToday();
+
+    const dialog = await openChooseSplit(user);
+    // Sorted by the program's own order, the split on Today tinted.
+    const cards = within(dialog).getAllByRole("region");
+    expect(cards.map((card) => card.getAttribute("aria-label"))).toEqual([
+      "Lower Body",
+      "Upper Push",
+    ]);
+    expect(cards[0]).toHaveAttribute("data-split-card", "current");
+    expect(cards[1]).toHaveAttribute("data-split-card", "");
+    expect(
+      within(cards[0]!).getByText("Avg 1h 08m · 7 workouts"),
+    ).toBeVisible();
+
+    await user.click(
+      within(cards[1]!).getByRole("button", {
+        name: "Put on Today, don't start yet",
+      }),
+    );
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("dialog", { name: "Choose another split" }),
+      ).not.toBeInTheDocument(),
+    );
+    expect(actions.startWorkout).not.toHaveBeenCalled();
+    expect(screen.getByText("Today-only split")).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Upper Push" })).toBeVisible();
+    // The rotation still names the proposal, and nothing set a new next split.
+    expect(screen.getByText(/Rotation position: Lower Body\./)).toBeVisible();
+    expect(actions.setNext).not.toHaveBeenCalled();
+
+    await user.click(
+      screen.getByRole("button", { name: "Start today's workout" }),
+    );
     expect(actions.startWorkout).toHaveBeenCalledWith(
       expect.objectContaining({
         sourceKind: "alternate_split",
         splitId: alternateId,
       }),
     );
-    expect(actions.push).toHaveBeenCalledWith("/workout/current");
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
   });
 
-  it("previews every exercise in the selected split beneath Start Workout", async () => {
+  it("starts an alternate straight from the panel with Train today", async () => {
     const user = userEvent.setup();
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
+    actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
+    renderToday();
+
+    const dialog = await openChooseSplit(user);
+    const upperPush = within(dialog).getByRole("region", {
+      name: "Upper Push",
+    });
+    const train = within(upperPush).getByRole("button", {
+      name: "Train this today",
+    });
+    expect(train).toHaveTextContent("Train today");
+    await user.click(train);
+
+    expect(actions.startWorkout).toHaveBeenCalledWith(
+      expect.objectContaining({
+        sourceKind: "alternate_split",
+        splitId: alternateId,
+      }),
     );
+    expect(actions.setNext).not.toHaveBeenCalled();
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
+  });
+
+  it("previews every exercise in the selected split beneath the start action", async () => {
+    const user = userEvent.setup();
+    renderToday();
 
     expect(screen.getByText("Back Squat")).toBeVisible();
-    expect(screen.getByText("3 × 5–8 reps")).toBeVisible();
+    // Step 2: the scheme is the prototype's `3 × 5–8`, with no `reps` unit.
+    expect(screen.getByText("3 × 5–8")).toBeVisible();
+
+    const dialog = await openChooseSplit(user);
     await user.click(
-      screen.getByRole("button", { name: "Choose another split" }),
+      within(
+        within(dialog).getByRole("region", { name: "Upper Push" }),
+      ).getByRole("button", { name: "Put on Today, don't start yet" }),
     );
-    const dialog = screen.getByRole("dialog", { name: "Choose Another Split" });
-    await user.click(
-      within(dialog).getAllByRole("button", {
-        name: "Put on Today, don't start yet",
-      })[1]!,
+    await waitFor(() =>
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument(),
     );
     expect(screen.queryByText("Back Squat")).not.toBeInTheDocument();
     expect(screen.getByText("Overhead Press")).toBeVisible();
-    expect(screen.getByText("4 × 6–10 reps")).toBeVisible();
+    expect(screen.getByText("4 × 6–10")).toBeVisible();
   });
 
-  it("offers today's weight only while the day has none", async () => {
-    const user = userEvent.setup();
-    actions.createWeight.mockResolvedValue({ ok: true, value: recorded.entry });
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
+  it("offers no split panel when the program has only one split", () => {
+    renderToday({ ...today, alternateSplits: [] });
 
-    const card = within(screen.getByRole("region", { name: "Today's weight" }));
-    await user.click(card.getByRole("button", { name: "Add today's weight" }));
-    const sheet = screen.getByRole("dialog", { name: "Add today's weight" });
-    await user.type(within(sheet).getByLabelText("Weight (kg)"), "82.4");
-    await user.click(
-      within(sheet).getByRole("button", { name: "Save Weight" }),
-    );
-
-    expect(actions.createWeight).toHaveBeenCalledWith({
-      entryDate: "2026-08-26",
-      weightKg: 82.4,
-    });
-    expect(actions.refresh).toHaveBeenCalled();
-  });
-
-  it("shows the recorded weight instead of a second-entry prompt", () => {
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={recorded}
-        measurements={null}
-      />,
-    );
-
-    const card = within(screen.getByRole("region", { name: "Today's weight" }));
-    expect(card.getByText("82.4 kg")).toBeVisible();
-    expect(card.getByRole("link", { name: "See Weight" })).toHaveAttribute(
-      "href",
-      "/body/weight",
-    );
     expect(
-      card.queryByRole("button", { name: "Add today's weight" }),
-    ).toBeNull();
-  });
-
-  it("resolves a weigh-in that appeared while the sheet was open", async () => {
-    const user = userEvent.setup();
-    actions.createWeight.mockResolvedValue({
-      ok: false,
-      error: {
-        code: "validation",
-        message: "Check the weigh-in and try again.",
-        retryable: false,
-        fieldErrors: { entryDate: ["That date already has a weigh-in."] },
-      },
-    });
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
-
-    await user.click(
-      screen.getByRole("button", { name: "Add today's weight" }),
-    );
-    const sheet = screen.getByRole("dialog", { name: "Add today's weight" });
-    await user.type(within(sheet).getByLabelText("Weight (kg)"), "82.4");
-    await user.click(
-      within(sheet).getByRole("button", { name: "Save Weight" }),
-    );
-
-    expect(screen.getByText(/Today already has a weigh-in/)).toBeVisible();
-    expect(screen.queryByRole("button", { name: "Save Weight" })).toBeNull();
-    expect(actions.refresh).toHaveBeenCalled();
-  });
-
-  it("keeps the weight card beside a restored workout and with no program", () => {
-    renderToday(
-      <TodayExperience
-        today={{ ...today, proposedSplit: null, alternateSplits: [] }}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
+      screen.queryByRole("button", { name: "Another split" }),
+    ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("region", { name: "Today's weight" }),
-    ).toBeVisible();
-    cleanup();
-
-    renderToday(
-      <TodayExperience
-        today={{
-          ...today,
-          currentWorkout: {
-            id: "66666666-6666-4666-8666-666666666666",
-            name: "Lower Body",
-            status: "active",
-            accumulatedActiveSeconds: 60,
-            activeSegmentStartedAt: null,
-          },
-        }}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
-    expect(
-      screen.getByRole("region", { name: "Today's weight" }),
+      screen.getByRole("button", { name: "One-time workout" }),
     ).toBeVisible();
   });
 
-  it("replaces all second-start actions with an accurate restore card", () => {
-    renderToday(
-      <TodayExperience
-        today={{
-          ...today,
-          currentWorkout: {
-            id: "66666666-6666-4666-8666-666666666666",
-            name: "Lower Body",
-            status: "paused",
-            accumulatedActiveSeconds: 1458,
-            activeSegmentStartedAt: null,
-          },
-        }}
-        serverNow={Date.now()}
-        weight={noWeighIn}
-        measurements={null}
-      />,
-    );
+  it("keeps a one-time workout available when there is no program", () => {
+    renderToday({ ...today, proposedSplit: null, alternateSplits: [] });
 
-    expect(screen.getByLabelText("Restored workout")).toHaveTextContent(
-      "Paused · 24:18",
-    );
-    expect(screen.getByRole("link", { name: "Resume Workout" })).toBeVisible();
+    expect(screen.getByText("No proposed workout")).toBeVisible();
     expect(
-      screen.queryByRole("button", { name: "Start Workout" }),
+      screen.getByRole("link", { name: "Go to Programs" }),
+    ).toHaveAttribute("href", "/programs");
+    expect(
+      screen.queryByRole("button", { name: "Start today's workout" }),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByRole("link", { name: "One-time workout" }),
-    ).not.toBeInTheDocument();
+      screen.getByRole("button", { name: "One-time workout" }),
+    ).toBeVisible();
   });
 
-  it("keeps one-time input, validates, reorders, and submits active exercises", async () => {
+  it("raises a refused start on Today and retries the same definition", async () => {
+    const user = userEvent.setup();
+    actions.startWorkout
+      .mockResolvedValueOnce({
+        ok: false,
+        error: { code: "persistence", message: "Try again.", retryable: true },
+      })
+      .mockResolvedValueOnce({ ok: true, value: {} });
+    renderToday();
+
+    await user.click(
+      screen.getByRole("button", { name: "Start today's workout" }),
+    );
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("Try again.");
+    expect(actions.push).not.toHaveBeenCalled();
+
+    const [firstDefinition] = actions.startWorkout.mock.calls[0]!;
+    await user.click(within(alert).getByRole("button", { name: "Retry" }));
+    expect(actions.startWorkout).toHaveBeenCalledTimes(2);
+    expect(actions.startWorkout.mock.calls[1]![0]).toEqual(firstDefinition);
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
+  });
+
+  it("offers no retry for a start the server will not accept", async () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValueOnce({
       ok: false,
-      error: { code: "persistence", message: "Try again.", retryable: true },
+      error: {
+        code: "conflict",
+        message: "A workout is already in progress.",
+        retryable: false,
+      },
     });
-    render(<OneTimeWorkoutForm exercises={exercises} />);
+    renderToday();
 
-    await user.click(screen.getByRole("button", { name: "Start Workout" }));
+    await user.click(
+      screen.getByRole("button", { name: "Start today's workout" }),
+    );
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("A workout is already in progress.");
     expect(
-      screen.getAllByText("Enter a name for this workout."),
-    ).not.toHaveLength(0);
-    expect(
-      screen.getAllByText("Add at least one exercise before starting."),
-    ).not.toHaveLength(0);
+      within(alert).queryByRole("button", { name: "Retry" }),
+    ).not.toBeInTheDocument();
+  });
 
-    await user.type(screen.getByLabelText("Workout name"), "Hotel session");
-    await user.click(screen.getByRole("button", { name: "Add Exercise" }));
-    await user.click(screen.getByRole("button", { name: "Pull-Up" }));
-    await user.click(screen.getByRole("button", { name: "Face Pull" }));
-    await user.keyboard("{Escape}");
-    await user.click(screen.getByRole("button", { name: "Move Face Pull up" }));
-    await user.click(screen.getByRole("button", { name: "Start Workout" }));
+  it("replaces all second-start actions with an accurate restore card", () => {
+    renderToday({ ...today, currentWorkout: restoredWorkout });
+
+    const card = screen.getByRole("region", { name: "Restored workout" });
+    expect(card).toHaveTextContent("Lower Body");
+    expect(card).toHaveTextContent("Paused · 24:18");
+    expect(
+      within(card).getByRole("link", { name: "Resume workout" }),
+    ).toHaveAttribute("href", "/workout/current");
+    expect(
+      screen.getByText(
+        "Finish or discard the restored workout before starting another.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Start today's workout" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Another split" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "One-time workout" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("offers the restore card even with no program", () => {
+    renderToday({
+      ...today,
+      proposedSplit: null,
+      alternateSplits: [],
+      currentWorkout: { ...restoredWorkout, status: "active" },
+    });
+
+    expect(
+      screen.getByRole("region", { name: "Restored workout" }),
+    ).toHaveTextContent("Running · 24:18");
+    expect(
+      screen.queryByRole("button", { name: "One-time workout" }),
+    ).not.toBeInTheDocument();
+  });
+});
+
+// MVP-TOD-003, as the Owner decided after step 21 of the redesign plan: the
+// one-time workout opens the shared Add exercise panel instead of the deleted
+// `/today/one-time` form. Its name is always `One-time workout`, so the old
+// name field, its validation and the reorder buttons have no surface left; the
+// exercises start in the order they were picked.
+describe("MVP-TOD-003 one-time workout", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    window.history.replaceState(null, "");
+    actions.listExercises.mockResolvedValue({ ok: true, value: exercises });
+  });
+  afterEach(cleanup);
+
+  async function openOneTime(user: ReturnType<typeof userEvent.setup>) {
+    await user.click(screen.getByRole("button", { name: "One-time workout" }));
+    const panel = screen.getByRole("dialog", { name: "Add exercise" });
+    await within(panel).findByRole("button", { name: "Pull-Up" });
+    return panel;
+  }
+
+  it("starts `One-time workout` with the exercises the panel adds", async () => {
+    const user = userEvent.setup();
+    actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
+    renderToday();
+
+    const panel = await openOneTime(user);
+    expect(actions.listExercises).toHaveBeenCalledTimes(1);
+    const add = within(panel).getByRole("button", { name: "Add selected" });
+    // Nothing picked, nothing to start with: the workout needs an exercise.
+    expect(add).toBeDisabled();
+    expect(add).toHaveTextContent("Select exercises");
+
+    await user.click(within(panel).getByRole("button", { name: "Face Pull" }));
+    await user.click(within(panel).getByRole("button", { name: "Pull-Up" }));
+    expect(add).toHaveTextContent("Add 2 selected");
+    await user.click(add);
+
+    expect(actions.startWorkout).toHaveBeenCalledTimes(1);
+    expect(actions.startWorkout).toHaveBeenCalledWith({
+      sourceKind: "one_time",
+      name: "One-time workout",
+      exerciseIds: [exerciseAId, exerciseBId],
+      startedAt: expect.any(String),
+    });
+    const { startedAt } = actions.startWorkout.mock.calls[0]![0] as {
+      startedAt: string;
+    };
+    expect(Number.isNaN(Date.parse(startedAt))).toBe(false);
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
+  });
+
+  it("searches the active library before adding", async () => {
+    const user = userEvent.setup();
+    actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
+    renderToday();
+
+    const panel = await openOneTime(user);
+    await user.type(
+      within(panel).getByRole("searchbox", { name: "Search active library" }),
+      "face",
+    );
+    expect(
+      within(panel).queryByRole("button", { name: "Pull-Up" }),
+    ).not.toBeInTheDocument();
+    await user.click(within(panel).getByRole("button", { name: "Face Pull" }));
+    await user.click(
+      within(panel).getByRole("button", { name: "Add selected" }),
+    );
 
     expect(actions.startWorkout).toHaveBeenCalledWith(
       expect.objectContaining({
         sourceKind: "one_time",
-        name: "Hotel session",
-        exerciseIds: [exerciseBId, exerciseAId],
+        exerciseIds: [exerciseBId],
       }),
     );
-    expect(screen.getByText("Try again.")).toBeVisible();
-    expect(screen.getByLabelText("Workout name")).toHaveValue("Hotel session");
-  });
-});
-
-describe("MVP-TOD-005 today's measurements", () => {
-  beforeEach(() => vi.clearAllMocks());
-  afterEach(cleanup);
-
-  const waist = { id: "m1", name: "Waist" };
-  const arm = { id: "m2", name: "Left arm" };
-
-  function measurements(
-    entries: readonly { id: string; name: string; valueCm: number | null }[],
-  ) {
-    return { localDate: "2026-09-06", measurements: entries };
-  }
-
-  it("offers nothing when no measurement is defined", () => {
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={recorded}
-        measurements={measurements([])}
-      />,
-    );
-
-    expect(screen.queryByLabelText("Today's measurements")).toBeNull();
   });
 
-  it("names what the day is missing and takes them in one save", async () => {
+  it("starts nothing when the panel is closed", async () => {
     const user = userEvent.setup();
-    actions.createMeasurements.mockResolvedValue({ ok: true, value: [] });
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={recorded}
-        measurements={measurements([
-          { ...waist, valueCm: null },
-          { ...arm, valueCm: null },
-        ])}
-      />,
-    );
+    renderToday();
 
-    const card = within(screen.getByLabelText("Today's measurements"));
-    await user.click(
-      card.getByRole("button", { name: "Add today's measurements" }),
-    );
+    const panel = await openOneTime(user);
+    await user.click(within(panel).getByRole("button", { name: "Pull-Up" }));
+    await user.click(within(panel).getByRole("button", { name: "Close" }));
 
-    const sheet = screen.getByRole("dialog", {
-      name: "Add today's measurements",
-    });
-    await user.type(within(sheet).getByLabelText("Waist (cm)"), "84");
-    await user.type(within(sheet).getByLabelText("Left arm (cm)"), "38");
-    await user.click(
-      within(sheet).getByRole("button", { name: "Save Measurements" }),
+    await waitFor(() =>
+      expect(
+        screen.queryByRole("dialog", { name: "Add exercise" }),
+      ).not.toBeInTheDocument(),
     );
-
-    expect(actions.createMeasurements).toHaveBeenCalledWith([
-      { measurementTypeId: "m1", entryDate: "2026-09-06", valueCm: 84 },
-      { measurementTypeId: "m2", entryDate: "2026-09-06", valueCm: 38 },
-    ]);
+    expect(actions.startWorkout).not.toHaveBeenCalled();
+    expect(actions.push).not.toHaveBeenCalled();
   });
 
-  it("refuses a blank value against the measurement it belongs to", async () => {
+  it("raises a refused one-time start on Today and retries it", async () => {
     const user = userEvent.setup();
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={recorded}
-        measurements={measurements([
-          { ...waist, valueCm: null },
-          { ...arm, valueCm: null },
-        ])}
-      />,
+    actions.startWorkout
+      .mockResolvedValueOnce({
+        ok: false,
+        error: { code: "persistence", message: "Try again.", retryable: true },
+      })
+      .mockResolvedValueOnce({ ok: true, value: {} });
+    renderToday();
+
+    const panel = await openOneTime(user);
+    await user.click(within(panel).getByRole("button", { name: "Pull-Up" }));
+    await user.click(
+      within(panel).getByRole("button", { name: "Add selected" }),
     );
 
-    await user.click(
-      screen.getByRole("button", { name: "Add today's measurements" }),
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent("Try again.");
+    expect(actions.push).not.toHaveBeenCalled();
+
+    await user.click(within(alert).getByRole("button", { name: "Retry" }));
+    expect(actions.startWorkout).toHaveBeenCalledTimes(2);
+    expect(actions.startWorkout.mock.calls[1]![0]).toEqual(
+      actions.startWorkout.mock.calls[0]![0],
     );
-    const sheet = screen.getByRole("dialog", {
-      name: "Add today's measurements",
+    expect(actions.startWorkout.mock.calls[1]![0]).toMatchObject({
+      sourceKind: "one_time",
+      name: "One-time workout",
+      exerciseIds: [exerciseAId],
     });
-    await user.type(within(sheet).getByLabelText("Waist (cm)"), "84");
-    await user.click(
-      within(sheet).getByRole("button", { name: "Save Measurements" }),
-    );
-
-    expect(within(sheet).getByText("Enter a value.")).toBeVisible();
-    expect(actions.createMeasurements).not.toHaveBeenCalled();
+    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
   });
 
-  it("shows the day's values and no create control once none are missing", () => {
-    renderToday(
-      <TodayExperience
-        today={today}
-        serverNow={Date.now()}
-        weight={recorded}
-        measurements={measurements([
-          { ...waist, valueCm: 84 },
-          { ...arm, valueCm: 38 },
-        ])}
-      />,
-    );
+  it("names a library that failed to load and loads it again on Retry", async () => {
+    const user = userEvent.setup();
+    actions.listExercises
+      .mockResolvedValueOnce({
+        ok: false,
+        error: {
+          code: "persistence",
+          message: "Could not load exercises.",
+          retryable: true,
+        },
+      })
+      .mockResolvedValueOnce({ ok: true, value: exercises });
+    renderToday();
 
-    const card = within(screen.getByLabelText("Today's measurements"));
-    expect(card.getByText("84 cm")).toBeVisible();
-    expect(card.getByText("38 cm")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "One-time workout" }));
+    const panel = screen.getByRole("dialog", { name: "Add exercise" });
+    const alert = await within(panel).findByRole("alert");
+    expect(alert).toHaveTextContent("Could not load exercises.");
     expect(
-      card.queryByRole("button", { name: "Add today's measurements" }),
-    ).toBeNull();
-    expect(card.getByRole("link", { name: "See Body" })).toBeVisible();
+      within(panel).getByRole("button", { name: "Add selected" }),
+    ).toBeDisabled();
+
+    await user.click(within(alert).getByRole("button", { name: "Retry" }));
+    expect(
+      await within(panel).findByRole("button", { name: "Pull-Up" }),
+    ).toBeVisible();
+    expect(actions.startWorkout).not.toHaveBeenCalled();
   });
 });

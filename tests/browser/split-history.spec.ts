@@ -1,12 +1,17 @@
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
+import {
+  rememberCurrentProgram,
+  restoreCurrentProgram,
+} from "./support/current-program";
+import { expect, test } from "./support/test";
 
 test.describe("Split History experience", () => {
   test("covers S17 filtering, S18 durations, chart, and the workout link", async ({
     page,
   }, testInfo) => {
     const stamp = `${testInfo.project.name} ${Date.now()}`;
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seedCompletedSplitWorkout(stamp);
 
     try {
@@ -39,23 +44,29 @@ test.describe("Split History experience", () => {
         page.getByText(/One-time workouts are excluded/),
       ).toBeVisible();
 
-      // The chart is never the only representation of its data.
+      // The chart is never the only representation of its data: its summary
+      // sentence, its named bars and its values list carry it (ADR-0033).
       await expect(
-        page.getByText(/Active duration across 1 workout/),
+        page.getByText(/^1 workout in range: 1 h to 1 h/),
       ).toBeVisible();
-      await page.getByText("Chart values").click();
+      await expect(
+        page.getByRole("button", { name: "Mon 10 Aug · 1 h" }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Chart values" }).click();
       await expect(
         page.getByRole("list", { name: "Chart values" }).getByText("1 h"),
       ).toBeVisible();
 
-      // The range selector reloads the series; the workout is older than a week.
-      await page.getByRole("button", { name: "Week" }).click();
+      // The range selector redraws the series; the workout is older than a
+      // week. Step 12 recomputes it in the browser.
+      const range = page.getByRole("group", { name: "Time range" });
+      await range.getByRole("button", { name: "Week" }).click();
       await expect(
         page.getByText(/No workout falls inside this range/),
       ).toBeVisible();
-      await page.getByRole("button", { name: "All" }).click();
+      await range.getByRole("button", { name: "All" }).click();
       await expect(
-        page.getByText(/Active duration across 1 workout/),
+        page.getByText(/^1 workout in range: 1 h to 1 h/),
       ).toBeVisible();
       await testInfo.attach(`history-split-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
@@ -63,17 +74,15 @@ test.describe("Split History experience", () => {
       });
 
       // Each workout links back to its detail.
-      await page
-        .getByRole("list", { name: "Split workouts" })
-        .getByRole("link")
-        .first()
-        .click();
+      await page.getByRole("link", { name: "Mon 10 Aug · 1 h" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
 
       // The detail reflows to the narrow end of the supported phone range.
       await page.goBack();
       await page.setViewportSize({ width: 320, height: 720 });
-      await expect(page.getByText("Duration", { exact: true })).toBeVisible();
+      await expect(
+        page.getByRole("heading", { level: 2, name: fixture.split }),
+      ).toBeVisible();
       const overflow = await page.evaluate(
         () =>
           document.documentElement.scrollWidth -
@@ -82,6 +91,7 @@ test.describe("Split History experience", () => {
       expect(overflow).toBeLessThanOrEqual(1);
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 });

@@ -2,7 +2,14 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test, type Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import {
+  rememberCurrentProgram,
+  restoreCurrentProgram,
+} from "./support/current-program";
+import { runScreenAction } from "./support/actions";
+import { awaitHydration } from "./support/hydration";
+import { expect, test } from "./support/test";
 
 // F-010 owns MVP-UX-001 through MVP-UX-003. Each Feature met them on its own
 // screens; nothing yet checks them across the whole application at once, which
@@ -35,6 +42,7 @@ test.describe("Local MVP phone interaction", () => {
   test("reflows every route across the accepted phone range", async ({
     page,
   }, testInfo) => {
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(`${testInfo.project.name} ${Date.now()}`);
 
     try {
@@ -65,113 +73,117 @@ test.describe("Local MVP phone interaction", () => {
       });
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 
   test("asks for the right keyboard wherever a number is entered", async ({
     page,
   }, testInfo) => {
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(`${testInfo.project.name} ${Date.now()}`);
 
     try {
-      // Every screen that takes a number, and what each number is: reps are
-      // whole, so they ask for the numeric keypad; loads, weights, and
-      // measurements are decimal.
-      const numericScreens = [
+      // The redesign enters workout, prescription and correction numbers on
+      // value wheels and steppers (PLAN steps 4, 10 and 15), so those screens
+      // raise no keyboard at all; none may fall back to a browser number
+      // spinner.
+      for (const url of [
         "/exercises/new",
         `/programs/${fixture.programId}/splits/new`,
         "/workout/current",
-        `/body/weight/${weighInAt}/edit`,
-        `/body/measurements/${fixture.typeId}/${measuredAt}/edit`,
         `/history/workouts/${fixture.workoutId}/edit`,
-      ];
-
-      for (const url of numericScreens) {
+      ]) {
         await page.goto(url);
-        const modes = await page.evaluate(() =>
-          [...document.querySelectorAll("input")]
-            .filter((input) => input.type !== "hidden")
-            .map((input) => ({
-              label:
-                input.getAttribute("aria-label") ??
-                document
-                  .querySelector(`label[for="${input.id}"]`)
-                  ?.textContent?.trim() ??
-                input.id,
-              type: input.type,
-              inputMode: input.inputMode,
-              className: input.className,
-            })),
-        );
+        await expect(
+          page.locator('input[type="number"]'),
+          `${url}: numbers come from wheels and steppers`,
+        ).toHaveCount(0);
+      }
 
-        for (const field of modes) {
-          // A numeric field is the one the application styles as numeric; a
-          // date input carries its own picker and needs no inputmode.
-          if (!field.className.includes("pf-numeric")) continue;
-          expect(
-            ["decimal", "numeric"],
-            `${url}: ${field.label} should request a numeric keyboard`,
-          ).toContain(field.inputMode);
-        }
+      // What is still typed is Body's weights and measurements, in its entry
+      // panel (step 20); both are decimal.
+      for (const [url, trigger, label] of [
+        ["/body/weight", "Add weigh-in", "Weight (kg)"],
+        [
+          `/body/measurements/${fixture.typeId}`,
+          "Record measurement",
+          "Measurement (cm)",
+        ],
+      ] as const) {
+        await page.goto(url);
+        const open = page.getByRole("button", { name: trigger });
+        await awaitHydration(open);
+        await open.click();
+        await expect(
+          page.getByRole("dialog").getByLabel(label),
+          `${url}: ${label} should request a decimal keyboard`,
+        ).toHaveAttribute("inputmode", "decimal");
       }
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 
-  test("offers named reorder controls and saves a completed reorder", async ({
+  test("reorders by holding or with Alt and an arrow, and saves a completed reorder", async ({
     page,
   }, testInfo) => {
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(`${testInfo.project.name} ${Date.now()}`);
 
     try {
-      // MVP-UX-002 as T-050 corrected it: every reorderable list carries a
-      // pair of named controls on each row, unavailable at the ends. The
-      // program holds two splits, so both ends are visible at once.
+      // MVP-UX-002 as the redesign states it: the paired Move buttons went in
+      // steps 5 and 14. Each reorderable list says in its heading that a row
+      // is held to reorder it, and a focused row moves with Alt and an arrow.
       await page.goto(`/programs/${fixture.programId}/edit`);
-      const firstUp = page.getByRole("button", {
-        name: `Move ${fixture.splitA} up`,
+      await expect(page.getByText("Hold to reorder")).toBeVisible();
+      const firstRow = page.getByRole("link", {
+        name: `${fixture.splitA}, position 1 of 2`,
       });
-      const firstDown = page.getByRole("button", {
-        name: `Move ${fixture.splitA} down`,
-      });
-      const lastUp = page.getByRole("button", {
-        name: `Move ${fixture.splitB} up`,
-      });
-      const lastDown = page.getByRole("button", {
-        name: `Move ${fixture.splitB} down`,
-      });
-      await expect(firstUp).toBeDisabled();
-      await expect(firstDown).toBeEnabled();
-      await expect(lastUp).toBeEnabled();
-      await expect(lastDown).toBeDisabled();
+      await expect(firstRow).toBeVisible();
+      // The row is a real phone target rather than a hairline strip.
+      const box = await firstRow.boundingBox();
+      expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
 
-      // Each control is a real phone target, not an icon a thumb misses.
-      for (const control of [firstDown, lastUp]) {
-        const box = await control.boundingBox();
-        expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
-        expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
-      }
+      // The split editor carries the same affordance.
+      await page.goto(`/splits/${fixture.splitBId}/edit`);
+      await expect(page.getByText("Hold to reorder")).toBeVisible();
+      await expect(
+        page.getByRole("region", {
+          name: `${fixture.exercise}, position 1 of 1`,
+        }),
+      ).toBeVisible();
 
-      // The other reorderable lists carry the same controls.
-      for (const [url, name] of [
-        [`/splits/${fixture.splitBId}/edit`, fixture.exercise],
-        ["/workout/current", fixture.exercise],
-        [`/history/workouts/${fixture.workoutId}/edit`, fixture.exercise],
-      ] as const) {
-        await page.goto(url);
-        await expect(
-          page.getByRole("button", { name: `Move ${name} up` }),
-        ).toBeVisible();
-        await expect(
-          page.getByRole("button", { name: `Move ${name} down` }),
-        ).toBeVisible();
-      }
+      // The workout overview describes the gesture on each row.
+      await page.goto("/workout/current?view=overview");
+      await expect(
+        page.getByRole("region", {
+          name: `${fixture.exercise}, position 1 of 1`,
+        }),
+      ).toHaveAccessibleDescription(
+        "Hold an exercise to drag it, or press Alt with the up or down arrow to move it.",
+      );
+
+      // The workout correction moves an exercise from its own Actions panel
+      // (step 10).
+      await page.goto(`/history/workouts/${fixture.workoutId}/edit`);
+      const correctionActions = page.getByRole("button", {
+        name: `Actions for ${fixture.exercise}`,
+      });
+      await awaitHydration(correctionActions);
+      await correctionActions.click();
+      const panel = page.getByRole("dialog", { name: "Actions" });
+      await expect(
+        panel.getByRole("button", { name: "Move down" }),
+      ).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(panel).not.toBeAttached();
 
       await page.goto(`/programs/${fixture.programId}/edit`);
-      await page
-        .getByRole("button", { name: `Move ${fixture.splitA} down` })
-        .click();
+      await awaitHydration(firstRow);
+      await firstRow.focus();
+      await page.keyboard.press("Alt+ArrowDown");
       await expect(page.getByText("Order saved.")).toBeVisible();
 
       // No save control appears for the order: it is already saved.
@@ -181,42 +193,43 @@ test.describe("Local MVP phone interaction", () => {
 
       // And it survives a reload, which is what "saved" has to mean.
       await page.reload();
-      const rows = page.getByRole("link", {
-        name: new RegExp(`${fixture.splitA}|${fixture.splitB}`),
-      });
-      await expect(rows.first()).toContainText(fixture.splitB);
+      await expect(
+        page.getByRole("link", { name: `${fixture.splitB}, position 1 of 2` }),
+      ).toBeVisible();
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 
   test("asks before every destructive removal", async ({ page }, testInfo) => {
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(`${testInfo.project.name} ${Date.now()}`);
 
     try {
       // MVP-UX-003 names three cases explicitly; ADR-0024 added the
-      // definition deletions, which the same rule covers.
+      // definition deletions, which the same rule covers. A screen's own
+      // deletion is an Actions panel entry since steps 9, 15 and 17.
       await expectConfirmed(page, `/history/workouts/${fixture.workoutId}`, {
-        name: "Delete workout",
-        exact: true,
+        action: "Delete workout",
       });
-      await expectConfirmed(page, "/workout/current/finish", {
-        name: "Discard Workout",
-      });
-      await expectConfirmed(page, `/exercises/${fixture.exerciseId}/edit`, {
-        name: "Delete Exercise",
-      });
-      await expectConfirmed(page, `/splits/${fixture.splitBId}/edit`, {
-        name: "Delete Split",
-      });
-      await expectConfirmed(page, `/body/weight/${weighInAt}/edit`, {
-        name: "Delete Entry",
-      });
+      // The finish route opens the review over the workout, and closing it
+      // leaves the workout's own URL (step 6).
       await expectConfirmed(
         page,
-        `/body/measurements/${fixture.typeId}/${measuredAt}/edit`,
-        { name: "Delete Entry" },
+        "/workout/current/finish",
+        { name: "Discard workout" },
+        "/workout/current",
       );
+      await expectConfirmed(page, `/exercises/${fixture.exerciseId}/edit`, {
+        action: "Delete exercise",
+      });
+      await expectConfirmed(page, `/splits/${fixture.splitBId}/edit`, {
+        action: "Delete split",
+      });
+      // Body's weigh-in and measurement deletions no longer ask a second
+      // time: step 20 makes the Actions panel's pick-then-Continue the
+      // confirmation, and MVP-UX-003 does not name them.
 
       await testInfo.attach(`phone-destructive-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
@@ -224,6 +237,7 @@ test.describe("Local MVP phone interaction", () => {
       });
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 });
@@ -236,22 +250,23 @@ test.describe("Local MVP phone interaction", () => {
 async function expectConfirmed(
   page: Page,
   url: string,
-  control: { name: string; exact?: boolean },
+  control: { name: string } | { action: string },
+  landsOn: string = url,
 ): Promise<void> {
   await page.goto(url);
-  await page
-    .getByRole("button", { name: control.name, exact: control.exact })
-    .first()
-    .click();
+  if ("action" in control) await runScreenAction(page, control.action);
+  else {
+    const button = page.getByRole("button", { name: control.name }).first();
+    await awaitHydration(button);
+    await button.click();
+  }
 
+  const named = "action" in control ? control.action : control.name;
   const dialog = page.getByRole("alertdialog");
-  await expect(
-    dialog,
-    `${url}: ${control.name} must confirm first`,
-  ).toBeVisible();
+  await expect(dialog, `${url}: ${named} must confirm first`).toBeVisible();
   await dialog.getByRole("button", { name: "Cancel" }).click();
   await expect(dialog).not.toBeVisible();
-  await expect(page).toHaveURL(new RegExp(`${escapeRegExp(url)}$`));
+  await expect(page).toHaveURL(new RegExp(`${escapeRegExp(landsOn)}$`));
 }
 
 function escapeRegExp(value: string): string {
@@ -287,6 +302,9 @@ function deliveredRoutes(): string[] {
 
 type Fixture = Awaited<ReturnType<typeof seed>>;
 
+// The Body edit routes went with step 20, whose entry panel replaced them, and
+// /today/one-time with the Owner's decision 1 after step 21.
+//
 // One concrete URL per delivered route. A route whose screen needs a record
 // takes it from the fixture, so the sweep always lands on a populated screen
 // rather than an empty state that reflows more easily than the real thing.
@@ -298,17 +316,11 @@ const routeFixtures: Record<string, (fixture: Fixture) => string> = {
   "/body": () => "/body",
   "/body/measurements": () => "/body/measurements",
   "/body/measurements/[typeId]": (f) => `/body/measurements/${f.typeId}`,
-  "/body/measurements/[typeId]/[date]/edit": (f) =>
-    `/body/measurements/${f.typeId}/${measuredAt}/edit`,
-  "/body/measurements/types/[id]/edit": (f) =>
-    `/body/measurements/types/${f.typeId}/edit`,
-  "/body/measurements/types/new": () => "/body/measurements/types/new",
   "/history/exercises": () => "/history/exercises",
   "/history/exercises/[id]": (f) => `/history/exercises/${f.exerciseId}`,
   "/history/splits": () => "/history/splits",
   "/history/splits/[id]": (f) => `/history/splits/${f.splitAId}`,
   "/body/weight": () => "/body/weight",
-  "/body/weight/[date]/edit": () => `/body/weight/${weighInAt}/edit`,
   "/history/workouts": () => "/history/workouts",
   "/history/workouts/[id]": (f) => `/history/workouts/${f.workoutId}`,
   "/history/workouts/[id]/edit": (f) => `/history/workouts/${f.workoutId}/edit`,
@@ -318,7 +330,6 @@ const routeFixtures: Record<string, (fixture: Fixture) => string> = {
   "/programs/new": () => "/programs/new",
   "/splits/[id]/edit": (f) => `/splits/${f.splitBId}/edit`,
   "/today": () => "/today",
-  "/today/one-time": () => "/today/one-time",
   "/workout/current": () => "/workout/current",
   "/workout/current/finish": () => "/workout/current/finish",
 };

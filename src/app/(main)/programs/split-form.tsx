@@ -39,6 +39,7 @@ import {
 } from "@/shared/ui";
 
 import "./split-form.css";
+import { failureMessage } from "@/shared/application/operation-result";
 
 /*
  * The Split editor — the prototype's screen 12, with Add exercise to split,
@@ -230,7 +231,7 @@ export function SplitForm({
     setBusy(false);
     if (!result.ok) {
       setInvalid(Boolean(result.error.fieldErrors?.name));
-      reportFailure(result.error.message);
+      reportFailure(failureMessage(result.error));
       return;
     }
     setSavedName(name);

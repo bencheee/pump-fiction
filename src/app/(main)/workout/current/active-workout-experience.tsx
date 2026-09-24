@@ -44,8 +44,6 @@ import "./delivery-cue.css";
 import { baseModeOf, SetQueue } from "./set-queue";
 import { WorkoutOverview } from "./workout-overview";
 
-type RowFeedback = Readonly<{ kind: "error" | "notice"; message: string }>;
-
 export function ActiveWorkoutExperience({
   initial,
   serverNow,
@@ -88,9 +86,6 @@ export function ActiveWorkoutExperience({
   const [placeholderIds, setPlaceholderIds] = useState<ReadonlySet<string>>(
     new Set(),
   );
-  const [feedback, setFeedback] = useState<
-    Readonly<Record<string, RowFeedback>>
-  >({});
   // The clock's baseline, and the one value on this screen that may not be
   // read from the device. `Date.now()` here runs twice — once in the server
   // render, once at hydration — and the two are apart by however long the HTML
@@ -293,24 +288,6 @@ export function ActiveWorkoutExperience({
   const resolvedSetId = current?.set.id ?? null;
   if (resolvedSetId !== cursorSetId) setCursorSetId(resolvedSetId);
 
-  const firstError = useMemo(() => {
-    for (const exercise of workout.exercises)
-      for (const set of exercise.sets) {
-        const entry = feedback[set.id];
-        if (entry?.kind === "error") return entry.message;
-      }
-    return undefined;
-  }, [feedback, workout.exercises]);
-
-  function setRowFeedback(setId: string, entry: RowFeedback | undefined) {
-    setFeedback((current) => {
-      const next = { ...current };
-      if (entry === undefined) delete next[setId];
-      else next[setId] = entry;
-      return next;
-    });
-  }
-
   function updateSet(
     set: WorkoutSet,
     mode: ExerciseLoadMode,
@@ -327,7 +304,6 @@ export function ActiveWorkoutExperience({
           : set.bandStrength,
       reps: changes.reps !== undefined ? changes.reps : set.reps,
     });
-    if (feedback[set.id]?.kind === "error") setRowFeedback(set.id, undefined);
   }
 
   function changeMode(set: WorkoutSet, mode: ExerciseLoadMode) {
@@ -340,15 +316,6 @@ export function ActiveWorkoutExperience({
       bandStrength: change.set.bandStrength,
       reps: change.set.reps,
     });
-    setRowFeedback(
-      set.id,
-      change.clearedLabels.length > 0
-        ? {
-            kind: "notice",
-            message: `Cleared ${change.clearedLabels.join(" and ")}.`,
-          }
-        : undefined,
-    );
   }
 
   /* `rowDragEnd` (line 3574): the row leaves its place and is put back in at
@@ -421,9 +388,8 @@ export function ActiveWorkoutExperience({
     });
   }
 
-  const cue = firstError
-    ? { kind: "validation" as const, message: firstError }
-    : status.state === "saving"
+  const cue =
+    status.state === "saving"
       ? { kind: "saving" as const, message: "Saving…" }
       : status.state === "save_failed"
         ? {

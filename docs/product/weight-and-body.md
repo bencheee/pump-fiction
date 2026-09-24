@@ -44,7 +44,7 @@ Its range is a trailing window that ends on the local date, as every chart's is,
 
 ## Body tracker
 
-The user defines arbitrary measurement types in Body. A type has a name; every measurement is in centimetres, which is shown in the label beneath the name rather than as a field of its own, and there is no archived state. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
+The user defines arbitrary measurement types in Body. A type has a name; every measurement is in centimetres, which the measurement panel states beneath its name field and every value carries, rather than as a field of its own, and there is no archived state. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Each type permits at most one entry per local calendar date; an entry stores date and a decimal value in centimeters.
 
 Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 

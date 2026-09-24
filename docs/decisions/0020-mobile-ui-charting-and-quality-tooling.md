@@ -1,6 +1,6 @@
 # ADR-0020: Mobile UI, charting, and quality tooling
 
-- **Status:** Accepted
+- **Status:** Accepted; its charting section is superseded by [ADR-0033](0033-charts-are-the-designs-own-bars.md)
 
 ## Context
 
@@ -22,9 +22,9 @@ Do not adopt a complete styled component kit or CSS-in-JS runtime for the MVP. E
 
 ### Charting
 
-Use Recharts stable `3.x`, with `react-is` aligned to React `19.x` as required by Recharts. Render charts inside feature-owned Client Components and load chart code only on routes that need it.
+Superseded by [ADR-0033](0033-charts-are-the-designs-own-bars.md): every chart is the application's own bar chart card, and Recharts has left the dependencies. What follows still holds.
 
-Application query/domain services calculate ranges, aggregates, PR eligibility, assisted-weight direction, and other product semantics. They return neutral serializable chart series. Chart components handle only presentation, responsive sizing, formatting, interaction, and accessible labeling; Recharts does not become a business-calculation layer.
+Application query/domain services calculate ranges, aggregates, PR eligibility, assisted-weight direction, and other product semantics. They return neutral serializable chart series. Chart components handle only presentation, responsive sizing, formatting, interaction, and accessible labeling and do not become a business-calculation layer.
 
 Charts must fit phone widths without horizontal table scrolling. A chart is never the sole representation of important progress information: provide the accepted textual summary and/or accessible data list alongside it. Respect reduced-motion preferences and do not require hover-only interaction.
 

@@ -1,7 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
 
+import { openScreenActions, runScreenAction } from "./support/actions";
 import { fillHydrated } from "./support/hydration";
+import { expect, test } from "./support/test";
 
 test.describe("programs mobile experience", () => {
   test("creates, validates, makes current, reorders, advances on deletion, and deletes", async ({
@@ -18,8 +19,8 @@ test.describe("programs mobile experience", () => {
     try {
       for (const exercise of [exerciseA, exerciseB]) {
         await page.goto("/exercises/new");
-        await fillHydrated(page.getByLabel("Name"), exercise);
-        await page.getByRole("button", { name: "Save Exercise" }).click();
+        await fillHydrated(page.getByLabel("Exercise name"), exercise);
+        await runScreenAction(page, "Save exercise");
         await expect(page).toHaveURL(/\/exercises$/);
         await expect(page.getByText("Exercise saved.")).toBeVisible();
       }
@@ -30,80 +31,101 @@ test.describe("programs mobile experience", () => {
         .getByRole("link", { name: "Add program", exact: true })
         .click();
       await fillHydrated(page.getByLabel("Program name"), program);
-      await page.getByRole("button", { name: "Save Program" }).click();
+      await runScreenAction(page, "Save program");
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program saved.")).toBeVisible();
       await page.getByRole("link", { name: new RegExp(program) }).click();
       await expect(page).toHaveURL(/\/programs\/[0-9a-f-]+\/edit$/);
       const programEditUrl = page.url();
 
-      // Split validation keeps the form open; a valid save returns to the program.
-      await page.getByRole("link", { name: "Add Split" }).click();
-      await page.getByLabel("Split name").fill(splitA);
-      await page.getByRole("button", { name: "Add Exercise" }).click();
+      // Split validation keeps the form open; a valid save returns to the
+      // program. The steppers can no longer cross a rep range (step 15), so
+      // the refusal proven here is the missing name.
+      await page.getByRole("link", { name: "Add split" }).click();
+      await page.getByRole("button", { name: "Add exercise" }).click();
       await page
-        .getByRole("dialog")
+        .getByRole("dialog", { name: "Add exercise" })
         .getByRole("button", { name: exerciseA })
         .click();
-      await page.getByLabel("Max reps").fill("4");
-      await page.getByRole("button", { name: "Save Split" }).click();
-      await expect(
-        page.getByText("Maximum reps must be at least the minimum reps."),
-      ).toBeVisible();
-      await page.getByLabel("Max reps").fill("12");
-      await page.getByRole("button", { name: "Save Split" }).click();
+      await runScreenAction(page, "Save split");
+      await expect(page.getByText("Enter a split name.")).toBeVisible();
+      await expect(page.getByLabel("Split name")).toHaveAttribute(
+        "aria-invalid",
+        "true",
+      );
+      await expect(page).toHaveURL(/\/splits\/new$/);
+      await page.getByLabel("Split name").fill(splitA);
+      await runScreenAction(page, "Save split");
       await expect(page).toHaveURL(programEditUrl);
       await expect(page.getByText("Split saved.")).toBeVisible();
 
-      await page.getByRole("link", { name: "Add Split" }).click();
-      await page.getByLabel("Split name").fill(splitB);
-      await page.getByRole("button", { name: "Add Exercise" }).click();
+      await page.getByRole("link", { name: "Add split" }).click();
+      await fillHydrated(page.getByLabel("Split name"), splitB);
+      await page.getByRole("button", { name: "Add exercise" }).click();
       await page
-        .getByRole("dialog")
+        .getByRole("dialog", { name: "Add exercise" })
         .getByRole("button", { name: exerciseB })
         .click();
-      await page.getByRole("button", { name: "Save Split" }).click();
+      await runScreenAction(page, "Save split");
       await expect(page).toHaveURL(programEditUrl);
 
       // Making the program current chooses the first split of its rotation.
-      await page.getByRole("button", { name: "Make Current Program" }).click();
+      await runScreenAction(page, "Make current program");
       await page
-        .getByRole("dialog")
+        .getByRole("dialog", { name: "Choose the first split" })
         .getByRole("button", { name: splitB })
         .click();
       await expect(page.getByText("Program is now current.")).toBeVisible();
       await expect(page.getByText("Current program")).toBeVisible();
-      await expect(page.getByText("Next", { exact: true })).toBeVisible();
+      await expect(
+        page
+          .getByRole("link", { name: new RegExp(splitB) })
+          .getByText("Next", { exact: true }),
+      ).toBeVisible();
 
-      await page.getByRole("button", { name: `Move ${splitA} down` }).click();
+      // Reorder is hold-drag or Alt+Arrow on the row itself (steps 5 and 14).
+      await page.getByRole("link", { name: new RegExp(splitA) }).focus();
+      await page.keyboard.press("Alt+ArrowDown");
       await expect(page.getByText("Order saved.")).toBeVisible();
-      await page.getByRole("button", { name: "Set Next Split" }).click();
+      await expect(
+        page.getByRole("link", { name: `${splitA}, position 2 of 2` }),
+      ).toBeVisible();
+      await runScreenAction(page, "Set next split");
       await page
-        .getByRole("dialog")
+        .getByRole("dialog", { name: "Set next split" })
         .getByRole("button", { name: splitA })
         .click();
       await expect(page.getByText("Next split updated.")).toBeVisible();
 
       // Deleting the next split moves the pointer to its successor.
       await page.getByRole("link", { name: new RegExp(splitA) }).click();
-      await page.getByRole("button", { name: "Delete Split" }).click();
+      await expect(page).toHaveURL(/\/splits\/[0-9a-f-]+\/edit$/);
+      await runScreenAction(page, "Delete split");
       await expect(page.getByRole("alertdialog")).toContainText(splitB);
       await page
         .getByRole("alertdialog")
-        .getByRole("button", { name: "Delete Split" })
+        .getByRole("button", { name: "Delete split" })
         .click();
       await expect(page).toHaveURL(programEditUrl);
       await expect(page.getByText("Split deleted.")).toBeVisible();
-      await expect(page.getByText("Next", { exact: true })).toBeVisible();
-
-      // The last split of the current program cannot be deleted.
-      await page.getByRole("link", { name: new RegExp(splitB) }).click();
       await expect(
-        page.getByRole("button", { name: "Delete Split" }),
-      ).toBeDisabled();
-      await expect(
-        page.getByText("The current program must keep at least one split."),
+        page
+          .getByRole("link", { name: new RegExp(splitB) })
+          .getByText("Next", { exact: true }),
       ).toBeVisible();
+
+      // The last split of the current program cannot be deleted. Step 15
+      // (`sfCanDelete`) no longer offers the entry, where it used to be a
+      // disabled button with an explanation beside it.
+      await page.getByRole("link", { name: new RegExp(splitB) }).click();
+      await expect(page).toHaveURL(/\/splits\/[0-9a-f-]+\/edit$/);
+      const splitActions = await openScreenActions(page);
+      await expect(
+        splitActions.getByRole("button", { name: "Save changes" }),
+      ).toBeVisible();
+      await expect(
+        splitActions.getByRole("button", { name: "Delete split" }),
+      ).toHaveCount(0);
       await page.goto(programEditUrl);
 
       const geometry = await page.evaluate(() => ({
@@ -117,10 +139,10 @@ test.describe("programs mobile experience", () => {
       });
 
       // Deleting the current program leaves no current program.
-      await page.getByRole("button", { name: "Delete Program" }).click();
+      await runScreenAction(page, "Delete program");
       await page
-        .getByRole("alertdialog")
-        .getByRole("button", { name: "Delete Program" })
+        .getByRole("alertdialog", { name: `Delete ${program}?` })
+        .getByRole("button", { name: "Delete program" })
         .click();
       await expect(page).toHaveURL(/\/programs$/);
       await expect(page.getByText("Program deleted.")).toBeVisible();
@@ -128,7 +150,9 @@ test.describe("programs mobile experience", () => {
         page.getByRole("link", { name: new RegExp(program) }),
       ).toHaveCount(0);
       await page.goto("/today");
-      await expect(page.getByText("No proposed workout")).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: "No proposed workout" }),
+      ).toBeVisible();
     } finally {
       await cleanUp({
         program,

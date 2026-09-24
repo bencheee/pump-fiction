@@ -48,4 +48,4 @@ Deleting a program deletes its split templates with it.
 
 If the deleted split was next, the new next split is the first split that followed it in the pre-deletion order, wrapping as needed.
 
-The last split of the current program cannot be deleted. The action is rejected with an explanation that the current program must keep at least one split.
+The last split of the current program cannot be deleted. The split editor does not offer the deletion, and the server rejects it, because the current program must keep at least one split.

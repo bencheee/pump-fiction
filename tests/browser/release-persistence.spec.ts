@@ -1,8 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
 
-import { fillHydrated } from "./support/hydration";
+import { awaitHydration } from "./support/hydration";
+import {
+  rememberCurrentProgram,
+  restoreCurrentProgram,
+} from "./support/current-program";
+import { expect, test } from "./support/test";
 
 // F-010 owns MVP-REL-003 and MVP-REL-004, the two criteria no single Feature
 // could prove: each one is about what happens *between* the Features. Every
@@ -24,6 +28,7 @@ test.describe("Local MVP integration", () => {
     browser,
   }, testInfo) => {
     const stamp = `${testInfo.project.name} ${Date.now()}`;
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(stamp);
 
     try {
@@ -64,14 +69,32 @@ test.describe("Local MVP integration", () => {
         // its accumulated duration rather than restarting.
         // The seed started it 25 minutes ago, so a timer that restarted from
         // zero rather than resuming would read under a minute.
+        // The set queue shows a set's values on its wheels and today's note
+        // in the Note panel (steps 4 and 6).
         await fresh.goto("/workout/current");
+        const firstSet = fresh.getByRole("button", {
+          name: `${fixture.pressName} set 1`,
+        });
+        await awaitHydration(firstSet);
+        await expect(firstSet).toHaveAttribute("data-state", "recorded");
+        await firstSet.click();
         await expect(
-          fresh.getByLabel("kg", { exact: true }).first(),
-        ).toHaveValue("60");
-        await expect(fresh.getByLabel("Reps").first()).toHaveValue("8");
+          fresh
+            .getByRole("group", { name: "Load" })
+            .locator("[data-wheel-value]"),
+        ).toHaveText(/^60kg/);
         await expect(
-          fresh.getByLabel("Today's note · saved with this workout"),
-        ).toHaveValue(fixture.workoutNote);
+          fresh
+            .getByRole("group", { name: "Reps" })
+            .locator("[data-wheel-value]"),
+        ).toHaveText(/^8reps/);
+        await fresh.getByRole("button", { name: "Exercise note" }).click();
+        await expect(
+          fresh
+            .getByRole("dialog", { name: "Note" })
+            .getByText(`Today: ${fixture.workoutNote}`, { exact: false }),
+        ).toBeVisible();
+        await fresh.keyboard.press("Escape");
         await expect(fresh.getByLabel("Active duration")).toHaveText(
           /^(2[5-9]|[3-9]\d):\d{2}$/,
         );
@@ -80,6 +103,7 @@ test.describe("Local MVP integration", () => {
       }
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 
@@ -87,13 +111,16 @@ test.describe("Local MVP integration", () => {
     page,
   }, testInfo) => {
     const stamp = `${testInfo.project.name} ${Date.now()}`;
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seed(stamp);
     const client = adminClient();
 
     try {
       // The saved workout as it stands, before anything upstream moves.
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}`);
-      await expect(page.getByText(fixture.pressName)).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: fixture.pressName }),
+      ).toBeVisible();
       await expect(page.getByText(fixture.pressNote)).toBeVisible();
       await expect(page.getByText("60 kg × 8")).toBeVisible();
 
@@ -111,7 +138,9 @@ test.describe("Local MVP integration", () => {
       // the half of MVP-REL-004 that only a cross-Feature scenario can reach:
       // F-005 owns the edit and F-008 owns the snapshot that must not move.
       await page.reload();
-      await expect(page.getByText(fixture.pressName)).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: fixture.pressName }),
+      ).toBeVisible();
       await expect(page.getByText(fixture.pressNote)).toBeVisible();
       await expect(page.getByText(renamed)).toHaveCount(0);
       await expect(page.getByText("A different note entirely")).toHaveCount(0);
@@ -124,7 +153,9 @@ test.describe("Local MVP integration", () => {
       await expect(page.getByText(fixture.chinName)).toHaveCount(0);
 
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}`);
-      await expect(page.getByText(fixture.chinName)).toBeVisible();
+      await expect(
+        page.getByRole("heading", { name: fixture.chinName }),
+      ).toBeVisible();
       await expect(page.getByText("× 12")).toBeVisible();
       await expect(page.getByText("No longer in the library")).toBeVisible();
 
@@ -140,12 +171,14 @@ test.describe("Local MVP integration", () => {
       await rpc(client, "delete_split", { p_split_id: fixture.pushSplitId });
 
       // The saved workout prints its split name in the top bar, the page
-      // heading, and the summary list, so the snapshot is read from the
-      // summary entry rather than from all three at once.
+      // heading, and its facts, so the snapshot is read from the Split fact
+      // (step 9) rather than from all three at once.
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}`);
       await expect(
-        page.getByRole("definition").filter({ hasText: fixture.pushSplit }),
-      ).toBeVisible();
+        page
+          .locator("[data-workout-detail-fact]")
+          .filter({ hasText: /^Split/ }),
+      ).toContainText(fixture.pushSplit);
       await page.goto("/history/splits");
       await expect(
         page.getByRole("link", { name: new RegExp(fixture.pushSplit) }).first(),
@@ -156,11 +189,23 @@ test.describe("Local MVP integration", () => {
       // The first entry after a full navigation waits for hydration: WebKit
       // otherwise types into a controlled field before React attaches to it,
       // which is the race T-037 recorded.
+      // A set is corrected in its own panel on the value wheels (step 10).
       await page.goto(`/history/workouts/${fixture.completedWorkoutId}/edit`);
-      await fillHydrated(page.getByLabel("Kilograms").first(), "95");
+      const correctSet = page.getByRole("button", {
+        name: `Correct set 1 of ${fixture.pressName}, 60 kg × 8`,
+      });
+      await awaitHydration(correctSet);
+      await correctSet.click();
+      const setPanel = page.getByRole("dialog", { name: "Correct set" });
+      await setPanel
+        .getByRole("group", { name: "Load" })
+        .getByRole("button", { name: "65", exact: true })
+        .click();
+      await setPanel.getByRole("button", { name: "Apply to set" }).click();
+      await expect(setPanel).not.toBeAttached();
       await page.getByRole("button", { name: "Save corrections" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
-      await expect(page.getByText("95 kg × 8")).toBeVisible();
+      await expect(page.getByText("65 kg × 8")).toBeVisible();
 
       await page.goto("/history/exercises");
       await page
@@ -170,7 +215,7 @@ test.describe("Local MVP integration", () => {
       await expect(
         page
           .getByRole("region", { name: "Weight" })
-          .getByText("95 kg × 8")
+          .getByText("65 kg × 8")
           .first(),
       ).toBeVisible();
       await testInfo.attach(
@@ -195,6 +240,7 @@ test.describe("Local MVP integration", () => {
       });
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 });
@@ -210,8 +256,12 @@ async function expectEverythingPresent(
 ): Promise<void> {
   // Exercise definitions.
   await page.goto("/exercises");
-  await expect(page.getByText(fixture.pressName)).toBeVisible();
-  await expect(page.getByText(fixture.chinName)).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: new RegExp(fixture.pressName) }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: new RegExp(fixture.chinName) }),
+  ).toBeVisible();
 
   // Programs, the current-program flag, and the rotation pointer. The list row
   // carries all three, and the pointer sits on the second split rather than
@@ -226,14 +276,15 @@ async function expectEverythingPresent(
 
   // The splits themselves.
   await page.goto(`/programs/${fixture.programId}/edit`);
-  await expect(page.getByText(fixture.pushSplit)).toBeVisible();
-  await expect(page.getByText(fixture.pullSplit)).toBeVisible();
-  await expect(page.getByText(fixture.legsSplit)).toBeVisible();
+  for (const split of [fixture.pushSplit, fixture.pullSplit, fixture.legsSplit])
+    await expect(
+      page.getByRole("link", { name: new RegExp(split) }),
+    ).toBeVisible();
 
   // The active workout, offered from Today.
   await page.goto("/today");
   await expect(
-    page.getByRole("link", { name: "Resume Workout" }),
+    page.getByRole("link", { name: "Resume workout" }),
   ).toBeVisible();
 
   // Completed workouts.
@@ -246,19 +297,20 @@ async function expectEverythingPresent(
     .first();
   await expect(secondCompleted).toBeVisible();
 
-  // Weight entries.
+  // Weight entries. Each weigh-in row opens the entry panel (step 20); the
+  // database is shared with real use, so only this spec's own are counted.
   await page.goto("/body/weight");
-  await expect(
-    page.getByRole("list", { name: "Weigh-ins" }).getByRole("link"),
-  ).toHaveCount(2);
+  for (const label of ["Fri 8 May", "Mon 11 May"])
+    await expect(
+      page.getByRole("button", { name: `Edit weigh-in ${label}` }),
+    ).toHaveCount(1);
 
   // Measurement types and their entries.
   await page.goto("/body/measurements");
-  const measurements = page.getByRole("list", { name: "Measurements" });
   await expect(
-    measurements.getByRole("link", { name: new RegExp(fixture.arm) }),
+    page.getByRole("link", { name: new RegExp(fixture.arm) }),
   ).toBeVisible();
-  const waistRow = measurements.getByRole("link", {
+  const waistRow = page.getByRole("link", {
     name: new RegExp(fixture.waist),
   });
   await expect(waistRow).toContainText("84 cm");

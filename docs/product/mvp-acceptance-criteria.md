@@ -43,7 +43,7 @@ Given an active program with a next active split, Today shows the local date, th
 
 ### MVP-TOD-002 — Today-only split choice
 
-Given another active split is selected through **Choose Another Split**, starting and completing it records a split workout and contributes to that split's statistics, but does not change or advance the rotation pointer.
+Given another active split is selected through **Another split**, starting and completing it records a split workout and contributes to that split's statistics, but does not change or advance the rotation pointer.
 
 ### MVP-TOD-003 — One-time workout
 
@@ -107,7 +107,7 @@ A split belongs to one program and has a name unique within that program. It can
 
 ### MVP-PRG-003 — Template ordering
 
-The user can reorder splits in a program and exercises in a split through a named control on every row. Reordering does not change saved or active workouts. Reordering splits preserves the identity of the current next split and changes only what follows it.
+The user can reorder splits in a program and exercises in a split by holding a row and dragging it, or by moving a focused row with Alt and an arrow key. Reordering does not change saved or active workouts. Reordering splits preserves the identity of the current next split and changes only what follows it.
 
 ### MVP-PRG-004 — Set next split
 
@@ -123,7 +123,7 @@ Completing a Today-only alternate split or a one-time workout never advances rot
 
 ### MVP-PRG-007 — Delete a split
 
-Deleting a split removes it and its prescriptions permanently while every workout it produced keeps its name snapshot in History. If it was next, the first split after it in the prior order—wrapping if needed—becomes next. The app rejects an attempt to delete the last split of the current program and explains that the current program must keep at least one split.
+Deleting a split removes it and its prescriptions permanently while every workout it produced keeps its name snapshot in History. If it was next, the first split after it in the prior order—wrapping if needed—becomes next. The split editor does not offer deletion for the last split of the current program, and the server rejects such a deletion, because the current program must keep at least one split.
 
 ## Active workout
 
@@ -251,7 +251,7 @@ Canonical behavior: [`weight-and-body.md`](weight-and-body.md#body-tracker).
 
 ### MVP-BOD-001 — Measurement-type lifecycle
 
-In Body, the user can create an arbitrary named measurement type and delete a type that has no entries. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Every measurement is in centimetres, which is shown in the label beneath each measurement's name rather than as a field or a section of its own.
+In Body, the user can create an arbitrary named measurement type and delete a type that has no entries. A type that still has entries cannot be deleted, because those entries are the only record of that measurement. Every measurement is in centimetres, which the measurement panel states beneath its name field (`Recorded in centimetres.`) and every value carries, rather than as a field or a section of its own.
 
 ### MVP-BOD-002 — Measurement entry validation
 
@@ -259,7 +259,7 @@ For each type, at most one decimal-centimeter value exists per local date. Body 
 
 ### MVP-BOD-003 — Measurement detail
 
-Detail shows latest value/date, latest change (`latest − previous`), total change (`latest − first`), all entries, and month/quarter/year/all chart ranges. Increase and decrease are not automatically labelled good or bad.
+Detail shows latest value/date, latest change (`latest − previous`), total change (`latest − first`), all entries, and week/month/quarter/year chart ranges, opening on quarter. Increase and decrease are not automatically labelled good or bad.
 
 ### MVP-BOD-004 — Recalculation
 
@@ -275,7 +275,7 @@ All required flows are operable at phone viewport widths without horizontal tabl
 
 ### MVP-UX-002 — State and reorder affordances
 
-Every reorderable list exposes its reordering on each row, as a pair of named controls that move the row up and down and are unavailable at the ends of the list. Completing a reorder auto-saves the new order.
+Every reorderable list says in its heading that a row is held to reorder it, lets a held row be dragged into place, and moves a focused row one place with Alt and an arrow key, so reordering needs no pointer. Completing a reorder of a saved list auto-saves the new order. The one exception is the historical workout correction, which the prototype gives no reorder of its own: there an exercise moves one place at a time through `Move up` and `Move down` in its Actions panel (redesign step 10).
 
 ### MVP-UX-003 — Destructive confirmation
 

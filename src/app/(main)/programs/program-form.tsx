@@ -34,6 +34,7 @@ import {
 } from "@/shared/ui";
 
 import "./program-form.css";
+import { failureMessage } from "@/shared/application/operation-result";
 
 /*
  * The Program screen — the prototype's screen 11, with Set next split, its
@@ -118,7 +119,7 @@ export function ProgramForm({ program }: { program?: Program }) {
     setBusy(false);
     if (!result.ok) {
       setInvalid(Boolean(result.error.fieldErrors?.name));
-      reportFailure(result.error.message);
+      reportFailure(failureMessage(result.error));
       return;
     }
     setSavedName(validation.value.name);

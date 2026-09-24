@@ -150,7 +150,12 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
         {view === "daily" ? (
           <BarChart
             variant="body"
-            points={dailyPoints(series, range, overview.localDate)}
+            points={dailyPoints(
+              series,
+              range,
+              overview.localDate,
+              firstWeighIn(overview.entries),
+            )}
             summary={dailySummary(series)}
             emptyMessage="No weigh-in falls inside this range."
             signature={`daily|${range}|${series.points.length}`}
@@ -249,14 +254,15 @@ const chartViews: readonly { key: ChartView; label: string }[] = [
 /**
  * Every day of the range, a weigh-in or not (Owner, 2026-09-24): a day with
  * none is an empty column, so a gap in the record shows as a gap. The range
- * starts no earlier than the first weigh-in, so a year does not open on
- * months before the record began. The heights are the shared chart scale's,
+ * starts no earlier than the first weigh-in the record holds, so a year does
+ * not open on months before the record began. The heights are the shared chart scale's,
  * measured over the days that hold a weigh-in.
  */
 function dailyPoints(
   series: ChartSeries,
   range: ChartRange,
   localDate: string,
+  recordStart: string,
 ): readonly BarChartPoint[] {
   if (series.points.length === 0) return [];
   const byDate = new Map(
@@ -267,8 +273,7 @@ function dailyPoints(
     series.points.map((point, index) => [point.date, heights[index] ?? 0]),
   );
   const from = rangeStart(range, localDate);
-  const first = series.points[0]?.date ?? localDate;
-  const start = from === null || first > from ? first : from;
+  const start = from === null || recordStart > from ? recordStart : from;
   const days: BarChartPoint[] = [];
   for (let day = start; day <= localDate; day = nextDay(day)) {
     const value = byDate.get(day);
@@ -292,6 +297,16 @@ function dailyPoints(
     );
   }
   return days;
+}
+
+/** The earliest date the record holds a weigh-in for. */
+function firstWeighIn(
+  entries: readonly Readonly<{ entryDate: string }>[],
+): string {
+  return entries.reduce(
+    (first, entry) => (entry.entryDate < first ? entry.entryDate : first),
+    entries[0]?.entryDate ?? "",
+  );
 }
 
 /**

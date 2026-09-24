@@ -84,11 +84,11 @@ Canonical decision: [ADR-0019](../decisions/0019-application-boundaries-and-acti
 - Application-owned primitives under `src/shared/ui`; semantic native HTML first
 - Stable `radix-ui` adopted incrementally and wrapped only for complex accessible behaviors
 - No complete styled component kit and no CSS-in-JS runtime for the MVP
-- Recharts stable `3.x` in feature-owned, route-local Client Components
+- One application-owned bar chart card in `src/shared/ui`, with no chart library ([ADR-0033](../decisions/0033-charts-are-the-designs-own-bars.md))
 - Query/domain services own all calculations and return neutral serializable chart series
 - Responsive charts never carry important information without a textual summary and/or accessible data list
 
-The package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, Recharts `3.10.1`, React Is `19.2.8`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`.
+The package baseline locks Tailwind CSS and `@tailwindcss/postcss` `4.3.3`, `radix-ui` `1.6.7`, `@supabase/supabase-js` `2.112.4`, and `server-only` `0.0.1`.
 
 The mobile foundation uses frozen local Barlow fonts and Lucide SVG assets, translates v0.4 tokens into application-owned CSS variables and Tailwind aliases, and provides the safe-area-aware main shell, shared route and not-found conventions, history-backed transient overlay wrappers, and demonstrated cross-feature primitives. Asset/license guidance, component scope, and UI verification commands are canonical in [`mobile-ui-foundation.md`](mobile-ui-foundation.md).
 

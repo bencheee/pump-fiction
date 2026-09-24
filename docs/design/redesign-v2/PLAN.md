@@ -280,8 +280,8 @@ knowing something the prototype does not:
   in History` — and neither invents a colour, a radius or a size.
 - The 48px outline pill carries `box-sizing: border-box`, which the prototype
   gets from the user-agent stylesheet because its pill is a `<button>`. Today's
-  One-time workout is a link and needs it written down to resolve to the same
-  48px. There is no global reset: the prototype has none either, and its `body`
+  One-time workout was a link then, and needed it written down to resolve to
+  the same 48px; it has been a button since the Owner's decisions after step 21. There is no global reset: the prototype has none either, and its `body`
   is `content-box`.
 
 `PageFrame` grew two things this step, both the prototype's: a `screen` name so
@@ -1912,8 +1912,10 @@ card.
   them, but the suites import the forms.
 - `ProgressChart` and the Recharts dependency have no screen left. They go with
   an amendment to ADR-0020.
-- `supabase-program-repository.integration.test.ts` still builds exercises in
-  the model ADR-0023 replaced, and is not in `test:repository`.
+- `supabase-program-repository.integration.test.ts` is not in
+  `test:repository`. (This note first said it built exercises in the model
+  ADR-0023 replaced. It does not; it only needs the local Supabase
+  environment, and it passes.)
 
 ## Owner decisions after step 21
 
@@ -1962,6 +1964,48 @@ The Owner answered the six questions step 21 gathered, on 2026-09-24:
    count chip on History and Body, and the round add button on Programs and
    Exercises. The title is still each screen's `h1`, for assistive technology,
    and draws nothing. Today keeps `Hello Sandro!`.
+
+## The test pass
+
+After the Owner's decisions, on 2026-09-24, every suite was brought to the
+redesigned screens. Where a test asserted something a step deliberately
+changed, it now asserts the new behaviour, with a comment that names the step
+or decision.
+
+- **Removed with the suites that imported them:** the form routes Body's
+  panel replaced (`/body/weight/[date]/edit`, `/body/measurements/types/new`,
+  `/body/measurements/types/[id]/edit`,
+  `/body/measurements/[typeId]/[date]/edit`) with their forms, the unlinked
+  `/today/one-time` name form (decision 1), and `ProgressChart` with Recharts.
+  [ADR-0033](../../decisions/0033-charts-are-the-designs-own-bars.md) amends
+  ADR-0020's charting section.
+- **`supabase-program-repository.integration.test.ts`** is in
+  `test:repository`.
+- **Bugs the suites found, fixed:**
+  - A set that holds a mode but no values read `— kg × —` on the workout
+    detail and the correction, and counted as recorded. It reads `No values`
+    and does not count (ADR-0027), through `hasSetValues`.
+  - The daily weight chart began at the first weigh-in inside the range, so a
+    month whose first weeks held none dropped them. It begins at the first
+    weigh-in the record holds, as decision 4 says.
+  - A refusal with a field reason — a name already in use — toasted the
+    generic message. Body's panel and the exercise, program and split editors
+    now give the field's reason, through `failureMessage`.
+  - With no persistent note, the queue's Note panel opened today's note on a
+    stray ` · `.
+  - The queue kept row feedback nothing drew: a `Cleared added kg.` notice and
+    an error branch nothing wrote. The prototype says nothing when an addition
+    is removed, so the state is gone.
+- **Documentation brought to the screens:** `MVP-BOD-003`'s ranges;
+  `MVP-BOD-001` and weight-and-body.md on where centimetres are stated; and
+  `MVP-UX-002`, which now names the correction's `Move up` / `Move down` (step
+  10) as its one exception.
+- **Known and left:** adding a set or an exercise to the active workout reads
+  the workout once before the command is delivered. The revision guard and
+  the replay make the read harmless; it costs one request.
+- **The browser suite** runs one worker again, as it did before the revert,
+  waits for React's streamed holders before reading a page, and puts back the
+  current program the seeding clears.
 
 ## Progress
 

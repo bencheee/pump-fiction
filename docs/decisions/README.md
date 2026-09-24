@@ -11,7 +11,7 @@ ADRs preserve important cross-cutting product and technical decisions. Removed n
 | [0017](0017-nextjs-app-router-runtime.md) | Accepted | Next.js 16 App Router, React 19, strict TypeScript, and Node.js 24 LTS |
 | [0018](0018-local-supabase-postgres-and-server-data-access.md) | Accepted | Local Supabase PostgreSQL, declarative SQL schemas, and server-only data access |
 | [0019](0019-application-boundaries-and-active-workout-durability.md) | Accepted | Single-app boundaries and durable command outbox for active workouts |
-| [0020](0020-mobile-ui-charting-and-quality-tooling.md) | Accepted | Mobile UI, charting, static checks, and test tooling |
+| [0020](0020-mobile-ui-charting-and-quality-tooling.md) | Superseded in part | Mobile UI, static checks, and test tooling; ADR-0033 replaces its charting |
 | [0023](0023-simplified-exercise-load-mode-model.md) | Accepted | Implied base load mode plus at most one optional addition; no standalone band type |
 | [0024](0024-deletion-with-preserved-history.md) | Accepted | Deletion replaces archiving; snapshots and optional references keep History intact |
 | [0025](0025-active-workout-in-the-main-shell.md) | Accepted | The active workout keeps the bottom navigation; the focused shell is removed |
@@ -20,6 +20,7 @@ ADRs preserve important cross-cutting product and technical decisions. Removed n
 | [0029](0029-one-visibility-rule-for-test-support-routes.md) | Accepted | Both test-support routes are hidden unless `PF_ENABLE_TEST_SUPPORT` is set, so one production server runs the whole browser suite |
 | [0030](0030-body-is-its-own-destination.md) | Superseded in part | Weight and body measurements become a fifth destination; ADR-0032 moves entry from Today to Body |
 | [0032](0032-body-records-its-own-entries.md) | Accepted | Body records its own entries, for today or any earlier date, in one entry panel |
+| [0033](0033-charts-are-the-designs-own-bars.md) | Accepted | Every chart is the application's own bar chart card; Recharts is removed |
 | [0031](0031-shared-password-protects-the-hosted-application.md) | Accepted | One shared password gates the hosted application; the database stays closed by grant rather than by Row Level Security |
 
 ## Lifecycle

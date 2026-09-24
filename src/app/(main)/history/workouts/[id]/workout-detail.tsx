@@ -8,6 +8,10 @@ import { useEffect, useRef, useState, useTransition } from "react";
 import { correctHistoryWorkoutAction } from "@/app/actions/workout-history";
 import { prescriptionText } from "@/features/active-workout/ui/set-queue-presentation";
 import { formatSetChip } from "@/features/active-workout/ui/workout-presentation";
+import {
+  hasSetValues,
+  isRecordedSet,
+} from "@/features/history/domain/exercise-statistics";
 import type {
   HistoryWorkout,
   HistoryWorkoutExercise,
@@ -267,9 +271,7 @@ function ExerciseCard({
   // `ex.planned` (2065) counts every set the workout holds and calls them
   // recorded; a saved workout here can hold a set that was never given values,
   // so this counts the ones that were.
-  const recorded = exercise.sets.filter(
-    (set) => set.loadMode !== null || set.reps !== null,
-  ).length;
+  const recorded = exercise.sets.filter(isRecordedSet).length;
   const tally = `${formatCount(recorded, "set")} recorded`;
 
   return (
@@ -292,7 +294,7 @@ function ExerciseCard({
           <li key={set.id}>
             <span>Set {set.position}</span>
             <span>
-              {set.loadMode === null && set.reps === null
+              {!hasSetValues(set)
                 ? "No values"
                 : formatSetChip(set, exercise.measurementType)}
             </span>

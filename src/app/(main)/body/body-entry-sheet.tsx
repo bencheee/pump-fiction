@@ -40,6 +40,7 @@ import {
 } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+import { failureMessage } from "@/shared/application/operation-result";
 
 /*
  * The Body entry panel — the prototype's screen 20 — ported for step 20 of
@@ -169,7 +170,7 @@ export function BodyEntrySheet({
           })
         : await createMeasurementTypeAction(validation.value);
       setBusy(false);
-      if (!result.ok) return showToast(result.error.message);
+      if (!result.ok) return showToast(failureMessage(result.error));
       finish(
         target.measurement ? "Measurement renamed." : "Measurement added.",
       );
@@ -220,7 +221,7 @@ export function BodyEntrySheet({
         : await createMeasurementEntryAction(validation.value);
     }
     setBusy(false);
-    if (!result.ok) return showToast(result.error.message);
+    if (!result.ok) return showToast(failureMessage(result.error));
     finish(target.kind === "weight" ? "Weigh-in saved." : "Measurement saved.");
   }
 
@@ -238,7 +239,7 @@ export function BodyEntrySheet({
           : await deleteMeasurementEntryAction(existing.id);
     } else return setBusy(false);
     setBusy(false);
-    if (!result.ok) return showToast(result.error.message);
+    if (!result.ok) return showToast(failureMessage(result.error));
     showToast(
       target.kind === "weight"
         ? "Weigh-in deleted."

@@ -1,12 +1,18 @@
 import { randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { expect, test } from "@playwright/test";
+import {
+  rememberCurrentProgram,
+  restoreCurrentProgram,
+} from "./support/current-program";
+import { runScreenAction } from "./support/actions";
+import { expect, test } from "./support/test";
 
 test.describe("Workout History experience", () => {
   test("covers the subsection shell, S13, S14 correction, deletion, and reflow", async ({
     page,
   }, testInfo) => {
     const stamp = `${testInfo.project.name} ${Date.now()}`;
+    const seededProgramId = await rememberCurrentProgram();
     const fixture = await seedCompletedWorkout(stamp);
 
     try {
@@ -46,16 +52,34 @@ test.describe("Workout History experience", () => {
       await expect(page.getByText("No values")).toBeVisible();
 
       // Correcting a set value returns to the detail and shows the new value.
-      await page.getByRole("link", { name: "Edit workout" }).click();
+      // Edit sits in the detail's Actions panel (step 9), and a set is
+      // corrected in its own panel on the value wheels (step 10), where the
+      // form used to hold a kilogram and a reps field per set.
+      await runScreenAction(page, "Edit workout");
       await expect(page).toHaveURL(/\/edit$/);
-      const repsFields = page.getByLabel("Reps");
-      await repsFields.nth(1).fill("6");
-      const kilogramFields = page.getByLabel("Kilograms");
-      await kilogramFields.nth(1).fill("65");
-      await expect(page.getByText("Unsaved changes")).toBeVisible();
+      await expect(page.getByText("Unsaved", { exact: true })).toHaveCount(0);
+      await page
+        .getByRole("button", {
+          name: new RegExp(`^Correct set 2 of ${fixture.exercise}`),
+        })
+        .click();
+      const setPanel = page.getByRole("dialog", { name: "Correct set" });
+      await expect(setPanel.getByText("Not recorded yet")).toBeVisible();
+      await setPanel
+        .getByRole("group", { name: "Load" })
+        .getByRole("button", { name: "5", exact: true })
+        .click();
+      await setPanel
+        .getByRole("group", { name: "Reps" })
+        .getByRole("button", { name: "10", exact: true })
+        .click();
+      await setPanel.getByRole("button", { name: "Apply to set" }).click();
+      await expect(setPanel).not.toBeAttached();
+      await expect(page.getByText("Unsaved", { exact: true })).toBeVisible();
       await page.getByRole("button", { name: "Save corrections" }).click();
       await expect(page).toHaveURL(/\/history\/workouts\/[0-9a-f-]+$/);
-      await expect(page.getByText("65 kg × 6")).toBeVisible();
+      await expect(page.getByText("5 kg × 10")).toBeVisible();
+      await expect(page.getByText("60 kg × 8")).toBeVisible();
       await testInfo.attach(`history-workout-${testInfo.project.name}.png`, {
         body: await page.screenshot({ fullPage: true }),
         contentType: "image/png",
@@ -71,10 +95,7 @@ test.describe("Workout History experience", () => {
 
       // Deleting requires confirmation and returns to the list.
       await page.goto(`/history/workouts/${fixture.workoutId}`);
-      await page
-        .getByRole("button", { name: "Delete workout", exact: true })
-        .first()
-        .click();
+      await runScreenAction(page, "Delete workout");
       const dialog = page.getByRole("alertdialog");
       await expect(dialog).toContainText("Rotation is not affected");
       await dialog
@@ -98,6 +119,7 @@ test.describe("Workout History experience", () => {
       expect(overflow).toBeLessThanOrEqual(1);
     } finally {
       await cleanUp(fixture);
+      await restoreCurrentProgram(seededProgramId);
     }
   });
 });
@@ -108,6 +130,7 @@ type Fixture = Readonly<{
   programId: string;
   split: string;
   nextSplit: string;
+  exercise: string;
 }>;
 
 function adminClient() {
@@ -209,7 +232,14 @@ async function seedCompletedWorkout(stamp: string): Promise<Fixture> {
     p_client_created_at: "2026-08-10T11:00:00Z",
   });
 
-  return { workoutId: workout.id, exerciseId, programId, split, nextSplit };
+  return {
+    workoutId: workout.id,
+    exerciseId,
+    programId,
+    split,
+    nextSplit,
+    exercise,
+  };
 }
 
 async function cleanUp(fixture: Fixture) {

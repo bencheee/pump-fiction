@@ -40,6 +40,7 @@ import {
 } from "@/shared/ui";
 
 import "./exercise-form.css";
+import { failureMessage } from "@/shared/application/operation-result";
 
 /*
  * The Exercise definition — the prototype's screen 14 — ported for step 17 of
@@ -150,7 +151,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     setBusy(false);
     if (!result.ok) {
       setInvalid(Boolean(result.error.fieldErrors?.name));
-      reportFailure(result.error.message);
+      reportFailure(failureMessage(result.error));
       return;
     }
     returnToParent("Exercise saved.");

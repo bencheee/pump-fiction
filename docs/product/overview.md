@@ -28,11 +28,11 @@ Today shows:
 - the next split in the active program rotation;
 - every exercise in the split currently selected for today, in split order;
 - that split's average duration when completed historical data exists;
-- the primary **Start Workout** action;
-- **Choose Another Split**;
+- the primary **Start today's workout** action;
+- **Another split**, which opens **Choose another split**;
 - **One-Time Workout**.
 
-**Choose Another Split** applies only to today's workout. It neither changes nor advances the future rotation.
+**Another split** applies only to today's workout. It neither changes nor advances the future rotation.
 
 **One-Time Workout** opens the Add exercise panel on the active exercise library, and the workout starts, named **One-time workout**, with the exercises the panel adds; closing the panel starts nothing. It is not attached to a split and does not affect rotation. Its exercise performances still contribute to exercise statistics, while it does not contribute to split statistics.
 

@@ -71,6 +71,15 @@ export function isRecordedSet(set: WorkoutSet): boolean {
 }
 
 /**
+ * Whether a set holds any value at all — a load, a band or reps. A set can
+ * carry a mode and nothing else, which is a set with no values, not a
+ * recorded one; what a screen writes for it is "No values".
+ */
+export function hasSetValues(set: WorkoutSet): boolean {
+  return set.loadKg !== null || set.bandStrength !== null || set.reps !== null;
+}
+
+/**
  * Only recorded sets of completed workouts feed personal records and charts.
  * One-time workouts count because they are completed workouts too.
  */

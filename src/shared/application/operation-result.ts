@@ -23,3 +23,15 @@ export function operationFailure(
 ): OperationResult<never> {
   return { ok: false, error };
 }
+
+/**
+ * What a refusal tells the person: the reason a field was refused, which is
+ * the specific one — a name already in use — and the failure's own message
+ * otherwise.
+ */
+export function failureMessage(error: OperationFailure): string {
+  return (
+    Object.values(error.fieldErrors ?? {}).find((list) => list.length)?.[0] ??
+    error.message
+  );
+}

@@ -907,11 +907,15 @@ function LastTimeSheet({
 
 /* Note — the prototype's screen 26 (lines 1380-1394). */
 function NoteSheet({ exercise }: { exercise: WorkoutExercise }) {
-  // `noteText` (line 3169) and `noteColor` (line 3378).
+  // `noteText` (line 3169) and `noteColor` (line 3378). The prototype's
+  // exercises all carry a persistent note; without one, today's stands alone
+  // rather than behind a separator.
   const note =
-    exercise.workoutNote.length > 0
-      ? `${exercise.persistentNote} · Today: ${exercise.workoutNote}`
-      : exercise.persistentNote;
+    exercise.workoutNote.length === 0
+      ? exercise.persistentNote
+      : exercise.persistentNote.length > 0
+        ? `${exercise.persistentNote} · Today: ${exercise.workoutNote}`
+        : `Today: ${exercise.workoutNote}`;
   const hasNote = note.trim().length > 0;
   const previous = exercise.previousWorkoutNote ?? null;
 
