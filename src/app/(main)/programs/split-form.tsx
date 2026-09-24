@@ -12,7 +12,7 @@ import type {
   Exercise,
   ExerciseMeasurementType,
 } from "@/features/exercises/domain/exercise";
-import { exerciseTypeLabels } from "@/features/exercises/ui/exercise-presentation";
+import { exerciseDefinitionDetail } from "@/features/exercises/ui/exercise-presentation";
 import type {
   Program,
   Split,
@@ -393,7 +393,7 @@ export function SplitForm({
           >
             <span>
               <span>{exercise.name}</span>
-              <span>{exerciseDetail(exercise)}</span>
+              <span>{exerciseDefinitionDetail(exercise)}</span>
             </span>
             <Icon name="plus" size={16} />
           </button>
@@ -522,16 +522,6 @@ function PrescriptionCard({
       </div>
     </section>
   );
-}
-
-/**
- * `defDetail` (line 1782): the type, what a set is measured in, and how many
- * load modes the exercise allows — its base mode and the one addition it may
- * carry.
- */
-function exerciseDetail(exercise: Exercise): string {
-  const modes = exercise.allowedLoadModes.length;
-  return `${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${modes} ${modes === 1 ? "mode" : "modes"}`;
 }
 
 function toDraft(item: SplitExercisePrescription): Draft {

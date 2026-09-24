@@ -1,0 +1,80 @@
+/*
+ * The Exercise library, ported from the prototype for step 16 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 898-933, `data-screen-label="Exercises"`
+ *   bound values  lines 2722-2737, 2993-3001
+ *
+ * The title bar, its add button, the search field, the row and the note card
+ * are shared surfaces and live in `src/shared/ui`. What is here is this
+ * screen's own.
+ */
+
+/* Line 905: the field stands under the title bar, outside the scroll. */
+[data-exercises-search] {
+  flex: none;
+  position: relative;
+  margin: 0 20px;
+}
+
+/* The prototype's `.sx` (line 914), with this screen's gap and inset. */
+[data-screen-frame="exercises"] [data-screen-body] {
+  gap: 14px;
+  padding: 16px 20px 22px;
+}
+
+/* Line 915. */
+[data-exercises-lead] {
+  margin: 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* `dfNoResults` (line 930): the shared note card, 6px from its neighbours
+   where the History list gives it 12. */
+[data-screen-frame="exercises"] [data-note-card] {
+  margin: 6px 0;
+}
+
+/* ----- Letter groups ----------------------------------------------------- */
+
+/* `dfGroups` (lines 916-927). */
+[data-exercises-group] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* `g.letter`. */
+[data-exercises-group] > p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-14);
+  color: var(--text-faint);
+}
+
+/* The rows are children of the group in the prototype; the list only carries
+   their number and adds no box of its own. */
+[data-exercises-group] > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* `x.anim` is `rowAnim("dfl", …)` (2733): 34ms a row across the letters, the
+   tenth and every row after it together. */
+[data-exercises-group] > ul > li {
+  animation: ovRowA var(--dur-300) var(--ease)
+    calc(var(--row-index) * var(--stagger-row)) both;
+}
+
+[data-exercises-group][data-row-anim="B"] > ul > li {
+  animation-name: ovRowB;
+}

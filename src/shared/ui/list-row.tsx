@@ -44,8 +44,10 @@ export function ListRow({
   /**
    * `split` takes the taller padding and drops the minimum height. `program`
    * is the Programs list's row: the same frame, its own type (line 757).
+   * `definition` is the Exercise library's (line 917): 72px, and its detail
+   * in the plain 13px grey.
    */
-  variant?: "split" | "program";
+  variant?: "split" | "program" | "definition";
 }) {
   return (
     <Link

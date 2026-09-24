@@ -8,6 +8,7 @@ export function PageFrame({
   screen = "",
   title,
   trailing,
+  under,
   children,
 }: {
   /** Names the screen, so its own stylesheet can reach the shared frame. */
@@ -15,6 +16,11 @@ export function PageFrame({
   title: ReactNode;
   /** The optional trailing item of the title bar — Today's date chip. */
   trailing?: ReactNode;
+  /**
+   * What stands between the title bar and the scroll region and does not
+   * scroll with it — the Exercise library's search field (line 906).
+   */
+  under?: ReactNode;
   children?: ReactNode;
 }) {
   return (
@@ -23,6 +29,7 @@ export function PageFrame({
         <h1>{title}</h1>
         {trailing}
       </div>
+      {under}
       <div data-screen-body="">{children}</div>
     </section>
   );

@@ -226,7 +226,7 @@ reuses the listed component or changes it for everyone.
 | Section head (`Hold to reorder`) | `SectionHead` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
 | Empty card (24px, icon) | `EmptyCard` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
-| List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13 | lists |
+| List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13, `definition` in 16 | lists |
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10, changed in 12 | 4, 10 |
@@ -1491,6 +1491,57 @@ Verification. The MCP was not used; the prototype was read from the local copy.
     `Enter a split name.`
   - The split and its six prescriptions are exactly as they were found.
 
+Step 16 read the prototype from the same byte-exact local copy.
+
+The screen is built almost wholly from surfaces that already exist:
+
+- **the title bar** and **its round add button** (step 13);
+- **the search field** (step 8), which the prototype writes byte for byte as on
+  the History list's exercises tab, only its placeholder and label changed;
+- **the list row**, as a new `definition` variant: 72px where the row is 78,
+  and its detail is 13px words rather than 14px numerals (line 917);
+- **the note card** (step 13), which this screen spaces 6px from its
+  neighbours where the History list spaces it 12 (line 930).
+
+`PageFrame` takes an `under` slot for what stands between the title bar and the
+scroll region and does not scroll: here, the search field (line 905).
+
+`defDetail` (1782), `Weights · Reps · 1 mode`, is stated on this screen and in
+the split editor's Add exercise panel, so it moves to
+`exercise-presentation.ts` as `exerciseDefinitionDetail` and both take it.
+
+The screen departs from the prototype in three places:
+
+- **The search is the browser's**, where the page used to send it to the server
+  as `?q=`. The prototype filters as you type, and the History list's search
+  has since step 8, so a `q` in the address is no longer read.
+- **An empty library** says `Add your first reusable exercise definition.` in
+  the note card, with `Add exercise` inside it. The prototype has no empty
+  library.
+- **A read that failed** takes the note card with `Try again`.
+
+`docs/ux/wireframe-decisions.md` now describes the library.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **169 declarations** — the title
+  bar, the search wrapper, field and glyph, the scroll region, the lead, a
+  letter group and its letter, a row, its text, name, detail and chevron — and
+  **25 on the no-match note card**. None differs.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either:
+  - The rows arrive 34ms apart across the letters, the tenth and every row after
+    it together.
+  - `bar` narrows the list to the four barbell exercises under `B`, turns the
+    field's border `#2a332e`, shows `Clear search` and replays the entrance with
+    the `B` half of the pair.
+  - `zzzz` answers `No exercise matches this search.`
+  - `Clear search` empties the field and brings back all twenty.
+  - A row opens its definition `scFwd`. The Exercises tab returns `scBack`. The
+    add button opens `/exercises/new` `scFwd`. Both are step 17's screen.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1511,5 +1562,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 13 | done | 2026-09-24 | — |
 | 14 | done | 2026-09-24 | — |
 | 15 | done | 2026-09-24 | — |
+| 16 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

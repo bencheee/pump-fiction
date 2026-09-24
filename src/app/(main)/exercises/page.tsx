@@ -1,84 +1,46 @@
 import Link from "next/link";
 
-import { exerciseTypeLabels } from "@/features/exercises/ui/exercise-presentation";
 import { listExercises } from "@/server/application/exercises";
-import { EmptyState, Icon, ListRow, PageFrame } from "@/shared/ui";
+import { Icon, PageFrame } from "@/shared/ui";
+
+import { ExerciseLibrary } from "./exercise-library";
+import "./exercise-library.css";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = Promise<{ q?: string | string[] }>;
-
-export default async function ExercisesPage({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const query = first((await searchParams).q).trim();
+export default async function ExercisesPage() {
   const result = await listExercises();
-  const exercises = result.ok
-    ? result.value.filter((exercise) =>
-        exercise.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
-      )
-    : [];
 
+  if (!result.ok) {
+    // A read that failed, which the prototype has no notion of: the note card
+    // every ported list answers such a state with.
+    return (
+      <PageFrame
+        screen="exercises"
+        title="Exercises"
+        trailing={<AddExercise />}
+      >
+        <p data-note-card="">
+          {result.error.message}
+          <Link href="/exercises">Try again</Link>
+        </p>
+      </PageFrame>
+    );
+  }
+
+  return <ExerciseLibrary exercises={result.value} add={<AddExercise />} />;
+}
+
+/** `dfAdd` (line 902): a new definition opens as its own screen, a route here. */
+function AddExercise() {
   return (
-    <PageFrame title="Exercises">
-      <Link href="/exercises/new" aria-label="Add exercise">
-        <Icon name="plus" size={20} />
-      </Link>
-
-      <form action="/exercises" method="get">
-        <label htmlFor="exercise-search">Search exercises</label>
-        <Icon name="search" size={18} />
-        <input
-          id="exercise-search"
-          name="q"
-          type="search"
-          defaultValue={query}
-          placeholder="Search exercises"
-        />
-      </form>
-
-      <p>Definitions only. Personal records and charts live in History.</p>
-
-      {!result.ok ? (
-        <EmptyState
-          title="Exercises couldn't be loaded"
-          body={result.error.message}
-          action={<Link href={queryHref(query)}>Retry</Link>}
-        />
-      ) : exercises.length === 0 ? (
-        <EmptyState
-          title={query ? "No matching exercises" : "No exercises yet"}
-          body={
-            query
-              ? "Try another search."
-              : "Add your first reusable exercise definition."
-          }
-          action={
-            !query ? <Link href="/exercises/new">Add Exercise</Link> : undefined
-          }
-        />
-      ) : (
-        <div>
-          {exercises.map((exercise) => (
-            <ListRow
-              key={exercise.id}
-              href={`/exercises/${exercise.id}/edit`}
-              title={exercise.name}
-              detail={`${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${exercise.allowedLoadModes.length} ${exercise.allowedLoadModes.length === 1 ? "mode" : "modes"}`}
-            />
-          ))}
-        </div>
-      )}
-    </PageFrame>
+    <Link
+      href="/exercises/new"
+      data-variant="title-add"
+      aria-label="Add exercise"
+      title="Add exercise"
+    >
+      <Icon name="plus" size={18} />
+    </Link>
   );
-}
-
-function queryHref(query: string): string {
-  return query ? `/exercises?q=${encodeURIComponent(query)}` : "/exercises";
-}
-
-function first(value: string | string[] | undefined): string {
-  return Array.isArray(value) ? (value[0] ?? "") : (value ?? "");
 }

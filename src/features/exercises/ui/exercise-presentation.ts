@@ -1,9 +1,24 @@
-import type { ExerciseBaseType, ExerciseLoadMode } from "../domain/exercise";
+import type {
+  Exercise,
+  ExerciseBaseType,
+  ExerciseLoadMode,
+} from "../domain/exercise";
 
 export const exerciseTypeLabels: Readonly<Record<ExerciseBaseType, string>> = {
   weights: "Weights",
   bodyweight: "Bodyweight",
 };
+
+/**
+ * `defDetail` (prototype line 1782): the type, what a set is measured in, and
+ * how many load modes the exercise allows — its base mode and the one addition
+ * it may carry. The Exercise library's rows and the split editor's Add
+ * exercise panel both state it.
+ */
+export function exerciseDefinitionDetail(exercise: Exercise): string {
+  const modes = exercise.allowedLoadModes.length;
+  return `${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${modes} ${modes === 1 ? "mode" : "modes"}`;
+}
 
 export const exerciseModeLabels: Readonly<Record<ExerciseLoadMode, string>> = {
   weight: "Weight",

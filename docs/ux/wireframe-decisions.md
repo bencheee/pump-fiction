@@ -27,6 +27,8 @@ Saving an exercise, program, or split closes the screen: the app returns to the 
 
 ## Exercises
 
+The **Exercise Library** lists every definition by name under the letter it starts with, each row stating its type, what a set is measured in, and how many load modes it allows. A search field under the title filters the loaded list in the browser as you type, and says so when nothing matches. The round add button in the title bar opens **Add Exercise**.
+
 **Add Exercise** contains name, exercise type, the optional per-set addition its type offers, exercise note, and **Save Exercise**. The mode a type implies is stated as a sentence rather than offered as a selectable row.
 
 **Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Delete Exercise**, whose confirmation names the splits that lose it.

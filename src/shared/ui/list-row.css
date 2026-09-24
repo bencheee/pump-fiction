@@ -118,3 +118,18 @@
   font-variant-numeric: normal;
   font-size: var(--fs-13);
 }
+
+/* ----- Definition -------------------------------------------------------- */
+
+/* The Exercise library's row, added in step 16 (line 917, values at
+   2732-2735): 6px shorter than the list row, and its detail is words, not
+   numerals. */
+[data-list-row="definition"] {
+  min-height: 72px;
+}
+
+[data-list-row="definition"] [data-list-row-detail] {
+  font-family: inherit;
+  font-variant-numeric: normal;
+  font-size: var(--fs-13);
+}
