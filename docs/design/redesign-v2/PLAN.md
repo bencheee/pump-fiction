@@ -1956,6 +1956,13 @@ The Owner answered the six questions step 21 gathered, on 2026-09-24:
    and never less than 0.4 under it. Upper body's durations now stand between
    47% and 100% where they stood between 63% and 100%.
 
+7. **The destinations do not write their names.** History, Programs, Exercises
+   and Body no longer draw their 28px title; the bottom navigation already
+   says where you are. What stood against the title stays where it was: the
+   count chip on History and Body, and the round add button on Programs and
+   Exercises. The title is still each screen's `h1`, for assistive technology,
+   and draws nothing. Today keeps `Hello Sandro!`.
+
 ## Progress
 
 | Step | State | Approved | Commit |

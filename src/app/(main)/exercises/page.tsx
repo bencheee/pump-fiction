@@ -18,6 +18,7 @@ export default async function ExercisesPage() {
       <PageFrame
         screen="exercises"
         title="Exercises"
+        titleHidden
         trailing={<AddExercise />}
       >
         <p data-note-card="">

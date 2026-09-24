@@ -40,6 +40,23 @@
   letter-spacing: var(--ls-tight);
 }
 
+/* A destination's name, kept for assistive technology and drawn nowhere
+   (Owner, 2026-09-24). What stands against it — an add button — stays on
+   the right of the bar, and the bar keeps its height. */
+[data-screen-heading] h1[data-title-hidden] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+[data-screen-heading]:has(> h1[data-title-hidden]) {
+  justify-content: flex-end;
+}
+
 /* ----- Top bar ---------------------------------------------------------- */
 
 /* The bar a screen reached from another one opens with. */

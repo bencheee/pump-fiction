@@ -12,6 +12,7 @@ export default function ProgramsLoading() {
     <PageFrame
       screen="programs"
       title="Programs"
+      titleHidden
       trailing={
         <Link
           href="/programs/new"

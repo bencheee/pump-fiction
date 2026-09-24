@@ -12,6 +12,7 @@ export default function ExercisesLoading() {
     <PageFrame
       screen="exercises"
       title="Exercises"
+      titleHidden
       trailing={
         <Link
           href="/exercises/new"

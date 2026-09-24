@@ -7,6 +7,7 @@ import "./page-frame.css";
 export function PageFrame({
   screen = "",
   title,
+  titleHidden = false,
   trailing,
   under,
   children,
@@ -14,6 +15,13 @@ export function PageFrame({
   /** Names the screen, so its own stylesheet can reach the shared frame. */
   screen?: string;
   title: ReactNode;
+  /**
+   * The destinations do not write their names above themselves (Owner,
+   * 2026-09-24): the bottom navigation already says where you are. The title
+   * stays for assistive technology and draws nothing. Today's greeting is
+   * the one title that stays drawn.
+   */
+  titleHidden?: boolean;
   /** The optional trailing item of the title bar — Today's date chip. */
   trailing?: ReactNode;
   /**
@@ -26,7 +34,7 @@ export function PageFrame({
   return (
     <section data-screen-frame={screen}>
       <div data-screen-heading="">
-        <h1>{title}</h1>
+        <h1 data-title-hidden={titleHidden ? "" : undefined}>{title}</h1>
         {trailing}
       </div>
       {under}

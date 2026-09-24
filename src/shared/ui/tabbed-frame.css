@@ -21,13 +21,16 @@
   grid-template-rows: auto auto minmax(0, 1fr);
 }
 
+/* The destination's name draws nothing (Owner, 2026-09-24); the count keeps
+   its place on the right of the first row. */
 [data-tabbed-title] {
-  grid-area: 1 / 1 / 2 / 2;
-  align-self: center;
-  margin: 24px 0 12px 20px;
-  font-size: var(--fs-28);
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-tight);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 [data-tabbed-count] {

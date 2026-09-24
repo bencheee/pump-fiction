@@ -1,9 +1,11 @@
-import { LoadingSkeleton, PageFrame } from "@/shared/ui";
+import { LoadingSkeleton, TabbedPanel } from "@/shared/ui";
 
+/* Inside Body's tabbed frame, as the tab's own panel: the frame already draws
+   the tab bar. */
 export default function BodyHistoryLoading() {
   return (
-    <PageFrame title="Body">
+    <TabbedPanel>
       <LoadingSkeleton label="Loading measurements" />
-    </PageFrame>
+    </TabbedPanel>
   );
 }

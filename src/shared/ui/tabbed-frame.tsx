@@ -59,6 +59,9 @@ export function TabbedFrame({
   return (
     <PanelAnimContext.Provider value={panelAnim}>
       <section data-screen-frame={screen} data-tabbed-frame="">
+        {/* The destination's name, kept for assistive technology and drawn
+            nowhere (Owner, 2026-09-24): the bottom navigation already says
+            where you are. */}
         <h1 data-tabbed-title="">{title}</h1>
         <SubsectionNavigation label={label} subsections={tabs} />
         {children}

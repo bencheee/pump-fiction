@@ -63,6 +63,7 @@ export function ExerciseLibrary({
     <PageFrame
       screen="exercises"
       title="Exercises"
+      titleHidden
       trailing={add}
       under={
         <div data-exercises-search="">

@@ -22,7 +22,12 @@ export default async function ProgramsPage() {
   const result = await listPrograms();
 
   return (
-    <PageFrame screen="programs" title="Programs" trailing={<AddProgram />}>
+    <PageFrame
+      screen="programs"
+      title="Programs"
+      titleHidden
+      trailing={<AddProgram />}
+    >
       <p data-programs-lead="">
         The current program drives the rotation on Today. Its splits run in the
         order you set here.
