@@ -7,8 +7,9 @@
  * say the same kind of thing — the History list's exercise row (line 322) and
  * split row (346), the Workout detail's exercise card (401), and the two
  * statistics screens (486, 616). The first three are one declaration; the two
- * statistics screens pad it a hair wider (5px 11px), which is theirs to add at
- * steps 11 and 12.
+ * statistics screens pad it a hair wider (5px 11px). Step 11 kept the rows'
+ * padding there; the Owner chose the prototype's per screen on 2026-09-24, so
+ * the wider one is this badge's `statistics` size rather than a second badge.
  *
  * The margin above it belongs to the context, not to the badge: the row writes
  * 8px and the card 10px. Step 8 wrote the row's copy inside `list-row.css`;
@@ -26,6 +27,10 @@
   font-size: var(--fs-11-5);
   font-weight: var(--fw-semibold);
   color: var(--text-muted);
+}
+
+[data-badge][data-size="statistics"] {
+  padding: 5px 11px;
 }
 
 /* ----- Unsaved chip ------------------------------------------------------ */

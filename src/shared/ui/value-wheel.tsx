@@ -18,13 +18,14 @@ import "./value-wheel.css";
  *
  * The column is five rows tall: two candidates above the value, the value in an
  * 80px window, two candidates below. Pressing a candidate moves the column by
- * that many steps; dragging moves it one step per 34px. Both clamp at the ends
- * of the column, and both replay the same 170ms slide, alternating the A/B pair
- * so a second move in the same direction restarts it.
+ * that many steps; dragging moves it one step per 30px (`PITCH`, line 3528).
+ * Both clamp at the ends of the column, and both replay the same 340ms slide
+ * (`kgAnim`, line 3406), alternating the A/B pair so a second move in the same
+ * direction restarts it.
  */
 
 export type ValueWheelProps = {
-  /** The two boxes the prototype draws: 132px for a load, 112px for reps. */
+  /** The two boxes the prototype draws: 146px for a load, 112px for reps. */
   kind: "load" | "reps";
   /** Names the wheel for assistive technology; the prototype names neither. */
   label: string;
@@ -50,8 +51,8 @@ export type ValueWheelProps = {
   onChange: (value: number) => void;
 };
 
-/** One step of the drag, in pixels. `onDragMove` divides by 34. */
-const dragStepPx = 34;
+/** One step of the drag, in pixels. `onDragMove` divides by `PITCH`, 30. */
+const dragStepPx = 30;
 
 export function ValueWheel({
   kind,
@@ -69,7 +70,7 @@ export function ValueWheel({
   const [anim, setAnim] = useState<{ dir: "Up" | "Down"; n: number }>();
   // The steps an in-flight drag has travelled. The prototype commits every
   // step; here the value is committed when the finger lifts, so one drag is one
-  // command rather than one per 34px.
+  // command rather than one per 30px.
   const [dragged, setDragged] = useState(0);
   const drag = useRef<{ y: number; captured: boolean }>(null);
 
@@ -83,6 +84,13 @@ export function ValueWheel({
         : fallbackIndex;
   const index = clamp(committedIndex + dragged, column.length);
   const at = (offset: number): number | undefined => column[index + offset];
+
+  // `kg0` (line 3356) writes an em dash while the set holds no value. A drag
+  // in progress is showing a candidate, not the absence, and so is an offer.
+  const shown =
+    value === null && dragged === 0 && !offering
+      ? "—"
+      : format(column[index] ?? 0);
 
   function slide(delta: number) {
     setAnim((current) => ({
@@ -167,20 +175,20 @@ export function ValueWheel({
           format={format}
           onPress={() => press(-1)}
         />
-        <span data-wheel-value="">
-          {/* `kg0` (line 3356) writes an em dash while the set holds no
-              value. A drag in progress is showing a candidate, not the
-              absence, and so is an offer. */}
-          {value === null && dragged === 0 && !offering
-            ? "—"
-            : format(column[index] ?? 0)}
-          <span data-wheel-unit="">{unit}</span>
-          {/* The offer looks exactly like an entered value, because it is the
-              one the primary action will write. Say which it is to anything
-              that cannot see the segment bar. */}
-          {offering && dragged === 0 ? (
-            <span data-wheel-offer="">, suggested</span>
-          ) : null}
+        <span
+          data-wheel-value=""
+          data-size={kind === "load" ? numeralSize(shown) : undefined}
+        >
+          <span>
+            {shown}
+            <span data-wheel-unit="">{unit}</span>
+            {/* The offer looks exactly like an entered value, because it is
+                the one the primary action will write. Say which it is to
+                anything that cannot see the segment bar. */}
+            {offering && dragged === 0 ? (
+              <span data-wheel-offer="">, suggested</span>
+            ) : null}
+          </span>
         </span>
         <Candidate
           distance="near"
@@ -248,6 +256,16 @@ export function SetValueWheels({
       <ValueWheel {...reps} />
     </div>
   );
+}
+
+/**
+ * `kgSize` (line 3353): the load's numeral steps down as it grows, 46px at four
+ * characters and 40px at five or more, so a long load stays inside the window.
+ * The reps wheel keeps 52px whatever it shows.
+ */
+function numeralSize(text: string): "52" | "46" | "40" {
+  if (text.length >= 5) return "40";
+  return text.length === 4 ? "46" : "52";
 }
 
 function clamp(index: number, length: number): number {

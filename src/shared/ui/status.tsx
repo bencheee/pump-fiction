@@ -68,12 +68,18 @@ type BadgeTone = "neutral" | "accent" | "ok" | "warn" | "danger";
 export function Badge({
   children,
   tone = "neutral",
+  size,
 }: {
   children: ReactNode;
   tone?: BadgeTone;
+  /**
+   * `statistics` is the heading badge of the two statistics screens, which the
+   * prototype pads 1px wider on each side than the rows' (lines 486, 616).
+   */
+  size?: "statistics";
 }) {
   return (
-    <span data-badge="" data-tone={tone}>
+    <span data-badge="" data-tone={tone} data-size={size}>
       {children}
     </span>
   );

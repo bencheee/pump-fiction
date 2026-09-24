@@ -89,7 +89,7 @@ export function ExerciseStatisticsView({
           <h2 data-exercise-statistics-name="">{statistics.exerciseName}</h2>
           {statistics.stillInLibrary ? null : (
             <p data-exercise-statistics-retired="">
-              <Badge>No longer in the library</Badge>
+              <Badge size="statistics">No longer in the library</Badge>
             </p>
           )}
         </div>
@@ -321,31 +321,37 @@ function formatNumber(value: number): string {
 }
 
 /**
- * `b.h` (2371): a bar is its value against the tallest in range, and never
- * shorter than 5% so that a small value is still a bar. A series a smaller
- * number wins is measured the other way up, so its best result is its tallest
- * bar — `MVP-HIS-010`, which the reversed axis of the Recharts line used to
- * carry. The reading over the bars always states the value itself.
+ * How tall each bar stands. The prototype's `b.h` (2371) measures a value
+ * against zero, and a lifter's loads sit far from zero: ten sessions between
+ * 70 and 75 kg drew ten bars between 92% and 100%. The Owner chose on
+ * 2026-09-24 to float the base as the Body chart does (`bodyChart`, lines
+ * 2601-2613): it sits below the smallest value by nine tenths of the spread,
+ * and never less than 0.4, so the spread fills the track and a single point
+ * stands full height. A bar is never shorter than 5%, as `b.h` keeps it.
+ *
+ * A series a smaller number wins is measured the other way up, so its best
+ * result is its tallest bar — `MVP-HIS-010`, which the reversed axis of the
+ * Recharts line used to carry. The reading over the bars always states the
+ * value itself.
  */
 function barPoints(series: ChartSeries): readonly BarChartPoint[] {
   const values = series.points.map((point) => point.value);
   const max = values.length > 0 ? Math.max(...values) : 0;
   const min = values.length > 0 ? Math.min(...values) : 0;
+  const base = min - Math.max(0.4, (max - min) * 0.9);
+  const span = Math.max(0.001, max - base);
 
-  return series.points.map((point, index) => ({
-    key: point.workoutId ?? `${point.date}-${index}`,
-    date: formatHistoryDate(point.date),
-    value: seriesValue(series, point.value),
-    height:
-      max <= 0
-        ? 5
-        : Math.max(
-            5,
-            ((series.lowerIsBetter ? max + min - point.value : point.value) /
-              max) *
-              100,
-          ),
-  }));
+  return series.points.map((point, index) => {
+    const measured = series.lowerIsBetter
+      ? max + min - point.value
+      : point.value;
+    return {
+      key: point.workoutId ?? `${point.date}-${index}`,
+      date: formatHistoryDate(point.date),
+      value: seriesValue(series, point.value),
+      height: Math.max(5, ((measured - base) / span) * 100),
+    };
+  });
 }
 
 /** `chartSummary` (2388-2390). */

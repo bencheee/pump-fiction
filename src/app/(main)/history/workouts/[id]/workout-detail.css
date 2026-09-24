@@ -63,8 +63,9 @@
  * `wdDuration` and `wdPerformed` (line 375-386). The statistics screens draw a
  * grid of tiles that looks like this pair and is not it — theirs states its
  * value at 21px, carries a detail line under it and binds all three of its
- * colours (line 622) — so these two stay this screen's until step 12 can say
- * whether the two are one surface.
+ * colours (line 622) — so these two stay this screen's. Step 12 settled it:
+ * the prototype writes three tiles, this pair, Split statistics' and Body's,
+ * and each stays on its own screen.
  */
 [data-workout-detail-stats] {
   display: grid;

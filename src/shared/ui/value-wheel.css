@@ -9,8 +9,13 @@
  * The two are the same declarations twice over, which is why the wheel is a
  * component and not a screen's markup. Four numbers below stay literals rather
  * than tokens because they belong to this one surface and the prototype writes
- * them nowhere else: the 132/112px boxes, the 196px height, the 58px top of the
- * window and its 80px height, and the 34px a drag spends per step.
+ * them nowhere else: the 146/112px boxes, the 196px height, the 58px top of the
+ * window and its 80px height, and the 30px a drag spends per step.
+ *
+ * The prototype moved on after step 4 and step 10 found five declarations
+ * apart; the Owner took all five on 2026-09-24: the 146px load box, the load's
+ * value shrinking inside a padded full-width box, the four-stop blurred slide,
+ * its 340ms on the wheel's own ease, and the 30px drag step.
  */
 
 /* ----- The wheel -------------------------------------------------------- */
@@ -23,7 +28,7 @@
 }
 
 [data-wheel="load"] {
-  width: 132px;
+  width: 146px;
 }
 
 [data-wheel="reps"] {
@@ -51,16 +56,16 @@
 /* `wheel{Up,Down}{A,B}` — the A/B pair alternates so a second move in the same
    direction restarts the slide. */
 [data-wheel-anim="wheelUpA"] {
-  animation: wheelUpA var(--dur-170) var(--ease);
+  animation: wheelUpA var(--dur-340) var(--ease-wheel);
 }
 [data-wheel-anim="wheelUpB"] {
-  animation: wheelUpB var(--dur-170) var(--ease);
+  animation: wheelUpB var(--dur-340) var(--ease-wheel);
 }
 [data-wheel-anim="wheelDownA"] {
-  animation: wheelDownA var(--dur-170) var(--ease);
+  animation: wheelDownA var(--dur-340) var(--ease-wheel);
 }
 [data-wheel-anim="wheelDownB"] {
-  animation: wheelDownB var(--dur-170) var(--ease);
+  animation: wheelDownB var(--dur-340) var(--ease-wheel);
 }
 
 /* ----- The candidates --------------------------------------------------- */
@@ -84,17 +89,45 @@
 
 /* ----- The value -------------------------------------------------------- */
 
+/* The 80px row centres the numeral and its unit, which sit on one baseline
+   inside it (lines 186 and 192). */
 [data-wheel-value] {
   height: 80px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
+}
+
+[data-wheel-value] > span:first-child {
+  display: flex;
+  align-items: baseline;
   gap: 4px;
   font-family: var(--font-display);
   font-variant-numeric: tabular-nums;
   font-size: var(--fs-52);
   font-weight: var(--fw-bold);
   line-height: var(--lh-1);
+}
+
+/* The load's row is the full width of its box, less 8px a side, and the
+   numeral steps down as it grows — `kgSize` (line 3353): 46px at four
+   characters, 40px at five or more — so a long load stays in the window. */
+[data-wheel="load"] [data-wheel-value] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+
+[data-wheel="load"] [data-wheel-value] > span:first-child {
+  max-width: 100%;
+}
+
+[data-wheel-value][data-size="46"] > span:first-child {
+  font-size: 46px;
+}
+
+[data-wheel-value][data-size="40"] > span:first-child {
+  font-size: 40px;
 }
 
 [data-wheel-unit] {

@@ -156,8 +156,24 @@ export function durationSeries(
   range: ChartRange,
   localDate: string,
 ): ChartSeries {
+  return entryDurationSeries(
+    splitWorkouts(workouts, splitIdentityId),
+    range,
+    localDate,
+  );
+}
+
+/**
+ * The same series from the split's own workout list, which is what a screen
+ * already holds: a change of range is answered from it without asking again.
+ */
+export function entryDurationSeries(
+  entries: readonly SplitWorkoutEntry[],
+  range: ChartRange,
+  localDate: string,
+): ChartSeries {
   const from = rangeStart(range, localDate);
-  const points: ChartPoint[] = splitWorkouts(workouts, splitIdentityId)
+  const points: ChartPoint[] = entries
     .filter((entry) => from === null || entry.workoutDate >= from)
     .map((entry) => ({
       workoutId: entry.workoutId,

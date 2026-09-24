@@ -225,7 +225,7 @@ reuses the listed component or changes it for everyone.
 | List row | `shared/ui/list-row.{tsx,css}` | 8 | lists |
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
-| Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10 | 4, 10 |
+| Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10, changed in 12 | 4, 10 |
 | Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11 | 11, 12, 18, 19 |
 | Disclosure row (44px, chevron) | `shared/ui/disclosure.{tsx,css}` | 11 | 11, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
@@ -241,7 +241,7 @@ reuses the listed component or changes it for everyone.
 | Failed-command card | `AlertCard` in `shared/ui/status.{tsx,css}` | 9, lifted in 10 | 9, 10 |
 | Toast | `shared/ui/toast.{tsx,css}` | 6 | all |
 | Confirm dialog | `DestructiveDialog` in `shared/ui/overlays.{tsx,css}` | 9 | 6, 7, 9, 10, destructive actions |
-| Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9 | 8, 9, 10, 11, 12 |
+| Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9, `statistics` size in 12 | 8, 9, 10, 11, 12 |
 
 Component styling lives in a CSS file beside its component, keyed on the same
 data attributes the markup already carries, and is imported by it. `globals.css`
@@ -1191,6 +1191,87 @@ Three things for the Owner:
 3. **The wheel question from step 10 is still open**, and this step did not
    touch it.
 
+Step 12 read the prototype from the same byte-exact local copy as step 11 —
+3611 lines, 283,529 bytes — and the Owner confirmed it had not changed.
+
+The Owner answered the four questions steps 10 and 11 left open (2026-09-24),
+and all four are carried in this step:
+
+1. **The wheel takes the prototype's five declarations**: the load box is
+   146px, its value sits in a full-width box padded `0 8px` and steps from
+   52px down to 46px at four characters and 40px at five or more (`kgSize`,
+   line 3353), `wheel{Up,Down}{A,B}` travel 54.5px through four stops with a
+   1.4px blur, the slide runs 340ms on `cubic-bezier(.22,.9,.26,1)` — which the
+   prototype writes four times, all of them the wheel, so it is the token
+   `--ease-wheel` — and a drag spends 30px per step. Both wheels take it, the
+   Active set queue's and the correction panel's, because it is one component.
+   `--dur-170` left `globals.css` with it: the prototype no longer writes 170ms
+   anywhere.
+2. **The exercise chart floats its base** as the Body chart does (`bodyChart`,
+   lines 2601-2613): the base sits nine tenths of the spread below the smallest
+   value, and never less than 0.4 below it. The bench loads that drew between
+   92% and 100% now draw between 47% and 100%. Split statistics keeps the
+   prototype's zero-based `b.h`, which is what its screen writes, and a
+   duration's spread is wide enough to read.
+3. **The badge takes the prototype's padding per screen**: `5px 11px` on the
+   two statistics screens and `4px 10px` everywhere else. It is the badge's
+   `statistics` size, not a second badge.
+4. **`prefers-reduced-motion` stays with step 21**, one rule for every screen.
+
+The screen departs from the prototype in four places:
+
+- **The six tiles are this screen's own.** Step 9 left open whether the Workout
+  detail's pair (line 375) and these tiles are one surface. They are not: the
+  prototype states the pair's value at 22px and this one at 21px, binds all
+  three of this tile's colours so the first can be drawn on the accent, and
+  writes the Body tiles (1024) a third way, with the detail 6px under the
+  value at 1.4. Three declarations, so three tiles, each on its own screen.
+- **The chips answer in the same frame**, as step 11's do: every workout of the
+  split is on the screen, and `entryDurationSeries` is the domain function the
+  server's own `durationSeries` now goes through. The server action stays for
+  the suites that still call it.
+- **A read that failed** takes the note card inside the screen's own frame, as
+  the exercise screen's does. The prototype has no screen for it.
+- **Back is a route, not a pop**: `/history/splits`, as every ported screen's bar
+  goes to its own list.
+
+Verification. The MCP was not used; the prototype was read from the local copy
+as in step 11.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **313 declarations**, the accent and
+  a neutral tile, both chip states, the chart card, the footnote, a workout row
+  and its three children, **and none differs**. The first pass inserted each
+  probe before its target, which moved the target off `:first-child` and gave
+  42 false differences; appending it gave none. The retired badge, which no
+  split in this database carries, was measured on injected markup: **30
+  declarations, none differs**, and 10px stands between it and the program.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either; at 320 the range chips wrap to a second row, as the prototype's
+  `flex-wrap` lets them. The tiles arrive 34ms apart and the workout rows 34ms
+  apart, both on `ovRowA`. Each range chip recomputes the series in place,
+  replays `barIn{A,B}` and puts the reading back on the most recent point; a
+  bar press moves the reading and replays `read{A,B}`; `Chart values` opens,
+  turns its chevron 180 degrees and takes the region out of `inert`. `Week`
+  on Upper body holds one workout and says `Unchanged over this range.`
+- **The transitions are `navAll()`'s own**: the split list to this screen
+  `scFwd`, a workout row to the workout `scFwd`, and `Back` to the list
+  `scBack`.
+- **The wheel was driven on the correction panel**: 146px, `72.5` at 46px with
+  the reps at 52px, a press replaying `wheelDownA` for 340ms on the new ease
+  through the four stops, and a 61px drag moving the reps two steps. The draft
+  was left unsaved. The exercise chart's load bars read 47.4% and 100%.
+
+One thing for the Owner: **the volume chart is now nearly flat the other way.**
+A floated base lets one outlier set the spread. Bench's ten volumes run from
+2,257 to 2,417 kg·reps with one session of 435, and the nine full sessions draw
+between 95% and 100% while that one draws 47%. That is the formula doing what
+it says, and it is the Body chart's formula; whether the exercise chart should
+use it on every metric or only on the load is a design decision. The Owner
+approved step 12 as it stands and put the charts' scaling off until every
+screen is done (2026-09-24).
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1207,5 +1288,6 @@ Three things for the Owner:
 | 9 | done | 2026-09-22 | — |
 | 10 | done | 2026-09-22 | — |
 | 11 | done | 2026-09-22 | — |
+| 12 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.
