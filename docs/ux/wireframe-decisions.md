@@ -23,15 +23,15 @@ These are design-reference constraints, not an expansion of product behavior. Th
 
 ## Saving a definition
 
-Saving an exercise, program, or split closes the screen: the app returns to the parent screen and confirms the save with a toast there. A failure keeps the screen open, shows its field errors, and reports the failure as a toast. The parent screens are the Exercises list, the Programs list, and the owning program's edit screen. A form reports `Unsaved changes` only while it actually differs from the state it opened with. The implementation contract is in [`../architecture/mobile-ui-foundation.md`](../architecture/mobile-ui-foundation.md#definition-form-save-contract).
+Saving an exercise, program, or split closes the screen: the app returns to the parent screen and confirms the save with a toast there. A failure keeps the screen open, shows its field errors, and reports the failure as a toast. The parent screens are the Exercises list, the Programs list, and the owning program's edit screen. An existing definition reports **Unsaved** only while it differs from what was saved; a new one is unsaved from the start. The implementation contract is in [`../architecture/mobile-ui-foundation.md`](../architecture/mobile-ui-foundation.md#definition-form-save-contract).
 
 ## Exercises
 
 The **Exercise Library** lists every definition by name under the letter it starts with, each row stating its type, what a set is measured in, and how many load modes it allows. A search field under the title filters the loaded list in the browser as you type, and says so when nothing matches. The round add button in the title bar opens **Add Exercise**.
 
-**Add Exercise** contains name, exercise type, the optional per-set addition its type offers, exercise note, and **Save Exercise**. The mode a type implies is stated as a sentence rather than offered as a selectable row.
+**Add Exercise** contains name, exercise type, set measurement, the optional per-set addition its type offers, exercise note, and one **Actions** control whose panel holds **Save Exercise**. The mode a type implies is stated as a sentence rather than offered as a selectable row. Changing the type clears an addition the new type does not offer, and a toast says so.
 
-**Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Delete Exercise**, whose confirmation names the splits that lose it.
+**Edit Exercise** additionally shows current values, how many splits use the exercise, a message that edits affect only future workouts, and **Delete Exercise** in the same panel, whose confirmation says how many splits lose it.
 
 See [`exercises.md`](../product/exercises.md).
 

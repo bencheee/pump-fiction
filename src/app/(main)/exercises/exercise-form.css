@@ -1,0 +1,227 @@
+/*
+ * The Exercise definition, ported from the prototype for step 17 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 937-1003, `data-screen-label="Exercise definition"`
+ *   bound values  lines 3005-3044
+ *
+ * The top bar, the Unsaved chip, the name field, the Actions pill and panel and
+ * the confirm dialog are shared and live in `src/shared/ui`. What is here is
+ * this screen's own.
+ */
+
+[data-definition] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 946), with this screen's own gap and inset. */
+[data-definition-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-definition-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----- Sections ---------------------------------------------------------- */
+
+[data-definition-section] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* The uppercase heading each section opens with. */
+[data-definition-section] > p:first-child {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* `dfMeasureHint` and `dfBaseSummary` (lines 969, 974). */
+[data-definition-hint] {
+  margin: 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+}
+
+[data-definition-choices] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+/* `t` and `m` (lines 957, 966): the chosen one is tinted. */
+[data-definition-choice] {
+  min-height: var(--control-56);
+  border-radius: var(--radius-18);
+  border: 1px solid transparent;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  transition:
+    background var(--dur-180) linear,
+    border-color var(--dur-180) linear,
+    color var(--dur-180) linear;
+}
+
+[data-definition-choice][aria-pressed="true"] {
+  background: var(--accent-surface);
+  color: var(--accent);
+}
+
+/* ----- Additions --------------------------------------------------------- */
+
+/* `o` (lines 976-982). */
+[data-definition-option] {
+  min-height: var(--control-66);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--radius-20);
+  border: 1px solid transparent;
+  background: var(--surface);
+  padding: 12px 18px;
+  text-align: left;
+  transition:
+    background var(--dur-160) linear,
+    border-color var(--dur-160) linear;
+}
+
+[data-definition-option][aria-pressed="true"] {
+  background: var(--accent-surface);
+}
+
+/* `o.boxBorder`, `o.boxBg`, `o.boxColor`: an empty ring, filled and ticked
+   once the addition is on. */
+[data-definition-check] {
+  width: var(--control-26);
+  height: var(--control-26);
+  flex: none;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-definition-option][aria-pressed="true"] [data-definition-check] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+[data-definition-option] > span + span {
+  flex: 1;
+  min-width: 0;
+}
+
+/* `o.label`. */
+[data-definition-option] > span + span > span:first-child {
+  display: block;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+}
+
+/* `o.detail`. */
+[data-definition-option] > span + span > span + span {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-12-5);
+  color: var(--text-muted);
+}
+
+/* ----- Note -------------------------------------------------------------- */
+
+/* Lines 986-990. */
+[data-definition-note] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-definition-note] > span:first-child {
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-definition-note] > textarea {
+  width: 100%;
+  box-sizing: border-box;
+  height: 120px;
+  border-radius: var(--radius-20);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16);
+  line-height: var(--lh-1-45);
+  padding: 16px 18px;
+  resize: none;
+}
+
+/* The prototype declares no focus for this field. The name field above it
+   answers with its border, and so does this one, rather than the browser's
+   ring on one field and not the other. */
+[data-definition-note] > textarea:focus {
+  border-color: var(--line-strong);
+  outline: none;
+}
+
+[data-definition-note] > span:last-child {
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* ----- Usage ------------------------------------------------------------- */
+
+/* `dfUsage` (lines 993-996). */
+[data-definition-usage] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 16px 18px;
+}
+
+[data-definition-usage] > p:first-child {
+  margin: 0;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+}
+
+[data-definition-usage] > p + p {
+  margin: 8px 0 0;
+  font-size: var(--fs-13);
+  line-height: var(--lh-1-45);
+  color: var(--text-muted);
+}
+
+/* Line 1000: the pill that opens the Actions panel, pinned under the form. */
+[data-definition-footer] {
+  flex: none;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}

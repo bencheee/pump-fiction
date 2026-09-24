@@ -1542,6 +1542,68 @@ Verification. The MCP was not used; the prototype was read from the local copy.
   - A row opens its definition `scFwd`. The Exercises tab returns `scBack`. The
     add button opens `/exercises/new` `scFwd`. Both are step 17's screen.
 
+Step 17 read the prototype from the same byte-exact local copy.
+
+The screen takes the name field, the Unsaved chip, the Actions pill with its
+`data-edits` copy, the panel and the confirm dialog. The name field gains
+`accessibleName`, because here its label reads `Name` while its placeholder
+and its accessible name read `Exercise name` (line 950). The two-up choice
+tile (956, 965), the addition option with its ring (976), the note field (988)
+and the usage card (993) are written on this screen alone, so they stay its
+own.
+
+**A new definition is unsaved from its first frame.** `dfAdd`, `pgAdd` and
+`pgAddSplit` (3001, 2911, 2925) all set the dirty flag as they open the
+draft, so a new exercise, program or split shows `Unsaved` at once and its
+panel's meta ends `· Unsaved changes`. Steps 14 and 15 showed it only once
+something had been typed; all three now follow the prototype. The save
+contract in `docs/architecture/mobile-ui-foundation.md`, which said a form
+reads unsaved only while it differs from how it opened, now says the same,
+and `docs/ux/wireframe-decisions.md` describes Add and Edit Exercise as they
+are.
+
+The screen departs from the prototype in three places:
+
+- **A change of type says what it cleared.** The prototype drops an addition
+  the new type does not offer without a word (`t.pick`, 3016). The application
+  has always said so, and now says it in a toast: `Choices that do not apply to
+  this type were cleared.`
+- **The note field answers focus with its border**, as the name field above it
+  does. The prototype declares no focus for it, which would leave the
+  browser's ring on one field and not the other.
+- **A read that failed** takes the note card inside the screen's own frame.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **476 declarations** — the scroll
+  region, the name field, a section and its heading, both states of a choice
+  tile, the hint, both states of an addition and of its ring, its glyph, label
+  and detail, the note field, its label, textarea and hint, the usage card and
+  its two lines, the footer and the Actions pill. None differs. The note's hint
+  first read three false differences, because an appended probe takes
+  `:last-child` from it; measured with the probe placed before it, none.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either, and Dip is saved exactly as it was found:
+  - Pressing `Add weight` on Dip replaced `Assist with weight` and raised
+    `Unsaved`. Pressing it again took it off, and `Assist with weight` put back
+    what was saved and cleared the chip.
+  - `Seconds` turned the hint to `Each set records its duration in seconds.`,
+    the summary to `Every set stores seconds.` and the details to `… and
+    seconds`.
+  - `Weights` left one addition, `Add resistance band`, with the summary
+    `Every set stores kilograms and reps.`, and toasted that the choice was
+    cleared.
+  - The panel reads `Dip`, `Bodyweight · Reps · 2 modes`, and holds `Save
+    exercise` and `Delete exercise`. Delete raised `Delete Dip?` with `No split
+    uses it.` and was cancelled.
+  - Save returned to the library `scBack`, toasting `Exercise saved.`
+  - A new exercise opens with `Unsaved`, Weights and Reps chosen, no usage card
+    and a panel holding `Save exercise` alone, over `New definition · Unsaved
+    changes`. Saving it with no name toasted `Enter an exercise name.` and
+    marked the field.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1563,5 +1625,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 14 | done | 2026-09-24 | — |
 | 15 | done | 2026-09-24 | — |
 | 16 | done | 2026-09-24 | — |
+| 17 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

@@ -74,9 +74,9 @@ Reuse demonstrated across features moves into the owning feature's `ui` module r
 Every definition form follows the same contract, so a save is an act of leaving the screen rather than a state shown on it.
 
 - A successful save raises a toast and returns to the form's parent screen: `/exercises` for an exercise, `/programs` for a program, and the owning program's edit screen for a split. The parent is refreshed so the saved value is visible immediately.
-- A failed save, including client-side validation, raises a toast and keeps the form mounted with its entered values, its field-level errors, and the existing retry control for retryable failures.
+- A failed save, including client-side validation, raises a toast and keeps the form mounted with its entered values. A refused name is marked on its field, and the toast says what to fix, such as **Enter a program name.**
 - The toast lives in the shell above the routed screens, so a toast raised immediately before navigation is shown on the destination screen. `MainShell` owns exactly one toast.
-- `SaveStatus` reports `clean`, `unsaved`, `saving`, or `failure`. A form that still matches the state it opened with renders no text at all; only a real difference from that baseline reads `Unsaved changes`. Forms compare a normalized snapshot of their own editable values and rebase that baseline when an in-place action, such as reordering split exercises, auto-saves.
+- The save and delete actions sit in the screen's **Actions** panel, opened from the pill under the form, and the top bar carries an **Unsaved** chip while there is something to save. A definition that already exists shows it only while its editable values differ from what was saved; a new definition is unsaved from its first frame, because nothing of it exists yet. Forms compare a normalized snapshot of their own values and rebase it when an in-place action, such as reordering a program's splits or a split's exercises, writes to the server at once.
 
 The parent-return rule applies to explicit save actions. Auto-saving surfaces, such as the active workout, have no save action and keep their own cue.
 

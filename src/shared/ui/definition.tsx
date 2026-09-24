@@ -16,10 +16,17 @@ import "./definition.css";
 /** The labelled name a definition is saved under (lines 790-793). */
 export function NameField({
   label,
+  accessibleName = label,
   invalid = false,
   ...props
 }: {
   label: string;
+  /**
+   * What the field is called and what it shows while empty, where that says
+   * more than the label: the Exercise definition's `Name` is `Exercise name`
+   * (line 950).
+   */
+  accessibleName?: string;
   /** The name was refused; the prototype says so in a toast alone. */
   invalid?: boolean;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "aria-label">) {
@@ -27,9 +34,9 @@ export function NameField({
     <label data-name-field="">
       <span>{label}</span>
       <input
-        aria-label={label}
+        aria-label={accessibleName}
         aria-invalid={invalid ? true : undefined}
-        placeholder={label}
+        placeholder={accessibleName}
         autoComplete="off"
         {...props}
       />

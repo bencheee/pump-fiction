@@ -73,7 +73,9 @@ export function ProgramForm({ program }: { program?: Program }) {
   );
   const [invalid, setInvalid] = useState(false);
   const [busy, setBusy] = useState(false);
-  const dirty = program === undefined ? name !== "" : name !== savedName;
+  /* `pDirty` (2913): a new program is a draft from the first frame, as `pgAdd`
+     marks it; a saved one only once its name differs. */
+  const dirty = program === undefined || name !== savedName;
 
   /*
    * The prototype writes into its one `s.pSheet` and `s.dialog` slots from the

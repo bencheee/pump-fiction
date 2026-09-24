@@ -97,7 +97,9 @@ export function SplitForm({
   const [savedName, setSavedName] = useState(split?.name ?? "");
   const [savedRows, setSavedRows] = useState(() => rowsOf(drafts));
   const rowsDirty = rowsOf(drafts) !== savedRows;
-  const dirty = name !== savedName || rowsDirty;
+  /* `pDirty` (2931): a new split is a draft from the first frame, as
+     `pgAddSplit` marks it; a saved one only once it differs. */
+  const dirty = split === undefined || name !== savedName || rowsDirty;
 
   const actionsOverlay = useTransientOverlay();
   const addOverlay = useTransientOverlay();
