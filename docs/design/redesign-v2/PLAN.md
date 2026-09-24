@@ -1915,6 +1915,40 @@ card.
 - `supabase-program-repository.integration.test.ts` still builds exercises in
   the model ADR-0023 replaced, and is not in `test:repository`.
 
+## Owner decisions after step 21
+
+The Owner answered the six questions step 21 gathered, on 2026-09-24:
+
+1. **One-time workout follows the prototype.** Today's `One-time workout` opens
+   the Add exercise panel at once (`startOneTime`, 3325). The application's
+   workout cannot exist without an exercise — the start function refuses one
+   (`PF206`) — so the workout starts, named `One-time workout`, the moment the
+   panel adds its first exercises, and lands on the overview. Closing the
+   panel starts nothing. The name form `/today/one-time` is no longer linked
+   and goes with the test pass. `docs/product/overview.md` and `MVP-TOD-003`
+   say so.
+2. **The unlock screen keeps its layout**, and takes the design's colours only.
+   The password field had drawn in the browser's own grey; it now takes the
+   field fill, line and text, and its hint and refusal the design's greys.
+   Its `Unlock` pill is still the width of its word.
+3. **Body records its own entries, for today or any earlier date.** This is
+   [ADR-0032](../../decisions/0032-body-records-its-own-entries.md), which
+   supersedes the part of ADR-0030 that gave entry to Today. `MVP-WGT-001` and
+   `MVP-BOD-002` now say it, and `MVP-TOD-004` and `MVP-TOD-005` are
+   withdrawn. The overview and the wireframe decisions no longer describe
+   Today's weight and measurement cards.
+4. **The weekly averages belong in the weight chart.** The prototype draws
+   none. How they are drawn is proposed to the Owner before it is built.
+5. **Measurements offer week, month, quarter, year and all, and open on all.**
+6. **Every chart fits its scale to its own range.** The Owner's example is a
+   week of weigh-ins between 90.2 and 90.8 kg, which drawn against zero would
+   look flat. `barHeights` in `src/features/history/ui/chart-scale.ts` is the
+   one scale every chart now takes: exercise statistics on every metric, split
+   statistics, weight and measurements. The base sits nine tenths of the
+   range under the lowest value, as the prototype's own Body chart puts it,
+   and never less than 0.4 under it. Upper body's durations now stand between
+   47% and 100% where they stood between 63% and 100%.
+
 ## Progress
 
 | Step | State | Approved | Commit |

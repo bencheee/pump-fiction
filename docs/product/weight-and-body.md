@@ -4,7 +4,7 @@
 
 Weight and measurement entries use the user's configured local time zone. Body records them in one entry panel, which opens on today and lets an earlier date be chosen, never a future one; saving onto a date that already holds a value corrects that value rather than adding a second. The same panel edits and deletes an existing value. Historical changes immediately affect derived values and charts.
 
-This is the redesign's prototype. [ADR-0030](../decisions/0030-body-is-its-own-destination.md) moved creation to Today and accepted that a day not recorded on the day stays unrecorded; the redesign took the weight and measurement cards off Today, and ADR-0030, `MVP-WGT-001` and `MVP-BOD-002` still describe the earlier rule until the Owner amends them.
+[ADR-0032](../decisions/0032-body-records-its-own-entries.md) decided this, superseding the part of [ADR-0030](../decisions/0030-body-is-its-own-destination.md) that gave entry to Today and left a missed day unrecorded.
 
 ## Weight tracker
 
@@ -66,4 +66,4 @@ Both are unavailable rather than zero until a second measurement exists, and the
 
 The app does not label increase or decrease as inherently positive, because that depends on the measurement and user's goal.
 
-The chart supports week, month, quarter, and year, and opens on the quarter, as the redesign's prototype draws it. Its ranges are trailing windows ending on the local date, as every chart's are. The latest card states the change since the previous measurement and, once there are three or more, the change since the first; the entries under the chart state every value it draws.
+The chart supports week, month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every chart's are. The latest card states the change since the previous measurement and, once there are three or more, the change since the first; the entries under the chart state every value it draws.

@@ -1,0 +1,31 @@
+/*
+ * The unlock screen (ADR-0031) has no screen in the redesign's prototype and
+ * keeps its layout. The Owner asked only that its colours match the rest of
+ * the application (2026-09-24): the password field takes the fill, the line
+ * and the text every other field in the design is drawn with, where it would
+ * otherwise take the browser's own.
+ */
+[data-unlock] input {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  color-scheme: dark;
+}
+
+[data-unlock] input:focus {
+  border-color: var(--line-strong);
+  outline: none;
+}
+
+[data-unlock] input:disabled {
+  color: var(--text-dim);
+}
+
+/* The hint and the refusal under the field, in the design's muted greys. */
+[data-unlock] form p {
+  color: var(--text-muted);
+}
+
+[data-unlock] form p[role="alert"] {
+  color: var(--text-secondary);
+}

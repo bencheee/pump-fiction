@@ -47,15 +47,15 @@ Given another active split is selected through **Choose Another Split**, startin
 
 ### MVP-TOD-003 — One-time workout
 
-The user can give a one-time workout an arbitrary name and add active library exercises. Completing it contributes eligible sets to exercise statistics but creates no split statistic and never changes rotation.
+The user can start a one-time workout, named **One-time workout**, from the active library exercises it is started with, and add more during it. Completing it contributes eligible sets to exercise statistics but creates no split statistic and never changes rotation.
 
 ### MVP-TOD-004 — Today's weight prompt
 
-Today offers a weight input when the local date has no weight entry. After today's entry exists, the new-entry prompt is no longer shown as though another entry can be created.
+Withdrawn by [ADR-0032](../decisions/0032-body-records-its-own-entries.md): Today carries no weight card, and Body records the weigh-in.
 
 ### MVP-TOD-005 — Today's measurement prompt
 
-Today offers one measurement input covering every defined measurement type that has no value for the local date, and names which are missing. Saving records them together. Once no measurement is missing, Today shows the day's recorded values without offering to create another; when no measurement type is defined, Today offers nothing.
+Withdrawn by [ADR-0032](../decisions/0032-body-records-its-own-entries.md): Today carries no measurement card, and Body records measurements.
 
 ## Exercise library
 
@@ -231,7 +231,7 @@ Canonical behavior: [`weight-and-body.md`](weight-and-body.md#weight-tracker).
 
 ### MVP-WGT-001 — Daily entry validation
 
-At most one decimal-kilogram entry exists per local date. Today creates the entry for the local date while that date has none; Body edits and deletes any existing entry but creates none, so a date that was not recorded on the day stays unrecorded. A duplicate date is rejected, and no screen offers a future one.
+At most one decimal-kilogram entry exists per local date. Body creates, edits and deletes entries for today or any earlier date; a save onto a date that already holds an entry corrects it, and no screen offers a future date. See [ADR-0032](../decisions/0032-body-records-its-own-entries.md).
 
 ### MVP-WGT-002 — Weekly calculations
 
@@ -255,7 +255,7 @@ In Body, the user can create an arbitrary named measurement type and delete a ty
 
 ### MVP-BOD-002 — Measurement entry validation
 
-For each type, at most one decimal-centimeter value exists per local date. Today creates the values for the local date while that date is missing them; Body edits and deletes any existing value but creates none. A duplicate type and date is rejected, and no screen offers a future date.
+For each type, at most one decimal-centimeter value exists per local date. Body creates, edits and deletes values for today or any earlier date; a save onto a date that already holds a value corrects it, and no screen offers a future date. See [ADR-0032](../decisions/0032-body-records-its-own-entries.md).
 
 ### MVP-BOD-003 — Measurement detail
 

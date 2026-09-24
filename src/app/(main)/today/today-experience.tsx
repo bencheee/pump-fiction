@@ -10,8 +10,10 @@ import type {
   TodaySplit,
   TodayView,
 } from "@/features/active-workout/domain/workout";
+import type { Exercise } from "@/features/exercises/domain/exercise";
 import { Action, BlockingProgress, Icon, PageFrame } from "@/shared/ui";
 
+import { AddExerciseSheet } from "../add-exercise-sheet";
 import { ChooseSplitPanel } from "./choose-split";
 import { splitStatsText } from "./split-stats";
 import "./today.css";
@@ -59,6 +61,15 @@ export function TodayExperience({
     // prototype's overview; only the restored-workout card below goes straight
     // to the set queue.
     router.push("/workout/current?view=overview");
+  }
+
+  function startOneTime(exercises: readonly Exercise[]) {
+    void start({
+      sourceKind: "one_time",
+      name: "One-time workout",
+      exerciseIds: exercises.map((exercise) => exercise.id),
+      startedAt: new Date().toISOString(),
+    });
   }
 
   function startSplit(split: TodaySplit) {
@@ -151,9 +162,19 @@ export function TodayExperience({
               onSelect={setSelectedSplit}
             />
           ) : null}
-          <Link href="/today/one-time" data-variant="secondary">
-            One-time workout
-          </Link>
+          {/* `startOneTime` (line 3325): a one-time workout opens straight on
+              the Add exercise panel. The application's workout needs an
+              exercise to exist, so the workout starts, as `One-time workout`,
+              the moment the panel adds its first ones, and lands on the
+              overview the prototype opens it over. */}
+          <AddExerciseSheet
+            onAdd={startOneTime}
+            trigger={
+              <button type="button" data-variant="secondary" disabled={pending}>
+                One-time workout
+              </button>
+            }
+          />
         </div>
       ) : null}
 

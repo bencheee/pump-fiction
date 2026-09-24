@@ -14,6 +14,7 @@ import {
   type SplitSummary,
   type SplitWorkoutEntry,
 } from "@/features/history/domain/split-statistics";
+import { barHeights } from "@/features/history/ui/chart-scale";
 import { Badge, BarChart, Chip, Icon, TopBar } from "@/shared/ui";
 import type { BarChartPoint } from "@/shared/ui";
 
@@ -210,15 +211,21 @@ function WorkoutRow({
   );
 }
 
-/** `b.h` (2371): a bar is its value against the tallest in range, never under 5%. */
+/**
+ * The bars, each at the height the shared chart scale gives it: the range is
+ * measured first and the base sits just under the shortest workout, so the
+ * differences between durations fill the track (Owner, 2026-09-24).
+ */
 function barPoints(series: ChartSeries): readonly BarChartPoint[] {
-  const max = Math.max(0, ...series.points.map((point) => point.value));
-
+  const heights = barHeights(
+    series.points.map((point) => point.value),
+    { floor: 5 },
+  );
   return series.points.map((point, index) => ({
     key: point.workoutId ?? `${point.date}-${index}`,
     date: formatHistoryDate(point.date),
     value: formatHistoryDuration(point.value),
-    height: Math.max(5, max > 0 ? (point.value / max) * 100 : 0),
+    height: heights[index] ?? 0,
   }));
 }
 

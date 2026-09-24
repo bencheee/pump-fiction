@@ -1,6 +1,6 @@
 # ADR-0030: Body is its own destination and today's values are entered on Today
 
-- **Status:** Accepted
+- **Status:** Superseded in part by [ADR-0032](0032-body-records-its-own-entries.md), which moves entry from Today to Body and lets a missed day be filled in
 
 ## Context
 

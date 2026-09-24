@@ -9,6 +9,8 @@ import {
 } from "@/server/access/access-gate";
 import { Action, PageFrame, TextField } from "@/shared/ui";
 
+import "./unlock.css";
+
 export const dynamic = "force-dynamic";
 
 async function unlock(formData: FormData) {
@@ -54,7 +56,7 @@ export default async function UnlockPage({
   const configured = readAccessPassword() !== undefined;
 
   return (
-    <main>
+    <main data-unlock="">
       <PageFrame title="Locked">
         <p>Enter the password to reach your workouts.</p>
         <form action={unlock}>

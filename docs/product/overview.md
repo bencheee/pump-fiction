@@ -30,17 +30,13 @@ Today shows:
 - that split's average duration when completed historical data exists;
 - the primary **Start Workout** action;
 - **Choose Another Split**;
-- **One-Time Workout**;
-- today's weight entry when one has not yet been recorded, and once it exists the recorded value in its place;
-- today's body measurements when any defined measurement has no value for the date, and once none is missing the recorded values in their place.
+- **One-Time Workout**.
 
 **Choose Another Split** applies only to today's workout. It neither changes nor advances the future rotation.
 
-**One-Time Workout** accepts an arbitrary name and exercises selected from the active exercise library. It is not attached to a split and does not affect rotation. Its exercise performances still contribute to exercise statistics, while it does not contribute to split statistics.
+**One-Time Workout** opens the Add exercise panel on the active exercise library, and the workout starts, named **One-time workout**, with the exercises the panel adds; closing the panel starts nothing. It is not attached to a split and does not affect rotation. Its exercise performances still contribute to exercise statistics, while it does not contribute to split statistics.
 
-Today is where a weigh-in and a measurement are created, and the only place they are. Each card offers its entry only while the local date is missing it, in a sheet fixed to that date; once the day is recorded, the same card shows the values with a link to Body and no create control, so Today never reads as though a second entry were possible. The measurement card takes every measurement the day is missing in one sheet, names which they are, and does not appear at all when no measurement type is defined.
-
-Correcting or deleting an existing value happens in Body, never here — and a day that passed without an entry stays without one, which [ADR-0030](../decisions/0030-body-is-its-own-destination.md) accepted as the cost of keeping entry on the day it belongs to.
+Today carries no weight or measurement card. Both are recorded in Body, for today or any earlier date, under [ADR-0032](../decisions/0032-body-records-its-own-entries.md).
 
 Rotation rules are canonical in [`programs-and-splits.md`](programs-and-splits.md#rotation). Workout behavior is in [`workouts.md`](workouts.md), and weight and measurement entry rules are in [`weight-and-body.md`](weight-and-body.md#weight-tracker).
 

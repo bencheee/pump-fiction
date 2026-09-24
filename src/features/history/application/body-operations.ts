@@ -40,11 +40,11 @@ export type MeasurementProgress = Readonly<{
 }>;
 
 /**
- * The range the chart opens on: the quarter, as the redesign's prototype opens
- * a measurement (`bPush`, line 2513). Week, month and year are offered beside
- * it.
+ * The range the chart opens on. A measurement is taken every few weeks at
+ * most, so its whole history is what tells the story; week, month, quarter
+ * and year are offered beside it.
  */
-export const defaultMeasurementRange: ChartRange = "quarter";
+export const defaultMeasurementRange: ChartRange = "all";
 
 export async function listBodyMeasurements(
   repository: BodyRepository,

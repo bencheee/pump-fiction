@@ -26,6 +26,8 @@ import {
   type BarChartPoint,
 } from "@/shared/ui";
 
+import { barHeights } from "@/features/history/ui/chart-scale";
+
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
 import { BodyEntrySheet } from "../body-entry-sheet";
@@ -210,22 +212,14 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
   );
 }
 
-/**
- * `b.h` (2613): the Body chart floats its base under the smallest value by
- * nine tenths of the spread, and never less than 0.4, so the spread fills the
- * track; a bar is never shorter than 6%.
- */
+/** The bars, each at the height the shared chart scale gives it. */
 function barPoints(series: ChartSeries): readonly BarChartPoint[] {
-  const values = series.points.map((point) => point.value);
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const min = values.length > 0 ? Math.min(...values) : 0;
-  const base = min - Math.max(0.4, (max - min) * 0.9);
-  const span = Math.max(0.001, max - base);
-  return series.points.map((point) => ({
+  const heights = barHeights(series.points.map((point) => point.value));
+  return series.points.map((point, index) => ({
     key: point.date,
     date: formatHistoryDate(point.date),
     value: formatKg(point.value),
-    height: Math.max(6, ((point.value - base) / span) * 100),
+    height: heights[index] ?? 0,
   }));
 }
 

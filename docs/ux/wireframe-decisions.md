@@ -61,9 +61,7 @@ Restoring a workout shows no banner: the restored workout itself is the evidence
 
 The workout header is one row: truncated workout name, text-only **Continue Later** or **Resume**, and the live clock, in 40 CSS pixels beyond the safe-area inset. At the lower-right, one round check action replaces the full-width Review & Finish button. It opens the review immediately as an in-place sheet from the already loaded workout. The sheet keeps **Complete Workout**, **Continue Workout**, and the separately confirmed **Discard Workout** together, so discard stays reachable without leaving and reloading the active screen. Start and finish persistence cover the viewport with a progress layer so a pending database transition cannot be triggered twice; after an outcome is selected, that layer also covers the final queue drain and authoritative-revision synchronization before the terminal command.
 
-Today's weight card sits below the workout actions and above the rotation note, in every state including no program and a restored workout. It offers the entry while the day has none and shows the recorded value with a link to Body once it does; it never offers a second entry, and it never edits or deletes. Since [ADR-0030](../decisions/0030-body-is-its-own-destination.md) it is one of two entry cards, and the only place a weigh-in is created.
-
-The measurements card sits beside it and behaves the same way, for every defined measurement at once: it names which the day is missing, opens one sheet holding one field per missing measurement, and saves them together. A refusal shows against the measurement it belongs to rather than against the form. Once none is missing the card lists the day's values with a link to Body, and when no measurement type is defined the card is absent entirely.
+Today carries no weight or measurement card; both are recorded in Body under [ADR-0032](../decisions/0032-body-records-its-own-entries.md).
 
 The workout keeps the bottom navigation and uses the finish flow defined in [`workouts.md`](../product/workouts.md).
 
@@ -95,11 +93,11 @@ The filter appears only when more than one program has a completed split; a sing
 
 ### Weight
 
-The first tab of the Body destination. Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, and entry list — and no way to create one.
+The first tab of the Body destination. Provide latest value, weekly average and change, recorded-days count, time-range selector, chart, entry list, and **Add**.
 
 The two summaries are stat cards: the latest weigh-in with its date and its change from the one before it, and this week with its average, its change from last week or the unavailable state, its `n/7` count, and whether it is provisional or final. A week with no weigh-in yet says so rather than showing a zero. The range selector offers week, month, quarter, and year, and opens on the month. The chart carries a legend naming its solid and dashed lines, a sentence above it, and an expandable list below that repeats both the weigh-ins and the weekly averages with their spans. Each weigh-in row opens the entry screen for that date.
 
-The screen offers no add action: a weigh-in is created on Today and nowhere else. Each row opens the entry screen for its date, which corrects the value it already holds. That screen's save, validation, and outcome cue is the first row of the sticky action bar, and **Delete Entry** sits behind the destructive confirmation that names what recalculates.
+**Add** opens the Body entry panel on today's weigh-in, or on the one today already holds; its date picker offers any earlier day and no later one ([ADR-0032](../decisions/0032-body-records-its-own-entries.md)). Each row opens the same panel on that weigh-in, whose Actions panel saves it or deletes it. A save onto a date that already holds a weigh-in corrects that one.
 
 ### Measurements
 
@@ -107,8 +105,8 @@ The second tab of the Body destination. Provide measurement-type list with lates
 
 The list is ordered by name and each row carries the latest value, its date, and its change, or says that nothing is recorded yet. It shows no archived section, badge, or filter, because [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed archiving, and it states once that a rise or a fall is neither good nor bad on its own.
 
-The type form states the unit in the hint under the name rather than as a block of its own, which ADR-0030 decided. It offers **Delete Measurement** only while the type holds nothing; with entries it explains that they are the only record and that renaming keeps every one of them, rather than disabling a control silently. Renaming is an ordinary save.
+The Body entry panel adds a measurement by name and states the unit in the hint under it rather than as a field of its own, which ADR-0030 decided; the same panel renames and deletes one from the measurement's own screen. It offers **Delete Measurement** only while the type holds nothing; with entries it explains that they are the only record and that renaming keeps every one of them, rather than disabling a control silently. Renaming is an ordinary save.
 
-The detail names the unit under the measurement's name, then gives the latest value, the latest change, and the total change as stat cards, each saying so plainly when there is nothing to compare against. Its range selector offers month, quarter, year, and all, and opens on all. It offers no add action either: a value is recorded on Today. Each row opens the entry screen for its date, which mirrors the weight one — the cue in the first row of the sticky action bar, and deletion behind the destructive confirmation.
+The detail names the unit under the measurement's name, then gives the latest value in one card with its date, its change since the previous entry and, from the third entry on, its change since the first. Its range selector offers week, month, quarter, year, and all, and opens on all. **Record measurement** opens the Body entry panel on today's value, and each row opens it on that entry, as the weigh-ins do.
 
 History calculations are canonical in [`history-and-statistics.md`](../product/history-and-statistics.md) and [`weight-and-body.md`](../product/weight-and-body.md).

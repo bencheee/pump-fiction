@@ -22,6 +22,8 @@ import {
   type BarChartPoint,
 } from "@/shared/ui";
 
+import { barHeights } from "@/features/history/ui/chart-scale";
+
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
 import { BodyEntrySheet } from "../../body-entry-sheet";
@@ -41,8 +43,18 @@ import { BodyEntrySheet } from "../../body-entry-sheet";
  * through, and every entry is already on the screen.
  */
 
-/** `B_RANGES` (line 1730), which the prototype's measurement shares. */
-const bodyRanges: readonly ChartRange[] = ["week", "month", "quarter", "year"];
+/**
+ * The prototype's `B_RANGES` (line 1730) and `all` beside them: a measurement
+ * is taken every few weeks at most, so its whole history is what tells the
+ * story (Owner, 2026-09-24).
+ */
+const bodyRanges: readonly ChartRange[] = [
+  "week",
+  "month",
+  "quarter",
+  "year",
+  "all",
+];
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",
@@ -65,7 +77,7 @@ export function MeasurementDetailView({
     date: entry.entryDate,
     value: entry.valueCm,
   }));
-  /* `bPush` (2513) opens a measurement on the quarter. */
+  /* A measurement opens on its whole history (Owner, 2026-09-24). */
   const [range, setRange] = useState<ChartRange>(defaultMeasurementRange);
   const series = useMemo(
     () => measurementSeries(entries, range, localDate),
@@ -230,18 +242,14 @@ function latestDetail(progress: MeasurementProgress): string {
   return parts.join(" · ");
 }
 
-/** `b.h` (2613): the Body chart's floated base, never under 6%. */
+/** The bars, each at the height the shared chart scale gives it. */
 function barPoints(series: ChartSeries): readonly BarChartPoint[] {
-  const values = series.points.map((point) => point.value);
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const min = values.length > 0 ? Math.min(...values) : 0;
-  const base = min - Math.max(0.4, (max - min) * 0.9);
-  const span = Math.max(0.001, max - base);
-  return series.points.map((point) => ({
+  const heights = barHeights(series.points.map((point) => point.value));
+  return series.points.map((point, index) => ({
     key: point.date,
     date: formatHistoryDate(point.date),
     value: formatCm(point.value),
-    height: Math.max(6, ((point.value - base) / span) * 100),
+    height: heights[index] ?? 0,
   }));
 }
 

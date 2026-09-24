@@ -18,6 +18,7 @@ import {
   type ExercisePerformance,
   type PersonalRecord,
 } from "@/features/history/domain/exercise-statistics";
+import { barHeights } from "@/features/history/ui/chart-scale";
 import { Badge, BarChart, Chip, Disclosure, Icon, TopBar } from "@/shared/ui";
 import type { BarChartPoint } from "@/shared/ui";
 
@@ -319,37 +320,21 @@ function formatNumber(value: number): string {
 }
 
 /**
- * How tall each bar stands. The prototype's `b.h` (2371) measures a value
- * against zero, and a lifter's loads sit far from zero: ten sessions between
- * 70 and 75 kg drew ten bars between 92% and 100%. The Owner chose on
- * 2026-09-24 to float the base as the Body chart does (`bodyChart`, lines
- * 2601-2613): it sits below the smallest value by nine tenths of the spread,
- * and never less than 0.4, so the spread fills the track and a single point
- * stands full height. A bar is never shorter than 5%, as `b.h` keeps it.
- *
- * A series a smaller number wins is measured the other way up, so its best
- * result is its tallest bar — `MVP-HIS-010`, which the reversed axis of the
- * Recharts line used to carry. The reading over the bars always states the
- * value itself.
+ * The bars, each at the height the shared chart scale gives it: the range is
+ * measured first and the base sits just under the lowest value, and a series
+ * a smaller number wins stands the other way up (`MVP-HIS-010`).
  */
 function barPoints(series: ChartSeries): readonly BarChartPoint[] {
-  const values = series.points.map((point) => point.value);
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const min = values.length > 0 ? Math.min(...values) : 0;
-  const base = min - Math.max(0.4, (max - min) * 0.9);
-  const span = Math.max(0.001, max - base);
-
-  return series.points.map((point, index) => {
-    const measured = series.lowerIsBetter
-      ? max + min - point.value
-      : point.value;
-    return {
-      key: point.workoutId ?? `${point.date}-${index}`,
-      date: formatHistoryDate(point.date),
-      value: seriesValue(series, point.value),
-      height: Math.max(5, ((measured - base) / span) * 100),
-    };
-  });
+  const heights = barHeights(
+    series.points.map((point) => point.value),
+    { lowerIsBetter: series.lowerIsBetter, floor: 5 },
+  );
+  return series.points.map((point, index) => ({
+    key: point.workoutId ?? `${point.date}-${index}`,
+    date: formatHistoryDate(point.date),
+    value: seriesValue(series, point.value),
+    height: heights[index] ?? 0,
+  }));
 }
 
 /** `chartSummary` (2388-2390). */
