@@ -1,16 +1,20 @@
-import { LoadingSkeleton, PageFrame, TopBar } from "@/shared/ui";
+import { LoadingSkeleton, TopBar } from "@/shared/ui";
 
+/* The frame the screen itself opens with, so the bar does not move when the
+   read arrives. The prototype has no loading state and the skeleton inside is
+   still unported. */
 export default function MeasurementDetailLoading() {
   return (
-    <div>
+    <div data-measurement="">
       <TopBar
+        screen="measurement"
         title="Measurement"
         backHref="/body/measurements"
-        backLabel="Body"
+        backLabel="Back"
       />
-      <PageFrame title="Measurement">
+      <div data-measurement-body="">
         <LoadingSkeleton label="Loading measurement" />
-      </PageFrame>
+      </div>
     </div>
   );
 }

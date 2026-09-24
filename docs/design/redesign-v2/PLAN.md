@@ -230,7 +230,7 @@ reuses the listed component or changes it for everyone.
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10, changed in 12 | 4, 10 |
-| Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11, `body` variant in 18 | 11, 12, 18, 19 |
+| Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11, `body` variant in 18, `measure` in 19 | 11, 12, 18, 19 |
 | Disclosure row (44px, chevron) | `shared/ui/disclosure.{tsx,css}` | 11 | 11, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
 | Tabbed frame (title, count, tabs, sliding panel) | `TabbedFrame` in `shared/ui/tabbed-frame.{tsx,css}` | 8, lifted in 18 | 8, 18 |
@@ -1687,6 +1687,65 @@ Verification. The MCP was not used; the prototype was read from the local copy.
     a measurement row its own screen, neither under the tabs. Nothing was
     saved.
 
+Step 19 read the prototype from the same byte-exact local copy.
+
+The screen sits under Body's layout. It takes the tab's eyebrow, chips and
+entry rows, which the prototype writes the same way (lines 1171-1177 against
+1090-1096). Its `Record measurement` is the commit pill step 10 named
+as one of its three copies (line 1182). The chart card gains a `measure`
+variant: the Body pair's bars in a 120px track, 5px apart, with no axis dates
+and no values list, because the prototype writes neither here (1149-1162). The
+entries under the card state every value the bars draw, which is what ADR-0020
+asks of a chart. The latest card on the tinted fill (1136-1140) is this
+screen's own. Its value is 26px, where the Exercise statistics' latest card
+states a line of sets.
+
+The screen departs from the prototype, or from the documents, in four places.
+The first two are for the Owner:
+
+- **The ranges are the prototype's**, week, month, quarter and year, opening on
+  the quarter (`B_RANGES`, 1730; `bPush`, 2513). `MVP-BOD-003` names month,
+  quarter, year and all, and the documents opened on all, because a
+  measurement is taken every few weeks and its whole history tells the story.
+  `defaultMeasurementRange` and `docs/product/weight-and-body.md` now say the
+  quarter. A week holds one entry at most.
+- **`Record measurement` creates today's entry.** It opens
+  `/body/measurements/[typeId]/new`, a new route on the application's entry
+  form, until step 20 ports the Body entry panel, or today's entry when one
+  exists. This is the question step 18 raised for weigh-ins: `MVP-BOD-002`
+  and ADR-0030 say Body creates none.
+- **The total change is stated.** `MVP-BOD-003` asks for the change since the
+  first measurement, which the prototype does not write. It follows the
+  latest card's detail as `−1.6 cm since the first` once there are three
+  entries or more. With two, it would repeat the change since the previous
+  one.
+- **Renaming and deleting the measurement** keep a control. The prototype's
+  screen has none, and `MVP-BOD-001` asks for deletion. It is the shared row
+  icon, a pencil, in the top bar's trailing slot, and it opens the
+  measurement's edit screen.
+
+A read that failed takes the note card inside the screen's own frame.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **228 declarations**, covering the
+  scroll region, the name, the latest card and its three lines, the eyebrow,
+  the chart card, its 120px bars row, a bar's button and its bar, the summary,
+  an entry row and its value and detail, the footer, the commit pill and its
+  glyph. None differs. The card draws no axis and no values list.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either:
+  - Waist redraws 1, 4, 5 and 5 bars for Week, Month, Quarter and Year, and a
+    press on the first reads `Sun 23 Aug 86.4 cm`. The five bars stand at
+    100, 87, 77, 68 and 48% over the floated base.
+  - `Record measurement` opens today's new entry.
+  - An entry opens its edit screen, and the pencil the measurement's.
+  - The measurements list to Waist is `scFwd`, into an entry `scFwd`, and back
+    to the list `scBack`.
+  - Nothing was saved.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1710,5 +1769,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 16 | done | 2026-09-24 | — |
 | 17 | done | 2026-09-24 | — |
 | 18 | done | 2026-09-24 | — |
+| 19 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

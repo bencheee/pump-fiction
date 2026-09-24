@@ -64,4 +64,4 @@ Both are unavailable rather than zero until a second measurement exists, and the
 
 The app does not label increase or decrease as inherently positive, because that depends on the measurement and user's goal.
 
-The chart supports month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every chart's are.
+The chart supports week, month, quarter, and year, and opens on the quarter, as the redesign's prototype draws it. Its ranges are trailing windows ending on the local date, as every chart's are. The latest card states the change since the previous measurement and, once there are three or more, the change since the first; the entries under the chart state every value it draws.

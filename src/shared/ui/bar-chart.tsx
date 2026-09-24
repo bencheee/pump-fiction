@@ -60,9 +60,12 @@ export function BarChart({
   /**
    * `body` is the Body pair's card (lines 1044-1052): the bars are centred,
    * 4px apart and at most 46px wide, their corners 6px over 3px, and they
-   * arrive 22ms apart rather than 26 (`bodyChart`, 2616).
+   * arrive 22ms apart rather than 26 (`bodyChart`, 2616). `measure` is the
+   * Measurement detail's (1149-1162): the same bars in a 120px track, 5px
+   * apart, and no axis dates or values list under them — the entries listed
+   * beneath the card state every value the bars draw.
    */
-  variant?: "body";
+  variant?: "body" | "measure";
   /**
    * What the Chart values list holds, newest first, when it says more than
    * the bars do; the bars' own points otherwise.
@@ -125,23 +128,27 @@ export function BarChart({
         ))}
       </div>
 
-      <div data-bar-chart-axis="">
-        <span>{points[0].date}</span>
-        <span>{points[points.length - 1].date}</span>
-      </div>
+      {variant === "measure" ? null : (
+        <div data-bar-chart-axis="">
+          <span>{points[0].date}</span>
+          <span>{points[points.length - 1].date}</span>
+        </div>
+      )}
 
       <p data-bar-chart-summary="">{summary}</p>
 
       {/* `chartValues` (2392): newest first, which is the order the list above
           the chart reads in and the reverse of the bars' own. */}
-      <Disclosure label="Chart values">
-        {(values ?? [...points].reverse()).map((point) => (
-          <li key={point.key}>
-            <span>{point.date}</span>
-            <span>{point.value}</span>
-          </li>
-        ))}
-      </Disclosure>
+      {variant === "measure" ? null : (
+        <Disclosure label="Chart values">
+          {(values ?? [...points].reverse()).map((point) => (
+            <li key={point.key}>
+              <span>{point.date}</span>
+              <span>{point.value}</span>
+            </li>
+          ))}
+        </Disclosure>
+      )}
     </section>
   );
 }

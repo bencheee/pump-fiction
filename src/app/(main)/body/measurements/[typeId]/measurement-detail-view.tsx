@@ -1,31 +1,47 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useMemo, useState, type CSSProperties } from "react";
 
-import { getMeasurementProgressAction } from "@/app/actions/body";
-import type { MeasurementProgress } from "@/features/history/application/body-operations";
+import {
+  defaultMeasurementRange,
+  type MeasurementProgress,
+} from "@/features/history/application/body-operations";
+import { measurementSeries } from "@/features/history/domain/body";
 import type { ChartRange, ChartSeries } from "@/features/history/domain/chart";
 import {
   formatChangeCm,
   formatCm,
-  noPreviousMeasurement,
-  noTotalChange,
 } from "@/features/history/ui/body-presentation";
-import { ProgressChart } from "@/features/history/ui/progress-chart";
 import {
+  Action,
+  BarChart,
   Chip,
-  EmptyState,
-  ListRow,
-  PageFrame,
-  StatCard,
+  Icon,
   TopBar,
+  type BarChartPoint,
 } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
 
-/** Body offers no `week` range; `weight-and-body.md` names these four. */
-const bodyRanges: readonly ChartRange[] = ["month", "quarter", "year", "all"];
+/*
+ * The Measurement detail — the prototype's screen 16 — ported for step 19 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy of
+ * `Workout App - Prototype.dc.html` at the etag the plan records:
+ *   markup        lines 1126-1186, `data-screen-label="Measurement"`
+ *   bound values  lines 2593-2638 (`bodyChart`), 3082-3094 (`bdName` …
+ *                 `bdRecord`), 1730 (`B_RANGES`)
+ *
+ * The chips answer in the same frame, as Body's weight chart does:
+ * `measurementSeries` is the domain function the server's own series goes
+ * through, and every entry is already on the screen.
+ */
+
+/** `B_RANGES` (line 1730), which the prototype's measurement shares. */
+const bodyRanges: readonly ChartRange[] = ["week", "month", "quarter", "year"];
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",
@@ -37,150 +53,161 @@ const rangeLabels: Readonly<Record<ChartRange, string>> = {
 
 export function MeasurementDetailView({
   progress,
-  initialRange,
 }: {
   progress: MeasurementProgress;
-  initialRange: ChartRange;
 }) {
-  const [view, setView] = useState(progress);
-  const [range, setRange] = useState<ChartRange>(initialRange);
-  const [pending, startTransition] = useTransition();
-  const { detail, series } = view;
-  const { type } = detail;
-
-  const reload = (next: ChartRange) => {
-    setRange(next);
-    startTransition(async () => {
-      const result = await getMeasurementProgressAction(type.id, {
-        range: next,
-      });
-      if (result.ok) setView(result.value);
-    });
-  };
+  const router = useRouter();
+  const { detail, localDate } = progress;
+  const { type, latest, entries } = detail;
+  /* `bPush` (2513) opens a measurement on the quarter. */
+  const [range, setRange] = useState<ChartRange>(defaultMeasurementRange);
+  const series = useMemo(
+    () => measurementSeries(entries, range, localDate),
+    [entries, range, localDate],
+  );
 
   return (
-    <div>
+    <div data-measurement="">
       <TopBar
+        screen="measurement"
         title={type.name}
         backHref="/body/measurements"
-        backLabel="Body"
-      />
-      <PageFrame title={type.name}>
-        {/* The unit is a label under the name rather than a section of its
-            own, which ADR-0030 decided. */}
-        <p>Measured in centimetres</p>
-        <div>
-          <Link href={`/body/measurements/types/${type.id}/edit`}>
-            Edit measurement
+        backLabel="Back"
+        trailing={
+          // Renaming and deleting the measurement, which the prototype's
+          // screen has no control for; `MVP-BOD-001` asks for both.
+          <Link
+            href={`/body/measurements/types/${type.id}/edit`}
+            data-variant="row-icon"
+            data-measurement-edit=""
+            aria-label="Edit measurement"
+            title="Edit measurement"
+          >
+            <Icon name="pencil" size={17} />
           </Link>
+        }
+      />
+
+      <div data-measurement-body="">
+        <h2 data-measurement-name="">{type.name}</h2>
+
+        {/* `bdLatest` and `bdLatestDetail` (lines 1136-1140, values at
+            3085-3086). */}
+        <section data-measurement-latest="">
+          <p>Latest</p>
+          <p>{latest === null ? "—" : formatCm(latest.valueCm)}</p>
+          <p>{latestDetail(progress)}</p>
+        </section>
+
+        <p data-body-eyebrow="">Trend</p>
+        <div data-body-chips="" role="group" aria-label="Time range">
+          {bodyRanges.map((option) => (
+            <Chip
+              key={option}
+              selected={range === option}
+              onClick={() => setRange(option)}
+            >
+              {rangeLabels[option]}
+            </Chip>
+          ))}
         </div>
+        <BarChart
+          variant="measure"
+          points={barPoints(series)}
+          summary={chartSummary(series)}
+          emptyMessage="No entry falls inside this range."
+          signature={`${range}|${series.points.length}`}
+        />
 
-        {detail.latest === null ? (
-          <EmptyState
-            title="Nothing recorded yet"
-            body="Record this measurement on Today and this screen starts tracking how it changes."
-          />
+        <p data-body-eyebrow="">Entries</p>
+        {entries.length === 0 ? (
+          <p data-note-card="">
+            Nothing recorded yet. Record the first entry to start tracking how
+            it changes.
+          </p>
         ) : (
-          <>
-            <div>
-              <StatCard
-                label="Latest"
-                value={formatCm(detail.latest.valueCm)}
-                detail={formatHistoryDate(detail.latest.entryDate)}
-              />
-              <StatCard
-                label="Latest change"
-                value={
-                  detail.latest.changeCm === null
-                    ? "—"
-                    : formatChangeCm(detail.latest.changeCm)
-                }
-                detail={
-                  detail.latest.changeCm === null
-                    ? noPreviousMeasurement
-                    : "since the one before it"
-                }
-              />
-              <StatCard
-                label="Total change"
-                value={
-                  detail.totalChangeCm === null
-                    ? "—"
-                    : formatChangeCm(detail.totalChangeCm)
-                }
-                detail={
-                  detail.totalChangeCm === null
-                    ? noTotalChange
-                    : "since the first entry"
-                }
-              />
-            </div>
-
-            <section>
-              <h2>Trend</h2>
-              <div role="group" aria-label="Time range">
-                {bodyRanges.map((option) => (
-                  <Chip
-                    key={option}
-                    selected={range === option}
-                    disabled={pending}
-                    onClick={() => reload(option)}
+          <ul data-body-rows="">
+            {entries.map((entry, index) => {
+              const date = formatHistoryDate(entry.entryDate);
+              return (
+                <li
+                  key={entry.id}
+                  style={{ "--row-index": Math.min(index, 9) } as CSSProperties}
+                >
+                  {/* `bdRows` (lines 1171-1177, values at 3087-3093): the
+                      weigh-in row Body's weight tab draws. */}
+                  <Link
+                    href={`/body/measurements/${type.id}/${entry.entryDate}/edit`}
+                    data-body-entry=""
+                    aria-label={`Edit entry ${date}`}
                   >
-                    {rangeLabels[option]}
-                  </Chip>
-                ))}
-              </div>
-              <p>{trendSentence(series)}</p>
-              <ProgressChart
-                series={series}
-                frame="data"
-                formatValue={(value) => value.toFixed(1)}
-              />
-              <details>
-                <summary>Chart values</summary>
-                <ul aria-label="Chart values">
-                  {series.points.map((point) => (
-                    <li key={point.date}>
-                      <span>{formatHistoryDate(point.date)}</span>
-                      <span>{formatCm(point.value)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            </section>
-
-            <section>
-              <h2>Entries</h2>
-              <ul aria-label="Entries">
-                {detail.entries.map((entry) => (
-                  <li key={entry.id}>
-                    <ListRow
-                      href={`/body/measurements/${type.id}/${entry.entryDate}/edit`}
-                      title={formatCm(entry.valueCm)}
-                      detail={
-                        <>
-                          {formatHistoryDate(entry.entryDate)}
-                          {entry.changeCm === null
-                            ? ` · ${noPreviousMeasurement}`
-                            : ` · ${formatChangeCm(entry.changeCm)}`}
-                        </>
-                      }
-                    />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </>
+                    <span>{formatCm(entry.valueCm)}</span>
+                    <span>
+                      {date}
+                      {entry.changeCm === null
+                        ? ""
+                        : ` · ${formatChangeCm(entry.changeCm)}`}
+                    </span>
+                    <Icon name="pencil" size={15} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         )}
-      </PageFrame>
+      </div>
+
+      {/* `bdRecord` (line 1182, value at 3094): the shared commit pill. */}
+      <div data-measurement-footer="">
+        <Action
+          variant="commit"
+          aria-label="Record measurement"
+          title="Record measurement"
+          onClick={() => router.push(`/body/measurements/${type.id}/new`)}
+        >
+          <Icon name="plus" size={18} />
+          Record measurement
+        </Action>
+      </div>
     </div>
   );
 }
 
-/** One string, so the sentence reads the same however JSX would break the line. */
-function trendSentence(series: ChartSeries): string {
-  if (series.points.length === 0) return "No entry falls inside this range.";
+/**
+ * `bdLatestDetail` (3086): the date and the change since the entry before.
+ * `MVP-BOD-003` asks for the change since the first entry as well, which the
+ * prototype does not state; it follows as one more clause.
+ */
+function latestDetail(progress: MeasurementProgress): string {
+  const { latest, totalChangeCm, entries } = progress.detail;
+  if (latest === null) return "Nothing recorded yet";
+  const parts = [formatHistoryDate(latest.entryDate)];
+  if (latest.changeCm !== null)
+    parts.push(`${formatChangeCm(latest.changeCm)} since the previous entry`);
+  if (totalChangeCm !== null && entries.length > 2)
+    parts.push(`${formatChangeCm(totalChangeCm)} since the first`);
+  return parts.join(" · ");
+}
+
+/** `b.h` (2613): the Body chart's floated base, never under 6%. */
+function barPoints(series: ChartSeries): readonly BarChartPoint[] {
   const values = series.points.map((point) => point.value);
-  const count = series.points.length;
-  return `${count} ${count === 1 ? "entry" : "entries"} from ${formatCm(values[0] ?? 0)} to ${formatCm(values[values.length - 1] ?? 0)}, lowest ${formatCm(Math.min(...values))}, highest ${formatCm(Math.max(...values))}.`;
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const min = values.length > 0 ? Math.min(...values) : 0;
+  const base = min - Math.max(0.4, (max - min) * 0.9);
+  const span = Math.max(0.001, max - base);
+  return series.points.map((point) => ({
+    key: point.date,
+    date: formatHistoryDate(point.date),
+    value: formatCm(point.value),
+    height: Math.max(6, ((point.value - base) / span) * 100),
+  }));
+}
+
+/** `bSummary` (2624-2626), with the measurement's own noun. */
+function chartSummary(series: ChartSeries): string {
+  const values = series.points.map((point) => point.value);
+  if (values.length === 0) return "";
+  const noun = values.length === 1 ? "entry" : "entries";
+  return `${values.length} ${noun} in range: ${formatCm(values[0])} to ${formatCm(values[values.length - 1])}, lowest ${formatCm(Math.min(...values))}, highest ${formatCm(Math.max(...values))}.`;
 }

@@ -1,9 +1,9 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { defaultMeasurementRange } from "@/features/history/application/body-operations";
 import { getMeasurementProgress } from "@/server/application/body";
 import { requireUuidRouteParam } from "@/shared/routing/uuid-route-param";
-import { EmptyState, PageFrame, TopBar } from "@/shared/ui";
+import { TopBar } from "@/shared/ui";
 
 import { MeasurementDetailView } from "./measurement-detail-view";
 
@@ -15,33 +15,29 @@ export default async function MeasurementDetailPage({
   params: Promise<{ typeId: string }>;
 }) {
   const typeId = requireUuidRouteParam((await params).typeId);
-  const result = await getMeasurementProgress(typeId, {
-    range: defaultMeasurementRange,
-  });
+  const result = await getMeasurementProgress(typeId);
 
   if (!result.ok && result.error.code === "not_found") notFound();
   if (!result.ok) {
+    // A read that failed, which the prototype has no notion of: the note card
+    // inside the screen's own frame, as every ported screen answers it.
     return (
-      <div>
+      <div data-measurement="">
         <TopBar
+          screen="measurement"
           title="Measurement"
           backHref="/body/measurements"
-          backLabel="Body"
+          backLabel="Back"
         />
-        <PageFrame title="Measurement unavailable">
-          <EmptyState
-            title="That measurement couldn't be loaded"
-            body={result.error.message}
-          />
-        </PageFrame>
+        <div data-measurement-body="">
+          <p data-note-card="">
+            {result.error.message}
+            <Link href={`/body/measurements/${typeId}`}>Try again</Link>
+          </p>
+        </div>
       </div>
     );
   }
 
-  return (
-    <MeasurementDetailView
-      progress={result.value}
-      initialRange={defaultMeasurementRange}
-    />
-  );
+  return <MeasurementDetailView progress={result.value} />;
 }

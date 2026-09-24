@@ -175,3 +175,90 @@
   line-height: var(--lh-1-5);
   color: var(--text-dim);
 }
+
+/* ----- Measurement detail ------------------------------------------------- */
+
+/*
+ * The Measurement detail — the prototype's screen 16 — ported for step 19
+ * (lines 1126-1186, values at 3082-3094). It sits under Body's layout, so it
+ * takes the eyebrow, the chips and the entry rows the tabs already draw.
+ */
+[data-measurement] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 1133), with this screen's own gap and inset. */
+[data-measurement-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-measurement-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* `bdName` (line 1134). The bar above carries the same name. */
+[data-measurement-name] {
+  margin: 0;
+  font-size: var(--fs-23);
+  line-height: var(--lh-1-16);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  text-wrap: pretty;
+}
+
+/* `bdLatest` (lines 1136-1140): the one card on the screen on the tinted
+   fill. */
+[data-measurement-latest] {
+  border-radius: var(--radius-22);
+  background: var(--accent-surface);
+  padding: 18px;
+}
+
+[data-measurement-latest] > p:first-child {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-08);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+[data-measurement-latest] > p:nth-child(2) {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-26);
+  font-weight: var(--fw-bold);
+  color: var(--accent-hi);
+}
+
+[data-measurement-latest] > p:nth-child(3) {
+  margin: 6px 0 0;
+  font-size: var(--fs-13-5);
+  color: var(--text-secondary);
+}
+
+/* The edit control the application adds to the bar, the shared row icon. */
+[data-measurement-edit] {
+  text-decoration: none;
+}
+
+/* Line 1181: the commit pill, pinned under the entries. */
+[data-measurement-footer] {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}
