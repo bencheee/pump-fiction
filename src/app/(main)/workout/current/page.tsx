@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { getCurrentWorkout } from "@/server/application/active-workout";
 import { renderedAt } from "@/server/application/rendered-at";
-import { EmptyState, PageFrame } from "@/shared/ui";
+import { PageFrame } from "@/shared/ui";
 
 import { ActiveWorkoutExperience } from "./active-workout-experience";
 
@@ -39,12 +39,13 @@ export default async function CurrentWorkoutPage({
 
   if (!workout.ok) {
     return (
+      // A read that failed, which the prototype has no notion of: the note
+      // card every ported screen answers such a state with (step 21).
       <PageFrame title="Active workout">
-        <EmptyState
-          title="The workout couldn't be loaded"
-          body={workout.error.message}
-          action={<Link href="/workout/current">Retry</Link>}
-        />
+        <p data-note-card="">
+          {workout.error.message}
+          <Link href="/workout/current">Try again</Link>
+        </p>
       </PageFrame>
     );
   }

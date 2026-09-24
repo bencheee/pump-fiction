@@ -8,7 +8,8 @@
  * comment — never by inference. A value the prototype uses once is not here; it
  * stays a literal on the screen that uses it.
  *
- * Tokens and motion only. No component styling lives in this file.
+ * Tokens and motion only. No component styling lives in this file; the one
+ * rule is the reduced-motion preference at its end, which applies to all of it.
  */
 
 /* Fonts — the seven faces the prototype declares. Paths are the only change:
@@ -725,5 +726,29 @@ input {
   100% {
     transform: translateY(-4px);
     opacity: 0.35;
+  }
+}
+
+/* ----- Reduced motion ------------------------------------------------------ */
+
+/*
+ * ADR-0020 asks every screen to respect a reduced-motion preference, and the
+ * prototype declares none, so this is the application's own rule, added in
+ * step 21 of docs/design/redesign-v2/PLAN.md for every screen at once. Motion
+ * collapses to its end state: a row, a panel or a bar arrives where it would
+ * have come to rest, a wheel's value changes in place, and nothing that
+ * reports the state of the workout is lost — every change the motion drew is
+ * also a change of text or colour.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
   }
 }

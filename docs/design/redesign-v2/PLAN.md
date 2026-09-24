@@ -1842,6 +1842,79 @@ Verification. The MCP was not used; the prototype was read from the local copy.
   - The database holds exactly what it held before: 30 weigh-ins and the six
     measurements.
 
+Step 21 is the reconciliation pass the table describes. By now every surface
+exists, and the pass confirms that the Actions panel, the toast and the confirm
+dialog are one implementation each, and that they draw the same wherever they
+appear.
+
+- **One implementation each.** No screen draws its own: every Actions panel is
+  `ActionsPanel`, every toast the shell's one `Toast`, every confirmation
+  `DestructiveDialog`, and nothing reaches Radix's dialog, `window.confirm` or
+  its own toast directly.
+- **The Screen actions panel** (lines 1188-1208) was opened and measured on all
+  five screens that carry one: Workout detail, Program, Split editor, Exercise
+  definition and the Body entry panel. **174 declarations each, none differs**
+  from the prototype. The entries arrive 40ms, 85ms and 130ms after the panel
+  on every one.
+- **The confirm dialog** (1559-1575) was raised on the four screens that delete
+  from their Actions panel: Workout detail, Program, Split editor and Exercise
+  definition. Each was cancelled. **133 declarations each, and none differs.**
+  The card is `ovIn` for 220ms and the scrim `hoDim` for 160ms at `z-index:
+  40`. A first pass measured the centring wrapper that carries
+  `role="alertdialog"` in place of the card; measured on the card, none
+  differs.
+- **The toast** (1319-1327) was raised inside a panel, by a refused Body entry
+  (`Enter a number.`), and on the screen a save returns to (`Program saved.`).
+  **62 declarations each, none differs**, and both rise in.
+- **Two failed reads still drew the pre-redesign empty state**: Today's and the
+  active workout's. Both now take the note card with `Try again`, as every
+  ported screen does.
+- **`prefers-reduced-motion`**, which the Owner put here (2026-09-24), is one
+  rule at the end of `globals.css`. Every animation and transition collapses to
+  its end state. Emulated in the browser, the History, Programs and Exercises
+  rows, Body's bars, the tab pill and the tab panel all arrive at once, at full
+  opacity and without a transform. Without the preference, the rows still take
+  their 300ms. ADR-0020 has always asked for this, and
+  `docs/architecture/mobile-ui-foundation.md` had gone on describing it after
+  the first redesign removed it; it is true again. The active workout's flash,
+  handoff and completion were not driven under the preference.
+
+`docs/architecture/mobile-ui-foundation.md` also still named the History frame
+and the Recharts line. It now names the shared tabbed frame and the bar chart
+card.
+
+**Left for the Owner, gathered from every step:**
+
+1. **One-time workout.** The prototype's `One-time workout` on Today starts an
+   empty workout at once and opens Add exercise (`startOneTime`, 3325). The
+   application sends it to `/today/one-time`, a form this plan never ported
+   because no screen of the prototype is it.
+2. **The unlock screen** (`/unlock`, ADR-0031) has no screen in the prototype
+   and is unported.
+3. **Body creates entries, for today or an earlier date** (steps 18-20).
+   ADR-0030, `MVP-WGT-001` and `MVP-BOD-002` still say it creates none.
+4. **The weight chart draws daily weigh-ins alone** and keeps the weekly
+   averages in its values list (step 18, `MVP-WGT-003`).
+5. **Measurement ranges** are the prototype's week to year, opening on the
+   quarter, where `MVP-BOD-003` names month to all and the documents opened on
+   all (step 19).
+6. **The charts' scaling**, which the Owner put off until every screen is done
+   (steps 11-12).
+
+**Left for the test pass, which comes next:**
+
+- The suites are untouched, as non-negotiable 9 requires, and many now fail or
+  do not load. Some assert pre-redesign copy, some expect `?q=` on the library,
+  and one imports `finish/finish-review`, which step 7 removed.
+- The form routes Body's panel replaced (`/body/weight/[date]/edit`,
+  `/body/measurements/types/new`, `/body/measurements/types/[id]/edit`,
+  `/body/measurements/[typeId]/[date]/edit`) and their forms. Nothing links to
+  them, but the suites import the forms.
+- `ProgressChart` and the Recharts dependency have no screen left. They go with
+  an amendment to ADR-0020.
+- `supabase-program-repository.integration.test.ts` still builds exercises in
+  the model ADR-0023 replaced, and is not in `test:repository`.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1867,5 +1940,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 18 | done | 2026-09-24 | — |
 | 19 | done | 2026-09-24 | — |
 | 20 | done | 2026-09-24 | — |
+| 21 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

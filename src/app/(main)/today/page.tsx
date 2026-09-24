@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getToday } from "@/server/application/active-workout";
 import { renderedAt } from "@/server/application/rendered-at";
-import { EmptyState, PageFrame } from "@/shared/ui";
+import { PageFrame } from "@/shared/ui";
 
 import { TodayExperience } from "./today-experience";
 
@@ -13,12 +13,13 @@ export default async function TodayPage() {
 
   if (!result.ok) {
     return (
-      <PageFrame title="Today">
-        <EmptyState
-          title="Today couldn't be loaded"
-          body={result.error.message}
-          action={<Link href="/today">Retry</Link>}
-        />
+      // A read that failed, which the prototype has no notion of: the note
+      // card every ported screen answers such a state with (step 21).
+      <PageFrame screen="today" title="Today">
+        <p data-note-card="">
+          {result.error.message}
+          <Link href="/today">Try again</Link>
+        </p>
       </PageFrame>
     );
   }
