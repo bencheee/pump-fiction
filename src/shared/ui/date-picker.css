@@ -1,0 +1,145 @@
+/*
+ * The date picker, ported from the prototype for step 20 of
+ * docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 1285-1310, `data-screen-label="Choose date"`
+ *   bound values  lines 3118-3145
+ *
+ * The panel's frame — the sheet, the 60px bar and its close button — is the
+ * shared one in `overlays.css`. The picker opens over the Body entry panel, a
+ * layer above it (`z-index: 23` over 22, lines 1259 and 1287).
+ */
+
+[data-panel="choose-date"] {
+  z-index: 23;
+}
+
+/* The shared body with this panel's own gap (line 1291). */
+[data-panel="choose-date"] [data-panel-body] {
+  gap: 18px;
+}
+
+/* ----- Month ------------------------------------------------------------- */
+
+[data-date-picker-month] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-date-picker-month] > button {
+  flex: none;
+  width: var(--control-44);
+  height: var(--control-44);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+[data-date-picker-month] > button:first-child > [data-icon] {
+  transform: rotate(180deg);
+}
+
+/* `dpNextBg` and `dpNextColor` (3129-3130): nowhere to go after today's
+   month. `#101613` is written here and nowhere else. */
+[data-date-picker-month] > button:disabled {
+  background: #101613;
+  color: var(--line-strong);
+  cursor: default;
+}
+
+/* `dpMonthLabel`. */
+[data-date-picker-month] > span {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+}
+
+/* ----- Days -------------------------------------------------------------- */
+
+[data-date-picker-grid] {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* `dpWeekdays` (1300). */
+[data-date-picker-weekday] {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-06);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* `dpCells` (1303, values at 3133-3144). */
+[data-date-picker-day] {
+  height: 46px;
+  box-sizing: border-box;
+  border-radius: var(--radius-14);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-semibold);
+  transition:
+    background var(--dur-160) linear,
+    color var(--dur-160) linear;
+}
+
+/* The blank cells before the first and after the last day. */
+span[data-date-picker-day] {
+  background: transparent;
+}
+
+[data-date-picker-day="selected"] {
+  background: var(--accent-surface);
+  color: var(--accent);
+  font-weight: var(--fw-bold);
+}
+
+[data-date-picker-day="future"] {
+  background: transparent;
+  color: var(--line-strong);
+  cursor: default;
+}
+
+/* Today, ringed while it is not the chosen day. */
+[data-date-picker-day][data-today] {
+  border-color: var(--line-strong);
+}
+
+/* `dpToday` (line 1307): the tinted pill. */
+[data-date-picker-today] {
+  min-height: var(--control-48);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  background: var(--accent-surface);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-semibold);
+  transition: background var(--dur-160) linear;
+}
+
+[data-date-picker-today]:hover {
+  background: var(--accent-surface-hover);
+}

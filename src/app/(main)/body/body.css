@@ -107,6 +107,8 @@
 /* `bwRows` (lines 1090-1096): the value leads, the date and change follow,
    and the pencil says a press edits it. */
 [data-body-entry] {
+  /* A flex item of the prototype's column, which a list item is not. */
+  width: 100%;
   min-height: 62px;
   box-sizing: border-box;
   border-radius: var(--radius-18);
@@ -249,11 +251,6 @@
   color: var(--text-secondary);
 }
 
-/* The edit control the application adds to the bar, the shared row icon. */
-[data-measurement-edit] {
-  text-decoration: none;
-}
-
 /* Line 1181: the commit pill, pinned under the entries. */
 [data-measurement-footer] {
   flex: none;
@@ -261,4 +258,107 @@
   flex-direction: column;
   padding: 12px 20px 18px;
   background: var(--bg);
+}
+
+/* ----- Body entry panel --------------------------------------------------- */
+
+/*
+ * The Body entry panel — the prototype's screen 20 — ported for step 20
+ * (lines 1256-1282, values at 3102-3117). The frame is the shared panel's; it
+ * sits a layer above the others (`z-index: 22`, line 1258), under the date
+ * picker it opens.
+ */
+[data-panel="body-entry"] {
+  z-index: 22;
+}
+
+/* The prototype's `.sx` holds the fields and the pinned block holds the
+   Actions pill; here both are in the shared body, and the pill's block is
+   pushed to the bottom as the note panel's is. */
+[data-body-entry-fields] {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+[data-body-entry-field] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-body-entry-field] > span:first-child {
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-body-entry-field] > span:last-child {
+  font-size: var(--fs-12-5);
+  color: var(--text-dim);
+}
+
+/* `dpFieldLabel` (line 1267): a field that is a button. */
+[data-body-entry-date] {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--control-58);
+  border-radius: var(--radius-20);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  text-align: left;
+  transition: border-color var(--dur-160) linear;
+}
+
+[data-body-entry-date]:hover {
+  border-color: var(--line-strong);
+}
+
+[data-body-entry-date] > span {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-18);
+}
+
+[data-body-entry-date] > [data-icon] {
+  flex: none;
+  color: var(--text-dim);
+}
+
+/* `bshValue` (line 1273). */
+[data-body-entry-field] > input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--control-58);
+  border-radius: var(--radius-20);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-semibold);
+  padding: 0 18px;
+}
+
+/* The prototype declares no focus for this field; the name fields answer
+   with their border, and so does this one. */
+[data-body-entry-field] > input:focus {
+  border-color: var(--line-strong);
+  outline: none;
+}
+
+/* Line 1277: the pinned block. */
+[data-body-entry-footer] {
+  margin-top: auto;
+  padding: 12px 0 18px;
 }

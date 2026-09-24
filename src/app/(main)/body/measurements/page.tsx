@@ -7,15 +7,11 @@ import {
   formatCm,
   noPreviousMeasurement,
 } from "@/features/history/ui/body-presentation";
-import {
-  EmptyCard,
-  Icon,
-  ListRow,
-  TabbedCount,
-  TabbedPanel,
-} from "@/shared/ui";
+import { EmptyCard, ListRow, TabbedCount, TabbedPanel } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+
+import { AddMeasurementSheet } from "../body-entry-sheet";
 
 export const dynamic = "force-dynamic";
 
@@ -56,16 +52,9 @@ export default async function BodyMeasurementsPage() {
       </TabbedCount>
       <TabbedPanel>
         {/* `bmAddType` (line 1102, value at 3081): a new measurement type,
-            which step 20 opens in the Body entry panel. */}
+            in the Body entry panel. */}
         <div data-body-add-row="">
-          <Link
-            href="/body/measurements/types/new"
-            data-body-add=""
-            aria-label="Add measurement"
-          >
-            <Icon name="plus" size={16} />
-            Add measurement
-          </Link>
+          <AddMeasurementSheet localDate={result.value.localDate} />
         </div>
 
         {count === 0 ? (

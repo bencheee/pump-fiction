@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo, useState, type CSSProperties } from "react";
 
 import { defaultWeightRange } from "@/features/history/application/weight-operations";
@@ -28,6 +27,8 @@ import {
 } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+
+import { BodyEntrySheet } from "../body-entry-sheet";
 
 /*
  * Body's Weight tab — the prototype's screen 15, first tab — ported for step
@@ -69,9 +70,12 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
   );
   const { latest, currentWeek } = overview;
   const count = overview.entries.length;
-  const today = overview.entries.find(
-    (entry) => entry.entryDate === overview.localDate,
-  );
+  const saved = overview.entries.map((entry) => ({
+    id: entry.id,
+    date: entry.entryDate,
+    value: entry.weightKg,
+  }));
+  const today = saved.find((entry) => entry.date === overview.localDate);
 
   return (
     <>
@@ -134,20 +138,22 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
 
         <div data-body-list-head="">
           <p data-body-eyebrow="">Weigh-ins</p>
-          {/* `bwAdd` (3068): today's weigh-in, which step 20 opens in the
-              Body entry panel. */}
-          <Link
-            href={
-              today === undefined
-                ? "/body/weight/new"
-                : `/body/weight/${today.entryDate}/edit`
+          {/* `bwAdd` (3068): today's weigh-in in the Body entry panel, or the
+              one today already holds. */}
+          <BodyEntrySheet
+            target={{ kind: "weight", entry: today, saved }}
+            localDate={overview.localDate}
+            trigger={
+              <button
+                type="button"
+                data-body-add="small"
+                aria-label="Add weigh-in"
+              >
+                <Icon name="plus" size={14} />
+                Add
+              </button>
             }
-            data-body-add="small"
-            aria-label="Add weigh-in"
-          >
-            <Icon name="plus" size={14} />
-            Add
-          </Link>
+          />
         </div>
 
         {count === 0 ? (
@@ -164,21 +170,36 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
                   key={entry.id}
                   style={{ "--row-index": Math.min(index, 9) } as CSSProperties}
                 >
-                  {/* `bwRows` (lines 1090-1096, values at 3062-3067). */}
-                  <Link
-                    href={`/body/weight/${entry.entryDate}/edit`}
-                    data-body-entry=""
-                    aria-label={`Edit weigh-in ${date}`}
-                  >
-                    <span>{formatKg(entry.weightKg)}</span>
-                    <span>
-                      {date}
-                      {entry.changeKg === null
-                        ? ""
-                        : ` · ${formatChangeKg(entry.changeKg)}`}
-                    </span>
-                    <Icon name="pencil" size={15} />
-                  </Link>
+                  {/* `bwRows` (lines 1090-1096, values at 3062-3067): a press
+                      opens the weigh-in in the Body entry panel. */}
+                  <BodyEntrySheet
+                    target={{
+                      kind: "weight",
+                      entry: {
+                        id: entry.id,
+                        date: entry.entryDate,
+                        value: entry.weightKg,
+                      },
+                      saved,
+                    }}
+                    localDate={overview.localDate}
+                    trigger={
+                      <button
+                        type="button"
+                        data-body-entry=""
+                        aria-label={`Edit weigh-in ${date}`}
+                      >
+                        <span>{formatKg(entry.weightKg)}</span>
+                        <span>
+                          {date}
+                          {entry.changeKg === null
+                            ? ""
+                            : ` · ${formatChangeKg(entry.changeKg)}`}
+                        </span>
+                        <Icon name="pencil" size={15} />
+                      </button>
+                    }
+                  />
                 </li>
               );
             })}

@@ -2,13 +2,15 @@
 
 ## Shared date rules
 
-Weight and measurement entries use the user's configured local time zone. A value is created on the day it belongs to, on Today; an existing value can be edited or deleted afterwards in Body, and future dates are never offered. A day that was not recorded on the day stays unrecorded, which [ADR-0030](../decisions/0030-body-is-its-own-destination.md) accepted as the cost of moving entry to Today. Historical changes immediately affect derived values and charts.
+Weight and measurement entries use the user's configured local time zone. Body records them in one entry panel, which opens on today and lets an earlier date be chosen, never a future one; saving onto a date that already holds a value corrects that value rather than adding a second. The same panel edits and deletes an existing value. Historical changes immediately affect derived values and charts.
+
+This is the redesign's prototype. [ADR-0030](../decisions/0030-body-is-its-own-destination.md) moved creation to Today and accepted that a day not recorded on the day stays unrecorded; the redesign took the weight and measurement cards off Today, and ADR-0030, `MVP-WGT-001` and `MVP-BOD-002` still describe the earlier rule until the Owner amends them.
 
 ## Weight tracker
 
-There is at most one weight entry per local calendar date. An entry contains date and decimal kilograms. Today creates the day's entry; an existing entry can be edited or deleted in Body.
+There is at most one weight entry per local calendar date. An entry contains date and decimal kilograms. Body's **Add** opens today's entry, or the one today already holds.
 
-The Today destination offers the day's entry only while none exists, and shows the recorded value with a link to Body once it does. The full Weight experience is the Body destination's Weight tab.
+Today carries no weight card; the redesign took it off (step 2). The full Weight experience is the Body destination's Weight tab.
 
 ### Weekly calculation
 
@@ -48,7 +50,7 @@ Entries can be retrospective, edited, or deleted, but cannot be future-dated.
 
 A measurement type may be renamed. The name is all that changes: the type keeps its identity, so every entry stays attached, and the measurement stays in centimetres. Names are unique regardless of case and surrounding spaces.
 
-Today records the day's measurements. While any defined measurement has no value for the local date, Today offers one card naming which are missing and one sheet that takes them all; saving writes them in a single transaction, so the day is recorded or none of it is. Once nothing is missing the card shows the day's values with a link to Body. No card appears while no measurement type is defined.
+A measurement's own screen records its entries, one at a time, in Body's entry panel. Today carries no measurement card; the redesign took it off (step 2), and the transaction that wrote a whole day's missing measurements at once stays in the application for the card that used it.
 
 Deletion is the only other lifecycle action. There is no archived state and no reactivation; [ADR-0024](../decisions/0024-deletion-with-preserved-history.md) removed both.
 

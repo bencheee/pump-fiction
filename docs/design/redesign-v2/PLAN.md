@@ -236,7 +236,8 @@ reuses the listed component or changes it for everyone.
 | Tabbed frame (title, count, tabs, sliding panel) | `TabbedFrame` in `shared/ui/tabbed-frame.{tsx,css}` | 8, lifted in 18 | 8, 18 |
 | Stat tile | `StatCard` in `shared/ui/status.{tsx,css}` | 9, lifted in 18 | 9, 18 |
 | Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10 |
-| Date picker | — | 20 | 20 |
+| Date picker | `DatePicker` in `shared/ui/date-picker.{tsx,css}` | 20 | 20 |
+| Body entry panel | `BodyEntrySheet` in `src/app/(main)/body/body-entry-sheet.tsx` | 20 | 18, 19, 20 |
 | Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, 10, definition screens |
 | Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9, `data-edits` copy in 14 | 9, 14, 15, 17 |
 | Note editor panel | `NoteEditorSheet` in `shared/ui/note-sheet.{tsx,css}` | 6, lifted in 10 | 6, 10 |
@@ -1746,6 +1747,101 @@ Verification. The MCP was not used; the prototype was read from the local copy.
     to the list `scBack`.
   - Nothing was saved.
 
+Step 20 read the prototype from the same byte-exact local copy.
+
+**The Body entry panel** (lines 1256-1282) is one panel for everything Body
+records: a weigh-in, a measurement's entry, and a measurement itself. It opens
+from every control that used to lead to a form route: Body's `Add`, a weigh-in
+row, `Add measurement`, `Record measurement` and a measurement's entry row. It
+also opens from the measurement's pencil, which step 19 kept for renaming and
+deleting. It saves through the same server actions and the same domain
+validators the forms used.
+
+- Its title, value label, placeholder, hint and save label are `bshTitle`,
+  `bshValueLabel`, `bshPlaceholder`, `bshHint` and `bshSaveLabel` (3104-3112).
+  Its `Actions` pill opens the shared Actions panel, with `Save …` and, for
+  what already exists, `Delete entry` (2878-2884).
+- The toasts are the prototype's: `Weigh-in saved.`,
+  `Measurement saved.`, `Measurement added.`, `Weigh-in deleted.`, `Entry
+  deleted.`, and the refusals `Enter a number.`, `Enter a measurement name.`
+  and `A future date is not allowed.`
+- **A save onto a date that already holds a value corrects it** (`saveSheet`,
+  2776, 2787). The panel carries the saved dates and turns such a save into an
+  update, where a create would have been refused as a duplicate.
+- The panel sits at `z-index: 22` and its date picker at 23 (1258, 1287). The
+  fields are pushed above the pinned Actions block, as the note panel does it.
+- A deletion does not ask again. The prototype's `deleteSheet` (2795) does not,
+  and the Actions panel is already a pick and a `Continue`.
+
+**The date picker** (1285-1310) is `DatePicker` in `src/shared/ui`. It is a
+month of days, Monday first, opening on the chosen date's month. A day after
+today is drawn out and disabled, the month after today's cannot be turned to,
+and `Today` jumps back. `Previous month` is `chevron-right` turned round, as
+the prototype draws it.
+
+The screen departs from the prototype in four places:
+
+- **A measurement can be renamed and deleted in the same panel.** Its title is
+  `Edit measurement`, its Actions `Save changes` and `Delete measurement`. The
+  prototype's panel only adds a measurement (`measType`). A measurement that
+  still has entries is refused by the server, and the panel says why.
+- **A deleted measurement leaves its screen** for the list. The move waits for
+  the panel's own history entry to be given back, because leaving first is
+  undone by the step back that closes the panel.
+- **The Measurements tab's `Add measurement` is drawn by the panel's module.**
+  A server page's trigger reaches a client panel as a server element, and
+  Radix's `Slot` cannot clone it after a refresh. The tab crashed on the first
+  save until the pill moved.
+- **The routes the panel replaces stay reachable** for now, and so do their
+  forms: `/body/weight/[date]/edit`, `/body/measurements/types/new`,
+  `/body/measurements/types/[id]/edit` and
+  `/body/measurements/[typeId]/[date]/edit`. Nothing links to them any more,
+  but `weight.test.tsx` and `body.test.tsx` import the forms, and tests are
+  left until every screen is approved. They go with the test pass. The
+  stop-gap `/body/weight/new` and `/body/measurements/[typeId]/new` routes of
+  steps 18 and 19 are gone.
+
+**For the Owner, again:** the panel creates, and for an earlier date. That is
+the prototype (`An earlier date is fine. A future one is not.`, line 1270).
+ADR-0030, `MVP-WGT-001` and `MVP-BOD-002` say Body creates none and that a day
+not recorded on the day stays unrecorded. `docs/product/weight-and-body.md`
+now describes what the application does and names the three as awaiting
+amendment. The same document still described Today's weight and measurement
+cards, which step 2 removed, and now does not.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the two panels was compared to
+  the app's own `getComputedStyle`**, each applied to a probe of the
+  prototype's own element in the target's parent. **181 on the Body entry
+  panel**: the panel, the fields, a field and its label, the date button, its
+  text and glyph, the hint, the value field and the Actions pill. **344 on the
+  date picker**: the body, the month row, both month buttons in their two
+  states, the month label, the grid, a weekday, a day in each of its four
+  states and `Today`. None differs. Two differences first reported on the
+  picker were the probe's own. It widened the grid's last column by 0.008px as
+  an eighth item, and a selector took the empty cell before the 1st for a day.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either:
+  - A weigh-in opens on its date and value, and closing the panel puts back
+    whatever was changed in it.
+  - The picker turned to August, and a press on the 15th closed it and set the
+    field to `Sat 15 Aug`. At 320 a day is 37×46px, and 25 September onward is
+    disabled.
+  - Today's weigh-in was added as `83,2`, with a decimal comma. It raised the
+    list to 31, the latest tile to 83.2 kg and This week to `+0.3 kg vs last
+    week · 1/7 days`, and toasted `Weigh-in saved.` Its `Delete entry` took it
+    away again.
+  - `Add` with 20 September chosen corrected that day's weigh-in, and the list
+    stayed at 30.
+  - A measurement `Test` was added from the tab, recorded at 50.5 cm and
+    refused deletion while it held that entry. The entry was deleted, and then
+    the measurement, which returned to the list. `Test2` was added, renamed
+    `Test3` in place and deleted.
+  - An empty value toasts `Enter a number.` and keeps the panel open.
+  - The database holds exactly what it held before: 30 weigh-ins and the six
+    measurements.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1770,5 +1866,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 17 | done | 2026-09-24 | — |
 | 18 | done | 2026-09-24 | — |
 | 19 | done | 2026-09-24 | — |
+| 20 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

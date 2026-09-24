@@ -4,6 +4,7 @@ export { BarChart, type BarChartPoint } from "./bar-chart";
 export { BlockingProgress } from "./blocking-progress";
 export { normalizeDecimalInput } from "./decimal-input";
 export { Chip } from "./chip";
+export { DatePicker } from "./date-picker";
 export { EmptyCard, NameField, SectionHead } from "./definition";
 export { Disclosure } from "./disclosure";
 export { NumericField, TextAreaField, TextField } from "./form-controls";

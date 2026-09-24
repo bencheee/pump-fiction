@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, type CSSProperties } from "react";
 
@@ -24,6 +23,8 @@ import {
 } from "@/shared/ui";
 
 import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+
+import { BodyEntrySheet } from "../../body-entry-sheet";
 
 /*
  * The Measurement detail — the prototype's screen 16 — ported for step 19 of
@@ -59,6 +60,11 @@ export function MeasurementDetailView({
   const router = useRouter();
   const { detail, localDate } = progress;
   const { type, latest, entries } = detail;
+  const saved = entries.map((entry) => ({
+    id: entry.id,
+    date: entry.entryDate,
+    value: entry.valueCm,
+  }));
   /* `bPush` (2513) opens a measurement on the quarter. */
   const [range, setRange] = useState<ChartRange>(defaultMeasurementRange);
   const series = useMemo(
@@ -75,16 +81,25 @@ export function MeasurementDetailView({
         backLabel="Back"
         trailing={
           // Renaming and deleting the measurement, which the prototype's
-          // screen has no control for; `MVP-BOD-001` asks for both.
-          <Link
-            href={`/body/measurements/types/${type.id}/edit`}
-            data-variant="row-icon"
-            data-measurement-edit=""
-            aria-label="Edit measurement"
-            title="Edit measurement"
-          >
-            <Icon name="pencil" size={17} />
-          </Link>
+          // screen has no control for; `MVP-BOD-001` asks for both. It opens
+          // the Body entry panel on the measurement itself.
+          <BodyEntrySheet
+            target={{
+              kind: "type",
+              measurement: { id: type.id, name: type.name },
+            }}
+            localDate={localDate}
+            onDeleted={() => router.replace("/body/measurements")}
+            trigger={
+              <Action
+                variant="row-icon"
+                aria-label="Edit measurement"
+                title="Edit measurement"
+              >
+                <Icon name="pencil" size={17} />
+              </Action>
+            }
+          />
         }
       />
 
@@ -136,20 +151,35 @@ export function MeasurementDetailView({
                 >
                   {/* `bdRows` (lines 1171-1177, values at 3087-3093): the
                       weigh-in row Body's weight tab draws. */}
-                  <Link
-                    href={`/body/measurements/${type.id}/${entry.entryDate}/edit`}
-                    data-body-entry=""
-                    aria-label={`Edit entry ${date}`}
-                  >
-                    <span>{formatCm(entry.valueCm)}</span>
-                    <span>
-                      {date}
-                      {entry.changeCm === null
-                        ? ""
-                        : ` · ${formatChangeCm(entry.changeCm)}`}
-                    </span>
-                    <Icon name="pencil" size={15} />
-                  </Link>
+                  <BodyEntrySheet
+                    target={{
+                      kind: "measurement",
+                      typeId: type.id,
+                      entry: {
+                        id: entry.id,
+                        date: entry.entryDate,
+                        value: entry.valueCm,
+                      },
+                      saved,
+                    }}
+                    localDate={localDate}
+                    trigger={
+                      <button
+                        type="button"
+                        data-body-entry=""
+                        aria-label={`Edit entry ${date}`}
+                      >
+                        <span>{formatCm(entry.valueCm)}</span>
+                        <span>
+                          {date}
+                          {entry.changeCm === null
+                            ? ""
+                            : ` · ${formatChangeCm(entry.changeCm)}`}
+                        </span>
+                        <Icon name="pencil" size={15} />
+                      </button>
+                    }
+                  />
                 </li>
               );
             })}
@@ -157,17 +187,28 @@ export function MeasurementDetailView({
         )}
       </div>
 
-      {/* `bdRecord` (line 1182, value at 3094): the shared commit pill. */}
+      {/* `bdRecord` (line 1182, value at 3094): the shared commit pill, which
+          opens today's entry in the Body entry panel. */}
       <div data-measurement-footer="">
-        <Action
-          variant="commit"
-          aria-label="Record measurement"
-          title="Record measurement"
-          onClick={() => router.push(`/body/measurements/${type.id}/new`)}
-        >
-          <Icon name="plus" size={18} />
-          Record measurement
-        </Action>
+        <BodyEntrySheet
+          target={{
+            kind: "measurement",
+            typeId: type.id,
+            entry: saved.find((item) => item.date === localDate),
+            saved,
+          }}
+          localDate={localDate}
+          trigger={
+            <Action
+              variant="commit"
+              aria-label="Record measurement"
+              title="Record measurement"
+            >
+              <Icon name="plus" size={18} />
+              Record measurement
+            </Action>
+          }
+        />
       </div>
     </div>
   );
