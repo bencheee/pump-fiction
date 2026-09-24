@@ -133,3 +133,15 @@
   font-variant-numeric: normal;
   font-size: var(--fs-13);
 }
+
+/* ----- Measurement ------------------------------------------------------- */
+
+/* Body's measurement row, added in step 18 (line 1105): 2px shorter than the
+   list row, and its name declares no `text-wrap`. */
+[data-list-row="measurement"] {
+  min-height: 76px;
+}
+
+[data-list-row="measurement"] [data-list-row-title] {
+  text-wrap: wrap;
+}

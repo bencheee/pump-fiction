@@ -12,7 +12,10 @@ export function formatCm(value: number): string {
  * is why nothing here colours or labels a direction.
  */
 export function formatChangeCm(value: number): string {
-  const sign = value < 0 ? minus : "+";
+  // `fmtDelta` (prototype line 1781): a change that rounds to nothing is
+  // neither a rise nor a fall, and says so with `±`.
+  const rounded = Number(Math.abs(value).toFixed(1));
+  const sign = rounded === 0 ? "±" : value < 0 ? minus : "+";
   return `${sign}${Math.abs(value).toFixed(1)} cm`;
 }
 

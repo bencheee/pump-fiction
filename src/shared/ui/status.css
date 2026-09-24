@@ -138,3 +138,43 @@
   flex: none;
   color: var(--text-muted);
 }
+
+/* ----- Stat tile --------------------------------------------------------- */
+
+/* Lines 375-386, 1024-1033. */
+[data-stat-card] {
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 16px 14px;
+}
+
+[data-stat-card] > p:first-child {
+  margin: 0;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-06);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-stat-card] > p:nth-child(2) {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-22);
+  font-weight: var(--fw-bold);
+}
+
+[data-stat-card] > p:nth-child(3) {
+  margin: 6px 0 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-4);
+  color: var(--text-muted);
+}
+
+/* Two to a row, as every screen that draws them sets them. */
+[data-stat-cards] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}

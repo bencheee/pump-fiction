@@ -150,6 +150,15 @@ export function LoadingSkeleton({ label }: { label: string }) {
   );
 }
 
+/*
+ * The stat tile, ported from the prototype for step 9 of
+ * docs/design/redesign-v2/PLAN.md and lifted here in step 18.
+ *
+ * Prototype sources: the Workout detail's pair (lines 375-386) and Body's
+ * weight tiles (1024-1033). The two write the same tile; the Workout detail's
+ * carries no detail line. Split statistics' tiles (620) state their value at
+ * 21px and bind their colours, so they stay that screen's own.
+ */
 export function StatCard({
   label,
   value,
@@ -160,10 +169,10 @@ export function StatCard({
   detail?: ReactNode;
 }) {
   return (
-    <section>
-      <h2>{label}</h2>
+    <div data-stat-card="">
+      <p>{label}</p>
       <p>{value}</p>
       {detail ? <p>{detail}</p> : null}
-    </section>
+    </div>
   );
 }

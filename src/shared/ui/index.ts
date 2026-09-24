@@ -36,6 +36,7 @@ export {
   UnsavedChip,
 } from "./status";
 export { Stepper } from "./stepper";
+export { TabbedCount, TabbedFrame, TabbedPanel } from "./tabbed-frame";
 export { SubsectionNavigation, type Subsection } from "./subsection-navigation";
 export { Toast, ToastProvider, useToast } from "./toast";
 export {

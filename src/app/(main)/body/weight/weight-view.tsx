@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import Link from "next/link";
+import { useMemo, useState, type CSSProperties } from "react";
 
-import { getWeightProgressAction } from "@/app/actions/weight";
-import type { WeightProgress } from "@/features/history/application/weight-operations";
+import { defaultWeightRange } from "@/features/history/application/weight-operations";
 import type { ChartRange, ChartSeries } from "@/features/history/domain/chart";
-import { ProgressChart } from "@/features/history/ui/progress-chart";
-import { Chip, EmptyState, ListRow, PageFrame, StatCard } from "@/shared/ui";
-
-import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+import {
+  weightSeries,
+  type WeightOverview,
+} from "@/features/history/domain/weight";
 import {
   formatAverageKg,
   formatChangeKg,
@@ -17,8 +17,34 @@ import {
   noPreviousWeek,
   weekStatusLabel,
 } from "@/features/history/ui/weight-presentation";
+import {
+  BarChart,
+  Chip,
+  Icon,
+  StatCard,
+  TabbedCount,
+  TabbedPanel,
+  type BarChartPoint,
+} from "@/shared/ui";
 
-/** Weight offers no `all` range; `weight-and-body.md` names these four. */
+import { formatHistoryDate } from "@/app/(main)/history/history-presentation";
+
+/*
+ * Body's Weight tab — the prototype's screen 15, first tab — ported for step
+ * 18 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy of
+ * `Workout App - Prototype.dc.html` at the etag the plan records:
+ *   markup        lines 1022-1098, `data-screen-label="Body"`
+ *   bound values  lines 2593-2638 (`bodyChart`), 3053-3068 (`bodyCount`,
+ *                 `bwLatest` … `bwAdd`), 1730 (`B_RANGES`)
+ *
+ * The chips answer in the same frame, as the statistics screens' do: every
+ * weigh-in is already on the screen, and `weightSeries` is the domain function
+ * the server's own series is computed through.
+ */
+
+/** `B_RANGES` (line 1730): Weight offers no `all`. */
 const weightRanges: readonly ChartRange[] = [
   "week",
   "month",
@@ -34,171 +60,180 @@ const rangeLabels: Readonly<Record<ChartRange, string>> = {
   all: "All",
 };
 
-export function WeightView({
-  progress,
-  initialRange,
-}: {
-  progress: WeightProgress;
-  initialRange: ChartRange;
-}) {
-  const [view, setView] = useState(progress);
-  const [range, setRange] = useState<ChartRange>(initialRange);
-  const [pending, startTransition] = useTransition();
-  const { overview, series } = view;
-
-  const reload = (next: ChartRange) => {
-    setRange(next);
-    startTransition(async () => {
-      const result = await getWeightProgressAction({ range: next });
-      if (result.ok) setView(result.value);
-    });
-  };
+export function WeightView({ overview }: { overview: WeightOverview }) {
+  /* `bodyRange: "quarter"` (line 1804): the chart opens on the quarter. */
+  const [range, setRange] = useState<ChartRange>(defaultWeightRange);
+  const series = useMemo(
+    () => weightSeries(overview.entries, range, overview.localDate),
+    [overview.entries, overview.localDate, range],
+  );
+  const { latest, currentWeek } = overview;
+  const count = overview.entries.length;
+  const today = overview.entries.find(
+    (entry) => entry.entryDate === overview.localDate,
+  );
 
   return (
-    <PageFrame title="Weight">
-      {overview.latest === null ? (
-        <EmptyState
-          title="No weigh-in yet"
-          body="Record today's weight on Today and this screen starts tracking your weekly average."
-        />
-      ) : (
-        <>
-          <div>
-            <StatCard
-              label="Latest"
-              value={formatKg(overview.latest.weightKg)}
-              detail={
-                <>
-                  {formatHistoryDate(overview.latest.entryDate)}
-                  {overview.latest.changeKg === null
-                    ? null
-                    : ` · ${formatChangeKg(overview.latest.changeKg)} since the previous weigh-in`}
-                </>
-              }
-            />
-            {overview.currentWeek ? (
-              <StatCard
-                label="This week"
-                value={formatAverageKg(overview.currentWeek.averageKg)}
-                detail={
-                  <>
-                    {overview.currentWeek.changeKg === null
+    <>
+      <TabbedCount>
+        {count} {count === 1 ? "weigh-in" : "weigh-ins"}
+      </TabbedCount>
+      <TabbedPanel>
+        {/* `bwLatest`, `bwWeek` (lines 1024-1033, values at 3055-3061). */}
+        <div data-stat-cards="">
+          <StatCard
+            label="Latest"
+            value={latest === null ? "—" : formatKg(latest.weightKg)}
+            detail={
+              latest === null
+                ? "No weigh-in yet"
+                : `${formatHistoryDate(latest.entryDate)}${latest.changeKg === null ? "" : ` · ${formatChangeKg(latest.changeKg)} since the previous weigh-in`}`
+            }
+          />
+          <StatCard
+            label="This week"
+            value={
+              currentWeek === null
+                ? "—"
+                : formatAverageKg(currentWeek.averageKg)
+            }
+            detail={
+              currentWeek === null
+                ? "No weigh-in this week yet"
+                : [
+                    currentWeek.changeKg === null
                       ? noPreviousWeek
-                      : `${formatChangeKg(overview.currentWeek.changeKg)} vs last week`}
-                    {" · "}
-                    {formatRecordedDays(overview.currentWeek.recordedDays)}
-                    {" · "}
-                    {weekStatusLabel(overview.currentWeek)}
-                  </>
-                }
-              />
-            ) : (
-              <StatCard
-                label="This week"
-                value="—"
-                detail="No weigh-in this week yet"
-              />
-            )}
-          </div>
+                      : `${formatChangeKg(currentWeek.changeKg)} vs last week`,
+                    formatRecordedDays(currentWeek.recordedDays),
+                    weekStatusLabel(currentWeek),
+                  ].join(" · ")
+            }
+          />
+        </div>
 
-          <section>
-            <h2>Trend</h2>
-            <div role="group" aria-label="Time range">
-              {weightRanges.map((option) => (
-                <Chip
-                  key={option}
-                  selected={range === option}
-                  disabled={pending}
-                  onClick={() => reload(option)}
-                >
-                  {rangeLabels[option]}
-                </Chip>
-              ))}
-            </div>
-            <TrendSummary series={series} />
-            <ProgressChart
-              series={series}
-              frame="data"
-              formatValue={(value) => value.toFixed(1)}
-            />
-            <ChartValues series={series} />
-          </section>
-
-          <section>
-            <h2>Weigh-ins</h2>
-            <ul aria-label="Weigh-ins">
-              {overview.entries.map((entry) => (
-                <li key={entry.id}>
-                  <ListRow
-                    href={`/body/weight/${entry.entryDate}/edit`}
-                    title={formatKg(entry.weightKg)}
-                    detail={
-                      <>
-                        {formatHistoryDate(entry.entryDate)}
-                        {entry.changeKg === null
-                          ? null
-                          : ` · ${formatChangeKg(entry.changeKg)}`}
-                      </>
-                    }
-                  />
-                </li>
-              ))}
-            </ul>
-          </section>
-        </>
-      )}
-    </PageFrame>
-  );
-}
-
-function TrendSummary({ series }: { series: ChartSeries }) {
-  if (series.points.length === 0)
-    return <p>No weigh-in falls inside this range.</p>;
-  return <p>{trendSentence(series)}</p>;
-}
-
-/** One string, so the sentence reads the same however JSX would break the line. */
-function trendSentence(series: ChartSeries): string {
-  const values = series.points.map((point) => point.value);
-  const count = series.points.length;
-  const weeks = series.companion?.points.length ?? 0;
-  const span = `${count} ${count === 1 ? "weigh-in" : "weigh-ins"} from ${formatKg(values[0] ?? 0)} to ${formatKg(values[values.length - 1] ?? 0)}`;
-  const bounds = `lowest ${formatKg(Math.min(...values))}, highest ${formatKg(Math.max(...values))}`;
-  const averages =
-    weeks === 0
-      ? ""
-      : `, across ${weeks} ${weeks === 1 ? "week" : "weeks"} of averages`;
-  return `${span}, ${bounds}${averages}.`;
-}
-
-function ChartValues({ series }: { series: ChartSeries }) {
-  const weekly = series.companion?.points ?? [];
-  return (
-    <details>
-      <summary>Chart values</summary>
-      <ul aria-label="Chart values">
-        {series.points.map((point) => (
-          <li key={point.date}>
-            <span>{formatHistoryDate(point.date)}</span>
-            <span>{formatKg(point.value)}</span>
-          </li>
-        ))}
-      </ul>
-      {weekly.length > 0 ? (
-        <ul aria-label="Weekly averages">
-          {weekly.map((point) => (
-            <li key={point.date}>
-              <span>
-                Week of {formatHistoryDate(point.span?.start ?? point.date)}
-                {point.span
-                  ? ` · ${formatRecordedDays(point.span.recordedDays)}${point.span.provisional ? " · provisional" : ""}`
-                  : null}
-              </span>
-              <span>{formatAverageKg(point.value)}</span>
-            </li>
+        <p data-body-eyebrow="">Trend</p>
+        <div data-body-chips="" role="group" aria-label="Time range">
+          {weightRanges.map((option) => (
+            <Chip
+              key={option}
+              selected={range === option}
+              onClick={() => setRange(option)}
+            >
+              {rangeLabels[option]}
+            </Chip>
           ))}
-        </ul>
-      ) : null}
-    </details>
+        </div>
+        <BarChart
+          variant="body"
+          points={barPoints(series)}
+          summary={chartSummary(series)}
+          emptyMessage="No weigh-in falls inside this range."
+          signature={`${range}|${series.points.length}`}
+          values={chartValues(series)}
+        />
+
+        <div data-body-list-head="">
+          <p data-body-eyebrow="">Weigh-ins</p>
+          {/* `bwAdd` (3068): today's weigh-in, which step 20 opens in the
+              Body entry panel. */}
+          <Link
+            href={
+              today === undefined
+                ? "/body/weight/new"
+                : `/body/weight/${today.entryDate}/edit`
+            }
+            data-body-add="small"
+            aria-label="Add weigh-in"
+          >
+            <Icon name="plus" size={14} />
+            Add
+          </Link>
+        </div>
+
+        {count === 0 ? (
+          <p data-note-card="">
+            No weigh-in yet. Add today&apos;s and this screen starts tracking
+            your weekly average.
+          </p>
+        ) : (
+          <ul data-body-rows="">
+            {overview.entries.map((entry, index) => {
+              const date = formatHistoryDate(entry.entryDate);
+              return (
+                <li
+                  key={entry.id}
+                  style={{ "--row-index": Math.min(index, 9) } as CSSProperties}
+                >
+                  {/* `bwRows` (lines 1090-1096, values at 3062-3067). */}
+                  <Link
+                    href={`/body/weight/${entry.entryDate}/edit`}
+                    data-body-entry=""
+                    aria-label={`Edit weigh-in ${date}`}
+                  >
+                    <span>{formatKg(entry.weightKg)}</span>
+                    <span>
+                      {date}
+                      {entry.changeKg === null
+                        ? ""
+                        : ` · ${formatChangeKg(entry.changeKg)}`}
+                    </span>
+                    <Icon name="pencil" size={15} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </TabbedPanel>
+    </>
   );
+}
+
+/**
+ * `b.h` (2613): the Body chart floats its base under the smallest value by
+ * nine tenths of the spread, and never less than 0.4, so the spread fills the
+ * track; a bar is never shorter than 6%.
+ */
+function barPoints(series: ChartSeries): readonly BarChartPoint[] {
+  const values = series.points.map((point) => point.value);
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const min = values.length > 0 ? Math.min(...values) : 0;
+  const base = min - Math.max(0.4, (max - min) * 0.9);
+  const span = Math.max(0.001, max - base);
+  return series.points.map((point) => ({
+    key: point.date,
+    date: formatHistoryDate(point.date),
+    value: formatKg(point.value),
+    height: Math.max(6, ((point.value - base) / span) * 100),
+  }));
+}
+
+/** `bSummary` (2624-2626). */
+function chartSummary(series: ChartSeries): string {
+  const values = series.points.map((point) => point.value);
+  if (values.length === 0) return "";
+  const noun = values.length === 1 ? "weigh-in" : "weigh-ins";
+  return `${values.length} ${noun} in range: ${formatKg(values[0])} to ${formatKg(values[values.length - 1])}, lowest ${formatKg(Math.min(...values))}, highest ${formatKg(Math.max(...values))}.`;
+}
+
+/**
+ * `bValues` (2627): every weigh-in in range, newest first. The application's
+ * series carries the Monday-to-Sunday averages beside them — `MVP-WGT-003` —
+ * which the prototype's chart does not draw, so the list states them under
+ * the weigh-ins rather than leave them unsaid.
+ */
+function chartValues(series: ChartSeries) {
+  const daily = [...series.points].reverse().map((point) => ({
+    key: point.date,
+    date: formatHistoryDate(point.date),
+    value: formatKg(point.value),
+  }));
+  const weekly = [...(series.companion?.points ?? [])]
+    .reverse()
+    .map((point) => ({
+      key: `week-${point.span?.start ?? point.date}`,
+      date: `Week of ${formatHistoryDate(point.span?.start ?? point.date)}${point.span ? ` · ${formatRecordedDays(point.span.recordedDays)}${point.span.provisional ? " · provisional" : ""}` : ""}`,
+      value: formatAverageKg(point.value),
+    }));
+  return [...daily, ...weekly];
 }

@@ -43,6 +43,8 @@ export function BarChart({
   summary,
   emptyMessage,
   signature,
+  variant,
+  values,
 }: {
   points: readonly BarChartPoint[];
   /** The sentence under the bars; empty when there is nothing to say. */
@@ -55,6 +57,17 @@ export function BarChart({
    * exercise — which is also when the prototype drops the selection.
    */
   signature: string;
+  /**
+   * `body` is the Body pair's card (lines 1044-1052): the bars are centred,
+   * 4px apart and at most 46px wide, their corners 6px over 3px, and they
+   * arrive 22ms apart rather than 26 (`bodyChart`, 2616).
+   */
+  variant?: "body";
+  /**
+   * What the Chart values list holds, newest first, when it says more than
+   * the bars do; the bars' own points otherwise.
+   */
+  values?: readonly Readonly<{ key: string; date: string; value: string }>[];
 }) {
   const [picked, setPicked] = useState<{
     signature: string;
@@ -77,7 +90,7 @@ export function BarChart({
 
   if (points.length === 0)
     return (
-      <section data-bar-chart="">
+      <section data-bar-chart={variant ?? ""}>
         <p data-bar-chart-empty="">{emptyMessage}</p>
       </section>
     );
@@ -85,7 +98,7 @@ export function BarChart({
   const reading = points[selected];
 
   return (
-    <section data-bar-chart="">
+    <section data-bar-chart={variant ?? ""}>
       <div data-bar-chart-reading="" data-read-anim={readPair}>
         <span>{reading.date}</span>
         <span>{reading.value}</span>
@@ -122,7 +135,7 @@ export function BarChart({
       {/* `chartValues` (2392): newest first, which is the order the list above
           the chart reads in and the reverse of the bars' own. */}
       <Disclosure label="Chart values">
-        {[...points].reverse().map((point) => (
+        {(values ?? [...points].reverse()).map((point) => (
           <li key={point.key}>
             <span>{point.date}</span>
             <span>{point.value}</span>

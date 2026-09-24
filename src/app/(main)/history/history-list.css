@@ -12,77 +12,12 @@
 
 /* ----- Frame ------------------------------------------------------------- */
 
-/*
- * The prototype's screen is a column of title bar, tab bar and scroll region.
- * Here the title and the tab bar come from the layout and the count and the
- * region come from the page, so the four arrive in two pieces and a grid puts
- * them back in the order the prototype draws them. Nothing about the result
- * differs: row 1 is the title bar, `1fr auto` holding the title against the
- * count exactly as `space-between` does.
- */
-[data-screen-frame="history"] {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto minmax(0, 1fr);
-}
-
-[data-history-title] {
-  grid-area: 1 / 1 / 2 / 2;
-  align-self: center;
-  margin: 24px 0 12px 20px;
-  font-size: var(--fs-28);
-  font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-tight);
-}
-
-[data-history-count] {
-  grid-area: 1 / 2 / 2 / 3;
-  align-self: center;
-  margin: 24px 20px 12px 0;
-  padding: 7px 12px;
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-  font-family: var(--font-display);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--fs-14);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
-}
-
-[data-screen-frame="history"] > [data-tabs] {
-  grid-area: 2 / 1 / 3 / 3;
-}
-
-/* ----- Panel ------------------------------------------------------------- */
-
-/* The prototype's `.sx` (line 277), with this screen's own gap and inset. */
-[data-history-panel] {
-  grid-area: 3 / 1 / 4 / 3;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
+/* The title, the count, the tab bar and the scroll region are the shared
+   tabbed frame's (`src/shared/ui/tabbed-frame.css`), lifted in step 18 when
+   Body took the same one. The 12px between what the panel holds is History's
+   (line 277). */
+[data-screen-frame="history"] [data-tabbed-panel] {
   gap: 12px;
-  padding: 18px 20px 22px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-}
-
-[data-history-panel]::-webkit-scrollbar {
-  display: none;
-}
-
-[data-history-panel][data-panel-anim="panFwdA"] {
-  animation: panFwdA var(--dur-280) var(--ease);
-}
-[data-history-panel][data-panel-anim="panFwdB"] {
-  animation: panFwdB var(--dur-280) var(--ease);
-}
-[data-history-panel][data-panel-anim="panBackA"] {
-  animation: panBackA var(--dur-280) var(--ease);
-}
-[data-history-panel][data-panel-anim="panBackB"] {
-  animation: panBackB var(--dur-280) var(--ease);
 }
 
 /* ----- Lists ------------------------------------------------------------- */

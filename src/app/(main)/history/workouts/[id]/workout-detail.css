@@ -59,42 +59,9 @@
 
 /* ----- The two numbers --------------------------------------------------- */
 
-/*
- * `wdDuration` and `wdPerformed` (line 375-386). The statistics screens draw a
- * grid of tiles that looks like this pair and is not it — theirs states its
- * value at 21px, carries a detail line under it and binds all three of its
- * colours (line 622) — so these two stay this screen's. Step 12 settled it:
- * the prototype writes three tiles, this pair, Split statistics' and Body's,
- * and each stays on its own screen.
- */
-[data-workout-detail-stats] {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-[data-workout-detail-stat] {
-  border-radius: var(--radius-20);
-  background: var(--surface);
-  padding: 16px 14px;
-}
-
-[data-workout-detail-stat] > p:first-child {
-  margin: 0;
-  font-size: var(--fs-11);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-06);
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-[data-workout-detail-stat] > p + p {
-  margin: 8px 0 0;
-  font-family: var(--font-display);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--fs-22);
-  font-weight: var(--fw-bold);
-}
+/* `wdDuration` and `wdPerformed` (lines 375-386) are the shared stat tile in
+   `src/shared/ui/status.css`, lifted in step 18 when Body drew the same tile
+   with a detail line under it. */
 
 /* ----- What the workout was ---------------------------------------------- */
 

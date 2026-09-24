@@ -226,13 +226,15 @@ reuses the listed component or changes it for everyone.
 | Section head (`Hold to reorder`) | `SectionHead` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
 | Empty card (24px, icon) | `EmptyCard` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
-| List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13, `definition` in 16 | lists |
+| List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13, `definition` in 16, `measurement` in 18 | lists |
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10, changed in 12 | 4, 10 |
-| Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11 | 11, 12, 18, 19 |
+| Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11, `body` variant in 18 | 11, 12, 18, 19 |
 | Disclosure row (44px, chevron) | `shared/ui/disclosure.{tsx,css}` | 11 | 11, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
+| Tabbed frame (title, count, tabs, sliding panel) | `TabbedFrame` in `shared/ui/tabbed-frame.{tsx,css}` | 8, lifted in 18 | 8, 18 |
+| Stat tile | `StatCard` in `shared/ui/status.{tsx,css}` | 9, lifted in 18 | 9, 18 |
 | Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10 |
 | Date picker | — | 20 | 20 |
 | Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, 10, definition screens |
@@ -1604,6 +1606,87 @@ Verification. The MCP was not used; the prototype was read from the local copy.
     changes`. Saving it with no name toasted `Enter an exercise name.` and
     marked the field.
 
+Step 18 read the prototype from the same byte-exact local copy.
+
+**Two surfaces are lifted and one gains a variant:**
+
+- **The tabbed frame.** History (lines 264-277) and Body (1006-1020) write the
+  same frame: a 28px title with a count chip against it, the segmented tabs,
+  and a scroll region that slides in from the side its tab was chosen from.
+  Step 8's `HistoryFrame` is now `TabbedFrame` in `src/shared/ui`, and History
+  and Body both take it. Only the gap inside the panel differs, 12px for
+  History and 14px for Body, and each destination sets its own.
+  `BodyNavigation` is gone. A measurement's own screen and every form under
+  Body are screens of their own, and the frame steps out of their way as
+  History's does.
+- **The stat tile.** Body's weight tiles (1024-1033) are the Workout detail's
+  pair (375-386) with a detail line under the value. So `StatCard` is now that
+  tile, and the Workout detail draws its pair with it. Split statistics' tiles
+  bind their colours and state the value at 21px, and stay that screen's.
+- **The chart card's `body` variant**: the bars centred, 4px apart and at most
+  46px wide, their corners 6px over 3px, and 22ms apart on the way in
+  (`bodyChart`, 2593-2618). The heights are the caller's, and Body floats its
+  base as the prototype's `bodyChart` does. The card takes an optional
+  `values` list for what the bars do not say.
+
+**Rows:** Body's measurement row is the list row's `measurement` variant, 76px
+and without `text-wrap: pretty` (line 1105). A weigh-in row (1090-1096) and
+the two `Add` pills (1087, 1102) are this screen's own. The empty card is the
+shared one, 26px padded with a 30px glyph here (1112).
+
+**A change that rounds to nothing reads `±0.0`**, as the prototype's
+`fmtDelta` (1781) writes it, for kilograms and centimetres alike. Before, it
+read `+0.0`.
+
+The screen departs from the prototype, or from the documents, in five places.
+The first three are for the Owner:
+
+- **Body now adds a weigh-in.** The prototype's `Add` (`bwAdd`, 3068) opens
+  today's weigh-in. `MVP-WGT-001`, `MVP-BOD-002` and ADR-0030 say Body edits
+  and deletes but creates none, and Today creates. Step 2 took the weight and
+  measurement cards off Today, so since then nothing has created one. `Add`
+  now opens `/body/weight/new`, a new route on the application's own weight
+  form, until step 20 ports the Body entry panel, or today's weigh-in when
+  one exists. The criteria and the ADR are unchanged; step 2 left their
+  amendment open, and this makes it pressing.
+- **The chart draws the daily weigh-ins alone.** `MVP-WGT-003` asks for weekly
+  averages in the chart, and the prototype draws none. The weekly averages
+  stay in the chart card's values list, under the weigh-ins, each with its
+  `n/7` and whether it is provisional. The current week keeps its tile.
+- **The chart opens on the quarter**, as the prototype's does (`bodyRange`,
+  1804). The documents said the month. `defaultWeightRange` and
+  `docs/product/weight-and-body.md` now say the quarter.
+- **The chips answer in the same frame.** Every weigh-in is on the screen, and
+  `weightSeries` is the domain function the server's own series goes through.
+- **The This week tile keeps `Provisional until Sunday` or `Final`**, which
+  `MVP-WGT-002` asks for and the prototype does not write. A read that failed
+  takes the note card inside the panel.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element in the target's parent. **260 on the Weight tab**: the title, the
+  count, the panel, the tile grid, a tile and its three lines, the eyebrow,
+  the chips, the chart card, its bars row, a bar's button and its bar, the
+  weigh-ins heading and its `Add` and glyph, a weigh-in row and its value,
+  detail and pencil. **110 on the Measurements tab**: the add row, its pill and
+  glyph, a measurement row, its name, detail and chevron, and the footnote.
+  None differs. History's panel was measured again after the lift and still
+  carries its own 12px.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either:
+  - The bars arrive 22ms apart and the weigh-ins 34ms, both capped at the tenth.
+  - Week, Month, Quarter and Year redraw 3, 28, 30 and 30 bars with the
+    prototype's sentence.
+  - Chart values lists the weigh-ins newest first, then `Week of Mon 14 Sept ·
+    7/7 days 82.9 kg` and the weeks before it.
+  - Measurements slides the panel `panFwd` and Weight `panBack`, and History's
+    tabs still slide the same way.
+  - `Add` opens today's new weigh-in. A weigh-in row opens its edit screen and
+    a measurement row its own screen, neither under the tabs. Nothing was
+    saved.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1626,5 +1709,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 15 | done | 2026-09-24 | — |
 | 16 | done | 2026-09-24 | — |
 | 17 | done | 2026-09-24 | — |
+| 18 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

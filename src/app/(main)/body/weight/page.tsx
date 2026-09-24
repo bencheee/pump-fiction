@@ -1,29 +1,30 @@
 import Link from "next/link";
 
-import { defaultWeightRange } from "@/features/history/application/weight-operations";
 import { getWeightProgress } from "@/server/application/weight";
-import { EmptyState, PageFrame } from "@/shared/ui";
+import { TabbedCount, TabbedPanel } from "@/shared/ui";
 
 import { WeightView } from "./weight-view";
 
 export const dynamic = "force-dynamic";
 
 export default async function WeightHistoryPage() {
-  const result = await getWeightProgress({ range: defaultWeightRange });
+  const result = await getWeightProgress();
 
   if (!result.ok) {
+    // A read that failed, which the prototype has no notion of: the note card
+    // every ported list answers such a state with.
     return (
-      <PageFrame title="Weight">
-        <EmptyState
-          title="Weight couldn't be loaded"
-          body={result.error.message}
-          action={<Link href="/body/weight">Retry</Link>}
-        />
-      </PageFrame>
+      <>
+        <TabbedCount>—</TabbedCount>
+        <TabbedPanel>
+          <p data-note-card="">
+            {result.error.message}
+            <Link href="/body/weight">Try again</Link>
+          </p>
+        </TabbedPanel>
+      </>
     );
   }
 
-  return (
-    <WeightView progress={result.value} initialRange={defaultWeightRange} />
-  );
+  return <WeightView overview={result.value.overview} />;
 }

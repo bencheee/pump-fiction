@@ -36,7 +36,7 @@ The previous individual weigh-in is the one before it *by date*, not by the orde
 
 Values are stored and shown as entered, to two decimals. Averages and changes are rounded to one decimal for display only; the derivation and the stored value keep their full precision.
 
-The chart supports week, month, quarter, and year and displays daily values together with weekly averages. It opens on the month.
+The chart supports week, month, quarter, and year and draws one bar for each daily weigh-in; its values list names every weigh-in in the range and, under them, the weekly averages of the weeks the range reaches, each with its recorded-days count and whether it is still provisional. The current week's average also stands in its own tile above the chart. It opens on the quarter.
 
 Its range is a trailing window that ends on the local date, as every chart's is, while weekly averages stay Monday-to-Sunday calendar weeks. The two do not line up, and that is deliberate: `week` shows the last seven days, and the weekly average beside them is still the week's. A weekly point is drawn on the last day its week actually reaches, so the current provisional week appears at today rather than in the future, and it carries the week it covers, its recorded-days count, and whether it is still provisional. A week that began before the window keeps its whole average, because a week is a week.
 

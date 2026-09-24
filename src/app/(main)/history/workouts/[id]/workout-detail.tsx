@@ -22,6 +22,7 @@ import {
   TopBar,
   useToast,
   useTransientOverlay,
+  StatCard,
 } from "@/shared/ui";
 
 import {
@@ -161,15 +162,12 @@ export function WorkoutDetail({
           </p>
         </div>
 
-        <div data-workout-detail-stats="">
-          <div data-workout-detail-stat="">
-            <p>Active duration</p>
-            <p>{formatHistoryDuration(workout.activeDurationSeconds)}</p>
-          </div>
-          <div data-workout-detail-stat="">
-            <p>Performed</p>
-            <p>{formatExerciseCount(performed)}</p>
-          </div>
+        <div data-stat-cards="">
+          <StatCard
+            label="Active duration"
+            value={formatHistoryDuration(workout.activeDurationSeconds)}
+          />
+          <StatCard label="Performed" value={formatExerciseCount(performed)} />
         </div>
 
         <div data-workout-detail-facts="">

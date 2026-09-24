@@ -79,8 +79,8 @@
      four uses. */
   background: var(--surface-hover);
   transform-origin: bottom;
-  animation: barInA var(--dur-460) var(--ease) calc(var(--bar-index) * 26ms)
-    both;
+  animation: barInA var(--dur-460) var(--ease)
+    calc(var(--bar-index) * var(--bar-stagger, 26ms)) both;
   transition:
     background var(--dur-200) linear,
     height var(--dur-380) var(--ease);
@@ -134,4 +134,23 @@
   color: var(--text-muted);
   text-align: center;
   animation: hoDim var(--dur-200) linear;
+}
+
+/* ----- Body -------------------------------------------------------------- */
+
+/* The Body pair's card (lines 1044-1052, `bodyChart` at 2593-2618): the same
+   card with its bars centred, 4px apart and at most 46px wide, rounder by a
+   pixel less, and 22ms apart on the way in. */
+[data-bar-chart="body"] [data-bar-chart-bars] {
+  justify-content: center;
+  gap: 4px;
+  --bar-stagger: 22ms;
+}
+
+[data-bar-chart="body"] [data-bar-chart-bars] > button {
+  max-width: 46px;
+}
+
+[data-bar-chart="body"] [data-bar-chart-bars] > button > span {
+  border-radius: 6px 6px 3px 3px;
 }

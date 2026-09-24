@@ -28,11 +28,11 @@ export type WeightProgress = Readonly<{
 }>;
 
 /**
- * The range the chart opens on. A month shows the trend the weekly averages
- * are for while still naming individual weigh-ins; `S19` offers week, month,
- * quarter, and year beside it.
+ * The range the chart opens on: the quarter, as the redesign's prototype opens
+ * it (`bodyRange: "quarter"`, line 1804). Week, month and year are offered
+ * beside it.
  */
-export const defaultWeightRange: ChartRange = "month";
+export const defaultWeightRange: ChartRange = "quarter";
 
 export async function getWeightProgress(
   repository: WeightRepository,
