@@ -187,7 +187,7 @@ export function WorkoutDetail({
           // A saved workout with no exercises at all, which the prototype has
           // no notion of. The sentence goes in the note card the History list
           // answers an emptiness with.
-          <p data-history-note="">This workout recorded no exercises.</p>
+          <p data-note-card="">This workout recorded no exercises.</p>
         ) : null}
 
         {workout.exercises.map((exercise, index) => (

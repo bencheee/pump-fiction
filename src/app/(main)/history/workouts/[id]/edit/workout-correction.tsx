@@ -402,7 +402,7 @@ export function WorkoutCorrection({
           // A saved workout with no exercises, which the prototype has no
           // notion of: the note card the History list answers an emptiness
           // with, as the Workout detail uses it.
-          <p data-history-note="">
+          <p data-note-card="">
             This workout holds no exercises. Add one to correct it.
           </p>
         ) : null}

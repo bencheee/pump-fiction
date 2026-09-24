@@ -57,7 +57,7 @@ export function SplitHistoryList({ history }: { history: SplitHistory }) {
         </div>
       ) : null}
       {shown.length === 0 ? (
-        <p data-history-note="">
+        <p data-note-card="">
           {/* `noSplits` (line 2198) is only the filtered emptiness: the
               prototype draws nothing at all when there is no split history,
               which leaves the tab blank. The second sentence is the

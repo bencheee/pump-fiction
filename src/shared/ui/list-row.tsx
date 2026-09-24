@@ -23,6 +23,8 @@ export function ListRow({
   badge,
   trailing,
   leading,
+  titleBadge,
+  current = false,
   variant,
 }: {
   href: string;
@@ -35,14 +37,32 @@ export function ListRow({
   /** Sits before the chevron; the saved workout's trend. */
   trailing?: ReactNode;
   leading?: ReactNode;
-  /** `split` takes the taller padding and drops the minimum height. */
-  variant?: "split";
+  /** Sits beside the name and wraps under it; the program row's `Current`. */
+  titleBadge?: ReactNode;
+  /** The program row the rotation runs from, drawn on the tinted fill. */
+  current?: boolean;
+  /**
+   * `split` takes the taller padding and drops the minimum height. `program`
+   * is the Programs list's row: the same frame, its own type (line 757).
+   */
+  variant?: "split" | "program";
 }) {
   return (
-    <Link href={href} data-list-row={variant ?? ""}>
+    <Link
+      href={href}
+      data-list-row={variant ?? ""}
+      data-current={current ? "" : undefined}
+    >
       {leading}
       <span data-list-row-text="">
-        <span data-list-row-title="">{title}</span>
+        {titleBadge ? (
+          <span data-list-row-heading="">
+            <span data-list-row-title="">{title}</span>
+            {titleBadge}
+          </span>
+        ) : (
+          <span data-list-row-title="">{title}</span>
+        )}
         {meta ? <span data-list-row-meta="">{meta}</span> : null}
         {detail ? <span data-list-row-detail="">{detail}</span> : null}
         {badge ? (

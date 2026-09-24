@@ -32,7 +32,7 @@ export default async function WorkoutHistoryPage() {
   if (!result.ok) {
     return (
       <HistoryPanel>
-        <p data-history-note="">
+        <p data-note-card="">
           {result.error.message}
           <Link href="/history/workouts">Try again</Link>
         </p>

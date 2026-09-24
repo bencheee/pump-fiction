@@ -35,7 +35,7 @@ export default async function SplitStatisticsPage({
           backLabel="Back"
         />
         <div data-split-statistics-body="">
-          <p data-history-note="">
+          <p data-note-card="">
             {result.error.message}
             <Link href={`/history/splits/${id}`}>Try again</Link>
           </p>

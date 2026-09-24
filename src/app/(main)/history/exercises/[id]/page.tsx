@@ -35,7 +35,7 @@ export default async function ExerciseStatisticsPage({
           backLabel="Back"
         />
         <div data-exercise-statistics-body="">
-          <p data-history-note="">
+          <p data-note-card="">
             {result.error.message}
             <Link href={`/history/exercises/${id}`}>Try again</Link>
           </p>

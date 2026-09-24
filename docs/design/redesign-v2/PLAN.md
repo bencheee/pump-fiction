@@ -222,7 +222,7 @@ reuses the listed component or changes it for everyone.
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
-| List row | `shared/ui/list-row.{tsx,css}` | 8 | lists |
+| List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13 | lists |
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
 | List filter field (52px) | `shared/ui/search-field.{tsx,css}` | 8 | 8, 16 |
 | Value wheel | `shared/ui/value-wheel.{tsx,css}` | 4, fixed in 10, changed in 12 | 4, 10 |
@@ -242,6 +242,9 @@ reuses the listed component or changes it for everyone.
 | Toast | `shared/ui/toast.{tsx,css}` | 6 | all |
 | Confirm dialog | `DestructiveDialog` in `shared/ui/overlays.{tsx,css}` | 9 | 6, 7, 9, 10, destructive actions |
 | Outline badge | `Badge` in `shared/ui/status.{tsx,css}` | 8, lifted in 9, `statistics` size in 12 | 8, 9, 10, 11, 12 |
+| Tinted badge (`Current`, `Next`) | `Badge tone="accent"` in `shared/ui/status.{tsx,css}` | 13 | 13, 14, 18 |
+| Note card | `[data-note-card]` in `shared/ui/status.css` | 8, lifted in 13 | 8, 9, 10, 11, 12, 13 |
+| Title add (44px, round) | `[data-variant="title-add"]` in `shared/ui/action.css` | 13 | 13, 16 |
 
 Component styling lives in a CSS file beside its component, keyed on the same
 data attributes the markup already carries, and is imported by it. `globals.css`
@@ -1272,6 +1275,51 @@ use it on every metric or only on the load is a design decision. The Owner
 approved step 12 as it stands and put the charts' scaling off until every
 screen is done (2026-09-24).
 
+Step 13 read the prototype from the same byte-exact local copy.
+
+Three shared surfaces are born here and one is lifted:
+
+- **The tinted badge** is the `Current` and `Next` marker. The prototype writes
+  it three times with the same five declarations — the Programs list (line 762),
+  a program's split rows (807) and Set next split (1223) — so it is the badge's
+  `accent` tone, which status.css had reserved for it since step 9.
+- **The round add button** in a root screen's title bar is written twice, the
+  same ten declarations each time: Programs (752) and Exercises (902). It is
+  the action's `title-add` variant, a link here because both open a route.
+- **The program row** is the shared list row's `program` variant: the frame is
+  the same row, the border is transparent rather than the fill's own colour so
+  the tinted current program carries no darker edge, and the name at 16.5px,
+  the badge beside it and the 13px detail under it are this row's type. The
+  row takes `current` for `p.bg` and a `titleBadge` slot for the marker.
+- **The note card** leaves `history-list.css` for `status.css`, and
+  `data-history-note` becomes `data-note-card`. Programs is the first screen
+  outside History to need it. No declaration changed, and a History note was
+  measured again after the move: 25 declarations, none differs.
+
+The screen departs from the prototype in two places, both states the prototype
+has no screen for: **no program at all** and **a read that failed**. Both take
+the note card, the first with `Add program` inside it and the second with `Try
+again`. The lead paragraph stays above both, because it says what the screen is
+for whatever it holds.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **161 declarations** — the title
+  bar, its heading, the add button and its glyph, the scroll region, the lead,
+  the current program's row, its text, heading, name, badge, detail and
+  chevron — **and none differs**. Both hovers were read under a real pointer:
+  the add button takes `#35b57e` on `#0f2a1d`, and the row's border `#2a332e`.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either. The row arrives on `ovRowA`, 34ms a row. The row opens the program
+  `scFwd`, its Back returns `scBack`, and the add button opens `/programs/new`
+  `scFwd`; both targets are step 14's screen.
+- This database holds one program, the current one, so **a row that is not the
+  current program was not seen**. It takes the list row's own `#141a17`, which
+  the History rows were measured on in step 8. The empty list and the failed
+  read were not reached either.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1289,5 +1337,6 @@ screen is done (2026-09-24).
 | 10 | done | 2026-09-22 | — |
 | 11 | done | 2026-09-22 | — |
 | 12 | done | 2026-09-24 | — |
+| 13 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

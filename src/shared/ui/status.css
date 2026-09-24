@@ -15,8 +15,8 @@
  * 8px and the card 10px. Step 8 wrote the row's copy inside `list-row.css`;
  * this lifts it out so the two are one surface rather than two.
  *
- * Only the neutral tone is the prototype's. `accent` is the `Current` and
- * `Next` marker on Programs, which steps 13 and 14 port.
+ * The neutral tone is this outline; `accent` is the tinted `Current` and `Next`
+ * marker on Programs, below.
  */
 
 [data-badge][data-tone="neutral"] {
@@ -29,8 +29,49 @@
   color: var(--text-muted);
 }
 
+/* The `Current` and `Next` marker, added in step 13. The prototype writes it
+   three times with the same five declarations: the Programs list (line 762),
+   a program's split rows (807) and Set next split (1223). */
+[data-badge][data-tone="accent"] {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-surface);
+  color: var(--accent);
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+}
+
 [data-badge][data-size="statistics"] {
   padding: 5px 11px;
+}
+
+/* ----- Note card -------------------------------------------------------- */
+
+/*
+ * The card a list answers an emptiness with, ported for step 8 from the History
+ * list's exercise and split tabs (lines 322, 341) and lifted here in step 13,
+ * when Programs needed the same card for a list with no program in it and a
+ * read that failed. Every ported screen that has a state the prototype has no
+ * screen for answers it with this card, a link inside it when there is
+ * something to do.
+ */
+[data-note-card] {
+  margin: 12px 0;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  padding: 20px;
+  font-size: var(--fs-14);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+  text-align: center;
+  animation: rise var(--dur-200) var(--ease);
+}
+
+[data-note-card] a {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: var(--fw-semibold);
 }
 
 /* ----- Unsaved chip ------------------------------------------------------ */

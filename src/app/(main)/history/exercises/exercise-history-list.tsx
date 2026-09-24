@@ -54,7 +54,7 @@ export function ExerciseHistoryList({
         onChange={setQuery}
       />
       {matches.length === 0 ? (
-        <p data-history-note="">
+        <p data-note-card="">
           {entries.length === 0
             ? "No exercise history yet. Record a set in a workout and that exercise appears here."
             : "No exercise with a recorded set matches that name."}

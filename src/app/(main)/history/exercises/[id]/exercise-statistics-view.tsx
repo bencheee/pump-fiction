@@ -101,7 +101,7 @@ export function ExerciseStatisticsView({
           // An exercise whose performances hold no recorded set, which the
           // prototype has no screen for: the note card the History list
           // answers an emptiness with, as steps 9 and 10 use it.
-          <p data-history-note="">
+          <p data-note-card="">
             Records appear once a completed workout holds a recorded set.
           </p>
         ) : (
@@ -112,7 +112,7 @@ export function ExerciseStatisticsView({
 
         <p data-exercise-statistics-eyebrow="">Progress</p>
         {statistics.metrics.length === 0 ? (
-          <p data-history-note="">
+          <p data-note-card="">
             A completed workout with recorded sets starts the chart.
           </p>
         ) : (
@@ -161,9 +161,7 @@ export function ExerciseStatisticsView({
 
         <p data-exercise-statistics-eyebrow="">All performances</p>
         {statistics.performances.length === 0 ? (
-          <p data-history-note="">
-            This exercise has no saved performance yet.
-          </p>
+          <p data-note-card="">This exercise has no saved performance yet.</p>
         ) : (
           statistics.performances.map((performance, index) => (
             <PerformanceCard

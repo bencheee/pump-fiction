@@ -14,7 +14,7 @@ export default async function SplitHistoryPage() {
   if (!result.ok) {
     return (
       <HistoryPanel>
-        <p data-history-note="">
+        <p data-note-card="">
           {result.error.message}
           <Link href="/history/splits">Try again</Link>
         </p>

@@ -83,3 +83,38 @@
   flex: none;
   color: var(--text-faint);
 }
+
+/* ----- Program ----------------------------------------------------------- */
+
+/*
+ * The Programs list's row, added in step 13 (line 757, values at 2661-2669).
+ * The frame is the same row; the border is transparent rather than the fill's
+ * own colour so the tinted current program carries no darker edge, and the
+ * name, the badge beside it and the detail under it are this row's type.
+ */
+[data-list-row="program"] {
+  border-color: transparent;
+}
+
+/* `p.bg`: the current program is drawn on the tinted fill. */
+[data-list-row="program"][data-current] {
+  background: var(--accent-surface);
+}
+
+[data-list-row-heading] {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+[data-list-row="program"] [data-list-row-title] {
+  font-size: var(--fs-16-5);
+}
+
+[data-list-row="program"] [data-list-row-detail] {
+  margin-top: 6px;
+  font-family: inherit;
+  font-variant-numeric: normal;
+  font-size: var(--fs-13);
+}

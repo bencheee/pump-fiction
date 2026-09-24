@@ -173,25 +173,8 @@
   text-align: center;
 }
 
-/* The note the other two tabs answer with (lines 322, 341), and the two
-   states the prototype has no notion of: a read that failed. */
-[data-history-note] {
-  margin: 12px 0;
-  border-radius: var(--radius-20);
-  background: var(--surface);
-  padding: 20px;
-  font-size: var(--fs-14);
-  line-height: var(--lh-1-5);
-  color: var(--text-muted);
-  text-align: center;
-  animation: rise var(--dur-200) var(--ease);
-}
-
-[data-history-note] a {
-  display: inline-block;
-  margin-top: 10px;
-  font-weight: var(--fw-semibold);
-}
+/* The note card this list answers an emptiness with is the shared one in
+   `src/shared/ui/status.css`, lifted there in step 13. */
 
 /* ----- Trend ------------------------------------------------------------- */
 

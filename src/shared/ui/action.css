@@ -229,3 +229,33 @@
 [data-variant="quiet"]:disabled {
   color: var(--text-faint);
 }
+
+/* ----- Title add -------------------------------------------------------- */
+
+/*
+ * The round add button a root screen's title bar carries, added in step 13.
+ * The prototype writes it twice with the same ten declarations: Programs (line
+ * 752) and Exercises (902). Both open a new definition, which is a route, so
+ * it is a link here and `box-sizing` keeps the border inside its 44px as the
+ * user-agent stylesheet does for the prototype's `<button>`.
+ */
+[data-variant="title-add"] {
+  box-sizing: border-box;
+  width: var(--control-44);
+  height: var(--control-44);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color var(--dur-160) linear,
+    background var(--dur-160) linear;
+}
+
+[data-variant="title-add"]:hover {
+  border-color: var(--accent);
+  background: var(--accent-surface);
+  color: var(--accent);
+}
