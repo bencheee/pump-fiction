@@ -1,11 +1,13 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { listExercises } from "@/server/application/exercises";
 import { getProgram } from "@/server/application/programs";
 import { requireUuidRouteParam } from "@/shared/routing/uuid-route-param";
-import { EmptyState, PageFrame, TopBar } from "@/shared/ui";
+import { TopBar } from "@/shared/ui";
 
 import { SplitForm } from "../../../split-form";
+import "../../../split-form.css";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +30,7 @@ export default async function NewSplitPage({
         : exerciseResult.error.message;
     return (
       <LoadFailure
-        title="New Split"
+        title="New split"
         backHref={`/programs/${id}/edit`}
         message={message}
       />
@@ -42,21 +44,31 @@ export default async function NewSplitPage({
   );
 }
 
+/* A read that failed, which the prototype has no notion of: the note card
+   inside the screen's own frame, as every ported screen answers it. */
 function LoadFailure({
-  title,
-  backHref,
+  title = "New split",
+  backHref = "/programs",
   message,
 }: {
-  title: string;
-  backHref: string;
+  title?: string;
+  backHref?: string;
   message: string;
 }) {
   return (
-    <div>
-      <TopBar title={title} backHref={backHref} backLabel="Program" />
-      <PageFrame title="Split unavailable">
-        <EmptyState title="Split couldn't be opened" body={message} />
-      </PageFrame>
+    <div data-split-editor="">
+      <TopBar
+        screen="split-editor"
+        title={title}
+        backHref={backHref}
+        backLabel="Back"
+      />
+      <div data-split-editor-body="">
+        <p data-note-card="">
+          {message}
+          <Link href={backHref}>Back</Link>
+        </p>
+      </div>
     </div>
   );
 }

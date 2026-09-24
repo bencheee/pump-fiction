@@ -21,9 +21,10 @@ import "./stepper.css";
  * as the wheel's does. The prototype bumps on the press and not on the change,
  * so a value held at its limit still answers.
  *
- * The card the rows sit in belongs to the screen, not to the stepper: the
- * split editor (line 858, step 15) writes three of these in a grid with no
- * card at all.
+ * The card the rows sit in belongs to the screen, not to the stepper. The
+ * split editor's prescription field (line 865, step 15) looks related and is
+ * not this surface: its label sits over a 44px well with two 34px buttons and
+ * no hop, so it stays that screen's own.
  */
 export function Stepper({
   label,

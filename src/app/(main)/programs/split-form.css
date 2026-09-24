@@ -1,0 +1,243 @@
+/*
+ * The Split editor and its Add exercise panel, ported from the prototype for
+ * step 15 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 836-896 (Split editor), 1233-1253 (Add exercise)
+ *   bound values  lines 2686-2721, 2957-2982
+ *
+ * The top bar, the Unsaved chip, the name field, the section head, the empty
+ * card, the add pill, the row icon, the Actions pill and panel, the reorder
+ * gesture and the confirm dialog are shared and live in `src/shared/ui`. What
+ * is here is this screen's own.
+ */
+
+[data-split-editor] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 846), with this screen's own gap and inset. */
+[data-split-editor-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-split-editor-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----- Prescription card ------------------------------------------------- */
+
+/* `sfExercises` (lines 857-876). The hold, the lift and the cards moving out
+   of its way are the shared gesture's; the frame is this card's. */
+[data-prescription] {
+  box-sizing: border-box;
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  border: 1px solid transparent;
+  padding: 14px 12px 16px 18px;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+[data-prescription-head] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* `ex.name`. */
+[data-prescription-head] > h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: var(--fs-15-5);
+  line-height: var(--lh-1-25);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* `ex.remove` (line 861) is the shared row icon, and this copy of it answers a
+   hover the workout overview's does not. */
+[data-prescription-head] > [data-variant="row-icon"] {
+  transition: color var(--dur-160) linear;
+}
+
+[data-prescription-head] > [data-variant="row-icon"]:hover {
+  color: var(--text-secondary);
+}
+
+[data-prescription-fields] {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+/* Three wells need about 290px and a 320px screen leaves the card 250, so the
+   prototype's row would run out of it. Below 360px the wells wrap instead, as
+   many to a row as fit whole; from 360px up nothing moves. */
+@media (max-width: 359px) {
+  [data-prescription-fields] {
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  }
+}
+
+/* `ex.fields` (lines 865-872). Not the correction screen's stepper: the label
+   sits over a 44px well rather than beside two round buttons, and the value
+   does not hop. */
+[data-prescription-field] {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+[data-prescription-field] > span {
+  font-size: var(--fs-10-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-06);
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+[data-prescription-field] > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  height: var(--control-44);
+  border-radius: var(--radius-14);
+  background: var(--surface-tile);
+  padding: 0 4px;
+}
+
+[data-prescription-field] button {
+  width: 34px;
+  height: 36px;
+  border-radius: var(--radius-11);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition:
+    background var(--dur-150) linear,
+    color var(--dur-150) linear;
+}
+
+[data-prescription-field] button:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+/* The prototype has no stepper that cannot be pressed; a save in flight does,
+   and says it in the colour a refused control takes everywhere else. */
+[data-prescription-field] button:disabled {
+  color: var(--text-faint);
+}
+
+/* `f.value`. */
+[data-prescription-field] > div > span {
+  flex: 1;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-19);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+}
+
+/* ----- Closing lines ----------------------------------------------------- */
+
+/* Line 888. */
+[data-split-editor-footnote] {
+  margin: 6px 0 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* Line 891: the pill that opens the Actions panel, pinned under the list. */
+[data-split-editor-footer] {
+  flex: none;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}
+
+/* ----- Add exercise to split --------------------------------------------- */
+
+/* Line 1239: the body's gap and the 16px under the last option. */
+[data-panel="add-to-split"] [data-panel-body] {
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+[data-panel="add-to-split"] [data-panel-lead] {
+  margin: 0 0 6px;
+  line-height: var(--lh-1-45);
+}
+
+/* `sfAddOptions` (lines 1241-1247, values at 2970-2982). Each arrives on
+   `ovRow`, 40ms after the one above it and 40ms after the panel, the ninth
+   and every one after it together. */
+[data-add-option] {
+  min-height: 68px;
+  box-sizing: border-box;
+  border-radius: var(--radius-20);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  text-align: left;
+  animation: ovRow var(--dur-260) var(--ease) var(--option-delay) both;
+  transition: border-color var(--dur-160) linear;
+}
+
+[data-add-option]:hover {
+  border-color: var(--line-strong);
+}
+
+[data-add-option] > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* `o.name`. */
+[data-add-option] > span:first-child > span:first-child {
+  display: block;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* `o.detail`. */
+[data-add-option] > span:first-child > span + span {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-12-5);
+  color: var(--text-muted);
+}
+
+[data-add-option] > [data-icon] {
+  flex: none;
+  color: var(--accent);
+}
+
+/* `sfAddEmpty` (line 1249). */
+[data-add-option-empty] {
+  margin: 16px 0;
+  text-align: center;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}

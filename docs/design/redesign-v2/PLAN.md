@@ -233,7 +233,7 @@ reuses the listed component or changes it for everyone.
 | Bar chart | `shared/ui/bar-chart.{tsx,css}` | 11 | 11, 12, 18, 19 |
 | Disclosure row (44px, chevron) | `shared/ui/disclosure.{tsx,css}` | 11 | 11, 18, 19 |
 | Segmented tabs | `shared/ui/subsection-navigation.{tsx,css}` | 8 | 8, 18 |
-| Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10, 15 |
+| Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10 |
 | Date picker | — | 20 | 20 |
 | Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, 10, definition screens |
 | Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9, `data-edits` copy in 14 | 9, 14, 15, 17 |
@@ -1421,6 +1421,76 @@ Verification. The MCP was not used; the prototype was read from the local copy.
   `finish/finish-review` module that step 7 removed; tests are left until every
   screen is approved.
 
+Step 15 read the prototype from the same byte-exact local copy.
+
+The screen takes nearly everything from step 14: the name field, the section
+head, the empty card, the hold to reorder, the add pill, the row icon, the
+Actions pill with its `data-edits` copy, the panel and the confirm dialog. Two
+things are its own:
+
+- **The prescription field is not the stepper.** Step 10 expected the split
+  editor to take its stepper (line 858). It does not: the correction screen's
+  row is a label beside two round 40px buttons with a hop on the value (lines
+  440-447). This one is a 10.5px label over a 44px well on `#1a211d` with two
+  34×36px buttons and no hop (865-872). They are two surfaces, and the
+  register's `Stepper` row no longer lists step 15.
+- **The remove button** is the shared row icon, and this copy adds a 160ms
+  colour transition and a hover the overview's does not (line 861). The screen
+  adds those two declarations to it.
+
+**Split routes are on Programs' stack.** The shell took a route's page from
+its first segment, and `/splits/[id]/edit` was nobody's. So opening a split
+from its program took the back transition and saving it took the forward one.
+`splits` now answers to `programs`, as `workout` answers to `today`.
+
+The screen departs from the prototype in five places:
+
+- **The order of a saved split is written at once**, as it always has been,
+  and toasts `Order saved.`. It is written only when the prescriptions are as
+  saved. One holding unsaved changes, or a new split, keeps the order for Save
+  with everything else, because the order the server would be told of is not
+  one it holds.
+- **The three wells wrap below 360px.** They need about 290px and a 320px
+  screen leaves the card 250, so the prototype's `repeat(3, 1fr)` would run
+  out of it. From 360px up nothing moves.
+- **Each well button names its exercise**, `One set more, Barbell back squat`,
+  because the screen holds several of them. The prototype writes `One set more`.
+- **An empty library** says `Add an exercise to the Exercise Library first.` in
+  the empty card, and `The Exercise Library holds no exercise yet.` in the Add
+  exercise panel. The prototype has no empty library.
+- **Deleting the next split** keeps the application's own sentence, `The next
+  split moves to …`, ahead of the prototype's. A split that is not next reads
+  exactly as the prototype does.
+
+`docs/ux/wireframe-decisions.md` now describes Edit Split as it is.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent. **306 on the Split editor**: the
+  scroll region, name field, section head, a prescription card, its heading,
+  remove button and glyph, the fields grid, a field, its label, well, both
+  buttons, glyph and value, the add pill, the footnote, the footer and the
+  Actions pill. **65 more on Add exercise**: an option, its text, name,
+  detail and plus. None differs. The options arrive on `ovRow`, 40ms apart
+  from 40ms, the ninth and every one after it together.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either once the wells wrap:
+  - A plus and a minus raise and clear `Unsaved`.
+  - The minimum stops at the maximum, and sets stop at 10.
+  - A 160px drag moved the squat below the deadlift and back, toasting `Order
+    saved.` and leaving nothing unsaved.
+  - `Add exercise` added Barbell bench press at 3 × 8–12 and raised `Unsaved`;
+    removing it cleared it.
+  - The Actions panel holds `Save changes`, `Add exercise` and `Delete split`;
+    a new split's holds the first two.
+  - `Delete split` raised `Delete Lower body?` and was cancelled.
+  - Save returned to the program `scBack`, toasting `Split saved.`
+  - A new split opens `scFwd` on the empty card, and Save with no name toasts
+    `Enter a split name.`
+  - The split and its six prescriptions are exactly as they were found.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1440,5 +1510,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 12 | done | 2026-09-24 | — |
 | 13 | done | 2026-09-24 | — |
 | 14 | done | 2026-09-24 | — |
+| 15 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import {
   createSplitAction,
@@ -8,7 +8,11 @@ import {
   reorderSplitExercisesAction,
   updateSplitAction,
 } from "@/app/actions/programs";
-import type { Exercise } from "@/features/exercises/domain/exercise";
+import type {
+  Exercise,
+  ExerciseMeasurementType,
+} from "@/features/exercises/domain/exercise";
+import { exerciseTypeLabels } from "@/features/exercises/ui/exercise-presentation";
 import type {
   Program,
   Split,
@@ -17,30 +21,57 @@ import type {
 import { validateSplitDefinition } from "@/features/programs/domain/program-validation";
 import {
   Action,
+  ActionsPanel,
   DestructiveDialog,
-  EmptyState,
+  EmptyCard,
   Icon,
-  NumericField,
-  SaveStatus,
+  NameField,
+  SectionHead,
   Sheet,
-  StickyActionBar,
-  TextField,
   TopBar,
+  UnsavedChip,
+  useHoldReorder,
   useSaveOutcome,
-  useSavedSnapshot,
   useToast,
-  type SavePhase,
+  useTransientOverlay,
+  type ActionEntry,
+  type ReorderRowProps,
 } from "@/shared/ui";
 
-type FieldErrors = Readonly<Record<string, readonly string[]>>;
-type DraftPrescription = Omit<
-  SplitExercisePrescription,
-  "position" | "plannedSets" | "minReps" | "maxReps"
-> & {
-  plannedSets: string;
-  minReps: string;
-  maxReps: string;
-};
+import "./split-form.css";
+
+/*
+ * The Split editor — the prototype's screen 12, with Add exercise to split,
+ * its screen 19 — ported for step 15 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy of
+ * `Workout App - Prototype.dc.html` at the etag the plan records:
+ *   markup        lines 836-896, `data-screen-label="Split editor"`
+ *                 lines 1233-1253, `data-screen-label="Add exercise to split"`
+ *   bound values  lines 2686-2721 (`sfExercises`, `sfRemaining`), 2817-2827
+ *                 (`doSaveSplit`, `doDeleteSplit`), 2847-2854 (this screen's
+ *                 Actions entries), 2957-2982 (`sfTitle` … `sfAddOptions`),
+ *                 1782 (`defDetail`)
+ *
+ * The name and the prescriptions are held for Save, as they always were here
+ * and as the prototype's draft holds them. The order of an existing split's
+ * exercises is written the moment a row is let go, as it always has been, so a
+ * reorder alone leaves nothing unsaved.
+ */
+
+/** `gRow` (2578): the height an unmeasured prescription card is taken to be. */
+const fallbackRowHeight = 76;
+
+type Draft = Readonly<{
+  exerciseId: string;
+  exerciseName: string;
+  measurementType: ExerciseMeasurementType;
+  plannedSets: number;
+  minReps: number;
+  maxReps: number;
+}>;
+
+type Field = "plannedSets" | "minReps" | "maxReps";
 
 export function SplitForm({
   program,
@@ -51,409 +82,479 @@ export function SplitForm({
   split?: Split;
   exerciseLibrary: readonly Exercise[];
 }) {
-  const [name, setName] = useState(split?.name ?? "");
-  const [prescriptions, setPrescriptions] = useState<
-    readonly DraftPrescription[]
-  >(() => (split?.exercises ?? []).map(toDraftPrescription));
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [message, setMessage] = useState<string>();
-  const [phase, setPhase] = useState<SavePhase>("editing");
+  const { showToast } = useToast();
   const { returnToParent, reportFailure } = useSaveOutcome(
     `/programs/${program.id}/edit`,
   );
-  const { showToast } = useToast();
-  const { savedSnapshot, acceptAsSaved } = useSavedSnapshot(
-    snapshotOf(name, prescriptions),
+  const [name, setName] = useState(split?.name ?? "");
+  const [drafts, setDrafts] = useState<readonly Draft[]>(() =>
+    (split?.exercises ?? []).map(toDraft),
   );
-  const busy = phase === "saving";
-  const saveState =
-    phase === "editing"
-      ? snapshotOf(name, prescriptions) === savedSnapshot
-        ? "clean"
-        : "unsaved"
-      : phase;
-  const canDelete = !program.isCurrent || program.splits.length > 1;
-  const remainingExercises = exerciseLibrary.filter(
-    (exercise) =>
-      !prescriptions.some((item) => item.exerciseId === exercise.id),
-  );
+  const [invalid, setInvalid] = useState(false);
+  const [busy, setBusy] = useState(false);
+  // What the server holds, which `Unsaved` is measured against: the name and
+  // the prescriptions apart, because a reorder writes the second alone.
+  const [savedName, setSavedName] = useState(split?.name ?? "");
+  const [savedRows, setSavedRows] = useState(() => rowsOf(drafts));
+  const rowsDirty = rowsOf(drafts) !== savedRows;
+  const dirty = name !== savedName || rowsDirty;
 
-  function changed(field?: string) {
-    setPhase("editing");
-    setMessage(undefined);
-    if (!field) return;
-    setErrors((current) => {
-      if (!(field in current)) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
-    });
+  const actionsOverlay = useTransientOverlay();
+  const addOverlay = useTransientOverlay();
+  const confirmOverlay = useTransientOverlay();
+  const pendingRef = useRef<(() => void) | null>(null);
+  const actionsRef = useRef<HTMLButtonElement>(null);
+
+  // What an Actions entry runs waits for the panel to give its history entry
+  // back first — the mechanism steps 6, 9 and 14 use.
+  useEffect(() => {
+    if (actionsOverlay.open) return;
+    const run = pendingRef.current;
+    if (run === null) return;
+    pendingRef.current = null;
+    run();
+  }, [actionsOverlay.open]);
+
+  const reorder = useHoldReorder({
+    count: drafts.length,
+    fallbackHeight: fallbackRowHeight,
+    onMove: (from, to) => void moveExercise(from, to),
+  });
+
+  /* `sfRemaining` (2721): what the library holds that the split does not. */
+  const remaining = exerciseLibrary.filter(
+    (exercise) => !drafts.some((item) => item.exerciseId === exercise.id),
+  );
+  /* `sfCanDelete` (2966): the current program keeps at least one split. */
+  const canDelete =
+    split !== undefined && (!program.isCurrent || program.splits.length > 1);
+
+  /* `adj` (2689-2696): sets run 1 to 10, the minimum up to the maximum and the
+     maximum from the minimum to 180. A value already past a bound is left
+     where it is rather than pulled back by a press toward it. */
+  function adjust(index: number, field: Field, delta: -1 | 1) {
+    setDrafts((current) =>
+      current.map((item, position) => {
+        if (position !== index) return item;
+        const value = item[field];
+        const [low, high] =
+          field === "plannedSets"
+            ? [1, 10]
+            : field === "minReps"
+              ? [1, item.maxReps]
+              : [item.minReps, 180];
+        const next = value + delta;
+        if (next < low || next > high) return item;
+        return { ...item, [field]: next };
+      }),
+    );
   }
 
-  function addExercise(exercise: Exercise, close: () => void) {
-    setPrescriptions((current) => [
+  /* `o.pick` (2974-2981): a new prescription is 3 × 8–12, or 3 × 20–40 for an
+     exercise measured in seconds. */
+  function addExercise(exercise: Exercise) {
+    const seconds = exercise.measurementType === "seconds";
+    setDrafts((current) => [
       ...current,
       {
         exerciseId: exercise.id,
         exerciseName: exercise.name,
         measurementType: exercise.measurementType ?? "reps",
-        plannedSets: "3",
-        minReps: "8",
-        maxReps: "12",
+        plannedSets: 3,
+        minReps: seconds ? 20 : 8,
+        maxReps: seconds ? 40 : 12,
       },
     ]);
-    changed("exercises");
-    close();
+    addOverlay.requestOpenChange(false);
   }
 
-  function updatePrescription(
-    index: number,
-    field: "plannedSets" | "minReps" | "maxReps",
-    value: string,
-  ) {
-    setPrescriptions((current) =>
-      current.map((item, itemIndex) =>
-        itemIndex === index ? { ...item, [field]: value } : item,
-      ),
-    );
-    changed(`exercises.${index}.${field}`);
-  }
-
+  /* `ex.remove` (2708-2712). */
   function removeExercise(index: number) {
-    setPrescriptions((current) =>
-      current.filter((_, itemIndex) => itemIndex !== index),
+    setDrafts((current) =>
+      current.filter((_unused, position) => position !== index),
     );
-    changed("exercises");
   }
 
-  async function moveExercise(index: number, direction: -1 | 1) {
-    const destination = index + direction;
-    if (destination < 0 || destination >= prescriptions.length) return;
-    const previous = [...prescriptions];
-    const reordered = [...prescriptions];
-    [reordered[index], reordered[destination]] = [
-      reordered[destination]!,
-      reordered[index]!,
-    ];
-    setPrescriptions(reordered);
-    if (!split) {
-      showToast("Order updated. Save the split to keep it.");
-      changed();
-      return;
-    }
+  /* `gripUp` (2703-2707). An existing split whose prescriptions are as saved
+     writes its new order at once; one holding unsaved prescriptions, or a new
+     one, keeps the order for Save with everything else. */
+  async function moveExercise(from: number, to: number) {
+    const previous = drafts;
+    const reordered = [...drafts];
+    const [moved] = reordered.splice(from, 1);
+    if (moved === undefined) return;
+    reordered.splice(to, 0, moved);
+    setDrafts(reordered);
+    if (!split || rowsDirty) return;
     const result = await reorderSplitExercisesAction(
       split.id,
       reordered.map((item) => item.exerciseId),
     );
     if (!result.ok) {
-      setPrescriptions(previous);
-      setMessage(result.error.message);
-      setPhase("failure");
+      setDrafts(previous);
       reportFailure(result.error.message);
       return;
     }
-    setPhase("editing");
-    acceptAsSaved(snapshotOf(name, reordered));
+    setSavedRows(rowsOf(reordered));
     showToast("Order saved.");
   }
 
+  /* `doSaveSplit` (2817-2827). */
   async function save() {
-    const input = {
+    const validation = validateSplitDefinition({
       name,
-      exercises: prescriptions.map((item) => ({
+      exercises: drafts.map((item) => ({
         exerciseId: item.exerciseId,
-        plannedSets: numericValue(item.plannedSets),
-        minReps: numericValue(item.minReps),
-        maxReps: numericValue(item.maxReps),
+        plannedSets: item.plannedSets,
+        minReps: item.minReps,
+        maxReps: item.maxReps,
       })),
-    };
-    const validation = validateSplitDefinition(input);
+    });
     if (!validation.ok) {
-      setErrors(validation.fieldErrors);
-      setMessage(validationMessage);
-      setPhase("editing");
-      reportFailure(validationMessage);
+      const nameRefused = validation.fieldErrors.name !== undefined;
+      setInvalid(nameRefused);
+      showToast(
+        nameRefused
+          ? "Enter a split name."
+          : (Object.values(validation.fieldErrors)[0]?.[0] ??
+              "Check the split."),
+      );
       return;
     }
-
-    setErrors({});
-    setMessage(undefined);
-    setPhase("saving");
+    setBusy(true);
     const result = split
       ? await updateSplitAction(split.id, validation.value)
       : await createSplitAction(program.id, validation.value);
+    setBusy(false);
     if (!result.ok) {
-      setErrors(result.error.fieldErrors ?? {});
-      setMessage(result.error.retryable ? undefined : result.error.message);
-      setPhase("failure");
+      setInvalid(Boolean(result.error.fieldErrors?.name));
       reportFailure(result.error.message);
       return;
     }
+    setSavedName(name);
+    setSavedRows(rowsOf(drafts));
     returnToParent("Split saved.");
   }
 
   async function remove() {
     if (!split) return;
-    setPhase("saving");
+    setBusy(true);
     const result = await deleteSplitAction(split.id);
+    setBusy(false);
     if (!result.ok) {
-      setMessage(result.error.message);
-      setPhase("failure");
       reportFailure(result.error.message);
       return;
     }
     returnToParent("Split deleted.");
   }
 
+  /* `actRaw` for a split (2847-2854). */
+  const actions: ActionEntry[] = [
+    {
+      key: "save",
+      label: split ? "Save changes" : "Save split",
+      icon: "check",
+      disabled: busy,
+      run: () => {
+        pendingRef.current = () => void save();
+      },
+    },
+    {
+      key: "add",
+      label: "Add exercise",
+      icon: "plus",
+      disabled: busy,
+      run: () => {
+        pendingRef.current = () => addOverlay.requestOpenChange(true);
+      },
+    },
+    ...(canDelete
+      ? [
+          {
+            key: "delete",
+            label: "Delete split",
+            icon: "trash-2" as const,
+            disabled: busy,
+            run: () => {
+              pendingRef.current = () => confirmOverlay.requestOpenChange(true);
+            },
+          },
+        ]
+      : []),
+  ];
+
   const successor = split ? successorAfter(program, split.id) : undefined;
+  const count = drafts.length;
 
   return (
-    <div>
+    <div data-split-editor="">
       <TopBar
-        title={split ? "Edit Split" : "New Split"}
+        screen="split-editor"
+        title={split ? "Edit split" : "New split"}
         backHref={`/programs/${program.id}/edit`}
-        backLabel={program.name}
+        backLabel="Back"
+        trailing={dirty ? <UnsavedChip /> : null}
       />
-      <main>
-        <div>
-          <TextField
-            id="split-name"
-            label="Split name"
-            value={name}
-            error={errors.name?.[0]}
+
+      <div data-split-editor-body="">
+        <NameField
+          label="Split name"
+          value={name}
+          invalid={invalid}
+          disabled={busy}
+          onChange={(event) => {
+            setName(event.target.value);
+            setInvalid(false);
+          }}
+        />
+
+        <SectionHead aside="Hold to reorder">
+          Prescription · {count}
+        </SectionHead>
+
+        {drafts.map((item, index) => (
+          <PrescriptionCard
+            key={item.exerciseId}
+            item={item}
+            index={index}
+            count={count}
             disabled={busy}
-            autoComplete="off"
-            onChange={(event) => {
-              setName(event.target.value);
-              changed("name");
-            }}
+            gesture={reorder.rowProps(index)}
+            onAdjust={(field, delta) => adjust(index, field, delta)}
+            onRemove={() => removeExercise(index)}
           />
+        ))}
 
-          <section aria-labelledby="exercise-prescriptions-title">
-            <div>
-              <h2 id="exercise-prescriptions-title">
-                Prescription · {prescriptions.length}
-              </h2>
-              {remainingExercises.length > 0 ? (
-                <Sheet
-                  title="Add exercise"
-                  description="Only active Exercise Library definitions are available."
-                  trigger={
-                    <button type="button">
-                      <Icon name="plus" size={16} /> Add Exercise
-                    </button>
-                  }
-                >
-                  {(close) => (
-                    <div>
-                      {remainingExercises.map((exercise) => (
-                        <Action
-                          key={exercise.id}
-                          variant="secondary"
-                          onClick={() => addExercise(exercise, close)}
-                        >
-                          {exercise.name}
-                        </Action>
-                      ))}
-                    </div>
-                  )}
-                </Sheet>
-              ) : null}
-            </div>
+        {count === 0 ? (
+          <EmptyCard icon="dumbbell" title="No exercises yet">
+            {exerciseLibrary.length === 0
+              ? "Add an exercise to the Exercise Library first."
+              : "Add exercises, then set the planned sets and rep range for each."}
+          </EmptyCard>
+        ) : null}
 
-            {prescriptions.length === 0 ? (
-              <EmptyState
-                title="No exercises yet"
-                body={
-                  exerciseLibrary.length === 0
-                    ? "Add an active Exercise Library definition first."
-                    : "Add exercises and define sets and rep ranges."
-                }
-              />
-            ) : (
-              <div>
-                {prescriptions.map((item, index) => (
-                  <article key={item.exerciseId}>
-                    <div>
-                      <Icon name="grip-vertical" size={18} />
-                      <h3>{item.exerciseName}</h3>
-                      <button
-                        type="button"
-                        aria-label={`Move ${item.exerciseName} up`}
-                        disabled={busy || index === 0}
-                        onClick={() => void moveExercise(index, -1)}
-                      >
-                        <Icon name="arrow-up" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Move ${item.exerciseName} down`}
-                        disabled={busy || index === prescriptions.length - 1}
-                        onClick={() => void moveExercise(index, 1)}
-                      >
-                        <Icon name="arrow-down" size={18} />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Remove ${item.exerciseName}`}
-                        disabled={busy}
-                        onClick={() => removeExercise(index)}
-                      >
-                        <Icon name="x" size={18} />
-                      </button>
-                    </div>
-                    <div>
-                      <NumericField
-                        id={`sets-${index}`}
-                        label="Sets"
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.plannedSets}
-                        error={errors[`exercises.${index}.plannedSets`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "plannedSets",
-                            event.target.value,
-                          )
-                        }
-                      />
-                      <NumericField
-                        id={`min-reps-${index}`}
-                        label={
-                          exerciseLibrary.find(
-                            (exercise) => exercise.id === item.exerciseId,
-                          )?.measurementType === "seconds"
-                            ? "Min seconds"
-                            : "Min reps"
-                        }
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.minReps}
-                        error={errors[`exercises.${index}.minReps`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "minReps",
-                            event.target.value,
-                          )
-                        }
-                      />
-                      <NumericField
-                        id={`max-reps-${index}`}
-                        label={
-                          exerciseLibrary.find(
-                            (exercise) => exercise.id === item.exerciseId,
-                          )?.measurementType === "seconds"
-                            ? "Max seconds"
-                            : "Max reps"
-                        }
-                        type="number"
-                        min="1"
-                        step="1"
-                        value={item.maxReps}
-                        error={errors[`exercises.${index}.maxReps`]?.[0]}
-                        disabled={busy}
-                        onChange={(event) =>
-                          updatePrescription(
-                            index,
-                            "maxReps",
-                            event.target.value,
-                          )
-                        }
-                      />
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-            {errors.exercises ? (
-              <p role="alert">{errors.exercises[0]}</p>
-            ) : null}
-            <p>
-              Prescriptions seed future workouts. Saved workouts keep their
-              snapshots.
-            </p>
-          </section>
-        </div>
+        <Action
+          variant="add"
+          aria-label="Add exercise"
+          title="Add exercise"
+          disabled={busy}
+          onClick={() => addOverlay.requestOpenChange(true)}
+        >
+          <Icon name="plus" size={17} />
+          Add exercise
+        </Action>
 
-        <StickyActionBar>
-          <SaveStatus
-            state={saveState}
-            validationMessage={message}
-            onRetry={() => void save()}
-          />
-          <Action disabled={busy} onClick={() => void save()}>
-            Save Split
-          </Action>
-          {split && canDelete ? (
-            <DestructiveDialog
-              title="Delete split?"
-              description={
-                program.nextSplitId === split.id && successor
-                  ? `The next split moves to ${successor.name}. Workouts already recorded keep this split in History.`
-                  : "Workouts already recorded keep this split in History."
-              }
-              confirmLabel="Delete Split"
-              onConfirm={() => void remove()}
-              trigger={
-                <Action variant="danger" disabled={busy}>
-                  Delete Split
-                </Action>
-              }
-            />
-          ) : null}
-          {split && !canDelete ? (
-            <div>
-              <Action variant="danger" disabled>
-                Delete Split
-              </Action>
-              <p>The current program must keep at least one split.</p>
-            </div>
-          ) : null}
-        </StickyActionBar>
-      </main>
+        <p data-split-editor-footnote="">
+          Prescriptions seed future workouts. Saved workouts keep their
+          snapshots.
+        </p>
+      </div>
+
+      <div data-split-editor-footer="">
+        <ActionsPanel
+          panel="split-actions"
+          heading={name.trim() || "Untitled split"}
+          meta={`${count} ${count === 1 ? "exercise" : "exercises"}${dirty ? " · Unsaved changes" : ""}`}
+          overlay={actionsOverlay}
+          items={actions}
+          trigger={
+            <Action
+              ref={actionsRef}
+              variant="actions"
+              data-edits=""
+              aria-label="Actions"
+              title="Actions"
+            >
+              {"···"}
+            </Action>
+          }
+        />
+      </div>
+
+      <Sheet
+        panel="add-to-split"
+        overlay={addOverlay}
+        returnFocusRef={actionsRef}
+        title="Add exercise"
+        description="Only active Exercise Library definitions are available."
+      >
+        {remaining.map((exercise, index) => (
+          <button
+            key={exercise.id}
+            type="button"
+            data-add-option=""
+            aria-label={exercise.name}
+            style={
+              {
+                "--option-delay": `${40 + Math.min(index, 8) * 40}ms`,
+              } as CSSProperties
+            }
+            onClick={() => addExercise(exercise)}
+          >
+            <span>
+              <span>{exercise.name}</span>
+              <span>{exerciseDetail(exercise)}</span>
+            </span>
+            <Icon name="plus" size={16} />
+          </button>
+        ))}
+        {remaining.length === 0 ? (
+          <p data-add-option-empty="">
+            {exerciseLibrary.length === 0
+              ? "The Exercise Library holds no exercise yet."
+              : "Every library exercise is already in this split."}
+          </p>
+        ) : null}
+      </Sheet>
+
+      {split ? (
+        <DestructiveDialog
+          overlay={confirmOverlay}
+          title={`Delete ${split.name || "this split"}?`}
+          description={
+            program.nextSplitId === split.id && successor
+              ? `The next split moves to ${successor.name}. Workouts already recorded keep this split in History.`
+              : "Workouts already recorded keep this split in History."
+          }
+          confirmLabel="Delete split"
+          onConfirm={() => void remove()}
+        />
+      ) : null}
     </div>
   );
 }
 
-const validationMessage = "Check the highlighted fields.";
+/*
+ * `sfExercises` (lines 857-876, values at 2686-2719). The card is a
+ * `<section>` in the prototype and so here; it is focusable, which the
+ * prototype's is not, so Alt with an arrow moves it.
+ */
+function PrescriptionCard({
+  item,
+  index,
+  count,
+  disabled,
+  gesture,
+  onAdjust,
+  onRemove,
+}: {
+  item: Draft;
+  index: number;
+  count: number;
+  disabled: boolean;
+  gesture: ReorderRowProps;
+  onAdjust: (field: Field, delta: -1 | 1) => void;
+  onRemove: () => void;
+}) {
+  const seconds = item.measurementType === "seconds";
+  const fields: readonly {
+    key: Field;
+    label: string;
+    downLabel: string;
+    upLabel: string;
+  }[] = [
+    {
+      key: "plannedSets",
+      label: "Sets",
+      downLabel: "One set fewer",
+      upLabel: "One set more",
+    },
+    {
+      key: "minReps",
+      label: seconds ? "Min sec" : "Min reps",
+      downLabel: "Lower the minimum",
+      upLabel: "Raise the minimum",
+    },
+    {
+      key: "maxReps",
+      label: seconds ? "Max sec" : "Max reps",
+      downLabel: "Lower the maximum",
+      upLabel: "Raise the maximum",
+    },
+  ];
 
-function snapshotOf(
-  name: string,
-  prescriptions: readonly DraftPrescription[],
-): string {
-  return JSON.stringify([
-    name,
-    prescriptions.map((item) => [
-      item.exerciseId,
-      item.measurementType,
-      item.plannedSets,
-      item.minReps,
-      item.maxReps,
-    ]),
-  ]);
+  return (
+    <section
+      {...gesture}
+      data-prescription=""
+      tabIndex={0}
+      aria-label={`${item.exerciseName}, position ${index + 1} of ${count}`}
+    >
+      <div data-prescription-head="">
+        <h3>{item.exerciseName}</h3>
+        <Action
+          variant="row-icon"
+          aria-label={`Remove ${item.exerciseName}`}
+          title="Remove"
+          disabled={disabled}
+          onClick={onRemove}
+        >
+          <Icon name="x" size={15} />
+        </Action>
+      </div>
+      <div data-prescription-fields="">
+        {fields.map((field) => (
+          <div key={field.key} data-prescription-field="">
+            <span>{field.label}</span>
+            <div>
+              {/* The prototype names the button and not the exercise; a
+                  screen with several of these says whose it is. */}
+              <button
+                type="button"
+                aria-label={`${field.downLabel}, ${item.exerciseName}`}
+                disabled={disabled}
+                onClick={() => onAdjust(field.key, -1)}
+              >
+                <Icon name="minus" size={12} />
+              </button>
+              <span aria-live="polite">{item[field.key]}</span>
+              <button
+                type="button"
+                aria-label={`${field.upLabel}, ${item.exerciseName}`}
+                disabled={disabled}
+                onClick={() => onAdjust(field.key, 1)}
+              >
+                <Icon name="plus" size={12} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
 
-function toDraftPrescription(
-  item: SplitExercisePrescription,
-): DraftPrescription {
+/**
+ * `defDetail` (line 1782): the type, what a set is measured in, and how many
+ * load modes the exercise allows — its base mode and the one addition it may
+ * carry.
+ */
+function exerciseDetail(exercise: Exercise): string {
+  const modes = exercise.allowedLoadModes.length;
+  return `${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${modes} ${modes === 1 ? "mode" : "modes"}`;
+}
+
+function toDraft(item: SplitExercisePrescription): Draft {
   return {
     exerciseId: item.exerciseId,
     exerciseName: item.exerciseName,
     measurementType: item.measurementType ?? "reps",
-    plannedSets: String(item.plannedSets),
-    minReps: String(item.minReps),
-    maxReps: String(item.maxReps),
+    plannedSets: item.plannedSets,
+    minReps: item.minReps,
+    maxReps: item.maxReps,
   };
 }
 
-function numericValue(value: string): number {
-  return value.trim() === "" ? 0 : Number(value);
+/** The prescriptions as `Unsaved` compares them: order and the three numbers. */
+function rowsOf(drafts: readonly Draft[]): string {
+  return JSON.stringify(
+    drafts.map((item) => [
+      item.exerciseId,
+      item.plannedSets,
+      item.minReps,
+      item.maxReps,
+    ]),
+  );
 }
 
 function successorAfter(program: Program, splitId: string) {

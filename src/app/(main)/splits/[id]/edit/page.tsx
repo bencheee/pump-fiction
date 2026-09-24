@@ -1,11 +1,13 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { listExercises } from "@/server/application/exercises";
 import { getProgram, getSplit } from "@/server/application/programs";
 import { requireUuidRouteParam } from "@/shared/routing/uuid-route-param";
-import { EmptyState, PageFrame, TopBar } from "@/shared/ui";
+import { TopBar } from "@/shared/ui";
 
 import { SplitForm } from "../../../programs/split-form";
+import "../../../programs/split-form.css";
 
 export const dynamic = "force-dynamic";
 
@@ -46,13 +48,31 @@ export default async function EditSplitPage({
   );
 }
 
-function LoadFailure({ message }: { message: string }) {
+/* A read that failed, which the prototype has no notion of: the note card
+   inside the screen's own frame, as every ported screen answers it. */
+function LoadFailure({
+  title = "Edit split",
+  backHref = "/programs",
+  message,
+}: {
+  title?: string;
+  backHref?: string;
+  message: string;
+}) {
   return (
-    <div>
-      <TopBar title="Edit Split" backHref="/programs" backLabel="Programs" />
-      <PageFrame title="Split unavailable">
-        <EmptyState title="Split couldn't be loaded" body={message} />
-      </PageFrame>
+    <div data-split-editor="">
+      <TopBar
+        screen="split-editor"
+        title={title}
+        backHref={backHref}
+        backLabel="Back"
+      />
+      <div data-split-editor-body="">
+        <p data-note-card="">
+          {message}
+          <Link href={backHref}>Back</Link>
+        </p>
+      </div>
     </div>
   );
 }

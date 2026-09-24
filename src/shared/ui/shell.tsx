@@ -150,7 +150,15 @@ type NavMemory = {
 function useScreenAnimation(): ScreenAnim {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
-  const page = segments[0] === "workout" ? "today" : (segments[0] ?? "");
+  /* The routes that sit under another page's stack in the prototype: the
+     workout is Today's (`overview`, `workout`), and a split is edited from its
+     program, so `/splits/[id]/edit` is on Programs' `pStack` (step 15). */
+  const page =
+    segments[0] === "workout"
+      ? "today"
+      : segments[0] === "splits"
+        ? "programs"
+        : (segments[0] ?? "");
   /* History's three tabs — every two-segment route under `/history` — are one
      screen in the prototype: `tabs[i].go` (line 2181) moves `s.tab` and never
      touches the stack, so moving between them is not a push and takes no

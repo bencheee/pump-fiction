@@ -45,7 +45,7 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 **Add Split** contains its program, split name, exercise list, **Add Exercise**, and **Save Split**.
 
-**Edit Split** contains name, per-row move-up and move-down ordering, planned sets/minimum reps/maximum reps for every exercise, **Remove**, **Add Exercise**, and **Delete Split**, which is disabled with an explanation for the last split of the current program.
+**Edit Split** contains name, the exercises in the order the rotation will run them, planned sets and minimum and maximum reps (or seconds) for every exercise set with minus and plus buttons, **Remove**, **Add Exercise**, and one **Actions** control whose panel holds **Save changes**, **Add Exercise**, and **Delete Split**. **Delete Split** is not offered for the last split of the current program. Sets run from 1 to 10, the minimum never passes the maximum, and the maximum stops at 180. A new prescription starts at 3 × 8–12, or 3 × 20–40 seconds.
 
 ## Active workout
 
