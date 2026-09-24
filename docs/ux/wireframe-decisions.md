@@ -35,9 +35,9 @@ See [`exercises.md`](../product/exercises.md).
 
 ## Programs
 
-**Add Program** contains program name, a split list, **Add Split**, and **Save Program**.
+**Add Program** contains program name, an empty split rotation that says the program must be saved before it holds a split, and one **Actions** control whose panel holds **Save Program**.
 
-**Edit Program** contains name, a current-program marker, ordered split rotation, a next-split marker, **Make Current Program** or **Set Next Split**, **Add Split**, **Edit Split**, and **Delete Program**.
+**Edit Program** contains name, a current-program marker, ordered split rotation with each split's position and exercise count, a next-split marker, **Add Split**, and one **Actions** control whose panel holds **Save changes**, **Make Current Program** or **Set Next Split**, and **Delete Program**. A split row opens that split's editor. A program that has not been saved yet shows no **Add Split**, because it has nowhere to keep a split until it exists.
 
 See [`programs-and-splits.md`](../product/programs-and-splits.md).
 

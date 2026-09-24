@@ -3,6 +3,8 @@ export type ProgramSplit = Readonly<{
   programId: string;
   name: string;
   position: number;
+  /** The prescriptions the split holds; a program's split row states it. */
+  exerciseCount: number;
 }>;
 
 export type Program = Readonly<{

@@ -232,7 +232,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
     const [splitsResult, settingsResult] = await Promise.all([
       this.client
         .from("splits")
-        .select(splitColumns)
+        .select(`${splitColumns}, split_exercises(count)`)
         .in("program_id", programIds)
         .order("position", { ascending: true }),
       this.client
@@ -249,7 +249,9 @@ export class SupabaseProgramRepository implements ProgramRepository {
     const splitsByProgram = new Map<string, ProgramSplit[]>();
     for (const split of data) {
       const programSplits = splitsByProgram.get(split.program_id) ?? [];
-      programSplits.push(toProgramSplit(split));
+      programSplits.push(
+        toProgramSplit(split, split.split_exercises[0]?.count ?? 0),
+      );
       splitsByProgram.set(split.program_id, programSplits);
     }
 
@@ -283,7 +285,7 @@ export class SupabaseProgramRepository implements ProgramRepository {
 
     const exerciseById = new Map(exercises.map((item) => [item.id, item]));
     return {
-      ...toProgramSplit(row),
+      ...toProgramSplit(row, prescriptions.length),
       exercises: prescriptions.map((prescription) => {
         const exercise = exerciseById.get(prescription.exercise_id);
         if (exercise === undefined) {
@@ -332,12 +334,13 @@ function prescriptionArrays(definition: SplitDefinition) {
   };
 }
 
-function toProgramSplit(row: SplitRow): ProgramSplit {
+function toProgramSplit(row: SplitRow, exerciseCount: number): ProgramSplit {
   return {
     id: row.id,
     programId: row.program_id,
     name: row.name,
     position: row.position,
+    exerciseCount,
   };
 }
 

@@ -32,7 +32,7 @@ An active workout opens its own screen but keeps the bottom navigation, so the u
 - Never require horizontal table scrolling.
 - Clearly highlight the active set.
 - Auto-save changes where specified, especially during active workouts.
-- Reorder through a named control on every row — a move-up and a move-down button, each at least 44 by 44 CSS pixels, disabled at the ends of the list — rather than a drag handle. A named button is reachable by touch, keyboard, and assistive technology alike, states its target in its own name, and needs no pointer to hold a position on a scrolling phone list. Never rely on hidden long-press behavior.
+- Reorder by holding a row and dragging it, as the redesign's prototype does: the row lifts after 180 ms held still, an 8-pixel slip first gives the press back to the scroll, and the rows it passes move out of its way. The list says so in its heading (**Hold to reorder**) rather than leaving the gesture hidden. Every reorderable row is focusable and Alt with an up or down arrow moves it one place, so the keyboard and assistive technology keep a path that needs no pointer. The Owner approved this in step 5 of the second redesign, replacing the per-row move-up and move-down buttons.
 - Require confirmation before removing populated workout data, deleting a historical workout, or discarding a workout.
 
 ## Overlay and safe-area behavior

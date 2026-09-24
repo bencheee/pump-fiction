@@ -1,0 +1,184 @@
+/*
+ * The Program screen and its Set next split panel, ported from the prototype
+ * for step 14 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   markup        lines 775-832 (Program), 1211-1231 (Set next split)
+ *   bound values  lines 2672-2684, 2915-2956
+ *
+ * The top bar, the Unsaved chip, the name field, the section head, the empty
+ * card, the add pill, the Actions pill and panel, the badge, the reorder
+ * gesture and the confirm dialog are shared and live in `src/shared/ui`. What
+ * is here is this screen's own.
+ */
+
+[data-program] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The prototype's `.sx` (line 785), with this screen's own gap and inset. */
+[data-program-body] {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 20px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+[data-program-body]::-webkit-scrollbar {
+  display: none;
+}
+
+/* `pgCurrent` (lines 786-788). */
+[data-program-current] {
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: var(--radius-18);
+  background: var(--accent-surface);
+  padding: 14px 18px;
+  font-size: var(--fs-13-5);
+  font-weight: var(--fw-semibold);
+  color: var(--accent);
+}
+
+[data-program-current] > [data-icon] {
+  flex: none;
+}
+
+/* ----- Split rows -------------------------------------------------------- */
+
+/* `pgSplits` (lines 803-814). The hold, the lift and the rows moving out of its
+   way are the shared gesture's; the frame is this row's. */
+[data-program-split] {
+  box-sizing: border-box;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 14px 18px;
+  color: var(--text);
+  text-decoration: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+[data-program-split]:hover {
+  color: var(--text);
+}
+
+[data-program-split-text] {
+  flex: 1;
+  min-width: 0;
+}
+
+[data-program-split-heading] {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* `sp.name`. */
+[data-program-split-heading] > span:first-child {
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+}
+
+/* `sp.meta`. */
+[data-program-split-meta] {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+[data-program-split] > [data-icon] {
+  flex: none;
+  color: var(--text-faint);
+}
+
+/* ----- Closing lines ----------------------------------------------------- */
+
+/* Line 826. */
+[data-program-footnote] {
+  margin: 6px 0 0;
+  font-size: var(--fs-12-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-dim);
+}
+
+/* Line 829: the pill that opens the Actions panel, pinned under the list. */
+[data-program-footer] {
+  flex: none;
+  padding: 12px 20px 18px;
+  background: var(--bg);
+}
+
+/* ----- Set next split ---------------------------------------------------- */
+
+/* Line 1217: the body's gap and the 16px under the last option. */
+[data-panel="set-next-split"] [data-panel-body] {
+  gap: 8px;
+  padding-bottom: 16px;
+}
+
+[data-panel="set-next-split"] [data-panel-lead] {
+  margin: 0 0 6px;
+  line-height: var(--lh-1-45);
+}
+
+/* `pgNextOptions` (lines 1219-1226, values at 2941-2955). Each arrives on
+   `ovRow`, 45ms after the one above it and 40ms after the panel. */
+[data-next-option] {
+  min-height: 68px;
+  box-sizing: border-box;
+  border-radius: var(--radius-20);
+  border: 1px solid transparent;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  text-align: left;
+  animation: ovRow var(--dur-260) var(--ease) var(--option-delay) both;
+  transition:
+    background var(--dur-160) linear,
+    border-color var(--dur-160) linear;
+}
+
+/* `o.name`, in `o.color`. */
+[data-next-option] > span:first-child {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+  text-wrap: pretty;
+  color: var(--text);
+}
+
+[data-next-option] > [data-badge] {
+  flex: none;
+}
+
+/* `o.bg` and `o.color`: the split the pointer is on now. */
+[data-next-option="selected"] {
+  background: var(--accent-surface);
+}
+
+[data-next-option="selected"] > span:first-child {
+  color: var(--accent-hi);
+}

@@ -20,7 +20,7 @@ An exercise may appear in multiple programs and splits, but only once within one
 
 ## Ordering
 
-The user can reorder splits inside a program and exercises inside a split. Every row carries its own named move-up and move-down controls.
+The user can reorder splits inside a program and exercises inside a split, by holding a row and dragging it or by moving a focused row with Alt and an arrow key; see [`mobile-information-architecture.md`](../ux/mobile-information-architecture.md). A program's new order is saved the moment the row is let go.
 
 Reordering never changes historical or already-started workouts. When splits are reordered, the identity of the currently next split stays the same; only the sequence after it changes.
 

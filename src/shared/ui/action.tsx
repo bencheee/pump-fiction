@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ComponentPropsWithRef, ReactNode } from "react";
 
 import "./action.css";
 
@@ -22,7 +22,7 @@ type ActionVariant =
   | "tertiary"
   | "danger";
 
-export type ActionProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ActionProps = ComponentPropsWithRef<"button"> & {
   variant?: ActionVariant;
   children: ReactNode;
 };

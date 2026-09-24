@@ -87,11 +87,16 @@
   gap: 8px;
   font-size: var(--fs-15);
   font-weight: var(--fw-semibold);
+  /* A program's Add split is a link to the new split's route (step 14); the
+     prototype's `<button>` has no underline to take away. */
+  text-decoration: none;
   transition: background var(--dur-160) linear;
 }
 
+/* The colour repeats so `a:hover` from the base layer cannot take the link's. */
 [data-variant="add"]:hover {
   background: var(--accent-surface-hover);
+  color: var(--accent);
 }
 
 /* ----- Row icon --------------------------------------------------------- */
@@ -141,6 +146,17 @@
   padding-bottom: 8px;
   transition:
     background var(--dur-180) linear,
+    transform var(--dur-160) var(--ease);
+}
+
+/* The three definition screens bind the pill's two colours — Program (line
+   830), Split editor (892) and Exercise definition (1001) — so they fade
+   colour as well, and declare no border; `data-edits` marks their copy. */
+[data-variant="actions"][data-edits] {
+  border-width: 0;
+  transition:
+    background var(--dur-180) linear,
+    color var(--dur-180) linear,
     transform var(--dur-160) var(--ease);
 }
 

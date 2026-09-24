@@ -1,0 +1,101 @@
+/*
+ * The parts a definition screen is built from, ported from the prototype for
+ * step 14 of docs/design/redesign-v2/PLAN.md.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   name field     lines 790-793, 847-850, 948-951
+ *   section head   lines 795-798, 852-855
+ *   empty card     lines 817-821, 879-883
+ */
+
+/* ----- Name field -------------------------------------------------------- */
+
+[data-name-field] {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+[data-name-field] > span {
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-name-field] > input {
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--control-58);
+  border-radius: var(--radius-18);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-16-5);
+  padding: 0 18px;
+  transition: border-color var(--dur-180) linear;
+}
+
+/* `style-focus="border-color:#2a332e"`: the ring is the border itself. */
+[data-name-field] > input:focus {
+  border-color: var(--line-strong);
+  outline: none;
+}
+
+/* ----- Section head ------------------------------------------------------ */
+
+[data-section-head] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--control-44);
+  margin-top: 6px;
+}
+
+[data-section-head] > p {
+  margin: 0;
+  font-size: var(--fs-11-5);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+[data-section-head] > span {
+  font-size: var(--fs-12);
+  color: var(--text-muted);
+}
+
+/* ----- Empty card -------------------------------------------------------- */
+
+[data-empty-card] {
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  animation: rise var(--dur-240) var(--ease);
+}
+
+[data-empty-card] > [data-icon] {
+  color: var(--line-strong);
+}
+
+[data-empty-card] > p:nth-of-type(1) {
+  margin: 0;
+  font-size: var(--fs-15-5);
+  font-weight: var(--fw-semibold);
+}
+
+[data-empty-card] > p:nth-of-type(2) {
+  margin: 0;
+  font-size: var(--fs-13-5);
+  line-height: var(--lh-1-5);
+  color: var(--text-muted);
+  text-align: center;
+}

@@ -221,6 +221,10 @@ reuses the listed component or changes it for everyone.
 | Delivery alert card | `.../delivery-cue.css` | 6 | 4, 5 |
 | Primary and secondary action | `shared/ui/action.{tsx,css}` | 2 | all |
 | Add pill (54px, tinted) | `[data-variant="add"]` in `shared/ui/action.css` | 5 | 5, 14, 15 |
+| Hold to reorder | `useHoldReorder` in `shared/ui/hold-reorder.{ts,css}` | 5, lifted in 14 | 5, 14, 15 |
+| Name field (58px) | `NameField` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15, 17 |
+| Section head (`Hold to reorder`) | `SectionHead` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
+| Empty card (24px, icon) | `EmptyCard` in `shared/ui/definition.{tsx,css}` | 14 | 14, 15 |
 | Row icon action (44px) | `[data-variant="row-icon"]` in `shared/ui/action.css` | 5 | 5, 15 |
 | List row | `shared/ui/list-row.{tsx,css}` | 8, `program` variant in 13 | lists |
 | Chip | `shared/ui/chip.{tsx,css}` | 8 | 8, 10, 11, 12, 18, 19 |
@@ -232,7 +236,7 @@ reuses the listed component or changes it for everyone.
 | Stepper | `shared/ui/stepper.{tsx,css}` | 10 | 10, 15 |
 | Date picker | — | 20 | 20 |
 | Actions panel | `shared/ui/actions-panel.{tsx,css}` | 6, lifted in 9 | 6, 9, 10, definition screens |
-| Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9 | 9, 14, 15, 17 |
+| Actions pill (58px) | `[data-variant="actions"]` in `shared/ui/action.css` | 9, `data-edits` copy in 14 | 9, 14, 15, 17 |
 | Note editor panel | `NoteEditorSheet` in `shared/ui/note-sheet.{tsx,css}` | 6, lifted in 10 | 6, 10 |
 | Set chip (tinted) | `SetChip` in `shared/ui/status.{tsx,css}` | 4, lifted in 10 | 4, 10 |
 | Unsaved chip | `UnsavedChip` in `shared/ui/status.{tsx,css}` | 10 | 10, 14, 15, 17 |
@@ -1320,6 +1324,103 @@ Verification. The MCP was not used; the prototype was read from the local copy.
   the History rows were measured on in step 8. The empty list and the failed
   read were not reached either.
 
+Step 14 read the prototype from the same byte-exact local copy.
+
+**Four shared surfaces are born here**, each written the same way on the
+Program and the Split editor, and the name field on the Exercise definition as
+well. Steps 15 and 17 take them:
+
+- **The name field**: a label and a 58px input (lines 790-793, 847-850,
+  948-951).
+- **The section head**: the uppercase count with `Hold to reorder` beside it
+  (795-798, 852-855).
+- **The empty card**: a 28px icon, a title and a sentence on a 24px-padded card
+  (817-821, 879-883). The History list's and Body's empty cards pad 26px and
+  draw a larger icon, so they are not this card.
+- **Hold to reorder**: the prototype writes the gesture twice, `rowDrag` for the
+  workout overview and `gDrag` for a program's splits and a split's exercises,
+  and the two are the same numbers and the same arithmetic. Step 5's copy is
+  lifted into `useHoldReorder` and its stylesheet, and the overview now uses it.
+  `gDrag` adds one thing, `recentDrag()` (2524): a row that opens something on
+  a press ignores the press for 400ms after a drag lets go of it.
+
+**Two shared surfaces change**:
+
+- **The Actions pill** takes a `data-edits` copy. The three definition screens
+  bind its colours, so they declare no border and fade `color` as well (lines
+  830, 892, 1001). Workout detail's copy is unchanged.
+- **The add pill** can now be a link. A program's `Add split` opens the new
+  split's route, so the pill loses the underline a link would otherwise draw.
+
+**The split row states its exercise count**, `Position 2 · 6 exercises`, as
+`sp.meta` does (2674). The application's `ProgramSplit` had no count, so the
+program read now asks for one: `split_exercises(count)` beside each split, and
+the prescriptions already loaded when a single split is read.
+
+The screen departs from the prototype in five places:
+
+- **Order and pointer are written at once.** The prototype holds every edit in
+  a draft until Save. The application writes a reorder and a next-split choice
+  the moment they happen, as it always has, and holds only the name for Save.
+  `Unsaved` and the panel's `· Unsaved changes` are the name's and nothing
+  else's. A reorder toasts `Order saved.`, which is the prototype's own toast
+  for it.
+- **A new program cannot hold a split yet.** The prototype's draft can add one
+  before it is saved; the application's split needs a program row to belong
+  to. A new program therefore shows the empty card saying `Save the program
+  first, then add its splits.`, and no `Add split`.
+- **A split row is a link.** The prototype's is a `<section>` with a click. Here
+  it is an anchor with `draggable` off, so it can be focused and opened without
+  a pointer, and Alt with an arrow moves it as the overview's rows do.
+- **A refused name is a toast and `aria-invalid`.** The prototype says `Enter a
+  program name.` in a toast and marks nothing. The field carries `aria-invalid`
+  as well, which draws nothing.
+- **A read that failed** takes the note card inside the screen's own frame.
+
+**Documentation corrected.** `docs/ux/mobile-information-architecture.md` still
+required per-row move-up and move-down buttons and forbade long-press, which
+step 5's approved drag had already replaced without the document being
+updated. It now describes the hold, the `Hold to reorder` heading and the Alt
+and arrow path. `docs/product/programs-and-splits.md` says the same, and
+`docs/ux/wireframe-decisions.md` describes Add and Edit Program as they are now.
+
+Verification. The MCP was not used; the prototype was read from the local copy.
+
+- **Every declaration the prototype writes on the screen was compared to the
+  app's own `getComputedStyle`**, each applied to a probe of the prototype's own
+  element appended to the target's parent: **308 on the Program screen**,
+  covering the current-program card, the name field, the section head, a split
+  row, its heading, name, `Next` badge, meta and chevron, the add pill, the
+  footnote, the footer and the Actions pill. **110 more on Set next split**:
+  the selected and the unselected option and their names. **39 on the new
+  program's empty card.** None differs. The options arrive on `ovRow` 40ms and
+  85ms after the panel.
+- **The flows were driven** at 390x844 and 320x720, with no horizontal scroll at
+  either:
+  - Editing the name raises `Unsaved`, and putting it back takes it away.
+  - The Actions panel holds `Save changes`, `Set next split` and `Delete
+    program`.
+  - `Set next split` moved the pointer to Lower body and back, toasting `Next
+    split updated.`
+  - A 90px drag moved Upper body below Lower body and back again, toasting
+    `Order saved.`. The lifted row drew `scale(1.02)`, the drag shadow, the
+    tinted fill and `z-index: 5`, and the `Next` badge stayed on Upper body. A
+    press just after a drag did not open the split.
+  - `Delete program` raised `Delete Upper / Lower?` and was cancelled.
+  - A plain press opened the split's editor.
+  - On a new program, Save with an empty name toasted `Enter a program name.`
+  - Save on the program returned to the list `scBack`, toasting `Program
+    saved.`
+  - The database holds the program exactly as it was found.
+- **The overview was driven again** on a started workout, which was discarded
+  afterwards so History and the rotation are as they were. At rest the row
+  carries `grab`, `pan-y`, `z-index: 1` and the 190ms transition. A 100px drag
+  lifted it and moved the row below it -80px, and let go the two had swapped.
+  Alt and the up arrow put it back and announced `Barbell bench press moved to
+  position 1 of 6.` Its test file still does not load, because it imports a
+  `finish/finish-review` module that step 7 removed; tests are left until every
+  screen is approved.
+
 ## Progress
 
 | Step | State | Approved | Commit |
@@ -1338,5 +1439,6 @@ Verification. The MCP was not used; the prototype was read from the local copy.
 | 11 | done | 2026-09-22 | — |
 | 12 | done | 2026-09-24 | — |
 | 13 | done | 2026-09-24 | — |
+| 14 | done | 2026-09-24 | — |
 
 Update this table in the same change that delivers a step.

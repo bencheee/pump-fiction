@@ -1,0 +1,49 @@
+/*
+ * Hold to reorder, ported from the prototype for step 5 of
+ * docs/design/redesign-v2/PLAN.md and lifted here in step 14.
+ *
+ * Prototype sources, read from the byte-exact local copy:
+ *   the workout overview   row values 3182-3197
+ *   a program's splits and
+ *   a split's exercises    `gRow` 2576-2587
+ *
+ * What the gesture draws, which both copies bind the same way. The row's own
+ * frame — its fill, radius, padding and type — is its screen's.
+ */
+
+[data-reorder] {
+  position: relative;
+  cursor: grab;
+  /* `touch` (3196, 2585): the list scrolls until a row lifts, and the rule
+     below takes the gesture away while one is held. */
+  touch-action: pan-y;
+  z-index: 1;
+  /* `transition` (3194, 2583). `transform` is "none" until a row moves, so the
+     rule below carries it and a row at rest has no transform at all — one that
+     resolved to `translateY(0)` would still make the row a containing block
+     the prototype's has not got. */
+  transition: transform var(--dur-190) var(--ease);
+}
+
+/* `transform` (3192-3193, 2581-2582): the rows between the lifted one and
+   where it would land move one row height out of its way. */
+[data-reorder][data-shifted] {
+  transform: translateY(var(--row-shift, 0px));
+}
+
+/* `bg` (3202) and `dragBg` (2586): the row under a drag is drawn tinted. */
+[data-reorder][data-drag="lifted"] {
+  background: var(--accent-surface);
+  transform: translateY(var(--row-shift, 0px)) scale(1.02);
+  transition: none;
+  z-index: 5;
+  box-shadow: var(--shadow-drag);
+  touch-action: none;
+}
+
+/* The row is focusable here, which the prototype's `<section>` is not: it is
+   how the keyboard reorders the list. The ring is the browser's own. */
+[data-reorder]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
