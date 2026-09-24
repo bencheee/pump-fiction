@@ -38,7 +38,7 @@ The previous individual weigh-in is the one before it *by date*, not by the orde
 
 Values are stored and shown as entered, to two decimals. Averages and changes are rounded to one decimal for display only; the derivation and the stored value keep their full precision.
 
-The chart supports week, month, quarter, and year and draws one bar for each daily weigh-in; its values list names every weigh-in in the range and, under them, the weekly averages of the weeks the range reaches, each with its recorded-days count and whether it is still provisional. The current week's average also stands in its own tile above the chart. It opens on the quarter.
+The chart supports week, month, quarter, and year, and opens on the quarter. A switch shows it one of two ways. **Daily** draws a bar for every day of the range, from the first weigh-in on, and a day with no weigh-in as an empty column, so a gap in the record reads as a gap. **Weekly average** draws a bar for each Monday-to-Sunday week that holds a weigh-in, each naming its recorded-days count and whether it is still provisional. Either way the sentence under the bars and its values list state what the bars draw. The current week's average also stands in its own tile above the chart.
 
 Its range is a trailing window that ends on the local date, as every chart's is, while weekly averages stay Monday-to-Sunday calendar weeks. The two do not line up, and that is deliberate: `week` shows the last seven days, and the weekly average beside them is still the week's. A weekly point is drawn on the last day its week actually reaches, so the current provisional week appears at today rather than in the future, and it carries the week it covers, its recorded-days count, and whether it is still provisional. A week that began before the window keeps its whole average, because a week is a week.
 
@@ -66,4 +66,4 @@ Both are unavailable rather than zero until a second measurement exists, and the
 
 The app does not label increase or decrease as inherently positive, because that depends on the measurement and user's goal.
 
-The chart supports week, month, quarter, year, and all, and opens on all, because a measurement is taken every few weeks at most and its whole history is what tells the story. Its ranges are trailing windows ending on the local date, as every chart's are. The latest card states the change since the previous measurement and, once there are three or more, the change since the first; the entries under the chart state every value it draws.
+The chart supports week, month, quarter, and year, and opens on the quarter. Its ranges are trailing windows ending on the local date, as every chart's are. The latest card states the change since the previous measurement and, once there are three or more, the change since the first; the entries under the chart state every value it draws.

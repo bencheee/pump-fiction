@@ -3,7 +3,11 @@
 import { useMemo, useState, type CSSProperties } from "react";
 
 import { defaultWeightRange } from "@/features/history/application/weight-operations";
-import type { ChartRange, ChartSeries } from "@/features/history/domain/chart";
+import {
+  rangeStart,
+  type ChartRange,
+  type ChartSeries,
+} from "@/features/history/domain/chart";
 import {
   weightSeries,
   type WeightOverview,
@@ -66,6 +70,9 @@ const rangeLabels: Readonly<Record<ChartRange, string>> = {
 export function WeightView({ overview }: { overview: WeightOverview }) {
   /* `bodyRange: "quarter"` (line 1804): the chart opens on the quarter. */
   const [range, setRange] = useState<ChartRange>(defaultWeightRange);
+  /* The Owner's switch (2026-09-24): every day's weigh-in, or the average of
+     each Monday-to-Sunday week. The prototype draws the days alone. */
+  const [view, setView] = useState<ChartView>("daily");
   const series = useMemo(
     () => weightSeries(overview.entries, range, overview.localDate),
     [overview.entries, overview.localDate, range],
@@ -129,14 +136,34 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
             </Chip>
           ))}
         </div>
-        <BarChart
-          variant="body"
-          points={barPoints(series)}
-          summary={chartSummary(series)}
-          emptyMessage="No weigh-in falls inside this range."
-          signature={`${range}|${series.points.length}`}
-          values={chartValues(series)}
-        />
+        <div data-body-chips="" role="group" aria-label="Chart">
+          {chartViews.map((option) => (
+            <Chip
+              key={option.key}
+              selected={view === option.key}
+              onClick={() => setView(option.key)}
+            >
+              {option.label}
+            </Chip>
+          ))}
+        </div>
+        {view === "daily" ? (
+          <BarChart
+            variant="body"
+            points={dailyPoints(series, range, overview.localDate)}
+            summary={dailySummary(series)}
+            emptyMessage="No weigh-in falls inside this range."
+            signature={`daily|${range}|${series.points.length}`}
+          />
+        ) : (
+          <BarChart
+            variant="body"
+            points={weeklyPoints(series)}
+            summary={weeklySummary(series)}
+            emptyMessage="No week with a weigh-in falls inside this range."
+            signature={`weekly|${range}|${series.companion?.points.length ?? 0}`}
+          />
+        )}
 
         <div data-body-list-head="">
           <p data-body-eyebrow="">Weigh-ins</p>
@@ -212,43 +239,99 @@ export function WeightView({ overview }: { overview: WeightOverview }) {
   );
 }
 
-/** The bars, each at the height the shared chart scale gives it. */
-function barPoints(series: ChartSeries): readonly BarChartPoint[] {
+type ChartView = "daily" | "weekly";
+
+const chartViews: readonly { key: ChartView; label: string }[] = [
+  { key: "daily", label: "Daily" },
+  { key: "weekly", label: "Weekly average" },
+];
+
+/**
+ * Every day of the range, a weigh-in or not (Owner, 2026-09-24): a day with
+ * none is an empty column, so a gap in the record shows as a gap. The range
+ * starts no earlier than the first weigh-in, so a year does not open on
+ * months before the record began. The heights are the shared chart scale's,
+ * measured over the days that hold a weigh-in.
+ */
+function dailyPoints(
+  series: ChartSeries,
+  range: ChartRange,
+  localDate: string,
+): readonly BarChartPoint[] {
+  if (series.points.length === 0) return [];
+  const byDate = new Map(
+    series.points.map((point) => [point.date, point.value]),
+  );
   const heights = barHeights(series.points.map((point) => point.value));
-  return series.points.map((point, index) => ({
-    key: point.date,
-    date: formatHistoryDate(point.date),
-    value: formatKg(point.value),
-    height: heights[index] ?? 0,
-  }));
+  const heightByDate = new Map(
+    series.points.map((point, index) => [point.date, heights[index] ?? 0]),
+  );
+  const from = rangeStart(range, localDate);
+  const first = series.points[0]?.date ?? localDate;
+  const start = from === null || first > from ? first : from;
+  const days: BarChartPoint[] = [];
+  for (let day = start; day <= localDate; day = nextDay(day)) {
+    const value = byDate.get(day);
+    const date = formatHistoryDate(day);
+    days.push(
+      value === undefined
+        ? {
+            key: day,
+            date,
+            value: "—",
+            height: 6,
+            empty: true,
+            description: `${date} · No weigh-in`,
+          }
+        : {
+            key: day,
+            date,
+            value: formatKg(value),
+            height: heightByDate.get(day) ?? 0,
+          },
+    );
+  }
+  return days;
 }
 
-/** `bSummary` (2624-2626). */
-function chartSummary(series: ChartSeries): string {
+/**
+ * The Monday-to-Sunday averages the series carries beside its days —
+ * `MVP-WGT-003` — one bar a week, on the shared chart scale.
+ */
+function weeklyPoints(series: ChartSeries): readonly BarChartPoint[] {
+  const weeks = series.companion?.points ?? [];
+  const heights = barHeights(weeks.map((week) => week.value));
+  return weeks.map((week, index) => {
+    const date = `Week of ${formatHistoryDate(week.span?.start ?? week.date)}`;
+    const value = formatAverageKg(week.value);
+    return {
+      key: week.span?.start ?? week.date,
+      date,
+      value,
+      height: heights[index] ?? 0,
+      description: `${date} · ${value}${week.span ? ` · ${formatRecordedDays(week.span.recordedDays)}${week.span.provisional ? " · provisional" : ""}` : ""}`,
+    };
+  });
+}
+
+/** `bSummary` (2624-2626), over the days that hold a weigh-in. */
+function dailySummary(series: ChartSeries): string {
   const values = series.points.map((point) => point.value);
   if (values.length === 0) return "";
   const noun = values.length === 1 ? "weigh-in" : "weigh-ins";
   return `${values.length} ${noun} in range: ${formatKg(values[0])} to ${formatKg(values[values.length - 1])}, lowest ${formatKg(Math.min(...values))}, highest ${formatKg(Math.max(...values))}.`;
 }
 
-/**
- * `bValues` (2627): every weigh-in in range, newest first. The application's
- * series carries the Monday-to-Sunday averages beside them — `MVP-WGT-003` —
- * which the prototype's chart does not draw, so the list states them under
- * the weigh-ins rather than leave them unsaid.
- */
-function chartValues(series: ChartSeries) {
-  const daily = [...series.points].reverse().map((point) => ({
-    key: point.date,
-    date: formatHistoryDate(point.date),
-    value: formatKg(point.value),
-  }));
-  const weekly = [...(series.companion?.points ?? [])]
-    .reverse()
-    .map((point) => ({
-      key: `week-${point.span?.start ?? point.date}`,
-      date: `Week of ${formatHistoryDate(point.span?.start ?? point.date)}${point.span ? ` · ${formatRecordedDays(point.span.recordedDays)}${point.span.provisional ? " · provisional" : ""}` : ""}`,
-      value: formatAverageKg(point.value),
-    }));
-  return [...daily, ...weekly];
+/** The same sentence over the weeks, each an average of the days it holds. */
+function weeklySummary(series: ChartSeries): string {
+  const values = (series.companion?.points ?? []).map((week) => week.value);
+  if (values.length === 0) return "";
+  const noun = values.length === 1 ? "week" : "weeks";
+  return `${values.length} ${noun} in range: ${formatAverageKg(values[0])} to ${formatAverageKg(values[values.length - 1])}, lowest ${formatAverageKg(Math.min(...values))}, highest ${formatAverageKg(Math.max(...values))}.`;
+}
+
+function nextDay(date: string): string {
+  const next = new Date(`${date}T00:00:00Z`);
+  next.setUTCDate(next.getUTCDate() + 1);
+  return next.toISOString().slice(0, 10);
 }

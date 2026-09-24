@@ -164,3 +164,39 @@
   height: 120px;
   gap: 5px;
 }
+
+/* ----- Empty days and many bars ------------------------------------------- */
+
+/*
+ * A day the series holds nothing for, added after step 21 at the Owner's
+ * request (2026-09-24): an empty column at the bottom of the track, outlined
+ * rather than filled, so a missed weigh-in reads as a gap and not as a low
+ * one. The prototype draws recorded days only.
+ */
+[data-bar-chart-bars] > button[data-empty] > span {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+
+[data-bar-chart-bars] > button[data-empty][aria-pressed="true"] > span {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+/* Every day of a month, a quarter or a year does not fit 5px apart on a
+   phone, so the gap narrows as the bars grow in number. */
+[data-bar-chart-bars][data-density="close"] {
+  gap: 2px;
+}
+
+[data-bar-chart-bars][data-density="dense"] {
+  gap: 1px;
+}
+
+[data-bar-chart-bars][data-density="packed"] {
+  gap: 0;
+}
+
+[data-bar-chart-bars][data-density="packed"] > button > span {
+  border-radius: 1px 1px 0 0;
+}

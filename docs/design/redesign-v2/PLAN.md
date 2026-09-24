@@ -1937,9 +1937,16 @@ The Owner answered the six questions step 21 gathered, on 2026-09-24:
    `MVP-BOD-002` now say it, and `MVP-TOD-004` and `MVP-TOD-005` are
    withdrawn. The overview and the wireframe decisions no longer describe
    Today's weight and measurement cards.
-4. **The weekly averages belong in the weight chart.** The prototype draws
-   none. How they are drawn is proposed to the Owner before it is built.
-5. **Measurements offer week, month, quarter, year and all, and open on all.**
+4. **The weight chart switches between two charts.** A line of weekly
+   averages over the daily bars was tried and rejected; the bars are the
+   prototype's again. A `Daily` / `Weekly average` switch under the range
+   chips picks what they draw. `Daily` draws every day of the range from the
+   first weigh-in on, and a day with none as an empty, outlined column at the
+   bottom of the track. `Weekly average` draws one bar for each week that
+   holds a weigh-in. The chart card takes empty days and narrows its gap as
+   its bars grow in number: 2px past 40, 1px past 90 and none past 200.
+5. **Measurements keep the prototype's ranges**, week to year, opening on the
+   quarter. `All` was added and then taken out again at the Owner's word.
 6. **Every chart fits its scale to its own range.** The Owner's example is a
    week of weigh-ins between 90.2 and 90.8 kg, which drawn against zero would
    look flat. `barHeights` in `src/features/history/ui/chart-scale.ts` is the

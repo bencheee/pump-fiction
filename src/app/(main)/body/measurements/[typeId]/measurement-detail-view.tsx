@@ -43,18 +43,8 @@ import { BodyEntrySheet } from "../../body-entry-sheet";
  * through, and every entry is already on the screen.
  */
 
-/**
- * The prototype's `B_RANGES` (line 1730) and `all` beside them: a measurement
- * is taken every few weeks at most, so its whole history is what tells the
- * story (Owner, 2026-09-24).
- */
-const bodyRanges: readonly ChartRange[] = [
-  "week",
-  "month",
-  "quarter",
-  "year",
-  "all",
-];
+/** `B_RANGES` (line 1730), which the prototype's measurement shares. */
+const bodyRanges: readonly ChartRange[] = ["week", "month", "quarter", "year"];
 
 const rangeLabels: Readonly<Record<ChartRange, string>> = {
   week: "Week",
@@ -77,7 +67,7 @@ export function MeasurementDetailView({
     date: entry.entryDate,
     value: entry.valueCm,
   }));
-  /* A measurement opens on its whole history (Owner, 2026-09-24). */
+  /* `bPush` (2513) opens a measurement on the quarter. */
   const [range, setRange] = useState<ChartRange>(defaultMeasurementRange);
   const series = useMemo(
     () => measurementSeries(entries, range, localDate),

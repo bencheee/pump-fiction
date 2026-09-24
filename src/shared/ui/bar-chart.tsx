@@ -36,6 +36,13 @@ export type BarChartPoint = Readonly<{
   value: string;
   /** How tall the bar stands, 0 to 100; the caller's own scale decides it. */
   height: number;
+  /**
+   * A day the series holds nothing for, drawn as an empty column so the gap
+   * stays visible (Owner, 2026-09-24). `value` is what the reading states for
+   * it, and `description` what the column is called.
+   */
+  empty?: boolean;
+  description?: string;
 }>;
 
 export function BarChart({
@@ -77,13 +84,17 @@ export function BarChart({
     index: number;
   } | null>(null);
   // `selIdx` (2366): the reading opens on the most recent point and stays on
-  // whatever was pressed, unless the data under it changed.
+  // whatever was pressed, unless the data under it changed. An empty day is
+  // not a point, so the reading opens on the most recent one that holds one.
+  const lastFilled = points.findLastIndex((point) => !point.empty);
   const selected =
     picked !== null &&
     picked.signature === signature &&
     picked.index < points.length
       ? picked.index
-      : points.length - 1;
+      : lastFilled === -1
+        ? points.length - 1
+        : lastFilled;
 
   // `seq("bars", sig)` and `seq("read", …)` (2365, 2380): each animation is
   // written as an `A`/`B` pair so that re-running it restarts it, which one
@@ -107,14 +118,27 @@ export function BarChart({
         <span>{reading.value}</span>
       </div>
 
-      <div data-bar-chart-bars="" data-bar-anim={barPair}>
+      <div
+        data-bar-chart-bars=""
+        data-bar-anim={barPair}
+        data-density={
+          points.length > 200
+            ? "packed"
+            : points.length > 90
+              ? "dense"
+              : points.length > 40
+                ? "close"
+                : undefined
+        }
+      >
         {points.map((point, index) => (
           <button
             key={point.key}
             type="button"
-            aria-label={`${point.date} · ${point.value}`}
-            title={`${point.date} · ${point.value}`}
+            aria-label={point.description ?? `${point.date} · ${point.value}`}
+            title={point.description ?? `${point.date} · ${point.value}`}
             aria-pressed={index === selected}
+            data-empty={point.empty ? "" : undefined}
             onClick={() => setPicked({ signature, index })}
             style={
               {
@@ -141,7 +165,9 @@ export function BarChart({
           the chart reads in and the reverse of the bars' own. */}
       {variant === "measure" ? null : (
         <Disclosure label="Chart values">
-          {(values ?? [...points].reverse()).map((point) => (
+          {(
+            values ?? [...points].reverse().filter((point) => !point.empty)
+          ).map((point) => (
             <li key={point.key}>
               <span>{point.date}</span>
               <span>{point.value}</span>
