@@ -109,14 +109,21 @@ export function setChipText(
 }
 
 export type SuggestedSetValues = Readonly<{
+  mode: ExerciseLoadMode | null;
   loadKg: number | null;
+  bandStrength: WorkoutSet["bandStrength"];
   reps: number | null;
 }>;
 
-const noSuggestion: SuggestedSetValues = { loadKg: null, reps: null };
+const noSuggestion: SuggestedSetValues = {
+  mode: null,
+  loadKg: null,
+  bandStrength: null,
+  reps: null,
+};
 
 function carriesValues(set: WorkoutSet): boolean {
-  return set.loadKg !== null || set.reps !== null;
+  return set.loadKg !== null || set.bandStrength !== null || set.reps !== null;
 }
 
 /*
@@ -130,25 +137,38 @@ function carriesValues(set: WorkoutSet): boolean {
  * this workout, or failing that the last set of the exercise's previous
  * performance.
  *
- * The load only carries when it still means the same thing: kilograms on the
- * bar are not kilograms hung from a belt, so the source set's load field has
- * to match this set's. Repetitions always carry.
+ * An untouched base-mode row offers the previous set's permitted mode too, so
+ * an added-weight bodyweight set remains BW + kg on the next row. Kilograms
+ * carry only when both modes use the same load field.
  */
 export function suggestedValuesFor(
   exercise: WorkoutExercise,
   setIndex: number,
   mode: ExerciseLoadMode,
 ): SuggestedSetValues {
-  const field = setModeFields[mode].load;
-  const take = (set: WorkoutSet): SuggestedSetValues => ({
-    loadKg:
-      field !== null &&
+  const current = exercise.sets[setIndex];
+  const take = (set: WorkoutSet): SuggestedSetValues => {
+    const suggestedMode =
+      current?.loadMode === null &&
       set.loadMode !== null &&
-      setModeFields[set.loadMode].load === field
-        ? set.loadKg
-        : null,
-    reps: set.reps,
-  });
+      exercise.allowedLoadModes.includes(set.loadMode)
+        ? set.loadMode
+        : mode;
+    const fields = setModeFields[suggestedMode];
+    const source = set.loadMode === null ? null : setModeFields[set.loadMode];
+    return {
+      mode: suggestedMode,
+      loadKg:
+        fields.load !== null && source?.load === fields.load
+          ? set.loadKg
+          : null,
+      bandStrength:
+        fields.band !== null && source?.band === fields.band
+          ? set.bandStrength
+          : null,
+      reps: set.reps,
+    };
+  };
 
   for (let index = setIndex - 1; index >= 0; index -= 1) {
     const candidate = exercise.sets[index];

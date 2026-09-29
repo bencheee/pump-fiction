@@ -388,18 +388,17 @@ export function latestEligiblePerformance(
 }
 
 /**
- * The order the metric selector offers, most telling first. An exercise that
- * moves a load opens on that load, because it is what the lifter compares;
- * one that only moves the body opens on reps.
+ * Workout volume opens the chart whenever the exercise has measurable load.
+ * Without kilograms, total reps or seconds is the closest workload measure.
  */
 const metricOrder: readonly ChartMetric[] = [
+  "total_volume",
+  "total_reps",
+  "total_seconds",
   "top_load",
   "least_load",
   "top_reps",
   "top_seconds",
-  "total_volume",
-  "total_reps",
-  "total_seconds",
 ];
 
 /** The metrics that mean something for the categories this exercise actually has. */

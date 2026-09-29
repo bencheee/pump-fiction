@@ -6,6 +6,7 @@ import type {
   WorkoutSet,
   WorkoutSourceKind,
 } from "@/features/active-workout/domain/workout";
+import { isSetRecorded } from "@/features/active-workout/domain/set-entry";
 import type {
   ExerciseBaseType,
   ExerciseLoadMode,
@@ -62,21 +63,46 @@ export function workoutVolumeTrends(
   ordered.forEach((workout, index) => {
     const previous = ordered
       .slice(index + 1)
-      .find(
-        (earlier) =>
-          earlier.workoutDate < workout.workoutDate &&
-          earlier.name === workout.name,
-      );
-    if (previous === undefined || previous.volumeKgReps <= 0) return;
+      .find((earlier) => earlier.name === workout.name);
+    if (
+      previous === undefined ||
+      !Number.isFinite(previous.volumeKgReps) ||
+      previous.volumeKgReps <= 0 ||
+      !Number.isFinite(workout.volumeKgReps)
+    )
+      return;
     const percent = Math.round(
       ((workout.volumeKgReps - previous.volumeKgReps) / previous.volumeKgReps) *
         100,
     );
-    if (percent === 0) return;
+    if (!Number.isFinite(percent) || percent === 0) return;
     trends.set(workout.id, { percent, rising: percent > 0 });
   });
 
   return trends;
+}
+
+/** Derive volume from a saved snapshot when an older history read omits it. */
+export function workoutVolume(workout: HistoryWorkout): number {
+  return workout.exercises.reduce(
+    (total, exercise) =>
+      exercise.measurementType === "seconds"
+        ? total
+        : total +
+          exercise.sets.reduce(
+            (exerciseTotal, set) =>
+              set.loadMode !== null &&
+              set.loadMode !== "assistance_weight" &&
+              set.loadMode !== "assistance_band" &&
+              isSetRecorded(set.loadMode, set) &&
+              set.loadKg !== null &&
+              set.reps !== null
+                ? exerciseTotal + set.loadKg * set.reps
+                : exerciseTotal,
+            0,
+          ),
+    0,
+  );
 }
 
 export type HistoryWorkoutExercise = Readonly<{

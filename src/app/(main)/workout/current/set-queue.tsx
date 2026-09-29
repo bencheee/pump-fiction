@@ -279,14 +279,15 @@ export function SetQueue({
    * and then does what `advance()` (1871) always did. A set with nothing to
    * offer is left exactly as it was, so the review still counts it.
    */
-  const currentMode =
+  const storedMode =
     current === undefined
       ? null
       : (current.set.loadMode ?? baseModeOf(current.exercise));
   const offer: SuggestedSetValues =
-    current === undefined || currentMode === null
-      ? { loadKg: null, reps: null }
-      : suggestedValuesFor(current.exercise, current.setIndex, currentMode);
+    current === undefined || storedMode === null
+      ? { mode: null, loadKg: null, bandStrength: null, reps: null }
+      : suggestedValuesFor(current.exercise, current.setIndex, storedMode);
+  const currentMode = offer.mode ?? storedMode;
 
   /*
    * `primaryAction`'s log branch (line 3415): the flash runs, and 2300ms later
@@ -310,8 +311,12 @@ export function SetQueue({
         ...(set.reps === null && offer.reps !== null
           ? { reps: offer.reps }
           : {}),
+        ...(set.bandStrength === null && offer.bandStrength !== null
+          ? { bandStrength: offer.bandStrength }
+          : {}),
       };
-      if (Object.keys(fill).length > 0) onUpdateSet(set, currentMode, fill);
+      if (Object.keys(fill).length > 0 || set.loadMode !== currentMode)
+        onUpdateSet(set, currentMode, fill);
     }
 
     flashSeqRef.current += 1;
@@ -561,6 +566,7 @@ export function SetQueue({
               <ActionsSheet
                 exercise={current.exercise}
                 set={current.set}
+                offeredMode={currentMode ?? baseModeOf(current.exercise)}
                 setIndex={current.setIndex}
                 overlay={actionsOverlay}
                 lastSet={current.setIndex === current.exercise.sets.length - 1}
@@ -717,7 +723,7 @@ function SetStage({
   onUpdateSet: SetQueueProps["onUpdateSet"];
   onChangeMode: SetQueueProps["onChangeMode"];
 }) {
-  const mode = set.loadMode ?? baseModeOf(exercise);
+  const mode = offer.mode ?? set.loadMode ?? baseModeOf(exercise);
   const fields = setModeFields[mode];
 
   // `showLoadWheel` / `showBodyweightTag` (line 3352). The prototype reads a
@@ -779,7 +785,9 @@ function SetStage({
                 key={strength}
                 type="button"
                 data-queue-band-option=""
-                aria-pressed={set.bandStrength === strength}
+                aria-pressed={
+                  (set.bandStrength ?? offer.bandStrength) === strength
+                }
                 aria-label={bandLabels[strength]}
                 onClick={() =>
                   onUpdateSet(set, mode, { bandStrength: strength })
@@ -976,6 +984,7 @@ function NoteSheet({ exercise }: { exercise: WorkoutExercise }) {
 function ActionsSheet({
   exercise,
   set,
+  offeredMode,
   setIndex,
   overlay,
   triggerRef,
@@ -989,6 +998,7 @@ function ActionsSheet({
 }: {
   exercise: WorkoutExercise;
   set: WorkoutSet;
+  offeredMode: ExerciseLoadMode;
   setIndex: number;
   overlay: TransientOverlay;
   triggerRef: RefObject<HTMLButtonElement | null>;
@@ -1003,7 +1013,7 @@ function ActionsSheet({
   const baseMode = baseModeOf(exercise);
   const optionalMode =
     exercise.allowedLoadModes.find((allowed) => allowed !== baseMode) ?? null;
-  const mode = set.loadMode ?? baseMode;
+  const mode = offeredMode;
   const optionalOn = optionalMode !== null && mode === optionalMode;
   const populatedSet =
     set.loadKg !== null || set.bandStrength !== null || set.reps !== null;

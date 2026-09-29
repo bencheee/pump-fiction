@@ -18,7 +18,7 @@ Completed workouts are ordered newest first and grouped by month. Each item show
 
 Months group by the workout's local date, which is already stored in the configured time zone. The performed exercise count counts the exercises holding at least one recorded set, so an exercise the user opened but left empty is not counted as performed.
 
-A workout also carries the whole-percent change in the volume it moved against the last workout of the same name — the previous time that split was trained, or the previous one-time workout. Volume sums load by reps over the recorded sets, counting neither assistance kilograms, which are not work done, nor seconds-measured exercises, whose value is not a repetition count. A workout with no earlier workout of its name, one whose predecessor moved no volume, and one that lands on the same whole percent carry no trend at all.
+A workout also carries the whole-percent change in the volume it moved against the last workout of the same name — the previous time that split was trained, or the previous one-time workout, including one completed on the same date. Volume sums load by reps over the recorded sets, counting neither assistance kilograms, which are not work done, nor seconds-measured exercises, whose value is not a repetition count. A workout with no earlier workout of its name, one whose predecessor moved no volume, and one that lands on the same whole percent carry no trend at all. If an older history response omits volume, the application derives it from the saved workout's sets before displaying the trend.
 
 A workout detail renders its saved snapshot:
 
@@ -95,7 +95,7 @@ A band category that carries no kilograms tracks highest reps in a set and highe
 
 Depending on the exercise and selected metric, charts may show highest weight per workout, highest reps, total volume or reps, amount of assistance, or a meaningful band category.
 
-The chart opens on the metric that tells the most about the exercise: the load it moves, whether lifted or assisted, and otherwise reps. Available ranges are week, month, quarter, year, and all where the corresponding wireframe/product flow supports it. Assisted-weight charts visually treat a lower kilogram value as improvement. Exact chart technology remains undecided.
+The chart opens on total workout volume when kilograms and reps make that metric available. Otherwise it opens on total reps or total seconds where available, then least assistance or highest reps. The other available metrics, including highest load, remain selectable. Available ranges are week, month, quarter, year, and all where the corresponding wireframe/product flow supports it. Assisted-weight charts visually treat a lower kilogram value as improvement.
 
 ## Split history
 

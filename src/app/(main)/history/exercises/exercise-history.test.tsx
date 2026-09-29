@@ -168,18 +168,17 @@ const statistics: ExerciseStatistics = {
       repsByLoad: [],
     },
   ],
-  metrics: ["top_reps", "top_load", "total_volume"],
+  metrics: ["total_volume", "top_load", "top_reps"],
   performances: [latest, older],
-  // What the server computed for the first paint: the highest load of every
-  // completed performance above, oldest first.
+  // What the server computed for the first paint: each workout's volume.
   series: {
-    metric: "top_load",
-    label: "Highest load",
-    unit: "kg",
+    metric: "total_volume",
+    label: "Workout volume",
+    unit: "volume",
     lowerIsBetter: false,
     points: [
-      { workoutId: olderWorkoutId, date: "2026-03-01", value: 50 },
-      { workoutId, date: "2026-08-09", value: 80 },
+      { workoutId: olderWorkoutId, date: "2026-03-01", value: 500 },
+      { workoutId, date: "2026-08-09", value: 720 },
     ],
   },
 };
@@ -327,7 +326,7 @@ describe("exercise progress detail", () => {
     // The prototype's `chartSummary` (step 11) replaced the old sentence.
     expect(
       screen.getByText(
-        "2 workouts in range: 50 kg to 80 kg, best 80 kg. Moving in the better direction.",
+        "2 workouts in range: 500 kg·reps to 720 kg·reps, best 720 kg·reps. Moving in the better direction.",
       ),
     ).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Chart values" }));
@@ -335,16 +334,20 @@ describe("exercise progress detail", () => {
     const rows = within(values).getAllByRole("listitem");
     // Newest first, the reverse of the bars.
     expect(rows).toHaveLength(2);
-    expect(within(rows[0]).getByText("80 kg")).toBeInTheDocument();
-    expect(within(rows[1]).getByText("50 kg")).toBeInTheDocument();
+    expect(within(rows[0]).getByText("720 kg·reps")).toBeInTheDocument();
+    expect(within(rows[1]).getByText("500 kg·reps")).toBeInTheDocument();
   });
 
   it("draws one bar per point and reads out the one pressed", async () => {
     const user = userEvent.setup();
     renderStatistics();
 
-    const latestBar = screen.getByRole("button", { name: "Sun 9 Aug · 80 kg" });
-    const olderBar = screen.getByRole("button", { name: "Sun 1 Mar · 50 kg" });
+    const latestBar = screen.getByRole("button", {
+      name: "Sun 9 Aug · 720 kg·reps",
+    });
+    const olderBar = screen.getByRole("button", {
+      name: "Sun 1 Mar · 500 kg·reps",
+    });
     // The reading opens on the most recent point.
     expect(latestBar).toHaveAttribute("aria-pressed", "true");
     expect(olderBar).toHaveAttribute("aria-pressed", "false");
@@ -363,12 +366,18 @@ describe("exercise progress detail", () => {
     const metric = within(screen.getByRole("group", { name: "Metric" }));
     const range = within(screen.getByRole("group", { name: "Time range" }));
     expect(
-      metric.getByRole("button", { name: "Highest load" }),
+      metric.getByRole("button", { name: "Workout volume" }),
     ).toHaveAttribute("aria-pressed", "true");
     expect(range.getByRole("button", { name: "All" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
+
+    await user.click(metric.getByRole("button", { name: "Highest load" }));
+
+    expect(
+      metric.getByRole("button", { name: "Highest load" }),
+    ).toHaveAttribute("aria-pressed", "true");
 
     await user.click(metric.getByRole("button", { name: "Workout volume" }));
 

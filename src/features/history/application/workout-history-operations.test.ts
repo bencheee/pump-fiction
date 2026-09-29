@@ -64,6 +64,51 @@ describe("workout history operations", () => {
     });
   });
 
+  it("derives a missing volume from recorded saved sets before calculating a trend", async () => {
+    const repository = createRepository();
+    repository.list.mockResolvedValueOnce([
+      {
+        month: "2026-09",
+        workouts: [{ ...months[0]!.workouts[0]!, volumeKgReps: undefined! }],
+      },
+    ]);
+    repository.getById.mockResolvedValueOnce({
+      ...workout,
+      exercises: [
+        {
+          id: workoutExerciseId,
+          exerciseIdentityId: exerciseId,
+          exerciseId,
+          stillInLibrary: true,
+          position: 1,
+          exerciseName: "Bench press",
+          exerciseBaseType: "weights",
+          measurementType: "reps",
+          allowedLoadModes: ["weight"],
+          persistentNote: "",
+          plannedSets: 2,
+          minReps: 6,
+          maxReps: 10,
+          workoutNote: "",
+          sets: [
+            {
+              id: workoutSetId,
+              position: 1,
+              loadMode: "weight",
+              loadKg: 60,
+              bandDirection: null,
+              bandStrength: null,
+              reps: 8,
+            },
+          ],
+        },
+      ],
+    });
+    const result = await listWorkoutHistory(repository);
+    expect(result.ok && result.value[0]?.workouts[0]?.volumeKgReps).toBe(480);
+    expect(repository.getById).toHaveBeenCalledWith(workoutId);
+  });
+
   it("reports a load failure as retryable persistence", async () => {
     const repository = createRepository();
     repository.list.mockRejectedValueOnce(

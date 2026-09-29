@@ -257,7 +257,6 @@ function makeWorkout(overrides?: Partial<CurrentWorkout>): CurrentWorkout {
           makeSet({
             id: "00000000-0000-4000-8000-0000000000e2",
             position: 2,
-            loadMode: "bodyweight",
           }),
         ],
         lastPerformance: null,
@@ -453,21 +452,18 @@ describe("Active set queue", () => {
     ).not.toBeInTheDocument();
     expect(await screen.findByText("All changes saved")).toBeInTheDocument();
 
-    // An added weight shows its own unit; a plain bodyweight set shows the
-    // Bodyweight pill in place of a load.
+    // An added weight shows its own unit and the next empty row offers it.
     await user.click(segment("Pull-Up set 1"));
     expect(currentExercise()).toHaveTextContent("Pull-Up");
     expect(wheelValue("Load")).toHaveTextContent(/^5\+kg$/);
     expect(wheelValue("Reps")).toHaveTextContent(/^8reps$/);
 
     await user.click(segment("Pull-Up set 2"));
-    expect(screen.getByText("Bodyweight")).toBeVisible();
-    expect(
-      screen.queryByRole("group", { name: "Load" }),
-    ).not.toBeInTheDocument();
-    // The load does not carry from an added weight to a bodyweight set; the
-    // repetitions do.
+    expect(wheelValue("Load")).toHaveTextContent(/^5\+kg, suggested$/);
     expect(wheelValue("Reps")).toHaveTextContent(/^8reps, suggested$/);
+    await runAction(user, "Remove added weight");
+    expect(screen.getByText("Bodyweight")).toBeVisible();
+    expect(screen.queryByRole("group", { name: "Load" })).toBeNull();
   });
 
   it("shows the persistent note and the note carried from the last workout", async () => {
@@ -490,6 +486,52 @@ describe("Active set queue", () => {
       ).not.toBeInTheDocument();
     });
     expect(currentExercise()).toHaveTextContent("Squat");
+  });
+
+  it("offers added bodyweight load from the previous workout and logs that mode", async () => {
+    const user = userEvent.setup();
+    const workout = makeWorkout();
+    const exercises = workout.exercises.map((exercise) =>
+      exercise.exerciseName === "Pull-Up"
+        ? {
+            ...exercise,
+            sets: exercise.sets.map((set) => ({
+              ...set,
+              loadMode: null,
+              loadKg: null,
+              reps: null,
+            })),
+            lastPerformance: {
+              workoutId: "00000000-0000-4000-8000-0000000000aa",
+              workoutDate: "2026-08-22",
+              sets: [
+                makeSet({
+                  id: "00000000-0000-4000-8000-0000000000d9",
+                  loadMode: "bodyweight_added_weight",
+                  loadKg: 10,
+                  reps: 8,
+                }),
+              ],
+            },
+          }
+        : exercise,
+    );
+    const { transport } = renderExperience({
+      workout: { ...workout, exercises },
+    });
+
+    await user.click(segment("Pull-Up set 1"));
+    expect(wheelValue("Load")).toHaveTextContent(/^10\+kg, suggested$/);
+    expect(wheelValue("Reps")).toHaveTextContent(/^8reps, suggested$/);
+
+    await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await waitFor(() =>
+      expect(transport.last("update_set").payload).toMatchObject({
+        loadMode: "bodyweight_added_weight",
+        loadKg: 10,
+        reps: 8,
+      }),
+    );
   });
 
   it("shows Last time with its date and one set per line (MVP-WRK-006)", async () => {
@@ -1020,8 +1062,8 @@ describe("Logging a set", () => {
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
         workoutSetId: "00000000-0000-4000-8000-0000000000e2",
-        loadMode: "bodyweight",
-        loadKg: null,
+        loadMode: "bodyweight_added_weight",
+        loadKg: 5,
         reps: 8,
       });
     });
@@ -1258,7 +1300,16 @@ describe("Review & finish panel", () => {
           ...exercise,
           sets: exercise.sets.map((set) => ({
             ...set,
-            loadKg: set.loadMode === "bodyweight" ? null : 80,
+            loadMode:
+              set.loadMode ??
+              (exercise.exerciseBaseType === "bodyweight"
+                ? "bodyweight"
+                : "weight"),
+            loadKg:
+              exercise.exerciseBaseType === "bodyweight" &&
+              set.loadMode !== "bodyweight_added_weight"
+                ? null
+                : 80,
             reps: 7,
           })),
         })),

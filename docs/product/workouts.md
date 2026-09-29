@@ -31,6 +31,8 @@ Examples of resulting fields:
 
 Weights permit decimal values. Reps and seconds are positive integers. Values may be entered in any order, so a set can hold a band mode before its strength is chosen and still auto-save. Entering the values is the record: a set is *recorded* once it holds everything its mode requires, and nothing else marks it; see [ADR-0027](../decisions/0027-a-set-is-recorded-by-its-values.md). A partially entered set is kept as entered and simply does not count. Active-workout auto-save is a functionally important requirement. If a change is permanently refused, it is undone rather than retried: the workout stays usable, every other change is saved, and the screen names the set or exercise whose change was lost.
 
+An untouched set offers the most recent entered set of that exercise, first from this workout and then from its last completed performance. The offer includes the permitted load mode, kilograms or band strength, and reps or seconds. For example, after `BW + 10 kg × 8`, the next untouched set offers `BW + 10 kg × 8`, including in a later workout. A set whose mode was explicitly chosen keeps that mode. Pressing **Log set** records the offered values; changing a wheel saves the chosen value in the offered mode.
+
 The accepted technical durability mechanism is defined in [ADR-0019](../decisions/0019-application-boundaries-and-active-workout-durability.md); this document remains authoritative for user-visible workout behavior.
 
 ## Last time

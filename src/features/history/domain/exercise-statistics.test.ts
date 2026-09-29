@@ -350,14 +350,14 @@ describe("chart series", () => {
 });
 
 describe("available metrics", () => {
-  it("offers the load first for an exercise that moves one", () => {
+  it("starts with workout volume when measurable, otherwise the available workload metric", () => {
     expect(
       availableMetrics([
         performance({
           sets: [set({ loadMode: "weight", loadKg: 60, reps: 8 })],
         }),
       ])[0],
-    ).toBe("top_load");
+    ).toBe("total_volume");
     expect(
       availableMetrics([
         performance({
@@ -365,12 +365,12 @@ describe("available metrics", () => {
         }),
       ])[0],
     ).toBe("least_load");
-    // Nothing to weigh, so reps lead.
+    // Nothing to weigh, so total reps represent the workout's workload.
     expect(
       availableMetrics([
         performance({ sets: [set({ loadMode: "bodyweight", reps: 8 })] }),
       ])[0],
-    ).toBe("top_reps");
+    ).toBe("total_reps");
   });
 
   it("offers load and volume for weights and reps totals for bodyweight", () => {

@@ -3,9 +3,10 @@ import {
   operationSuccess,
   type OperationResult,
 } from "@/shared/application/operation-result";
-import type {
-  HistoryMonthGroup,
-  HistoryWorkout,
+import {
+  workoutVolume,
+  type HistoryMonthGroup,
+  type HistoryWorkout,
 } from "../domain/workout-history";
 import { validateHistoryCorrection } from "../domain/workout-history-validation";
 import {
@@ -17,7 +18,24 @@ export async function listWorkoutHistory(
   repository: WorkoutHistoryRepository,
 ): Promise<OperationResult<readonly HistoryMonthGroup[]>> {
   try {
-    return operationSuccess(await repository.list());
+    const months = await repository.list();
+    const repaired = await Promise.all(
+      months.map(async (month) => ({
+        ...month,
+        workouts: await Promise.all(
+          month.workouts.map(async (workout) => {
+            if (Number.isFinite(workout.volumeKgReps)) return workout;
+            const detail = await repository.getById(workout.id);
+            return {
+              ...workout,
+              volumeKgReps:
+                detail === null ? Number.NaN : workoutVolume(detail),
+            };
+          }),
+        ),
+      })),
+    );
+    return operationSuccess(repaired);
   } catch {
     return persistence("We couldn't load your workout history. Try again.");
   }
