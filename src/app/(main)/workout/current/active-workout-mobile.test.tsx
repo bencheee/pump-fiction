@@ -743,9 +743,14 @@ describe("Active set queue", () => {
         bandDirection: "resistance",
       });
     });
-    expect(screen.getByText("Resistance band")).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "Choose resistance band" }),
+    ).toBeVisible();
     expect(wheel("Load")).toBeVisible();
 
+    await user.click(
+      screen.getByRole("button", { name: "Choose resistance band" }),
+    );
     await user.click(screen.getByRole("button", { name: "Medium" }));
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
@@ -753,15 +758,23 @@ describe("Active set queue", () => {
         bandStrength: "medium",
       });
     });
-    expect(screen.getByRole("button", { name: "Medium" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
+    expect(
+      screen.getByRole("button", {
+        name: "Choose resistance band, Medium selected",
+      }),
+    ).toBeVisible();
 
     await user.click(segment("Squat set 3"));
-    expect(screen.queryByText("Resistance band")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Choose resistance band/ }),
+    ).not.toBeInTheDocument();
 
     await user.click(segment("Squat set 2"));
+    await user.click(
+      screen.getByRole("button", {
+        name: "Choose resistance band, Medium selected",
+      }),
+    );
     await user.click(screen.getByRole("button", { name: "Remove band" }));
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
@@ -771,7 +784,30 @@ describe("Active set queue", () => {
         bandStrength: null,
       });
     });
-    expect(screen.queryByText("Resistance band")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Choose resistance band/ }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("puts a bodyweight band below Bodyweight and chooses its strength in a dialog", async () => {
+    const user = userEvent.setup();
+    const workout = makeWorkout({ exercises: [facePull()] });
+    const { transport } = renderExperience({ workout });
+
+    await runAction(user, "Add resistance band");
+    const bodyweight = screen.getByText("Bodyweight");
+    const band = screen.getByRole("button", { name: "Choose resistance band" });
+    expect(bodyweight.parentElement).toContainElement(band);
+
+    await user.click(band);
+    const dialog = screen.getByRole("dialog", { name: "Resistance band" });
+    await user.click(within(dialog).getByRole("button", { name: "Strong" }));
+    await waitFor(() => {
+      expect(transport.last("update_set").payload).toMatchObject({
+        loadMode: "bodyweight_resistance_band",
+        bandStrength: "strong",
+      });
+    });
   });
 
   it("gates populated removals behind confirmation and removes empty rows directly", async () => {

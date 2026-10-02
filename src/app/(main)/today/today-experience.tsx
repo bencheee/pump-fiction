@@ -73,15 +73,7 @@ export function TodayExperience({
   }
 
   function startSplit(split: TodaySplit) {
-    const sourceKind =
-      split.splitId === today.proposedSplit?.splitId
-        ? "proposed_split"
-        : "alternate_split";
-    void start({
-      sourceKind,
-      splitId: split.splitId,
-      startedAt: new Date().toISOString(),
-    });
+    router.push(`/workout/preview?split=${encodeURIComponent(split.splitId)}`);
   }
 
   return (
@@ -112,12 +104,12 @@ export function TodayExperience({
               <Action
                 variant="on-accent"
                 data-today-start=""
-                aria-label="Start today's workout"
+                aria-label="Go to workout"
                 disabled={pending}
                 onClick={() => startSplit(selectedSplit)}
               >
                 <Icon name="play" size={18} />
-                {pending ? "Starting…" : "Start today's workout"}
+                Go to workout
               </Action>
             )}
           </section>

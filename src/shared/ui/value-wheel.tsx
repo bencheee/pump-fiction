@@ -1,6 +1,6 @@
 "use client";
 
-import type { PointerEvent } from "react";
+import type { PointerEvent, ReactNode } from "react";
 import { useRef, useState } from "react";
 
 import "./value-wheel.css";
@@ -240,15 +240,20 @@ function Candidate({
 export function SetValueWheels({
   load,
   reps,
+  bodyweightAccessory,
 }: {
   /** null draws the `Bodyweight` pill in the load's place. */
   load: ValueWheelProps | null;
   reps: ValueWheelProps;
+  bodyweightAccessory?: ReactNode;
 }) {
   return (
     <div data-wheels="">
       {load === null ? (
-        <span data-wheels-bodyweight="">Bodyweight</span>
+        <span data-wheels-bodyweight-stack="">
+          <span data-wheels-bodyweight="">Bodyweight</span>
+          {bodyweightAccessory}
+        </span>
       ) : (
         <ValueWheel {...load} />
       )}

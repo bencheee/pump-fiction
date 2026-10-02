@@ -242,64 +242,81 @@
   pointer-events: none;
 }
 
-/* ----- Resistance band -------------------------------------------------- */
+/* Compact band control beside the set values. */
+[data-queue-body] [data-wheels] {
+  gap: 6px;
+}
 
-[data-queue-band] {
-  flex: none;
-  width: 100%;
+[data-queue-band-pill] {
+  min-height: 36px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-10);
+  text-transform: uppercase;
+}
+
+[data-queue-band-scrim] {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgb(0 0 0 / 65%);
+}
+
+[data-queue-band-dialog] {
+  position: fixed;
+  z-index: 41;
+  top: 50%;
+  left: 50%;
+  width: min(320px, calc(100vw - 32px));
+  transform: translate(-50%, -50%);
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  color: var(--text);
+}
+
+[data-queue-band-dialog] h2 {
+  margin: 0;
+  font-size: var(--fs-17);
+}
+
+[data-queue-band-dialog] p {
+  margin: 8px 0 18px;
+  color: var(--text-muted);
+  font-size: var(--fs-14);
+}
+
+[data-queue-band-choices] {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-[data-queue-band-head] {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-[data-queue-band-label] {
-  font-size: var(--fs-11-5);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-08);
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
+[data-queue-band-choices] button,
 [data-queue-band-remove] {
-  height: 28px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: var(--fs-12-5);
-  font-weight: var(--fw-semibold);
-  color: var(--text-muted);
-}
-
-[data-queue-band-options] {
-  display: flex;
-  gap: 8px;
-}
-
-/* `bandOptions` (line 3380). */
-[data-queue-band-option] {
-  flex: 1;
-  height: var(--control-54);
-  border-radius: var(--radius-pill);
+  min-height: 44px;
   border: 1px solid var(--line);
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: var(--fs-15);
-  font-weight: var(--fw-semibold);
-  transition:
-    background var(--dur-160) linear,
-    border-color var(--dur-160) linear;
+  border-radius: var(--radius-pill);
+  color: var(--text);
 }
 
-[data-queue-band-option][aria-pressed="true"] {
+[data-queue-band-choices] button[aria-pressed="true"] {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--on-accent);
+}
+
+[data-queue-band-remove] {
+  width: 100%;
+  margin-top: 12px;
+  color: var(--text-muted);
 }
 
 /* ----- Primary action --------------------------------------------------- */

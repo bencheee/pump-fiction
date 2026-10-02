@@ -164,6 +164,13 @@
   color: var(--text-muted);
 }
 
+[data-wheels-bodyweight-stack] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
 /* The word that tells assistive technology an offered value is not yet an
    entered one (Owner, 2026-09-21). It draws nothing. */
 [data-wheel-offer] {

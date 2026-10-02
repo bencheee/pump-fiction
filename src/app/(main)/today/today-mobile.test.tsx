@@ -137,7 +137,7 @@ describe("Today and workout-start mobile experience", () => {
   });
   afterEach(cleanup);
 
-  it("starts the proposal on the overview", async () => {
+  it("opens the proposal preview without starting a workout", async () => {
     const user = userEvent.setup();
     actions.startWorkout.mockResolvedValue({ ok: true, value: {} });
     renderToday();
@@ -149,17 +149,11 @@ describe("Today and workout-start mobile experience", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Avg 1h 08m · 7 workouts")).toBeVisible();
 
-    await user.click(
-      screen.getByRole("button", { name: "Start today's workout" }),
+    await user.click(screen.getByRole("button", { name: "Go to workout" }));
+    expect(actions.startWorkout).not.toHaveBeenCalled();
+    expect(actions.push).toHaveBeenCalledWith(
+      `/workout/preview?split=${proposedId}`,
     );
-    expect(actions.startWorkout).toHaveBeenCalledWith(
-      expect.objectContaining({
-        sourceKind: "proposed_split",
-        splitId: proposedId,
-      }),
-    );
-    // Starts land on the prototype's overview (redesign plan, step 5).
-    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
   });
 
   it("can place an alternate on Today without moving rotation", async () => {
@@ -197,16 +191,11 @@ describe("Today and workout-start mobile experience", () => {
     expect(screen.getByText(/Rotation position: Lower Body\./)).toBeVisible();
     expect(actions.setNext).not.toHaveBeenCalled();
 
-    await user.click(
-      screen.getByRole("button", { name: "Start today's workout" }),
+    await user.click(screen.getByRole("button", { name: "Go to workout" }));
+    expect(actions.startWorkout).not.toHaveBeenCalled();
+    expect(actions.push).toHaveBeenCalledWith(
+      `/workout/preview?split=${alternateId}`,
     );
-    expect(actions.startWorkout).toHaveBeenCalledWith(
-      expect.objectContaining({
-        sourceKind: "alternate_split",
-        splitId: alternateId,
-      }),
-    );
-    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
   });
 
   it("starts an alternate straight from the panel with Train today", async () => {
@@ -224,14 +213,11 @@ describe("Today and workout-start mobile experience", () => {
     expect(train).toHaveTextContent("Train today");
     await user.click(train);
 
-    expect(actions.startWorkout).toHaveBeenCalledWith(
-      expect.objectContaining({
-        sourceKind: "alternate_split",
-        splitId: alternateId,
-      }),
-    );
+    expect(actions.startWorkout).not.toHaveBeenCalled();
     expect(actions.setNext).not.toHaveBeenCalled();
-    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
+    expect(actions.push).toHaveBeenCalledWith(
+      `/workout/preview?split=${alternateId}`,
+    );
   });
 
   it("previews every exercise in the selected split beneath the start action", async () => {
@@ -275,57 +261,11 @@ describe("Today and workout-start mobile experience", () => {
       screen.getByRole("link", { name: "Go to Programs" }),
     ).toHaveAttribute("href", "/programs");
     expect(
-      screen.queryByRole("button", { name: "Start today's workout" }),
+      screen.queryByRole("button", { name: "Go to workout" }),
     ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "One-time workout" }),
     ).toBeVisible();
-  });
-
-  it("raises a refused start on Today and retries the same definition", async () => {
-    const user = userEvent.setup();
-    actions.startWorkout
-      .mockResolvedValueOnce({
-        ok: false,
-        error: { code: "persistence", message: "Try again.", retryable: true },
-      })
-      .mockResolvedValueOnce({ ok: true, value: {} });
-    renderToday();
-
-    await user.click(
-      screen.getByRole("button", { name: "Start today's workout" }),
-    );
-    const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent("Try again.");
-    expect(actions.push).not.toHaveBeenCalled();
-
-    const [firstDefinition] = actions.startWorkout.mock.calls[0]!;
-    await user.click(within(alert).getByRole("button", { name: "Retry" }));
-    expect(actions.startWorkout).toHaveBeenCalledTimes(2);
-    expect(actions.startWorkout.mock.calls[1]![0]).toEqual(firstDefinition);
-    expect(actions.push).toHaveBeenCalledWith("/workout/current?view=overview");
-  });
-
-  it("offers no retry for a start the server will not accept", async () => {
-    const user = userEvent.setup();
-    actions.startWorkout.mockResolvedValueOnce({
-      ok: false,
-      error: {
-        code: "conflict",
-        message: "A workout is already in progress.",
-        retryable: false,
-      },
-    });
-    renderToday();
-
-    await user.click(
-      screen.getByRole("button", { name: "Start today's workout" }),
-    );
-    const alert = await screen.findByRole("alert");
-    expect(alert).toHaveTextContent("A workout is already in progress.");
-    expect(
-      within(alert).queryByRole("button", { name: "Retry" }),
-    ).not.toBeInTheDocument();
   });
 
   it("replaces all second-start actions with an accurate restore card", () => {

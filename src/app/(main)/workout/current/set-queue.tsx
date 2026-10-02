@@ -1,5 +1,6 @@
 "use client";
 
+import { Dialog } from "radix-ui";
 import type { MouseEvent, RefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -725,6 +726,17 @@ function SetStage({
 }) {
   const mode = offer.mode ?? set.loadMode ?? baseModeOf(exercise);
   const fields = setModeFields[mode];
+  const bandPicker =
+    fields.band === null ? null : (
+      <BandPicker
+        direction={fields.band}
+        strength={set.bandStrength ?? offer.bandStrength}
+        onSelect={(strength) =>
+          onUpdateSet(set, mode, { bandStrength: strength })
+        }
+        onRemove={() => onChangeMode(set, baseModeOf(exercise))}
+      />
+    );
 
   // `showLoadWheel` / `showBodyweightTag` (line 3352). The prototype reads a
   // `kind` and a nullable `kg`; the application reads the set's load mode,
@@ -760,48 +772,11 @@ function SetStage({
 
   return (
     <>
-      {fields.band === null ? null : (
-        <div data-queue-band="">
-          <div data-queue-band-head="">
-            <span data-queue-band-label="">
-              {fields.band === "assistance"
-                ? "Assistance band"
-                : "Resistance band"}
-            </span>
-            <button
-              type="button"
-              data-queue-band-remove=""
-              aria-label="Remove band"
-              title="Remove band"
-              onClick={() => onChangeMode(set, baseModeOf(exercise))}
-            >
-              <Icon name="x" size={12} />
-              Remove
-            </button>
-          </div>
-          <div data-queue-band-options="">
-            {(["light", "medium", "strong"] as const).map((strength) => (
-              <button
-                key={strength}
-                type="button"
-                data-queue-band-option=""
-                aria-pressed={
-                  (set.bandStrength ?? offer.bandStrength) === strength
-                }
-                aria-label={bandLabels[strength]}
-                onClick={() =>
-                  onUpdateSet(set, mode, { bandStrength: strength })
-                }
-              >
-                {bandLabels[strength]}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {fields.load !== null ? bandPicker : null}
 
       <SetValueWheels
         load={load}
+        bodyweightAccessory={fields.load === null ? bandPicker : null}
         reps={{
           kind: "reps",
           label: exercise.measurementType === "seconds" ? "Seconds" : "Reps",
@@ -814,6 +789,59 @@ function SetStage({
         }}
       />
     </>
+  );
+}
+
+function BandPicker({
+  direction,
+  strength,
+  onSelect,
+  onRemove,
+}: {
+  direction: "resistance" | "assistance";
+  strength: BandStrength | null;
+  onSelect: (strength: BandStrength) => void;
+  onRemove: () => void;
+}) {
+  return (
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
+        <button
+          type="button"
+          data-queue-band-pill=""
+          aria-label={`Choose ${direction} band${strength ? `, ${bandLabels[strength]} selected` : ""}`}
+        >
+          Band
+        </button>
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay data-queue-band-scrim="" />
+        <Dialog.Content data-queue-band-dialog="">
+          <Dialog.Title>
+            {direction === "assistance" ? "Assistance band" : "Resistance band"}
+          </Dialog.Title>
+          <Dialog.Description>Choose the band for this set.</Dialog.Description>
+          <div data-queue-band-choices="">
+            {(["light", "medium", "strong"] as const).map((choice) => (
+              <Dialog.Close asChild key={choice}>
+                <button
+                  type="button"
+                  aria-pressed={strength === choice}
+                  onClick={() => onSelect(choice)}
+                >
+                  {bandLabels[choice]}
+                </button>
+              </Dialog.Close>
+            ))}
+          </div>
+          <Dialog.Close asChild>
+            <button type="button" data-queue-band-remove="" onClick={onRemove}>
+              Remove band
+            </button>
+          </Dialog.Close>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 

@@ -51,6 +51,10 @@ See [`programs-and-splits.md`](../product/programs-and-splits.md).
 
 ## Active workout
 
+On Today, **Go to workout** opens the selected split's preview with its planned exercises, set counts, and a stationary `00:00` clock. **Start workout** on that preview creates the workout and opens the active set screen; returning to Today leaves the workout unstarted.
+
+On the active set screen, an applied band is shown by a compact **Band** pill below **Bodyweight**, or above the wheels for a weighted set. The pill opens a small dialog for light, medium, strong, and remove. The band choices do not occupy a row beneath the exercise name.
+
 Each exercise card shows name, type, targeted sets and rep range, persistent exercise note, last-time result, the exact initial set count from the split, per-set load and reps inputs, icon-only set removal, **Add Set**, and **Today's note**. The cards form an accordion: all start collapsed, only one can be expanded, and expanding one closes the previous card and aligns the opened card with the top of the visible workout content below the sticky header. The title/card surface itself is the named disclosure trigger and carries no chevron. Its small up, down, and remove icons share the upper-right title row; there is no drag handle. There is no set-confirmation control: entering the values records the set.
 
 A set occupies one 32-pixel-high horizontal row rather than separate title and field rows. It contains the set number, its applicable value inputs, a compact icon for applying or removing the definition's optional addition, and the final remove-set X. The addition icon retains the accessible name the definition requires, such as **Add resistance band**, **Add weight**, **Assist with weight**, or **Assist with band**. Band strength uses a compact labelled select in this row and retains direction through the load mode. A definition with no addition has no addition control. **Add Set** is borderless green text aligned to the right.

@@ -2,7 +2,7 @@
 
 ## Starting a workout
 
-Starting a split creates a separate workout snapshot. It includes the workout name, an automatic timer, ordered exercises, persistent exercise notes, each exercise's set measurement, last performance, planned sets and repetition/seconds ranges, actual set inputs, workout-specific exercise notes, and the actions needed to modify or finish the session.
+Today's **Go to workout** opens a preview of the selected split without creating a workout or starting the timer. **Start workout** on that preview creates the separate workout snapshot and starts the timer. The snapshot includes the workout name, ordered exercises, persistent exercise notes, each exercise's set measurement, last performance, planned sets and repetition/seconds ranges, actual set inputs, workout-specific exercise notes, and the actions needed to modify or finish the session.
 
 The snapshot boundary and stored fields are canonical in [`domain-model.md`](../architecture/domain-model.md#workout-snapshots). The source split remains unchanged by all workout-local edits.
 
@@ -21,6 +21,8 @@ If a removed set or exercise already contains data, the UI requires confirmation
 ## Set entry
 
 A set's fields come from the exercise definition rather than from a per-set menu. Every set starts in the mode its type implies, and when the definition permits an addition each set can apply or remove exactly that addition. The complete type rules are in [`exercises.md`](exercises.md#load-modes).
+
+On the active set screen, a selected band appears as a compact **Band** pill directly below **Bodyweight** when the set has no kilogram load. Tapping the pill opens a small dialog to choose light, medium, or strong, or remove the band. For a weighted set, the same pill sits above the value wheels.
 
 Examples of resulting fields:
 
