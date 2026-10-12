@@ -164,6 +164,24 @@ export function SetQueue({
   const { showToast } = useToast();
   const [lastTimeOpen, setLastTimeOpen] = useState(false);
   const [press, setPress] = useState(0);
+  const [logConfirmation, setLogConfirmation] = useState<string | null>(null);
+  const confirmingSet =
+    current !== undefined && logConfirmation === current.set.id;
+  useEffect(() => {
+    const cancel = () => setLogConfirmation(null);
+    window.addEventListener("blur", cancel);
+    document.addEventListener("visibilitychange", cancel);
+    return () => {
+      window.removeEventListener("blur", cancel);
+      document.removeEventListener("visibilitychange", cancel);
+    };
+  }, []);
+  if (
+    logConfirmation !== null &&
+    (logConfirmation !== current?.set.id || paused)
+  ) {
+    setLogConfirmation(null);
+  }
 
   /*
    * The prototype keeps one `s.sheet` slot and one `s.dialog` (line 1791), and
@@ -303,6 +321,14 @@ export function SetQueue({
    * whose values were entered on the wheels.
    */
   function logSet() {
+    if (
+      flash !== null ||
+      afterLogTimerRef.current !== null ||
+      paused ||
+      document.visibilityState === "hidden"
+    )
+      return;
+    setLogConfirmation(null);
     if (current !== undefined && currentMode !== null) {
       const { set } = current;
       const fill = {
@@ -528,6 +554,7 @@ export function SetQueue({
               data-queue-stage=""
               data-stage-anim={stage.anim}
               data-flashing={flash === null ? undefined : ""}
+              data-confirming={confirmingSet ? "" : undefined}
             >
               <SetStage
                 key={current.set.id}
@@ -549,11 +576,36 @@ export function SetQueue({
                 title={
                   allRecorded ? "Review and finish workout" : "Log this set"
                 }
-                onClick={allRecorded ? reviewAndFinish : logSet}
+                disabled={
+                  flash !== null || (!allRecorded && (paused || confirmingSet))
+                }
+                onClick={
+                  allRecorded
+                    ? reviewAndFinish
+                    : () => setLogConfirmation(current.set.id)
+                }
               >
                 <Icon name={allRecorded ? "check-check" : "check"} />
                 {allRecorded ? "Review & finish" : "Log set"}
               </button>
+              {confirmingSet ? (
+                <div
+                  data-queue-log-confirm=""
+                  role="group"
+                  aria-label="Confirm set logging"
+                >
+                  <button type="button" data-variant="primary" onClick={logSet}>
+                    Confirm log set
+                  </button>
+                  <button
+                    type="button"
+                    data-variant="secondary"
+                    onClick={() => setLogConfirmation(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
             </div>
 
             <div data-queue-actions="">

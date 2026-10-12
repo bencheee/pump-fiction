@@ -59,10 +59,15 @@ test.describe("Active workout experience", () => {
       // A start lands on the workout overview (step 5); resuming it opens the
       // set queue (step 4) on the first set still without values.
       await page.goto("/today");
-      const start = page.getByRole("button", { name: "Start today's workout" });
+      const start = page.getByRole("button", { name: "Go to workout" });
       await awaitHydration(start);
       await start.click();
-      await expect(page).toHaveURL(/\/workout\/current\?view=overview$/);
+      await expect(page).toHaveURL(/\/workout\/preview\?split=/);
+      await page
+        .getByRole("button", { name: "Start workout", exact: true })
+        .click();
+      await expect(page).toHaveURL(/\/workout\/current$/);
+      await page.getByRole("button", { name: "Workout overview" }).click();
       await expect(
         page.getByRole("region", { name: `${exerciseA}, position 1 of 1` }),
       ).toContainText("3 × 8–12 · 0 of 3 recorded");
@@ -105,6 +110,8 @@ test.describe("Active workout experience", () => {
       // them and moves on to the set after (step 7).
       await segment(2).click();
       await page.getByRole("button", { name: "Log this set" }).click();
+      await expect(segment(2)).toHaveAttribute("data-state", "current");
+      await page.getByRole("button", { name: "Confirm log set" }).click();
       await expect(segment(2)).toHaveAttribute("data-state", "recorded");
       await expect(
         page.getByText("Set 3 of 3 · 3 × 8–12 planned"),
@@ -289,7 +296,7 @@ test.describe("Active workout experience", () => {
         page.getByText("Workout discarded. No History record created."),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: "Start today's workout" }),
+        page.getByRole("button", { name: "Go to workout" }),
       ).toBeVisible();
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
     } finally {

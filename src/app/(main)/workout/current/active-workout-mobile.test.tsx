@@ -525,6 +525,7 @@ describe("Active set queue", () => {
     expect(wheelValue("Reps")).toHaveTextContent(/^8reps, suggested$/);
 
     await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
     await waitFor(() =>
       expect(transport.last("update_set").payload).toMatchObject({
         loadMode: "bodyweight_added_weight",
@@ -1046,14 +1047,37 @@ describe("Logging a set", () => {
   }
 
   async function afterFlash(): Promise<void> {
-    await act(() => vi.advanceTimersByTimeAsync(2300));
+    await act(() => vi.advanceTimersByTimeAsync(3000));
   }
+
+  it("requires a separate confirmation and cancels it on blur or set change", async () => {
+    const user = timedUser();
+    const { transport } = renderExperience();
+    await user.click(screen.getByRole("button", { name: "Log this set" }));
+    expect(transport.all("update_set")).toHaveLength(0);
+    expect(screen.getByRole("button", { name: "Log this set" })).toBeDisabled();
+    fireEvent.blur(window);
+    expect(
+      screen.queryByRole("button", { name: "Confirm log set" }),
+    ).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(segment("Squat set 3"));
+    expect(
+      screen.queryByRole("button", { name: "Confirm log set" }),
+    ).not.toBeInTheDocument();
+    expect(transport.all("update_set")).toHaveLength(0);
+    await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
+    await waitFor(() => expect(transport.all("update_set")).toHaveLength(1));
+    expect(screen.getByRole("button", { name: "Log this set" })).toBeDisabled();
+  });
 
   it("writes the offered values with the press, then hands over and completes", async () => {
     const user = timedUser();
     const { transport } = renderExperience();
 
     await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
     // The fill goes out with the press, not at the end of the flash (step 7).
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
@@ -1071,6 +1095,7 @@ describe("Logging a set", () => {
 
     // The last set of an exercise hands over to the next one with sets left.
     await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
     await afterFlash();
     const handoff = await screen.findByRole("dialog", { name: "Squat" });
     expect(within(handoff).getByText("Exercise done")).toBeVisible();
@@ -1095,6 +1120,7 @@ describe("Logging a set", () => {
 
     // The last set of the workout ends on the Workout complete screen.
     await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
     await waitFor(() => {
       expect(transport.last("update_set").payload).toMatchObject({
         workoutSetId: "00000000-0000-4000-8000-0000000000e2",
@@ -1136,6 +1162,7 @@ describe("Logging a set", () => {
 
     expect(wheelValue("Reps")).toHaveTextContent(/^—reps$/);
     await user.click(screen.getByRole("button", { name: "Log this set" }));
+    await user.click(screen.getByRole("button", { name: "Confirm log set" }));
     await afterFlash();
 
     expect(transport.all("update_set")).toHaveLength(0);

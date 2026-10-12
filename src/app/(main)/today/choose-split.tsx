@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
 import type { TodaySplit } from "@/features/active-workout/domain/workout";
-import { Action, Icon, Sheet } from "@/shared/ui";
+import { Action, Icon, Sheet, useTransientOverlay } from "@/shared/ui";
 
 import "./choose-split.css";
 import { splitStatsText } from "./split-stats";
@@ -29,8 +31,18 @@ export function ChooseSplitPanel({
   onStart: (split: TodaySplit) => void;
   onSelect: (split: TodaySplit) => void;
 }) {
+  const overlay = useTransientOverlay();
+  const pendingStart = useRef<TodaySplit | null>(null);
+  useEffect(() => {
+    if (overlay.open || pendingStart.current === null) return;
+    const split = pendingStart.current;
+    pendingStart.current = null;
+    onStart(split);
+  }, [overlay.open, onStart]);
+
   return (
     <Sheet
+      overlay={overlay}
       panel="choose-split"
       title="Choose another split"
       description="Pick a split to train today. This does not change your rotation."
@@ -61,8 +73,9 @@ export function ChooseSplitPanel({
                   aria-label="Train this today"
                   title="Train this today"
                   onClick={() => {
+                    if (pendingStart.current !== null) return;
+                    pendingStart.current = split;
                     close();
-                    onStart(split);
                   }}
                 >
                   <Icon name="play" size={17} />
@@ -74,6 +87,7 @@ export function ChooseSplitPanel({
                   aria-label="Put on Today, don't start yet"
                   title="Put on Today, don't start yet"
                   onClick={() => {
+                    if (pendingStart.current !== null) return;
                     onSelect(split);
                     close();
                   }}

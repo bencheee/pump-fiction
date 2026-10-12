@@ -90,9 +90,29 @@ test.describe("Today workout-start experience", () => {
         .click();
       await expect(page.getByText("Today-only split")).toBeVisible();
       await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
-      // Starts land on the overview (step 5).
-      await page.getByRole("button", { name: "Start today's workout" }).click();
-      await expect(page).toHaveURL(/\/workout\/current\?view=overview$/);
+      await another.click();
+      await page
+        .getByRole("dialog", { name: "Choose another split" })
+        .getByRole("region", { name: splitB })
+        .getByRole("button", { name: "Train this today" })
+        .click();
+      await expect(page).toHaveURL(/\/workout\/preview\?split=/);
+      await expect(page.getByRole("heading", { name: splitB })).toBeVisible();
+      await page.goBack();
+      await expect(page).toHaveURL(/\/today$/);
+      await expect(
+        page.getByRole("dialog", { name: "Choose another split" }),
+      ).not.toBeAttached();
+      await another.click();
+      await page
+        .getByRole("dialog", { name: "Choose another split" })
+        .getByRole("region", { name: splitB })
+        .getByRole("button", { name: "Train this today" })
+        .click();
+      await page
+        .getByRole("button", { name: "Start workout", exact: true })
+        .click();
+      await expect(page).toHaveURL(/\/workout\/current$/);
       await clearCurrentWorkout();
 
       // MVP-TOD-003 as the Owner decided after step 21: the one-time workout

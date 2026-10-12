@@ -215,9 +215,14 @@ describe("Today and workout-start mobile experience", () => {
 
     expect(actions.startWorkout).not.toHaveBeenCalled();
     expect(actions.setNext).not.toHaveBeenCalled();
-    expect(actions.push).toHaveBeenCalledWith(
-      `/workout/preview?split=${alternateId}`,
+    await waitFor(() =>
+      expect(actions.push).toHaveBeenCalledWith(
+        `/workout/preview?split=${alternateId}`,
+      ),
     );
+    expect(
+      screen.queryByRole("dialog", { name: "Choose another split" }),
+    ).not.toBeInTheDocument();
   });
 
   it("previews every exercise in the selected split beneath the start action", async () => {

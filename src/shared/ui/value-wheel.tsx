@@ -1,7 +1,7 @@
 "use client";
 
 import type { PointerEvent, ReactNode } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./value-wheel.css";
 
@@ -73,6 +73,25 @@ export function ValueWheel({
   // command rather than one per 30px.
   const [dragged, setDragged] = useState(0);
   const drag = useRef<{ y: number; captured: boolean }>(null);
+  const suppressClick = useRef(false);
+
+  function cancelDrag() {
+    drag.current = null;
+    setDragged(0);
+  }
+
+  useEffect(() => {
+    const cancel = () => {
+      drag.current = null;
+      setDragged(0);
+    };
+    window.addEventListener("blur", cancel);
+    document.addEventListener("visibilitychange", cancel);
+    return () => {
+      window.removeEventListener("blur", cancel);
+      document.removeEventListener("visibilitychange", cancel);
+    };
+  }, []);
 
   const suggestedIndex = suggested === null ? -1 : column.indexOf(suggested);
   const offering = value === null && suggestedIndex >= 0;
@@ -124,6 +143,7 @@ export function ValueWheel({
      * found the five buttons of each wheel unpressable.
      */
     if (!from.captured) {
+      suppressClick.current = true;
       from.captured = true;
       event.currentTarget.setPointerCapture?.(event.pointerId);
     }
@@ -150,11 +170,19 @@ export function ValueWheel({
       aria-label={label}
       data-wheel={kind}
       onPointerDown={(event) => {
+        suppressClick.current = false;
         drag.current = { y: event.clientY, captured: false };
       }}
       onPointerMove={dragMove}
       onPointerUp={dragEnd}
-      onPointerCancel={dragEnd}
+      onPointerCancel={cancelDrag}
+      onLostPointerCapture={cancelDrag}
+      onClickCapture={(event) => {
+        if (!suppressClick.current) return;
+        suppressClick.current = false;
+        event.preventDefault();
+        event.stopPropagation();
+      }}
     >
       <div data-wheel-window="" />
       <div

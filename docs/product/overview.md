@@ -32,6 +32,8 @@ Today shows:
 - **Another split**, which opens **Choose another split**;
 - **One-Time Workout**.
 
+In **Choose another split**, **Train today** waits until the panel has closed and its browser-history entry has been removed before opening that split’s preview. The calendar action places the split on Today without starting it.
+
 **Another split** applies only to today's workout. It neither changes nor advances the future rotation.
 
 The split preview lists its planned exercises and sets. **Start workout** there creates the active workout and starts its timer. Returning to Today before that action leaves no active workout.

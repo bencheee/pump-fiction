@@ -593,3 +593,16 @@
 
 /* The note editor lives in `shared/ui/note-sheet.{tsx,css}` from step 10: the
    correction screen writes the same panel for a saved workout's note. */
+[data-queue-log-confirm] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+[data-queue-stage][data-confirming] {
+  flex: 1 0 auto;
+  min-height: min-content;
+  padding-block: 20px;
+}
