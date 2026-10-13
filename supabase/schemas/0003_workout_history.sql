@@ -128,6 +128,7 @@ as $$
             'exerciseName', occurrence.exercise_name_snapshot,
             'exerciseBaseType', occurrence.exercise_base_type_snapshot,
             'measurementType', occurrence.measurement_type_snapshot,
+            'weightEquipment', occurrence.weight_equipment_snapshot,
             'allowedLoadModes', coalesce((
               select jsonb_agg(mode.load_mode order by mode.load_mode)
               from public.workout_exercise_load_modes as mode
@@ -327,8 +328,8 @@ begin
   -- A corrected workout receives the definition as it stands now, exactly as an
   -- exercise added during a workout does. Existing occurrences keep their own
   -- older snapshots.
-  insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, persistent_note_snapshot)
-  values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.measurement_type, source_exercise.persistent_note)
+  insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_equipment_snapshot, persistent_note_snapshot)
+  values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.measurement_type, source_exercise.weight_equipment, source_exercise.persistent_note)
   returning * into created_occurrence;
   insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
   select created_occurrence.id, source_exercise.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = source_exercise.id;

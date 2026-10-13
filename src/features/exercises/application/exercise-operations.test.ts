@@ -35,6 +35,7 @@ describe("exercise operations", () => {
       name: "Pull-up",
       baseType: "bodyweight",
       measurementType: "reps",
+      weightEquipment: "standard",
       allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
       persistentNote: "Keep the ribs down.",
     });
@@ -86,6 +87,7 @@ describe("exercise operations", () => {
       name: "Assisted dip",
       baseType: "bodyweight",
       measurementType: "reps",
+      weightEquipment: "standard",
       allowedLoadModes: ["bodyweight", "assistance_weight", "assistance_band"],
       persistentNote: "",
     });
@@ -135,6 +137,7 @@ describe("exercise operations", () => {
       name: "Assisted dip",
       baseType: "bodyweight",
       measurementType: "reps",
+      weightEquipment: "standard",
       allowedLoadModes: ["bodyweight", "assistance_weight"],
       persistentNote: "",
     });

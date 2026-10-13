@@ -6,6 +6,9 @@ export const exerciseMeasurementTypes = ["reps", "seconds"] as const;
 
 export type ExerciseMeasurementType = (typeof exerciseMeasurementTypes)[number];
 
+export const weightEquipmentTypes = ["standard", "dumbbells"] as const;
+export type WeightEquipment = (typeof weightEquipmentTypes)[number];
+
 export const exerciseLoadModes = [
   "weight",
   "weight_resistance_band",
@@ -23,6 +26,7 @@ export type Exercise = Readonly<{
   name: string;
   baseType: ExerciseBaseType;
   measurementType?: ExerciseMeasurementType;
+  weightEquipment?: WeightEquipment;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
   splitUsageCount: number;
@@ -32,6 +36,7 @@ export type ExerciseDefinition = Readonly<{
   name: string;
   baseType: ExerciseBaseType;
   measurementType?: ExerciseMeasurementType;
+  weightEquipment?: WeightEquipment;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
 }>;

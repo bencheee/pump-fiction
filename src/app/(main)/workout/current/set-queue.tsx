@@ -22,7 +22,7 @@ import {
 } from "@/features/exercises/ui/exercise-presentation";
 import {
   handoffViewFor,
-  loadColumnFor,
+  equipmentLoadColumnFor,
   loadFallbackIndex,
   outcomeAfterLog,
   repsColumnFor,
@@ -594,12 +594,18 @@ export function SetQueue({
                   role="group"
                   aria-label="Confirm set logging"
                 >
-                  <button type="button" data-variant="primary" onClick={logSet}>
-                    Confirm log set
+                  <button
+                    type="button"
+                    data-queue-confirm=""
+                    aria-label="Confirm log set"
+                    onClick={logSet}
+                  >
+                    <Icon name="check" size={18} />
+                    Confirm set
                   </button>
                   <button
                     type="button"
-                    data-variant="secondary"
+                    data-queue-cancel=""
                     onClick={() => setLogConfirmation(null)}
                   >
                     Cancel
@@ -794,7 +800,11 @@ function SetStage({
   // `kind` and a nullable `kg`; the application reads the set's load mode,
   // which is the same question asked of the data it actually has.
   // The offer has to be on the column, or the wheel cannot rest on it.
-  const loadColumn = loadColumnFor(set.loadKg, offer.loadKg);
+  const loadColumn = equipmentLoadColumnFor(
+    exercise.weightEquipment,
+    set.loadKg,
+    offer.loadKg,
+  );
   const repsColumn = repsColumnFor(exercise.maxReps, set.reps, offer.reps);
   const load: ValueWheelProps | null =
     fields.load === null

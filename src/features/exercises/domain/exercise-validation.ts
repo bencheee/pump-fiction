@@ -4,6 +4,7 @@ import {
   exerciseBaseTypes,
   exerciseLoadModes,
   exerciseMeasurementTypes,
+  weightEquipmentTypes,
   type ExerciseBaseType,
   type ExerciseDefinition,
   type ExerciseLoadMode,
@@ -14,6 +15,7 @@ export type ExerciseDefinitionInput = Readonly<{
   name: unknown;
   baseType: unknown;
   measurementType?: unknown;
+  weightEquipment?: unknown;
   allowedLoadModes: unknown;
   persistentNote: unknown;
 }>;
@@ -37,6 +39,16 @@ export function validateExerciseDefinition(
       : isExerciseMeasurementType(input.measurementType)
         ? input.measurementType
         : null;
+  const weightEquipment =
+    input.weightEquipment === undefined ? "standard" : input.weightEquipment;
+  if (
+    !weightEquipmentTypes.some((type) => type === weightEquipment) ||
+    (weightEquipment === "dumbbells" && baseType !== "weights")
+  ) {
+    fieldErrors.weightEquipment = [
+      "Choose standard weights or dumbbells for a weights exercise.",
+    ];
+  }
   const persistentNote =
     typeof input.persistentNote === "string" ? input.persistentNote : null;
   const allowedLoadModes = parseLoadModes(input.allowedLoadModes);
@@ -80,6 +92,7 @@ export function validateExerciseDefinition(
       name,
       baseType,
       measurementType,
+      weightEquipment: weightEquipment as "standard" | "dumbbells",
       allowedLoadModes,
       persistentNote,
     },

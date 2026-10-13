@@ -10,7 +10,7 @@ import { expect, test } from "./support/test";
 
 test("chooses an alternate and confirms logging separately", async ({
   page,
-}) => {
+}, testInfo) => {
   const url = process.env.SUPABASE_URL!;
   if (!/^http:\/\/(127\.0\.0\.1|localhost):/.test(url))
     throw new Error("Local database required");
@@ -41,6 +41,7 @@ test("chooses an alternate and confirms logging separately", async ({
     exerciseId = await rpc<string>("create_exercise_definition", {
       p_name: `Press ${tag}`,
       p_base_type: "weights",
+      p_weight_equipment: "dumbbells",
       p_persistent_note: "",
       p_load_modes: ["weight"],
     });
@@ -89,7 +90,11 @@ test("chooses an alternate and confirms logging separately", async ({
     await expect(page).toHaveURL(/\/workout\/current$/);
     await page
       .getByRole("group", { name: "Load" })
-      .getByRole("button", { name: "5", exact: true })
+      .getByRole("button", { name: "4", exact: true })
+      .click();
+    await page
+      .getByRole("group", { name: "Load" })
+      .getByRole("button", { name: "6", exact: true })
       .click();
     await page
       .getByRole("group", { name: "Reps" })
@@ -99,6 +104,22 @@ test("chooses an alternate and confirms logging separately", async ({
     await segment.click();
     await page.getByRole("button", { name: "Log this set" }).click();
     await expect(segment).toHaveAttribute("data-state", "current");
+    for (const width of [320, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+      const confirm = page.getByRole("button", { name: "Confirm log set" });
+      await confirm.scrollIntoViewIfNeeded();
+      const box = await confirm.boundingBox();
+      expect(box!.height).toBeGreaterThanOrEqual(48);
+      expect(box!.width).toBeGreaterThan(100);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth,
+        ),
+      ).toBe(false);
+      await page.screenshot({
+        path: `test-results/confirm-${testInfo.project.name}-${width}.png`,
+      });
+    }
     await page.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(segment).toHaveAttribute("data-state", "current");
     await page.getByRole("button", { name: "Log this set" }).click();
@@ -115,7 +136,7 @@ test("chooses an alternate and confirms logging separately", async ({
       .eq("workout_exercises.workouts.source_program_id", programId);
     if (setsError) throw setsError;
     expect(sets).toHaveLength(1);
-    expect(sets![0]).toMatchObject({ reps: 10, load_kg: 5 });
+    expect(sets![0]).toMatchObject({ reps: 10, load_kg: 6 });
   } finally {
     if (programId) {
       const { data: workouts, error } = await db

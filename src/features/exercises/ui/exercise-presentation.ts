@@ -17,7 +17,7 @@ export const exerciseTypeLabels: Readonly<Record<ExerciseBaseType, string>> = {
  */
 export function exerciseDefinitionDetail(exercise: Exercise): string {
   const modes = exercise.allowedLoadModes.length;
-  return `${exerciseTypeLabels[exercise.baseType]} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${modes} ${modes === 1 ? "mode" : "modes"}`;
+  return `${exerciseTypeLabels[exercise.baseType]}${exercise.weightEquipment === "dumbbells" ? " · Dumbbells" : ""} · ${exercise.measurementType === "seconds" ? "Seconds" : "Reps"} · ${modes} ${modes === 1 ? "mode" : "modes"}`;
 }
 
 export const exerciseModeLabels: Readonly<Record<ExerciseLoadMode, string>> = {

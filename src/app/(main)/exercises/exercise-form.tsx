@@ -12,6 +12,8 @@ import {
   defaultLoadModesByBaseType,
   exerciseBaseTypes,
   exerciseMeasurementTypes,
+  weightEquipmentTypes,
+  type WeightEquipment,
   optionalLoadModesByBaseType,
   type Exercise,
   type ExerciseBaseType,
@@ -73,6 +75,9 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   );
   const [measurementType, setMeasurementType] =
     useState<ExerciseMeasurementType>(exercise?.measurementType ?? "reps");
+  const [weightEquipment, setWeightEquipment] = useState<WeightEquipment>(
+    exercise?.weightEquipment ?? "standard",
+  );
   const [modes, setModes] = useState<readonly ExerciseLoadMode[]>(
     exercise?.allowedLoadModes ?? defaultLoadModesByBaseType.weights,
   );
@@ -84,6 +89,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     name,
     baseType,
     measurementType,
+    weightEquipment: baseType === "weights" ? weightEquipment : "standard",
     allowedLoadModes: modes,
     persistentNote: note,
   };
@@ -118,6 +124,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
       (mode) => mode !== baseLoadModeByBaseType[baseType],
     );
     setBaseType(next);
+    if (next !== "weights") setWeightEquipment("standard");
     setModes(defaultLoadModesByBaseType[next]);
     if (hadAddition)
       showToast("Choices that do not apply to this type were cleared.");
@@ -196,7 +203,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   ];
 
   /* `actMeta` (2857): the definition as it now stands. */
-  const meta = `${exercise ? exerciseDefinitionDetail({ ...exercise, baseType, measurementType, allowedLoadModes: modes }) : "New definition"}${dirty ? " · Unsaved changes" : ""}`;
+  const meta = `${exercise ? exerciseDefinitionDetail({ ...exercise, baseType, measurementType, weightEquipment, allowedLoadModes: modes }) : "New definition"}${dirty ? " · Unsaved changes" : ""}`;
   const usage = exercise?.splitUsageCount ?? 0;
 
   return (
@@ -241,6 +248,34 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
             ))}
           </div>
         </section>
+
+        {baseType === "weights" ? (
+          <section
+            data-definition-section=""
+            aria-labelledby="definition-equipment"
+          >
+            <p id="definition-equipment">Weight equipment</p>
+            <div data-definition-choices="">
+              {weightEquipmentTypes.map((equipment) => (
+                <button
+                  key={equipment}
+                  type="button"
+                  data-definition-choice=""
+                  aria-pressed={weightEquipment === equipment}
+                  disabled={busy}
+                  onClick={() => setWeightEquipment(equipment)}
+                >
+                  {equipment === "dumbbells" ? "Dumbbells" : "Standard"}
+                </button>
+              ))}
+            </div>
+            <p data-definition-hint="">
+              {weightEquipment === "dumbbells"
+                ? "Choose 2, 4, 6, 8… kg during a workout."
+                : "Choose weights in 2.5 kg steps."}
+            </p>
+          </section>
+        ) : null}
 
         {/* `dfMeasures` (lines 962-970, values at 3018-3025). */}
         <section
@@ -373,6 +408,7 @@ function snapshotOf(definition: {
   name: string;
   baseType: ExerciseBaseType;
   measurementType: ExerciseMeasurementType;
+  weightEquipment: WeightEquipment;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
 }): string {
@@ -380,6 +416,7 @@ function snapshotOf(definition: {
     definition.name,
     definition.baseType,
     definition.measurementType,
+    definition.weightEquipment,
     [...definition.allowedLoadModes].sort(),
     definition.persistentNote,
   ]);

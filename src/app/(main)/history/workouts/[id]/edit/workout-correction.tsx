@@ -12,7 +12,7 @@ import {
 } from "@/features/active-workout/domain/set-entry";
 import type { WorkoutSet } from "@/features/active-workout/domain/workout";
 import {
-  loadColumnFor,
+  equipmentLoadColumnFor,
   loadFallbackIndex,
   prescriptionText,
   repsColumnFor,
@@ -784,7 +784,11 @@ function CorrectSetSheet({
   const populated =
     saved.loadKg !== null || saved.bandStrength !== null || saved.reps !== null;
 
-  const loadColumn = loadColumnFor(editing.loadKg, saved.loadKg);
+  const loadColumn = equipmentLoadColumnFor(
+    exercise.weightEquipment,
+    editing.loadKg,
+    saved.loadKg,
+  );
   const repsColumn = repsColumnFor(exercise.maxReps, editing.reps, saved.reps);
   const load: ValueWheelProps | null =
     fields.load === null

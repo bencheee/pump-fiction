@@ -9,6 +9,7 @@ Each exercise has:
 - a persistent identity;
 - a unique active name;
 - one base type;
+- weight equipment for weights exercises: `standard` or `dumbbells`;
 - one set measurement, `reps` or `seconds`;
 - explicitly allowed load or assistance modes;
 - a persistent exercise note.
@@ -35,7 +36,7 @@ Load mode and all applicable values are stored per set, not merely per exercise 
 
 ### Weights
 
-A basic set stores kilograms and the exercise's repetition count or timed duration, for example `60 kg × 8` or `60 kg · 30 sec`. An exercise may optionally permit a resistance band alongside the weight.
+A basic set stores kilograms and the exercise's repetition count or timed duration, for example `60 kg × 8` or `60 kg · 30 sec`. An exercise may optionally permit a resistance band alongside the weight. Its **Weight equipment** selector defaults to **Standard**, whose value wheel uses 2.5 kg steps. **Dumbbells** uses 2 kg steps: 2, 4, 6, 8, 10, 12… kg, up to 200 kg. Both wheels retain any stored or suggested value outside that grid, so existing performances remain editable. Equipment changes affect future workouts only; started and historical workouts keep their snapshot. This changes the picker, not how kilograms are stored or counted in statistics.
 
 ### Bodyweight
 

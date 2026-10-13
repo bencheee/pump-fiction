@@ -115,6 +115,7 @@ export type Database = {
           name: string
           persistent_note: string
           updated_at: string
+          weight_equipment: string
         }
         Insert: {
           base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -124,6 +125,7 @@ export type Database = {
           name: string
           persistent_note?: string
           updated_at?: string
+          weight_equipment?: string
         }
         Update: {
           base_type?: Database["public"]["Enums"]["exercise_base_type"]
@@ -133,6 +135,7 @@ export type Database = {
           name?: string
           persistent_note?: string
           updated_at?: string
+          weight_equipment?: string
         }
         Relationships: []
       }
@@ -378,6 +381,7 @@ export type Database = {
           planned_sets_snapshot: number | null
           position: number
           updated_at: string
+          weight_equipment_snapshot: string
           workout_id: string
           workout_note: string
         }
@@ -395,6 +399,7 @@ export type Database = {
           planned_sets_snapshot?: number | null
           position: number
           updated_at?: string
+          weight_equipment_snapshot?: string
           workout_id: string
           workout_note?: string
         }
@@ -412,6 +417,7 @@ export type Database = {
           planned_sets_snapshot?: number | null
           position?: number
           updated_at?: string
+          weight_equipment_snapshot?: string
           workout_id?: string
           workout_note?: string
         }
@@ -640,6 +646,7 @@ export type Database = {
           p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
+          p_weight_equipment?: string
         }
         Returns: string
       }
@@ -810,6 +817,7 @@ export type Database = {
           p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
+          p_weight_equipment?: string
         }
         Returns: string
       }
