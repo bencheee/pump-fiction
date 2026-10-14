@@ -115,7 +115,7 @@ export type Database = {
           name: string
           persistent_note: string
           updated_at: string
-          weight_equipment: string
+          weight_increment: number
         }
         Insert: {
           base_type: Database["public"]["Enums"]["exercise_base_type"]
@@ -125,7 +125,7 @@ export type Database = {
           name: string
           persistent_note?: string
           updated_at?: string
-          weight_equipment?: string
+          weight_increment?: number
         }
         Update: {
           base_type?: Database["public"]["Enums"]["exercise_base_type"]
@@ -135,7 +135,7 @@ export type Database = {
           name?: string
           persistent_note?: string
           updated_at?: string
-          weight_equipment?: string
+          weight_increment?: number
         }
         Relationships: []
       }
@@ -381,7 +381,7 @@ export type Database = {
           planned_sets_snapshot: number | null
           position: number
           updated_at: string
-          weight_equipment_snapshot: string
+          weight_increment_snapshot: number
           workout_id: string
           workout_note: string
         }
@@ -399,7 +399,7 @@ export type Database = {
           planned_sets_snapshot?: number | null
           position: number
           updated_at?: string
-          weight_equipment_snapshot?: string
+          weight_increment_snapshot?: number
           workout_id: string
           workout_note?: string
         }
@@ -417,7 +417,7 @@ export type Database = {
           planned_sets_snapshot?: number | null
           position?: number
           updated_at?: string
-          weight_equipment_snapshot?: string
+          weight_increment_snapshot?: number
           workout_id?: string
           workout_note?: string
         }
@@ -646,7 +646,7 @@ export type Database = {
           p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
-          p_weight_equipment?: string
+          p_weight_increment?: number
         }
         Returns: string
       }
@@ -817,7 +817,7 @@ export type Database = {
           p_measurement_type?: Database["public"]["Enums"]["exercise_measurement_type"]
           p_name: string
           p_persistent_note: string
-          p_weight_equipment?: string
+          p_weight_increment?: number
         }
         Returns: string
       }

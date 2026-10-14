@@ -12,7 +12,7 @@ import {
 } from "@/features/active-workout/domain/set-entry";
 import type { WorkoutSet } from "@/features/active-workout/domain/workout";
 import {
-  equipmentLoadColumnFor,
+  incrementLoadColumnFor,
   loadFallbackIndex,
   prescriptionText,
   repsColumnFor,
@@ -784,8 +784,8 @@ function CorrectSetSheet({
   const populated =
     saved.loadKg !== null || saved.bandStrength !== null || saved.reps !== null;
 
-  const loadColumn = equipmentLoadColumnFor(
-    exercise.weightEquipment,
+  const loadColumn = incrementLoadColumnFor(
+    exercise.weightIncrement,
     editing.loadKg,
     saved.loadKg,
   );

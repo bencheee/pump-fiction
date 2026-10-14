@@ -28,7 +28,7 @@ describe("SupabaseExerciseRepository", () => {
     const created = await repository.create({
       name: originalName,
       baseType: "weights",
-      weightEquipment: "dumbbells",
+      weightIncrement: 2,
       allowedLoadModes: ["weight", "weight_resistance_band"],
       persistentNote: "Original note",
     });
@@ -61,7 +61,7 @@ describe("SupabaseExerciseRepository", () => {
         name: editedName,
         baseType: "bodyweight",
         measurementType: "seconds",
-        weightEquipment: "standard",
+        weightIncrement: 2.5,
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
       });
@@ -76,7 +76,7 @@ describe("SupabaseExerciseRepository", () => {
       ).rejects.toMatchObject({ code: "duplicate_name" });
 
       expect(used).toMatchObject({
-        weightEquipment: "dumbbells",
+        weightIncrement: 2,
         id: created.id,
         splitUsageCount: 1,
       });
@@ -85,7 +85,7 @@ describe("SupabaseExerciseRepository", () => {
         name: editedName,
         baseType: "bodyweight",
         measurementType: "seconds",
-        weightEquipment: "standard",
+        weightIncrement: 2.5,
         allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
         persistentNote: "Updated note",
         splitUsageCount: 1,

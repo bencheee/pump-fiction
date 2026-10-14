@@ -4,7 +4,6 @@ import {
   exerciseBaseTypes,
   exerciseLoadModes,
   exerciseMeasurementTypes,
-  weightEquipmentTypes,
   type ExerciseBaseType,
   type ExerciseDefinition,
   type ExerciseLoadMode,
@@ -15,7 +14,7 @@ export type ExerciseDefinitionInput = Readonly<{
   name: unknown;
   baseType: unknown;
   measurementType?: unknown;
-  weightEquipment?: unknown;
+  weightIncrement?: unknown;
   allowedLoadModes: unknown;
   persistentNote: unknown;
 }>;
@@ -39,14 +38,23 @@ export function validateExerciseDefinition(
       : isExerciseMeasurementType(input.measurementType)
         ? input.measurementType
         : null;
-  const weightEquipment =
-    input.weightEquipment === undefined ? "standard" : input.weightEquipment;
+  const weightIncrement =
+    input.weightIncrement === undefined
+      ? 2.5
+      : typeof input.weightIncrement === "number"
+        ? input.weightIncrement
+        : typeof input.weightIncrement === "string" &&
+            input.weightIncrement.trim() !== ""
+          ? Number(input.weightIncrement.replace(",", "."))
+          : NaN;
   if (
-    !weightEquipmentTypes.some((type) => type === weightEquipment) ||
-    (weightEquipment === "dumbbells" && baseType !== "weights")
+    !Number.isFinite(weightIncrement) ||
+    weightIncrement < 0.01 ||
+    weightIncrement > 200 ||
+    Math.abs(weightIncrement * 100 - Math.round(weightIncrement * 100)) > 1e-8
   ) {
-    fieldErrors.weightEquipment = [
-      "Choose standard weights or dumbbells for a weights exercise.",
+    fieldErrors.weightIncrement = [
+      "Enter a weight increment from 0.01 to 200 kg, with at most two decimal places.",
     ];
   }
   const persistentNote =
@@ -92,7 +100,7 @@ export function validateExerciseDefinition(
       name,
       baseType,
       measurementType,
-      weightEquipment: weightEquipment as "standard" | "dumbbells",
+      weightIncrement,
       allowedLoadModes,
       persistentNote,
     },

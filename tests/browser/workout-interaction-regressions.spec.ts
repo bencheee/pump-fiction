@@ -5,6 +5,7 @@ import {
   rememberCurrentProgram,
   restoreCurrentProgram,
 } from "./support/current-program";
+import { runScreenAction } from "./support/actions";
 import { awaitHydration } from "./support/hydration";
 import { expect, test } from "./support/test";
 
@@ -41,13 +42,34 @@ test("chooses an alternate and confirms logging separately", async ({
     exerciseId = await rpc<string>("create_exercise_definition", {
       p_name: `Press ${tag}`,
       p_base_type: "weights",
-      p_weight_equipment: "dumbbells",
+      p_weight_increment: 2,
       p_persistent_note: "",
       p_load_modes: ["weight"],
     });
     programId = await rpc<string>("create_program", {
       p_name: `Regression ${tag}`,
     });
+    await page.goto(`/exercises/${exerciseId}/edit`);
+    const increment = page.getByRole("spinbutton", {
+      name: "Weight increment (kg)",
+    });
+    await awaitHydration(increment);
+    await expect(increment).toHaveValue("2");
+    await increment.fill("5");
+    await runScreenAction(page, "Save exercise");
+    await expect(page).toHaveURL(/\/exercises$/);
+    const { data: updated, error: updateError } = await db
+      .from("exercises")
+      .select("weight_increment")
+      .eq("id", exerciseId)
+      .single();
+    if (updateError) throw updateError;
+    expect(updated.weight_increment).toBe(5);
+    await page.goto(`/exercises/${exerciseId}/edit`);
+    await awaitHydration(increment);
+    await increment.fill("2");
+    await runScreenAction(page, "Save exercise");
+    await expect(page).toHaveURL(/\/exercises$/);
     const splitIds: string[] = [];
     for (const name of ["Upper B", "Upper A"]) {
       splitIds.push(

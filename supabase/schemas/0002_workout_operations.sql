@@ -27,7 +27,7 @@ as $$
             'exerciseName', occurrence.exercise_name_snapshot,
             'exerciseBaseType', occurrence.exercise_base_type_snapshot,
             'measurementType', occurrence.measurement_type_snapshot,
-            'weightEquipment', occurrence.weight_equipment_snapshot,
+            'weightIncrement', occurrence.weight_increment_snapshot,
             'allowedLoadModes', coalesce((
               select jsonb_agg(mode.load_mode order by mode.load_mode)
               from public.workout_exercise_load_modes as mode
@@ -231,8 +231,8 @@ begin
       from public.split_exercises as split_item join public.exercises as exercise on exercise.id = split_item.exercise_id
       where split_item.split_id = selected_split.id order by split_item.position
     loop
-      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_equipment_snapshot, persistent_note_snapshot, planned_sets_snapshot, min_reps_snapshot, max_reps_snapshot)
-      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.measurement_type, item.weight_equipment, item.persistent_note, item.planned_sets, item.min_reps, item.max_reps)
+      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_increment_snapshot, persistent_note_snapshot, planned_sets_snapshot, min_reps_snapshot, max_reps_snapshot)
+      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.measurement_type, item.weight_increment, item.persistent_note, item.planned_sets, item.min_reps, item.max_reps)
       returning id into created_occurrence_id;
       insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
       select created_occurrence_id, item.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = item.id;
@@ -246,8 +246,8 @@ begin
     values ('active', 'one_time', btrim(p_one_time_name), (p_started_at at time zone configured_time_zone)::date, p_started_at, p_started_at)
     returning id into created_workout_id;
     for item in select exercise.*, selected.ordinality::integer as position from pg_catalog.unnest(p_exercise_ids) with ordinality as selected(id, ordinality) join public.exercises as exercise on exercise.id = selected.id order by selected.ordinality loop
-      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_equipment_snapshot, persistent_note_snapshot)
-      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.measurement_type, item.weight_equipment, item.persistent_note) returning id into created_occurrence_id;
+      insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_increment_snapshot, persistent_note_snapshot)
+      values (created_workout_id, item.id, item.id, item.position, item.name, item.base_type, item.measurement_type, item.weight_increment, item.persistent_note) returning id into created_occurrence_id;
       insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
       select created_occurrence_id, item.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = item.id;
       insert into public.workout_sets(workout_exercise_id, position)
@@ -365,8 +365,8 @@ begin
     select exercise.* into source_exercise from public.exercises as exercise where exercise.id = target_id;
     if not found then raise exception using errcode = 'PF203', message = 'Exercise is unavailable'; end if;
     select coalesce(max(position), 0) + 1 into next_position from public.workout_exercises where workout_id = p_workout_id;
-    insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_equipment_snapshot, persistent_note_snapshot)
-    values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.measurement_type, source_exercise.weight_equipment, source_exercise.persistent_note) returning * into target_occurrence;
+    insert into public.workout_exercises(workout_id, exercise_id, exercise_identity_id, position, exercise_name_snapshot, exercise_base_type_snapshot, measurement_type_snapshot, weight_increment_snapshot, persistent_note_snapshot)
+    values (p_workout_id, source_exercise.id, source_exercise.id, next_position, source_exercise.name, source_exercise.base_type, source_exercise.measurement_type, source_exercise.weight_increment, source_exercise.persistent_note) returning * into target_occurrence;
     insert into public.workout_exercise_load_modes(workout_exercise_id, exercise_base_type_snapshot, load_mode)
     select target_occurrence.id, source_exercise.base_type, mode.load_mode from public.exercise_load_modes as mode where mode.exercise_id = source_exercise.id;
   elsif p_operation = 'remove_exercise' then

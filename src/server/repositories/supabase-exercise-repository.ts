@@ -23,11 +23,11 @@ type ExerciseRow = Pick<
 
 type ExerciseRowWithMeasurement = ExerciseRow & {
   measurement_type: Exercise["measurementType"];
-  weight_equipment: string;
+  weight_increment: number;
 };
 
 const exerciseColumns =
-  "id, name, base_type, measurement_type, weight_equipment, persistent_note" as const;
+  "id, name, base_type, measurement_type, weight_increment, persistent_note" as const;
 
 export class SupabaseExerciseRepository implements ExerciseRepository {
   constructor(private readonly client: ServerDatabaseClient) {}
@@ -72,7 +72,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
           p_name: definition.name,
           p_base_type: definition.baseType,
           p_measurement_type: definition.measurementType ?? "reps",
-          p_weight_equipment: definition.weightEquipment ?? "standard",
+          p_weight_increment: definition.weightIncrement ?? 2.5,
           p_persistent_note: definition.persistentNote,
           p_load_modes: [...definition.allowedLoadModes],
         },
@@ -94,7 +94,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
           p_name: definition.name,
           p_base_type: definition.baseType,
           p_measurement_type: definition.measurementType ?? "reps",
-          p_weight_equipment: definition.weightEquipment ?? "standard",
+          p_weight_increment: definition.weightIncrement ?? 2.5,
           p_persistent_note: definition.persistentNote,
           p_load_modes: [...definition.allowedLoadModes],
         },
@@ -165,8 +165,7 @@ export class SupabaseExerciseRepository implements ExerciseRepository {
       name: row.name,
       baseType: row.base_type,
       measurementType: row.measurement_type,
-      weightEquipment:
-        row.weight_equipment === "dumbbells" ? "dumbbells" : "standard",
+      weightIncrement: row.weight_increment,
       allowedLoadModes: (modesByExercise.get(row.id) ?? []).sort(
         (left, right) =>
           exerciseLoadModes.indexOf(left) - exerciseLoadModes.indexOf(right),

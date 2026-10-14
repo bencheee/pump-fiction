@@ -1,28 +1,39 @@
 import { expect, it } from "vitest";
-import { equipmentLoadColumnFor } from "./set-queue-presentation";
+import { incrementLoadColumnFor } from "./set-queue-presentation";
 import { validateExerciseDefinition } from "@/features/exercises/domain/exercise-validation";
 
-it("offers even dumbbell weights and preserves off-grid values", () => {
-  const column = equipmentLoadColumnFor("dumbbells", 12.5, 6);
-  expect(column.slice(0, 9)).toEqual([0, 2, 4, 6, 8, 10, 12, 12.5, 14]);
-  expect(equipmentLoadColumnFor("standard").slice(0, 7)).toEqual([
-    0, 2.5, 5, 7.5, 10, 12.5, 15,
-  ]);
+it.each([1, 2, 2.5, 5, 10])(
+  "offers %s kg increments and preserves off-grid values",
+  (increment) => {
+    expect(incrementLoadColumnFor(increment).slice(0, 4)).toEqual([
+      0,
+      increment,
+      increment * 2,
+      increment * 3,
+    ]);
+    expect(incrementLoadColumnFor(increment, 1.25)).toContain(1.25);
+    expect(incrementLoadColumnFor(increment).at(-1)).toBe(200);
+  },
+);
+
+it("avoids floating-point noise for fractional increments", () => {
+  expect(incrementLoadColumnFor(0.1).slice(0, 4)).toEqual([0, 0.1, 0.2, 0.3]);
 });
 
-it("rejects dumbbell equipment on a bodyweight definition and unknown equipment", () => {
-  for (const weightEquipment of ["dumbbells", "unknown"]) {
+it.each([0, -1, 201, "", null, "unknown", 1.234, Infinity])(
+  "rejects invalid increment %s",
+  (weightIncrement) => {
     expect(
       validateExerciseDefinition({
         name: "Pull-up",
         baseType: "bodyweight",
-        allowedLoadModes: ["bodyweight"],
+        allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
         persistentNote: "",
-        weightEquipment,
+        weightIncrement,
       }),
     ).toMatchObject({
       ok: false,
-      fieldErrors: { weightEquipment: expect.any(Array) },
+      fieldErrors: { weightIncrement: expect.any(Array) },
     });
-  }
-});
+  },
+);

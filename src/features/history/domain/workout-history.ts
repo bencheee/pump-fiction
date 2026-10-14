@@ -115,7 +115,7 @@ export type HistoryWorkoutExercise = Readonly<{
   position: number;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
-  weightEquipment?: import("@/features/exercises/domain/exercise").WeightEquipment;
+  weightIncrement?: number;
   measurementType?: import("@/features/exercises/domain/exercise").ExerciseMeasurementType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;

@@ -6,7 +6,7 @@ This is a logical model, not the SQL schema. Local persistence is accepted as Su
 
 ### `exercises`
 
-Persistent exercise definitions: identity, unique name, base type, set measurement (`reps` or `seconds`, defaulting to reps), weight equipment (`standard` or `dumbbells`, defaulting to standard and available only for weights), and persistent note. There is no status; removal is deletion, per [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
+Persistent exercise definitions: identity, unique name, base type, set measurement (`reps` or `seconds`, defaulting to reps), weight increment (positive decimal kilograms, defaulting to 2.5), and persistent note. There is no status; removal is deletion, per [ADR-0024](../decisions/0024-deletion-with-preserved-history.md).
 
 ### `exercise_load_modes`
 
@@ -60,7 +60,7 @@ Starting a workout copies the then-current display and prescription values into 
 - split name;
 - exercise name;
 - exercise base type;
-- weight equipment;
+- weight increment;
 - allowed load modes;
 - persistent exercise note;
 - planned sets;

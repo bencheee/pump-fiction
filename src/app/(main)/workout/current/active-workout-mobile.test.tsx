@@ -488,6 +488,28 @@ describe("Active set queue", () => {
     expect(currentExercise()).toHaveTextContent("Squat");
   });
 
+  it("uses the exercise increment for bodyweight with added weight", async () => {
+    const user = userEvent.setup();
+    const workout = makeWorkout();
+    renderExperience({
+      workout: {
+        ...workout,
+        exercises: workout.exercises.map((exercise) => ({
+          ...exercise,
+          weightIncrement: 1,
+        })),
+      },
+    });
+    await user.click(segment("Pull-Up set 2"));
+    expect(wheelValue("Load")).toHaveTextContent(/^5\+kg, suggested$/);
+    expect(
+      within(wheel("Load")).getByRole("button", { name: "6" }),
+    ).toBeVisible();
+    expect(
+      within(wheel("Load")).queryByRole("button", { name: "7.5" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("offers added bodyweight load from the previous workout and logs that mode", async () => {
     const user = userEvent.setup();
     const workout = makeWorkout();

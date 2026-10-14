@@ -9,7 +9,7 @@ Each exercise has:
 - a persistent identity;
 - a unique active name;
 - one base type;
-- weight equipment for weights exercises: `standard` or `dumbbells`;
+- a weight increment in kilograms;
 - one set measurement, `reps` or `seconds`;
 - explicitly allowed load or assistance modes;
 - a persistent exercise note.
@@ -36,7 +36,7 @@ Load mode and all applicable values are stored per set, not merely per exercise 
 
 ### Weights
 
-A basic set stores kilograms and the exercise's repetition count or timed duration, for example `60 kg × 8` or `60 kg · 30 sec`. An exercise may optionally permit a resistance band alongside the weight. Its **Weight equipment** selector defaults to **Standard**, whose value wheel uses 2.5 kg steps. **Dumbbells** uses 2 kg steps: 2, 4, 6, 8, 10, 12… kg, up to 200 kg. Both wheels retain any stored or suggested value outside that grid, so existing performances remain editable. Equipment changes affect future workouts only; started and historical workouts keep their snapshot. This changes the picker, not how kilograms are stored or counted in statistics.
+A basic set stores kilograms and the exercise's repetition count or timed duration, for example `60 kg × 8` or `60 kg · 30 sec`. An exercise may optionally permit a resistance band alongside the weight. **Weight increment (kg)** is an editable number that controls the value-wheel steps, for example 1, 2, 2.5, 5, or 10 kg. It accepts positive values from 0.01 to 200 kg with at most two decimal places. New definitions default to 2.5 kg; existing Standard definitions retain 2.5 kg and existing Dumbbells definitions retain 2 kg after migration. The wheel runs from its empty zero position to 200 kg and retains any stored or suggested off-grid value. Increment changes affect future workouts only; started and historical workouts keep their snapshot. This changes the picker, not how kilograms are stored or counted in statistics.
 
 ### Bodyweight
 
@@ -47,6 +47,8 @@ A basic bodyweight set stores reps or seconds according to the definition. An ex
 - `BW + strong resistance band × 10`
 - `25 kg assistance × 10`
 - `strong band assistance × 8`
+
+**Weight increment (kg)** is also shown when the selected addition uses kilograms (added weight or assistance weight), and controls that load wheel with the same rules as weights exercises. A plain bodyweight or band-only definition does not show the field.
 
 An assisted movement is therefore a bodyweight exercise whose optional addition is assistance. More kilograms of assistance means an easier performance. Assistance is stored as a positive value; it is never represented as negative weight.
 

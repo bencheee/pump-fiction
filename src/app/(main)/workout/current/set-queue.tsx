@@ -22,7 +22,7 @@ import {
 } from "@/features/exercises/ui/exercise-presentation";
 import {
   handoffViewFor,
-  equipmentLoadColumnFor,
+  incrementLoadColumnFor,
   loadFallbackIndex,
   outcomeAfterLog,
   repsColumnFor,
@@ -800,8 +800,8 @@ function SetStage({
   // `kind` and a nullable `kg`; the application reads the set's load mode,
   // which is the same question asked of the data it actually has.
   // The offer has to be on the column, or the wheel cannot rest on it.
-  const loadColumn = equipmentLoadColumnFor(
-    exercise.weightEquipment,
+  const loadColumn = incrementLoadColumnFor(
+    exercise.weightIncrement,
     set.loadKg,
     offer.loadKg,
   );

@@ -2,7 +2,6 @@ import type {
   ExerciseBaseType,
   ExerciseLoadMode,
   ExerciseMeasurementType,
-  WeightEquipment,
 } from "@/features/exercises/domain/exercise";
 import type { BandDirection, BandStrength } from "./active-workout-command";
 
@@ -74,7 +73,7 @@ export type WorkoutExercise = Readonly<{
   position: number;
   exerciseName: string;
   exerciseBaseType: ExerciseBaseType;
-  weightEquipment?: WeightEquipment;
+  weightIncrement?: number;
   measurementType?: ExerciseMeasurementType;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;

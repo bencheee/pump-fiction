@@ -42,7 +42,7 @@ describe("SupabaseWorkoutRepository", () => {
       const exercise = await exercises.create({
         name: `T-014 Press ${suffix}`,
         baseType: "weights",
-        weightEquipment: "dumbbells",
+        weightIncrement: 2,
         allowedLoadModes: ["weight"],
         persistentNote: "Brace hard",
       });
@@ -83,13 +83,13 @@ describe("SupabaseWorkoutRepository", () => {
         }),
       ]);
 
-      expect(current.exercises[0]?.weightEquipment).toBe("dumbbells");
+      expect(current.exercises[0]?.weightIncrement).toBe(2);
       await exercises.update(exercise.id, {
         ...exercise,
-        weightEquipment: "standard",
+        weightIncrement: 2.5,
       });
-      expect((await workouts.getCurrent())?.exercises[0]?.weightEquipment).toBe(
-        "dumbbells",
+      expect((await workouts.getCurrent())?.exercises[0]?.weightIncrement).toBe(
+        2,
       );
       const workoutSetId = current.exercises[0]?.sets[0]?.id;
       if (!workoutSetId) throw new Error("Expected initial workout set");

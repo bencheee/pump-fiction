@@ -12,8 +12,6 @@ import {
   defaultLoadModesByBaseType,
   exerciseBaseTypes,
   exerciseMeasurementTypes,
-  weightEquipmentTypes,
-  type WeightEquipment,
   optionalLoadModesByBaseType,
   type Exercise,
   type ExerciseBaseType,
@@ -75,8 +73,8 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   );
   const [measurementType, setMeasurementType] =
     useState<ExerciseMeasurementType>(exercise?.measurementType ?? "reps");
-  const [weightEquipment, setWeightEquipment] = useState<WeightEquipment>(
-    exercise?.weightEquipment ?? "standard",
+  const [weightIncrement, setWeightIncrement] = useState(
+    String(exercise?.weightIncrement ?? 2.5),
   );
   const [modes, setModes] = useState<readonly ExerciseLoadMode[]>(
     exercise?.allowedLoadModes ?? defaultLoadModesByBaseType.weights,
@@ -89,7 +87,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
     name,
     baseType,
     measurementType,
-    weightEquipment: baseType === "weights" ? weightEquipment : "standard",
+    weightIncrement,
     allowedLoadModes: modes,
     persistentNote: note,
   };
@@ -124,7 +122,6 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
       (mode) => mode !== baseLoadModeByBaseType[baseType],
     );
     setBaseType(next);
-    if (next !== "weights") setWeightEquipment("standard");
     setModes(defaultLoadModesByBaseType[next]);
     if (hadAddition)
       showToast("Choices that do not apply to this type were cleared.");
@@ -203,7 +200,7 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
   ];
 
   /* `actMeta` (2857): the definition as it now stands. */
-  const meta = `${exercise ? exerciseDefinitionDetail({ ...exercise, baseType, measurementType, weightEquipment, allowedLoadModes: modes }) : "New definition"}${dirty ? " · Unsaved changes" : ""}`;
+  const meta = `${exercise ? exerciseDefinitionDetail({ ...exercise, baseType, measurementType, weightIncrement: Number(weightIncrement), allowedLoadModes: modes }) : "New definition"}${dirty ? " · Unsaved changes" : ""}`;
   const usage = exercise?.splitUsageCount ?? 0;
 
   return (
@@ -249,30 +246,27 @@ export function ExerciseForm({ exercise }: { exercise?: Exercise }) {
           </div>
         </section>
 
-        {baseType === "weights" ? (
-          <section
-            data-definition-section=""
-            aria-labelledby="definition-equipment"
-          >
-            <p id="definition-equipment">Weight equipment</p>
-            <div data-definition-choices="">
-              {weightEquipmentTypes.map((equipment) => (
-                <button
-                  key={equipment}
-                  type="button"
-                  data-definition-choice=""
-                  aria-pressed={weightEquipment === equipment}
-                  disabled={busy}
-                  onClick={() => setWeightEquipment(equipment)}
-                >
-                  {equipment === "dumbbells" ? "Dumbbells" : "Standard"}
-                </button>
-              ))}
-            </div>
+        {baseType === "weights" ||
+        modes.includes("bodyweight_added_weight") ||
+        modes.includes("assistance_weight") ? (
+          <section data-definition-section="">
+            <label id="definition-increment" htmlFor="weight-increment">
+              Weight increment (kg)
+            </label>
+            <input
+              id="weight-increment"
+              type="number"
+              inputMode="decimal"
+              min="0.01"
+              max="200"
+              step="0.01"
+              value={weightIncrement}
+              disabled={busy}
+              onChange={(event) => setWeightIncrement(event.target.value)}
+              data-definition-increment=""
+            />
             <p data-definition-hint="">
-              {weightEquipment === "dumbbells"
-                ? "Choose 2, 4, 6, 8… kg during a workout."
-                : "Choose weights in 2.5 kg steps."}
+              For example: 1, 2, 2.5, 5 or 10 kg. Applies to new workouts.
             </p>
           </section>
         ) : null}
@@ -408,7 +402,7 @@ function snapshotOf(definition: {
   name: string;
   baseType: ExerciseBaseType;
   measurementType: ExerciseMeasurementType;
-  weightEquipment: WeightEquipment;
+  weightIncrement: string;
   allowedLoadModes: readonly ExerciseLoadMode[];
   persistentNote: string;
 }): string {
@@ -416,7 +410,7 @@ function snapshotOf(definition: {
     definition.name,
     definition.baseType,
     definition.measurementType,
-    definition.weightEquipment,
+    definition.weightIncrement,
     [...definition.allowedLoadModes].sort(),
     definition.persistentNote,
   ]);

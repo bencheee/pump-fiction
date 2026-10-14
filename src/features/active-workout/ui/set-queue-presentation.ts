@@ -1,9 +1,6 @@
 import { isSetRecorded, setModeFields } from "../domain/set-entry";
 import type { WorkoutExercise, WorkoutSet } from "../domain/workout";
-import type {
-  WeightEquipment,
-  ExerciseLoadMode,
-} from "@/features/exercises/domain/exercise";
+import type { ExerciseLoadMode } from "@/features/exercises/domain/exercise";
 
 /*
  * The values the Active set queue binds, ported from the prototype for step 4
@@ -37,17 +34,27 @@ const repsColumnTop = 40;
 export function loadColumnFor(
   ...values: readonly (number | null)[]
 ): readonly number[] {
-  return equipmentLoadColumnFor("standard", ...values);
+  return incrementLoadColumnFor(2.5, ...values);
 }
 
-export function equipmentLoadColumnFor(
-  equipment: WeightEquipment | undefined,
+export function incrementLoadColumnFor(
+  increment: number | undefined,
   ...values: readonly (number | null)[]
 ): readonly number[] {
+  const step =
+    increment !== undefined &&
+    Number.isFinite(increment) &&
+    increment >= 0.01 &&
+    increment <= 200
+      ? increment
+      : 2.5;
   const base =
-    equipment === "dumbbells"
-      ? Array.from({ length: 101 }, (_, index) => index * 2)
-      : loadColumnBase;
+    step === 2.5
+      ? loadColumnBase
+      : Array.from(
+          { length: Math.floor(200 / step) + 1 },
+          (_, index) => Math.round(index * step * 100) / 100,
+        );
   const extra = values.filter(
     (value): value is number => value !== null && !base.includes(value),
   );

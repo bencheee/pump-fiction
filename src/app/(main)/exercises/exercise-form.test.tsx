@@ -44,7 +44,7 @@ const pullUp: Exercise = {
   name: "Pull-up",
   baseType: "bodyweight",
   measurementType: "reps",
-  weightEquipment: "standard",
+  weightIncrement: 2.5,
   allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
   persistentNote: "",
   splitUsageCount: 2,
@@ -129,24 +129,31 @@ describe("ExerciseForm", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("saves dumbbell equipment and hides it for bodyweight", async () => {
+  it("saves a custom increment for weights and bodyweight with added weight", async () => {
     const user = userEvent.setup();
     actions.create.mockResolvedValue({ ok: true, value: { id: "created" } });
     renderForm(<ExerciseForm />);
-    await user.type(screen.getByLabelText("Exercise name"), "Dumbbell press");
-    await user.click(screen.getByRole("button", { name: "Dumbbells" }));
-    expect(screen.getByRole("button", { name: "Dumbbells" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
+    await user.type(screen.getByLabelText("Exercise name"), "Press");
+    const input = screen.getByLabelText("Weight increment (kg)");
+    expect(input).toHaveValue(2.5);
+    await user.clear(input);
+    await user.type(input, "5");
     await runAction(user, "Save exercise");
     expect(actions.create).toHaveBeenCalledWith(
-      expect.objectContaining({ weightEquipment: "dumbbells" }),
+      expect.objectContaining({ weightIncrement: 5 }),
     );
     await chooseType(user, "Bodyweight");
     expect(
-      screen.queryByRole("button", { name: "Dumbbells" }),
+      screen.queryByLabelText("Weight increment (kg)"),
     ).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Add weight" }));
+    expect(screen.getByLabelText("Weight increment (kg)")).toHaveValue(5);
+    await user.clear(screen.getByLabelText("Weight increment (kg)"));
+    await user.type(screen.getByLabelText("Weight increment (kg)"), "1");
+    await runAction(user, "Save exercise");
+    expect(actions.create).toHaveBeenLastCalledWith(
+      expect.objectContaining({ baseType: "bodyweight", weightIncrement: 1 }),
+    );
   });
 
   it("keeps at most one addition", async () => {
@@ -171,7 +178,7 @@ describe("ExerciseForm", () => {
       name: "Pull-up",
       baseType: "bodyweight",
       measurementType: "reps",
-      weightEquipment: "standard",
+      weightIncrement: 2.5,
       allowedLoadModes: ["bodyweight", "bodyweight_resistance_band"],
       persistentNote: "",
     });
@@ -294,7 +301,9 @@ describe("ExerciseForm", () => {
     await user.click(screen.getByRole("button", { name: "Actions" }));
     const panel = await screen.findByRole("dialog", { name: "Actions" });
     expect(
-      within(panel).getByText("Bodyweight · Reps · 2 modes · Unsaved changes"),
+      within(panel).getByText(
+        "Bodyweight · 2.5 kg steps · Reps · 2 modes · Unsaved changes",
+      ),
     ).toBeVisible();
     await user.click(within(panel).getByRole("button", { name: "Close" }));
     await waitFor(() =>
@@ -349,7 +358,7 @@ describe("ExerciseForm", () => {
       name: "Weighted pull-up",
       baseType: "bodyweight",
       measurementType: "reps",
-      weightEquipment: "standard",
+      weightIncrement: 2.5,
       allowedLoadModes: ["bodyweight", "bodyweight_added_weight"],
       persistentNote: "",
     });
@@ -444,7 +453,7 @@ describe("ExerciseForm", () => {
       name: "Assisted dip",
       baseType: "bodyweight",
       measurementType: "reps",
-      weightEquipment: "standard",
+      weightIncrement: 2.5,
       allowedLoadModes: ["bodyweight", "assistance_weight"],
       persistentNote: "",
     });
